@@ -1,0 +1,137 @@
+{
+  "nusach": "chabad",
+  "tipo": "yatom",
+  "audio_duration": 89.24,
+  "total_versos": 16,
+  "verso_duration": 5.58,
+  "versos": [
+    {
+      "n": 1,
+      "start": 0.0,
+      "end": 5.58,
+      "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
+      "transliteration_pt": "Yitgadal v'yitkadash sh'mei raba",
+      "translation_pt": "Exaltado e santificado seja o Seu grande Nome"
+    },
+    {
+      "n": 2,
+      "start": 5.58,
+      "end": 11.15,
+      "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
+      "transliteration_pt": "b'alma di v'ra chir'utei",
+      "translation_pt": "no mundo que Ele criou segundo Sua vontade"
+    },
+    {
+      "n": 3,
+      "start": 11.15,
+      "end": 16.73,
+      "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
+      "transliteration_pt": "v'yamlich malchutei",
+      "translation_pt": "e que faça reinar o Seu reino"
+    },
+    {
+      "n": 4,
+      "start": 16.73,
+      "end": 22.31,
+      "hebrew": "וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
+      "transliteration_pt": "v'yatsmach purkanei vikarev meshichei",
+      "translation_pt": "e que floresça Sua redenção e aproxime o Seu Mashiach"
+    },
+    {
+      "n": 5,
+      "start": 22.31,
+      "end": 27.89,
+      "hebrew": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
+      "transliteration_pt": "b'chayeichon uv'yomeichon",
+      "translation_pt": "em vossas vidas e em vossos dias"
+    },
+    {
+      "n": 6,
+      "start": 27.89,
+      "end": 33.46,
+      "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
+      "transliteration_pt": "uv'chayei d'chol beit yisrael",
+      "translation_pt": "e na vida de toda a casa de Israel"
+    },
+    {
+      "n": 7,
+      "start": 33.46,
+      "end": 39.04,
+      "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
+      "transliteration_pt": "ba'agala uv'zman qariv ve'imru amen",
+      "translation_pt": "rapidamente e em breve — e dizei amém"
+    },
+    {
+      "n": 8,
+      "start": 39.04,
+      "end": 44.62,
+      "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
+      "transliteration_pt": "Yehei shmei raba m'varach l'alam ul'almei almaya",
+      "translation_pt": "Que Seu grande Nome seja abençoado eternamente e para sempre"
+    },
+    {
+      "n": 9,
+      "start": 44.62,
+      "end": 50.2,
+      "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
+      "transliteration_pt": "Yitbarach v'yishtabach v'yitpaar",
+      "translation_pt": "Bendito, louvado e glorificado seja"
+    },
+    {
+      "n": 10,
+      "start": 50.2,
+      "end": 55.77,
+      "hebrew": "וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
+      "transliteration_pt": "v'yitromam v'yitnassa v'yithadar",
+      "translation_pt": "exaltado, elevado e honrado seja"
+    },
+    {
+      "n": 11,
+      "start": 55.77,
+      "end": 61.35,
+      "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
+      "transliteration_pt": "v'yitaleh v'yithalal shmei d'qudsha b'rich hu",
+      "translation_pt": "e elevado e exaltado seja o Nome do Santo Bendito Seja"
+    },
+    {
+      "n": 12,
+      "start": 61.35,
+      "end": 66.93,
+      "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
+      "transliteration_pt": "l'eila min kol birchata v'shirata",
+      "translation_pt": "acima de todas as bênçãos e cânticos"
+    },
+    {
+      "n": 13,
+      "start": 66.93,
+      "end": 72.51,
+      "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
+      "transliteration_pt": "tushbechata v'nechamata da'amiran b'alma ve'imru amen",
+      "translation_pt": "louvores e consolações que se recitam no mundo — e dizei amém"
+    },
+    {
+      "n": 14,
+      "start": 72.51,
+      "end": 78.08,
+      "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
+      "transliteration_pt": "Yehei shlama raba min shamaya v'chayim tovim aleinu v'al kol yisrael ve'imru amen",
+      "translation_pt": "Que grande paz do céu e boa vida venha sobre nós e sobre toda Israel — e dizei amém"
+    },
+    {
+      "n": 15,
+      "start": 78.08,
+      "end": 83.66,
+      "hebrew": "עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
+      "transliteration_pt": "Oseh shalom bimromav",
+      "translation_pt": "Aquele que faz paz em Suas alturas"
+    },
+    {
+      "n": 16,
+      "start": 83.66,
+      "end": 89.24,
+      "hebrew": "הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
+      "transliteration_pt": "hu ya'aseh shalom aleinu v'al kol yisrael ve'imru amen",
+      "translation_pt": "que Ele faça paz sobre nós e sobre toda Israel — e dizei amém"
+    }
+  ]
+}

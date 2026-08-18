@@ -1,0 +1,4698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#f4ede0">
+<title>Tefilá · Kadish do Enlutado · v3</title>
+<script src="./sync-player.js"></script>
+<link rel="manifest" href='data:application/manifest+json,{"name":"Tefil%C3%A1 · Kadish","short_name":"Tefil%C3%A1","start_url":"./","display":"standalone","theme_color":"%238b6a3e","background_color":"%23f4ede0","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 192 192%22%3E%3Crect width%3D%22192%22 height%3D%22192%22 fill%3D%22%23f4ede0%22%2F%3E%3Ctext x%3D%2296%22 y%3D%22120%22 font-size%3D%22100%22 text-anchor%3D%22middle%22 fill%3D%22%238b6a3e%22%3E%E2%9C%A1%3C%2Ftext%3E%3C%2Fsvg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-scale: 1;
+    /* Pergaminho Quente · sidur do avô (DEFAULT) */
+    --bg: #f4ede0;
+    --bg-elevated: #ecdfc7;
+    --text: #2a1f15;
+    --text-soft: #4d3d2d;
+    --text-faint: #8a7860;
+    --brass: #8b6a3e;
+    --brass-bright: #d4a25a;
+    --gold-glow: #d4a25a;
+    --line: #c9b894;
+    --rule: rgba(42, 31, 21, 0.1);
+    --tip-bg: rgba(212, 162, 90, 0.12);
+    --record-red: #c14545;
+  }
+
+  /* Theme: Claro */
+  body.theme-claro {
+    --bg: #ffffff;
+    --bg-elevated: #f5f5f5;
+    --text: #1a1a1a;
+    --text-soft: #3a3a3a;
+    --text-faint: #6a6a6a;
+    --brass: #6b5a3e;
+    --brass-bright: #a68a4e;
+    --gold-glow: #a68a4e;
+    --line: #d8d8d8;
+    --rule: rgba(0, 0, 0, 0.08);
+    --tip-bg: rgba(166, 138, 78, 0.10);
+  }
+
+  /* Theme: Escuro */
+  body.theme-escuro {
+    --bg: #1a1612;
+    --bg-elevated: #252019;
+    --text: #f5ecd8;
+    --text-soft: #d8c89a;
+    --text-faint: #a89876;
+    --brass: #e8c084;
+    --brass-bright: #f4d49e;
+    --gold-glow: #f4d49e;
+    --line: #45382a;
+    --rule: rgba(232, 192, 132, 0.18);
+    --tip-bg: rgba(232, 192, 132, 0.14);
+  }
+  body.theme-escuro .hebrew { color: #ffffff; }
+
+  /* Theme: Alto contraste */
+  body.theme-contraste {
+    --bg: #ffffff;
+    --bg-elevated: #ffffff;
+    --text: #000000;
+    --text-soft: #000000;
+    --text-faint: #2a2a2a;
+    --brass: #000000;
+    --brass-bright: #000000;
+    --gold-glow: #000000;
+    --line: #000000;
+    --rule: #000000;
+    --tip-bg: #ffff00;
+  }
+  body.theme-contraste .hebrew { font-weight: 700 !important; }
+  body.theme-contraste .pt-merged { border-left-width: 4px !important; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #f4ede0;
+    background-color: #f4ede0;
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+  body {
+    background-image:
+      radial-gradient(at 20% 0%, rgba(184, 147, 92, 0.10) 0%, transparent 55%),
+      radial-gradient(at 80% 100%, rgba(139, 106, 62, 0.08) 0%, transparent 55%);
+    padding-bottom: 130px;
+  }
+  main { background-color: transparent; }
+  .verse { background-color: transparent; }
+
+  /* ============ TOPBAR ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(244, 237, 224, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand {
+    padding: 14px 20px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--brass);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .brand-right { display: flex; gap: 8px; align-items: center; }
+
+  .mode-toggle {
+    display: flex;
+    background: var(--bg-elevated);
+    border-radius: 100px;
+    padding: 3px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule);
+  }
+  .mode-toggle button {
+    background: transparent;
+    border: none;
+    padding: 5px 11px;
+    border-radius: 100px;
+    cursor: pointer;
+    color: var(--text-faint);
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
+  }
+  .mode-toggle button.active {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .studio-toggle {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    color: var(--text-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+  }
+  .studio-toggle svg { width: 16px; height: 16px; fill: currentColor; }
+  body.studio .studio-toggle {
+    background: var(--text);
+    color: var(--brass-bright);
+    border-color: var(--text);
+  }
+
+  .info-toggle {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    color: var(--text-soft);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+  }
+  .info-toggle svg { width: 18px; height: 18px; }
+  .info-toggle:hover { color: var(--brass); border-color: var(--brass); }
+
+  /* Prominent labeled entry to the educational panel */
+  .learn-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: calc(100% - 40px);
+    margin: 4px 20px 0;
+    padding: 13px 16px;
+    background: var(--tip-bg);
+    border: 1px solid rgba(212, 162, 90, 0.35);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    text-align: left;
+    transition: all 0.2s ease;
+  }
+  .learn-strip:hover {
+    background: rgba(212, 162, 90, 0.18);
+    border-color: var(--brass);
+  }
+  .learn-strip .ls-icon {
+    color: var(--brass);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .learn-strip .ls-text {
+    flex: 1;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .learn-strip .ls-text small {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    margin-top: 1px;
+  }
+  .learn-strip .ls-arrow {
+    color: var(--brass);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ============ EDUCATIONAL OVERLAY ============ */
+  .info-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 31, 21, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 40px 16px;
+  }
+  .info-overlay.show { opacity: 1; pointer-events: auto; }
+  .info-panel {
+    background: var(--bg);
+    max-width: 600px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 32px 28px 36px;
+    box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
+    border: 1px solid var(--line);
+    transform: translateY(16px);
+    transition: transform 0.3s ease;
+  }
+  .info-overlay.show .info-panel { transform: translateY(0); }
+  .info-close {
+    float: right;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    color: var(--text-soft);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-close:hover { color: var(--brass); border-color: var(--brass); }
+  .info-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; letter-spacing: 0.32em; color: var(--brass);
+    text-transform: uppercase; font-weight: 500; margin-bottom: 8px;
+  }
+  .info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 500; color: var(--text);
+    margin-bottom: 24px; line-height: 1.1;
+  }
+  .info-h {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px; font-weight: 600; color: var(--text);
+    margin: 22px 0 8px;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .info-h::before {
+    content: ''; display: inline-block;
+    width: 18px; height: 1px; background: var(--brass);
+  }
+  .info-p {
+    font-family: 'Lora', serif;
+    font-size: 14.5px; line-height: 1.7; color: var(--text-soft);
+    margin-bottom: 10px;
+  }
+  .info-p strong { color: var(--text); font-weight: 600; }
+  .info-p em { font-style: italic; color: var(--text); }
+  .info-note {
+    margin-top: 24px;
+    padding: 12px 14px;
+    background: var(--tip-bg);
+    border-left: 3px solid var(--brass);
+    border-radius: 0 4px 4px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 13px; color: var(--text-soft);
+  }
+
+  .prayer-meta {
+    padding: 2px 20px 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .prayer-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--text);
+  }
+  .prayer-source {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+
+  /* Studio banner */
+  .studio-banner {
+    display: none;
+    padding: 10px 20px;
+    background: var(--tip-bg);
+    color: var(--text-soft);
+    border-top: 1px solid rgba(212, 162, 90, 0.25);
+    border-bottom: 1px solid rgba(212, 162, 90, 0.25);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+  body.studio .studio-banner { display: block; }
+
+  /* ============ PICTOGRAMS ============ */
+  .pictograms {
+    display: flex;
+    gap: 18px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-elevated);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pictograms::-webkit-scrollbar { display: none; }
+  .picto {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    white-space: nowrap;
+    opacity: 0.4;
+    transition: opacity 0.4s ease;
+  }
+  .picto.active { opacity: 1; color: var(--brass); }
+  .picto svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* ============ MAIN ============ */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .verse {
+    margin-bottom: 14px;
+    position: relative;
+    transition: opacity 0.5s ease;
+  }
+  .verse.dimmed { opacity: 0.32; }
+
+  /* Decorative line - only first verse, very subtle elsewhere */
+  .vm-line {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--brass), transparent);
+    width: 40%;
+    margin: 0 auto 10px;
+    opacity: 0.35;
+  }
+  .verse:first-child .vm-line { opacity: 0.6; width: 55%; margin-bottom: 14px; }
+  .vm-dot {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--brass-bright);
+    box-shadow: 0 0 8px var(--brass-bright);
+    display: none;
+  }
+  .verse.has-audio .vm-dot { display: block; }
+
+  /* ============ HEBREW (28px - dominant) ============ */
+  .hebrew {
+    font-family: 'Frank Ruhl Libre', serif;
+    direction: rtl;
+    text-align: right;
+    font-size: calc(28px * var(--font-scale));
+    line-height: 1.55;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .word {
+    display: inline-block;
+    padding: 0 4px;
+    margin: 0 -2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .word:hover { color: var(--brass); }
+  .word.active {
+    color: var(--text);
+    background: var(--gold-glow);
+    box-shadow: 0 0 0 2px var(--gold-glow), 0 0 28px rgba(212, 162, 90, 0.5);
+    animation: pulse 0.4s ease;
+  }
+  .word.mark-target {
+    background: rgba(212, 162, 90, 0.18);
+    box-shadow: 0 0 0 2px var(--brass);
+    animation: targetPulse 1.2s ease-in-out infinite;
+  }
+  .word.mark-done {
+    color: var(--text-faint);
+    text-decoration: line-through;
+    text-decoration-color: var(--brass);
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  @keyframes targetPulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--brass); }
+    50% { box-shadow: 0 0 0 2px var(--brass), 0 0 16px rgba(184, 147, 92, 0.5); }
+  }
+
+  /* ============ TRANSLITERATION (19px - functional, what you actually pronounce) ============ */
+  .translit {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: calc(19px * var(--font-scale));
+    line-height: 1.4;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+    direction: rtl;        /* flow words right-to-left to align with Hebrew */
+    text-align: right;
+    unicode-bidi: plaintext; /* keep individual Latin words readable left-to-right */
+  }
+  .twrd {
+    transition: all 0.25s ease;
+    padding: 0 2px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .twrd.active {
+    color: var(--text);
+    font-weight: 500;
+    font-style: normal;
+    background: rgba(212, 162, 90, 0.22);
+  }
+
+  /* ============ PT MERGED (14px - meaning, reads as natural sentence) ============ */
+  .pt-merged {
+    font-family: 'Lora', serif;
+    font-size: calc(14px * var(--font-scale));
+    line-height: 1.45;
+    color: var(--text-soft);
+    margin-top: 2px;
+    padding-right: 14px;
+    border-right: 2px solid var(--line);
+    text-align: right;
+  }
+  .phrase {
+    padding: 0 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .phrase.active {
+    color: var(--text);
+    font-weight: 500;
+    background: rgba(212, 162, 90, 0.22);
+  }
+  .phrase:empty { padding: 0; }
+
+  /* ============ TIP ============ */
+  .tip {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: var(--tip-bg);
+    border-left: 3px solid var(--brass);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text-soft);
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+    display: none; /* hidden by default - shown only when explanations enabled */
+    gap: 10px;
+    align-items: flex-start;
+  }
+  body.show-explanations .tip { display: flex; }
+  .tip-icon {
+    color: var(--brass);
+    font-size: 14px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  body.completo .tip { display: none; }
+
+  /* community-respond hidden by default, shown when explanations enabled */
+  body:not(.show-explanations) .community-respond { display: none; }
+
+  /* Declaration verse (Shema itself) gets bigger Hebrew */
+  .verse.declaration .hebrew {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .verse.whisper .hebrew {
+    font-size: 24px;
+    color: var(--text-soft);
+  }
+  .verse.whisper .translit { font-size: 17px; }
+
+  /* ============ COMPLETO MODE ============ */
+  body.completo .translit { display: none; }
+  body.completo .pt-merged {
+    font-size: 12px;
+    opacity: 0.7;
+    border-left-width: 1px;
+  }
+  body.completo .hebrew { font-size: 32px; }
+  body.completo .verse.declaration .hebrew { font-size: 38px; }
+
+  /* ============ STUDIO STRIP ============ */
+  .studio-strip {
+    display: none;
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--bg-elevated);
+    color: var(--text);
+    border-left: 3px solid var(--brass);
+    border-radius: 0 6px 6px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+  }
+  body.studio .studio-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .studio-strip .status {
+    flex: 1;
+    min-width: 100px;
+    color: var(--brass);
+    font-style: italic;
+    letter-spacing: 0.04em;
+  }
+  .studio-btn {
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text);
+    border-radius: 100px;
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .studio-btn:hover {
+    background: var(--tip-bg);
+    border-color: var(--brass);
+    color: var(--brass);
+  }
+  .studio-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .studio-btn svg { width: 11px; height: 11px; fill: currentColor; }
+  .studio-btn.recording {
+    background: var(--record-red);
+    border-color: var(--record-red);
+    color: white;
+    animation: recordPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes recordPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(193, 69, 69, 0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(193, 69, 69, 0); }
+  }
+
+  /* ============ MARK MODE ============ */
+  body.marking .verse:not(.marking-active) { opacity: 0.15; pointer-events: none; }
+  body.marking .verse.marking-active { z-index: 2; }
+  body.marking .studio-strip { display: none !important; }
+  body.marking .audio-bar { display: none !important; }
+
+  .mark-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--brass-bright);
+    color: var(--text);
+    padding: 16px 20px;
+    z-index: 200;
+    display: none;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  body.marking .mark-banner { display: block; }
+  .mark-banner strong { font-weight: 600; }
+  .mark-banner .mark-progress {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.85;
+  }
+  .mark-banner .cancel-mark {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 1px solid var(--text);
+    color: var(--text);
+    border-radius: 100px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ============ LAYER VISIBILITY & FOCUS ============ */
+  body.heb-hidden .hebrew { display: none; }
+  body.tr-hidden .translit { display: none; }
+  body.pt-hidden .pt-merged { display: none; }
+
+  /* Focus modes - one layer big, others small + faded */
+  body.focus-heb .hebrew { font-size: 36px; }
+  body.focus-heb .verse.declaration .hebrew { font-size: 40px; }
+  body.focus-heb .translit { font-size: 14px; opacity: 0.45; }
+  body.focus-heb .pt-merged { font-size: 12px; opacity: 0.45; }
+
+  body.focus-tr .translit { font-size: 26px; font-weight: 500; color: var(--text); }
+  body.focus-tr .hebrew { font-size: 20px; opacity: 0.45; }
+  body.focus-tr .pt-merged { font-size: 12px; opacity: 0.45; }
+
+  body.focus-pt .pt-merged { font-size: 19px; font-weight: 500; color: var(--text); border-left-width: 3px; }
+  body.focus-pt .hebrew { font-size: 20px; opacity: 0.45; }
+  body.focus-pt .translit { font-size: 14px; opacity: 0.45; }
+
+  /* ============ SETTINGS PANEL ============ */
+  .settings-overlay {
+    position: fixed; inset: 0;
+    background: rgba(42, 31, 21, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 40px 16px;
+  }
+  .settings-overlay.show { opacity: 1; pointer-events: auto; }
+  .settings-panel {
+    background: var(--bg);
+    max-width: 480px; width: 100%;
+    border-radius: 12px;
+    padding: 28px 26px 32px;
+    box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
+    border: 1px solid var(--line);
+    transform: translateY(16px);
+    transition: transform 0.3s;
+  }
+  .settings-overlay.show .settings-panel { transform: translateY(0); }
+  .settings-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; letter-spacing: 0.32em; color: var(--brass);
+    text-transform: uppercase; font-weight: 500; margin-bottom: 18px;
+  }
+  .settings-row { margin-bottom: 20px; }
+  .settings-row-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 600; color: var(--text);
+    margin-bottom: 8px;
+  }
+  .seg-control {
+    display: flex;
+    background: var(--bg-elevated);
+    border-radius: 100px;
+    padding: 3px;
+    gap: 2px;
+    border: 1px solid var(--rule);
+  }
+  .seg-control button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 8px 8px;
+    border-radius: 100px;
+    cursor: pointer;
+    color: var(--text-faint);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .seg-control button.active {
+    background: var(--text);
+    color: var(--bg);
+  }
+  .seg-control button.focus-state.active {
+    background: var(--brass);
+    color: var(--bg);
+  }
+  .settings-hint {
+    margin-top: 18px;
+    padding: 12px 14px;
+    background: var(--tip-bg);
+    border-left: 3px solid var(--brass);
+    border-radius: 0 4px 4px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 13px; color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  /* ============ REPEAT BUTTON ============ */
+  .repeat-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-faint);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 11px;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .repeat-btn svg { width: 14px; height: 14px; position: absolute; }
+  .repeat-btn .rep-count {
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
+    border-radius: 100px;
+    padding: 0 3px;
+    line-height: 1;
+  }
+  .repeat-btn.active {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+  .repeat-btn.active .rep-count {
+    background: var(--brass);
+    color: var(--bg);
+  }
+  .word-popup {
+    position: fixed;
+    background: var(--bg);
+    color: var(--text);
+    padding: 14px 46px 14px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--brass);
+    box-shadow: 0 16px 40px rgba(42, 31, 21, 0.25), 0 0 0 1px var(--rule);
+    font-family: 'Cormorant Garamond', serif;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s;
+    max-width: 280px;
+  }
+  .word-popup.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .word-popup .popup-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--brass);
+    border: none;
+    color: var(--bg);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    transition: all 0.18s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+  .word-popup .popup-close:hover, .word-popup .popup-close:active {
+    transform: scale(1.08);
+    background: var(--brass-bright);
+  }
+  .popup-heb {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 22px;
+    direction: rtl;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .popup-translit {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--brass);
+    margin-bottom: 8px;
+  }
+  .popup-pt {
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-soft);
+  }
+
+  /* ============ AUDIO BAR ============ */
+  .audio-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--bg-elevated);
+    color: var(--text);
+    padding: 14px 20px 20px;
+    z-index: 60;
+    border-top: 1px solid rgba(212, 162, 90, 0.4);
+    box-shadow: 0 -4px 24px rgba(42, 31, 21, 0.1);
+  }
+  .audio-bar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .speed-toggle {
+    display: flex;
+    background: rgba(42, 31, 21, 0.06);
+    border-radius: 100px;
+    padding: 2px;
+    font-size: 10.5px;
+  }
+  .speed-toggle button {
+    background: transparent;
+    border: none;
+    padding: 5px 7px;
+    border-radius: 100px;
+    cursor: pointer;
+    color: var(--text-faint);
+    font-family: 'Lora', serif;
+    transition: all 0.2s;
+    min-width: 32px;
+  }
+  .speed-toggle button.active {
+    background: var(--brass-bright);
+    color: var(--text);
+    font-weight: 500;
+  }
+  .play-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--brass-bright);
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 4px 18px rgba(212, 162, 90, 0.45);
+  }
+  .play-btn:hover { background: var(--gold-glow); transform: scale(1.05); }
+  .play-btn svg { width: 22px; height: 22px; fill: currentColor; }
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-faint);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .icon-btn:hover { background: var(--tip-bg); color: var(--brass); border-color: var(--brass); }
+  .icon-btn svg { width: 14px; height: 14px; fill: currentColor; }
+  .progress {
+    width: 100%;
+    height: 2px;
+    background: rgba(42, 31, 21, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--brass-bright);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 140px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-elevated);
+    color: var(--text-soft);
+    padding: 12px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--brass);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    box-shadow: 0 8px 24px rgba(42, 31, 21, 0.18);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ============ FOOTER ============ */
+  .foot-note {
+    text-align: center;
+    padding: 32px 20px 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 480px) {
+    .hebrew { font-size: 26px; }
+    .verse.declaration .hebrew { font-size: 30px; }
+    .translit { font-size: 18px; }
+    .pt-merged { font-size: 14px; }
+    .prayer-title { font-size: 19px; }
+    main { padding: 24px 20px; }
+    .audio-controls { gap: 16px; }
+
+    /* === Mobile topbar fix — prevent horizontal overflow === */
+    html, body { overflow-x: hidden; max-width: 100vw; }
+    .topbar { max-width: 100vw; overflow-x: hidden; }
+    .brand {
+      padding: 10px 14px 4px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .brand-mark {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .brand-right {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .treino-toggle {
+      padding: 6px 10px !important;
+      font-size: 11px !important;
+    }
+    .lang-toggle {
+      padding: 5px 8px !important;
+      font-size: 11px !important;
+    }
+    .info-toggle { width: 32px !important; height: 32px !important; }
+    .kadish-type-toggle { font-size: 10px !important; padding: 4px 9px !important; }
+    .tradition-badge { font-size: 10px !important; padding: 3px 8px !important; }
+    .prayer-meta { padding: 8px 16px !important; }
+    .prayer-title { font-size: 17px !important; }
+    .prayer-source { font-size: 11px !important; }
+    .pictograms { padding: 10px 14px !important; gap: 14px !important; }
+    .picto { font-size: 10px !important; }
+  }
+
+  /* ============ V3 NEW COMPONENTS ============ */
+
+  /* Modo Treino banner */
+  .treino-banner {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    background: var(--brass);
+    color: var(--bg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+  body.modo-treino .treino-banner { display: flex; }
+
+  /* Memorial strip — Em memória de */
+  .memorial-strip {
+    display: none;
+    background: linear-gradient(180deg, transparent 0%, var(--tip-bg) 60%, var(--tip-bg) 100%);
+    padding: 12px 20px 14px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--text-soft);
+    line-height: 1.35;
+    border-bottom: 1px solid var(--rule);
+  }
+  .memorial-strip.show { display: block; }
+  .memorial-strip .mem-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-style: normal;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .memorial-strip .mem-name {
+    color: var(--text);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+  }
+  .memorial-strip .mem-heb {
+    font-family: 'Frank Ruhl Libre', serif;
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 14px;
+    color: var(--brass);
+    font-weight: 400;
+  }
+  .memorial-strip .mem-dates {
+    font-size: 11.5px;
+    color: var(--text-faint);
+    margin-top: 3px;
+    font-style: normal;
+  }
+
+  /* Topbar: language and Treino buttons */
+  .lang-toggle, .treino-toggle {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-soft);
+    padding: 6px 11px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .lang-toggle:hover, .treino-toggle:hover { border-color: var(--brass); color: var(--brass); }
+  .treino-toggle.active {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+  .treino-toggle.active::before { content: '⊙ '; }
+
+  /* Community response indicator */
+  .community-respond {
+    margin: -8px 20px 16px;
+    padding: 7px 13px;
+    background: rgba(139, 106, 62, 0.07);
+    border-left: 3px solid var(--brass-bright);
+    border-radius: 0 4px 4px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .community-respond::before {
+    content: '☷';
+    font-style: normal;
+    font-size: 13px;
+    color: var(--brass);
+  }
+
+  /* LGPD consent banner */
+  .consent-banner {
+    position: fixed;
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 440px;
+    width: calc(100% - 24px);
+    background: var(--bg);
+    border: 1px solid var(--brass);
+    border-radius: 8px;
+    padding: 14px 18px;
+    box-shadow: 0 8px 28px rgba(42, 31, 21, 0.22);
+    z-index: 200;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.5;
+    display: none;
+  }
+  .consent-banner.show { display: block; }
+  .consent-banner strong { color: var(--text); font-style: normal; }
+  .consent-banner-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .consent-banner-actions button {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--brass);
+    background: transparent;
+    color: var(--brass);
+  }
+  .consent-banner-actions .primary { background: var(--brass); color: var(--bg); }
+
+  /* First-time setup modal */
+  .setup-modal {
+    position: fixed; inset: 0;
+    background: rgba(42, 31, 21, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 500;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 36px 16px;
+  }
+  .setup-modal.show { display: flex; }
+  .setup-panel {
+    background: var(--bg);
+    max-width: 440px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 28px 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
+  }
+  .setup-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--brass);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .setup-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .setup-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .setup-field { margin-bottom: 12px; }
+  .setup-field label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .setup-field input {
+    width: 100%;
+    padding: 9px 11px;
+    font-family: 'Lora', serif;
+    font-size: 14.5px;
+    color: var(--text);
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .setup-field input:focus { border-color: var(--brass); }
+  .setup-field input.hebrew-input {
+    font-family: 'Frank Ruhl Libre', serif;
+    direction: rtl;
+    text-align: right;
+    font-size: 17px;
+  }
+  .setup-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .setup-actions button {
+    flex: 1;
+    padding: 11px;
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--text-soft);
+  }
+  .setup-actions .primary {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+  .setup-skip {
+    text-align: center;
+    margin-top: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--text-faint);
+  }
+  .setup-skip a { color: var(--brass); cursor: pointer; text-decoration: underline; }
+
+  /* Yahrzeit info card (in settings) */
+  .yahrzeit-card {
+    background: var(--tip-bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 13px 15px;
+    margin-top: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+  }
+  .yahrzeit-card .yz-label {
+    font-size: 10.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .yahrzeit-card .yz-date {
+    font-size: 15.5px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .yahrzeit-card .yz-hebrew {
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+  .yahrzeit-card .yz-mock {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    background: var(--brass);
+    color: var(--bg);
+    border-radius: 100px;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 500;
+    vertical-align: middle;
+  }
+
+  /* Counter sponsor (mocked) */
+  .honoring-counter {
+    text-align: center;
+    padding: 14px 20px 22px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--text-faint);
+    border-top: 1px solid var(--rule);
+    margin-top: 28px;
+    line-height: 1.5;
+  }
+  .honoring-counter strong {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--brass);
+    font-size: 14px;
+  }
+  .honoring-counter .mock-tag {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 1px 5px;
+    background: var(--text-faint);
+    color: var(--bg);
+    border-radius: 100px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-style: normal;
+    vertical-align: middle;
+  }
+
+  /* Chabad link in info overlay */
+  .chabad-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 14px;
+    background: var(--brass);
+    color: var(--bg);
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    transition: opacity 0.2s;
+  }
+  .chabad-link:hover { opacity: 0.85; }
+
+  /* Tradition badge in topbar */
+  .tradition-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(139, 106, 62, 0.12);
+    color: var(--brass);
+    border-radius: 100px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10.5px;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    margin-left: 10px;
+  }
+
+  .kadish-type-toggle {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 10px;
+    background: var(--brass);
+    color: var(--bg);
+    border: none;
+    border-radius: 100px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.18s;
+  }
+  .kadish-type-toggle:hover { opacity: 0.88; transform: translateY(-1px); }
+  .kadish-type-toggle:active { transform: translateY(0); }
+  .kadish-type-toggle.derabanan { background: #6b4a2a; }
+  .kadish-type-toggle .kt-size {
+    margin-left: 4px;
+    font-weight: 400;
+    font-style: italic;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+    font-size: 0.92em;
+  }
+
+  /* Calibrate button — appears when verse has pre-loaded audio waiting for word sync */
+  .calibrate-btn {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 0 14px;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px dashed var(--brass);
+    color: var(--brass);
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .calibrate-btn:hover {
+    background: var(--tip-bg);
+    border-style: solid;
+  }
+  .calibrate-btn span {
+    text-transform: none;
+  }
+
+  /* Filter DeRabanan verses based on selected Kadish type */
+  body:not(.kadish-derabanan) .verse-derabanan { display: none; }
+  body.kadish-derabanan .verse-derabanan {
+    background: linear-gradient(180deg, transparent 0%, rgba(139, 106, 62, 0.04) 50%, transparent 100%);
+    border-radius: 8px;
+  }
+  body.kadish-derabanan .verse-derabanan .vm-line {
+    background: linear-gradient(to right, transparent, #6b4a2a, transparent);
+  }
+
+
+  /* Sincronizacao verso-a-verso */
+  .verso-sync-display {
+    display: none;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid #8b6a3e;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+  }
+  .verso-sync-display.active {
+    display: block;
+    animation: slideIn 0.3s ease-in-out;
+  }
+  .sync-verso-n {
+    font-size: 0.9rem;
+    color: var(--text-faint);
+    margin-bottom: 0.5rem;
+  }
+  .sync-hebrew {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    direction: rtl;
+    text-align: right;
+    color: var(--text);
+  }
+  .sync-translit {
+    font-size: 1rem;
+    color: var(--text-soft);
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+  .sync-translation {
+    font-size: 1rem;
+    color: var(--text-soft);
+    margin-bottom: 0.5rem;
+  }
+  .sync-time {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+  }
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">Tefilá · v3.0<span class="tradition-badge" id="traditionBadge">Chabad</span><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button></div>
+    <div class="brand-right">
+      <button class="treino-toggle" id="treinoToggle" data-i18n="modo_reza">Modo Reza</button>
+      <button class="lang-toggle" id="langToggle" title="Idioma">
+        <span class="lang-flag">🇧🇷</span><span id="langCode">PT</span><span class="arr">▾</span>
+      </button>
+      <button class="info-toggle" id="settingsToggle" title="Configurações">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="info-toggle" id="infoToggle" title="Sobre esta reza">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="12" y1="11" x2="12" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="8" r="1.1" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="memorial-strip" id="memorialStrip">
+    <div class="mem-eyebrow" data-i18n="in_memory_of">Em memória de</div>
+    <div><span class="mem-name" id="memName"></span><span class="mem-heb" id="memHeb"></span></div>
+    <div class="mem-dates" id="memDates"></div>
+  </div>
+  <div class="prayer-meta">
+    <div class="prayer-title" data-i18n="prayer_title">Kadish do Enlutado</div>
+    <div class="prayer-source" data-i18n="prayer_source">Kadish Yatom · recitado em pé</div>
+  </div>
+  <button class="learn-strip" id="learnStrip">
+    <span class="ls-icon">✦</span>
+    <span class="ls-text" data-i18n-html="learn_title"><span data-i18n="learn_title">Por que dizemos o Kadish?</span><small data-i18n="learn_sub">O significado, a história e quem instituiu</small></span>
+    <span class="ls-arrow">→</span>
+  </button>
+  <div class="treino-banner" id="treinoBanner" data-i18n="treino_active">⊙ Modo Treino · pausa após cada verso</div>
+  <div class="studio-banner" data-i18n="studio_banner">
+    Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)
+  </div>
+  <div class="pictograms" id="pictograms">
+    <div class="picto" data-pic="stand">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M12 6v9M12 15l-3 5M12 15l3 5M8 9h8"/></svg>
+      Em pé
+    </div>
+    <div class="picto" data-pic="minyan">
+      <svg viewBox="0 0 24 24"><circle cx="7" cy="6" r="2"/><circle cx="17" cy="6" r="2"/><circle cx="12" cy="5" r="2"/><path d="M3 20v-2a3 3 0 0 1 3-3h2M21 20v-2a3 3 0 0 0-3-3h-2M9 20v-3a3 3 0 0 1 6 0v3"/></svg>
+      Em minyan (10)
+    </div>
+    <div class="picto" data-pic="voice">
+      <svg viewBox="0 0 24 24"><path d="M3 10v4h3l4 4V6L6 10H3z"/><path d="M14 8a4 4 0 0 1 0 8M16.5 5.5a8 8 0 0 1 0 13"/></svg>
+      Em voz audível
+    </div>
+  </div>
+</div>
+
+<div class="settings-overlay" id="settingsOverlay">
+  <div class="settings-panel">
+    <button class="info-close" id="settingsClose" style="float:right;">×</button>
+    <div class="settings-eyebrow" data-i18n="settings_title">Configurações</div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="theme_label">Tema</div>
+      <div class="seg-control" data-setting="theme">
+        <button class="active" data-value="pergaminho">Pergaminho</button>
+        <button data-value="claro" data-i18n="theme_light">Claro</button>
+        <button data-value="escuro" data-i18n="theme_dark">Escuro</button>
+        <button data-value="contraste" data-i18n="theme_contrast">Contraste</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="font_size_label">Tamanho da fonte</div>
+      <div class="seg-control" data-setting="fontscale">
+        <button data-value="0.85" data-i18n="font_small">Pequena</button>
+        <button class="active" data-value="1" data-i18n="font_normal">Normal</button>
+        <button data-value="1.2" data-i18n="font_large">Grande</button>
+        <button data-value="1.45" data-i18n="font_xlarge">Muito grande</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="tradition_label">Tradição</div>
+      <div class="seg-control" data-setting="tradition">
+        <button class="active" data-value="chabad">Chabad</button>
+        <button data-value="sefard">Sefard</button>
+        <button data-value="ashkenazi">Ashkenazi</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="language_label">Idioma</div>
+      <div class="seg-control" data-setting="language" style="flex-wrap:wrap;gap:4px;">
+        <button class="active" data-value="pt">🇧🇷 PT</button>
+        <button data-value="en">🇺🇸 EN</button>
+        <button data-value="es">🇪🇸 ES</button>
+        <button data-value="fr">🇫🇷 FR</button>
+        <button data-value="ru">🇷🇺 RU</button>
+        <button data-value="he">🇮🇱 HE</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="explanations_label">Explicações entre versos</div>
+      <div class="seg-control" data-setting="explanations">
+        <button class="active" data-value="off" data-i18n="explanations_off">Ocultar</button>
+        <button data-value="on" data-i18n="explanations_on">Mostrar</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="audio_source_label">Áudio</div>
+      <div class="seg-control" data-setting="audiosrc">
+        <button class="active" data-value="tts" data-i18n="audio_tts">Voz do dispositivo</button>
+        <button data-value="silent" data-i18n="audio_silent">Silencioso</button>
+      </div>
+    </div>
+
+    <div class="settings-eyebrow" style="margin-top:24px;" data-i18n="layers_title">Camadas</div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="layer_hebrew">Hebraico</div>
+      <div class="seg-control" data-layer="heb">
+        <button data-state="hidden" data-i18n="hide">Ocultar</button>
+        <button class="active" data-state="normal" data-i18n="normal">Normal</button>
+        <button class="focus-state" data-state="focus" data-i18n="highlight">Destaque</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="layer_translit">Transliteração</div>
+      <div class="seg-control" data-layer="tr">
+        <button data-state="hidden" data-i18n="hide">Ocultar</button>
+        <button class="active" data-state="normal" data-i18n="normal">Normal</button>
+        <button class="focus-state" data-state="focus" data-i18n="highlight">Destaque</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="layer_translation">Tradução</div>
+      <div class="seg-control" data-layer="pt">
+        <button data-state="hidden" data-i18n="hide">Ocultar</button>
+        <button class="active" data-state="normal" data-i18n="normal">Normal</button>
+        <button class="focus-state" data-state="focus" data-i18n="highlight">Destaque</button>
+      </div>
+    </div>
+
+    <div class="settings-eyebrow" style="margin-top:24px;" data-i18n="dedication_title">Dedicação</div>
+
+    <div class="settings-row">
+      <button class="setup-actions" id="editMemorial" style="display:block;width:100%;padding:11px;border-radius:6px;font-family:'Cormorant Garamond',serif;font-size:13.5px;font-weight:500;letter-spacing:0.06em;cursor:pointer;border:1px solid var(--brass);background:transparent;color:var(--brass);" data-i18n="edit_memorial">Editar perfil "Em memória de"</button>
+    </div>
+
+    <div class="yahrzeit-card" id="yahrzeitCard" style="display:none;">
+      <div class="yz-label" data-i18n="next_yahrzeit">Próximo Yahrzeit</div>
+      <div class="yz-date" id="yzDate">—</div>
+      <div class="yz-hebrew" id="yzHebrew">—</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--text-faint);font-style:italic;" data-i18n="yahrzeit_reminder_note">App enviará lembrete por email 7 dias antes <span class="yz-mock">mock</span></div>
+    </div>
+
+    <div class="settings-hint" data-i18n="settings_hint">
+      Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem. Apenas uma camada pode estar em destaque por vez.
+    </div>
+
+    <div class="honoring-counter">
+      <span data-i18n="honoring_intro">Junto com você, neste ano,</span><br>
+      <strong id="soulCount">12.847</strong> <span data-i18n="honoring_outro">almas estão sendo honradas pelo mundo</span>
+      <span class="mock-tag">mock</span>
+    </div>
+  </div>
+</div>
+
+<!-- First-time setup modal: Em memória de -->
+<div class="setup-modal" id="setupModal">
+  <div class="setup-panel">
+    <div class="setup-eyebrow" data-i18n="setup_eyebrow">Personalizar</div>
+    <h2 class="setup-title" data-i18n="setup_title">Em memória de quem você está rezando?</h2>
+    <p class="setup-intro" data-i18n="setup_intro">O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.</p>
+
+    <div class="setup-field">
+      <label data-i18n="setup_name">Nome (em português)</label>
+      <input type="text" id="setupName" placeholder="Ex: Itzhak Avraham Cohen">
+    </div>
+    <div class="setup-field">
+      <label data-i18n="setup_hebrew_name">Nome hebraico (opcional)</label>
+      <input type="text" id="setupHebrew" class="hebrew-input" placeholder="יִצְחָק אַבְרָהָם בֶּן יוֹסֵף" dir="rtl">
+    </div>
+    <div class="setup-field">
+      <label data-i18n="setup_relation">Relação</label>
+      <input type="text" id="setupRelation" placeholder="Pai, mãe, avô...">
+    </div>
+    <div class="setup-field">
+      <label data-i18n="setup_death_date">Data de falecimento (necessária pra yahrzeit)</label>
+      <input type="date" id="setupDeathDate">
+    </div>
+
+    <div class="setup-actions">
+      <button id="setupCancel" data-i18n="setup_skip_btn">Pular</button>
+      <button class="primary" id="setupSave" data-i18n="setup_save">Salvar</button>
+    </div>
+    <div class="setup-skip"><a id="setupSkipLink" data-i18n="setup_skip_link">Depois, no menu ⚙</a></div>
+  </div>
+</div>
+
+<!-- LGPD consent banner -->
+<div class="consent-banner" id="consentBanner">
+  <strong data-i18n="consent_title">Privacidade</strong> · <span data-i18n="consent_text">Este app coleta dados anônimos de uso e, se você cadastrar, seu nome e data do falecimento ficam guardados localmente. Conforme LGPD/GDPR, você pode apagar tudo a qualquer momento.</span>
+  <div class="consent-banner-actions">
+    <button id="consentDecline" data-i18n="consent_decline">Apenas o essencial</button>
+    <button class="primary" id="consentAccept" data-i18n="consent_accept">OK, prosseguir</button>
+  </div>
+</div>
+
+<div class="info-overlay" id="infoOverlay">
+  <div class="info-panel">
+    <button class="info-close" id="infoClose">×</button>
+    <div class="info-eyebrow">Sobre esta reza</div>
+    <div class="info-title">O Kadish</div>
+
+    <div class="info-h">O que é</div>
+    <div class="info-p">"Kadish" significa <strong>"santificação"</strong> em aramaico — a língua que os judeus falavam no cotidiano, escolhida para que todos entendessem e respondessem. É uma prece de <strong>louvor e exaltação ao Nome de D'us</strong>.</div>
+    <div class="info-p">O detalhe mais profundo: o Kadish <strong>não menciona a morte em momento algum</strong>. Fala apenas do louvor a D'us e do desejo da vinda de Seu reino e da paz. Ensina que louvamos D'us mesmo na hora da dor mais profunda.</div>
+
+    <div class="info-h">Por que dizemos</div>
+    <div class="info-p">A maior honra que um filho pode dar a um pai falecido é <strong>levar a comunidade a santificar o Nome de D'us</strong>. Esse louvor público gera mérito (<em>zechut</em>) que eleva a alma de quem partiu.</div>
+    <div class="info-p">A base do costume é a história de <strong>Rabi Akiva</strong>, que encontra o espírito de um falecido em sofrimento e aprende que, se o filho liderar a congregação no louvor e ela responder <em>"amen, yehei shmei raba"</em>, a alma é elevada.</div>
+
+    <div class="info-h">Desde quando</div>
+    <div class="info-p">O texto é antigo — remonta ao <strong>período talmúdico</strong>. Surgiu não na sinagoga, mas na <strong>casa de estudo</strong>: após um sábio ensinar, os alunos se levantavam para louvar o Nome de D'us.</div>
+    <div class="info-p">O costume do enlutado recitar Kadish desenvolveu-se na <strong>Ashkenaz medieval (séc. XII-XIII)</strong>. Séculos depois, o <strong>Arizal</strong> (Rabi Isaac Luria, séc. XVI) deu-lhe profundo significado místico e o tornou universal em todas as comunidades.</div>
+
+    <div class="info-h">Por que em comunidade</div>
+    <div class="info-p">O Kadish exige <strong>minyan</strong> (10 adultos). O luto judaico não é solitário — acontece cercado de comunidade. A obrigação diária traz o enlutado ao minyan todos os dias, prevenindo o isolamento da dor.</div>
+
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);text-align:center;">
+      <a href="https://www.chabad.org/centers/default_cdo/jewish/Centers.htm" target="_blank" rel="noopener" class="chabad-link" data-i18n="find_chabad">Encontrar Beit Chabad próximo →</a>
+    </div>
+
+    <div class="info-note">Conteúdo histórico em revisão pelo rabino validador. Tradição de referência: Chabad / Nusach Ari.</div>
+  </div>
+</div>
+
+<div class="mark-banner" id="markBanner">
+  <strong id="markBannerTitle">Toque em cada palavra ao ouvi-la</strong>
+  <div class="mark-progress" id="markProgress">0 de 0</div>
+  <button class="cancel-mark" id="cancelMarkBtn">Cancelar</button>
+</div>
+
+<!-- Calibration Export Modal — shows JSON to paste into manifest.json after marking words -->
+<div class="setup-modal" id="calibrationExportModal">
+  <div class="setup-panel" style="max-width:520px;">
+    <div class="setup-eyebrow">Sincronia capturada · ✦</div>
+    <h2 class="setup-title" style="font-size:22px;">Cole esta linha no <code style="font-family:monospace;font-size:0.7em;background:var(--tip-bg);padding:2px 6px;border-radius:4px;">manifest.json</code></h2>
+    <p class="setup-intro">
+      Verso <strong id="calibVerseId" style="color:var(--brass);font-style:normal;"></strong> calibrado. Copie a linha abaixo e substitua a entrada correspondente no seu <code>audio/manifest.json</code>. Depois faça redeploy no Netlify.
+    </p>
+    <pre id="calibJson" style="background:var(--bg-elevated);border:1px solid var(--rule);border-radius:6px;padding:12px;font-family:monospace;font-size:12px;color:var(--text);overflow-x:auto;white-space:pre-wrap;word-break:break-all;line-height:1.5;margin-bottom:8px;"></pre>
+    <div style="font-size:12px;color:var(--text-faint);font-style:italic;margin-bottom:14px;line-height:1.4;">
+      ✦ A sincronia já está ativa no seu navegador. Pro patrocinador (e outros) verem, precisa colar no manifest e re-subir.
+    </div>
+    <div class="setup-actions">
+      <button id="calibCopyBtn" class="primary">📋 Copiar pra área de transferência</button>
+      <button id="calibCloseBtn">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<div class="foot-note">יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא · grave, ouça, sincronize</div>
+
+<div class="word-popup" id="popup">
+  <button class="popup-close" id="popupClose" aria-label="Fechar">×</button>
+  <div class="popup-heb" id="popupHeb"></div>
+  <div class="popup-translit" id="popupTranslit"></div>
+  <div class="popup-pt" id="popupPt"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="audio-bar">
+  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="audio-bar-top">
+    <span id="nowReading">Pronto para começar</span>
+    <span id="timeDisplay">0:00</span>
+  </div>
+  <div class="audio-controls">
+    <button class="icon-btn" id="restartBtn" aria-label="Reiniciar">
+      <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6H4c0 4.4 3.6 8 8 8s8-3.6 8-8-3.6-8-8-8z"/></svg>
+    </button>
+    <button class="play-btn" id="playBtn" aria-label="Play">
+      <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="speed-toggle" id="speedToggle">
+      <button data-speed="0.5">.5×</button>
+      <button data-speed="0.75">.75×</button>
+      <button class="active" data-speed="1">1×</button>
+      <button data-speed="1.25">1.25×</button>
+      <button data-speed="1.5">1.5×</button>
+    </div>
+    <button class="repeat-btn" id="repeatBtn" aria-label="Repetir verso">
+      <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="rep-count" id="repCount" style="display:none;">2×</span>
+    </button>
+  </div>
+</div>
+
+<audio id="audioPlayer" preload="auto"></audio>
+<div id="verso-sync-display" class="verso-sync-display"></div>
+
+<script>
+// ============================================================
+// PRAYER DATA — Kadish Yatom (primeira frase)
+// Transliteração/vocalização pendente de validação do rabino (tradição Chabad)
+// ============================================================
+const verses = [
+  {
+    id: 'kadish-1',
+    classMod: 'declaration',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['יִתְגַּדַּל', 'וְיִתְקַדַּשׁ', 'שְׁמֵהּ', 'רַבָּא'],
+    translit: {
+      pt: ['Yitgadal', 'v\u2019yitkadash', 'sh\u2019mei', 'raba'],
+      en: ['Yitgadal', 'v\u2019yitkadash', 'sh\u2019mei', 'raba'],
+      es: ['Yitgadal', 'v\u2019yitkadash', 'sh\u2019mei', 'raba'],
+      fr: ['Yitgadal', 'v\u2019yitkadash', 'sh\u2019mei', 'raba'],
+      ru: ['Йитгадаль', 'в-йиткадаш', 'шмей', 'раба'],
+      he: []
+    },
+    merged: {
+      pt: ['Exaltado', 'e\u00A0santificado', 'seja\u00A0o\u00A0Seu', 'grande\u00A0Nome'],
+      en: ['Exalted', 'and\u00A0sanctified', 'be\u00A0His', 'great\u00A0Name'],
+      es: ['Exaltado', 'y\u00A0santificado', 'sea\u00A0Su', 'gran\u00A0Nombre'],
+      fr: ['Exalté', 'et\u00A0sanctifié', 'soit\u00A0Son', 'grand\u00A0Nom'],
+      ru: ['Превознесено', 'и\u00A0освящено', 'будет\u00A0Его', 'великое\u00A0Имя'],
+      he: ['יִתְגַּדֵּל', 'וְיִתְקַדֵּשׁ', 'שְׁמוֹ', 'הַגָּדוֹל']
+    },
+    glosses: {
+      pt: ['que se reconheça Sua grandeza', 'reconhecido como sagrado', 'o Nome divino', ''],
+      en: ['so His greatness be recognized', 'recognized as sacred', 'the divine Name', ''],
+      es: ['que se reconozca Su grandeza', 'reconocido como sagrado', 'el Nombre divino', ''],
+      fr: ['que Sa grandeur soit reconnue', 'reconnu comme sacré', 'le Nom divin', ''],
+      ru: ['чтобы признали Его величие', 'признано священным', 'Имя Божественное', ''],
+      he: ['שֶׁיֻּכַּר גָּדְלוֹ', 'מֻכָּר כְּקָדוֹשׁ', 'הַשֵּׁם הָאֱלוֹקִי', '']
+    },
+    durations: [850, 950, 650, 800],
+    tip: {
+      pt: 'O Kadish é recitado em pé. Após esta linha, a comunidade responde "Amen".',
+      en: 'The Kaddish is recited standing. After this line, the congregation responds "Amen".',
+      es: 'El Kadish se recita de pie. Después de esta línea, la comunidad responde "Amén".',
+      fr: 'Le Kaddish est récité debout. Après cette ligne, la communauté répond "Amen".',
+      ru: 'Кадиш читают стоя. После этой строки община отвечает "Амен".',
+      he: 'הַקַּדִּישׁ נֶאֱמָר בַּעֲמִידָה. לְאַחַר שׁוּרָה זוֹ, הַקָּהָל עוֹנֶה "אָמֵן".'
+    },
+    communityResponds: {
+      pt: 'A comunidade responde "Amen" — faça uma pausa para que respondam.',
+      en: 'The congregation responds "Amen" — pause to let them respond.',
+      es: 'La comunidad responde "Amén" — haga una pausa para que respondan.',
+      fr: 'La communauté répond "Amen" — faites une pause pour qu\u2019ils répondent.',
+      ru: 'Община отвечает "Амен" — сделайте паузу, чтобы они ответили.',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן" — עֲשֵׂה הַפְסָקָה כְּדֵי שֶׁיַּעֲנוּ.'
+    }
+  },
+  {
+    id: 'kadish-2',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['בְּעָלְמָא', 'דִּי', 'בְרָא', 'כִרְעוּתֵהּ'],
+    translit: {
+      pt: ['b\u2019alma', 'di', 'v\u2019ra', 'chir\u2019utei'],
+      en: ['b\u2019alma', 'di', 'v\u2019ra', 'chir\u2019utei'],
+      es: ['b\u2019alma', 'di', 'v\u2019ra', 'jir\u2019utei'],
+      fr: ['b\u2019alma', 'di', 'v\u2019ra', 'khir\u2019utei'],
+      ru: ['б-альма', 'ди', 'в-ра', 'хирутей'],
+      he: []
+    },
+    merged: {
+      pt: ['no\u00A0mundo', 'que', 'Ele\u00A0criou', 'segundo\u00A0Sua\u00A0vontade'],
+      en: ['in\u00A0the\u00A0world', 'that', 'He\u00A0created', 'according\u00A0to\u00A0His\u00A0will'],
+      es: ['en\u00A0el\u00A0mundo', 'que', 'Él\u00A0creó', 'según\u00A0Su\u00A0voluntad'],
+      fr: ['dans\u00A0le\u00A0monde', 'qu\u2019', 'Il\u00A0a\u00A0créé', 'selon\u00A0Sa\u00A0volonté'],
+      ru: ['в\u00A0мире', 'который', 'Он\u00A0создал', 'по\u00A0Своей\u00A0воле'],
+      he: ['בָּעוֹלָם', 'אֲשֶׁר', 'בָּרָא', 'כִּרְצוֹנוֹ']
+    },
+    glosses: {
+      pt: ['', '', '', 'conforme Seu desejo'],
+      en: ['', '', '', 'according to His desire'],
+      es: ['', '', '', 'conforme a Su deseo'],
+      fr: ['', '', '', 'selon Son désir'],
+      ru: ['', '', '', 'согласно Его желанию'],
+      he: ['', '', '', 'כְּפִי רְצוֹנוֹ']
+    },
+    durations: [750, 400, 600, 950],
+    tip: null
+  },
+  {
+    id: 'kadish-3',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְיַמְלִיךְ', 'מַלְכוּתֵהּ'],
+    translit: {
+      pt: ['v\u2019yamlich', 'malchutei'],
+      en: ['v\u2019yamlich', 'malchutei'],
+      es: ['v\u2019yamlij', 'maljutei'],
+      fr: ['v\u2019yamlikh', 'malkhutei'],
+      ru: ['в-ямлих', 'малхутей'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0que\u00A0faça\u00A0reinar', 'o\u00A0Seu\u00A0reino'],
+      en: ['and\u00A0may\u00A0He\u00A0establish', 'His\u00A0kingdom'],
+      es: ['y\u00A0que\u00A0haga\u00A0reinar', 'Su\u00A0reino'],
+      fr: ['et\u00A0qu\u2019Il\u00A0fasse\u00A0régner', 'Son\u00A0royaume'],
+      ru: ['и\u00A0да\u00A0установит', 'Своё\u00A0царство'],
+      he: ['וְיַמְלִיךְ', 'מַלְכוּתוֹ']
+    },
+    glosses: {
+      pt: ['que estabeleça', 'a soberania divina'],
+      en: ['that He establish', 'the divine sovereignty'],
+      es: ['que establezca', 'la soberanía divina'],
+      fr: ['qu\u2019Il établisse', 'la souveraineté divine'],
+      ru: ['чтобы установил', 'Божественная власть'],
+      he: ['שֶׁיְּכוֹנֵן', 'הָרִבּוֹנוּת הָאֱלוֹקִית']
+    },
+    durations: [1050, 950],
+    tip: {
+      pt: 'A vinda do reino de D\u2019us é o tema central do Kadish — não a morte. O Kadish é puro louvor.',
+      en: 'The coming of G-d\u2019s kingdom is the central theme of the Kaddish — not death. The Kaddish is pure praise.',
+      es: 'La venida del reino de D\u2019s es el tema central del Kadish — no la muerte. El Kadish es pura alabanza.',
+      fr: 'L\u2019avènement du règne de D.ieu est le thème central du Kaddish — pas la mort. Le Kaddish est pure louange.',
+      ru: 'Пришествие царства Б-га — центральная тема Кадиша, а не смерть. Кадиш — это чистое восхваление.',
+      he: 'בּוֹא מַלְכוּת ה\u2032 הוּא הַנּוֹשֵׂא הַמֶּרְכָּזִי שֶׁל הַקַּדִּישׁ — לֹא הַמָּוֶת. הַקַּדִּישׁ הוּא שֶׁבַח טָהוֹר.'
+    }
+  },
+  {
+    id: 'kadish-4',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְיַצְמַח', 'פֻּרְקָנֵהּ'],
+    translit: {
+      pt: ['v\u2019yatsmach', 'purkanei'],
+      en: ['v\u2019yatzmach', 'purkanei'],
+      es: ['v\u2019yatsmaj', 'purkanei'],
+      fr: ['v\u2019yatsmakh', 'pourkanei'],
+      ru: ['в-яцмах', 'пурканей'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0que\u00A0floresça', 'Sua\u00A0redenção'],
+      en: ['and\u00A0may\u00A0sprout\u00A0forth', 'His\u00A0redemption'],
+      es: ['y\u00A0que\u00A0florezca', 'Su\u00A0redención'],
+      fr: ['et\u00A0que\u00A0fleurisse', 'Sa\u00A0rédemption'],
+      ru: ['и\u00A0да\u00A0расцветёт', 'Его\u00A0спасение'],
+      he: ['וְיַצְמִיחַ', 'יְשׁוּעָתוֹ']
+    },
+    glosses: {
+      pt: ['que germine, surja', 'a salvação divina'],
+      en: ['that it germinate, emerge', 'the divine salvation'],
+      es: ['que germine, surja', 'la salvación divina'],
+      fr: ['qu\u2019elle germe, émerge', 'le salut divin'],
+      ru: ['чтобы взошло, появилось', 'спасение Божественное'],
+      he: ['שֶׁיִּצְמַח וְיַעֲלֶה', 'הַיְשׁוּעָה הָאֱלוֹקִית']
+    },
+    durations: [950, 900],
+    tip: null
+  },
+  {
+    id: 'kadish-5',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וִיקָרֵב', 'מְשִׁיחֵהּ'],
+    translit: {
+      pt: ['vikarev', 'meshichei'],
+      en: ['vikarev', 'meshichei'],
+      es: ['vikarev', 'meshijei'],
+      fr: ['vikarev', 'meshikhei'],
+      ru: ['викарев', 'мешихей'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0aproxime', 'o\u00A0Seu\u00A0Mashiach'],
+      en: ['and\u00A0bring\u00A0near', 'His\u00A0Mashiach'],
+      es: ['y\u00A0acerque', 'Su\u00A0Mashiaj'],
+      fr: ['et\u00A0rapproche', 'Son\u00A0Mashiakh'],
+      ru: ['и\u00A0приблизит', 'Своего\u00A0Машиаха'],
+      he: ['וִיקָרֵב', 'מְשִׁיחוֹ']
+    },
+    glosses: {
+      pt: ['traga para perto', 'o Ungido, o Messias'],
+      en: ['bring near, draw close', 'the Anointed, the Messiah'],
+      es: ['traiga cerca', 'el Ungido, el Mesías'],
+      fr: ['rapproche, fasse venir', 'l\u2019Oint, le Messie'],
+      ru: ['приблизит, приведёт', 'Помазанник, Мессия'],
+      he: ['יָבִיא לְקִרְבָה', 'הַמָּשׁוּחַ, הַמָּשִׁיחַ']
+    },
+    durations: [900, 900],
+    tip: {
+      pt: 'O Kadish carrega o anseio messiânico — não só pelo nosso conforto, mas pela redenção do mundo.',
+      en: 'The Kaddish carries the messianic longing — not only for our comfort, but for the redemption of the world.',
+      es: 'El Kadish lleva el anhelo mesiánico — no solo por nuestro consuelo, sino por la redención del mundo.',
+      fr: 'Le Kaddish porte l\u2019aspiration messianique — non seulement pour notre consolation, mais pour la rédemption du monde.',
+      ru: 'Кадиш несёт мессианскую надежду — не только для нашего утешения, но и для искупления мира.',
+      he: 'הַקַּדִּישׁ נוֹשֵׂא אֶת הַכְּמִיהָה הַמְּשִׁיחִית — לֹא רַק לְנֶחָמָתֵנוּ, אֶלָּא לִגְאֻלַּת הָעוֹלָם.'
+    }
+  },
+  {
+    id: 'kadish-6',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['בְּחַיֵּיכוֹן', 'וּבְיוֹמֵיכוֹן'],
+    translit: {
+      pt: ['b\u2019chayeichon', 'uv\u2019yomeichon'],
+      en: ['b\u2019chayeichon', 'uv\u2019yomeichon'],
+      es: ['b\u2019jayeijon', 'uv\u2019yomeijon'],
+      fr: ['b\u2019khayeikhon', 'ouv\u2019yomeikhon'],
+      ru: ['б-хайейхон', 'у-в-йомейхон'],
+      he: []
+    },
+    merged: {
+      pt: ['em\u00A0vossas\u00A0vidas', 'e\u00A0em\u00A0vossos\u00A0dias'],
+      en: ['in\u00A0your\u00A0lifetime', 'and\u00A0in\u00A0your\u00A0days'],
+      es: ['en\u00A0vuestras\u00A0vidas', 'y\u00A0en\u00A0vuestros\u00A0días'],
+      fr: ['durant\u00A0vos\u00A0vies', 'et\u00A0durant\u00A0vos\u00A0jours'],
+      ru: ['в\u00A0вашей\u00A0жизни', 'и\u00A0в\u00A0ваши\u00A0дни'],
+      he: ['בְּחַיֵּיכֶם', 'וּבִימֵיכֶם']
+    },
+    glosses: {
+      pt: ['na vida de vocês — plural, à comunidade', ''],
+      en: ['in your lives — plural, to the community', ''],
+      es: ['en vuestras vidas — plural, a la comunidad', ''],
+      fr: ['dans vos vies — pluriel, à la communauté', ''],
+      ru: ['в ваших жизнях — множественное, к общине', ''],
+      he: ['בְּחַיֵּיכֶם — לְשׁוֹן רַבִּים, לַקְּהִלָּה', '']
+    },
+    durations: [1100, 1050],
+    tip: null
+  },
+  {
+    id: 'kadish-7',
+    classMod: 'declaration',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וּבְחַיֵּי', 'דְכָל', 'בֵּית', 'יִשְׂרָאֵל'],
+    translit: {
+      pt: ['uv\u2019chayei', 'd\u2019chol', 'beit', 'yisrael'],
+      en: ['uv\u2019chayei', 'd\u2019chol', 'beit', 'yisrael'],
+      es: ['uv\u2019jayei', 'd\u2019jol', 'beit', 'yisrael'],
+      fr: ['ouv\u2019khayei', 'd\u2019khol', 'beit', 'yisraël'],
+      ru: ['у-в-хайей', 'д-холь', 'бейт', 'Йисраэль'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0na\u00A0vida', 'de\u00A0toda', 'a\u00A0casa', 'de\u00A0Israel'],
+      en: ['and\u00A0in\u00A0the\u00A0life', 'of\u00A0all', 'the\u00A0House', 'of\u00A0Israel'],
+      es: ['y\u00A0en\u00A0la\u00A0vida', 'de\u00A0toda', 'la\u00A0casa', 'de\u00A0Israel'],
+      fr: ['et\u00A0dans\u00A0la\u00A0vie', 'de\u00A0toute', 'la\u00A0maison', 'd\u2019Israël'],
+      ru: ['и\u00A0в\u00A0жизни', 'всего', 'дома', 'Израиля'],
+      he: ['וּבְחַיֵּי', 'כָּל', 'בֵּית', 'יִשְׂרָאֵל']
+    },
+    glosses: {
+      pt: ['', '', 'a casa, no sentido de povo/família', 'todo o povo judeu'],
+      en: ['', '', 'the House, meaning people/family', 'all the Jewish people'],
+      es: ['', '', 'la casa, en sentido de pueblo/familia', 'todo el pueblo judío'],
+      fr: ['', '', 'la maison, au sens de peuple/famille', 'tout le peuple juif'],
+      ru: ['', '', 'дом — в смысле народ/семья', 'весь еврейский народ'],
+      he: ['', '', 'הַבַּיִת — בְּמַשְׁמָעוּת עַם/מִשְׁפָּחָה', 'כָּל הָעָם הַיְּהוּדִי']
+    },
+    durations: [900, 500, 500, 900],
+    tip: {
+      pt: 'Após esta linha, a comunidade responde "Amen". Fecha-se aqui o primeiro pensamento completo do Kadish.',
+      en: 'After this line, the congregation responds "Amen". Here closes the first complete thought of the Kaddish.',
+      es: 'Después de esta línea, la comunidad responde "Amén". Aquí se cierra el primer pensamiento completo del Kadish.',
+      fr: 'Après cette ligne, la communauté répond "Amen". Ici se clôt la première pensée complète du Kaddish.',
+      ru: 'После этой строки община отвечает "Амен". Здесь закрывается первая полная мысль Кадиша.',
+      he: 'לְאַחַר שׁוּרָה זוֹ, הַקָּהָל עוֹנֶה "אָמֵן". כָּאן נִסְגֶּרֶת הַמַּחְשָׁבָה הַשְּׁלֵמָה הָרִאשׁוֹנָה שֶׁל הַקַּדִּישׁ.'
+    },
+    communityResponds: {
+      pt: 'A comunidade responde "Amen, yehei shmei raba mevarach..." — pausa importante.',
+      en: 'The congregation responds "Amen, yehei shmei raba mevarach..." — important pause.',
+      es: 'La comunidad responde "Amén, yehei shmei raba mevaraj..." — pausa importante.',
+      fr: 'La communauté répond "Amen, yehei shmei raba mevarakh..." — pause importante.',
+      ru: 'Община отвечает "Амен, йехей шмей раба меварах..." — важная пауза.',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן, יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ..." — הַפְסָקָה חֲשׁוּבָה.'
+    }
+  },
+  // ====== Continuação Kadish Yatom (compartilhado com DeRabanan) ======
+  {
+    id: 'kadish-8',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['בַּעֲגָלָא', 'וּבִזְמַן', 'קָרִיב', 'וְאִמְרוּ', 'אָמֵן'],
+    translit: {
+      pt: ['ba\u2019agala', 'uvizman', 'kariv', 'v\u2019imru', 'amen'],
+      en: ['ba\u2019agala', 'uvizman', 'kariv', 'v\u2019imru', 'amen'],
+      es: ['ba\u2019agala', 'uvizman', 'kariv', 'v\u2019imru', 'amén'],
+      fr: ['ba\u2019agala', 'uvizman', 'kariv', 'v\u2019imrou', 'amen'],
+      ru: ['ба-агала', 'у-в-зман', 'карив', 'в-имру', 'амен'],
+      he: []
+    },
+    merged: {
+      pt: ['rapidamente', 'e\u00A0em\u00A0tempo', 'próximo', 'e\u00A0dizei', 'Amen'],
+      en: ['speedily', 'and\u00A0in\u00A0time', 'near', 'and\u00A0say', 'Amen'],
+      es: ['rápidamente', 'y\u00A0en\u00A0tiempo', 'cercano', 'y\u00A0decid', 'Amén'],
+      fr: ['rapidement', 'et\u00A0dans\u00A0un\u00A0temps', 'proche', 'et\u00A0dites', 'Amen'],
+      ru: ['скоро', 'и\u00A0во\u00A0время', 'близкое', 'и\u00A0скажите', 'Амен'],
+      he: ['בִּמְהֵרָה', 'וּבִזְמַן', 'קָרוֹב', 'וְאָמְרוּ', 'אָמֵן']
+    },
+    glosses: { pt:['','','','',''], en:['','','','',''], es:['','','','',''], fr:['','','','',''], ru:['','','','',''], he:['','','','',''] },
+    durations: [600, 600, 500, 700, 600],
+    tip: null,
+    communityResponds: {
+      pt: 'A comunidade responde "Amen" — pausa para resposta congregacional.',
+      en: 'The congregation responds "Amen" — pause for congregational response.',
+      es: 'La comunidad responde "Amén" — pausa para respuesta congregacional.',
+      fr: 'La communauté répond "Amen" — pause pour la réponse congrégationnelle.',
+      ru: 'Община отвечает "Амен" — пауза для общинного ответа.',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן" — הַפְסָקָה לִתְגוּבַת הַצִּבּוּר.'
+    }
+  },
+  {
+    id: 'kadish-9',
+    classMod: 'declaration',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['יְהֵא', 'שְׁמֵהּ', 'רַבָּא', 'מְבָרַךְ'],
+    translit: {
+      pt: ['y\u2019hei', 'shmei', 'raba', 'mevarach'],
+      en: ['y\u2019hei', 'shmei', 'raba', 'mevarach'],
+      es: ['y\u2019hei', 'shmei', 'raba', 'mevaraj'],
+      fr: ['y\u2019hei', 'shmei', 'raba', 'mevarakh'],
+      ru: ['йехей', 'шмей', 'раба', 'меварах'],
+      he: []
+    },
+    merged: {
+      pt: ['Seja', 'Seu\u00A0Nome', 'grande', 'bendito'],
+      en: ['May\u00A0be', 'His\u00A0Name', 'great', 'blessed'],
+      es: ['Sea', 'Su\u00A0Nombre', 'grande', 'bendito'],
+      fr: ['Que\u00A0soit', 'Son\u00A0Nom', 'grand', 'béni'],
+      ru: ['Да\u00A0будет', 'Имя\u00A0Его', 'великое', 'благословенно'],
+      he: ['יְהִי', 'שְׁמוֹ', 'הַגָּדוֹל', 'מְבֹרָךְ']
+    },
+    glosses: { pt:['','','o\u00A0Nome\u00A0divino',''], en:['','','the\u00A0divine\u00A0Name',''], es:['','','el\u00A0Nombre\u00A0divino',''], fr:['','','le\u00A0Nom\u00A0divin',''], ru:['','','Имя\u00A0Божественное',''], he:['','','','']},
+    durations: [600, 700, 700, 800],
+    tip: {
+      pt: 'Esta é a resposta central que toda a congregação diz junto com o enlutado — momento de máxima união.',
+      en: 'This is the central response that the entire congregation says together with the mourner — moment of maximum unity.',
+      es: 'Esta es la respuesta central que toda la congregación dice junto con el enlutado — momento de máxima unión.',
+      fr: 'C\u2019est la réponse centrale que toute la congrégation dit avec l\u2019endeuillé — moment d\u2019unité maximale.',
+      ru: 'Это центральный ответ, который вся община произносит вместе со скорбящим — момент максимального единения.',
+      he: 'זוֹהִי הַתְּגוּבָה הַמֶּרְכָּזִית שֶׁכָּל הַקָּהָל אוֹמֵר יַחַד עִם הָאָבֵל — רֶגַע שֶׁל אַחְדוּת מַקְסִימָלִית.'
+    }
+  },
+  {
+    id: 'kadish-10',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['לְעָלַם', 'וּלְעָלְמֵי', 'עָלְמַיָּא'],
+    translit: {
+      pt: ['l\u2019alam', 'ul\u2019almei', 'almaya'],
+      en: ['l\u2019alam', 'ul\u2019almei', 'almaya'],
+      es: ['l\u2019alam', 'ul\u2019almei', 'almaya'],
+      fr: ['l\u2019alam', 'oul\u2019almei', 'almaya'],
+      ru: ['л-алам', 'у-л-альмей', 'альмайа'],
+      he: []
+    },
+    merged: {
+      pt: ['para\u00A0sempre', 'e\u00A0por\u00A0todas', 'as\u00A0eternidades'],
+      en: ['forever', 'and\u00A0for\u00A0all', 'eternities'],
+      es: ['para\u00A0siempre', 'y\u00A0por\u00A0todas', 'las\u00A0eternidades'],
+      fr: ['pour\u00A0toujours', 'et\u00A0pour\u00A0toutes', 'les\u00A0éternités'],
+      ru: ['навеки', 'и\u00A0во\u00A0все', 'вечности'],
+      he: ['לְעוֹלָם', 'וּלְעוֹלְמֵי', 'עוֹלָמִים']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [800, 700, 1100],
+    tip: null
+  },
+  {
+    id: 'kadish-11',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['יִתְבָּרַךְ', 'וְיִשְׁתַּבַּח', 'וְיִתְפָּאַר'],
+    translit: {
+      pt: ['yitbarach', 'v\u2019yishtabach', 'v\u2019yitpa\u2019ar'],
+      en: ['yitbarach', 'v\u2019yishtabach', 'v\u2019yitpa\u2019ar'],
+      es: ['yitbaraj', 'v\u2019yishtabaj', 'v\u2019yitpa\u2019ar'],
+      fr: ['yitbarakh', 'v\u2019yishtabakh', 'v\u2019yitpa\u2019ar'],
+      ru: ['йитбарах', 'в-йиштабах', 'в-йитпаар'],
+      he: []
+    },
+    merged: {
+      pt: ['Bendito', 'e\u00A0louvado', 'e\u00A0glorificado'],
+      en: ['Blessed', 'and\u00A0praised', 'and\u00A0glorified'],
+      es: ['Bendito', 'y\u00A0alabado', 'y\u00A0glorificado'],
+      fr: ['Béni', 'et\u00A0loué', 'et\u00A0glorifié'],
+      ru: ['Благословенно', 'и\u00A0восхваленно', 'и\u00A0прославленно'],
+      he: ['בָּרוּךְ', 'וּמְשֻׁבָּח', 'וּמְפֹאָר']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [950, 950, 950],
+    tip: {
+      pt: 'Aqui começa uma sequência de 7 verbos de louvor — uma das passagens mais intensas do Kadish.',
+      en: 'Here begins a sequence of 7 verbs of praise — one of the most intense passages of the Kaddish.',
+      es: 'Aquí comienza una secuencia de 7 verbos de alabanza — uno de los pasajes más intensos del Kadish.',
+      fr: 'Ici commence une séquence de 7 verbes de louange — l\u2019un des passages les plus intenses du Kaddish.',
+      ru: 'Здесь начинается последовательность из 7 глаголов восхваления — один из самых интенсивных отрывков Кадиша.',
+      he: 'כָּאן מַתְחִיל רֶצֶף שֶׁל 7 פָּעֳלֵי שֶׁבַח — אֶחָד הַקְּטָעִים הָעַזִּים בְּיוֹתֵר שֶׁל הַקַּדִּישׁ.'
+    }
+  },
+  {
+    id: 'kadish-12',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְיִתְרוֹמַם', 'וְיִתְנַשֵּׂא', 'וְיִתְהַדָּר'],
+    translit: {
+      pt: ['v\u2019yitromam', 'v\u2019yitnasei', 'v\u2019yithadar'],
+      en: ['v\u2019yitromam', 'v\u2019yitnasei', 'v\u2019yithadar'],
+      es: ['v\u2019yitromam', 'v\u2019yitnasei', 'v\u2019yithadar'],
+      fr: ['v\u2019yitromam', 'v\u2019yitnasei', 'v\u2019yithadar'],
+      ru: ['в-йитромам', 'в-йитнасе', 'в-йитhадар'],
+      he: []
+    },
+    merged: {
+      pt: ['exaltado', 'enaltecido', 'honrado'],
+      en: ['exalted', 'extolled', 'honored'],
+      es: ['exaltado', 'enaltecido', 'honrado'],
+      fr: ['exalté', 'élevé', 'honoré'],
+      ru: ['превознесённо', 'возвышенно', 'почитаемо'],
+      he: ['מְרוֹמָם', 'מִתְנַשֵּׂא', 'מְהֻדָּר']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [950, 950, 950],
+    tip: null
+  },
+  {
+    id: 'kadish-13',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְיִתְעַלֶּה', 'וְיִתְהַלָּל', 'שְׁמֵהּ', 'דְּקֻדְשָׁא', 'בְּרִיךְ', 'הוּא'],
+    translit: {
+      pt: ['v\u2019yit\u2019aleh', 'v\u2019yithalal', 'shmei', 'd\u2019kudsha', 'b\u2019rich', 'hu'],
+      en: ['v\u2019yit\u2019aleh', 'v\u2019yithalal', 'shmei', 'd\u2019kudsha', 'b\u2019rich', 'hu'],
+      es: ['v\u2019yit\u2019ale', 'v\u2019yithalal', 'shmei', 'd\u2019kudsha', 'b\u2019rij', 'hu'],
+      fr: ['v\u2019yit\u2019aleh', 'v\u2019yithalal', 'shmei', 'd\u2019kudsha', 'b\u2019rikh', 'hu'],
+      ru: ['в-йит-але', 'в-йитhалаль', 'шмей', 'д-кудша', 'б-рих', 'hу'],
+      he: []
+    },
+    merged: {
+      pt: ['elevado', 'e\u00A0celebrado', 'seja\u00A0o\u00A0Nome', 'do\u00A0Santo', 'bendito', 'é\u00A0Ele'],
+      en: ['elevated', 'and\u00A0lauded', 'be\u00A0the\u00A0Name', 'of\u00A0the\u00A0Holy\u00A0One', 'blessed', 'is\u00A0He'],
+      es: ['elevado', 'y\u00A0celebrado', 'sea\u00A0el\u00A0Nombre', 'del\u00A0Santo', 'bendito', 'es\u00A0Él'],
+      fr: ['élevé', 'et\u00A0célébré', 'soit\u00A0le\u00A0Nom', 'du\u00A0Saint', 'béni', 'est\u00A0Il'],
+      ru: ['возвышенно', 'и\u00A0прославлено', 'будет\u00A0Имя', 'Святого', 'благословен', 'Он'],
+      he: ['וְיִתְעַלֶּה', 'וְיִתְהַלָּל', 'שְׁמוֹ', 'שֶׁל\u00A0הַקָּדוֹשׁ', 'בָּרוּךְ', 'הוּא']
+    },
+    glosses: { pt:['','','','','',''], en:['','','','','',''], es:['','','','','',''], fr:['','','','','',''], ru:['','','','','',''], he:['','','','','',''] },
+    durations: [900, 900, 700, 800, 600, 400],
+    tip: null
+  },
+  {
+    id: 'kadish-14',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['לְעֵלָּא', 'מִן\u00A0כָּל', 'בִּרְכָתָא', 'וְשִׁירָתָא'],
+    translit: {
+      pt: ['l\u2019eila', 'min\u00A0kol', 'birchata', 'v\u2019shirata'],
+      en: ['l\u2019eila', 'min\u00A0kol', 'birchata', 'v\u2019shirata'],
+      es: ['l\u2019eila', 'min\u00A0kol', 'birjata', 'v\u2019shirata'],
+      fr: ['l\u2019eila', 'min\u00A0kol', 'birkhata', 'v\u2019shirata'],
+      ru: ['л-эйла', 'мин\u00A0коль', 'бирхата', 'в-ширата'],
+      he: []
+    },
+    merged: {
+      pt: ['acima', 'de\u00A0todas', 'as\u00A0bênçãos', 'e\u00A0cânticos'],
+      en: ['above', 'all', 'blessings', 'and\u00A0songs'],
+      es: ['por\u00A0encima', 'de\u00A0todas', 'las\u00A0bendiciones', 'y\u00A0cánticos'],
+      fr: ['au-dessus', 'de\u00A0toutes', 'les\u00A0bénédictions', 'et\u00A0cantiques'],
+      ru: ['выше', 'всех', 'благословений', 'и\u00A0песнопений'],
+      he: ['מֵעַל', 'מִכָּל', 'הַבְּרָכוֹת', 'וְהַשִּׁירוֹת']
+    },
+    glosses: { pt:['','','',''], en:['','','',''], es:['','','',''], fr:['','','',''], ru:['','','',''], he:['','','',''] },
+    durations: [700, 600, 850, 850],
+    tip: null
+  },
+  {
+    id: 'kadish-15',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['תֻּשְׁבְּחָתָא', 'וְנֶחֱמָתָא', 'דַּאֲמִירָן', 'בְּעָלְמָא', 'וְאִמְרוּ', 'אָמֵן'],
+    translit: {
+      pt: ['tushb\u2019chata', 'v\u2019nechemata', 'da\u2019amiran', 'b\u2019alma', 'v\u2019imru', 'amen'],
+      en: ['tushb\u2019chata', 'v\u2019nechemata', 'da\u2019amiran', 'b\u2019alma', 'v\u2019imru', 'amen'],
+      es: ['tushb\u2019jata', 'v\u2019nejemata', 'da\u2019amirán', 'b\u2019alma', 'v\u2019imru', 'amén'],
+      fr: ['toushb\u2019khata', 'v\u2019nehkemata', 'da\u2019amiran', 'b\u2019alma', 'v\u2019imrou', 'amen'],
+      ru: ['тушбехата', 'в-нехемата', 'д-амиран', 'б-альма', 'в-имру', 'амен'],
+      he: []
+    },
+    merged: {
+      pt: ['louvores', 'e\u00A0consolações', 'que\u00A0são\u00A0ditas', 'no\u00A0mundo', 'e\u00A0dizei', 'Amen'],
+      en: ['praises', 'and\u00A0consolations', 'that\u00A0are\u00A0said', 'in\u00A0the\u00A0world', 'and\u00A0say', 'Amen'],
+      es: ['alabanzas', 'y\u00A0consuelos', 'que\u00A0se\u00A0dicen', 'en\u00A0el\u00A0mundo', 'y\u00A0decid', 'Amén'],
+      fr: ['louanges', 'et\u00A0consolations', 'qui\u00A0sont\u00A0dites', 'dans\u00A0le\u00A0monde', 'et\u00A0dites', 'Amen'],
+      ru: ['восхваления', 'и\u00A0утешения', 'произносимые', 'в\u00A0мире', 'и\u00A0скажите', 'Амен'],
+      he: ['שְׁבָחוֹת', 'וְנֶחָמוֹת', 'הַנֶּאֱמָרוֹת', 'בָּעוֹלָם', 'וְאָמְרוּ', 'אָמֵן']
+    },
+    glosses: { pt:['','','','','',''], en:['','','','','',''], es:['','','','','',''], fr:['','','','','',''], ru:['','','','','',''], he:['','','','','',''] },
+    durations: [1100, 1000, 850, 700, 700, 600],
+    tip: null,
+    communityResponds: {
+      pt: 'A comunidade responde "Amen" — fim do louvor central.',
+      en: 'The congregation responds "Amen" — end of central praise.',
+      es: 'La comunidad responde "Amén" — fin de la alabanza central.',
+      fr: 'La communauté répond "Amen" — fin de la louange centrale.',
+      ru: 'Община отвечает "Амен" — конец центрального восхваления.',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן" — סוֹף הַשֶּׁבַח הַמֶּרְכָּזִי.'
+    }
+  },
+  // ====== DeRabanan-only verses (parágrafo dos sábios) ======
+  {
+    id: 'kadish-dr-1',
+    inDeRabanan: true,
+    classMod: 'derabanan',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['עַל\u00A0יִשְׂרָאֵל', 'וְעַל\u00A0רַבָּנָן'],
+    translit: {
+      pt: ['al\u00A0yisrael', 'v\u2019al\u00A0rabanan'],
+      en: ['al\u00A0yisrael', 'v\u2019al\u00A0rabanan'],
+      es: ['al\u00A0yisrael', 'v\u2019al\u00A0rabanán'],
+      fr: ['al\u00A0yisraël', 'v\u2019al\u00A0rabanan'],
+      ru: ['аль-Йисраэль', 'в-аль-рабанан'],
+      he: []
+    },
+    merged: {
+      pt: ['Sobre\u00A0Israel', 'e\u00A0sobre\u00A0os\u00A0Sábios'],
+      en: ['Upon\u00A0Israel', 'and\u00A0upon\u00A0the\u00A0Sages'],
+      es: ['Sobre\u00A0Israel', 'y\u00A0sobre\u00A0los\u00A0Sabios'],
+      fr: ['Sur\u00A0Israël', 'et\u00A0sur\u00A0les\u00A0Sages'],
+      ru: ['На\u00A0Израиль', 'и\u00A0на\u00A0Мудрецов'],
+      he: ['עַל\u00A0יִשְׂרָאֵל', 'וְעַל\u00A0הַחֲכָמִים']
+    },
+    glosses: { pt:['',''], en:['',''], es:['',''], fr:['',''], ru:['',''], he:['',''] },
+    durations: [1100, 1000],
+    tip: {
+      pt: 'Aqui começa o parágrafo exclusivo do Kadish DeRabanan — recitado em mérito dos estudiosos da Torá.',
+      en: 'Here begins the exclusive paragraph of the Kaddish DeRabanan — recited in merit of Torah scholars.',
+      es: 'Aquí comienza el párrafo exclusivo del Kadish DeRabanán — recitado en mérito de los estudiosos de la Torá.',
+      fr: 'Ici commence le paragraphe exclusif du Kaddish DeRabanan — récité en mérite des étudiants de la Torah.',
+      ru: 'Здесь начинается уникальный отрывок Кадиша Деработим — читается в заслугу изучающих Тору.',
+      he: 'כָּאן מַתְחִילָה הַפִּסְקָה הַיִּחוּדִית שֶׁל קַדִּישׁ דְּרַבָּנָן — נֶאֱמַר לִזְכוּת לוֹמְדֵי הַתּוֹרָה.'
+    }
+  },
+  {
+    id: 'kadish-dr-2',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְעַל\u00A0תַּלְמִידֵיהוֹן', 'וְעַל\u00A0כָּל\u00A0תַּלְמִידֵי', 'תַלְמִידֵיהוֹן'],
+    translit: {
+      pt: ['v\u2019al\u00A0talmidehon', 'v\u2019al\u00A0kol\u00A0talmidei', 'talmidehon'],
+      en: ['v\u2019al\u00A0talmidehon', 'v\u2019al\u00A0kol\u00A0talmidei', 'talmidehon'],
+      es: ['v\u2019al\u00A0talmidehon', 'v\u2019al\u00A0kol\u00A0talmidei', 'talmidehon'],
+      fr: ['v\u2019al\u00A0talmidehon', 'v\u2019al\u00A0kol\u00A0talmidei', 'talmidehon'],
+      ru: ['в-аль-талмидейhон', 'в-аль-коль-талмидей', 'талмидейhон'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0sobre\u00A0seus\u00A0discípulos', 'e\u00A0sobre\u00A0todos\u00A0os\u00A0discípulos', 'dos\u00A0discípulos'],
+      en: ['and\u00A0upon\u00A0their\u00A0disciples', 'and\u00A0upon\u00A0all\u00A0the\u00A0disciples', 'of\u00A0their\u00A0disciples'],
+      es: ['y\u00A0sobre\u00A0sus\u00A0discípulos', 'y\u00A0sobre\u00A0todos\u00A0los\u00A0discípulos', 'de\u00A0los\u00A0discípulos'],
+      fr: ['et\u00A0sur\u00A0leurs\u00A0disciples', 'et\u00A0sur\u00A0tous\u00A0les\u00A0disciples', 'de\u00A0leurs\u00A0disciples'],
+      ru: ['и\u00A0на\u00A0их\u00A0учеников', 'и\u00A0на\u00A0всех\u00A0учеников', 'их\u00A0учеников'],
+      he: ['וְעַל\u00A0תַּלְמִידֵיהֶם', 'וְעַל\u00A0כָּל\u00A0תַּלְמִידֵי', 'תַּלְמִידֵיהֶם']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [1300, 1300, 900],
+    tip: null
+  },
+  {
+    id: 'kadish-dr-3',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְעַל\u00A0כָּל\u00A0מָאן', 'דְּעָסְקִין', 'בְּאוֹרַיְתָא'],
+    translit: {
+      pt: ['v\u2019al\u00A0kol\u00A0man', 'd\u2019as\u2019kin', 'b\u2019oraita'],
+      en: ['v\u2019al\u00A0kol\u00A0man', 'd\u2019as\u2019kin', 'b\u2019oraita'],
+      es: ['v\u2019al\u00A0kol\u00A0man', 'd\u2019as\u2019kin', 'b\u2019oraita'],
+      fr: ['v\u2019al\u00A0kol\u00A0man', 'd\u2019as\u2019kin', 'b\u2019oraita'],
+      ru: ['в-аль-коль-ман', 'д-аскин', 'б-орайта'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0sobre\u00A0todos\u00A0os\u00A0que', 'se\u00A0dedicam', 'à\u00A0Torá'],
+      en: ['and\u00A0upon\u00A0all\u00A0who', 'engage', 'in\u00A0Torah'],
+      es: ['y\u00A0sobre\u00A0todos\u00A0los\u00A0que', 'se\u00A0dedican', 'a\u00A0la\u00A0Torá'],
+      fr: ['et\u00A0sur\u00A0tous\u00A0ceux\u00A0qui', 's\u2019occupent', 'de\u00A0la\u00A0Torah'],
+      ru: ['и\u00A0на\u00A0всех\u00A0кто', 'занимается', 'Торой'],
+      he: ['וְעַל\u00A0כָּל\u00A0מִי\u00A0שֶׁ', 'עוֹסְקִים', 'בַּתּוֹרָה']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [1100, 850, 850],
+    tip: null
+  },
+  {
+    id: 'kadish-dr-4',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['דִּי\u00A0בְאַתְרָא\u00A0הָדֵין', 'וְדִי\u00A0בְכָל\u00A0אֲתַר', 'וַאֲתַר'],
+    translit: {
+      pt: ['di\u00A0v\u2019atra\u00A0hadein', 'v\u2019di\u00A0v\u2019chol\u00A0atar', 'va\u2019atar'],
+      en: ['di\u00A0v\u2019atra\u00A0hadein', 'v\u2019di\u00A0v\u2019chol\u00A0atar', 'va\u2019atar'],
+      es: ['di\u00A0v\u2019atra\u00A0hadein', 'v\u2019di\u00A0v\u2019jol\u00A0atar', 'va\u2019atar'],
+      fr: ['di\u00A0v\u2019atra\u00A0hadein', 'v\u2019di\u00A0v\u2019khol\u00A0atar', 'va\u2019atar'],
+      ru: ['ди-в-атра-hадейн', 'в-ди-в-холь-атар', 'в-атар'],
+      he: []
+    },
+    merged: {
+      pt: ['neste\u00A0lugar', 'e\u00A0em\u00A0todo\u00A0lugar', 'e\u00A0lugar'],
+      en: ['in\u00A0this\u00A0place', 'and\u00A0in\u00A0every\u00A0place', 'and\u00A0place'],
+      es: ['en\u00A0este\u00A0lugar', 'y\u00A0en\u00A0todo\u00A0lugar', 'y\u00A0lugar'],
+      fr: ['en\u00A0ce\u00A0lieu', 'et\u00A0en\u00A0tout\u00A0lieu', 'et\u00A0lieu'],
+      ru: ['в\u00A0этом\u00A0месте', 'и\u00A0во\u00A0всяком\u00A0месте', 'и\u00A0месте'],
+      he: ['בַּמָּקוֹם\u00A0הַזֶּה', 'וּבְכָל\u00A0מָקוֹם', 'וּמָקוֹם']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [1300, 1300, 700],
+    tip: null
+  },
+  {
+    id: 'kadish-dr-5',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['יְהֵא\u00A0לְהוֹן', 'וּלְכוֹן', 'שְׁלָמָא\u00A0רַבָּא'],
+    translit: {
+      pt: ['y\u2019hei\u00A0l\u2019hon', 'ulchon', 'shlama\u00A0raba'],
+      en: ['y\u2019hei\u00A0l\u2019hon', 'ulchon', 'shlama\u00A0raba'],
+      es: ['y\u2019hei\u00A0l\u2019hon', 'uljon', 'shlama\u00A0raba'],
+      fr: ['y\u2019hei\u00A0l\u2019hon', 'ulkhon', 'shlama\u00A0raba'],
+      ru: ['йехей-л-hон', 'ульхон', 'шлама-раба'],
+      he: []
+    },
+    merged: {
+      pt: ['Que\u00A0haja\u00A0para\u00A0eles', 'e\u00A0para\u00A0vós', 'paz\u00A0abundante'],
+      en: ['May\u00A0there\u00A0be\u00A0to\u00A0them', 'and\u00A0to\u00A0you', 'abundant\u00A0peace'],
+      es: ['Sea\u00A0para\u00A0ellos', 'y\u00A0para\u00A0vosotros', 'paz\u00A0abundante'],
+      fr: ['Qu\u2019il\u00A0y\u00A0ait\u00A0pour\u00A0eux', 'et\u00A0pour\u00A0vous', 'paix\u00A0abondante'],
+      ru: ['Да\u00A0будет\u00A0им', 'и\u00A0вам', 'мир\u00A0обильный'],
+      he: ['יְהִי\u00A0לָהֶם', 'וְלָכֶם', 'שָׁלוֹם\u00A0רַב']
+    },
+    glosses: { pt:['','',''], en:['','',''], es:['','',''], fr:['','',''], ru:['','',''], he:['','',''] },
+    durations: [1100, 700, 1100],
+    tip: null
+  },
+  {
+    id: 'kadish-dr-6',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['חִנָּא\u00A0וְחִסְדָּא', 'וְרַחֲמֵי'],
+    translit: {
+      pt: ['chinna\u00A0v\u2019chisda', 'v\u2019rachamei'],
+      en: ['chinna\u00A0v\u2019chisda', 'v\u2019rachamei'],
+      es: ['jinna\u00A0v\u2019jisda', 'v\u2019rajamei'],
+      fr: ['khinna\u00A0v\u2019khisda', 'v\u2019rakhamei'],
+      ru: ['хинна-в-хисда', 'в-рахамей'],
+      he: []
+    },
+    merged: {
+      pt: ['graça\u00A0e\u00A0bondade', 'e\u00A0misericórdia'],
+      en: ['grace\u00A0and\u00A0kindness', 'and\u00A0mercy'],
+      es: ['gracia\u00A0y\u00A0bondad', 'y\u00A0misericordia'],
+      fr: ['grâce\u00A0et\u00A0bonté', 'et\u00A0miséricorde'],
+      ru: ['благодать\u00A0и\u00A0милость', 'и\u00A0милосердие'],
+      he: ['חֵן\u00A0וָחֶסֶד', 'וְרַחֲמִים']
+    },
+    glosses: { pt:['',''], en:['',''], es:['',''], fr:['',''], ru:['',''], he:['',''] },
+    durations: [1200, 800],
+    tip: null
+  },
+  {
+    id: 'kadish-dr-7',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְחַיֵּי\u00A0אֲרִיכֵי', 'וּמְזוֹנֵי\u00A0רְוִיחֵי'],
+    translit: {
+      pt: ['v\u2019chayei\u00A0arichei', 'umzonei\u00A0r\u2019vichei'],
+      en: ['v\u2019chayei\u00A0arichei', 'umzonei\u00A0r\u2019vichei'],
+      es: ['v\u2019jayei\u00A0arijei', 'umzonei\u00A0r\u2019vijei'],
+      fr: ['v\u2019khayei\u00A0arikhei', 'oumzonei\u00A0r\u2019vikhei'],
+      ru: ['в-хайей-арихей', 'у-м-зоней-р-вихей'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0vida\u00A0longa', 'e\u00A0sustento\u00A0abundante'],
+      en: ['and\u00A0long\u00A0life', 'and\u00A0ample\u00A0sustenance'],
+      es: ['y\u00A0vida\u00A0larga', 'y\u00A0sustento\u00A0abundante'],
+      fr: ['et\u00A0longue\u00A0vie', 'et\u00A0subsistance\u00A0abondante'],
+      ru: ['и\u00A0долгую\u00A0жизнь', 'и\u00A0обильное\u00A0пропитание'],
+      he: ['וְחַיִּים\u00A0אֲרֻכִּים', 'וּמָזוֹן\u00A0מְרֻבֶּה']
+    },
+    glosses: { pt:['',''], en:['',''], es:['',''], fr:['',''], ru:['',''], he:['',''] },
+    durations: [1200, 1200],
+    tip: null
+  },
+  {
+    id: 'kadish-dr-8',
+    inDeRabanan: true,
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וּפֻרְקָנָא', 'מִן\u00A0קֳדָם', 'אֲבוּהוֹן', 'דִּי\u00A0בִשְׁמַיָּא', 'וְאִמְרוּ\u00A0אָמֵן'],
+    translit: {
+      pt: ['ufurkana', 'min\u00A0kodam', 'avuhon', 'di\u00A0vishmaya', 'v\u2019imru\u00A0amen'],
+      en: ['ufurkana', 'min\u00A0kodam', 'avuhon', 'di\u00A0vishmaya', 'v\u2019imru\u00A0amen'],
+      es: ['ufurkana', 'min\u00A0kodam', 'avuhon', 'di\u00A0vishmaya', 'v\u2019imru\u00A0amén'],
+      fr: ['ouforkana', 'min\u00A0kodam', 'avouhon', 'di\u00A0vishmaya', 'v\u2019imrou\u00A0amen'],
+      ru: ['у-пуркана', 'мин\u00A0кодам', 'авуhон', 'ди-вишмайа', 'в-имру\u00A0амен'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0salvação', 'de\u00A0diante', 'de\u00A0seu\u00A0Pai', 'que\u00A0está\u00A0nos\u00A0céus', 'e\u00A0dizei\u00A0Amen'],
+      en: ['and\u00A0deliverance', 'from\u00A0before', 'their\u00A0Father', 'who\u00A0is\u00A0in\u00A0Heaven', 'and\u00A0say\u00A0Amen'],
+      es: ['y\u00A0salvación', 'de\u00A0delante', 'de\u00A0su\u00A0Padre', 'que\u00A0está\u00A0en\u00A0los\u00A0cielos', 'y\u00A0decid\u00A0Amén'],
+      fr: ['et\u00A0délivrance', 'de\u00A0devant', 'leur\u00A0Père', 'qui\u00A0est\u00A0aux\u00A0cieux', 'et\u00A0dites\u00A0Amen'],
+      ru: ['и\u00A0избавление', 'от\u00A0лица', 'их\u00A0Отца', 'который\u00A0на\u00A0небесах', 'и\u00A0скажите\u00A0Амен'],
+      he: ['וִישׁוּעָה', 'מִלִּפְנֵי', 'אֲבִיהֶם', 'שֶׁבַּשָּׁמַיִם', 'וְאָמְרוּ\u00A0אָמֵן']
+    },
+    glosses: { pt:['','','','',''], en:['','','','',''], es:['','','','',''], fr:['','','','',''], ru:['','','','',''], he:['','','','',''] },
+    durations: [1100, 700, 900, 1100, 1100],
+    tip: null,
+    communityResponds: {
+      pt: 'A comunidade responde "Amen" — fim do parágrafo dos sábios (DeRabanan).',
+      en: 'The congregation responds "Amen" — end of the sages\u2019 paragraph (DeRabanan).',
+      es: 'La comunidad responde "Amén" — fin del párrafo de los sabios (DeRabanán).',
+      fr: 'La communauté répond "Amen" — fin du paragraphe des sages (DeRabanan).',
+      ru: 'Община отвечает "Амен" — конец отрывка мудрецов (Деработим).',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן" — סוֹף פִּסְקַת הַחֲכָמִים (דְּרַבָּנָן).'
+    }
+  },
+  // ====== Continuação compartilhada (após DeRabanan parágrafo) ======
+  {
+    id: 'kadish-16',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['יְהֵא\u00A0שְׁלָמָא\u00A0רַבָּא', 'מִן\u00A0שְׁמַיָּא'],
+    translit: {
+      pt: ['y\u2019hei\u00A0shlama\u00A0raba', 'min\u00A0sh\u2019maya'],
+      en: ['y\u2019hei\u00A0shlama\u00A0raba', 'min\u00A0sh\u2019maya'],
+      es: ['y\u2019hei\u00A0shlama\u00A0raba', 'min\u00A0sh\u2019maya'],
+      fr: ['y\u2019hei\u00A0shlama\u00A0raba', 'min\u00A0sh\u2019maya'],
+      ru: ['йехей-шлама-раба', 'мин\u00A0ш-майа'],
+      he: []
+    },
+    merged: {
+      pt: ['Que\u00A0haja\u00A0paz\u00A0abundante', 'do\u00A0céu'],
+      en: ['May\u00A0there\u00A0be\u00A0abundant\u00A0peace', 'from\u00A0heaven'],
+      es: ['Que\u00A0haya\u00A0paz\u00A0abundante', 'del\u00A0cielo'],
+      fr: ['Qu\u2019il\u00A0y\u00A0ait\u00A0paix\u00A0abondante', 'du\u00A0ciel'],
+      ru: ['Да\u00A0будет\u00A0мир\u00A0обильный', 'с\u00A0небес'],
+      he: ['יְהִי\u00A0שָׁלוֹם\u00A0רַב', 'מִן\u00A0הַשָּׁמַיִם']
+    },
+    glosses: { pt:['',''], en:['',''], es:['',''], fr:['',''], ru:['',''], he:['',''] },
+    durations: [1500, 900]
+  },
+  {
+    id: 'kadish-17',
+    classMod: '',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['וְחַיִּים\u00A0טוֹבִים', 'עָלֵינוּ\u00A0וְעַל', 'כָּל\u00A0יִשְׂרָאֵל', 'וְאִמְרוּ\u00A0אָמֵן'],
+    translit: {
+      pt: ['v\u2019chayim\u00A0tovim', 'aleinu\u00A0v\u2019al', 'kol\u00A0yisrael', 'v\u2019imru\u00A0amen'],
+      en: ['v\u2019chayim\u00A0tovim', 'aleinu\u00A0v\u2019al', 'kol\u00A0yisrael', 'v\u2019imru\u00A0amen'],
+      es: ['v\u2019jayim\u00A0tovim', 'aleinu\u00A0v\u2019al', 'kol\u00A0yisrael', 'v\u2019imru\u00A0amén'],
+      fr: ['v\u2019khayim\u00A0tovim', 'aleinou\u00A0v\u2019al', 'kol\u00A0yisraël', 'v\u2019imrou\u00A0amen'],
+      ru: ['в-хайим-товим', 'алейну-в-аль', 'коль-Йисраэль', 'в-имру\u00A0амен'],
+      he: []
+    },
+    merged: {
+      pt: ['e\u00A0vida\u00A0boa', 'sobre\u00A0nós\u00A0e\u00A0sobre', 'todo\u00A0Israel', 'e\u00A0dizei\u00A0Amen'],
+      en: ['and\u00A0good\u00A0life', 'upon\u00A0us\u00A0and\u00A0upon', 'all\u00A0Israel', 'and\u00A0say\u00A0Amen'],
+      es: ['y\u00A0vida\u00A0buena', 'sobre\u00A0nosotros\u00A0y\u00A0sobre', 'todo\u00A0Israel', 'y\u00A0decid\u00A0Amén'],
+      fr: ['et\u00A0bonne\u00A0vie', 'sur\u00A0nous\u00A0et\u00A0sur', 'tout\u00A0Israël', 'et\u00A0dites\u00A0Amen'],
+      ru: ['и\u00A0добрая\u00A0жизнь', 'на\u00A0нас\u00A0и\u00A0на', 'весь\u00A0Израиль', 'и\u00A0скажите\u00A0Амен'],
+      he: ['וְחַיִּים\u00A0טוֹבִים', 'עָלֵינוּ\u00A0וְעַל', 'כָּל\u00A0יִשְׂרָאֵל', 'וְאָמְרוּ\u00A0אָמֵן']
+    },
+    glosses: { pt:['','','',''], en:['','','',''], es:['','','',''], fr:['','','',''], ru:['','','',''], he:['','','',''] },
+    durations: [1100, 1000, 900, 1100],
+    communityResponds: {
+      pt: 'A comunidade responde "Amen" — invocação de paz e vida.',
+      en: 'The congregation responds "Amen" — invocation of peace and life.',
+      es: 'La comunidad responde "Amén" — invocación de paz y vida.',
+      fr: 'La communauté répond "Amen" — invocation de paix et de vie.',
+      ru: 'Община отвечает "Амен" — призыв мира и жизни.',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן" — בַּקָּשַׁת שָׁלוֹם וְחַיִּים.'
+    }
+  },
+  {
+    id: 'kadish-18',
+    classMod: 'declaration',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['עֹשֶׂה\u00A0שָׁלוֹם', 'בִּמְרוֹמָיו'],
+    translit: {
+      pt: ['oseh\u00A0shalom', 'bimromav'],
+      en: ['oseh\u00A0shalom', 'bimromav'],
+      es: ['oseh\u00A0shalom', 'bimromav'],
+      fr: ['oseh\u00A0shalom', 'bimromav'],
+      ru: ['осе-шалом', 'бимромав'],
+      he: []
+    },
+    merged: {
+      pt: ['Aquele\u00A0que\u00A0faz\u00A0paz', 'em\u00A0Suas\u00A0alturas'],
+      en: ['He\u00A0who\u00A0makes\u00A0peace', 'in\u00A0His\u00A0heights'],
+      es: ['El\u00A0que\u00A0hace\u00A0paz', 'en\u00A0Sus\u00A0alturas'],
+      fr: ['Celui\u00A0qui\u00A0fait\u00A0la\u00A0paix', 'en\u00A0Ses\u00A0hauteurs'],
+      ru: ['Творящий\u00A0мир', 'в\u00A0Своих\u00A0высотах'],
+      he: ['עוֹשֶׂה\u00A0שָׁלוֹם', 'בִּמְרוֹמָיו']
+    },
+    glosses: { pt:['',''], en:['',''], es:['',''], fr:['',''], ru:['',''], he:['',''] },
+    durations: [1200, 900],
+    tip: {
+      pt: 'Aqui o enlutado dá três passos para trás, curva-se à esquerda, depois à direita, depois ao centro — gesto litúrgico tradicional.',
+      en: 'Here the mourner takes three steps backward, bows left, then right, then center — traditional liturgical gesture.',
+      es: 'Aquí el enlutado da tres pasos hacia atrás, se inclina a la izquierda, luego a la derecha, luego al centro — gesto litúrgico tradicional.',
+      fr: 'Ici l\u2019endeuillé recule de trois pas, s\u2019incline à gauche, puis à droite, puis au centre — geste liturgique traditionnel.',
+      ru: 'Здесь скорбящий делает три шага назад, кланяется налево, затем направо, затем в центр — традиционный литургический жест.',
+      he: 'כָּאן הָאָבֵל פּוֹסֵעַ שָׁלוֹשׁ פְּסִיעוֹת לְאָחוֹר, מִשְׁתַּחֲוֶה לִשְׂמֹאל, אַחַר כָּךְ לְיָמִין, אַחַר כָּךְ לַמֶּרְכָּז — מֶחֱוָה לִיטוּרְגִּית מָסוֹרְתִּית.'
+    }
+  },
+  {
+    id: 'kadish-19',
+    classMod: 'declaration',
+    pictograms: ['stand', 'minyan'],
+    hebrew: ['הוּא\u00A0יַעֲשֶׂה\u00A0שָׁלוֹם', 'עָלֵינוּ\u00A0וְעַל', 'כָּל\u00A0יִשְׂרָאֵל', 'וְאִמְרוּ\u00A0אָמֵן'],
+    translit: {
+      pt: ['hu\u00A0ya\u2019aseh\u00A0shalom', 'aleinu\u00A0v\u2019al', 'kol\u00A0yisrael', 'v\u2019imru\u00A0amen'],
+      en: ['hu\u00A0ya\u2019aseh\u00A0shalom', 'aleinu\u00A0v\u2019al', 'kol\u00A0yisrael', 'v\u2019imru\u00A0amen'],
+      es: ['hu\u00A0ya\u2019aseh\u00A0shalom', 'aleinu\u00A0v\u2019al', 'kol\u00A0yisrael', 'v\u2019imru\u00A0amén'],
+      fr: ['hou\u00A0ya\u2019aseh\u00A0shalom', 'aleinou\u00A0v\u2019al', 'kol\u00A0yisraël', 'v\u2019imrou\u00A0amen'],
+      ru: ['hу-яасе-шалом', 'алейну-в-аль', 'коль-Йисраэль', 'в-имру\u00A0амен'],
+      he: []
+    },
+    merged: {
+      pt: ['Ele\u00A0fará\u00A0paz', 'sobre\u00A0nós\u00A0e\u00A0sobre', 'todo\u00A0Israel', 'e\u00A0dizei\u00A0Amen'],
+      en: ['He\u00A0shall\u00A0make\u00A0peace', 'upon\u00A0us\u00A0and\u00A0upon', 'all\u00A0Israel', 'and\u00A0say\u00A0Amen'],
+      es: ['Él\u00A0hará\u00A0paz', 'sobre\u00A0nosotros\u00A0y\u00A0sobre', 'todo\u00A0Israel', 'y\u00A0decid\u00A0Amén'],
+      fr: ['Il\u00A0fera\u00A0la\u00A0paix', 'sur\u00A0nous\u00A0et\u00A0sur', 'tout\u00A0Israël', 'et\u00A0dites\u00A0Amen'],
+      ru: ['Он\u00A0сотворит\u00A0мир', 'на\u00A0нас\u00A0и\u00A0на', 'весь\u00A0Израиль', 'и\u00A0скажите\u00A0Амен'],
+      he: ['הוּא\u00A0יַעֲשֶׂה\u00A0שָׁלוֹם', 'עָלֵינוּ\u00A0וְעַל', 'כָּל\u00A0יִשְׂרָאֵל', 'וְאָמְרוּ\u00A0אָמֵן']
+    },
+    glosses: { pt:['','','',''], en:['','','',''], es:['','','',''], fr:['','','',''], ru:['','','',''], he:['','','',''] },
+    durations: [1500, 1000, 900, 1100],
+    tip: null,
+    communityResponds: {
+      pt: 'A comunidade responde "Amen" — conclusão do Kadish.',
+      en: 'The congregation responds "Amen" — conclusion of the Kaddish.',
+      es: 'La comunidad responde "Amén" — conclusión del Kadish.',
+      fr: 'La communauté répond "Amen" — conclusion du Kaddish.',
+      ru: 'Община отвечает "Амен" — заключение Кадиша.',
+      he: 'הַקָּהָל עוֹנֶה "אָמֵן" — סִיּוּם הַקַּדִּישׁ.'
+    }
+  }
+];
+
+// ============================================================
+// FULL PHRASE TRANSLATIONS — one complete sentence per verse per language
+// Used to display meaningful translation below word-by-word transliteration.
+// Sources: Tehillat Hashem (Chabad), ArtScroll, Koren, Sefaria reference texts.
+// ============================================================
+const fullTranslations = {
+  'kadish-1': {
+    pt: 'Que Seu grande Nome seja exaltado e santificado',
+    en: 'May His great Name be exalted and sanctified',
+    es: 'Que Su gran Nombre sea exaltado y santificado',
+    fr: 'Que Son grand Nom soit exalté et sanctifié',
+    ru: 'Да возвысится и освятится Его великое Имя',
+    he: 'יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמוֹ הַגָּדוֹל',
+  },
+  'kadish-2': {
+    pt: 'no mundo que Ele criou segundo Sua vontade',
+    en: 'in the world that He created according to His will',
+    es: 'en el mundo que Él creó según Su voluntad',
+    fr: 'dans le monde qu\u2019Il a créé selon Sa volonté',
+    ru: 'в мире, который Он создал по Своей воле',
+    he: 'בָּעוֹלָם אֲשֶׁר בָּרָא כִּרְצוֹנוֹ',
+  },
+  'kadish-3': {
+    pt: 'e que faça reinar Seu reino',
+    en: 'and may He establish His kingdom',
+    es: 'y que establezca Su reino',
+    fr: 'et qu\u2019Il établisse Son royaume',
+    ru: 'и да утвердит Он Своё царство',
+    he: 'וְיַמְלִיךְ מַלְכוּתוֹ',
+  },
+  'kadish-4': {
+    pt: 'e que floresça Sua redenção',
+    en: 'and may His redemption sprout forth',
+    es: 'y que florezca Su redención',
+    fr: 'et que Sa rédemption fleurisse',
+    ru: 'и да произрастёт Его избавление',
+    he: 'וְיַצְמִיחַ יְשׁוּעָתוֹ',
+  },
+  'kadish-5': {
+    pt: 'e aproxime Seu Mashiach',
+    en: 'and bring near His Mashiach',
+    es: 'y acerque a Su Mashíaj',
+    fr: 'et qu\u2019Il approche Son Machiah',
+    ru: 'и приблизит Своего Машиаха',
+    he: 'וִיקָרֵב אֶת מְשִׁיחוֹ',
+  },
+  'kadish-6': {
+    pt: 'em suas vidas e em seus dias',
+    en: 'in your lifetime and in your days',
+    es: 'en sus vidas y en sus días',
+    fr: 'de votre vivant et durant vos jours',
+    ru: 'при вашей жизни и в ваши дни',
+    he: 'בְּחַיֵּיכֶם וּבְיָמֵיכֶם',
+  },
+  'kadish-7': {
+    pt: 'e nas vidas de toda a casa de Israel',
+    en: 'and in the lives of all the House of Israel',
+    es: 'y en las vidas de toda la casa de Israel',
+    fr: 'et dans la vie de toute la maison d\u2019Israël',
+    ru: 'и в жизни всего дома Израиля',
+    he: 'וּבְחַיֵּי כָּל בֵּית יִשְׂרָאֵל',
+  },
+  'kadish-8': {
+    pt: 'rapidamente e em tempo próximo, e dizei: Amém',
+    en: 'speedily and soon, and say: Amen',
+    es: 'rápidamente y en tiempo cercano, y decid: Amén',
+    fr: 'rapidement et bientôt, et dites : Amen',
+    ru: 'вскоре и в близкое время, и скажите: Амен',
+    he: 'בִּמְהֵרָה וּבִזְמַן קָרוֹב, וְאִמְרוּ אָמֵן',
+  },
+  'kadish-9': {
+    pt: 'Que Seu grande Nome seja bendito',
+    en: 'May His great Name be blessed',
+    es: 'Que Su gran Nombre sea bendito',
+    fr: 'Que Son grand Nom soit béni',
+    ru: 'Да будет Его великое Имя благословенно',
+    he: 'יְהִי שְׁמוֹ הַגָּדוֹל מְבֹרָךְ',
+  },
+  'kadish-10': {
+    pt: 'para sempre e por toda a eternidade',
+    en: 'forever and for all eternity',
+    es: 'por siempre y por toda la eternidad',
+    fr: 'à jamais et pour toute l\u2019éternité',
+    ru: 'во веки и во веки вечные',
+    he: 'לְעוֹלָם וּלְעוֹלְמֵי עוֹלָמִים',
+  },
+  'kadish-11': {
+    pt: 'Bendito, louvado, glorificado',
+    en: 'Blessed, praised, glorified',
+    es: 'Bendito, alabado, glorificado',
+    fr: 'Béni, loué, glorifié',
+    ru: 'Благословенно, восхваляемо, прославляемо',
+    he: 'בָּרוּךְ, מְשֻׁבָּח, וּמְפֹאָר',
+  },
+  'kadish-12': {
+    pt: 'exaltado, engrandecido e honrado',
+    en: 'exalted, extolled, and honored',
+    es: 'enaltecido, ensalzado y honrado',
+    fr: 'exalté, élevé et honoré',
+    ru: 'возвышено, превознесено и почитаемо',
+    he: 'מְרוֹמָם, מִתְנַשֵּׂא וּמְהֻדָּר',
+  },
+  'kadish-13': {
+    pt: 'elevado e louvado seja o Nome do Santo, bendito é Ele',
+    en: 'uplifted and lauded be the Name of the Holy One, blessed is He',
+    es: 'elevado y alabado sea el Nombre del Santo, bendito es Él',
+    fr: 'élevé et loué soit le Nom du Saint, béni soit-Il',
+    ru: 'вознесено и восхвалено Имя Святого, благословен Он',
+    he: 'יִתְעַלֶּה וְיִתְהַלָּל שְׁמוֹ שֶׁל הַקָּדוֹשׁ, בָּרוּךְ הוּא',
+  },
+  'kadish-14': {
+    pt: 'acima de todas as bênçãos e cânticos',
+    en: 'above all blessings and hymns',
+    es: 'por encima de todas las bendiciones y cánticos',
+    fr: 'au-dessus de toutes les bénédictions et de tous les cantiques',
+    ru: 'превыше всех благословений и песнопений',
+    he: 'מֵעַל כָּל הַבְּרָכוֹת וְהַשִּׁירוֹת',
+  },
+  'kadish-15': {
+    pt: 'louvores e consolos pronunciados no mundo, e dizei: Amém',
+    en: 'praises and consolations spoken in the world, and say: Amen',
+    es: 'alabanzas y consuelos pronunciados en el mundo, y decid: Amén',
+    fr: 'louanges et consolations prononcées dans le monde, et dites : Amen',
+    ru: 'хвалы и утешения, произнесённые в мире, и скажите: Амен',
+    he: 'שְׁבָחוֹת וְנֶחָמוֹת הַנֶּאֱמָרוֹת בָּעוֹלָם, וְאָמְרוּ אָמֵן',
+  },
+  'kadish-16': {
+    pt: 'Que haja grande paz dos céus',
+    en: 'May there be abundant peace from heaven',
+    es: 'Que haya gran paz de los cielos',
+    fr: 'Qu\u2019il y ait une grande paix venant des cieux',
+    ru: 'Да будет великий мир с небес',
+    he: 'יְהִי שָׁלוֹם רַב מִן הַשָּׁמַיִם',
+  },
+  'kadish-17': {
+    pt: 'e boa vida sobre nós e sobre todo Israel, e dizei: Amém',
+    en: 'and good life upon us and upon all Israel, and say: Amen',
+    es: 'y buena vida sobre nosotros y sobre todo Israel, y decid: Amén',
+    fr: 'et une bonne vie sur nous et sur tout Israël, et dites : Amen',
+    ru: 'и доброй жизни нам и всему Израилю, и скажите: Амен',
+    he: 'וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל, וְאָמְרוּ אָמֵן',
+  },
+  'kadish-18': {
+    pt: 'Aquele que faz a paz em Suas alturas',
+    en: 'He who makes peace in His heights',
+    es: 'El que hace la paz en Sus alturas',
+    fr: 'Celui qui fait la paix dans Ses hauteurs',
+    ru: 'Творящий мир в высях Своих',
+    he: 'עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו',
+  },
+  'kadish-19': {
+    pt: 'Ele fará paz sobre nós e sobre todo Israel, e dizei: Amém',
+    en: 'He will make peace upon us and upon all Israel, and say: Amen',
+    es: 'Él hará paz sobre nosotros y sobre todo Israel, y decid: Amén',
+    fr: 'Il fera la paix sur nous et sur tout Israël, et dites : Amen',
+    ru: 'Он сотворит мир нам и всему Израилю, и скажите: Амен',
+    he: 'הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל, וְאָמְרוּ אָמֵן',
+  },
+  // ===== Kadish DeRabanan (additional verses) =====
+  'kadish-dr-1': {
+    pt: 'Sobre Israel e sobre os mestres',
+    en: 'Upon Israel and upon the sages',
+    es: 'Sobre Israel y sobre los maestros',
+    fr: 'Sur Israël et sur les maîtres',
+    ru: 'На Израиль и на мудрецов',
+    he: 'עַל יִשְׂרָאֵל וְעַל הַחֲכָמִים',
+  },
+  'kadish-dr-2': {
+    pt: 'e sobre seus discípulos e sobre todos os discípulos de seus discípulos',
+    en: 'and upon their disciples and upon all the disciples of their disciples',
+    es: 'y sobre sus discípulos y sobre todos los discípulos de sus discípulos',
+    fr: 'et sur leurs disciples et sur tous les disciples de leurs disciples',
+    ru: 'и на их учеников и на всех учеников их учеников',
+    he: 'וְעַל תַּלְמִידֵיהֶם וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהֶם',
+  },
+  'kadish-dr-3': {
+    pt: 'e sobre todos os que se dedicam à Torá',
+    en: 'and upon all who engage in the study of Torah',
+    es: 'y sobre todos los que se dedican a la Torá',
+    fr: 'et sur tous ceux qui s\u2019adonnent à l\u2019étude de la Torah',
+    ru: 'и на всех, кто занимается Торой',
+    he: 'וְעַל כָּל הָעוֹסְקִים בַּתּוֹרָה',
+  },
+  'kadish-dr-4': {
+    pt: 'neste lugar e em todo e qualquer lugar',
+    en: 'in this place and in every place',
+    es: 'en este lugar y en todo lugar',
+    fr: 'en ce lieu et en tout autre lieu',
+    ru: 'в этом месте и во всяком месте',
+    he: 'בַּמָּקוֹם הַזֶּה וּבְכָל מָקוֹם וּמָקוֹם',
+  },
+  'kadish-dr-5': {
+    pt: 'que haja para eles e para vós grande paz',
+    en: 'may there be upon them and upon you abundant peace',
+    es: 'que haya para ellos y para vosotros gran paz',
+    fr: 'qu\u2019il y ait pour eux et pour vous une grande paix',
+    ru: 'да будет им и вам великий мир',
+    he: 'יְהִי לָהֶם וְלָכֶם שָׁלוֹם רַב',
+  },
+  'kadish-dr-6': {
+    pt: 'graça, bondade e misericórdia',
+    en: 'grace, kindness, and compassion',
+    es: 'gracia, bondad y misericordia',
+    fr: 'grâce, bonté et miséricorde',
+    ru: 'милость, доброта и сострадание',
+    he: 'חֵן וָחֶסֶד וְרַחֲמִים',
+  },
+  'kadish-dr-7': {
+    pt: 'vida longa e sustento abundante',
+    en: 'long life and ample sustenance',
+    es: 'vida larga y sustento abundante',
+    fr: 'longue vie et subsistance abondante',
+    ru: 'долгой жизни и обильного пропитания',
+    he: 'וְחַיִּים אֲרֻכִּים וּמָזוֹן מְרֻבֶּה',
+  },
+  'kadish-dr-8': {
+    pt: 'e redenção da parte de seu Pai que está nos céus, e dizei: Amém',
+    en: 'and salvation from their Father in heaven, and say: Amen',
+    es: 'y salvación de su Padre que está en los cielos, y decid: Amén',
+    fr: 'et délivrance de leur Père qui est aux cieux, et dites : Amen',
+    ru: 'и спасение от их Отца, что на небесах, и скажите: Амен',
+    he: 'וִישׁוּעָה מִלִּפְנֵי אֲבִיהֶם שֶׁבַּשָּׁמַיִם, וְאָמְרוּ אָמֵן',
+  },
+};
+
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  recordings: {},
+  blobUrls: {},
+  timestamps: {},
+  isPlaying: false,
+  isRecording: false,
+  recordingVerseId: null,
+  mediaRecorder: null,
+  recordedChunks: [],
+  currentVerse: 0,
+  speed: 1,
+  timer: null,
+  wordTimers: [],
+  elapsed: 0,
+  marking: false,
+  markingVerseId: null,
+  markingWordIdx: 0,
+  markingTimestamps: [],
+};
+
+const audioPlayer = document.getElementById('audioPlayer');
+
+// Surface audio errors so we know what's failing
+audioPlayer.addEventListener('error', (e) => {
+  const err = audioPlayer.error;
+  console.error('Audio error:', err);
+  if (err) showToast('Erro de áudio: ' + (err.message || 'código ' + err.code));
+});
+
+// ============================================================
+// PLAYABLE URL — iOS Safari can't reliably play data URLs for audio,
+// so we always convert to a blob URL before playback
+// ============================================================
+function getPlayableUrl(verseId) {
+  // Already cached blob URL
+  if (state.blobUrls[verseId]) return state.blobUrls[verseId];
+  // Convert stored data URL → blob → object URL
+  const dataUrl = state.recordings[verseId];
+  if (!dataUrl) return null;
+  try {
+    const [meta, b64] = dataUrl.split(',');
+    const mimeMatch = meta.match(/data:([^;]+)/);
+    const mime = mimeMatch ? mimeMatch[1] : 'audio/webm';
+    const byteStr = atob(b64);
+    const buf = new ArrayBuffer(byteStr.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < byteStr.length; i++) view[i] = byteStr.charCodeAt(i);
+    const blob = new Blob([buf], { type: mime });
+    const url = URL.createObjectURL(blob);
+    state.blobUrls[verseId] = url;
+    return url;
+  } catch (e) {
+    console.error('Blob conversion failed:', e);
+    return null;
+  }
+}
+
+// ============================================================
+// STORAGE (graceful fallback if window.storage doesn't exist)
+// ============================================================
+state.preloadedAudio = {};        // verseId -> URL of audio file (from server)
+state.preloadedTimestamps = {};   // verseId -> [ts1, ts2, ...] in ms
+
+// Load audio manifest from server (if exists)
+// Allows recordings to be shared with all users via Netlify deployment
+async function loadAudioManifest() {
+  // Skip if running from file:// (local file open) — fetch doesn't work there
+  if (window.location.protocol === 'file:') return;
+  try {
+    const res = await fetch('./audio/manifest.json', { cache: 'no-cache' });
+    if (!res.ok) return;
+    const manifest = await res.json();
+    Object.entries(manifest).forEach(([id, entry]) => {
+      // Special keys: _full_yatom and _full_derabanan point to a single audio file
+      // containing the whole prayer. Used when user records one continuous take.
+      if (id === '_full_yatom' && typeof entry === 'string') {
+        state.fullPrayerAudio = state.fullPrayerAudio || {};
+        state.fullPrayerAudio.yatom = './audio/' + entry;
+        return;
+      }
+      if (id === '_full_derabanan' && typeof entry === 'string') {
+        state.fullPrayerAudio = state.fullPrayerAudio || {};
+        state.fullPrayerAudio.derabanan = './audio/' + entry;
+        return;
+      }
+      if (id.startsWith('_')) return;
+      if (typeof entry === 'string') {
+        state.preloadedAudio[id] = './audio/' + entry;
+      } else if (entry && typeof entry === 'object') {
+        if (entry.src) state.preloadedAudio[id] = './audio/' + entry.src;
+        if (Array.isArray(entry.timestamps)) state.preloadedTimestamps[id] = entry.timestamps;
+      }
+    });
+    const count = Object.keys(state.preloadedAudio).length;
+    const hasFull = !!(state.fullPrayerAudio && (state.fullPrayerAudio.yatom || state.fullPrayerAudio.derabanan));
+    if (count > 0 || hasFull) {
+      console.log(`[Tefilá] Audio detected: ${count} per-verse, full=${hasFull}`);
+      updateAllVerseStatuses();
+      // Visible diagnostic — user sees this on load if manifest worked
+      setTimeout(() => {
+        if (hasFull) {
+          const which = state.fullPrayerAudio.yatom ? 'Yatom' : 'DeRabanan';
+          showToast('✓ Gravação completa detectada (' + which + ')');
+        } else if (count > 0) {
+          showToast('✓ ' + count + ' versos com áudio detectados');
+        }
+      }, 1500);
+    }
+  } catch (e) {
+    // No manifest or fetch error — app falls back to TTS. Silent.
+  }
+}
+// Kick off manifest loading immediately (non-blocking)
+loadAudioManifest();
+
+async function loadFromStorage() {
+  if (typeof window.storage === 'undefined') return;
+  for (const v of verses) {
+    try {
+      const audioRes = await window.storage.get(`audio-${v.id}`);
+      if (audioRes) state.recordings[v.id] = audioRes.value;
+    } catch (e) {}
+    try {
+      const tsRes = await window.storage.get(`timestamps-${v.id}`);
+      if (tsRes) state.timestamps[v.id] = JSON.parse(tsRes.value);
+    } catch (e) {}
+  }
+  updateAllVerseStatuses();
+}
+async function saveAudio(verseId, dataURL) {
+  state.recordings[verseId] = dataURL;
+  if (typeof window.storage === 'undefined') return;
+  try { await window.storage.set(`audio-${verseId}`, dataURL); }
+  catch (e) { showToast('Áudio salvo na sessão (sem persistência local)'); }
+}
+async function saveTimestamps(verseId, timestamps) {
+  state.timestamps[verseId] = timestamps;
+  if (typeof window.storage === 'undefined') return;
+  try { await window.storage.set(`timestamps-${verseId}`, JSON.stringify(timestamps)); }
+  catch (e) {}
+}
+async function deleteVerseData(verseId) {
+  delete state.recordings[verseId];
+  delete state.timestamps[verseId];
+  if (typeof window.storage === 'undefined') return;
+  try {
+    await window.storage.delete(`audio-${verseId}`);
+    await window.storage.delete(`timestamps-${verseId}`);
+  } catch (e) {}
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+
+// Normalize verses: split any entries with \u00A0 (non-breaking space) into
+// individual words. This ensures TTS speaks one word at a time and visual
+// highlights advance per word. Some manually-entered verses had grouped phrases
+// like "מִן\u00A0כָּל" which should be two separate words.
+function normalizeVerseToSingleWords(v) {
+  const newHebrew = [];
+  const newTranslit = {};
+  const newMerged = {};
+  const newGlosses = {};
+  const newDurations = [];
+  if (v.translit) Object.keys(v.translit).forEach(l => newTranslit[l] = []);
+  if (v.merged) Object.keys(v.merged).forEach(l => newMerged[l] = []);
+  if (v.glosses) Object.keys(v.glosses).forEach(l => newGlosses[l] = []);
+
+  v.hebrew.forEach((heb, i) => {
+    const hebParts = heb.split('\u00A0').filter(s => s.length > 0);
+    if (hebParts.length === 0) hebParts.push(heb);
+    hebParts.forEach((hebPart, pi) => {
+      newHebrew.push(hebPart);
+      if (v.translit) {
+        Object.keys(v.translit).forEach(l => {
+          const orig = (v.translit[l] || [])[i] || '';
+          if (!orig) { newTranslit[l].push(''); return; }
+          const parts = orig.split('\u00A0').filter(s => s.length > 0);
+          newTranslit[l].push(parts[pi] !== undefined ? parts[pi] : '');
+        });
+      }
+      if (v.merged) {
+        Object.keys(v.merged).forEach(l => {
+          const orig = (v.merged[l] || [])[i] || '';
+          if (!orig) { newMerged[l].push(''); return; }
+          const parts = orig.split('\u00A0').filter(s => s.length > 0);
+          newMerged[l].push(parts[pi] !== undefined ? parts[pi] : '');
+        });
+      }
+      if (v.glosses) {
+        Object.keys(v.glosses).forEach(l => {
+          const orig = (v.glosses[l] || [])[i] || '';
+          newGlosses[l].push(pi === 0 ? orig : '');
+        });
+      }
+      newDurations.push(Math.round((v.durations[i] || 600) / hebParts.length));
+    });
+  });
+  v.hebrew = newHebrew;
+  if (v.translit) v.translit = newTranslit;
+  if (v.merged) v.merged = newMerged;
+  if (v.glosses) v.glosses = newGlosses;
+  v.durations = newDurations;
+}
+verses.forEach(normalizeVerseToSingleWords);
+
+const main = document.getElementById('main');
+verses.forEach((v, vi) => {
+  const verseEl = document.createElement('div');
+  verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
+  verseEl.dataset.idx = vi;
+  verseEl.dataset.id = v.id;
+
+  // Decorative line with audio dot
+  const line = document.createElement('div');
+  line.className = 'vm-line';
+  line.innerHTML = '<span class="vm-dot"></span>';
+  verseEl.appendChild(line);
+
+  // Hebrew (line 1 - dominant, 28px)
+  const heb = document.createElement('div');
+  heb.className = 'hebrew';
+  v.hebrew.forEach((w, wi) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.dataset.vi = vi;
+    span.dataset.wi = wi;
+    span.textContent = w;
+    span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+    heb.appendChild(span);
+    heb.appendChild(document.createTextNode(' '));
+  });
+  verseEl.appendChild(heb);
+
+  // Transliteration (line 2 - functional, 19px italic)
+  const tr = document.createElement('div');
+  tr.className = 'translit';
+  const translitArr = (v.translit && v.translit[state.lang]) || (v.translit && v.translit.pt) || [];
+  translitArr.forEach((w, wi) => {
+    const span = document.createElement('span');
+    span.className = 'twrd';
+    span.dataset.vi = vi;
+    span.dataset.wi = wi;
+    span.textContent = w;
+    span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+    tr.appendChild(span);
+    tr.appendChild(document.createTextNode(' '));
+  });
+  if (translitArr.length === 0) tr.style.display = 'none'; // Hide for Hebrew speakers
+  verseEl.appendChild(tr);
+
+  // Merged translation (line 3 - meaning, reads as natural sentence)
+  const pt = document.createElement('div');
+  pt.className = 'pt-merged';
+  if (state.lang === 'he') pt.style.fontFamily = "'Frank Ruhl Libre', serif";
+
+  // Use full phrase translation when available (cleaner meaning),
+  // otherwise fall back to word-by-word merged array.
+  const fullT = (typeof fullTranslations !== 'undefined' && fullTranslations[v.id])
+    ? (fullTranslations[v.id][state.lang] || fullTranslations[v.id].pt)
+    : null;
+
+  if (fullT) {
+    // Single phrase per verse — reads as natural sentence
+    const span = document.createElement('span');
+    span.className = 'phrase';
+    span.dataset.vi = vi;
+    span.dataset.wi = 0;
+    span.textContent = fullT;
+    pt.appendChild(span);
+  } else {
+    // Legacy fallback — word-by-word
+    const mergedArr = (v.merged && v.merged[state.lang]) || (v.merged && v.merged.pt) || [];
+    mergedArr.forEach((phrase, wi) => {
+      const span = document.createElement('span');
+      span.className = 'phrase';
+      span.dataset.vi = vi;
+      span.dataset.wi = wi;
+      span.textContent = phrase;
+      span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+      pt.appendChild(span);
+      pt.appendChild(document.createTextNode(' '));
+    });
+  }
+  verseEl.appendChild(pt);
+
+  // Tip — language-aware
+  if (v.tip) {
+    const tipText = (typeof v.tip === 'object') ? (v.tip[state.lang] || v.tip.pt) : v.tip;
+    const tip = document.createElement('div');
+    tip.className = 'tip';
+    tip.innerHTML = `<span class="tip-icon">✦</span><span>${tipText}</span>`;
+    verseEl.appendChild(tip);
+  }
+
+  // Community responds — language-aware
+  if (v.communityResponds) {
+    const respText = (typeof v.communityResponds === 'object') ? (v.communityResponds[state.lang] || v.communityResponds.pt) : v.communityResponds;
+    const resp = document.createElement('div');
+    resp.className = 'community-respond';
+    resp.dataset.communityRespond = '1';
+    resp.textContent = respText;
+    verseEl.appendChild(resp);
+  }
+
+  // Studio strip
+  const strip = document.createElement('div');
+  strip.className = 'studio-strip';
+  strip.innerHTML = `
+    <div class="status" data-status="${v.id}">Sem gravação</div>
+    <button class="studio-btn rec-btn" data-action="record" data-id="${v.id}">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg>
+      <span class="btn-label">Gravar</span>
+    </button>
+    <button class="studio-btn upload-btn" data-action="upload" data-id="${v.id}">
+      <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zM5 18h14v2H5z"/></svg>
+      Carregar
+    </button>
+    <button class="studio-btn listen-btn" data-action="listen" data-id="${v.id}" disabled>
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      Ouvir
+    </button>
+    <button class="studio-btn mark-btn" data-action="mark" data-id="${v.id}" disabled>
+      ✦ Marcar
+    </button>
+    <button class="studio-btn del-btn" data-action="delete" data-id="${v.id}" disabled>✕</button>
+  `;
+  verseEl.appendChild(strip);
+
+  // Calibration button — visible when verse has pre-loaded audio (from server manifest)
+  // Lets non-developers mark word timings without editing JSON
+  const calibBtn = document.createElement('button');
+  calibBtn.className = 'calibrate-btn';
+  calibBtn.dataset.id = v.id;
+  calibBtn.innerHTML = '🎯 <span>Calibrar sincronia</span>';
+  calibBtn.style.display = 'none';
+  calibBtn.addEventListener('click', () => startMarkMode(v.id));
+  verseEl.appendChild(calibBtn);
+
+  main.appendChild(verseEl);
+});
+
+// Studio button delegation
+main.addEventListener('click', (e) => {
+  const btn = e.target.closest('.studio-btn');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+  if (action === 'record') toggleRecord(id);
+  if (action === 'upload') triggerUpload(id);
+  if (action === 'listen') listenRecording(id);
+  if (action === 'mark') startMarkMode(id);
+  if (action === 'delete') deleteRecording(id);
+});
+
+function updateVerseStatus(verseId) {
+  const verseEl = document.querySelector(`.verse[data-id="${verseId}"]`);
+  if (!verseEl) return;
+  const status = verseEl.querySelector(`[data-status="${verseId}"]`);
+  const listenBtn = verseEl.querySelector('.listen-btn');
+  const markBtn = verseEl.querySelector('.mark-btn');
+  const delBtn = verseEl.querySelector('.del-btn');
+  const calibBtn = verseEl.querySelector('.calibrate-btn');
+  const hasAudio = !!state.recordings[verseId];
+  const hasTimestamps = !!state.timestamps[verseId];
+  const hasPreloaded = !!state.preloadedAudio[verseId];
+  const hasPreciseTimestamps = !!(state.preloadedTimestamps[verseId] && state.preloadedTimestamps[verseId].length);
+  verseEl.classList.toggle('has-audio', (hasAudio && hasTimestamps) || hasPreloaded);
+
+  // Calibrate button: show when there's pre-loaded audio AND no precise timestamps yet (or estimated only)
+  if (calibBtn) {
+    if (hasPreloaded && !hasPreciseTimestamps && !hasAudio) {
+      calibBtn.style.display = 'inline-flex';
+    } else {
+      calibBtn.style.display = 'none';
+    }
+  }
+
+  if (!status) return;
+  if (hasPreloaded && !hasAudio) {
+    status.textContent = hasPreciseTimestamps ? '♪ Gravação calibrada' : '♪ Gravação (sincronia estimada)';
+    if (listenBtn) listenBtn.disabled = false;
+    if (markBtn) markBtn.disabled = false;
+    if (delBtn) delBtn.disabled = true;
+  } else if (!hasAudio) {
+    status.textContent = 'Sem gravação';
+    if (listenBtn) listenBtn.disabled = true;
+    if (markBtn) markBtn.disabled = true;
+    if (delBtn) delBtn.disabled = true;
+  } else if (!hasTimestamps) {
+    status.textContent = '◐ Áudio pronto · falta marcar';
+    if (listenBtn) listenBtn.disabled = false;
+    if (markBtn) markBtn.disabled = false;
+    if (delBtn) delBtn.disabled = false;
+  } else {
+    status.textContent = '● Sincronizado';
+    if (listenBtn) listenBtn.disabled = false;
+    if (markBtn) markBtn.disabled = false;
+    if (delBtn) delBtn.disabled = false;
+  }
+}
+function updateAllVerseStatuses() {
+  verses.forEach(v => updateVerseStatus(v.id));
+}
+
+// ============================================================
+// RECORDING
+// ============================================================
+async function toggleRecord(verseId) {
+  if (state.isRecording && state.recordingVerseId === verseId) { stopRecording(); return; }
+  if (state.isRecording) { showToast('Pare a gravação atual primeiro'); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    state.recordedChunks = [];
+    state.mediaRecorder = new MediaRecorder(stream);
+    state.mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) state.recordedChunks.push(e.data); };
+    state.mediaRecorder.onstop = async () => {
+      const blob = new Blob(state.recordedChunks, { type: 'audio/webm' });
+      const reader = new FileReader();
+      reader.onload = async () => {
+        await saveAudio(verseId, reader.result);
+        delete state.timestamps[verseId];
+        if (typeof window.storage !== 'undefined') {
+          try { await window.storage.delete(`timestamps-${verseId}`); } catch (e) {}
+        }
+        updateVerseStatus(verseId);
+        showToast('Gravado · agora marque as palavras');
+      };
+      reader.readAsDataURL(blob);
+      stream.getTracks().forEach(t => t.stop());
+    };
+    state.mediaRecorder.start();
+    state.isRecording = true;
+    state.recordingVerseId = verseId;
+    updateRecordButton(verseId, true);
+  } catch (e) {
+    showToast('Microfone bloqueado · use "Carregar" pra subir áudio');
+    console.error(e);
+  }
+}
+function stopRecording() {
+  if (state.mediaRecorder && state.mediaRecorder.state !== 'inactive') state.mediaRecorder.stop();
+  updateRecordButton(state.recordingVerseId, false);
+  state.isRecording = false;
+  state.recordingVerseId = null;
+}
+function updateRecordButton(verseId, recording) {
+  const btn = document.querySelector(`.verse[data-id="${verseId}"] .rec-btn`);
+  if (!btn) return;
+  btn.classList.toggle('recording', recording);
+  btn.querySelector('.btn-label').textContent = recording ? 'Parar' : 'Gravar';
+}
+function listenRecording(verseId) {
+  const url = getPlayableUrl(verseId);
+  if (!url) { showToast('Áudio não encontrado'); return; }
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = state.speed;
+  const p = audioPlayer.play();
+  if (p && p.catch) p.catch(err => {
+    console.error('Play failed:', err);
+    showToast('Não tocou: ' + err.message);
+  });
+}
+
+// ============================================================
+// UPLOAD AUDIO (Voice Memos / external file)
+// ============================================================
+function triggerUpload(verseId) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'audio/*,.m4a,.mp3,.wav,.webm,.ogg';
+  input.style.display = 'none';
+  input.onchange = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    // Size check - storage limit is 5MB
+    if (file.size > 4.5 * 1024 * 1024) {
+      showToast('Arquivo muito grande (máx 4.5MB)');
+      return;
+    }
+    showToast('Carregando áudio...');
+
+    // 1) Create blob URL immediately for iOS-safe playback
+    if (state.blobUrls[verseId]) URL.revokeObjectURL(state.blobUrls[verseId]);
+    state.blobUrls[verseId] = URL.createObjectURL(file);
+
+    // 2) Also persist as data URL so it survives reload
+    const reader = new FileReader();
+    reader.onload = async () => {
+      state.recordings[verseId] = reader.result;
+      try { await saveAudio(verseId, reader.result); } catch (err) {}
+      delete state.timestamps[verseId];
+      if (typeof window.storage !== 'undefined') {
+        try { await window.storage.delete(`timestamps-${verseId}`); } catch (e) {}
+      }
+      updateVerseStatus(verseId);
+      showToast('Áudio carregado · agora marque as palavras');
+    };
+    reader.onerror = () => showToast('Erro ao ler o arquivo');
+    reader.readAsDataURL(file);
+  };
+  document.body.appendChild(input);
+  input.click();
+  setTimeout(() => input.remove(), 1000);
+}
+async function deleteRecording(verseId) {
+  if (!confirm('Apagar gravação e marcação deste verso?')) return;
+  await deleteVerseData(verseId);
+  updateVerseStatus(verseId);
+  showToast('Apagado');
+}
+
+// ============================================================
+// MARK MODE
+// ============================================================
+function startMarkMode(verseId) {
+  const verse = verses.find(v => v.id === verseId);
+  if (!verse) return;
+  // Use local recording if available, otherwise fall back to pre-loaded audio
+  let url = null;
+  if (state.recordings[verseId]) {
+    url = getPlayableUrl(verseId);
+  } else if (state.preloadedAudio[verseId]) {
+    url = state.preloadedAudio[verseId];
+  }
+  if (!url) { showToast('Sem áudio para calibrar'); return; }
+  state.marking = true;
+  state.markingVerseId = verseId;
+  state.markingWordIdx = 0;
+  state.markingTimestamps = [];
+  document.body.classList.add('marking');
+  const verseEl = document.querySelector(`.verse[data-id="${verseId}"]`);
+  verseEl.classList.add('marking-active');
+  verseEl.querySelectorAll('.word').forEach(w => w.classList.remove('mark-target', 'mark-done', 'active'));
+  updateMarkBanner();
+  highlightMarkTarget();
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = 1;
+  audioPlayer.currentTime = 0;
+  const p = audioPlayer.play();
+  if (p && p.catch) p.catch(err => {
+    console.error('Mark play failed:', err);
+    showToast('Áudio não tocou: ' + err.message);
+    cancelMarkMode();
+  });
+  audioPlayer.onended = () => finishMarking(true);
+}
+function highlightMarkTarget() {
+  const verseEl = document.querySelector(`.verse[data-id="${state.markingVerseId}"]`);
+  if (!verseEl) return;
+  verseEl.querySelectorAll('.word').forEach((w, i) => {
+    w.classList.remove('mark-target');
+    if (i === state.markingWordIdx) w.classList.add('mark-target');
+  });
+}
+function updateMarkBanner() {
+  const verse = verses.find(v => v.id === state.markingVerseId);
+  document.getElementById('markProgress').textContent =
+    `${state.markingWordIdx} de ${verse.hebrew.length} marcadas`;
+}
+function tapMarkWord(vi, wi) {
+  if (!state.marking) return;
+  if (verses[vi].id !== state.markingVerseId) return;
+  if (wi !== state.markingWordIdx) return;
+  const elapsed = audioPlayer.currentTime * 1000;
+  state.markingTimestamps.push(Math.round(elapsed));
+  const verseEl = document.querySelector(`.verse[data-id="${state.markingVerseId}"]`);
+  const wordEl = verseEl.querySelector(`.word[data-wi="${wi}"]`);
+  wordEl.classList.remove('mark-target');
+  wordEl.classList.add('mark-done');
+  state.markingWordIdx++;
+  updateMarkBanner();
+  if (state.markingWordIdx >= verses[vi].hebrew.length) finishMarking(false);
+  else highlightMarkTarget();
+}
+async function finishMarking(incomplete) {
+  const verseId = state.markingVerseId;
+  audioPlayer.pause();
+  audioPlayer.onended = null;
+  const verse = verses.find(v => v.id === verseId);
+  if (incomplete && state.markingTimestamps.length < verse.hebrew.length) {
+    showToast(`Faltam ${verse.hebrew.length - state.markingTimestamps.length} palavras. Tente de novo`);
+  } else {
+    const ts = state.markingTimestamps.slice();
+    await saveTimestamps(verseId, ts);
+    // If this verse uses pre-loaded audio (no local recording), show JSON export
+    if (!state.recordings[verseId] && state.preloadedAudio[verseId]) {
+      showCalibrationExport(verseId, ts);
+    } else {
+      showToast('Sincronização salva ✦');
+    }
+    // Also update preloadedTimestamps so app uses precise sync immediately
+    state.preloadedTimestamps[verseId] = ts;
+  }
+  cancelMarkMode();
+  updateVerseStatus(verseId);
+}
+
+function showCalibrationExport(verseId, timestamps) {
+  // Get current manifest entry shape (just the audio filename)
+  const audioUrl = state.preloadedAudio[verseId] || '';
+  const filename = audioUrl.replace('./audio/', '');
+  const jsonLine = `  "${verseId}": { "src": "${filename}", "timestamps": [${timestamps.join(', ')}] }`;
+  const modal = document.getElementById('calibrationExportModal');
+  if (!modal) return;
+  document.getElementById('calibVerseId').textContent = verseId;
+  document.getElementById('calibJson').textContent = jsonLine;
+  modal.classList.add('show');
+}
+function cancelMarkMode() {
+  state.marking = false;
+  document.body.classList.remove('marking');
+  document.querySelectorAll('.verse').forEach(v => v.classList.remove('marking-active'));
+  document.querySelectorAll('.word').forEach(w => w.classList.remove('mark-target', 'mark-done'));
+  if (!audioPlayer.paused) audioPlayer.pause();
+  state.markingVerseId = null;
+}
+document.getElementById('cancelMarkBtn').addEventListener('click', cancelMarkMode);
+
+// Calibration export modal handlers
+document.getElementById('calibCloseBtn').addEventListener('click', () => {
+  document.getElementById('calibrationExportModal').classList.remove('show');
+});
+document.getElementById('calibCopyBtn').addEventListener('click', async () => {
+  const text = document.getElementById('calibJson').textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Copiado! Cole no manifest.json e re-suba no Netlify');
+    document.getElementById('calibrationExportModal').classList.remove('show');
+  } catch (e) {
+    // Fallback: select text for manual copy
+    const pre = document.getElementById('calibJson');
+    const range = document.createRange();
+    range.selectNode(pre);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    showToast('Selecionado — pressione Ctrl/Cmd+C pra copiar');
+  }
+});
+
+// ============================================================
+// WORD CLICK (popup or mark depending on mode)
+// ============================================================
+function handleWordClick(e, vi, wi) {
+  if (state.marking) tapMarkWord(vi, wi);
+  else showPopup(e, vi, wi);
+}
+
+// ============================================================
+// PLAYBACK
+// ============================================================
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const nowReading = document.getElementById('nowReading');
+const timeDisplay = document.getElementById('timeDisplay');
+const progressFill = document.getElementById('progressFill');
+
+function formatTime(ms) {
+  const s = Math.floor(ms / 1000);
+  return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+}
+function updatePictograms(verseIdx) {
+  const v = verses[verseIdx];
+  if (!v) return;
+  document.querySelectorAll('.picto').forEach(p => {
+    p.classList.toggle('active', v.pictograms.includes(p.dataset.pic));
+  });
+}
+function dimOtherVerses(activeIdx) {
+  document.querySelectorAll('.verse').forEach((el, i) => {
+    el.classList.toggle('dimmed', i !== activeIdx && state.isPlaying);
+  });
+}
+function clearActiveWords() {
+  document.querySelectorAll('.word.active, .twrd.active, .phrase.active').forEach(el => el.classList.remove('active'));
+}
+function highlightWord(vi, wi) {
+  clearActiveWords();
+  const hebEl = document.querySelector(`.word[data-vi="${vi}"][data-wi="${wi}"]`);
+  const trEl = document.querySelector(`.twrd[data-vi="${vi}"][data-wi="${wi}"]`);
+  const phEl = document.querySelector(`.phrase[data-vi="${vi}"][data-wi="${wi}"]`);
+  if (hebEl) {
+    hebEl.classList.add('active');
+    // Auto-scroll: keep active word in upper-middle of viewport
+    const rect = hebEl.getBoundingClientRect();
+    const safeTop = 180;
+    const safeBottom = window.innerHeight - 220;
+    if (rect.top < safeTop || rect.bottom > safeBottom) {
+      hebEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  if (trEl) trEl.classList.add('active');
+  if (phEl) phEl.classList.add('active');
+  const tr = (verses[vi].translit && (verses[vi].translit[state.lang] || verses[vi].translit.pt)) || [];
+  nowReading.textContent = tr[wi] || verses[vi].hebrew[wi] || '';
+}
+function clearWordTimers() {
+  state.wordTimers.forEach(t => clearTimeout(t));
+  state.wordTimers = [];
+}
+function playVerse(vi, onComplete) {
+  const v = verses[vi];
+  // Skip DeRabanan-only verses when in Yatom mode
+  if (v.inDeRabanan && state.kadishType !== 'derabanan') {
+    onComplete();
+    return;
+  }
+  // Auto-scroll: bring this verse into view at start
+  const verseEl = document.querySelector(`.verse[data-id="${v.id}"]`);
+  if (verseEl) verseEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const hasReal = !!(state.recordings[v.id] && state.timestamps[v.id]);
+  const hasPreloaded = !!state.preloadedAudio[v.id];
+  const hasTTS = ('speechSynthesis' in window) && !state.disableTTS;
+  updatePictograms(vi);
+  dimOtherVerses(vi);
+  if (hasReal) {
+    const url = getPlayableUrl(v.id);
+    audioPlayer.src = url;
+    audioPlayer.playbackRate = state.speed;
+    audioPlayer.currentTime = 0;
+    const p = audioPlayer.play();
+    if (p && p.catch) p.catch(err => {
+      console.error('Verse play failed:', err);
+      showToast('Áudio não tocou: ' + err.message);
+    });
+    clearWordTimers();
+    state.timestamps[v.id].forEach((ts, wi) => {
+      const timer = setTimeout(() => { if (state.isPlaying) highlightWord(vi, wi); }, ts / state.speed);
+      state.wordTimers.push(timer);
+    });
+    audioPlayer.onended = () => { clearWordTimers(); onComplete(); };
+  } else if (hasPreloaded) {
+    // Pre-loaded audio from server (e.g. recorded by chazan, uploaded to ./audio/)
+    audioPlayer.src = state.preloadedAudio[v.id];
+    audioPlayer.playbackRate = state.speed;
+    audioPlayer.currentTime = 0;
+    const p = audioPlayer.play();
+    if (p && p.catch) p.catch(err => {
+      console.error('Preloaded audio failed:', err);
+      // Fall back to TTS or silent
+      if (hasTTS) { /* will be handled by onComplete + retry */ }
+      onComplete();
+    });
+    clearWordTimers();
+    // Use timestamps from manifest if provided, otherwise estimate from durations
+    let timestamps = state.preloadedTimestamps[v.id];
+    if (!timestamps) {
+      timestamps = [0];
+      let cum = 0;
+      for (let i = 0; i < v.durations.length - 1; i++) {
+        cum += v.durations[i];
+        timestamps.push(cum);
+      }
+    }
+    timestamps.forEach((ts, wi) => {
+      const timer = setTimeout(() => { if (state.isPlaying) highlightWord(vi, wi); }, ts / state.speed);
+      state.wordTimers.push(timer);
+    });
+    audioPlayer.onended = () => { clearWordTimers(); onComplete(); };
+  } else if (hasTTS) {
+    // Word-by-word TTS: each word's onend triggers the next — guaranteed sync
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+    clearWordTimers();
+    let widx = 0;
+    const speakNextWord = () => {
+      if (!state.isPlaying) return;
+      if (widx >= v.hebrew.length) { onComplete(); return; }
+      highlightWord(vi, widx);
+      const dur = v.durations[widx] / state.speed;
+      state.elapsed += dur;
+      timeDisplay.textContent = formatTime(state.elapsed);
+      const utter = new SpeechSynthesisUtterance(v.hebrew[widx]);
+      utter.lang = 'he-IL';
+      utter.rate = Math.max(0.25, Math.min(1.2, (state.speed || 1) * 0.4));
+      utter.pitch = 1;
+      let advanced = false;
+      const advance = () => {
+        if (advanced) return;
+        advanced = true;
+        widx++;
+        setTimeout(speakNextWord, 450 / (state.speed || 1)); // breath between words, scales with speed
+      };
+      utter.onend = advance;
+      utter.onerror = advance;
+      try {
+        window.speechSynthesis.speak(utter);
+        // Safety net: if TTS never fires onend, advance after estimated duration + 2s
+        setTimeout(advance, dur + 2000);
+      } catch (e) {
+        advance();
+      }
+    };
+    speakNextWord();
+  } else {
+    let wi = 0;
+    const playWord = () => {
+      if (!state.isPlaying) return;
+      if (wi >= v.hebrew.length) { onComplete(); return; }
+      highlightWord(vi, wi);
+      const dur = v.durations[wi] / state.speed;
+      state.elapsed += dur;
+      timeDisplay.textContent = formatTime(state.elapsed);
+      wi++;
+      state.timer = setTimeout(playWord, dur);
+    };
+    playWord();
+  }
+}
+function play() {
+  state.isPlaying = true;
+  playIcon.innerHTML = '<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
+  if (state.currentVerse >= verses.length) { state.currentVerse = 0; state.elapsed = 0; }
+
+  // Full Prayer Mode: if manifest has _full_yatom or _full_derabanan, play it as ONE audio
+  const fullUrl = state.fullPrayerAudio && state.fullPrayerAudio[state.kadishType];
+  if (fullUrl) {
+    // Reset to start so the full audio plays from beginning
+    state.currentVerse = 0;
+    state.elapsed = 0;
+    playFullPrayer(fullUrl);
+    return;
+  }
+
+  const playFromVerse = (vi) => {
+    if (!state.isPlaying || vi >= verses.length) {
+      stop();
+      nowReading.textContent = 'Concluído · Amen';
+      return;
+    }
+    state.currentVerse = vi;
+    // If repeat is enabled and we just started this verse, initialize the remaining counter
+    if (state.repeatN > 0 && state.repeatRemaining === 0) {
+      state.repeatRemaining = state.repeatN;
+    }
+    playVerse(vi, () => {
+      // Verse finished — should we repeat?
+      if (state.repeatN > 0 && state.repeatRemaining > 1) {
+        state.repeatRemaining--;
+        showToast(`Repetição ${state.repeatN - state.repeatRemaining + 1} de ${state.repeatN}`);
+        setTimeout(() => playFromVerse(vi), 700 / state.speed);
+      } else {
+        state.repeatRemaining = 0;
+        // Modo Treino — pause after each verse so user can repeat
+        if (state.modoTreino && vi < verses.length - 1) {
+          stop();
+          nowReading.textContent = `Pausado · toque ▶ para o próximo verso (${vi + 2}/${verses.length})`;
+          state.currentVerse = vi + 1;
+          return;
+        }
+        setTimeout(() => playFromVerse(vi + 1), 600 / state.speed);
+      }
+    });
+  };
+  playFromVerse(state.currentVerse);
+  const totalEst = verses.reduce((sum, v) => {
+    if (state.recordings[v.id] && state.timestamps[v.id]) {
+      return sum + (state.timestamps[v.id][state.timestamps[v.id].length - 1] + 800);
+    }
+    return sum + v.durations.reduce((a, b) => a + b, 0) + 600;
+  }, 0);
+  const progressInterval = setInterval(() => {
+    if (!state.isPlaying) { clearInterval(progressInterval); return; }
+    state.elapsed += 100;
+    progressFill.style.width = Math.min(100, (state.elapsed / totalEst) * 100) + '%';
+    timeDisplay.textContent = formatTime(state.elapsed);
+  }, 100);
+}
+function pause() {
+  state.isPlaying = false;
+  playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  clearTimeout(state.timer);
+  clearWordTimers();
+  audioPlayer.pause();
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  dimOtherVerses(-1);
+}
+
+// Full prayer mode: plays ONE audio file containing the whole Kadish.
+// Word/verse highlights advance based on cumulative estimated durations.
+function playFullPrayer(url) {
+  clearWordTimers();
+  showToast('▶ Tocando gravação: ' + url.split('/').pop());
+  audioPlayer.src = url;
+  audioPlayer.playbackRate = state.speed;
+  audioPlayer.currentTime = 0;
+  // Add load error handler in addition to play error
+  audioPlayer.onerror = () => {
+    showToast('Erro carregando: ' + url.split('/').pop() + ' (verifique se o arquivo está em /audio/)');
+    state.isPlaying = false;
+    playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  };
+
+  // Filter to active verses for current kadishType
+  const activeVerses = verses
+    .map((v, idx) => ({ v, idx }))
+    .filter(({ v }) => !v.inDeRabanan || state.kadishType === 'derabanan');
+
+  let cumulativeMs = 0;
+  let totalEst = 0;
+  activeVerses.forEach(({ v, idx: vi }) => {
+    // Verse-start trigger: switch active verse, scroll, dim others
+    const verseStartMs = cumulativeMs;
+    state.wordTimers.push(setTimeout(() => {
+      if (!state.isPlaying) return;
+      state.currentVerse = vi;
+      dimOtherVerses(vi);
+      updatePictograms(vi);
+      const verseEl = document.querySelector(`.verse[data-id="${v.id}"]`);
+      if (verseEl) verseEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, verseStartMs / state.speed));
+
+    // Word-highlight triggers
+    v.durations.forEach((dur, wi) => {
+      const t = setTimeout(() => {
+        if (state.isPlaying) highlightWord(vi, wi);
+      }, cumulativeMs / state.speed);
+      state.wordTimers.push(t);
+      cumulativeMs += dur;
+    });
+    cumulativeMs += 500; // small pause between verses
+  });
+  totalEst = cumulativeMs;
+
+  // Progress bar updater
+  const progressInterval = setInterval(() => {
+    if (!state.isPlaying) { clearInterval(progressInterval); return; }
+    const elapsedMs = audioPlayer.currentTime * 1000;
+    progressFill.style.width = Math.min(100, (elapsedMs / totalEst) * 100) + '%';
+    timeDisplay.textContent = formatTime(elapsedMs);
+  }, 100);
+
+  audioPlayer.onended = () => {
+    clearWordTimers();
+    state.isPlaying = false;
+    playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    nowReading.textContent = 'Concluído · Amen';
+    state.currentVerse = 0;
+  };
+
+  const p = audioPlayer.play();
+  if (p && p.catch) p.catch(err => {
+    console.error('Full prayer play failed:', err);
+    showToast('Áudio não tocou: ' + err.message);
+    state.isPlaying = false;
+    playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  });
+}
+function stop() {
+  pause();
+  state.currentVerse = 0;
+  state.elapsed = 0;
+  progressFill.style.width = '0%';
+  timeDisplay.textContent = '0:00';
+  clearActiveWords();
+  document.querySelectorAll('.picto').forEach(p => p.classList.remove('active'));
+}
+playBtn.addEventListener('click', () => { state.isPlaying ? pause() : play(); });
+document.getElementById('restartBtn').addEventListener('click', () => {
+  stop();
+  nowReading.textContent = 'Pronto para começar';
+});
+
+// ============================================================
+// TOGGLES
+// ============================================================
+document.getElementById('speedToggle').addEventListener('click', (e) => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#speedToggle button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  state.speed = parseFloat(e.target.dataset.speed);
+  if (audioPlayer && !audioPlayer.paused) audioPlayer.playbackRate = state.speed;
+});
+document.getElementById('modeToggleRemoved')?.addEventListener('click', () => {}); // legacy noop
+document.getElementById('studioToggle')?.addEventListener('click', () => {
+  document.body.classList.toggle('studio');
+});
+
+// Settings panel — layer visibility & focus
+const settingsOverlay = document.getElementById('settingsOverlay');
+document.getElementById('settingsToggle').addEventListener('click', () => {
+  settingsOverlay.classList.add('show');
+});
+document.getElementById('settingsClose').addEventListener('click', () => {
+  settingsOverlay.classList.remove('show');
+});
+settingsOverlay.addEventListener('click', (e) => {
+  if (e.target === settingsOverlay) settingsOverlay.classList.remove('show');
+});
+
+// Each segmented control handles one layer (heb/tr/pt) with 3 states (hidden/normal/focus)
+document.querySelectorAll('.seg-control').forEach(seg => {
+  const layer = seg.dataset.layer; // 'heb', 'tr', or 'pt'
+  seg.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const state = btn.dataset.state;
+    // Update segment buttons UI
+    seg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyLayerState(layer, state);
+  });
+});
+
+function applyLayerState(layer, state) {
+  // Remove all classes for this layer
+  document.body.classList.remove(`${layer}-hidden`, `focus-${layer}`);
+  if (state === 'hidden') {
+    document.body.classList.add(`${layer}-hidden`);
+  } else if (state === 'focus') {
+    // Only one focus at a time — remove other focus classes and reset their segments to normal
+    ['heb', 'tr', 'pt'].forEach(l => {
+      if (l !== layer && document.body.classList.contains(`focus-${l}`)) {
+        document.body.classList.remove(`focus-${l}`);
+        const otherSeg = document.querySelector(`.seg-control[data-layer="${l}"]`);
+        if (otherSeg) {
+          otherSeg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          otherSeg.querySelector('[data-state="normal"]').classList.add('active');
+        }
+      }
+    });
+    document.body.classList.add(`focus-${layer}`);
+  }
+  // 'normal' state = no classes
+}
+
+// Educational overlay
+const infoOverlay = document.getElementById('infoOverlay');
+document.getElementById('infoToggle').addEventListener('click', () => infoOverlay.classList.add('show'));
+document.getElementById('learnStrip').addEventListener('click', () => infoOverlay.classList.add('show'));
+document.getElementById('infoClose').addEventListener('click', () => infoOverlay.classList.remove('show'));
+infoOverlay.addEventListener('click', (e) => {
+  if (e.target === infoOverlay) infoOverlay.classList.remove('show');
+});
+
+// Repeat verse — cycles: 0 (off) -> 2 -> 3 -> 5 -> 0
+state.repeatN = 0;
+state.repeatRemaining = 0; // counter during playback
+const REPEAT_CYCLE = [0, 2, 3, 5];
+const repeatBtn = document.getElementById('repeatBtn');
+const repCount = document.getElementById('repCount');
+repeatBtn.addEventListener('click', () => {
+  const idx = REPEAT_CYCLE.indexOf(state.repeatN);
+  state.repeatN = REPEAT_CYCLE[(idx + 1) % REPEAT_CYCLE.length];
+  if (state.repeatN === 0) {
+    repeatBtn.classList.remove('active');
+    repCount.style.display = 'none';
+  } else {
+    repeatBtn.classList.add('active');
+    repCount.style.display = 'inline-block';
+    repCount.textContent = state.repeatN + '×';
+  }
+  showToast(state.repeatN ? `Cada verso vai repetir ${state.repeatN}×` : 'Repetição desligada');
+});
+
+// ============================================================
+// V3 — I18N, THEMES, MEMORIAL, MODO TREINO, YAHRZEIT, LGPD
+// ============================================================
+
+// ---------- i18n strings ----------
+const I18N = {
+  pt: {
+    modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
+    treino_active: '⊙ Modo Treino · pausa após cada verso',
+    settings_title: 'Configurações',
+    theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Escuro', theme_contrast: 'Contraste',
+    font_size_label: 'Tamanho da fonte', font_small: 'Pequena', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muito grande',
+    tradition_label: 'Tradição', language_label: 'Idioma',
+    layers_title: 'Camadas', layer_hebrew: 'Hebraico', layer_translit: 'Transliteração', layer_translation: 'Tradução',
+    hide: 'Ocultar', normal: 'Normal', highlight: 'Destaque',
+    dedication_title: 'Dedicação', edit_memorial: 'Editar perfil "Em memória de"',
+    next_yahrzeit: 'Próximo Yahrzeit',
+    yahrzeit_reminder_note: 'App enviará lembrete por email 7 dias antes',
+    settings_hint: 'Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem.',
+    honoring_intro: 'Junto com você, neste ano,', honoring_outro: 'almas estão sendo honradas pelo mundo',
+    in_memory_of: 'Em memória de',
+    prayer_title: 'Kadish do Enlutado', prayer_source: 'Kadish Yatom · recitado em pé',
+    learn_title: 'Por que dizemos o Kadish?', learn_sub: 'O significado, a história e quem instituiu',
+    studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
+    setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
+    setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
+    setup_name: 'Nome (em português)', setup_hebrew_name: 'Nome hebraico (opcional)',
+    setup_relation: 'Relação', setup_death_date: 'Data de falecimento (necessária pra yahrzeit)',
+    setup_skip_btn: 'Pular', setup_save: 'Salvar', setup_skip_link: 'Depois, no menu ⚙',
+    consent_title: 'Privacidade', consent_text: 'Este app coleta dados anônimos de uso e, se você cadastrar, seu nome e data do falecimento ficam guardados localmente. Conforme LGPD/GDPR, você pode apagar tudo a qualquer momento.',
+    consent_decline: 'Apenas o essencial', consent_accept: 'OK, prosseguir',
+    find_chabad: 'Encontrar Beit Chabad próximo →',
+    explanations_label: 'Explicações entre versos', explanations_off: 'Ocultar', explanations_on: 'Mostrar'
+  },
+  en: {
+    modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
+    treino_active: '⊙ Practice Mode · pauses after each verse',
+    settings_title: 'Settings',
+    theme_label: 'Theme', theme_light: 'Light', theme_dark: 'Dark', theme_contrast: 'Contrast',
+    font_size_label: 'Font size', font_small: 'Small', font_normal: 'Normal', font_large: 'Large', font_xlarge: 'Extra large',
+    tradition_label: 'Tradition', language_label: 'Language',
+    layers_title: 'Layers', layer_hebrew: 'Hebrew', layer_translit: 'Transliteration', layer_translation: 'Translation',
+    hide: 'Hide', normal: 'Normal', highlight: 'Highlight',
+    dedication_title: 'Dedication', edit_memorial: 'Edit "In memory of" profile',
+    next_yahrzeit: 'Next Yahrzeit',
+    yahrzeit_reminder_note: 'App will send email reminder 7 days before',
+    settings_hint: 'Activate <strong>Highlight</strong> on a layer to focus on it while others fade.',
+    honoring_intro: 'Together with you, this year,', honoring_outro: 'souls are being honored worldwide',
+    in_memory_of: 'In memory of',
+    prayer_title: "Mourner's Kaddish", prayer_source: 'Kaddish Yatom · recited standing',
+    learn_title: 'Why do we say Kaddish?', learn_sub: 'The meaning, history, and origin',
+    studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
+    setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
+    setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
+    setup_name: 'Name (English)', setup_hebrew_name: 'Hebrew name (optional)',
+    setup_relation: 'Relationship', setup_death_date: 'Date of passing (required for yahrzeit)',
+    setup_skip_btn: 'Skip', setup_save: 'Save', setup_skip_link: 'Later, in ⚙ menu',
+    consent_title: 'Privacy', consent_text: 'This app collects anonymous usage data, and if you register, your name and date of passing are stored locally. Per GDPR/LGPD, you can delete everything at any time.',
+    consent_decline: 'Essential only', consent_accept: 'OK, proceed',
+    find_chabad: 'Find nearest Chabad House →',
+    explanations_label: 'Explanations between verses', explanations_off: 'Hide', explanations_on: 'Show'
+  },
+  es: {
+    modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
+    treino_active: '⊙ Modo Práctica · pausa después de cada verso',
+    settings_title: 'Ajustes',
+    theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Oscuro', theme_contrast: 'Contraste',
+    font_size_label: 'Tamaño de fuente', font_small: 'Pequeña', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muy grande',
+    tradition_label: 'Tradición', language_label: 'Idioma',
+    layers_title: 'Capas', layer_hebrew: 'Hebreo', layer_translit: 'Transliteración', layer_translation: 'Traducción',
+    hide: 'Ocultar', normal: 'Normal', highlight: 'Destacar',
+    dedication_title: 'Dedicación', edit_memorial: 'Editar perfil "En memoria de"',
+    next_yahrzeit: 'Próximo Yahrzeit',
+    yahrzeit_reminder_note: 'La app enviará recordatorio por email 7 días antes',
+    settings_hint: 'Active <strong>Destacar</strong> en una capa para enfocarse en ella mientras las otras se atenúan.',
+    honoring_intro: 'Junto a ti, este año,', honoring_outro: 'almas están siendo honradas en el mundo',
+    in_memory_of: 'En memoria de',
+    prayer_title: 'Kadish del Enlutado', prayer_source: 'Kadish Yatom · recitado de pie',
+    learn_title: '¿Por qué decimos el Kadish?', learn_sub: 'El significado, la historia y el origen',
+    studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
+    setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
+    setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
+    setup_name: 'Nombre (en español)', setup_hebrew_name: 'Nombre hebreo (opcional)',
+    setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (necesaria para yahrzeit)',
+    setup_skip_btn: 'Omitir', setup_save: 'Guardar', setup_skip_link: 'Después, en el menú ⚙',
+    consent_title: 'Privacidad', consent_text: 'Esta app recolecta datos de uso anónimos y, si te registras, tu nombre y fecha de fallecimiento se guardan localmente. Según LGPD/GDPR, puedes borrar todo en cualquier momento.',
+    consent_decline: 'Solo lo esencial', consent_accept: 'OK, continuar',
+    find_chabad: 'Encontrar Beit Jabad cercano →',
+    explanations_label: 'Explicaciones entre versos', explanations_off: 'Ocultar', explanations_on: 'Mostrar'
+  },
+  fr: {
+    modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
+    treino_active: '⊙ Mode Pratique · pause après chaque verset',
+    settings_title: 'Paramètres',
+    theme_label: 'Thème', theme_light: 'Clair', theme_dark: 'Sombre', theme_contrast: 'Contraste',
+    font_size_label: 'Taille de police', font_small: 'Petite', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Très grande',
+    tradition_label: 'Tradition', language_label: 'Langue',
+    layers_title: 'Couches', layer_hebrew: 'Hébreu', layer_translit: 'Translittération', layer_translation: 'Traduction',
+    hide: 'Masquer', normal: 'Normal', highlight: 'Mettre en avant',
+    dedication_title: 'Dédicace', edit_memorial: 'Éditer le profil "En mémoire de"',
+    next_yahrzeit: 'Prochain Yahrzeit',
+    yahrzeit_reminder_note: "L'app enverra un rappel par email 7 jours avant",
+    settings_hint: 'Activez <strong>Mettre en avant</strong> sur une couche pour vous concentrer dessus pendant que les autres s\'estompent.',
+    honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
+    in_memory_of: 'En mémoire de',
+    prayer_title: 'Kaddish du Endeuillé', prayer_source: 'Kaddish Yatom · récité debout',
+    learn_title: 'Pourquoi disons-nous le Kaddish?', learn_sub: 'Le sens, l\'histoire et l\'origine',
+    studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
+    setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
+    setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
+    setup_name: 'Nom (français)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
+    setup_relation: 'Relation', setup_death_date: 'Date de décès (nécessaire pour yahrzeit)',
+    setup_skip_btn: 'Passer', setup_save: 'Sauvegarder', setup_skip_link: 'Plus tard, dans le menu ⚙',
+    consent_title: 'Confidentialité', consent_text: "Cette app recueille des données d'usage anonymes et, si vous vous inscrivez, votre nom et date de décès sont stockés localement. Conformément au RGPD/LGPD, vous pouvez tout supprimer à tout moment.",
+    consent_decline: 'Essentiel uniquement', consent_accept: 'OK, continuer',
+    find_chabad: 'Trouver Beth Habad proche →',
+    explanations_label: 'Explications entre versets', explanations_off: 'Masquer', explanations_on: 'Afficher'
+  },
+  ru: {
+    modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
+    treino_active: '⊙ Режим Практики · пауза после каждого стиха',
+    settings_title: 'Настройки',
+    theme_label: 'Тема', theme_light: 'Светлая', theme_dark: 'Тёмная', theme_contrast: 'Контраст',
+    font_size_label: 'Размер шрифта', font_small: 'Малый', font_normal: 'Нормальный', font_large: 'Большой', font_xlarge: 'Очень большой',
+    tradition_label: 'Традиция', language_label: 'Язык',
+    layers_title: 'Слои', layer_hebrew: 'Иврит', layer_translit: 'Транслитерация', layer_translation: 'Перевод',
+    hide: 'Скрыть', normal: 'Норма', highlight: 'Выделить',
+    dedication_title: 'Посвящение', edit_memorial: 'Редактировать профиль "В память о"',
+    next_yahrzeit: 'Следующий Йорцайт',
+    yahrzeit_reminder_note: 'Приложение пришлёт напоминание за 7 дней',
+    settings_hint: 'Активируйте <strong>Выделить</strong> на слое, чтобы сфокусироваться на нём.',
+    honoring_intro: 'Вместе с вами, в этом году,', honoring_outro: 'душ почитаются по всему миру',
+    in_memory_of: 'В память о',
+    prayer_title: 'Кадиш сироты', prayer_source: 'Кадиш Ятом · читается стоя',
+    learn_title: 'Почему мы читаем Кадиш?', learn_sub: 'Значение, история и происхождение',
+    studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
+    setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
+    setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
+    setup_name: 'Имя (по-русски)', setup_hebrew_name: 'Еврейское имя (опционально)',
+    setup_relation: 'Отношение', setup_death_date: 'Дата кончины (требуется для йорцайта)',
+    setup_skip_btn: 'Пропустить', setup_save: 'Сохранить', setup_skip_link: 'Позже, в меню ⚙',
+    consent_title: 'Конфиденциальность', consent_text: 'Приложение собирает анонимные данные использования. Если вы зарегистрируетесь, ваше имя и дата хранятся локально. По LGPD/GDPR, можно удалить всё в любой момент.',
+    consent_decline: 'Только необходимое', consent_accept: 'OK, продолжить',
+    find_chabad: 'Найти ближайший Бейт Хабад →',
+    explanations_label: 'Пояснения между стихами', explanations_off: 'Скрыть', explanations_on: 'Показать'
+  },
+  he: {
+    modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
+    treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
+    settings_title: 'הגדרות',
+    theme_label: 'ערכת נושא', theme_light: 'בהיר', theme_dark: 'כהה', theme_contrast: 'ניגודיות',
+    font_size_label: 'גודל גופן', font_small: 'קטן', font_normal: 'רגיל', font_large: 'גדול', font_xlarge: 'גדול מאוד',
+    tradition_label: 'מסורת', language_label: 'שפה',
+    layers_title: 'שכבות', layer_hebrew: 'ארמית', layer_translit: 'תעתיק', layer_translation: 'תרגום לעברית',
+    hide: 'הסתר', normal: 'רגיל', highlight: 'הדגש',
+    dedication_title: 'הקדשה', edit_memorial: 'עריכת פרופיל "לזכר"',
+    next_yahrzeit: 'יארצייט הבא',
+    yahrzeit_reminder_note: 'האפליקציה תשלח תזכורת באימייל 7 ימים לפני',
+    settings_hint: 'הפעל <strong>הדגשה</strong> בשכבה כדי להתמקד בה.',
+    honoring_intro: 'יחד איתך, השנה,', honoring_outro: 'נשמות זוכות לכבוד ברחבי העולם',
+    in_memory_of: 'לזכר',
+    prayer_title: 'קדיש יתום', prayer_source: 'קדיש יתום · נאמר בעמידה',
+    learn_title: 'מדוע אומרים קדיש?', learn_sub: 'המשמעות, ההיסטוריה והמקור',
+    studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
+    setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',
+    setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',
+    setup_name: 'שם', setup_hebrew_name: 'שם עברי (אופציונלי)',
+    setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (נדרש ליארצייט)',
+    setup_skip_btn: 'דלג', setup_save: 'שמור', setup_skip_link: 'מאוחר יותר, בתפריט ⚙',
+    consent_title: 'פרטיות', consent_text: 'אפליקציה זו אוספת נתוני שימוש אנונימיים. אם תירשם, השם והתאריך נשמרים מקומית. ע"פ LGPD/GDPR ניתן למחוק הכל בכל זמן.',
+    consent_decline: 'רק חיוני', consent_accept: 'אישור, המשך',
+    find_chabad: 'מצא בית חב"ד קרוב →',
+    explanations_label: 'הסברים בין פסוקים', explanations_off: 'הסתר', explanations_on: 'הצג'
+  }
+};
+
+const LANG_META = {
+  pt: {flag:'🇧🇷', code:'PT', dir:'ltr'},
+  en: {flag:'🇺🇸', code:'EN', dir:'ltr'},
+  es: {flag:'🇪🇸', code:'ES', dir:'ltr'},
+  fr: {flag:'🇫🇷', code:'FR', dir:'ltr'},
+  ru: {flag:'🇷🇺', code:'RU', dir:'ltr'},
+  he: {flag:'🇮🇱', code:'HE', dir:'rtl'}
+};
+
+function applyI18n(lang) {
+  const t = I18N[lang] || I18N.pt;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) {
+      if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
+        el.placeholder = t[key];
+      } else {
+        el.innerHTML = t[key];
+      }
+    }
+  });
+  // Update lang code/flag in topbar
+  document.getElementById('langCode').textContent = LANG_META[lang].code;
+  document.querySelector('#langToggle .lang-flag').textContent = LANG_META[lang].flag;
+  // Update treino toggle label based on current state
+  updateTreinoLabel();
+}
+
+// ---------- Theme ----------
+function applyTheme(theme) {
+  document.body.classList.remove('theme-claro', 'theme-escuro', 'theme-contraste');
+  if (theme !== 'pergaminho') document.body.classList.add(`theme-${theme}`);
+  localStorage.setItem('tefila_theme', theme);
+}
+
+// ---------- Font scale ----------
+function applyFontScale(scale) {
+  document.documentElement.style.setProperty('--font-scale', scale);
+  localStorage.setItem('tefila_fontscale', scale);
+}
+
+// ---------- Language ----------
+state.lang = localStorage.getItem('tefila_lang') || 'pt';
+function rerenderVerseText() {
+  document.querySelectorAll('.verse').forEach((verseEl, vi) => {
+    const v = verses[vi];
+    if (!v) return;
+    // Update transliteration line
+    const trEl = verseEl.querySelector('.translit');
+    if (trEl) {
+      const translitArr = (v.translit && v.translit[state.lang]) || (v.translit && v.translit.pt) || [];
+      trEl.innerHTML = '';
+      translitArr.forEach((w, wi) => {
+        const span = document.createElement('span');
+        span.className = 'twrd';
+        span.dataset.vi = vi;
+        span.dataset.wi = wi;
+        span.textContent = w;
+        span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+        trEl.appendChild(span);
+        trEl.appendChild(document.createTextNode(' '));
+      });
+      trEl.style.display = translitArr.length === 0 ? 'none' : '';
+    }
+    // Update merged translation line
+    const ptEl = verseEl.querySelector('.pt-merged');
+    if (ptEl) {
+      ptEl.innerHTML = '';
+      ptEl.style.fontFamily = (state.lang === 'he') ? "'Frank Ruhl Libre', serif" : '';
+      // Always right-align (matches the static CSS for consistency with Hebrew flow)
+      ptEl.style.fontSize = (state.lang === 'he') ? 'calc(17px * var(--font-scale))' : '';
+
+      // Prefer full phrase translation if available
+      const fullT = (typeof fullTranslations !== 'undefined' && fullTranslations[v.id])
+        ? (fullTranslations[v.id][state.lang] || fullTranslations[v.id].pt)
+        : null;
+
+      if (fullT) {
+        const span = document.createElement('span');
+        span.className = 'phrase';
+        span.dataset.vi = vi;
+        span.dataset.wi = 0;
+        span.textContent = fullT;
+        ptEl.appendChild(span);
+      } else {
+        const mergedArr = (v.merged && v.merged[state.lang]) || (v.merged && v.merged.pt) || [];
+        mergedArr.forEach((phrase, wi) => {
+          const span = document.createElement('span');
+          span.className = 'phrase';
+          span.dataset.vi = vi;
+          span.dataset.wi = wi;
+          span.textContent = phrase;
+          span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+          ptEl.appendChild(span);
+          ptEl.appendChild(document.createTextNode(' '));
+        });
+      }
+    }
+    // Update tip
+    const tipEl = verseEl.querySelector('.tip span:not(.tip-icon)');
+    if (tipEl && v.tip) {
+      const tipText = (typeof v.tip === 'object') ? (v.tip[state.lang] || v.tip.pt) : v.tip;
+      tipEl.textContent = tipText;
+    }
+    // Update community responds
+    const respEl = verseEl.querySelector('.community-respond');
+    if (respEl && v.communityResponds) {
+      const respText = (typeof v.communityResponds === 'object') ? (v.communityResponds[state.lang] || v.communityResponds.pt) : v.communityResponds;
+      respEl.textContent = respText;
+    }
+  });
+}
+
+function applyLanguage(lang) {
+  state.lang = lang;
+  localStorage.setItem('tefila_lang', lang);
+  applyI18n(lang);
+  rerenderVerseText();
+  // Re-apply Kadish type so the size label (pequeno/grande/short/long...) translates
+  if (typeof applyKadishType === 'function' && state.kadishType) {
+    applyKadishType(state.kadishType);
+  }
+}
+
+// ---------- Tradition ----------
+state.tradition = localStorage.getItem('tefila_tradition') || 'chabad';
+function applyTradition(t) {
+  state.tradition = t;
+  localStorage.setItem('tefila_tradition', t);
+  const labels = {chabad:'Chabad', sefard:'Sefard', ashkenazi:'Ashkenazi'};
+  document.getElementById('traditionBadge').textContent = labels[t] || t;
+  if (t !== 'chabad') {
+    showToast('Conteúdo ' + labels[t] + ' em validação rabínica · usando Chabad por ora');
+  }
+}
+
+// ---------- Explanations toggle (tips + community-respond) ----------
+state.showExplanations = localStorage.getItem('tefila_explanations') === 'on';
+function applyExplanations(v) {
+  state.showExplanations = (v === 'on');
+  localStorage.setItem('tefila_explanations', v);
+  document.body.classList.toggle('show-explanations', state.showExplanations);
+}
+
+// ---------- Audio source (TTS or silent) ----------
+state.disableTTS = localStorage.getItem('tefila_audio_src') === 'silent';
+function applyAudioSource(v) {
+  state.disableTTS = (v === 'silent');
+  localStorage.setItem('tefila_audio_src', v);
+  if (state.disableTTS) {
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  }
+}
+
+// ---------- Kadish type toggle (Yatom <-> DeRabanan) ----------
+state.kadishType = localStorage.getItem('tefila_kadish_type') || 'yatom';
+function applyKadishType(t) {
+  state.kadishType = t;
+  localStorage.setItem('tefila_kadish_type', t);
+  document.body.classList.toggle('kadish-derabanan', t === 'derabanan');
+
+  // Size labels per language — helps mourner quickly identify which is which
+  const sizeLabels = {
+    pt: { yatom: 'pequeno', derabanan: 'grande' },
+    en: { yatom: 'short', derabanan: 'long' },
+    es: { yatom: 'corto', derabanan: 'largo' },
+    fr: { yatom: 'court', derabanan: 'long' },
+    ru: { yatom: 'малый', derabanan: 'большой' },
+    he: { yatom: 'קטן', derabanan: 'גדול' }
+  };
+  const size = (sizeLabels[state.lang] || sizeLabels.pt)[t];
+
+  const btn = document.getElementById('kadishTypeToggle');
+  if (btn) {
+    const name = (t === 'derabanan') ? 'DERABANAN' : 'YATOM';
+    btn.innerHTML = `${name}<span class="kt-size">· ${size}</span>`;
+    btn.classList.toggle('derabanan', t === 'derabanan');
+  }
+  // Reset playback position on type switch
+  if (typeof state !== 'undefined') {
+    state.currentVerse = 0;
+    state.elapsed = 0;
+  }
+  const titles = {
+    pt: { yatom: 'Kadish do Enlutado', derabanan: 'Kadish dos Sábios' },
+    en: { yatom: "Mourner's Kaddish", derabanan: "Rabbis' Kaddish" },
+    es: { yatom: 'Kadish del Enlutado', derabanan: 'Kadish de los Sabios' },
+    fr: { yatom: 'Kaddish du Endeuillé', derabanan: 'Kaddish des Sages' },
+    ru: { yatom: 'Кадиш сироты', derabanan: 'Кадиш мудрецов' },
+    he: { yatom: 'קדיש יתום', derabanan: 'קדיש דרבנן' }
+  };
+  const title = (titles[state.lang] || titles.pt)[t];
+  const prayerTitle = document.querySelector('.prayer-title');
+  if (prayerTitle) prayerTitle.textContent = title;
+
+  // Update prayer source line (subtitle) to include size label
+  const sourceLabels = {
+    pt: { yatom: `Kadish Yatom · pequeno · recitado em pé`, derabanan: `Kadish DeRabanan · grande · recitado em pé` },
+    en: { yatom: `Kaddish Yatom · short · recited standing`, derabanan: `Kaddish DeRabanan · long · recited standing` },
+    es: { yatom: `Kadish Yatom · corto · recitado de pie`, derabanan: `Kadish DeRabanan · largo · recitado de pie` },
+    fr: { yatom: `Kaddish Yatom · court · récité debout`, derabanan: `Kaddish DeRabanan · long · récité debout` },
+    ru: { yatom: `Кадиш Ятом · малый · читается стоя`, derabanan: `Кадиш Деработим · большой · читается стоя` },
+    he: { yatom: `קדיש יתום · קטן · נאמר בעמידה`, derabanan: `קדיש דרבנן · גדול · נאמר בעמידה` }
+  };
+  const sourceText = (sourceLabels[state.lang] || sourceLabels.pt)[t];
+  const prayerSource = document.querySelector('.prayer-source');
+  if (prayerSource) prayerSource.textContent = sourceText;
+
+  showToast(title + ' · ' + size);
+}
+
+// ---------- Modo Treino ----------
+state.modoTreino = false;
+function updateTreinoLabel() {
+  const btn = document.getElementById('treinoToggle');
+  const t = I18N[state.lang] || I18N.pt;
+  btn.textContent = state.modoTreino ? t.modo_treino : t.modo_reza;
+}
+function toggleModoTreino() {
+  state.modoTreino = !state.modoTreino;
+  const btn = document.getElementById('treinoToggle');
+  btn.classList.toggle('active', state.modoTreino);
+  document.body.classList.toggle('modo-treino', state.modoTreino);
+  if (state.modoTreino) {
+    // Set defaults: speed .75, repeat 2x — DOES NOT touch explanations (user controls)
+    state.speed = 0.75;
+    document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '0.75'));
+    if (state.repeatN === 0) {
+      state.repeatN = 2;
+      const repeatBtn = document.getElementById('repeatBtn');
+      const repCount = document.getElementById('repCount');
+      repeatBtn.classList.add('active');
+      repCount.style.display = 'inline-block';
+      repCount.textContent = '2×';
+    }
+    showToast('Modo Treino · velocidade .75× · repetição 2× · pausa após cada verso');
+  } else {
+    showToast('Modo Reza · leitura limpa, sem pausas');
+  }
+  updateTreinoLabel();
+}
+document.getElementById('treinoToggle').addEventListener('click', toggleModoTreino);
+
+// ---------- Memorial / Em memória de ----------
+function loadMemorial() {
+  try { return JSON.parse(localStorage.getItem('tefila_memorial') || 'null'); } catch (e) { return null; }
+}
+function saveMemorial(m) { localStorage.setItem('tefila_memorial', JSON.stringify(m)); }
+function clearMemorial() { localStorage.removeItem('tefila_memorial'); }
+
+function renderMemorial() {
+  const m = loadMemorial();
+  const strip = document.getElementById('memorialStrip');
+  if (!m || !m.name) { strip.classList.remove('show'); return; }
+  document.getElementById('memName').textContent = m.name;
+  document.getElementById('memHeb').textContent = m.hebrew || '';
+  const datesText = [m.relation, m.deathDate ? 'ז"ל · ' + new Date(m.deathDate).toLocaleDateString(state.lang === 'pt' ? 'pt-BR' : state.lang) : ''].filter(Boolean).join(' · ');
+  document.getElementById('memDates').textContent = datesText;
+  strip.classList.add('show');
+  // Show yahrzeit card
+  if (m.deathDate) renderYahrzeit(m);
+}
+
+function renderYahrzeit(m) {
+  const card = document.getElementById('yahrzeitCard');
+  if (!card) return;
+  card.style.display = 'block';
+  // Calculate next yahrzeit (mocked Hebrew calendar — for real, use Hebcal library)
+  const today = new Date();
+  const death = new Date(m.deathDate);
+  let next = new Date(death);
+  next.setFullYear(today.getFullYear());
+  if (next < today) next.setFullYear(today.getFullYear() + 1);
+  const opts = { day: 'numeric', month: 'long', year: 'numeric' };
+  const locales = { pt:'pt-BR', en:'en-US', es:'es-ES', fr:'fr-FR', ru:'ru-RU', he:'he-IL' };
+  document.getElementById('yzDate').textContent = next.toLocaleDateString(locales[state.lang] || 'pt-BR', opts);
+  // Mock Hebrew date (would be computed via Hebcal in production)
+  document.getElementById('yzHebrew').textContent = 'י"ז כסלו תשפ"ז · cálculo aproximado';
+}
+
+document.getElementById('editMemorial').addEventListener('click', () => {
+  const m = loadMemorial();
+  if (m) {
+    document.getElementById('setupName').value = m.name || '';
+    document.getElementById('setupHebrew').value = m.hebrew || '';
+    document.getElementById('setupRelation').value = m.relation || '';
+    document.getElementById('setupDeathDate').value = m.deathDate || '';
+  }
+  document.getElementById('settingsOverlay').classList.remove('show');
+  document.getElementById('setupModal').classList.add('show');
+});
+
+document.getElementById('setupSave').addEventListener('click', () => {
+  const m = {
+    name: document.getElementById('setupName').value.trim(),
+    hebrew: document.getElementById('setupHebrew').value.trim(),
+    relation: document.getElementById('setupRelation').value.trim(),
+    deathDate: document.getElementById('setupDeathDate').value
+  };
+  if (!m.name) { showToast('Preencha pelo menos o nome'); return; }
+  saveMemorial(m);
+  renderMemorial();
+  document.getElementById('setupModal').classList.remove('show');
+  showToast('Dedicação salva · ' + m.name);
+});
+
+document.getElementById('setupCancel').addEventListener('click', () => {
+  document.getElementById('setupModal').classList.remove('show');
+});
+document.getElementById('setupSkipLink').addEventListener('click', () => {
+  document.getElementById('setupModal').classList.remove('show');
+});
+
+// ---------- Settings panel seg-controls ----------
+document.querySelectorAll('.seg-control').forEach(seg => {
+  const setting = seg.dataset.setting;
+  if (!setting) return; // (layer controls handled separately above)
+  seg.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const value = btn.dataset.value;
+    seg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (setting === 'theme') applyTheme(value);
+    else if (setting === 'fontscale') applyFontScale(value);
+    else if (setting === 'language') applyLanguage(value);
+    else if (setting === 'tradition') applyTradition(value);
+    else if (setting === 'explanations') applyExplanations(value);
+    else if (setting === 'audiosrc') applyAudioSource(value);
+  });
+});
+
+// ---------- Language toggle in topbar cycles through languages ----------
+const LANG_ORDER = ['pt','en','es','fr','ru','he'];
+document.getElementById('langToggle').addEventListener('click', () => {
+  const idx = LANG_ORDER.indexOf(state.lang);
+  const next = LANG_ORDER[(idx + 1) % LANG_ORDER.length];
+  applyLanguage(next);
+  // Sync settings panel
+  document.querySelectorAll('[data-setting="language"] button').forEach(b => b.classList.toggle('active', b.dataset.value === next));
+  showToast(`Idioma: ${LANG_META[next].code}`);
+});
+
+// ---------- LGPD consent ----------
+function showConsentIfNeeded() {
+  if (!localStorage.getItem('tefila_consent')) {
+    setTimeout(() => document.getElementById('consentBanner').classList.add('show'), 1200);
+  }
+}
+document.getElementById('consentAccept').addEventListener('click', () => {
+  localStorage.setItem('tefila_consent', 'full');
+  document.getElementById('consentBanner').classList.remove('show');
+});
+document.getElementById('consentDecline').addEventListener('click', () => {
+  localStorage.setItem('tefila_consent', 'minimal');
+  document.getElementById('consentBanner').classList.remove('show');
+});
+
+// ---------- Boot ----------
+(function boot() {
+  // Restore saved preferences
+  const savedTheme = localStorage.getItem('tefila_theme') || 'pergaminho';
+  applyTheme(savedTheme);
+  document.querySelectorAll('[data-setting="theme"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedTheme));
+
+  const savedFontscale = localStorage.getItem('tefila_fontscale') || '1';
+  applyFontScale(savedFontscale);
+  document.querySelectorAll('[data-setting="fontscale"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedFontscale));
+
+  applyLanguage(state.lang);
+  document.querySelectorAll('[data-setting="language"] button').forEach(b => b.classList.toggle('active', b.dataset.value === state.lang));
+
+  applyTradition(state.tradition);
+  document.querySelectorAll('[data-setting="tradition"] button').forEach(b => b.classList.toggle('active', b.dataset.value === state.tradition));
+
+  const savedExpl = localStorage.getItem('tefila_explanations') || 'off';
+  applyExplanations(savedExpl);
+  document.querySelectorAll('[data-setting="explanations"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedExpl));
+
+  applyKadishType(state.kadishType);
+
+  // Bind Kadish type toggle (now that everything is loaded)
+  const kadishBtn = document.getElementById('kadishTypeToggle');
+  if (kadishBtn) {
+    kadishBtn.addEventListener('click', () => {
+      applyKadishType(state.kadishType === 'yatom' ? 'derabanan' : 'yatom');
+    });
+  }
+
+  const savedAudioSrc = localStorage.getItem('tefila_audio_src') || 'tts';
+  applyAudioSource(savedAudioSrc);
+  document.querySelectorAll('[data-setting="audiosrc"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedAudioSrc));
+
+  renderMemorial();
+  // Show first-time setup if no memorial saved
+  if (!loadMemorial() && !localStorage.getItem('tefila_setup_dismissed')) {
+    setTimeout(() => document.getElementById('setupModal').classList.add('show'), 800);
+    localStorage.setItem('tefila_setup_dismissed', '1');
+  }
+  showConsentIfNeeded();
+})();
+
+// ============================================================
+// POPUP
+// ============================================================
+const popup = document.getElementById('popup');
+const popupHeb = document.getElementById('popupHeb');
+const popupTr = document.getElementById('popupTranslit');
+const popupPt = document.getElementById('popupPt');
+
+function showPopup(e, vi, wi) {
+  const v = verses[vi];
+  // Toggle: if popup is showing for the same word, close it
+  if (popup.classList.contains('show') && popup._currentVi === vi && popup._currentWi === wi) {
+    closePopup();
+    return;
+  }
+  popup._currentVi = vi;
+  popup._currentWi = wi;
+  popupHeb.textContent = v.hebrew[wi];
+  // Multi-lang translit
+  const trArr = (v.translit && v.translit[state.lang]) || (v.translit && v.translit.pt) || [];
+  popupTr.textContent = trArr[wi] || '';
+  popupTr.style.display = trArr[wi] ? '' : 'none';
+  // Main translation from merged
+  const mergedArr = (v.merged && v.merged[state.lang]) || (v.merged && v.merged.pt) || [];
+  const main = (mergedArr[wi] || '').replace(/\u00A0/g, ' ');
+  // Additional gloss from glosses[lang]
+  const glossArr = (v.glosses && v.glosses[state.lang]) || (v.glosses && v.glosses.pt) || [];
+  const hint = glossArr[wi] || '';
+  popupPt.innerHTML = `<strong style="color:#8b6a3e;">${main}</strong>${hint ? ' · ' + hint : ''}`;
+
+  // Position: try below the word, fall back to above if no room
+  popup.style.opacity = '0';
+  popup.style.left = '0px';
+  popup.style.top = '0px';
+  popup.style.transform = '';
+  popup.classList.add('show');
+
+  requestAnimationFrame(() => {
+    const wordRect = e.target.getBoundingClientRect();
+    const popRect = popup.getBoundingClientRect();
+    const VW = window.innerWidth;
+    const VH = window.innerHeight;
+    const AUDIO_BAR_H = 90; // approx audio bar height — avoid overlapping
+    const PADDING = 8;
+
+    // Vertical: prefer below word, fall back to above if no room
+    let top = wordRect.bottom + PADDING;
+    if (top + popRect.height > VH - AUDIO_BAR_H) {
+      // No room below, place above
+      top = wordRect.top - popRect.height - PADDING;
+      if (top < PADDING) {
+        // No room above either — clamp to viewport with audio bar respected
+        top = Math.max(PADDING, Math.min(top, VH - AUDIO_BAR_H - popRect.height - PADDING));
+      }
+    }
+
+    // Horizontal: center on word, clamp to viewport
+    let left = wordRect.left + wordRect.width / 2 - popRect.width / 2;
+    left = Math.max(PADDING, Math.min(left, VW - popRect.width - PADDING));
+
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+    popup.style.transform = '';
+    popup.style.opacity = '1';
+  });
+
+  clearTimeout(popup._t);
+  popup._t = setTimeout(() => {
+    closePopup();
+  }, 3500);
+}
+
+function closePopup() {
+  popup.classList.remove('show');
+  popup.style.opacity = '';     // clear inline opacity set during animation
+  popup.style.transform = '';   // reset transform
+  popup._currentVi = null;
+  popup._currentWi = null;
+  clearTimeout(popup._t);
+}
+
+// Click anywhere on the popup closes it (except interactive children — but none right now)
+popup.addEventListener('click', (e) => {
+  closePopup();
+});
+
+// Explicit handler for the × close button (belt-and-suspenders for tap reliability)
+document.getElementById('popupClose').addEventListener('click', (e) => {
+  e.stopPropagation();
+  closePopup();
+});
+
+// Touch-friendly: tap anywhere outside word/popup closes
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.word') && !e.target.closest('.twrd') && !e.target.closest('.phrase') && !e.target.closest('.word-popup')) {
+    closePopup();
+  }
+});
+
+// Close on scroll — natural gesture to dismiss
+let _scrollClose;
+window.addEventListener('scroll', () => {
+  if (popup.classList.contains('show')) {
+    clearTimeout(_scrollClose);
+    _scrollClose = setTimeout(() => closePopup(), 150);
+  }
+}, { passive: true });
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePopup();
+});
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadFromStorage().catch(e => console.warn('Storage init:', e));
+</script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const audio = document.querySelector('audio');
+      if (audio && typeof SyncPlayer !== 'undefined') {
+        const nusach = 'chabad';
+        const tipo = 'yatom';
+        new SyncPlayer(audio, nusach, tipo);
+        console.log('✓ Sincronizacao ativada:', nusach, tipo);
+      }
+    });
+  </script>
+
+</body>
+</html>

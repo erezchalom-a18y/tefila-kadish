@@ -1,0 +1,193 @@
+{
+  "nusach": "chabad",
+  "tipo": "derabanan",
+  "audio_duration": 127.38,
+  "total_versos": 23,
+  "verso_duration": 5.54,
+  "versos": [
+    {
+      "n": 1,
+      "start": 0.0,
+      "end": 5.54,
+      "hebrew": "[verso 1]",
+      "transliteration_pt": "[transliteração verso 1]",
+      "translation_pt": "[tradução verso 1]"
+    },
+    {
+      "n": 2,
+      "start": 5.54,
+      "end": 11.08,
+      "hebrew": "[verso 2]",
+      "transliteration_pt": "[transliteração verso 2]",
+      "translation_pt": "[tradução verso 2]"
+    },
+    {
+      "n": 3,
+      "start": 11.08,
+      "end": 16.61,
+      "hebrew": "[verso 3]",
+      "transliteration_pt": "[transliteração verso 3]",
+      "translation_pt": "[tradução verso 3]"
+    },
+    {
+      "n": 4,
+      "start": 16.61,
+      "end": 22.15,
+      "hebrew": "[verso 4]",
+      "transliteration_pt": "[transliteração verso 4]",
+      "translation_pt": "[tradução verso 4]"
+    },
+    {
+      "n": 5,
+      "start": 22.15,
+      "end": 27.69,
+      "hebrew": "[verso 5]",
+      "transliteration_pt": "[transliteração verso 5]",
+      "translation_pt": "[tradução verso 5]"
+    },
+    {
+      "n": 6,
+      "start": 27.69,
+      "end": 33.23,
+      "hebrew": "[verso 6]",
+      "transliteration_pt": "[transliteração verso 6]",
+      "translation_pt": "[tradução verso 6]"
+    },
+    {
+      "n": 7,
+      "start": 33.23,
+      "end": 38.77,
+      "hebrew": "[verso 7]",
+      "transliteration_pt": "[transliteração verso 7]",
+      "translation_pt": "[tradução verso 7]"
+    },
+    {
+      "n": 8,
+      "start": 38.77,
+      "end": 44.31,
+      "hebrew": "[verso 8]",
+      "transliteration_pt": "[transliteração verso 8]",
+      "translation_pt": "[tradução verso 8]"
+    },
+    {
+      "n": 9,
+      "start": 44.31,
+      "end": 49.84,
+      "hebrew": "[verso 9]",
+      "transliteration_pt": "[transliteração verso 9]",
+      "translation_pt": "[tradução verso 9]"
+    },
+    {
+      "n": 10,
+      "start": 49.84,
+      "end": 55.38,
+      "hebrew": "[verso 10]",
+      "transliteration_pt": "[transliteração verso 10]",
+      "translation_pt": "[tradução verso 10]"
+    },
+    {
+      "n": 11,
+      "start": 55.38,
+      "end": 60.92,
+      "hebrew": "[verso 11]",
+      "transliteration_pt": "[transliteração verso 11]",
+      "translation_pt": "[tradução verso 11]"
+    },
+    {
+      "n": 12,
+      "start": 60.92,
+      "end": 66.46,
+      "hebrew": "[verso 12]",
+      "transliteration_pt": "[transliteração verso 12]",
+      "translation_pt": "[tradução verso 12]"
+    },
+    {
+      "n": 13,
+      "start": 66.46,
+      "end": 72.0,
+      "hebrew": "[verso 13]",
+      "transliteration_pt": "[transliteração verso 13]",
+      "translation_pt": "[tradução verso 13]"
+    },
+    {
+      "n": 14,
+      "start": 72.0,
+      "end": 77.54,
+      "hebrew": "[verso 14]",
+      "transliteration_pt": "[transliteração verso 14]",
+      "translation_pt": "[tradução verso 14]"
+    },
+    {
+      "n": 15,
+      "start": 77.54,
+      "end": 83.07,
+      "hebrew": "[verso 15]",
+      "transliteration_pt": "[transliteração verso 15]",
+      "translation_pt": "[tradução verso 15]"
+    },
+    {
+      "n": 16,
+      "start": 83.07,
+      "end": 88.61,
+      "hebrew": "[verso 16]",
+      "transliteration_pt": "[transliteração verso 16]",
+      "translation_pt": "[tradução verso 16]"
+    },
+    {
+      "n": 17,
+      "start": 88.61,
+      "end": 94.15,
+      "hebrew": "[verso 17]",
+      "transliteration_pt": "[transliteração verso 17]",
+      "translation_pt": "[tradução verso 17]"
+    },
+    {
+      "n": 18,
+      "start": 94.15,
+      "end": 99.69,
+      "hebrew": "[verso 18]",
+      "transliteration_pt": "[transliteração verso 18]",
+      "translation_pt": "[tradução verso 18]"
+    },
+    {
+      "n": 19,
+      "start": 99.69,
+      "end": 105.23,
+      "hebrew": "[verso 19]",
+      "transliteration_pt": "[transliteração verso 19]",
+      "translation_pt": "[tradução verso 19]"
+    },
+    {
+      "n": 20,
+      "start": 105.23,
+      "end": 110.77,
+      "hebrew": "[verso 20]",
+      "transliteration_pt": "[transliteração verso 20]",
+      "translation_pt": "[tradução verso 20]"
+    },
+    {
+      "n": 21,
+      "start": 110.77,
+      "end": 116.3,
+      "hebrew": "[verso 21]",
+      "transliteration_pt": "[transliteração verso 21]",
+      "translation_pt": "[tradução verso 21]"
+    },
+    {
+      "n": 22,
+      "start": 116.3,
+      "end": 121.84,
+      "hebrew": "[verso 22]",
+      "transliteration_pt": "[transliteração verso 22]",
+      "translation_pt": "[tradução verso 22]"
+    },
+    {
+      "n": 23,
+      "start": 121.84,
+      "end": 127.38,
+      "hebrew": "[verso 23]",
+      "transliteration_pt": "[transliteração verso 23]",
+      "translation_pt": "[tradução verso 23]"
+    }
+  ]
+}
