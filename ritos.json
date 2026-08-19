@@ -1,34 +1,89 @@
 {
-  "_leia": "Marcas estruturais que identificam cada rito. Fonte: livros de nussach. Regras marcadas obrigatorio=true reprovam a checagem; as demais so informam. Erez: confira esta tabela com o rabino antes de confiar nela.",
+  "_leia": "Marcas estruturais que identificam cada rito. As marcas sao propositalmente CURTAS: o mesmo trecho aparece com grafia cheia ou defectiva conforme a edicao (פורקנה / פרקנה), e uma regra longa reprova por diferenca de grafia, nao de rito. Erez: confira esta tabela com o rabino antes de confiar nela.",
+  "_edicoes": {
+    "ashkenaz": "סדור תפלת כל פה עם הקריאות — אשכנז",
+    "sefard": "סדור תפלת שלמה השלם",
+    "sefaradi": "סדור קול יעקב — כמנהג ארם צובה",
+    "chabad": "סדור תהלת ה' על פי נוסח האר\"י ז\"ל — Beit Chabad Central"
+  },
   "regras": [
-    { "id": "vetzmach", "texto": "ויצמחפורקנהויקרבמשיחה",
-      "rotulo": "ויצמח פורקנה ויקרב משיחה",
-      "deveTer": ["chabad", "sefard", "sefaradi"], "naoDeveTer": ["ashkenaz"],
+    {
+      "id": "vetzmach",
+      "texto": "ויצמח",
+      "rotulo": "וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
+      "deveTer": [
+        "chabad",
+        "sefard",
+        "sefaradi"
+      ],
+      "naoDeveTer": [
+        "ashkenaz"
+      ],
       "obrigatorio": true,
-      "porque": "marca definidora do Nussach Sefard/Sefaradi. Ashkenaz nao tem." },
-
-    { "id": "yehei-shlama", "texto": "יהאשלמארבאמןשמיא",
-      "rotulo": "יהא שלמא רבא מן שמיא",
-      "deveTer": ["ashkenaz", "chabad", "sefard", "sefaradi"], "naoDeveTer": [],
+      "porque": "marca definidora do Nussach Sefard/Sefaradi e do Chabad. O Ashkenaz nao tem."
+    },
+    {
+      "id": "yehei-shlama",
+      "texto": "יהאשלמארבאמןשמיא",
+      "rotulo": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא",
+      "deveTer": [
+        "ashkenaz",
+        "chabad",
+        "sefard",
+        "sefaradi"
+      ],
+      "naoDeveTer": [],
       "obrigatorio": true,
-      "porque": "abertura do penultimo paragrafo. Existe em todo Kadish." },
-
-    { "id": "shalom-rav", "texto": "שלוםרבמןשמיא",
-      "rotulo": "שלום רב מן שמיא",
-      "deveTer": [], "naoDeveTer": ["ashkenaz", "chabad", "sefard", "sefaradi"],
+      "porque": "abertura do penultimo paragrafo. Existe em todo Kadish."
+    },
+    {
+      "id": "shalom-rav",
+      "texto": "שלוםרבמןשמיא",
+      "rotulo": "שָׁלוֹם רַב מִן שְׁמַיָּא",
+      "deveTer": [],
+      "naoDeveTer": [
+        "ashkenaz",
+        "chabad",
+        "sefard",
+        "sefaradi"
+      ],
       "obrigatorio": true,
-      "porque": "NAO existe no Kadish. 'Shalom rav' e a bracha da Amida. Se aparecer, o texto foi inventado." },
-
-    { "id": "rabanan", "texto": "עלישראלועלרבנן",
-      "rotulo": "על ישראל ועל רבנן",
+      "porque": "NAO existe no Kadish. 'Shalom rav' e a bracha da Amida. Se aparecer, o texto foi inventado."
+    },
+    {
+      "id": "rabanan",
+      "texto": "ועלרבנן",
+      "rotulo": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן",
       "soNoTipo": "derabanan",
       "obrigatorio": true,
-      "porque": "paragrafo exclusivo do Kadish DeRabanan." },
-
-    { "id": "expansao-sefaradi", "texto": "חייםושבעוישועה",
-      "rotulo": "חיים ושבע וישועה ונחמה ושיזבא...",
-      "deveTer": ["sefaradi"], "naoDeveTer": [],
+      "porque": "paragrafo exclusivo do Kadish DeRabanan."
+    },
+    {
+      "id": "expansao-sefaradi",
+      "texto": "ושיזבא",
+      "rotulo": "חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא וּרְפוּאָה וּגְאֻלָּה וּסְלִיחָה וְכַפָּרָה וְרֶוַח וְהַצָּלָה",
+      "deveTer": [
+        "sefaradi"
+      ],
+      "naoDeveTer": [
+        "ashkenaz",
+        "chabad",
+        "sefard"
+      ],
+      "obrigatorio": true,
+      "porque": "expansao exclusiva do rito Sefaradi no yehei shlama. Confirmada na pagina 29 do Kol Yaakov."
+    },
+    {
+      "id": "mare-shmaya",
+      "texto": "מראשמיאוארעא",
+      "rotulo": "מָרֵא שְׁמַיָּא וְאַרְעָא",
+      "deveTer": [
+        "sefaradi"
+      ],
+      "naoDeveTer": [],
       "obrigatorio": false,
-      "porque": "expansao caracteristica do rito Sefaradi (Edot HaMizrach) no yehei shlama. CONFIRMAR com o rabino." }
+      "porque": "o Sefaradi usa 'Mare shmaya' onde os outros usam 'avuhon divishmaya'. So no DeRabanan.",
+      "soTipo": "derabanan"
+    }
   ]
 }

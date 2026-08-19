@@ -3,7 +3,7 @@
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const NOMES = ['ashkenaz_yatom','ashkenaz_derabanan','chabad_yatom','chabad_derabanan'];
+const NOMES = ['ashkenaz_yatom','ashkenaz_derabanan','chabad_yatom','chabad_derabanan','sefard_yatom','sefard_derabanan','sefaradi_yatom','sefaradi_derabanan'];
 const MARGEM = 0.12;   // folga antes/depois da fala, em segundos
 
 const dur = f => Number(execSync(`ffprobe -v error -show_entries format=duration -of csv=p=0 "${f}"`).toString().trim());
