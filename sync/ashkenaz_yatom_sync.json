@@ -1,118 +1,117 @@
 {
   "nusach": "ashkenaz",
   "tipo": "yatom",
-  "audio_duration": 91.11,
+  "audio_duration": 86.07,
   "total_versos": 14,
-  "verso_duration": 6.51,
   "versos": [
     {
       "n": 1,
       "start": 0,
-      "end": 6.51,
+      "end": 4.38,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 2,
-      "start": 6.51,
-      "end": 13.02,
+      "start": 4.38,
+      "end": 8.53,
       "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 3,
-      "start": 13.02,
-      "end": 19.52,
+      "start": 8.53,
+      "end": 11.03,
       "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 4,
-      "start": 19.52,
-      "end": 26.03,
+      "start": 11.03,
+      "end": 15.97,
       "hebrew": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 5,
-      "start": 26.03,
-      "end": 32.54,
+      "start": 15.97,
+      "end": 19.93,
       "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 6,
-      "start": 32.54,
-      "end": 39.05,
+      "start": 19.93,
+      "end": 25.28,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 7,
-      "start": 39.05,
-      "end": 45.55,
+      "start": 25.28,
+      "end": 32.22,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 8,
-      "start": 45.55,
-      "end": 52.06,
+      "start": 32.22,
+      "end": 36.5,
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 9,
-      "start": 52.06,
-      "end": 58.57,
+      "start": 36.5,
+      "end": 42.26,
       "hebrew": "וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 10,
-      "start": 58.57,
-      "end": 65.08,
+      "start": 42.26,
+      "end": 49.35,
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 11,
-      "start": 65.08,
-      "end": 71.59,
+      "start": 49.35,
+      "end": 54.49,
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 12,
-      "start": 71.59,
-      "end": 78.09,
+      "start": 54.49,
+      "end": 62.22,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחֱמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 13,
-      "start": 78.09,
-      "end": 84.6,
+      "start": 62.22,
+      "end": 73.32,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 14,
-      "start": 84.6,
-      "end": 91.11,
+      "start": 73.32,
+      "end": 86.07,
       "hebrew": "עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
@@ -120,5 +119,5 @@
   ],
   "fonte_texto": "fontes/texto-ashkenaz-yatom.md",
   "texto_status": "hebraico da fonte; transliteracao e traducao PENDENTES",
-  "sync_status": "DIVISAO UNIFORME - nao conferida contra o audio"
+  "sync_status": "pausas do audio + proporcao do texto - A CONFERIR DE OUVIDO"
 }

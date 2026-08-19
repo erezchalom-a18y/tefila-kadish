@@ -1,190 +1,189 @@
 {
   "nusach": "ashkenaz",
   "tipo": "derabanan",
-  "audio_duration": 145.81,
+  "audio_duration": 140.75,
   "total_versos": 23,
-  "verso_duration": 6.34,
   "versos": [
     {
       "n": 1,
       "start": 0,
-      "end": 6.34,
+      "end": 4.54,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 2,
-      "start": 6.34,
-      "end": 12.68,
+      "start": 4.54,
+      "end": 9.68,
       "hebrew": "בְּעָלְמָא דִי בְרָא כִרְעוּתֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 3,
-      "start": 12.68,
-      "end": 19.02,
+      "start": 9.68,
+      "end": 12.56,
       "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 4,
-      "start": 19.02,
-      "end": 25.36,
+      "start": 12.56,
+      "end": 17.15,
       "hebrew": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 5,
-      "start": 25.36,
-      "end": 31.7,
+      "start": 17.15,
+      "end": 20.65,
       "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 6,
-      "start": 31.7,
-      "end": 38.04,
+      "start": 20.65,
+      "end": 26.56,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 7,
-      "start": 38.04,
-      "end": 44.38,
+      "start": 26.56,
+      "end": 33.87,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 8,
-      "start": 44.38,
-      "end": 50.72,
+      "start": 33.87,
+      "end": 39.52,
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 9,
-      "start": 50.72,
-      "end": 57.06,
+      "start": 39.52,
+      "end": 44.07,
       "hebrew": "וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 10,
-      "start": 57.06,
-      "end": 63.4,
+      "start": 44.07,
+      "end": 51.05,
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 11,
-      "start": 63.4,
-      "end": 69.74,
+      "start": 51.05,
+      "end": 56.74,
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 12,
-      "start": 69.74,
-      "end": 76.07,
+      "start": 56.74,
+      "end": 64.83,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 13,
-      "start": 76.07,
-      "end": 82.41,
+      "start": 64.83,
+      "end": 68.38,
       "hebrew": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 14,
-      "start": 82.41,
-      "end": 88.75,
+      "start": 68.38,
+      "end": 77.28,
       "hebrew": "וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 15,
-      "start": 88.75,
-      "end": 95.09,
+      "start": 77.28,
+      "end": 83.37,
       "hebrew": "וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 16,
-      "start": 95.09,
-      "end": 101.43,
+      "start": 83.37,
+      "end": 90.36,
       "hebrew": "דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 17,
-      "start": 101.43,
-      "end": 107.77,
+      "start": 90.36,
+      "end": 94.43,
       "hebrew": "יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 18,
-      "start": 107.77,
-      "end": 114.11,
+      "start": 94.43,
+      "end": 98.45,
       "hebrew": "חִנָּא וְחִסְדָּא וְרַחֲמִין",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 19,
-      "start": 114.11,
-      "end": 120.45,
+      "start": 98.45,
+      "end": 104.62,
       "hebrew": "וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 20,
-      "start": 120.45,
-      "end": 126.79,
+      "start": 104.62,
+      "end": 114.46,
       "hebrew": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 21,
-      "start": 126.79,
-      "end": 133.13,
+      "start": 114.46,
+      "end": 125.98,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 22,
-      "start": 133.13,
-      "end": 139.47,
+      "start": 125.98,
+      "end": 130.44,
       "hebrew": "עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 23,
-      "start": 139.47,
-      "end": 145.81,
+      "start": 130.44,
+      "end": 140.75,
       "hebrew": "הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
@@ -192,5 +191,5 @@
   ],
   "fonte_texto": "fontes/texto-ashkenaz-derabanan.md",
   "texto_status": "hebraico da fonte; transliteracao e traducao PENDENTES",
-  "sync_status": "DIVISAO UNIFORME - nao conferida contra o audio"
+  "sync_status": "pausas do audio + proporcao do texto - A CONFERIR DE OUVIDO"
 }
