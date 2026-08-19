@@ -113,70 +113,29 @@ function destacar(){
   st.textContent = 'verso ' + (atual+1) + ' de ' + dados.versos.length + ' · ' + suspeitos.size + ' suspeito(s)';
 }
 
-function diag(txt, ruim){
-  msg.innerHTML = (ruim ? '⚠ ' : '') + txt;
-  msg.style.background = ruim ? '#3a1414' : '#3a2a10';
-  msg.style.borderColor = ruim ? '#7a2a2a' : '#6b5220';
-  msg.style.color = ruim ? '#fecaca' : '#fde68a';
-}
-
-async function baixarJson(id, v){
-  const tentativas = [
-    BASE + '/sync/' + id + '_sync.json?' + v,
-    BASE + '/sync/' + id + '_sync.json',
-  ];
-  let ultimo = '';
-  for (const u of tentativas) {
-    try {
-      const r = await fetch(u, {cache:'no-store'});
-      if (!r.ok) { ultimo = 'HTTP ' + r.status; continue; }
-      return await r.json();
-    } catch(e) { ultimo = e.message; }
-  }
-  throw new Error(ultimo || 'desconhecido');
-}
-
 async function carregar(){
-  const id = sel.value, [n,t] = id.split('_');
-  const v = 'v=' + Date.now();
-  diag('carregando…');
-
-  // 1) o audio primeiro, e independente do JSON
-  a.src = BASE + '/tefila-audio/' + n + '/' + t + '.ogg?' + v;
-  a.load();
-
-  // 2) o texto
+  const id = sel.value;
+  msg.textContent = 'carregando…';
+  const sel_v = 'v=' + Date.now();
   try {
-    dados = await baixarJson(id, v);
-  } catch(e) {
-    dados = null;
-    lista.innerHTML = '';
-    diag('o áudio deve tocar, mas não consegui baixar o texto (' + id + '): <b>' + e.message +
-         '</b><br>Se aparecer "Failed to fetch", este navegador está bloqueando o acesso ao GitHub.', true);
-    return;
-  }
-
+    const r = await fetch(BASE + '/sync/' + id + '_sync.json?' + sel_v, {cache:'no-store'});
+    dados = await r.json();
+  } catch(e) { msg.textContent = 'não consegui baixar o JSON: ' + e.message; return; }
+  const [n,t] = id.split('_');
+  a.src = BASE + '/tefila-audio/' + n + '/' + t + '.ogg?' + sel_v;
   atual = 0;
-  const vazios = dados.versos.filter(x => !x.hebrew || x.hebrew.startsWith('[')).length;
-  diag(vazios
-    ? 'este nussach ainda não tem o hebraico (' + vazios + ' versos vazios). Dá para ouvir, mas não dá para conferir.'
-    : (dados.sync_status || '') + ' — ouça seguindo o texto. Quando o destaque atrasar ou adiantar, aperte M no momento certo.',
-    !!vazios);
+  const vazios = dados.versos.filter(v => !v.hebrew || v.hebrew.startsWith('[')).length;
+  msg.textContent = vazios
+    ? '⚠ este nussach ainda não tem o hebraico (' + vazios + ' versos vazios). Dá para ouvir, mas não dá para conferir.'
+    : (dados.sync_status || '') + ' — ouça seguindo o texto. Quando o destaque atrasar ou adiantar, aperte M no momento certo.';
   desenhar();
 }
 
-a.addEventListener('error', () => {
-  const c = a.error ? a.error.code : 0;
-  const q = { 1:'carregamento abortado', 2:'erro de rede', 3:'erro ao decodificar o .ogg',
-              4:'o navegador recusou o endereço ou não toca .ogg' }[c] || 'erro ' + c;
-  diag('o áudio não carregou: <b>' + q + '</b><br><code>' + a.currentSrc + '</code>', true);
-});
-
 a.addEventListener('loadedmetadata', () => {
-  const d = a.duration, esperado = dados && dados.audio_duration;
-  if (esperado && isFinite(d) && Math.abs(d - esperado) > 0.3)
-    diag('o \u00e1udio que carregou tem <b>' + d.toFixed(2) + 's</b>, mas o JSON espera <b>' + esperado +
-         's</b>. \u00c9 cache. Clique em "recarregar do GitHub".', true);
+  const d = a.duration;
+  const esperado = dados && dados.audio_duration;
+  if (esperado && Math.abs(d - esperado) > 0.3)
+    msg.textContent = '\u26a0 o audio que carregou tem ' + d.toFixed(2) + 's, mas o JSON espera ' + esperado + 's. Clique em "recarregar do GitHub".';
 });
 
 a.addEventListener('timeupdate', () => {
