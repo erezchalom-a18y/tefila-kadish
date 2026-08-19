@@ -43,7 +43,7 @@ code{font-size:11px;color:var(--dim)}
 </head>
 <body>
 <header>
-  <h1>Conferidor — Kadish</h1>
+  <h1>Conferidor — Kadish <span style="color:#60a5fa;font-size:12px">v9 · palavra</span></h1>
   <div class="linha">
     <select id="sel"></select>
     <button id="ir">▶ tocar do verso atual</button>
@@ -118,8 +118,8 @@ function desenhar(){
       `<div class="top"><span>§${v.n}${suspeitos.has(i)?' &nbsp;⚠ ritmo fora do padrão':''}</span>` +
       `<span>${fmt(v.start)} → ${fmt(v.end)} &nbsp;(${(v.end-v.start).toFixed(2)}s)</span></div>` +
       `<div class="heb">${heb}</div><div class="tl">${tl}</div>` +
-      (gl ? `<div class="gl">${gl}</div>` : '') +
-      `<div class="td">${v.translation_pt ? esc(v.translation_pt) : '<span class="vazio">— sem tradução —</span>'}</div>`;
+      (gl ? `<div class="gl">${gl}</div>`
+          : `<div class="td">${v.translation_pt ? esc(v.translation_pt) : '<span class="vazio">— sem tradução —</span>'}</div>`);
     d.onclick = e => {
       const w = e.target.closest('.w');
       atual = i;
@@ -164,10 +164,10 @@ async function carregar(){
     diag(`o áudio deve tocar, mas não consegui baixar o texto (${id}): <b>${e.message}</b>`, true); return; }
   atual = 0; palAtual = -1;
   const semPal = dados.versos.filter(x => !x.palavras).length;
+  const nPal = dados.versos.reduce((acc,x) => acc + (x.palavras ? x.palavras.length : 0), 0);
   diag(semPal
-    ? `este arquivo ainda não tem tempo por palavra em ${semPal} versos — o destaque vai por verso.`
-    : (dados.palavras_status || dados.sync_status || '') +
-      ' — ouça acompanhando. <b>M</b> corrige o começo do verso, <b>N</b> corrige o da palavra.',
+    ? `o texto que veio do GitHub NÃO tem tempo por palavra em ${semPal} versos — clique em "recarregar do GitHub". Se não resolver, o push dos JSONs não foi feito.`
+    : `<b>${dados.versos.length} versos · ${nPal} palavras com tempo próprio.</b> Aperte ▶ e a palavra falada acende nas três linhas. <b>M</b> corrige o verso, <b>N</b> corrige a palavra.`,
     !!semPal);
   desenhar();
 }
