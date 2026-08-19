@@ -1,11 +1,11 @@
 {
-  "_leia": "Onde a reza comeca em cada audio completo, em segundos. Confirmado de ouvido pelo Erez. auto = o script acha sozinho.",
+  "_leia": "Segundo em que a reza comeca em cada arquivo de audio completo/. Os 8 foram conferidos de ouvido pelo Erez em 19/08/2026: todos comecam em yitgadal. NAO trocar por \"auto\" - o automatico errou em 2 dos 8.",
   "ashkenaz_yatom": 6.91,
-  "ashkenaz_derabanan": "auto",
+  "ashkenaz_derabanan": 5.83,
   "chabad_yatom": 4.1,
-  "chabad_derabanan": "auto",
-  "sefard_yatom": "auto",
-  "sefard_derabanan": "auto",
-  "sefaradi_yatom": "auto",
-  "sefaradi_derabanan": "auto"
+  "chabad_derabanan": 5.23,
+  "sefard_yatom": 6.07,
+  "sefard_derabanan": 6.55,
+  "sefaradi_yatom": 5.75,
+  "sefaradi_derabanan": 5.3
 }
