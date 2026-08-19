@@ -7,7 +7,7 @@
   "versos": [
     {
       "n": 1,
-      "start": 0.0,
+      "start": 0,
       "end": 5.58,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
       "transliteration_pt": "Yitgadal v'yitkadash sh'mei raba",
@@ -133,5 +133,8 @@
       "transliteration_pt": "hu ya'aseh shalom aleinu v'al kol yisrael ve'imru amen",
       "translation_pt": "que Ele faça paz sobre nós e sobre toda Israel — e dizei amém"
     }
-  ]
+  ],
+  "fonte_texto": "fontes/texto-chabad-yatom.md",
+  "texto_status": "hebraico conferido contra a fonte (16/16); transliteracao e traducao a verificar com rabino",
+  "sync_status": "DIVISAO UNIFORME - nao conferida contra o audio"
 }
