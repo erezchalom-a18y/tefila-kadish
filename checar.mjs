@@ -16,7 +16,9 @@ for (const f of readdirSync('sync').filter(x => x.endsWith('.json')).sort()) {
   }
   if (semHeb) erros.push(`${semHeb} sem hebraico`);
   if (j.versos.length !== j.total_versos) erros.push('contagem nao bate');
-  if (Math.abs(j.versos.at(-1).end - j.audio_duration) > 0.15) erros.push('ultimo verso nao termina no fim do audio');
+  const fimFala = j.fala_fim ?? j.audio_duration;
+  if (Math.abs(j.versos.at(-1).end - fimFala) > 0.15) erros.push('ultimo verso nao termina no fim da fala');
+  if (j.fala_inicio != null && Math.abs(j.versos[0].start - j.fala_inicio) > 0.15) erros.push('primeiro verso nao comeca no inicio da fala');
   for (let k = 1; k < j.versos.length; k++)
     if (Math.abs(j.versos[k].start - j.versos[k-1].end) > 0.01) { erros.push(`buraco/sobreposicao no §${k+1}`); break; }
 

@@ -1,197 +1,197 @@
 {
   "nusach": "chabad",
   "tipo": "derabanan",
-  "audio_duration": 122.34,
+  "audio_duration": 121.61,
   "total_versos": 24,
   "versos": [
     {
       "n": 1,
       "start": 0,
-      "end": 4.15,
+      "end": 4.07,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 2,
-      "start": 4.15,
-      "end": 6.9,
+      "start": 4.07,
+      "end": 6.81,
       "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 3,
-      "start": 6.9,
-      "end": 10.18,
+      "start": 6.81,
+      "end": 10.09,
       "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 4,
-      "start": 10.18,
-      "end": 14.91,
+      "start": 10.09,
+      "end": 14.83,
       "hebrew": "וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 5,
-      "start": 14.91,
-      "end": 18.5,
+      "start": 14.83,
+      "end": 18.42,
       "hebrew": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 6,
-      "start": 18.5,
-      "end": 22.6,
+      "start": 18.42,
+      "end": 21.76,
       "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 7,
-      "start": 22.6,
-      "end": 27.17,
+      "start": 21.76,
+      "end": 27.09,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 8,
-      "start": 27.17,
-      "end": 33.23,
+      "start": 27.09,
+      "end": 33.15,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 9,
-      "start": 33.23,
-      "end": 36.88,
+      "start": 33.15,
+      "end": 36.8,
       "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 10,
-      "start": 36.88,
-      "end": 41.79,
+      "start": 36.8,
+      "end": 41.7,
       "hebrew": "וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 11,
-      "start": 41.79,
-      "end": 47.52,
+      "start": 41.7,
+      "end": 47.43,
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 12,
-      "start": 47.52,
-      "end": 52.57,
+      "start": 47.43,
+      "end": 51.47,
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 13,
-      "start": 52.57,
-      "end": 60.08,
+      "start": 51.47,
+      "end": 59.03,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 14,
-      "start": 60.08,
-      "end": 63.08,
+      "start": 59.03,
+      "end": 62.3,
       "hebrew": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 15,
-      "start": 63.08,
-      "end": 70.63,
+      "start": 62.3,
+      "end": 69.31,
       "hebrew": "וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 16,
-      "start": 70.63,
-      "end": 75.59,
+      "start": 69.31,
+      "end": 74.52,
       "hebrew": "וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 17,
-      "start": 75.59,
-      "end": 80.71,
+      "start": 74.52,
+      "end": 79.55,
       "hebrew": "דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 18,
-      "start": 80.71,
-      "end": 84.43,
+      "start": 79.55,
+      "end": 84.35,
       "hebrew": "יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 19,
-      "start": 84.43,
-      "end": 88.33,
+      "start": 84.35,
+      "end": 87.11,
       "hebrew": "חִנָּא וְחִסְדָּא וְרַחֲמִין",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 20,
-      "start": 88.33,
-      "end": 92.81,
+      "start": 87.11,
+      "end": 92.73,
       "hebrew": "וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 21,
-      "start": 92.81,
-      "end": 100.48,
+      "start": 92.73,
+      "end": 100.4,
       "hebrew": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 22,
-      "start": 100.48,
-      "end": 111.33,
+      "start": 100.4,
+      "end": 111.25,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 23,
-      "start": 111.33,
-      "end": 115.05,
+      "start": 111.25,
+      "end": 113.89,
       "hebrew": "עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
       "transliteration_pt": "",
       "translation_pt": ""
     },
     {
       "n": 24,
-      "start": 115.05,
-      "end": 122.34,
+      "start": 113.89,
+      "end": 121.61,
       "hebrew": "הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "transliteration_pt": "",
       "translation_pt": ""
@@ -199,5 +199,7 @@
   ],
   "fonte_texto": "fontes/texto-chabad-derabanan.md",
   "texto_status": "hebraico da fonte; transliteracao e traducao PENDENTES",
-  "sync_status": "pausas do audio + proporcao do texto - A CONFERIR DE OUVIDO"
+  "sync_status": "pausas do audio + proporcao do texto, janela = so a fala - A CONFERIR DE OUVIDO",
+  "fala_inicio": 0,
+  "fala_fim": 121.61
 }

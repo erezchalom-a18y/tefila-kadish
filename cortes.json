@@ -1,0 +1,11 @@
+{
+  "_leia": "Onde a reza comeca em cada audio completo, em segundos. Confirmado de ouvido pelo Erez. auto = o script acha sozinho.",
+  "ashkenaz_yatom": 4.82,
+  "ashkenaz_derabanan": "auto",
+  "chabad_yatom": 2.77,
+  "chabad_derabanan": "auto",
+  "sefard_yatom": "auto",
+  "sefard_derabanan": "auto",
+  "sefaradi_yatom": "auto",
+  "sefaradi_derabanan": "auto"
+}
