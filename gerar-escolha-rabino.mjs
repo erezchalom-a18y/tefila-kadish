@@ -16,7 +16,9 @@ const LING = { 'português': 'pt', 'inglês': 'en', 'espanhol': 'es', 'francês'
                'italiano': 'it', 'alemão': 'de', 'russo': 'ru', 'hebraico moderno': 'he' };
 const NOME = { pt: 'Português', en: 'Inglês', es: 'Espanhol', fr: 'Francês',
                it: 'Italiano', de: 'Alemão', ru: 'Russo', he: 'Hebraico moderno' };
-const ORDEM = ['pt', 'he', 'en', 'es', 'fr', 'it', 'de', 'ru'];   // pt e he primeiro
+// pt, transliteracao e he primeiro
+const ORDEM = ['pt', 'tl', 'he', 'en', 'es', 'fr', 'it', 'de', 'ru'];
+NOME.tl = 'Transliteração';
 
 const norma = s => String(s).replace(/[֑-ׇ]/g, '').replace(/[^א-ת]/g, '');
 
@@ -69,6 +71,31 @@ function semente(s) {
 const glossario = JSON.parse(fs.readFileSync('glossario.json', 'utf8'));
 const porHebraico = {};
 for (const [chave, e] of Object.entries(glossario.entradas)) porHebraico[norma(e.hebrew)] = { chave, ...e };
+
+// achados da transliteracao: relatorio proprio, rubrica propria, uma so "lingua"
+function lerAchadosTranslit(caminho = 'RELATORIO-TRANSLITERACAO-GPT.md') {
+  if (!fs.existsSync(caminho)) return [];
+  const txt = fs.readFileSync(caminho, 'utf8');
+  const sec = txt.split('## Apontamentos, língua por língua')[1];
+  if (!sec) return [];
+  const corpo = sec.split('\n## ')[0];
+  const achados = [];
+  let hebraico = null, atual = null, a = null;
+  for (const linha of corpo.split('\n')) {
+    let m;
+    if ((m = linha.match(/^#### (.+)$/))) { hebraico = m[1].trim(); atual = null; continue; }
+    if ((m = linha.match(/^Transliteração: \*\*(.+)\*\*$/))) { atual = m[1].trim(); continue; }
+    if ((m = linha.match(/^- \*\*(.+?)\*\* · \*(.+?)\*$/))) {
+      a = { lingua: 'tl', hebraico, textoNosso: atual, onde: 'transliteracao', tipo: m[2].trim() };
+      achados.push(a); continue;
+    }
+    if (!a) continue;
+    if ((m = linha.match(/^  - trecho citado: `(.+?)`/))) { a.citacao = m[1]; continue; }
+    if ((m = linha.match(/^  - problema: (.+)$/))) { a.problema = m[1].trim(); continue; }
+    if ((m = linha.match(/^  - sugestão do revisor: (.+)$/))) { a.sugestao = m[1].trim(); continue; }
+  }
+  return achados.filter(x => x.hebraico && x.textoNosso);
+}
 
 const achados = lerAchados();
 const itens = [];
@@ -148,6 +175,38 @@ for (const a of achados) {
   });
 }
 
+// itens de transliteracao
+for (const a of lerAchadosTranslit()) {
+  const ent = porHebraico[norma(a.hebraico)];
+  if (!ent) { semEntrada++; continue; }
+  const nosso = ent.transliteration_pt;
+  if (!nosso) continue;
+
+  let alt = alternativaDe(a);
+  if (alt) {
+    const n = nosso.trim(), x = alt.trim();
+    // a sugestao tem que ser a transliteracao INTEIRA corrigida, nao um pedaco
+    // nem prosa da explicacao, e nao pode vir em hebraico
+    if (x === n) alt = null;
+    else if (/[֑-ׇא-ת]/.test(x)) alt = null;
+    else if (/[()\[\]]|significa|correto seria|deveria|pronunc/i.test(x)) alt = null;
+    else if (x.length < 0.6 * n.length || x.length > 1.6 * n.length) alt = null;
+  }
+  if (!alt) semPar++;
+
+  const id = `${ent.chave}|tl|transliteracao|`;
+  const inverte = !!alt && semente(id) === 1;
+  itens.push({
+    id, lingua: 'tl', chave: ent.chave, hebraico: ent.hebrew,
+    translit: nosso, campo: 'transliteracao', indice: null, palavraHebraica: null,
+    contexto: ent.translation_pt || null,
+    problema: a.problema || '', tipo: a.tipo,
+    A: alt ? (inverte ? alt : nosso) : nosso,
+    B: alt ? (inverte ? nosso : alt) : null,
+    _nosso: nosso, _revisor: alt || null,
+  });
+}
+
 // juntar itens repetidos (mesmo id) mantendo o primeiro
 const vistos = new Set();
 const unicos = itens.filter(i => (vistos.has(i.id) ? false : (vistos.add(i.id), true)));
@@ -171,34 +230,75 @@ const dataBR = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '
 const e = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const rtl = l => (l === 'he' ? ' dir="rtl" lang="he"' : '');
 
+// Muitos pares diferem por uma letra ou uma palavra só. Sem marcar, o rabino le
+// duas linhas que parecem iguais e nao ve a escolha. Aqui a parte que difere sai
+// grifada nos DOIS lados — o que nao entrega origem nenhuma, so torna visivel o
+// que ja estava la.
+function grifarDiferenca(a, b) {
+  const pa = String(a).split(/(\s+)/), pb = String(b).split(/(\s+)/);
+  // prefixo e sufixo iguais; o miolo e o que difere
+  let ini = 0;
+  while (ini < pa.length && ini < pb.length && pa[ini] === pb[ini]) ini++;
+  let fim = 0;
+  while (fim < pa.length - ini && fim < pb.length - ini &&
+         pa[pa.length - 1 - fim] === pb[pb.length - 1 - fim]) fim++;
+  const marcar = partes => {
+    const antes = partes.slice(0, ini).join('');
+    const meio  = partes.slice(ini, partes.length - fim).join('');
+    const dep   = partes.slice(partes.length - fim).join('');
+    return e(antes) + (meio ? `<mark>${e(meio)}</mark>` : '') + e(dep);
+  };
+  if (ini > 0 || fim > 0) return [marcar(pa), marcar(pb)];
+
+  // Nenhuma palavra em comum ("todo" x "todas"): compara letra a letra.
+  const ca = [...String(a)], cb = [...String(b)];
+  let ci = 0;
+  while (ci < ca.length && ci < cb.length && ca[ci] === cb[ci]) ci++;
+  let cf = 0;
+  while (cf < ca.length - ci && cf < cb.length - ci &&
+         ca[ca.length - 1 - cf] === cb[cb.length - 1 - cf]) cf++;
+  if (ci === 0 && cf === 0) return [e(a), e(b)];   // nada em comum: grifar tudo nao ajuda
+  const marcarLetras = c => e(c.slice(0, ci).join('')) +
+    (c.length - cf > ci ? `<mark>${e(c.slice(ci, c.length - cf).join(''))}</mark>` : '') +
+    e(c.slice(c.length - cf).join(''));
+  return [marcarLetras(ca), marcarLetras(cb)];
+}
+
 function bloco(i) {
   // Hebraico em cima; transliteracao e traducao embaixo dele.
   //
   // A traducao do verso so aparece quando o que esta em jogo e UMA PALAVRA.
   // Quando o que esta em jogo e a traducao do verso inteiro, mostra-la aqui
   // entregaria qual das duas opcoes e a nossa — e a cegueira acabaria.
-  const contexto = (i.campo === 'glosa' && i.contexto)
-    ? `<div class="trad"${rtl(i.lingua)}>${e(i.contexto)}</div>` : '';
+  // A transliteracao so aparece em cima quando NAO e ela que esta em jogo —
+  // senao entregaria qual das duas opcoes e a nossa.
+  const cabecaTl = i.campo === 'transliteracao' ? '' : `<div class="tl">${e(i.translit)}</div>`;
+  const mostrarTraducao = (i.campo === 'glosa' || i.campo === 'transliteracao') && i.contexto;
+  const contexto = mostrarTraducao ? `<div class="trad">${e(i.contexto)}</div>` : '';
   const emJogo = i.campo === 'glosa'
     ? `Em questão: a palavra <span class="pal">${e(i.palavraHebraica || ('nº ' + (i.indice + 1)))}</span>`
-    : 'Em questão: a tradução do verso inteiro';
+    : i.campo === 'transliteracao'
+      ? 'Em questão: como se lê este verso em voz alta'
+      : 'Em questão: a tradução do verso inteiro';
 
-  const op = (rot, txt) => `<div class="op"><span class="cx"></span><span class="rot">${rot}</span>
-        <div class="txt"${rtl(i.lingua)}>${e(txt)}</div></div>`;
+  const op = (rot, html) => `<div class="op"><span class="cx"></span><span class="rot">${rot}</span>
+        <div class="txt"${rtl(i.lingua)}>${html}</div></div>`;
 
+  const [htmlA, htmlB] = i.B ? grifarDiferenca(i.A, i.B) : [e(i.A), null];
   const opcoes = i.B
-    ? `<div class="opcoes">${op('Opção A', i.A)}${op('Opção B', i.B)}</div>`
-    : `<div class="opcoes uma">${op('A versão atual — manter', i.A)}</div>
+    ? `<div class="opcoes">${op('Opção A', htmlA)}${op('Opção B', htmlB)}</div>`
+    : `<div class="opcoes uma">${op('A versão atual — manter', htmlA)}</div>
        <div class="obs"><b>O revisor objetou:</b> ${e(i.problema)}</div>`;
 
   return `
   <article class="item">
     <div class="cab"><span class="num">${i.numero}</span>${emJogo}</div>
     <div class="heb" dir="rtl" lang="he">${e(i.hebraico)}</div>
-    <div class="tl">${e(i.translit)}</div>
+    ${cabecaTl}
     ${contexto}
     ${opcoes}
-    <div class="outra"><span class="cx"></span>Outra: <span class="linha"></span></div>
+    <div class="outra"><span class="cx"></span>${i.campo === 'transliteracao' ? 'Outra transliteração' : 'Outra tradução'} — escreva aqui:
+      <div class="linha"></div></div>
   </article>`;
 }
 
@@ -245,8 +345,7 @@ const ESTILO = `
   .outra { margin-top:3.5mm; font-size:11.5pt; }
   .outra .cx { display:inline-block; width:4.4mm; height:4.4mm; border:1pt solid #4a4438;
                border-radius:.8mm; vertical-align:-.9mm; margin-right:2mm; }
-  .outra .linha { display:inline-block; width:60%; border-bottom:.6pt solid #9a9081;
-                  height:4.5mm; vertical-align:-1.4mm; }
+  .outra .linha { border-bottom:.6pt solid #9a9081; height:7mm; margin-top:1mm; }
   .nota { font-size:10.5pt; color:#4a4438; background:#f6f1e6; border-left:2pt solid #8b6a3e;
           padding:3.5mm 4mm; margin:0 0 5mm; line-height:1.5; }`;
 
@@ -291,10 +390,14 @@ function documento(itens, rotuloLingua) {
   </div>
 </section>
 
-<div class="nota">
-  A transliteração aparece só como apoio para ler o hebraico — ela não foi submetida
-  a esta revisão, então não há opção a marcar sobre ela. Revisá-la é uma rodada à parte.
-</div>
+${rotuloLingua === 'Transliteração' ? `<div class="nota">
+  Aqui o que se decide é <strong>como o verso se lê em voz alta</strong>, não o que ele
+  significa. A tradução aparece só para situar. A transliteração foi revisada numa
+  rodada própria, com rubrica de som, nikud e coerência.
+</div>` : `<div class="nota">
+  A transliteração aparece só como apoio para ler o hebraico. Ela tem caderno próprio
+  — o que se decide aqui é a tradução.
+</div>`}
 
 ${secao(pares, 'Duas versões — assinale uma')}
 ${sozinhos.length ? `${secao(sozinhos, 'Objeções sem alternativa proposta')}` : ''}
