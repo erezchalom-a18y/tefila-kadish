@@ -199,13 +199,18 @@ function normalizar(s) {
   return String(s).toLowerCase().replace(/[\s"'‚„“”«»(),.;:!?]/g, '');
 }
 
-// Guarda contra citacao inventada: a citacao tem que estar mesmo no material.
+// Guarda contra citacao inventada. Devolve:
+//   'alvo'     — citou o texto da lingua revisada (traducao ou glosa);
+//   'hebraico' — citou a palavra hebraica de origem (jeito legitimo de apontar
+//                qual glosa esta errada; o problema vem no texto do achado);
+//   false      — nao existe em lugar nenhum: citacao inventada, descarta.
 function citacaoConfere(citacao, m) {
   if (!citacao) return false;
   const alvo = normalizar(citacao);
   if (!alvo) return false;
-  const fontes = [m.traducao, ...m.glosas].map(normalizar);
-  return fontes.some(f => f.includes(alvo));
+  if ([m.traducao, ...m.glosas].map(normalizar).some(f => f.includes(alvo))) return 'alvo';
+  if ([m.hebraico, ...m.palavras].map(normalizar).some(f => f.includes(alvo))) return 'hebraico';
+  return false;
 }
 
 function commitAtual() {
@@ -251,7 +256,9 @@ async function principal() {
     const achados = [], descartados = [];
     if (bruto?.veredito === 'problema') {
       for (const a of bruto.achados || []) {
-        (citacaoConfere(a.citacao, t.m) ? achados : descartados).push(a);
+        const onde = citacaoConfere(a.citacao, t.m);
+        if (onde) achados.push({ ...a, citouHebraico: onde === 'hebraico' });
+        else descartados.push(a);
       }
     }
     return { ...t, achados, descartados };
@@ -290,8 +297,9 @@ function relatorio(resultados, nEntradas) {
   l.push('correto quando estiver correto.');
   l.push('');
   l.push('Rubrica aplicada em cada entrada e língua: **erro de sentido**, **palavra');
-  l.push('errada**, **gramática da língua-alvo**. Toda queixa exige citação literal;');
-  l.push('citação que não confere com o texto real foi descartada automaticamente.');
+  l.push('errada**, **gramática da língua-alvo**. Toda queixa exige citação literal —');
+  l.push('do texto traduzido ou da palavra hebraica de origem. Citação que não existe');
+  l.push('em nenhum dos dois foi descartada automaticamente.');
   l.push('');
 
   l.push('## Resumo');
@@ -328,7 +336,7 @@ function relatorio(resultados, nEntradas) {
         l.push('');
         for (const a of r.achados) {
           l.push(`- **${a.onde || '?'}** · *${a.tipo || '?'}*`);
-          l.push(`  - trecho citado: \`${String(a.citacao).replace(/`/g, "'")}\``);
+          l.push(`  - trecho citado: \`${String(a.citacao).replace(/`/g, "'")}\`${a.citouHebraico ? ' *(citou a palavra hebraica de origem)*' : ''}`);
           l.push(`  - problema: ${a.problema || '(sem explicação)'}`);
           if (a.sugestao) l.push(`  - sugestão do revisor: ${a.sugestao}`);
         }
