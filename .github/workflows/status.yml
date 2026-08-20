@@ -1,0 +1,85 @@
+name: STATUS
+
+# Reescreve o STATUS.md a cada push na main.
+#
+# Sobre laco: o proprio commit do STATUS.md nao dispara este workflow por dois
+# motivos independentes — (1) push feito com o GITHUB_TOKEN nao dispara workflow,
+# e (2) paths-ignore abaixo. Alem disso o gerar-status.py e deterministico: nao
+# usa a hora atual, so a data do ultimo commit.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - STATUS.md
+      - metricas-sinal.json
+  workflow_dispatch:
+
+concurrency:
+  group: status
+  cancel-in-progress: true
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0        # gerar-status.py le a data dos commits
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar o que le o audio
+        run: pip install --quiet numpy soundfile
+
+      - name: Gerar o STATUS.md
+        id: gerar
+        continue-on-error: true
+        run: |
+          set +e
+          python3 gerar-status.py
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Conferir que nenhum dado nosso foi alterado
+        run: |
+          sujo=$(git status --porcelain -- sync tefila-audio ancoras.json cortes.json glossario.json)
+          if [ -n "$sujo" ]; then
+            echo "gerar-status.py alterou dados que nunca pode alterar:"
+            echo "$sujo"
+            exit 1
+          fi
+          echo "ok: nenhum dado nosso foi tocado"
+
+      - name: Commitar o STATUS.md
+        run: |
+          if [ -z "$(git status --porcelain -- STATUS.md metricas-sinal.json)" ]; then
+            echo "STATUS.md sem mudanca; nada a commitar"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add STATUS.md metricas-sinal.json
+          git commit -m "STATUS.md (automatico)"
+          for tentativa in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "push recusado, tentando de novo ($tentativa/3)"
+            sleep 5
+          done
+          echo "nao consegui empurrar o STATUS.md"
+          exit 1
+
+      - name: Reprovar se alguma checagem estiver vermelha
+        run: |
+          if [ "${{ steps.gerar.outputs.codigo }}" != "0" ]; then
+            echo "O STATUS.md foi publicado, mas ha checagem vermelha."
+            exit 1
+          fi
+          echo "checagens verdes"

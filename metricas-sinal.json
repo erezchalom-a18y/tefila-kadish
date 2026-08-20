@@ -1,0 +1,74 @@
+{
+  "ashkenaz_yatom": {
+    "palavras": 75,
+    "em_cima_da_voz": 69,
+    "pct": 92.0,
+    "desvio_global": -0.1,
+    "ganho_do_desvio": 2,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 3
+  },
+  "ashkenaz_derabanan": {
+    "palavras": 118,
+    "em_cima_da_voz": 108,
+    "pct": 91.5,
+    "desvio_global": -0.04,
+    "ganho_do_desvio": 0,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 6
+  },
+  "chabad_yatom": {
+    "palavras": 80,
+    "em_cima_da_voz": 72,
+    "pct": 90.0,
+    "desvio_global": -0.08,
+    "ganho_do_desvio": 4,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 1
+  },
+  "chabad_derabanan": {
+    "palavras": 121,
+    "em_cima_da_voz": 110,
+    "pct": 90.9,
+    "desvio_global": -0.1,
+    "ganho_do_desvio": 4,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 4
+  },
+  "sefard_yatom": {
+    "palavras": 81,
+    "em_cima_da_voz": 69,
+    "pct": 85.2,
+    "desvio_global": -0.06,
+    "ganho_do_desvio": 1,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 7
+  },
+  "sefard_derabanan": {
+    "palavras": 124,
+    "em_cima_da_voz": 112,
+    "pct": 90.3,
+    "desvio_global": -0.1,
+    "ganho_do_desvio": 3,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 5
+  },
+  "sefaradi_yatom": {
+    "palavras": 91,
+    "em_cima_da_voz": 83,
+    "pct": 91.2,
+    "desvio_global": -0.12,
+    "ganho_do_desvio": 2,
+    "mediana_distancia": 0.0,
+    "palavras_fora": 6
+  },
+  "sefaradi_derabanan": {
+    "palavras": 125,
+    "em_cima_da_voz": 116,
+    "pct": 92.8,
+    "desvio_global": -0.12,
+    "ganho_do_desvio": 3,
+    "mediana_distancia": 0.02,
+    "palavras_fora": 4
+  }
+}
