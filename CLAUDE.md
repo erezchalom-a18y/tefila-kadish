@@ -11,6 +11,10 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node checar-ritos.mjs  → marcas de rito. Tem que dar VERDE nos 8.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
+- As duas rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+  cada push na main e em todo pull request. Qualquer vermelho reprova o
+  workflow. Isso não substitui rodar antes de commitar — só impede que um
+  vermelho passe despercebido.
 
 ## Regras invioláveis
 
@@ -44,6 +48,36 @@ peso = sílabas (contadas pelo nikud). Testa duas granulações de bloco e fica 
 a de ritmo mais plausível. Âncoras são restrições rígidas. Fronteiras de verso
 derivam das palavras.
 
+## Revisão cega do glossário por ChatGPT
+
+revisar-glossario-gpt.mjs + .github/workflows/revisao-glossario.yml. É uma
+segunda opinião automática sobre o glossário, para o rabino não ser o único par
+de olhos. Regras, todas invioláveis:
+
+1. Revisa APENAS o glossário (42 entradas × 8 línguas). Nunca sincronia, nunca
+   áudio, nunca código.
+2. Às cegas: cada chamada manda só o hebraico, a transliteração e o texto de UMA
+   língua. O revisor não sabe quem escreveu (o campo `origem` nunca é enviado) e
+   não vê as outras línguas. Auditar com:
+   node revisar-glossario-gpt.mjs --exemplo de   (mostra o prompt exato)
+3. Rubrica fixa por entrada e língua: erro de sentido, palavra errada, gramática
+   da língua-alvo. Resposta: "ok" ou o problema com citação literal. Citação que
+   não bate com o texto real é descartada automaticamente pelo script.
+4. Proibido cota de defeitos. O prompt manda dizer que está correto quando
+   estiver correto. Nunca reescrever o prompt para "achar mais coisa".
+5. Saída: RELATORIO-REVISAO-GPT.md, commitado, escrito para humano ler.
+6. O ChatGPT nunca altera arquivo nenhum. O script só escreve o relatório.
+   Mudança de texto é decisão humana; a autoridade final é o rabino (regra 5 das
+   invioláveis continua valendo).
+7. Modelo barato (OPENAI_MODEL, padrão gpt-4o-mini), uma rodada por mudança do
+   glossario.json, nunca em loop. O commit do relatório não mexe no
+   glossario.json, então não se re-dispara.
+
+Apontamento do ChatGPT não é defeito comprovado: é pergunta para levar ao
+rabino. O workflow passa mesmo com apontamentos — de propósito.
+
+Testar sem gastar API: node revisar-glossario-gpt.mjs --ensaio
+
 ## Pendências de conteúdo (não são de código)
 
 - Revisão do rabino: glossario.json (42 entradas × 8 línguas) e as regras de
@@ -57,5 +91,7 @@ derivam das palavras.
 
 - git push --force
 - alterar checar.mjs/checar-ritos.mjs para silenciar um vermelho
+- deixar o ChatGPT (ou qualquer modelo) escrever direto no glossario.json
+- afrouxar o prompt da revisão cega para produzir mais apontamentos
 - gravar arquivos de texto em UTF-16 (foi um `echo >>` do PowerShell em UTF-16
   no .gitignore que quebrou o repositório uma vez — todo texto em UTF-8)

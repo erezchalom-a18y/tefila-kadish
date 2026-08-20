@@ -1,0 +1,25 @@
+name: Checagens
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v6
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: checar.mjs (estrutura, contagem, ritmo)
+        run: node checar.mjs
+
+      - name: checar-ritos.mjs (marcas de rito)
+        run: node checar-ritos.mjs
