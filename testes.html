@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Testes — Kadish</title>
+<style>
+  :root{--fundo:#faf7f1;--cartao:#fff;--linha:#e3dbcb;--txt:#1d1a14;--fraco:#6f6757;
+        --brass:#8b6a3e;--ok:#2f6b3a;--okbg:#eaf4ec;--nao:#a33;--naobg:#fbeceb}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:18px/1.55 -apple-system,system-ui,"Segoe UI",sans-serif;padding-bottom:120px}
+  header{padding:20px 18px 12px;border-bottom:1px solid var(--linha);background:var(--fundo)}
+  h1{font-size:23px;margin:0 0 6px}
+  .sub{color:var(--fraco);font-size:15.5px}
+  main{padding:16px 18px;max-width:720px;margin:0 auto}
+  .t{background:var(--cartao);border:1px solid var(--linha);border-radius:16px;
+     padding:18px;margin-bottom:16px}
+  .t.sim{border-color:var(--ok);background:var(--okbg)}
+  .t.nao{border-color:var(--nao);background:var(--naobg)}
+  .n{display:inline-block;background:var(--brass);color:#fff;border-radius:999px;
+     padding:2px 11px;font-size:14px;font-weight:700;margin-bottom:9px}
+  .o{font-size:19px;font-weight:600;margin-bottom:6px}
+  .c{color:var(--fraco);font-size:16px;margin-bottom:14px}
+  a.btn{display:block;text-align:center;background:var(--brass);color:#fff;
+        text-decoration:none;border-radius:12px;padding:15px;font-weight:600;
+        font-size:17px;margin-bottom:14px}
+  .par{display:flex;gap:12px}
+  .par button{flex:1;border:2px solid var(--linha);background:#fff;border-radius:12px;
+              padding:15px;font:inherit;font-size:17px;font-weight:600;cursor:pointer}
+  .par button.on-sim{border-color:var(--ok);background:var(--ok);color:#fff}
+  .par button.on-nao{border-color:var(--nao);background:var(--nao);color:#fff}
+  textarea{width:100%;margin-top:12px;border:2px solid var(--nao);border-radius:12px;
+           padding:13px;font:inherit;font-size:17px;min-height:80px}
+  .palavras{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px}
+  .palavras span{background:#f2ead9;border:1px solid var(--linha);border-radius:9px;
+                 padding:9px 13px;font-size:20px}
+  .versos{margin-bottom:14px}
+  .versos div{background:#f6f1e6;border-radius:10px;padding:12px 14px;margin-bottom:9px}
+  .versos b{display:block;font-size:23px;direction:rtl;text-align:right;margin-bottom:4px}
+  .versos i{font-size:19px;color:#3d382d;font-style:normal}
+  .barra{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--linha);
+         padding:14px 18px calc(14px + env(safe-area-inset-bottom));display:flex;gap:12px;align-items:center}
+  .barra .p{font-size:15.5px;color:var(--fraco)}
+  .barra button{margin-left:auto;background:var(--brass);color:#fff;border:0;border-radius:12px;
+                padding:15px 20px;font:inherit;font-size:17px;font-weight:600}
+  .barra button[disabled]{opacity:.4}
+  #saida{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;
+         align-items:center;justify-content:center;padding:18px}
+  #saida.ver{display:flex}
+  #saida .cx{background:#fff;border-radius:16px;padding:20px;max-width:640px;width:100%;
+             max-height:80vh;overflow:auto}
+  #saida pre{white-space:pre-wrap;font-size:15px;background:#f6f1e6;padding:14px;border-radius:10px}
+  #saida button{width:100%;background:var(--brass);color:#fff;border:0;border-radius:12px;
+                padding:15px;font:inherit;font-size:17px;font-weight:600;margin-top:12px}
+</style></head>
+<body>
+<header>
+  <h1>Testes do Kadish</h1>
+  <div class="sub">Toque <b>Funcionou</b> ou <b>Deu problema</b> em cada um.
+    No fim, aperte o botão e me mande o texto.</div>
+</header>
+<main id="lista"></main>
+
+<div class="barra">
+  <span class="p" id="prog"></span>
+  <button id="fechar" disabled>ver o recado</button>
+</div>
+
+<div id="saida"><div class="cx">
+  <p style="margin-top:0"><b>Copie tudo abaixo e me mande.</b></p>
+  <pre id="texto"></pre>
+  <button id="copiar">copiar</button>
+  <button id="voltar" style="background:#888">voltar</button>
+</div></div>
+
+<script>
+const APP = './';
+const TESTES = [
+  { n:'1', o:'O app abre e toca',
+    c:'Abra, espere carregar e aperte o ▶. Tem que sair a voz do rabino.',
+    link:{txt:'abrir o app', url: APP} },
+
+  { n:'2', o:'A palavra acende junto com a voz',
+    c:'Deixe tocar meio minuto olhando o texto. A palavra que ele fala acende em amarelo. Se descolar da voz, escreva em que segundo.' },
+
+  { n:'3', o:'As 8 línguas aparecem',
+    c:'Toque no botão da bandeira lá em cima, 8 vezes, até voltar ao PT. Nenhuma pode ficar em branco.' },
+
+  { n:'4', o:'Os 4 nussachim tocam', c:'Abra os quatro e aperte ▶ em cada um.',
+    links:[['ashkenaz', APP+'?n=ashkenaz'],['chabad', APP+'?n=chabad'],
+           ['sefard', APP+'?n=sefard'],['sefaradi', APP+'?n=sefaradi']] },
+
+  { n:'5', o:'Ler em voz alta — o teste que mais importa',
+    c:'Leia estes três versos em voz alta, pela linha do meio. Sai natural? Um estranho leria certo?',
+    versos:true },
+
+  { n:'6', o:'As palavras que mais mudaram',
+    c:'Estas ficaram diferentes do que eram. Leia uma por uma. Alguma tropeça na boca?',
+    palavras:['veshirata','shemei','berich','val','leila','balma','lalam','ulalmei','chirutei','baagala','yaaseh','veimru'] },
+
+  { n:'7', o:'O caderno do rabino dá para marcar',
+    c:'Abra o de português e veja: a diferença entre A e B está grifada em amarelo? Dá para escrever na linha "Outra"?',
+    link:{txt:'abrir o caderno de português', url:'./escolha-rabino/ESCOLHA-RABINO-pt.pdf'} },
+
+  { n:'8', o:'O folheto está bom para imprimir',
+    c:'O hebraico lê da direita para a esquerda, os pontinhos no lugar, e a tarja de RASCUNHO em toda página.',
+    link:{txt:'abrir um folheto', url:'./folhetos/chabad_yatom.pdf'} },
+
+  { n:'9', o:'Os robôs estão verdes',
+    c:'Abra o STATUS.md. As duas checagens têm que estar com bolinha verde 🟢.',
+    link:{txt:'abrir o STATUS', url:'https://github.com/erezchalom-a18y/tefila-kadish/blob/main/STATUS.md'} },
+];
+
+const R = JSON.parse(localStorage.getItem('testes_kadish') || '{}');
+const esc = s => String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+async function versosDeExemplo(){
+  try{
+    const j = await (await fetch('./sync/ashkenaz_yatom_sync.json')).json();
+    return j.versos.slice(0,3).map(v=>({heb:v.hebrew, tl:v.transliteration_pt}));
+  }catch(e){ return []; }
+}
+
+let VERSOS = [];
+function desenhar(){
+  document.getElementById('lista').innerHTML = TESTES.map(t=>{
+    const r = R[t.n] || {};
+    const links = t.links ? '<div class="par" style="margin-bottom:14px">' +
+        t.links.map(([nome,u])=>`<a class="btn" style="margin:0" href="${u}" target="_blank">${nome}</a>`).join('') + '</div>'
+      : t.link ? `<a class="btn" href="${t.link.url}" target="_blank">${t.link.txt}</a>` : '';
+    const pal = t.palavras ? '<div class="palavras">' + t.palavras.map(p=>`<span>${p}</span>`).join('') + '</div>' : '';
+    const ver = t.versos ? '<div class="versos">' + VERSOS.map(v=>
+        `<div><b>${esc(v.heb)}</b><i>${esc(v.tl)}</i></div>`).join('') + '</div>' : '';
+    const cx = r.v==='nao'
+      ? `<textarea data-n="${t.n}" placeholder="O que aconteceu? (pode ser curto)">${esc(r.obs||'')}</textarea>` : '';
+    return `<article class="t ${r.v==='sim'?'sim':r.v==='nao'?'nao':''}">
+      <span class="n">teste ${t.n}</span>
+      <div class="o">${t.o}</div>
+      <div class="c">${t.c}</div>
+      ${ver}${pal}${links}
+      <div class="par">
+        <button data-n="${t.n}" data-v="sim" class="${r.v==='sim'?'on-sim':''}">Funcionou</button>
+        <button data-n="${t.n}" data-v="nao" class="${r.v==='nao'?'on-nao':''}">Deu problema</button>
+      </div>${cx}</article>`;
+  }).join('');
+  const feitos = Object.keys(R).length;
+  document.getElementById('prog').textContent = `${feitos} de ${TESTES.length} respondidos`;
+  document.getElementById('fechar').disabled = feitos === 0;
+}
+
+document.addEventListener('click', ev=>{
+  const b = ev.target.closest('.par button'); if(!b) return;
+  const n = b.dataset.n;
+  R[n] = R[n] && R[n].v === b.dataset.v ? undefined : { v:b.dataset.v, obs:(R[n]||{}).obs||'' };
+  if(!R[n]) delete R[n];
+  localStorage.setItem('testes_kadish', JSON.stringify(R));
+  desenhar();
+});
+document.addEventListener('input', ev=>{
+  const t = ev.target.closest('textarea'); if(!t) return;
+  R[t.dataset.n] = { v:'nao', obs:t.value };
+  localStorage.setItem('testes_kadish', JSON.stringify(R));
+});
+
+document.getElementById('fechar').onclick = ()=>{
+  const ok = TESTES.filter(t=>(R[t.n]||{}).v==='sim').map(t=>t.n);
+  const ruim = TESTES.filter(t=>(R[t.n]||{}).v==='nao');
+  let s = 'TESTES DO KADISH\n\n';
+  s += ok.length ? `Funcionou: ${ok.join(', ')}\n\n` : '';
+  if(ruim.length){
+    s += 'Deu problema:\n';
+    for(const t of ruim) s += `- teste ${t.n} (${t.o}): ${(R[t.n].obs||'sem detalhe').trim()}\n`;
+  } else if(ok.length === TESTES.length) s += 'Passou tudo.\n';
+  const faltam = TESTES.filter(t=>!R[t.n]).map(t=>t.n);
+  if(faltam.length) s += `\nNão testei ainda: ${faltam.join(', ')}\n`;
+  document.getElementById('texto').textContent = s;
+  document.getElementById('saida').classList.add('ver');
+};
+document.getElementById('voltar').onclick = ()=>document.getElementById('saida').classList.remove('ver');
+document.getElementById('copiar').onclick = async ()=>{
+  const t = document.getElementById('texto').textContent;
+  try{ await navigator.clipboard.writeText(t); document.getElementById('copiar').textContent='copiado!'; }
+  catch(e){ document.getElementById('copiar').textContent='selecione o texto acima e copie'; }
+};
+
+versosDeExemplo().then(v=>{ VERSOS = v; desenhar(); });
+desenhar();
+</script>
+</body></html>

@@ -1,7 +1,16 @@
 # Roteiro de testes — Kadish
 
-Para o Erez conferir do iPad. Nenhum passo precisa de programa nenhum: só o
-navegador e o ouvido. Leva mais ou menos **40 minutos** no total.
+> **No iPad, não use este arquivo — abra a página de testes:**
+> **https://erezchalom-a18y.github.io/tefila-kadish/testes.html**
+>
+> São 9 testes, cada um com o botão que já abre a coisa certa. Você toca
+> "Funcionou" ou "Deu problema", e no fim ela monta o recado pronto para me
+> mandar. Leva uns 15 minutos.
+>
+> Este arquivo aqui é a versão longa, com os 40 testes. Serve de referência
+> quando algo der errado e a gente precisar olhar mais fundo.
+
+Nenhum passo precisa de programa nenhum: só o navegador e o ouvido.
 
 Marque cada linha. Onde der errado, me diga **o número do teste** e o que você
 viu — com isso eu acho o problema rápido.
