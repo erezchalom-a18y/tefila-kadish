@@ -2987,6 +2987,11 @@ state.preloadedTimestamps = {};   // verseId -> [ts1, ts2, ...] in ms
 async function loadAudioManifest() {
   // Skip if running from file:// (local file open) — fetch doesn't work there
   if (window.location.protocol === 'file:') return;
+  // O audio canonico do app vem de tefila-audio/, montado por window.SYNC.
+  // O manifesto era da epoca do Netlify (gravacoes enviadas pelo usuario) e nao
+  // existe neste repositorio: buscar por ele daria 404 em toda carga de pagina.
+  // So busca se alguem pedir de proposito com ?manifest=1.
+  if (!new URLSearchParams(location.search).has('manifest')) return;
   try {
     const res = await fetch('./audio/manifest.json', { cache: 'no-cache' });
     if (!res.ok) return;
@@ -2995,11 +3000,13 @@ async function loadAudioManifest() {
       // Special keys: _full_yatom and _full_derabanan point to a single audio file
       // containing the whole prayer. Used when user records one continuous take.
       if (id === '_full_yatom' && typeof entry === 'string') {
+        if (state.audioDeSincronia) return;   // nao sobrescreve tefila-audio/
         state.fullPrayerAudio = state.fullPrayerAudio || {};
         state.fullPrayerAudio.yatom = './audio/' + entry;
         return;
       }
       if (id === '_full_derabanan' && typeof entry === 'string') {
+        if (state.audioDeSincronia) return;   // nao sobrescreve tefila-audio/
         state.fullPrayerAudio = state.fullPrayerAudio || {};
         state.fullPrayerAudio.derabanan = './audio/' + entry;
         return;
@@ -3812,6 +3819,24 @@ function playFullPrayer(url) {
     playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
   };
 
+  // Sincronia real: o sync-player.js destaca palavra a palavra a partir do
+  // sync/*.json, que e medido do audio. Os temporizadores estimados abaixo
+  // brigariam com ele, entao nem sao montados.
+  if (window.SYNC && window.SYNC.ativo()) {
+    const pr = audioPlayer.play();
+    if (pr && pr.catch) pr.catch(err => {
+      showToast('Áudio não tocou: ' + err.message);
+      state.isPlaying = false;
+      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    });
+    audioPlayer.onended = () => {
+      state.isPlaying = false;
+      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      nowReading.textContent = 'Concluído · Amen';
+    };
+    return;
+  }
+
   // Filter to active verses for current kadishType
   const activeVerses = verses
     .map((v, idx) => ({ v, idx }))
@@ -4155,6 +4180,8 @@ const LANG_META = {
   en: {flag:'🇺🇸', code:'EN', dir:'ltr'},
   es: {flag:'🇪🇸', code:'ES', dir:'ltr'},
   fr: {flag:'🇫🇷', code:'FR', dir:'ltr'},
+  it: {flag:'🇮🇹', code:'IT', dir:'ltr'},
+  de: {flag:'🇩🇪', code:'DE', dir:'ltr'},
   ru: {flag:'🇷🇺', code:'RU', dir:'ltr'},
   he: {flag:'🇮🇱', code:'HE', dir:'rtl'}
 };
@@ -4267,6 +4294,7 @@ function applyLanguage(lang) {
   state.lang = lang;
   localStorage.setItem('tefila_lang', lang);
   applyI18n(lang);
+  if (window.SYNC) window.SYNC.trocarLingua(lang);
   rerenderVerseText();
   // Re-apply Kadish type so the size label (pequeno/grande/short/long...) translates
   if (typeof applyKadishType === 'function' && state.kadishType) {
@@ -4483,7 +4511,7 @@ document.querySelectorAll('.seg-control').forEach(seg => {
 });
 
 // ---------- Language toggle in topbar cycles through languages ----------
-const LANG_ORDER = ['pt','en','es','fr','ru','he'];
+const LANG_ORDER = ['pt','en','es','fr','it','de','ru','he'];
 document.getElementById('langToggle').addEventListener('click', () => {
   const idx = LANG_ORDER.indexOf(state.lang);
   const next = LANG_ORDER[(idx + 1) % LANG_ORDER.length];
@@ -4683,15 +4711,71 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 </script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const audio = document.querySelector('audio');
-      if (audio && typeof SyncPlayer !== 'undefined') {
-        const nusach = 'chabad';
-        const tipo = 'yatom';
-        new SyncPlayer(audio, nusach, tipo);
-        console.log('✓ Sincronizacao ativada:', nusach, tipo);
+  // ============================================================
+  // SINCRONIA — liga o sync-player.js v5 ao audio de tefila-audio/
+  // Caminhos todos relativos, para funcionar servido de subdiretorio
+  // (GitHub Pages: /tefila-kadish/).
+  // ============================================================
+  window.SYNC = (function () {
+    const NUSSACHIM = ['ashkenaz', 'chabad', 'sefard', 'sefaradi'];
+    const TIPOS = ['yatom', 'derabanan'];
+    let player = null, nussach = 'chabad', tipo = 'yatom';
+
+    const param = k => new URLSearchParams(location.search).get(k);
+    const audioEl = () => document.getElementById('audioPlayer');
+
+    function escolher() {
+      const n = param('n') || (window.state && state.tradition) || localStorage.getItem('tefila_tradition');
+      const t = param('t') || (window.state && state.kadishType) || localStorage.getItem('tefila_kadish_type');
+      nussach = NUSSACHIM.includes(n) ? n : 'chabad';
+      tipo = TIPOS.includes(t) ? t : 'yatom';
+    }
+
+    function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.ogg`; }
+
+    function montar() {
+      escolher();
+      // o audio completo de cada tipo, para o play() do app achar
+      if (window.state) {
+        state.audioDeSincronia = true;
+        state.fullPrayerAudio = {
+          yatom: caminhoAudio(nussach, 'yatom'),
+          derabanan: caminhoAudio(nussach, 'derabanan'),
+        };
       }
-    });
+      const audio = audioEl();
+      if (!audio || typeof SyncPlayer === 'undefined') return;
+      const novoSrc = caminhoAudio(nussach, tipo);
+      if (!audio.src || !audio.src.endsWith(novoSrc.replace('./', ''))) {
+        audio.src = novoSrc;
+      }
+      if (player) player.destroy();
+      const lang = (window.state && state.lang) || 'pt';
+      player = new SyncPlayer(audio, nussach, tipo, lang);
+      console.log('✓ sincronia:', nussach, tipo, lang);
+    }
+
+    return {
+      montar,
+      ativo: () => !!(player && player.carregado),
+      atual: () => ({ nussach, tipo, carregado: !!(player && player.carregado), erro: player && player.erro }),
+      trocarLingua: lang => { if (player) player.setLang(lang); },
+      trocar: (n, t) => {
+        if (n) nussach = NUSSACHIM.includes(n) ? n : nussach;
+        if (t) tipo = TIPOS.includes(t) ? t : tipo;
+        montar();
+      },
+    };
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.SYNC.montar();
+    // trocar o tipo de Kadish troca o audio e o JSON junto
+    const bt = document.getElementById('kadishTypeToggle');
+    if (bt) bt.addEventListener('click', () => setTimeout(() => {
+      window.SYNC.trocar(null, (window.state && state.kadishType) || null);
+    }, 0));
+  });
   </script>
 
 </body>

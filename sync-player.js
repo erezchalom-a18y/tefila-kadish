@@ -7,11 +7,13 @@
  */
 
 class SyncPlayer {
-  constructor(audioElement, nusach, tipo) {
+  constructor(audioElement, nusach, tipo, lang) {
     this.audio = audioElement;
     this.nusach = nusach;
     this.tipo = tipo;
-    this.lang = new URLSearchParams(window.location.search).get('lang') || 'pt';
+    this.lang = lang || new URLSearchParams(window.location.search).get('lang') || 'pt';
+    this.carregado = false;
+    this.erro = null;
     this.syncData = null;
     this.versoAtual = -1;
     this.palavraAtual = -1;
@@ -21,18 +23,40 @@ class SyncPlayer {
 
   async init() {
     try {
-      const r = await fetch(`./sync/${this.nusach}_${this.tipo}_sync.json`);
+      const r = await fetch(`./sync/${this.nusach}_${this.tipo}_sync.json`, { cache: 'no-cache' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
       this.syncData = await r.json();
+      this.carregado = true;
     } catch (e) {
+      this.erro = e.message;
       console.error('Erro ao carregar JSON de sincronia:', e);
       return;
     }
     const display = document.getElementById('verso-sync-display');
     if (!display) { console.error('verso-sync-display não encontrado'); return; }
     this._injetarCss();
-    this.audio.addEventListener('play',  () => { this.isPlaying = true; });
-    this.audio.addEventListener('pause', () => { this.isPlaying = false; });
-    this.audio.addEventListener('timeupdate', () => this.onTimeUpdate());
+    this._onPlay  = () => { this.isPlaying = true; };
+    this._onPause = () => { this.isPlaying = false; };
+    this._onTime  = () => this.onTimeUpdate();
+    this.audio.addEventListener('play',  this._onPlay);
+    this.audio.addEventListener('pause', this._onPause);
+    this.audio.addEventListener('timeupdate', this._onTime);
+  }
+
+  /** Troca a lingua sem recarregar o JSON e redesenha o verso na tela. */
+  setLang(lang) {
+    this.lang = lang;
+    const v = this.syncData && this.syncData.versos[this.versoAtual];
+    if (v) this.desenharVerso(v);
+  }
+
+  /** Solta os ouvintes deste player. Use antes de criar outro no mesmo audio. */
+  destroy() {
+    if (!this._onPlay) return;
+    this.audio.removeEventListener('play',  this._onPlay);
+    this.audio.removeEventListener('pause', this._onPause);
+    this.audio.removeEventListener('timeupdate', this._onTime);
+    this._onPlay = this._onPause = this._onTime = null;
   }
 
   _injetarCss() {
@@ -54,7 +78,7 @@ class SyncPlayer {
   }
 
   onTimeUpdate() {
-    if (!this.isPlaying || !this.syncData) return;
+    if (!this.syncData) return;
     const t = this.audio.currentTime;
     const versos = this.syncData.versos;
     const vi = versos.findIndex(v => t >= v.start && t < v.end);
