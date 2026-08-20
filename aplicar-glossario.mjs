@@ -13,7 +13,10 @@ for (const f of readdirSync('sync').filter(x => x.endsWith('.json')).sort()) {
     if (e.origem === 'tehilat_hashem') doSiddur++; else redigido++;
     return { ...v, transliteration_pt: e.transliteration_pt, translation_pt: e.translation_pt, origem_texto: e.origem };
   });
-  j.texto_status = (j.texto_status || '').replace(/; transliteracao e traducao PENDENTES/, '') +
+  // tira a nota anterior antes de escrever a nova, senao cada rodada duplica a linha
+  j.texto_status = (j.texto_status || '')
+      .replace(/; transliteracao e traducao PENDENTES/, '')
+      .replace(/; translit\/traducao:[^;]*$/, '') +
     `; translit/traducao: ${doSiddur} do siddur Tehilat Hashem (rever direitos), ${redigido} redigidas por Claude (rever com o rabino)`;
   writeFileSync(`sync/${f}`, JSON.stringify(j, null, 2) + '\n', 'utf8');
   console.log(`${f.replace('_sync.json','').padEnd(20)} ${String(j.versos.length).padStart(2)}v  siddur ${String(doSiddur).padStart(2)}  redigido ${String(redigido).padStart(2)}  ${falta ? 'SEM TEXTO ' + falta : ''}`);
