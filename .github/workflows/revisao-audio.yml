@@ -1,0 +1,63 @@
+name: Revisao auditiva do audio
+
+# Roda SOMENTE quando a sincronia ou os audios mudam (ou disparada a mao).
+# Uma rodada por mudanca. O commit do relatorio nao toca em sync/ nem em
+# tefila-audio/, entao nao se re-dispara: nunca entra em loop.
+on:
+  push:
+    branches: [main]
+    paths:
+      - sync/**
+      - tefila-audio/**
+  workflow_dispatch:
+
+concurrency:
+  group: revisao-audio
+  cancel-in-progress: true
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v6
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Transcrever os 8 audios e comparar com a sincronia
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          WHISPER_MODEL: ${{ vars.WHISPER_MODEL || 'whisper-1' }}
+          LIMIAR_SEGUNDOS: ${{ vars.LIMIAR_SEGUNDOS || '0.6' }}
+        run: node revisar-audio-whisper.mjs
+
+      - name: Conferir que nenhum dado nosso foi alterado
+        run: |
+          # O script so pode ter escrito o relatorio. Se mexeu em sync/,
+          # tefila-audio/ ou ancoras.json, isso e defeito grave: reprova.
+          sujo=$(git status --porcelain -- sync tefila-audio ancoras.json cortes.json)
+          if [ -n "$sujo" ]; then
+            echo "O script alterou dados que nunca pode alterar:"
+            echo "$sujo"
+            exit 1
+          fi
+          echo "ok: nenhum dado nosso foi tocado"
+
+      - name: Commitar o relatorio
+        run: |
+          # git diff NAO enxerga arquivo novo (nao rastreado); status --porcelain enxerga.
+          if [ -z "$(git status --porcelain -- RELATORIO-AUDIO-WHISPER.md)" ]; then
+            echo "relatorio sem mudanca; nada a commitar"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add RELATORIO-AUDIO-WHISPER.md
+          git commit -m "Relatorio da revisao auditiva por Whisper (automatico)"
+          git push

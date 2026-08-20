@@ -37,7 +37,8 @@ jobs:
 
       - name: Commitar o relatorio
         run: |
-          if git diff --quiet -- RELATORIO-REVISAO-GPT.md; then
+          # git diff NAO enxerga arquivo novo (nao rastreado); status --porcelain enxerga.
+          if [ -z "$(git status --porcelain -- RELATORIO-REVISAO-GPT.md)" ]; then
             echo "relatorio sem mudanca; nada a commitar"
             exit 0
           fi

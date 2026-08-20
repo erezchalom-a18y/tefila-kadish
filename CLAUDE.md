@@ -78,6 +78,34 @@ rabino. O workflow passa mesmo com apontamentos — de propósito.
 
 Testar sem gastar API: node revisar-glossario-gpt.mjs --ensaio
 
+## Revisão auditiva do áudio por Whisper
+
+revisar-audio-whisper.mjs + .github/workflows/revisao-audio.yml. Roda quando
+sync/*.json ou os áudios de tefila-audio/ mudam. Regras, todas invioláveis:
+
+1. Transcreve os 8 áudios pela API de transcrição da OpenAI, língua hebraico,
+   com timestamp por palavra (WHISPER_MODEL, padrão whisper-1 — é o que devolve
+   tempo por palavra).
+2. Compara com os nossos sync/*.json em dois eixos: palavra ouvida que não está
+   no texto / palavra do texto que não foi ouvida; e início de palavra divergindo
+   mais de LIMIAR_SEGUNDOS (padrão 0,6s).
+3. Saída: RELATORIO-AUDIO-WHISPER.md, commitado, agrupado por nussach e verso,
+   em português simples. Cruza com OUVIR-PRIMEIRO.md e destaca onde os dois
+   métodos concordam — é por aí que se começa a ouvir.
+4. NUNCA altera sync/*.json, ancoras.json nem cortes.json. O workflow confere
+   isso num passo próprio e reprova se algum desses arquivos foi tocado.
+5. Uma rodada por mudança, nunca em loop. O commit do relatório não toca em
+   sync/ nem em tefila-audio/, então não se re-dispara.
+
+O Whisper erra em aramaico litúrgico: confunde palavra curta com respiração e
+junta palavras. Apontamento dele é "vale a pena ouvir este trecho", nunca "está
+errado". Continua valendo a regra 1 das invioláveis: o reparo vira âncora só
+depois que o Erez ouviu e deu o segundo.
+
+Testar sem gastar API: node revisar-audio-whisper.mjs --ensaio
+(a transcrição é simulada a partir dos nossos próprios JSONs, com defeitos
+plantados, para conferir alinhamento e relatório.)
+
 ## Pendências de conteúdo (não são de código)
 
 - Revisão do rabino: glossario.json (42 entradas × 8 línguas) e as regras de
@@ -85,13 +113,16 @@ Testar sem gastar API: node revisar-glossario-gpt.mjs --ensaio
 - Direitos: entradas origem=tehilat_hashem no glossario vieram de siddur
   publicado; decisão pendente. As 7 línguas além do pt são rascunho de IA
   (origem=claude) — precisam de revisão humana.
-- Ouvir os 8 nussachim inteiros (lista dirigida: SUSPEITOS-PARA-OUVIR.txt).
+- Ouvir os 8 nussachim inteiros. Lista dirigida: OUVIR-PRIMEIRO.md (36
+  suspeitos em 28 versos, auditoria de sinal de 20/08), cruzada
+  automaticamente com o RELATORIO-AUDIO-WHISPER.md.
 
 ## Nunca
 
 - git push --force
 - alterar checar.mjs/checar-ritos.mjs para silenciar um vermelho
 - deixar o ChatGPT (ou qualquer modelo) escrever direto no glossario.json
+- deixar o Whisper (ou qualquer modelo) escrever nos sync/*.json ou nas âncoras
 - afrouxar o prompt da revisão cega para produzir mais apontamentos
 - gravar arquivos de texto em UTF-16 (foi um `echo >>` do PowerShell em UTF-16
   no .gitignore que quebrou o repositório uma vez — todo texto em UTF-8)
