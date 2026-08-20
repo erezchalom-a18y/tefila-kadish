@@ -46,4 +46,14 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add RELATORIO-REVISAO-GPT.md
           git commit -m "Relatorio da revisao cega do glossario (automatico)"
-          git push
+          # As duas revisoes podem terminar juntas e empurrar para a main ao mesmo
+          # tempo; sem rebase, a segunda leva rejeicao de nao-fast-forward.
+          for tentativa in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "push recusado, tentando de novo ($tentativa/3)"
+            sleep 5
+          done
+          echo "nao consegui empurrar o relatorio"
+          exit 1
