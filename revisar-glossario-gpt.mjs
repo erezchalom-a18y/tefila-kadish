@@ -25,12 +25,16 @@ import fs from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const ARQ_GLOSSARIO = 'glossario.json';
-const ARQ_RELATORIO = 'RELATORIO-REVISAO-GPT.md';
+// --transliteracao revisa a transliteracao portuguesa, que e uma rodada a parte:
+// rubrica propria, relatorio proprio, e uma so "lingua" (42 chamadas).
+const TRANSLIT = process.argv.includes('--transliteracao');
+const ARQ_RELATORIO = TRANSLIT ? 'RELATORIO-TRANSLITERACAO-GPT.md' : 'RELATORIO-REVISAO-GPT.md';
 const MODELO = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const CONCORRENCIA = Number(process.env.REVISAO_CONCORRENCIA || 6);
 const ENSAIO = process.argv.includes('--ensaio');
 
-const LINGUAS = [
+const LINGUAS_TRANSLIT = [{ cod: 'tl', nome: 'transliteracao', rotulo: 'transliteração' }];
+const LINGUAS_GLOSSARIO = [
   { cod: 'pt', nome: 'portugues',  rotulo: 'português' },
   { cod: 'en', nome: 'ingles',     rotulo: 'inglês' },
   { cod: 'es', nome: 'espanhol',   rotulo: 'espanhol' },
@@ -40,12 +44,13 @@ const LINGUAS = [
   { cod: 'ru', nome: 'russo',      rotulo: 'russo' },
   { cod: 'he', nome: 'hebraico moderno', rotulo: 'hebraico moderno' },
 ];
+const LINGUAS = TRANSLIT ? LINGUAS_TRANSLIT : LINGUAS_GLOSSARIO;
 
 // ---------------------------------------------------------------- material
 
 function material(entrada, cod) {
-  const traducao = cod === 'pt' ? entrada.translation_pt : entrada.translations?.[cod];
-  const glosas   = cod === 'pt' ? entrada.glosas_pt      : entrada.glosas?.[cod];
+  const traducao = TRANSLIT ? '' : (cod === 'pt' ? entrada.translation_pt : entrada.translations?.[cod]);
+  const glosas   = TRANSLIT ? [] : (cod === 'pt' ? entrada.glosas_pt      : entrada.glosas?.[cod]);
   return {
     hebraico: entrada.hebrew,
     transliteracao: entrada.transliteration_pt || '',
@@ -55,7 +60,53 @@ function material(entrada, cod) {
   };
 }
 
-const SISTEMA = [
+const SISTEMA_TRANSLIT = [
+  'Voce revisa transliteracoes de hebraico liturgico para leitores de portugues',
+  'do Brasil. Voce recebe o hebraico com nikud e a transliteracao proposta, e',
+  'avalia se um brasileiro que ler a transliteracao em voz alta vai pronunciar o',
+  'hebraico corretamente. Voce NAO sabe quem a escreveu.',
+  '',
+  'NAO existe cota de defeitos. Transliteracao nao tem forma unica certa: varios',
+  'sistemas convivem. So aponte o que faria a pessoa pronunciar ERRADO, ou',
+  'incoerencia dentro da propria transliteracao. Preferencia de sistema nao e erro.',
+  'Se estiver correta, diga que esta correta.',
+].join('\n');
+
+function promptTranslit(m) {
+  const linhas = m.palavras.map((p, i) => `${i + 1}. ${p}`);
+  return [
+    'HEBRAICO (com nikud), palavra a palavra:',
+    ...linhas,
+    '',
+    'TRANSLITERACAO PORTUGUESA PROPOSTA para o verso inteiro:',
+    `"${m.transliteracao}"`,
+    '',
+    'RUBRICA — aplique estes tres criterios, nesta ordem:',
+    '1. som errado: a letra ou o grupo de letras usado faz o leitor brasileiro',
+    '   pronunciar um som que nao e o do hebraico (ex.: usar "ch" onde o som e de',
+    '   "h" aspirado, ou "s" onde a letra e tsadi).',
+    '2. nikud ignorado: a vogal escrita no hebraico nao aparece, ou aparece trocada',
+    '   (ex.: kamatz lido como "e", sheva na lido como se fosse mudo).',
+    '3. incoerencia: a mesma letra hebraica aparece transliterada de dois jeitos',
+    '   diferentes dentro deste mesmo verso.',
+    '',
+    'RESPONDA SO COM JSON, neste formato:',
+    '{"veredito":"ok"} — se nao houver nenhum problema;',
+    'ou',
+    '{"veredito":"problema","achados":[',
+    '  {"onde":"transliteracao",',
+    '   "tipo":"som" ou "nikud" ou "incoerencia",',
+    '   "citacao":"<o trecho da transliteracao, copiado LITERALMENTE>",',
+    '   "problema":"<uma frase explicando>",',
+    '   "sugestao":"<a transliteracao inteira corrigida, entre aspas>"}',
+    ']}',
+    '',
+    'Na "sugestao", escreva a transliteracao do VERSO INTEIRO ja corrigida, entre',
+    'aspas — nao so a palavra. Se estiver tudo certo, responda {"veredito":"ok"}.',
+  ].join('\n');
+}
+
+const SISTEMA_GLOSSARIO = [
   'Voce e um revisor de traducoes liturgicas judaicas (Kadish).',
   'Voce recebe um texto que ja existe e avalia se esta correto. Voce NAO sabe',
   'quem o escreveu, e isso nao importa para o seu julgamento.',
@@ -66,7 +117,10 @@ const SISTEMA = [
   'So aponte o que um falante nativo culto consideraria errado.',
 ].join('\n');
 
+const SISTEMA = TRANSLIT ? SISTEMA_TRANSLIT : SISTEMA_GLOSSARIO;
+
 function prompt(m, lingua) {
+  if (TRANSLIT) return promptTranslit(m);
   const linhas = m.palavras.map((p, i) => `${i + 1}. ${p}  =  "${m.glosas[i] ?? ''}"`);
   return [
     `LINGUA-ALVO: ${lingua.rotulo}`,
@@ -210,6 +264,7 @@ function citacaoConfere(citacao, m) {
   if (!citacao) return false;
   const alvo = normalizar(citacao);
   if (!alvo) return false;
+  if (TRANSLIT) return normalizar(m.transliteracao).includes(alvo) ? 'alvo' : false;
   if ([m.traducao, ...m.glosas].map(normalizar).some(f => f.includes(alvo))) return 'alvo';
   if ([m.hebraico, ...m.palavras].map(normalizar).some(f => f.includes(alvo))) return 'hebraico';
   return false;
@@ -236,15 +291,19 @@ async function principal() {
   // o que aparecer aqui e tudo o que o ChatGPT ve.
   if (process.argv.includes('--exemplo')) {
     const [, entrada] = entradas[0];
-    const lingua = LINGUAS.find(x => x.cod === (process.argv[process.argv.indexOf('--exemplo') + 1] || 'de')) || LINGUAS[5];
+    const pedida = process.argv[process.argv.indexOf('--exemplo') + 1];
+    const lingua = LINGUAS.find(x => x.cod === pedida) || LINGUAS[Math.min(5, LINGUAS.length - 1)];
     console.log('--- system ---\n' + SISTEMA + '\n--- user ---\n' + prompt(material(entrada, lingua.cod), lingua));
     return;
   }
 
   const tarefas = [];
   for (const [chave, entrada] of entradas)
-    for (const lingua of LINGUAS)
-      tarefas.push({ chave, entrada, lingua, m: material(entrada, lingua.cod) });
+    for (const lingua of LINGUAS) {
+      const m = material(entrada, lingua.cod);
+      if (TRANSLIT && !m.transliteracao) continue;
+      tarefas.push({ chave, entrada, lingua, m });
+    }
 
   console.log(`Revisao cega: ${entradas.length} entradas x ${LINGUAS.length} linguas = ${tarefas.length} revisoes`);
   console.log(ENSAIO ? 'MODO ENSAIO (nenhuma chamada a API)' : `modelo: ${MODELO}, concorrencia: ${CONCORRENCIA}`);
@@ -280,7 +339,8 @@ function relatorio(resultados, nEntradas) {
   const descartados = resultados.filter(r => r.descartados.length);
   const l = [];
 
-  l.push('# Relatório da revisão cega do glossário');
+  l.push(TRANSLIT ? '# Relatório da revisão cega da transliteração'
+                  : '# Relatório da revisão cega do glossário');
   l.push('');
   l.push(`Gerado em ${agora} por ChatGPT (\`${ENSAIO ? 'ENSAIO — sem API' : MODELO}\`), sobre o commit \`${commitAtual()}\`.`);
   l.push('');
@@ -291,17 +351,32 @@ function relatorio(resultados, nEntradas) {
 
   l.push('## Como foi feito');
   l.push('');
-  l.push(`${nEntradas} entradas × ${LINGUAS.length} línguas = **${resultados.length} revisões independentes**.`);
+  if (TRANSLIT) {
+    l.push(`**${resultados.length} transliterações revisadas**, uma por entrada do glossário.`);
+    l.push('');
+    l.push('Cada revisão viu apenas o hebraico com nikud, palavra a palavra, e a');
+    l.push('transliteração proposta. O revisor não soube quem a escreveu e não recebeu');
+    l.push('nenhuma cota de defeitos — foi instruído a dizer que está correta quando');
+    l.push('estiver, e a não tratar preferência de sistema como erro.');
+  } else {
+    l.push(`${nEntradas} entradas × ${LINGUAS.length} línguas = **${resultados.length} revisões independentes**.`);
+    l.push('');
+    l.push('Cada revisão viu apenas o hebraico, a transliteração e o texto daquela');
+    l.push('única língua. O revisor não soube quem escreveu, não viu as outras línguas,');
+    l.push('e não recebeu nenhuma cota de defeitos — foi instruído a dizer que está');
+    l.push('correto quando estiver correto.');
+  }
   l.push('');
-  l.push('Cada revisão viu apenas o hebraico, a transliteração e o texto daquela');
-  l.push('única língua. O revisor não soube quem escreveu, não viu as outras línguas,');
-  l.push('e não recebeu nenhuma cota de defeitos — foi instruído a dizer que está');
-  l.push('correto quando estiver correto.');
-  l.push('');
-  l.push('Rubrica aplicada em cada entrada e língua: **erro de sentido**, **palavra');
-  l.push('errada**, **gramática da língua-alvo**. Toda queixa exige citação literal —');
-  l.push('do texto traduzido ou da palavra hebraica de origem. Citação que não existe');
-  l.push('em nenhum dos dois foi descartada automaticamente.');
+  if (TRANSLIT) {
+    l.push('Rubrica: **som errado**, **nikud ignorado**, **incoerência interna**.');
+    l.push('Toda queixa exige citação literal da própria transliteração; citação que não');
+    l.push('confere foi descartada automaticamente.');
+  } else {
+    l.push('Rubrica aplicada em cada entrada e língua: **erro de sentido**, **palavra');
+    l.push('errada**, **gramática da língua-alvo**. Toda queixa exige citação literal —');
+    l.push('do texto traduzido ou da palavra hebraica de origem. Citação que não existe');
+    l.push('em nenhum dos dois foi descartada automaticamente.');
+  }
   l.push('');
 
   l.push('## Resumo');
@@ -334,7 +409,8 @@ function relatorio(resultados, nEntradas) {
         l.push('');
         l.push(`*${r.m.transliteracao}*`);
         l.push('');
-        l.push(`Texto em ${lingua.rotulo}: **${r.m.traducao}**`);
+        l.push(TRANSLIT ? `Transliteração: **${r.m.transliteracao}**`
+                        : `Texto em ${lingua.rotulo}: **${r.m.traducao}**`);
         l.push('');
         for (const a of r.achados) {
           l.push(`- **${a.onde || '?'}** · *${a.tipo || '?'}*`);
