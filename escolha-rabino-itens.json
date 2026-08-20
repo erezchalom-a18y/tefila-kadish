@@ -248,7 +248,7 @@
       "hebraico": "וְיַמְלִיךְ מַלְכוּתֵהּ",
       "campo": "transliteracao",
       "indice": null,
-      "A": "veryamlich malchutei",
+      "A": "veyamlich malchutei",
       "B": "yamlich malchute",
       "origem_A": "nossa",
       "origem_B": "revisor"
@@ -261,7 +261,7 @@
       "campo": "transliteracao",
       "indice": null,
       "A": "yatsmach purkanei vikarev meshichei",
-      "B": "veryatsmach purkanei vikarev meshichei",
+      "B": "veyatsmach purkanei vikarev meshichei",
       "origem_A": "revisor",
       "origem_B": "nossa"
     },
@@ -272,7 +272,7 @@
       "hebraico": "וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
       "campo": "transliteracao",
       "indice": null,
-      "A": "veryatsmach purkanei vikarev meshichei",
+      "A": "veyatsmach purkanei vikarev meshichei",
       "B": "yatsmach purkanei vikarev meshichei",
       "origem_A": "nossa",
       "origem_B": "revisor"
@@ -284,7 +284,7 @@
       "hebraico": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "ufurkana min kodam avuhon divishmaya verarera ve'imru amen",
+      "A": "ufurkana min kodam avuhon divishmaya vara veimru amen",
       "B": "ufurkana min kodam avuhon divišmaya v",
       "origem_A": "nossa",
       "origem_B": "revisor"
@@ -296,7 +296,7 @@
       "hebraico": "וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "ufurkana min kodam avuhon di vishmaya verarera ve'imru amen",
+      "A": "ufurkana min kodam avuhon di vishmaya vara veimru amen",
       "B": "ufurkana min kodam avuhon di vishmaya ve",
       "origem_A": "nossa",
       "origem_B": "revisor"
@@ -308,7 +308,7 @@
       "hebraico": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "lereila min kol birchata vershirata",
+      "A": "leila min kol birchata veshirata",
       "B": "eila min kol birkatá v",
       "origem_A": "nossa",
       "origem_B": "revisor"
@@ -321,7 +321,7 @@
       "campo": "transliteracao",
       "indice": null,
       "A": "ila min kol birchata shirata",
-      "B": "lereila min kol birchata shirata",
+      "B": "leila min kol birchata shirata",
       "origem_A": "revisor",
       "origem_B": "nossa"
     },
@@ -332,7 +332,7 @@
       "hebraico": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "berchayeichon uveryomeichon",
+      "A": "bechayeichon uveyomeichon",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -344,7 +344,7 @@
       "hebraico": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "ba'agala uverzman qariv ve'imru amen",
+      "A": "baagala uvezman qariv veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -356,7 +356,7 @@
       "hebraico": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
       "campo": "transliteracao",
       "indice": null,
-      "A": "beralma di verra chirerutei",
+      "A": "balma di vera chirutei",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -368,7 +368,7 @@
       "hebraico": "דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר",
       "campo": "transliteracao",
       "indice": null,
-      "A": "di veratra hadein verdi verchol atar va'atar",
+      "A": "di vatra hadein vedi vechol atar vaatar",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -380,7 +380,7 @@
       "hebraico": "דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "deraserkin beroraita kadishta",
+      "A": "dasekin boraita kadishta",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -392,7 +392,7 @@
       "hebraico": "הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "hu berrachamav ya'aseh shalom aleinu veral kol yisrael ve'imru amen",
+      "A": "hu berachamav yaaseh shalom aleinu val kol yisrael veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -404,7 +404,7 @@
       "hebraico": "הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "hu berrachamav ya'aseh shalom aleinu veral kol amo yisrael ve'imru amen",
+      "A": "hu berachamav yaaseh shalom aleinu val kol amo yisrael veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -416,7 +416,7 @@
       "hebraico": "הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "hu ya'aseh verrachamav shalom aleinu veral kol yisrael ve'imru amen",
+      "A": "hu yaaseh verachamav shalom aleinu val kol yisrael veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -428,7 +428,7 @@
       "hebraico": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
       "campo": "transliteracao",
       "indice": null,
-      "A": "uverchayei derchol beit yisrael",
+      "A": "uvechayei dechol beit yisrael",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -440,7 +440,7 @@
       "hebraico": "וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "verchayin arichin umerzona rervicha",
+      "A": "vechayin arichin umezona revicha",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -452,7 +452,7 @@
       "hebraico": "וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי",
       "campo": "transliteracao",
       "indice": null,
-      "A": "verchayin arichin umerzonei rervichei",
+      "A": "vechayin arichin umezonei revichei",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -464,7 +464,7 @@
       "hebraico": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "veryitaleh veryithalal shmei derqudsha berrich hu",
+      "A": "veyitaleh veyithalal shmei dequdsha berich hu",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -476,7 +476,7 @@
       "hebraico": "וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
       "campo": "transliteracao",
       "indice": null,
-      "A": "veryitromam veryitnassa veryithadar",
+      "A": "veyitromam veyitnassa veyithadar",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -488,7 +488,7 @@
       "hebraico": "וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "veral kol man deraserkin beroraita",
+      "A": "val kol man dasekin boraita",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -500,7 +500,7 @@
       "hebraico": "וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "veral talmideihon veral kol talmidei talmideihon",
+      "A": "val talmideihon val kol talmidei talmideihon",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -512,7 +512,7 @@
       "hebraico": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "ufurkana min kodam avuhon divishmaya ve'imru amen",
+      "A": "ufurkana min kodam avuhon divishmaya veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -524,7 +524,7 @@
       "hebraico": "וּרְפוּאָה וּגְאֻלָּה וּסְלִיחָה וְכַפָּרָה",
       "campo": "transliteracao",
       "indice": null,
-      "A": "urerfua ugerula userlicha verchapara",
+      "A": "urefua ugula uselicha vechapara",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -536,7 +536,7 @@
       "hebraico": "חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "chayim versava vishua vernechama versheizava",
+      "A": "chayim vesava vishua venechama vesheizava",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -548,7 +548,7 @@
       "hebraico": "חִנָּא וְחִסְדָּא וְרַחֲמִין",
       "campo": "transliteracao",
       "indice": null,
-      "A": "china verchisda verrachamin",
+      "A": "china vechisda verachamin",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -560,7 +560,7 @@
       "hebraico": "יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "yehei lerhon ulerchon shlama raba",
+      "A": "yehei lehon ulechon shlama raba",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -572,7 +572,7 @@
       "hebraico": "יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי",
       "campo": "transliteracao",
       "indice": null,
-      "A": "yehei lana ulerhon ulerchon china verchisda verrachamei",
+      "A": "yehei lana ulehon ulechon china vechisda verachamei",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -584,7 +584,7 @@
       "hebraico": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "Yehei shlama raba min shamaya verchayim tovim aleinu veral kol yisrael ve'imru amen",
+      "A": "Yehei shlama raba min shamaya vechayim tovim aleinu val kol yisrael veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -596,7 +596,7 @@
       "hebraico": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "Yehei shmei raba mervarach leralam uleralmei almaya",
+      "A": "Yehei shmei raba mevarach lalam ulalmei almaya",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -608,7 +608,7 @@
       "hebraico": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
       "campo": "transliteracao",
       "indice": null,
-      "A": "Yitbarach veryishtabach veryitpaar",
+      "A": "Yitbarach veyishtabach veyitpaar",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -620,7 +620,7 @@
       "hebraico": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
       "campo": "transliteracao",
       "indice": null,
-      "A": "Yitgadal veryitkadash shermei raba",
+      "A": "Yitgadal veyitkadash shemei raba",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -632,7 +632,7 @@
       "hebraico": "מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "min kodam marei shmaya verarera ve'imru amen",
+      "A": "min kodam marei shmaya vara veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
@@ -644,7 +644,7 @@
       "hebraico": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
       "campo": "transliteracao",
       "indice": null,
-      "A": "tushbechata vernechamata da'amiran beralma ve'imru amen",
+      "A": "tushbechata venechamata daamiran balma veimru amen",
       "B": null,
       "origem_A": "nossa",
       "origem_B": null
