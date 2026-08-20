@@ -4722,21 +4722,45 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     let player = null, nussach = 'chabad', tipo = 'yatom';
 
     const param = k => new URLSearchParams(location.search).get(k);
+    // ATENCAO: `const state` no topo de outro <script> NAO vira window.state —
+    // const/let de topo ficam no escopo lexico global, nao no objeto window.
+    // Testar por window.state dava sempre falso, o audio nunca era entregue ao
+    // botao play, e o app caia na voz sintetizada do navegador.
+    const temState = () => typeof state !== 'undefined' && state;
     const audioEl = () => document.getElementById('audioPlayer');
 
     function escolher() {
-      const n = param('n') || (window.state && state.tradition) || localStorage.getItem('tefila_tradition');
-      const t = param('t') || (window.state && state.kadishType) || localStorage.getItem('tefila_kadish_type');
+      const n = param('n') || (temState() && state.tradition) || localStorage.getItem('tefila_tradition');
+      const t = param('t') || (temState() && state.kadishType) || localStorage.getItem('tefila_kadish_type');
       nussach = NUSSACHIM.includes(n) ? n : 'chabad';
       tipo = TIPOS.includes(t) ? t : 'yatom';
     }
 
-    function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.ogg`; }
+    // O Safari (iPad e Mac) NAO toca Ogg Vorbis. Sem isto o audio do rabino nao
+    // carrega no iPad e o app cai na voz sintetizada do navegador.
+    let _formato = null;
+    function formatoAudio() {
+      if (_formato) return _formato;
+      // ?audio=mp3  ou  ?audio=ogg  forca o formato — serve para testar o
+      // caminho do Safari em qualquer navegador
+      const pedido = param('audio');
+      if (pedido === 'mp3' || pedido === 'ogg') return (_formato = pedido);
+      const a = document.createElement('audio');
+      _formato = a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+      return _formato;
+    }
+    function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.${formatoAudio()}`; }
 
     function montar() {
       escolher();
       // o audio completo de cada tipo, para o play() do app achar
-      if (window.state) {
+      if (temState()) {
+        // o play() do app escolhe o audio por state.kadishType — se o ?t= pedir
+        // derabanan e o state continuar em yatom, toca o arquivo errado
+        if (state.kadishType !== tipo) {
+          state.kadishType = tipo;
+          if (typeof applyKadishType === 'function') { try { applyKadishType(tipo); } catch (e) {} }
+        }
         state.audioDeSincronia = true;
         state.fullPrayerAudio = {
           yatom: caminhoAudio(nussach, 'yatom'),
@@ -4750,7 +4774,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         audio.src = novoSrc;
       }
       if (player) player.destroy();
-      const lang = (window.state && state.lang) || 'pt';
+      const lang = (temState() && state.lang) || 'pt';
       player = new SyncPlayer(audio, nussach, tipo, lang);
       console.log('✓ sincronia:', nussach, tipo, lang);
     }
@@ -4773,7 +4797,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // trocar o tipo de Kadish troca o audio e o JSON junto
     const bt = document.getElementById('kadishTypeToggle');
     if (bt) bt.addEventListener('click', () => setTimeout(() => {
-      window.SYNC.trocar(null, (window.state && state.kadishType) || null);
+      window.SYNC.trocar(null, (temState() && state.kadishType) || null);
     }, 0));
   });
   </script>

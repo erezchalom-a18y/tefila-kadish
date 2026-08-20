@@ -168,7 +168,9 @@ async function baixarJson(id, v){
 async function carregar(){
   const id = sel.value, [n,t] = id.split('_'), v = 'v=' + Date.now();
   diag('carregando…');
-  a.src = `${BASE}/tefila-audio/${n}/${t}.ogg?${v}`;
+  // Safari nao toca Ogg Vorbis; ali usa o .m4a
+  const ext = document.createElement('audio').canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+  a.src = `${BASE}/tefila-audio/${n}/${t}.${ext}?${v}`;
   a.load();
   try { dados = await baixarJson(id, v); }
   catch(e) { dados = null; lista.innerHTML = '';
