@@ -98,8 +98,10 @@ function prompt(m, lingua) {
     '   "sugestao":"<o que estaria certo, se souber>"}',
     ']}',
     '',
-    'A "citacao" precisa ser copia literal de um trecho da traducao ou da glosa',
-    'acima — nao parafraseie, nao traduza, nao corrija ao citar.',
+    'A "citacao" precisa ser copia literal de UM trecho: ou do texto na',
+    'lingua-alvo, ou da palavra hebraica de origem. Copie so o trecho — nao',
+    'copie a linha inteira com o sinal de igual, nao parafraseie, nao traduza,',
+    'nao corrija ao citar.',
     'Se estiver tudo correto, responda exatamente {"veredito":"ok"}.',
   ].join('\n');
 }

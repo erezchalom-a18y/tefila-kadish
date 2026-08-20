@@ -61,8 +61,12 @@ de olhos. Regras, todas invioláveis:
    não vê as outras línguas. Auditar com:
    node revisar-glossario-gpt.mjs --exemplo de   (mostra o prompt exato)
 3. Rubrica fixa por entrada e língua: erro de sentido, palavra errada, gramática
-   da língua-alvo. Resposta: "ok" ou o problema com citação literal. Citação que
-   não bate com o texto real é descartada automaticamente pelo script.
+   da língua-alvo. Resposta: "ok" ou o problema com citação literal. A citação
+   vale se vier do texto traduzido OU da palavra hebraica de origem (apontar pelo
+   hebraico é jeito legítimo de dizer qual glosa está errada, e o relatório marca
+   quando foi assim). Só é descartada quando não existe em nenhum dos dois.
+   Nunca afrouxar mais que isso: se o revisor estiver citando errado, o conserto
+   é no prompt, não no guarda.
 4. Proibido cota de defeitos. O prompt manda dizer que está correto quando
    estiver correto. Nunca reescrever o prompt para "achar mais coisa".
 5. Saída: RELATORIO-REVISAO-GPT.md, commitado, escrito para humano ler.
