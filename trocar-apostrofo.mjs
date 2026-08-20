@@ -1,14 +1,19 @@
 /**
- * trocar-apostrofo.mjs — troca o apostrofo da transliteracao portuguesa por "er",
- * conforme decisao do Erez: v'shirata -> vershirata.
+ * trocar-apostrofo.mjs — tira o apostrofo da transliteracao portuguesa,
+ * conforme decisao do Erez. Sao tres regras, por tipo de apostrofo:
  *
- * ONDE TROCA: so onde o apostrofo representa um sheva na — isto e, quando vem
- * depois de CONSOANTE. Ali ele marca a vogal curta, e virar "er" e a decisao.
+ *  1. CONSOANTE antes e CONSOANTE depois  ->  vira "e"
+ *     v'shirata -> veshirata, b'rich -> berich, sh'mei -> shemei
+ *     Ali o apostrofo e um sheva na: vale um "e" curto.
  *
- * ONDE NAO TROCA: quando o apostrofo vem depois de VOGAL, ele nao e sheva —
- * ele separa duas vogais que nao podem se juntar (ve'imru, ya'aseh, ba'agala).
- * Trocar ali produziria "veerimru" e "yaeraseh", que ninguem consegue ler.
- * Esses casos ficam como estao e sao listados no fim, para decisao a parte.
+ *  2. CONSOANTE antes e VOGAL depois      ->  apaga
+ *     v'al -> val, l'eila -> leila
+ *     Virar "e" daria "veal" e "leeila".
+ *
+ *  3. VOGAL antes                          ->  apaga
+ *     ve'imru -> veimru, ya'aseh -> yaaseh
+ *     Ali o apostrofo nao e sheva: ele so separava duas vogais.
+ *     Virar "e" daria "veeimru" e "yaeaseh".
  *
  * Mexe na transliteracao em tres lugares: glossario.json, o verso nos sync/*.json
  * e as palavras dentro de cada verso. NUNCA mexe em tempo, em hebraico, em
@@ -23,17 +28,20 @@ import { execFileSync } from 'node:child_process';
 const CONFIRMAR = process.argv.includes('--confirmar');
 const VOGAIS = 'aeiouáàâãéêíóôõúAEIOUÁÀÂÃÉÊÍÓÔÕÚ';
 
-/** Troca so os apostrofos de sheva. Devolve [novoTexto, trocados, mantidos]. */
+/** Aplica as tres regras. Devolve [novoTexto, viraramE, apagados]. */
 function trocar(txt) {
   if (!txt || !txt.includes("'")) return [txt, 0, 0];
-  let saida = '', trocados = 0, mantidos = 0;
+  let saida = '', viraramE = 0, apagados = 0;
   for (let i = 0; i < txt.length; i++) {
     if (txt[i] !== "'") { saida += txt[i]; continue; }
     const anterior = i > 0 ? txt[i - 1] : '';
-    if (anterior && VOGAIS.includes(anterior)) { saida += "'"; mantidos++; }  // separador
-    else { saida += 'er'; trocados++; }                                        // sheva
+    const seguinte = i + 1 < txt.length ? txt[i + 1] : '';
+    const vogalAntes = anterior && VOGAIS.includes(anterior);
+    const vogalDepois = seguinte && VOGAIS.includes(seguinte);
+    if (!vogalAntes && !vogalDepois && seguinte) { saida += 'e'; viraramE++; }  // regra 1
+    else apagados++;                                                            // regras 2 e 3
   }
-  return [saida, trocados, mantidos];
+  return [saida, viraramE, apagados];
 }
 
 const arquivosSync = fs.readdirSync('sync').filter(f => f.endsWith('.json')).map(f => `sync/${f}`);
@@ -41,19 +49,16 @@ const TODOS = ['glossario.json', ...arquivosSync];
 const antes = Object.fromEntries(TODOS.map(f => [f, fs.readFileSync(f, 'utf8')]));
 
 let trocados = 0, mantidos = 0;
-const amostra = [], separadores = new Set();
+const amostra = [];
 
 function processa(obj, campo) {
   const [novo, t, m] = trocar(obj[campo]);
-  if (t) {
+  if (t || m) {
     if (amostra.length < 25 && obj[campo] !== novo) amostra.push([obj[campo], novo]);
     obj[campo] = novo;
     trocados += t;
   }
-  if (m) {
-    mantidos += m;
-    for (const p of String(obj[campo]).split(/\s+/)) if (p.includes("'")) separadores.add(p);
-  }
+  if (m) mantidos += m;
 }
 
 // 1. glossario.json
@@ -71,12 +76,12 @@ for (const f of arquivosSync) {
   syncs[f] = j;
 }
 
-console.log(`apostrofos trocados por "er" (sheva):        ${trocados}`);
-console.log(`apostrofos mantidos (separam duas vogais):   ${mantidos}\n`);
+console.log(`apostrofos que viraram "e"  (regra 1, sheva antes de consoante): ${trocados}`);
+console.log(`apostrofos apagados         (regras 2 e 3):                      ${mantidos}\n`);
 console.log('exemplos do que muda:');
 for (const [a, b] of amostra.slice(0, 12)) console.log(`   ${a}\n     -> ${b}`);
-console.log('\npalavras que continuam com apostrofo (nao sao sheva):');
-console.log('   ' + [...separadores].sort().join(', '));
+const sobrou = JSON.stringify(g).match(/[a-z]'[a-z]/gi);
+console.log(`\napostrofos que sobraram no glossario: ${sobrou ? sobrou.length : 0}`);
 
 if (!CONFIRMAR) {
   console.log('\nEnsaio — nada foi escrito. Para aplicar, rode com --confirmar');
