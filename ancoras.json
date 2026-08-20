@@ -1,0 +1,10 @@
+{
+  "_leia": "Ancoras confirmadas de ouvido pelo Erez. Cada uma diz: a palavra N do verso V comeca no bloco de voz que inicia em T. O alinhador global e obrigado a respeitar.",
+  "ashkenaz_yatom": [
+    { "verso": 7, "palavra": 7, "inicio": 29.42, "nota": "almaya" },
+    { "verso": 8, "palavra": 1, "inicio": 30.96, "nota": "Yitbarach" },
+    { "verso": 11, "palavra": 5, "inicio": 49.62, "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s)" },
+    { "verso": 12, "palavra": 1, "inicio": 50.54, "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush" },
+    { "verso": 12, "palavra": 2, "inicio": 53, "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez" }
+  ]
+}

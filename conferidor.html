@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conferidor — Kadish</title>
+<style>
+:root{--bg:#0f1115;--card:#191d25;--line:#2a3039;--txt:#e8eaed;--dim:#98a0ab;
+      --warn:#fbbf24;--bad:#f87171;--acc:#60a5fa;--hi:#fde047}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px;z-index:10}
+h1{font-size:16px;margin:0 0 10px}
+.linha{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,button{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+button:hover{border-color:var(--acc)}
+button.p{background:var(--acc);color:#0b1020;border-color:var(--acc);font-weight:600}
+button.on{background:#1c3a5e;border-color:var(--acc)}
+audio{width:100%;margin-top:10px}
+.aviso{background:#3a2a10;border:1px solid #6b5220;color:#fde68a;padding:10px 12px;border-radius:8px;margin:10px 16px;font-size:13px}
+main{padding:8px 16px 130px}
+.v{background:var(--card);border:1px solid var(--line);border-left:4px solid transparent;border-radius:10px;padding:10px 12px;margin:8px 0;cursor:pointer}
+.v:hover{background:#1f242d}
+.v.on{border-left-color:var(--acc);background:#1c2534}
+.v.susp{border-left-color:var(--warn)}
+.top{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--dim);margin-bottom:6px}
+.heb{direction:rtl;text-align:right;font-size:26px;line-height:2;font-family:"Times New Roman",serif}
+.tl{color:var(--dim);font-size:14px;font-style:italic;margin-top:6px}
+.gl{color:#8a93a0;font-size:13.5px;margin-top:6px}
+.v.on .gl{color:#cfd6de}
+.td{color:#6f7681;font-size:13px;margin-top:6px;transition:color .15s,font-size .15s}
+.v.on .td{color:var(--txt);font-size:16px;line-height:1.6}
+.v.on .tl{color:#b9c2cd}
+.w{padding:0 2px;border-radius:4px;transition:background .08s,color .08s}
+.w.agora{background:var(--hi);color:#111;font-weight:600}
+.tl .w.agora{background:var(--hi);color:#111}
+.vazio{color:#6b7280;font-size:12px}
+.barra{position:fixed;bottom:0;left:0;right:0;background:#141821;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px}
+kbd{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12px}
+.st{color:var(--dim);margin-left:auto}
+code{font-size:11px;color:var(--dim)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Conferidor — Kadish <span style="color:#60a5fa;font-size:12px">v11 · línguas</span></h1>
+  <div class="linha">
+    <select id="sel"></select>
+    <select id="lingua">
+      <option value="pt">português</option><option value="en">English</option>
+      <option value="es">español</option><option value="fr">français</option>
+      <option value="it">italiano</option><option value="de">Deutsch</option>
+      <option value="ru">русский</option><option value="he">עברית</option>
+    </select>
+    <button id="ir">▶ tocar do verso atual</button>
+    <button id="lento">velocidade 1.0×</button>
+    <button id="modo" class="on">destaque: palavra</button>
+    <button id="bater">🥁 corrigir este verso batendo</button>
+    <button id="recarregar">recarregar do GitHub</button>
+    <button class="p" id="baixar">baixar JSON corrigido</button>
+  </div>
+  <audio id="a" controls preload="metadata"></audio>
+</header>
+
+<div class="aviso" id="msg">carregando…</div>
+<main id="lista"></main>
+
+<div class="barra">
+  <span><kbd>espaço</kbd> toca/pausa</span>
+  <span><kbd>N</kbd> (no modo bater) marca o início da próxima palavra</span>
+  <span><kbd>M</kbd> o verso destacado começa AGORA</span>
+  <span><kbd>←</kbd><kbd>→</kbd> 2s</span>
+  <span><kbd>↑</kbd><kbd>↓</kbd> verso</span>
+  <span class="st" id="st"></span>
+</div>
+
+<script>
+const BASE = 'https://raw.githubusercontent.com/erezchalom-a18y/tefila-kadish/refs/heads/main';
+const OPCOES = [['ashkenaz','yatom'],['ashkenaz','derabanan'],['chabad','yatom'],['chabad','derabanan'],
+                ['sefard','yatom'],['sefard','derabanan'],['sefaradi','yatom'],['sefaradi','derabanan']];
+
+const sel = document.getElementById('sel');
+OPCOES.forEach(([n,t]) => { const o = document.createElement('option');
+  o.value = n + '_' + t; o.textContent = n + ' · ' + t; sel.appendChild(o); });
+
+const a = document.getElementById('a'), lista = document.getElementById('lista');
+const msg = document.getElementById('msg'), st = document.getElementById('st');
+let dados = null, atual = 0, palAtual = -1, suspeitos = new Set(), porPalavra = true;
+let lingua = 'pt';
+const glosaDe = p => (p.glosas && p.glosas[lingua]) || p.glosa_pt || '';
+const traducaoDe = v => (v.translations && v.translations[lingua]) || v.translation_pt || '';
+let batendo = false, idxBater = 0;
+
+const cons = h => (String(h).match(/[א-ת]/g) || []).length;
+const fmt = s => Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0') + '.' + String(Math.floor((s%1)*10));
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function diag(txt, ruim){
+  msg.innerHTML = (ruim ? '⚠ ' : '') + txt;
+  msg.style.background   = ruim ? '#3a1414' : '#3a2a10';
+  msg.style.borderColor  = ruim ? '#7a2a2a' : '#6b5220';
+  msg.style.color        = ruim ? '#fecaca' : '#fde68a';
+}
+
+function marcarSuspeitos(){
+  suspeitos = new Set();
+  const t = dados.versos.map(v => (v.end - v.start) / Math.max(1, cons(v.hebrew)));
+  const med = [...t].sort((x,y)=>x-y)[Math.floor(t.length/2)] || 1;
+  t.forEach((x,i) => { const r = x/med; if (r < 0.75 || r > 1.35) suspeitos.add(i); });
+}
+
+function desenhar(){
+  marcarSuspeitos();
+  lista.innerHTML = '';
+  dados.versos.forEach((v,i) => {
+    const d = document.createElement('div');
+    d.className = 'v' + (i===atual?' on':'') + (suspeitos.has(i)?' susp':'');
+    const ps = v.palavras;
+    const heb = ps
+      ? ps.map((p,k) => `<span class="w" data-v="${i}" data-p="${k}">${esc(p.hebrew)}</span>`).join(' ')
+      : esc(v.hebrew || '') || '<span class="vazio">— sem hebraico —</span>';
+    const tl = ps && ps.some(p => p.transliteration_pt)
+      ? ps.map((p,k) => `<span class="w" data-v="${i}" data-p="${k}">${esc(p.transliteration_pt)}</span>`).join(' ')
+      : (v.transliteration_pt ? esc(v.transliteration_pt) : '<span class="vazio">— sem transliteração —</span>');
+    const gl = ps && ps.some(p => glosaDe(p))
+      ? ps.map((p,k) => `<span class="w" data-v="${i}" data-p="${k}">${esc(glosaDe(p) || '·')}</span>`).join(' ')
+      : null;
+    d.innerHTML =
+      `<div class="top"><span>§${v.n}${suspeitos.has(i)?' &nbsp;⚠ ritmo fora do padrão':''}</span>` +
+      `<span>${fmt(v.start)} → ${fmt(v.end)} &nbsp;(${(v.end-v.start).toFixed(2)}s)</span></div>` +
+      `<div class="heb">${heb}</div><div class="tl">${tl}</div>` +
+      (gl ? `<div class="gl">${gl}</div>`
+          : `<div class="td">${traducaoDe(v) ? esc(traducaoDe(v)) : '<span class="vazio">— sem tradução —</span>'}</div>`);
+    d.onclick = e => {
+      const w = e.target.closest('.w');
+      atual = i;
+      a.currentTime = w && ps ? ps[+w.dataset.p].start : v.start;
+      destacar(true);
+    };
+    lista.appendChild(d);
+  });
+  destacar(true);
+}
+
+function destacar(rolar){
+  [...lista.children].forEach((el,i) => el.classList.toggle('on', i===atual));
+  lista.querySelectorAll('.w.agora').forEach(el => el.classList.remove('agora'));
+  if (porPalavra && palAtual >= 0)
+    lista.querySelectorAll(`.w[data-v="${atual}"][data-p="${palAtual}"]`).forEach(el => el.classList.add('agora'));
+  if (rolar && lista.children[atual]) lista.children[atual].scrollIntoView({block:'center', behavior:'smooth'});
+  const v = dados.versos[atual];
+  st.textContent = `verso ${atual+1}/${dados.versos.length}` +
+    (v.palavras ? ` · palavra ${palAtual+1}/${v.palavras.length}` : '') +
+    ` · ${suspeitos.size} suspeito(s)`;
+}
+
+async function baixarJson(id, v){
+  let ultimo = '';
+  for (const u of [`${BASE}/sync/${id}_sync.json?${v}`, `${BASE}/sync/${id}_sync.json`]) {
+    try { const r = await fetch(u, {cache:'no-store'});
+      if (!r.ok) { ultimo = 'HTTP ' + r.status; continue; }
+      return await r.json();
+    } catch(e) { ultimo = e.message; }
+  }
+  throw new Error(ultimo || 'desconhecido');
+}
+
+async function carregar(){
+  const id = sel.value, [n,t] = id.split('_'), v = 'v=' + Date.now();
+  diag('carregando…');
+  a.src = `${BASE}/tefila-audio/${n}/${t}.ogg?${v}`;
+  a.load();
+  try { dados = await baixarJson(id, v); }
+  catch(e) { dados = null; lista.innerHTML = '';
+    diag(`o áudio deve tocar, mas não consegui baixar o texto (${id}): <b>${e.message}</b>`, true); return; }
+  atual = 0; palAtual = -1;
+  const semPal = dados.versos.filter(x => !x.palavras).length;
+  const nPal = dados.versos.reduce((acc,x) => acc + (x.palavras ? x.palavras.length : 0), 0);
+  diag(semPal
+    ? `o texto que veio do GitHub NÃO tem tempo por palavra em ${semPal} versos — clique em "recarregar do GitHub".`
+    : `<b>${dados.versos.length} versos · ${nPal} palavras com tempo próprio.</b> Aperte ▶ e a palavra falada acende nas três linhas. <b>M</b> corrige o verso, <b>N</b> corrige a palavra.`,
+    !!semPal);
+  desenhar();
+}
+
+a.addEventListener('loadedmetadata', () => {
+  const d = a.duration, esperado = dados && dados.audio_duration;
+  if (esperado && isFinite(d) && Math.abs(d - esperado) > 0.3)
+    diag(`o áudio carregado tem <b>${d.toFixed(2)}s</b>, mas o JSON espera <b>${esperado}s</b>. É cache — clique em "recarregar do GitHub".`, true);
+});
+
+a.addEventListener('error', () => {
+  const c = a.error ? a.error.code : 0;
+  const q = {1:'carregamento abortado',2:'erro de rede',3:'erro ao decodificar o .ogg',
+             4:'o navegador recusou o endereço ou não toca .ogg'}[c] || 'erro ' + c;
+  diag(`o áudio não carregou: <b>${q}</b><br><code>${a.currentSrc}</code>`, true);
+});
+
+a.addEventListener('timeupdate', () => {
+  if (!dados) return;
+  const t = a.currentTime;
+  if (batendo && t > dados.versos[atual].end + 0.5) pararBater('o áudio passou do fim do verso — batidas salvas até onde você marcou.');
+  const i = dados.versos.findIndex(v => t >= v.start && t < v.end);
+  if (i === -1) return;
+  const v = dados.versos[i];
+  const p = v.palavras ? v.palavras.findIndex(w => t >= w.start && t < w.end) : -1;
+  if (i !== atual || p !== palAtual) { const mudouVerso = i !== atual; atual = i; palAtual = p; destacar(mudouVerso); }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  const k = e.key.toLowerCase();
+  if (e.code === 'Space') { e.preventDefault(); a.paused ? a.play() : a.pause(); }
+  else if (k === 'm') {
+    e.preventDefault();
+    const t = +a.currentTime.toFixed(2), v = dados.versos[atual];
+    v.start = t;
+    if (atual > 0) dados.versos[atual-1].end = t;
+    if (v.palavras && v.palavras[0]) v.palavras[0].start = t;
+    dados.sync_status = 'ajustado de ouvido';
+    desenhar();
+  }
+  else if (k === 'n') {
+    e.preventDefault();
+    const v = dados.versos[atual];
+    if (!v.palavras) return;
+    const t = +a.currentTime.toFixed(2);
+    if (batendo) {
+      v.palavras[idxBater].end = t;
+      if (idxBater + 1 < v.palavras.length) v.palavras[idxBater+1].start = t;
+      idxBater++;
+      dados.palavras_status = 'batido de ouvido';
+      if (idxBater >= v.palavras.length - 1) {
+        pararBater(`<b>§${v.n} corrigido.</b> Ouça de novo para conferir; depois "baixar JSON corrigido".`);
+        desenhar();
+      } else {
+        diag(`<b>§${v.n} — batendo.</b> ${idxBater} de ${v.palavras.length-1}. Próxima palavra: <b>${v.palavras[idxBater+1] ? v.palavras[idxBater+1].transliteration_pt : ''}</b>`);
+      }
+      return;
+    }
+    if (palAtual < 0) return;
+    v.palavras[palAtual].start = t;
+    if (palAtual > 0) v.palavras[palAtual-1].end = t;
+    else v.start = t;
+    dados.palavras_status = 'ajustado de ouvido';
+    desenhar();
+  }
+  else if (e.key === 'Escape' && batendo) { e.preventDefault(); pararBater('cancelado.'); }
+  else if (e.key === 'ArrowLeft')  { e.preventDefault(); a.currentTime = Math.max(0, a.currentTime - 2); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); a.currentTime += 2; }
+  else if (e.key === 'ArrowUp')    { e.preventDefault(); atual = Math.max(0, atual-1); a.currentTime = dados.versos[atual].start; destacar(true); }
+  else if (e.key === 'ArrowDown')  { e.preventDefault(); atual = Math.min(dados.versos.length-1, atual+1); a.currentTime = dados.versos[atual].start; destacar(true); }
+});
+
+document.getElementById('ir').onclick = () => { a.currentTime = dados.versos[atual].start; a.play(); };
+document.getElementById('lento').onclick = e => {
+  const v = a.playbackRate <= 0.55 ? 1 : a.playbackRate <= 0.8 ? 0.5 : 0.75;
+  a.playbackRate = v; e.target.textContent = 'velocidade ' + v.toFixed(2) + '×';
+};
+function comecarBater(){
+  const v = dados.versos[atual];
+  if (!v.palavras || v.palavras.length < 2) { diag('este verso não tem palavras para bater.', true); return; }
+  batendo = true; idxBater = 0;
+  a.currentTime = v.start;
+  a.play();
+  document.getElementById('bater').textContent = '🥁 batendo… (Esc cancela)';
+  diag(`<b>§${v.n} — modo bater.</b> O verso vai tocar do início. Aperte <b>N</b> no instante em que o rabino COMEÇA cada palavra nova (a primeira já está marcada). Faltam ${v.palavras.length-1} batidas.`);
+}
+function pararBater(msgFim){
+  batendo = false;
+  document.getElementById('bater').textContent = '🥁 corrigir este verso batendo';
+  if (msgFim) diag(msgFim);
+}
+document.getElementById('bater').onclick = () => batendo ? pararBater('cancelado.') : comecarBater();
+
+document.getElementById('modo').onclick = e => {
+  porPalavra = !porPalavra;
+  e.target.textContent = 'destaque: ' + (porPalavra ? 'palavra' : 'verso');
+  e.target.classList.toggle('on', porPalavra);
+  destacar(false);
+};
+document.getElementById('recarregar').onclick = carregar;
+document.getElementById('baixar').onclick = () => {
+  const b = new Blob([JSON.stringify(dados, null, 2) + '\n'], {type:'application/json'});
+  const u = URL.createObjectURL(b), l = document.createElement('a');
+  l.href = u; l.download = sel.value + '_sync.json'; l.click(); URL.revokeObjectURL(u);
+};
+document.getElementById('lingua').onchange = e => { lingua = e.target.value; desenhar(); };
+sel.onchange = carregar;
+carregar();
+</script>
+</body>
+</html>
