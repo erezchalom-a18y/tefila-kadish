@@ -206,13 +206,14 @@ function blocoSemPar(i, n) {
   </article>`;
 }
 
+let contador = 0;   // numeracao continua nas duas secoes: item 112 e so um item
 function secoes(itens, montar) {
-  let saida = '', n = 0;
+  let saida = '';
   for (const l of ORDEM) {
     const meus = itens.filter(x => x.lingua === l);
     if (!meus.length) continue;
     saida += `<h2 class="lingua">${NOME[l]}<span class="qt">${meus.length} ${meus.length === 1 ? 'item' : 'itens'}</span></h2>`;
-    for (const i of meus) saida += montar(i, ++n);
+    for (const i of meus) { i.numero = ++contador; saida += montar(i, i.numero); }
   }
   return saida;
 }
@@ -327,6 +328,22 @@ const pag = await navegador.newPage();
 await pag.setContent(doc, { waitUntil: 'load' });
 await pag.pdf({ path: 'ESCOLHA-RABINO.pdf', format: 'A4', printBackground: true });
 await navegador.close();
+
+// ponte entre o papel e o glossario: numero do item -> o que cada letra quer dizer.
+// O rabino nunca ve este arquivo; ele existe para o aplicar-escolhas.mjs saber
+// qual texto e a Opcao A e qual e a B de cada item.
+fs.writeFileSync('escolha-rabino-itens.json', JSON.stringify({
+  _leia: 'Gerado por gerar-escolha-rabino.mjs. Diz, para cada numero impresso no ' +
+         'ESCOLHA-RABINO.pdf, qual texto e a Opcao A e qual e a Opcao B, e onde no ' +
+         'glossario.json cada um se aplica. Use com aplicar-escolhas.mjs.',
+  itens: unicos.map(i => ({
+    numero: i.numero, lingua: i.lingua, chave: i.chave, hebraico: i.hebraico,
+    campo: i.campo, indice: i.indice,
+    A: i.A, B: i.B,
+    origem_A: i.A === i._nosso ? 'nossa' : 'revisor',
+    origem_B: i.B == null ? null : (i.B === i._nosso ? 'nossa' : 'revisor'),
+  })),
+}, null, 2) + '\n');
 
 console.log(`ESCOLHA-RABINO.html e .pdf escritos — ${unicos.length} itens ` +
             `(${comPar.length} com opção A/B real, ${semAlternativa.length} sem alternativa do revisor).`);

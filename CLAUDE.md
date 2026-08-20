@@ -110,6 +110,48 @@ Testar sem gastar API: node revisar-audio-whisper.mjs --ensaio
 (a transcrição é simulada a partir dos nossos próprios JSONs, com defeitos
 plantados, para conferir alinhamento e relatório.)
 
+## Ferramentas de medição e de produção
+
+Requerem: pip install numpy soundfile (o áudio é lido direto do .ogg, sem ffmpeg).
+Para as que imprimem, também playwright + Chromium.
+
+- sinal.py — módulo. Envelope de energia e inícios de bloco de voz. Só lê áudio.
+- medir-desvio.py — a sincronia contra O SINAL, por nussach. É a medida que vale.
+  O Whisper NÃO é medida: quando ele discorda do sinal, quem erra é ele.
+- gerar-ouvir-v2.py — escreve OUVIR-PRIMEIRO-v2.md, a lista curta de escuta: só
+  os versos onde a lista de 20/08, o sinal medido agora e o Whisper concordam.
+- gerar-status.py — escreve STATUS.md e metricas-sinal.json. Determinístico de
+  propósito (usa a data do último commit, nunca a hora atual), senão o CI entra
+  em laço. Rodado sozinho por .github/workflows/status.yml a cada push na main.
+- testar-app.mjs — abre o app num Chromium e confere as 8 combinações servindo
+  DE SUBDIRETÓRIO, como o GitHub Pages faz. É ali que caminho relativo quebra.
+- gerar-pdf.mjs — os 8 folhetos imprimíveis, em folhetos/. Sempre com marca
+  d'água RASCUNHO — AGUARDANDO REVISÃO RABÍNICA. Não tire enquanto o rabino não
+  tiver revisado.
+- gerar-escolha-rabino.mjs — ESCOLHA-RABINO.pdf/.html e escolha-rabino-itens.json.
+
+Todas só leem dados. Nenhuma escreve em sync/, ancoras.json, cortes.json ou
+glossario.json.
+
+## O caminho da decisão do rabino
+
+1. gerar-escolha-rabino.mjs monta o ESCOLHA-RABINO.pdf a partir do glossário e do
+   RELATORIO-REVISAO-GPT.md: só as entradas contestadas, uma por bloco, com as
+   duas versões como Opção A e Opção B em ordem embaralhada e sem dizer a origem.
+   Só forma par quando o revisor escreveu mesmo uma alternativa comparável —
+   nunca inventar uma Opção B para completar simetria.
+2. O rabino marca no papel.
+3. O Erez digita as escolhas num JSON: {"12":"A","13":"B","37":"texto dele"}.
+   O número é o impresso no documento.
+4. node aplicar-escolhas.mjs escolhas.json          → ensaio, só mostra
+   node aplicar-escolhas.mjs escolhas.json --confirmar → aplica
+
+aplicar-escolhas.mjs é o ÚNICO script que escreve no glossario.json, e só com
+--confirmar. Ele aplica, roda aplicar-glossario.mjs, propaga as glosas para
+sync/*.json, PROVA que nenhum tempo, nenhum hebraico e nenhuma âncora mudou, e
+roda as duas checagens. Qualquer coisa vermelha e ele desfaz tudo. Não faz push:
+mudança de texto litúrgico passa por olho humano antes da main.
+
 ## Pendências de conteúdo (não são de código)
 
 - Revisão do rabino: glossario.json (42 entradas × 8 línguas) e as regras de
@@ -117,9 +159,10 @@ plantados, para conferir alinhamento e relatório.)
 - Direitos: entradas origem=tehilat_hashem no glossario vieram de siddur
   publicado; decisão pendente. As 7 línguas além do pt são rascunho de IA
   (origem=claude) — precisam de revisão humana.
-- Ouvir os 8 nussachim inteiros. Lista dirigida: OUVIR-PRIMEIRO.md (36
-  suspeitos em 28 versos, auditoria de sinal de 20/08), cruzada
-  automaticamente com o RELATORIO-AUDIO-WHISPER.md.
+- Ouvir os 12 versos de OUVIR-PRIMEIRO-v2.md — a lista curta, onde a auditoria
+  de 20/08, o sinal e o Whisper concordam. O OUVIR-PRIMEIRO.md (v1, 36 suspeitos
+  em 28 versos) fica como registro do que foi medido.
+- Levar o ESCOLHA-RABINO.pdf ao rabino (170 itens, 60 páginas).
 
 ## Nunca
 
