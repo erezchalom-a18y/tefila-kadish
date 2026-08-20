@@ -160,191 +160,197 @@ const porLingua = {};
 for (const i of unicos) porLingua[i.lingua] = (porLingua[i.lingua] || 0) + 1;
 
 
+
 // ---------------------------------------------------- o documento impresso
 
-const comPar = unicos.filter(i => i.B);
-const semAlternativa = unicos.filter(i => !i.B);
-const dataBR = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+// Numeracao continua sobre TODOS os itens, antes de separar por lingua: assim o
+// numero 112 e o numero 112 em qualquer caderno, e ditar nunca fica ambiguo.
+unicos.forEach((i, k) => { i.numero = k + 1; });
 
+const dataBR = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 const e = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const rtl = l => (l === 'he' ? ' dir="rtl" lang="he"' : '');
 
-function alvoDe(i) {
-  if (i.campo !== 'glosa') return 'Tradução do verso inteiro';
-  const p = i.palavraHebraica ? `<span class="pal">${e(i.palavraHebraica)}</span>` : `palavra nº ${i.indice + 1}`;
-  return `Palavra ${p}${i.contexto ? ` &middot; no verso: “${e(i.contexto)}”` : ''}`;
-}
+function bloco(i) {
+  // Hebraico em cima; transliteracao e traducao embaixo dele.
+  //
+  // A traducao do verso so aparece quando o que esta em jogo e UMA PALAVRA.
+  // Quando o que esta em jogo e a traducao do verso inteiro, mostra-la aqui
+  // entregaria qual das duas opcoes e a nossa — e a cegueira acabaria.
+  const contexto = (i.campo === 'glosa' && i.contexto)
+    ? `<div class="trad"${rtl(i.lingua)}>${e(i.contexto)}</div>` : '';
+  const emJogo = i.campo === 'glosa'
+    ? `Em questão: a palavra <span class="pal">${e(i.palavraHebraica || ('nº ' + (i.indice + 1)))}</span>`
+    : 'Em questão: a tradução do verso inteiro';
 
-function bloco(i, n) {
+  const op = (rot, txt) => `<div class="op"><span class="cx"></span><span class="rot">${rot}</span>
+        <div class="txt"${rtl(i.lingua)}>${e(txt)}</div></div>`;
+
+  const opcoes = i.B
+    ? `<div class="opcoes">${op('Opção A', i.A)}${op('Opção B', i.B)}</div>`
+    : `<div class="opcoes uma">${op('A versão atual — manter', i.A)}</div>
+       <div class="obs"><b>O revisor objetou:</b> ${e(i.problema)}</div>`;
+
   return `
   <article class="item">
-    <div class="cab"><span class="num">${n}</span>${alvoDe(i)}</div>
+    <div class="cab"><span class="num">${i.numero}</span>${emJogo}</div>
     <div class="heb" dir="rtl" lang="he">${e(i.hebraico)}</div>
     <div class="tl">${e(i.translit)}</div>
-    <div class="opcoes">
-      <div class="op"><span class="cx"></span><span class="rot">Opção A</span>
-        <div class="txt"${rtl(i.lingua)}>${e(i.A)}</div></div>
-      <div class="op"><span class="cx"></span><span class="rot">Opção B</span>
-        <div class="txt"${rtl(i.lingua)}>${e(i.B)}</div></div>
-    </div>
+    ${contexto}
+    ${opcoes}
     <div class="outra"><span class="cx"></span>Outra: <span class="linha"></span></div>
   </article>`;
 }
 
-function blocoSemPar(i, n) {
-  return `
-  <article class="item">
-    <div class="cab"><span class="num">${n}</span>${alvoDe(i)}</div>
-    <div class="heb" dir="rtl" lang="he">${e(i.hebraico)}</div>
-    <div class="tl">${e(i.translit)}</div>
-    <div class="opcoes uma">
-      <div class="op"><span class="cx"></span><span class="rot">A nossa versão — manter</span>
-        <div class="txt"${rtl(i.lingua)}>${e(i.A)}</div></div>
-    </div>
-    <div class="obs"><b>O revisor objetou:</b> ${e(i.problema)}</div>
-    <div class="outra"><span class="cx"></span>Outra: <span class="linha"></span></div>
-  </article>`;
-}
-
-let contador = 0;   // numeracao continua nas duas secoes: item 112 e so um item
-function secoes(itens, montar) {
-  let saida = '';
-  for (const l of ORDEM) {
-    const meus = itens.filter(x => x.lingua === l);
-    if (!meus.length) continue;
-    saida += `<h2 class="lingua">${NOME[l]}<span class="qt">${meus.length} ${meus.length === 1 ? 'item' : 'itens'}</span></h2>`;
-    for (const i of meus) { i.numero = ++contador; saida += montar(i, i.numero); }
-  }
-  return saida;
-}
-
-const doc = `<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8">
-<title>Escolha do rabino — glossário do Kadish</title>
-<style>
-  @page { size: A4; margin: 16mm 15mm 18mm; }
-  @page :first { margin-top: 34mm; }
+const ESTILO = `
+  @page { size: A4; margin: 16mm 15mm 24mm; }
+  @page :first { margin-top: 30mm; }
   * { box-sizing: border-box; }
   body { margin:0; font-family:"FreeSerif","Liberation Serif",serif; color:#17140f; font-size:11.5pt; }
+  /* o rodape fica no pe da area de impressao; a margem de baixo do @page e
+     folgada para o ultimo item da pagina nao escorregar por cima dele */
+  .rodape { position: fixed; bottom: 0; left: 0; right: 0; font-size: 8.5pt; color:#7a7264;
+            border-top:.4pt solid #ddd3c0; padding-top:2mm; display:flex; justify-content:space-between; }
+  .capa { break-after: page; page-break-after: always; text-align:center; padding-top:10mm; }
+  .capa h1 { font-size:26pt; margin:0 0 2mm; }
+  .capa .lingua { font-size:17pt; color:#8b6a3e; font-weight:700; margin-bottom:3mm; }
+  .capa .quem { font-size:12.5pt; color:#6b6153; margin-bottom:14mm; }
+  .capa .ordem { font-size:15pt; line-height:1.6; border:1.4pt solid #8b6a3e; border-radius:4mm;
+                 padding:8mm 10mm; margin:0 6mm 12mm; }
+  .capa .como { text-align:left; font-size:11pt; line-height:1.6; margin:0 6mm; color:#4a4438; }
+  .capa .como li { margin-bottom:2.5mm; }
+  .capa .aviso { margin:12mm 6mm 0; font-size:10.5pt; color:#8a3a1a;
+                 border-top:.5pt solid #e0d6c3; padding-top:5mm; }
+  h2.secao { font-size:14pt; margin:8mm 0 4mm; padding-bottom:1.6mm; border-bottom:1.2pt solid #8b6a3e;
+             break-after: avoid; page-break-after: avoid; }
+  h2.secao .qt { float:right; font-size:10pt; font-weight:400; color:#7a7264; }
+  h2.secao:first-of-type { margin-top:0; }
+  .item { break-inside: avoid; page-break-inside: avoid; border:.5pt solid #ddd3c0;
+          border-radius:2.5mm; padding:4mm 5mm 4.5mm; margin-bottom:4.5mm; }
+  .cab { font-size:9.5pt; color:#6b6153; margin-bottom:2mm; }
+  .cab .num { display:inline-block; min-width:8mm; font-weight:700; color:#8b6a3e; }
+  .cab .pal { font-size:12.5pt; }
+  .heb { font-size:21pt; line-height:1.62; text-align:right; margin-bottom:1.5mm; }
+  .tl { font-size:11pt; font-style:italic; color:#5d5445; margin-bottom:1.2mm; }
+  .trad { font-size:11pt; color:#4a4438; margin-bottom:3.5mm; }
+  .opcoes { display:flex; gap:4mm; }
+  .opcoes .op { flex:1 1 0; border:.5pt solid #cfc4ad; border-radius:2mm; padding:3mm 3.5mm; }
+  .opcoes.uma .op { flex:0 1 auto; min-width:62%; }
+  .op .cx { display:inline-block; width:4.4mm; height:4.4mm; border:1pt solid #4a4438;
+            border-radius:.8mm; vertical-align:-.9mm; margin-right:2mm; }
+  .op .rot { font-size:9pt; letter-spacing:.07em; text-transform:uppercase; color:#6b6153; }
+  .op .txt { font-size:13.5pt; line-height:1.42; margin-top:2mm; }
+  .obs { font-size:10pt; color:#4a4438; background:#f6f1e6; border-radius:2mm;
+         padding:2.5mm 3mm; margin-top:3mm; }
+  .outra { margin-top:3.5mm; font-size:11.5pt; }
+  .outra .cx { display:inline-block; width:4.4mm; height:4.4mm; border:1pt solid #4a4438;
+               border-radius:.8mm; vertical-align:-.9mm; margin-right:2mm; }
+  .outra .linha { display:inline-block; width:60%; border-bottom:.6pt solid #9a9081;
+                  height:4.5mm; vertical-align:-1.4mm; }
+  .nota { font-size:10.5pt; color:#4a4438; background:#f6f1e6; border-left:2pt solid #8b6a3e;
+          padding:3.5mm 4mm; margin:0 0 5mm; line-height:1.5; }`;
 
-  .rodape { position: fixed; bottom: 0; left: 0; right: 0; font-size: 8.5pt;
-            color: #7a7264; border-top: .4pt solid #ddd3c0; padding-top: 2mm;
-            display: flex; justify-content: space-between; }
+function documento(itens, rotuloLingua) {
+  const pares = itens.filter(i => i.B);
+  const sozinhos = itens.filter(i => !i.B);
+  const secao = (lista, titulo) => lista.length
+    ? `<h2 class="secao">${titulo}<span class="qt">${lista.length} ${lista.length === 1 ? 'item' : 'itens'}</span></h2>`
+      + lista.map(bloco).join('')
+    : '';
 
-  .capa { break-after: page; page-break-after: always; text-align: center; padding-top: 12mm; }
-  .capa h1 { font-size: 25pt; margin: 0 0 3mm; }
-  .capa .quem { font-size: 13pt; color: #6b6153; margin-bottom: 16mm; }
-  .capa .ordem { font-size: 15pt; line-height: 1.6; border: 1.4pt solid #8b6a3e;
-                 border-radius: 4mm; padding: 8mm 10mm; margin: 0 6mm 14mm; }
-  .capa .como { text-align: left; font-size: 11pt; line-height: 1.6; margin: 0 6mm;
-                color: #4a4438; }
-  .capa .como li { margin-bottom: 2.5mm; }
-  .capa .aviso { margin: 14mm 6mm 0; font-size: 10.5pt; color: #8a3a1a;
-                 border-top: .5pt solid #e0d6c3; padding-top: 5mm; }
-
-  h2.lingua { font-size: 15pt; margin: 9mm 0 4mm; padding-bottom: 1.6mm;
-              border-bottom: 1.2pt solid #8b6a3e; break-after: avoid; page-break-after: avoid; }
-  h2.lingua .qt { float: right; font-size: 10pt; font-weight: 400; color: #7a7264; }
-  h2.lingua:first-of-type { margin-top: 0; }
-
-  .item { break-inside: avoid; page-break-inside: avoid; border: .5pt solid #ddd3c0;
-          border-radius: 2.5mm; padding: 4mm 5mm 4.5mm; margin-bottom: 4.5mm; }
-  .cab { font-size: 9.5pt; color: #6b6153; margin-bottom: 2mm; }
-  .cab .num { display:inline-block; min-width: 7mm; font-weight: 700; color: #8b6a3e; }
-  .cab .pal { font-size: 12pt; }
-  .heb { font-size: 20pt; line-height: 1.6; text-align: right; margin-bottom: 1.5mm; }
-  .tl { font-size: 10.5pt; font-style: italic; color: #5d5445; margin-bottom: 3.5mm; }
-
-  .opcoes { display: flex; gap: 4mm; }
-  .opcoes .op { flex: 1 1 0; border: .5pt solid #cfc4ad; border-radius: 2mm; padding: 3mm 3.5mm; }
-  .opcoes.uma .op { flex: 0 1 auto; min-width: 60%; }
-  .op .cx { display:inline-block; width: 4.2mm; height: 4.2mm; border: 1pt solid #4a4438;
-            border-radius: .8mm; vertical-align: -.8mm; margin-right: 2mm; }
-  .op .rot { font-size: 9pt; letter-spacing: .07em; text-transform: uppercase; color: #6b6153; }
-  .op .txt { font-size: 13pt; line-height: 1.42; margin-top: 2mm; }
-
-  .obs { font-size: 10pt; color: #4a4438; background: #f6f1e6; border-radius: 2mm;
-         padding: 2.5mm 3mm; margin-top: 3mm; }
-  .outra { margin-top: 3.5mm; font-size: 11pt; }
-  .outra .cx { display:inline-block; width: 4.2mm; height: 4.2mm; border: 1pt solid #4a4438;
-               border-radius: .8mm; vertical-align: -.8mm; margin-right: 2mm; }
-  .outra .linha { display: inline-block; width: 62%; border-bottom: .6pt solid #9a9081;
-                  height: 4mm; vertical-align: -1mm; }
-  .nota { font-size: 10.5pt; color: #4a4438; background: #f6f1e6; border-left: 2pt solid #8b6a3e;
-          padding: 3.5mm 4mm; margin: 0 0 5mm; line-height: 1.5; }
-</style></head>
+  return `<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>Escolha do rabino${rotuloLingua ? ' — ' + rotuloLingua : ''}</title>
+<style>${ESTILO}</style></head>
 <body>
 <div class="rodape">
-  <span>Glossário do Kadish — escolha do rabino</span>
+  <span>Glossário do Kadish${rotuloLingua ? ' — ' + rotuloLingua : ''}</span>
   <span>rascunho — decisão final é desta revisão · ${dataBR}</span>
 </div>
 
 <section class="capa">
   <h1>Glossário do Kadish</h1>
+  ${rotuloLingua ? `<div class="lingua">${rotuloLingua}</div>` : ''}
   <div class="quem">Pontos levantados por uma revisão independente, para decisão do rabino</div>
-
   <div class="ordem"><strong>Assinale a tradução preferida em cada item, ou escreva a sua.</strong></div>
-
   <ul class="como">
-    <li>São <strong>${unicos.length} itens</strong>, agrupados por língua. Comece pelo português e pelo hebraico moderno.</li>
-    <li>Em ${comPar.length} deles há duas versões, <strong>A</strong> e <strong>B</strong>. Qual é a nossa e qual é a do
-        revisor <strong>não está dito de propósito</strong>, e a ordem foi embaralhada, para que a escolha
-        não seja influenciada.</li>
-    <li>Nos outros ${semAlternativa.length}, o revisor apontou um problema mas não propôs outra versão.
-        Ali aparece só a nossa, com a objeção dele: manter, ou escrever outra.</li>
+    <li>São <strong>${itens.length} ${itens.length === 1 ? 'item' : 'itens'}</strong>${rotuloLingua ? ' nesta língua' : ''}.</li>
+    ${pares.length ? `<li>Em ${pares.length} deles há duas versões, <strong>A</strong> e <strong>B</strong>.
+        Qual é a nossa e qual é a do revisor <strong>não está dito de propósito</strong>, e a ordem foi
+        embaralhada, para que a escolha não seja influenciada.</li>` : ''}
+    ${sozinhos.length ? `<li>Nos outros ${sozinhos.length}, o revisor apontou um problema mas não propôs
+        outra versão. Ali aparece só a atual, com a objeção dele: manter, ou escrever outra.</li>` : ''}
     <li>Onde nenhuma servir, use a linha <strong>Outra</strong>.</li>
     <li>O hebraico do Kadish <strong>não está em questão</strong> — ele vem do siddur. O que se decide
         aqui é a tradução.</li>
+    <li>Os números são os mesmos em todos os cadernos: o item 112 é o item 112 em qualquer um.</li>
   </ul>
-
   <div class="aviso">
-    Este documento é um rascunho e nada foi aplicado. Nenhuma marcação feita aqui
-    altera o texto sozinha: as decisões são digitadas depois por uma pessoa.
+    Este documento é um rascunho e nada foi aplicado. Nenhuma marcação feita aqui altera
+    o texto sozinha: as decisões são digitadas depois por uma pessoa.
   </div>
 </section>
 
 <div class="nota">
-  A transliteração não aparece como opção porque não foi submetida a esta revisão —
-  ela entrou apenas como apoio para ler o hebraico. Se o rabino quiser revisá-la,
-  isso é uma rodada à parte.
+  A transliteração aparece só como apoio para ler o hebraico — ela não foi submetida
+  a esta revisão, então não há opção a marcar sobre ela. Revisá-la é uma rodada à parte.
 </div>
 
-${secoes(comPar, bloco)}
-
-${semAlternativa.length ? `<h2 class="lingua" style="margin-top:10mm">Objeções sem alternativa proposta<span class="qt">${semAlternativa.length} itens</span></h2>
-<div class="nota">Nestes o revisor reclamou mas não escreveu outra versão. Não inventamos
-uma Opção B: ou a nossa fica, ou o rabino escreve a dele.</div>
-${secoes(semAlternativa, blocoSemPar)}` : ''}
-
+${secao(pares, 'Duas versões — assinale uma')}
+${sozinhos.length ? `${secao(sozinhos, 'Objeções sem alternativa proposta')}` : ''}
 </body></html>`;
+}
 
-fs.writeFileSync('ESCOLHA-RABINO.html', doc);
+// ---------------------------------------------------- escrever
 
-// PDF pelo Chromium, que e quem sabe hebraico (direcao e nikud)
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
 const { chromium } = pw.default || pw;
 const navegador = await chromium.launch();
 const pag = await navegador.newPage();
-await pag.setContent(doc, { waitUntil: 'load' });
-await pag.pdf({ path: 'ESCOLHA-RABINO.pdf', format: 'A4', printBackground: true });
+
+async function escrever(nomeBase, itens, rotulo) {
+  const doc = documento(itens, rotulo);
+  fs.writeFileSync(`${nomeBase}.html`, doc);
+  await pag.setContent(doc, { waitUntil: 'load' });
+  await pag.pdf({ path: `${nomeBase}.pdf`, format: 'A4', printBackground: true });
+  return itens.length;
+}
+
+fs.mkdirSync('escolha-rabino', { recursive: true });
+
+// um caderno por lingua, portugues e hebraico moderno primeiro
+const linhas = [];
+for (const l of ORDEM) {
+  const meus = unicos.filter(i => i.lingua === l);
+  if (!meus.length) continue;
+  const base = `escolha-rabino/ESCOLHA-RABINO-${l}`;
+  await escrever(base, meus, NOME[l]);
+  const paginas = await pag.evaluate(() => 0).then(() => null);
+  linhas.push({ lingua: NOME[l], arquivo: `${base}.pdf`, itens: meus.length,
+                pares: meus.filter(i => i.B).length });
+}
+
+// e o caderno completo, com tudo, para arquivo
+await escrever('ESCOLHA-RABINO', unicos, null);
+
 await navegador.close();
 
-// ponte entre o papel e o glossario: numero do item -> o que cada letra quer dizer.
-// O rabino nunca ve este arquivo; ele existe para o aplicar-escolhas.mjs saber
-// qual texto e a Opcao A e qual e a B de cada item.
+// ponte entre o papel e o glossario; o rabino nunca ve este arquivo
 fs.writeFileSync('escolha-rabino-itens.json', JSON.stringify({
-  _leia: 'Gerado por gerar-escolha-rabino.mjs. Diz, para cada numero impresso no ' +
-         'ESCOLHA-RABINO.pdf, qual texto e a Opcao A e qual e a Opcao B, e onde no ' +
+  _leia: 'Gerado por gerar-escolha-rabino.mjs. Diz, para cada numero impresso nos ' +
+         'documentos de escolha, qual texto e a Opcao A e qual e a Opcao B, e onde no ' +
          'glossario.json cada um se aplica. Use com aplicar-escolhas.mjs.',
   itens: unicos.map(i => ({
     numero: i.numero, lingua: i.lingua, chave: i.chave, hebraico: i.hebraico,
-    campo: i.campo, indice: i.indice,
-    A: i.A, B: i.B,
+    campo: i.campo, indice: i.indice, A: i.A, B: i.B,
     origem_A: i.A === i._nosso ? 'nossa' : 'revisor',
     origem_B: i.B == null ? null : (i.B === i._nosso ? 'nossa' : 'revisor'),
   })),
 }, null, 2) + '\n');
 
-console.log(`ESCOLHA-RABINO.html e .pdf escritos — ${unicos.length} itens ` +
-            `(${comPar.length} com opção A/B real, ${semAlternativa.length} sem alternativa do revisor).`);
-console.log('por língua:', ORDEM.filter(l => porLingua[l]).map(l => `${l}:${porLingua[l]}`).join('  '));
+console.log('cadernos por língua:');
+for (const r of linhas)
+  console.log(`  ${r.lingua.padEnd(18)} ${String(r.itens).padStart(3)} itens ` +
+              `(${r.pares} com A/B)  ->  ${r.arquivo}`);
+console.log(`\ncompleto: ESCOLHA-RABINO.pdf — ${unicos.length} itens ` +
+            `(${unicos.filter(i => i.B).length} com A/B).`);
