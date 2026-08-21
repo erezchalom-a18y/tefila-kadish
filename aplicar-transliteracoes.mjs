@@ -37,6 +37,25 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const CONFIRMAR = process.argv.includes('--confirmar');
 const FONTE = 'fontes/transliteracao-por-lingua.json';
 const NUSSACHIM = ['sefaradi', 'ashkenaz', 'chabad'];
+
+/**
+ * De qual COLUNA do documento sai cada nussach.
+ *
+ * O documento tem tres colunas: Sefaradi, Ashkenazi e Chabad. As colunas
+ * Ashkenazi e Chabad usam a pronuncia europeia tradicional — "Yisgadal" no
+ * lugar de "Yitgadal", "beis" no lugar de "beit", "rabo" no lugar de "raba".
+ *
+ * O Erez ouviu a gravacao em 21/08 e confirmou: o rabino diz "yit-gadal".
+ * Como a transliteracao existe para a pessoa ler JUNTO com o audio, uma que
+ * diga "Yisgadal" atrapalha em vez de ajudar. Entao os tres nussachim saem da
+ * coluna Sefaradi, que e a que traz a pronuncia que se ouve na gravacao.
+ *
+ * O que isso NAO faz: nao inventa pronuncia nenhuma. Onde o texto do ashkenaz
+ * ou do chabad e realmente diferente do sefaradi (e ha lugares assim), as
+ * palavras simplesmente nao casam e continuam em portugues — o relatorio conta
+ * quantas. Preferi perder cobertura a inventar.
+ */
+const COLUNA = { sefaradi: 'sefaradi', ashkenaz: 'sefaradi', chabad: 'sefaradi' };
 const SEM_FONTE = ['sefard_derabanan', 'sefard_yatom'];
 const LIMIAR = 0.45;      // semelhanca minima para aceitar um par
 
@@ -97,7 +116,7 @@ function alinhar(A, B, sim) {
 for (const nussach of NUSSACHIM)
   for (let n = 1; n <= 27; n++) {
     const contas = LINGUAS.map(lg => {
-      const t = src.versos[String(n)][nussach][lg];
+      const t = src.versos[String(n)][COLUNA[nussach]][lg];
       return t === '—' ? 0 : palavrasDe(t).length;
     });
     if (new Set(contas).size > 1)
@@ -122,10 +141,13 @@ for (const nussach of NUSSACHIM) {
   const antes = ler(arquivo);
   const depois = ler(arquivo);
   const nossas = depois.versos.flatMap(v => (v.palavras || []).map(p => p));
+  // Apaga o que uma rodada anterior tenha posto. Sem isto, uma palavra que
+  // deixou de casar ficaria com a transliteracao velha para sempre.
+  for (const p of nossas) delete p.transliteracoes;
 
   const doc = [];
   for (let n = 1; n <= 27; n++) {
-    const linha = src.versos[String(n)][nussach];
+    const linha = src.versos[String(n)][COLUNA[nussach]];
     if (linha.en === '—') continue;
     const porLingua = Object.fromEntries(LINGUAS.map(lg => [lg, palavrasDe(linha[lg])]));
     porLingua.en.forEach((_, k) =>
@@ -160,6 +182,7 @@ for (const nussach of NUSSACHIM) {
   const antes = ler(arquivo);
   const depois = ler(arquivo);
   const nossas = depois.versos.flatMap(v => (v.palavras || []).map(p => p));
+  for (const p of nossas) delete p.transliteracoes;
   const base = dicionarioPorNussach[nussach];
 
   const pares = alinhar(nossas.map(p => semNikud(p.hebrew)), base.map(b => b.heb),
@@ -201,7 +224,9 @@ for (const nussach of NUSSACHIM) {
 }
 
 // ---------- relatorio ----------
-console.log('lingua(s) do documento:', LINGUAS.join(', '), '(o portugues fica como esta)\n');
+console.log('lingua(s) do documento:', LINGUAS.join(', '), '(o portugues fica como esta)');
+console.log('coluna usada por nussach:',
+  NUSSACHIM.map(n => `${n} <- ${COLUNA[n]}`).join(' · '), '\n');
 for (const r of relatorio) {
   const pct = (r.postas / r.total * 100).toFixed(1);
   console.log(`${r.arquivo.replace('sync/','').replace('_sync.json','').padEnd(20)} ` +

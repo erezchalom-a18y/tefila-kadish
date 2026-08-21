@@ -31,11 +31,11 @@
             "he": "יִתְעַלֶּה"
           },
           "transliteracoes": {
-            "en": "Yisgadal",
-            "es": "Yisgadal",
-            "fr": "Yisgadal",
-            "it": "Yisgadal",
-            "ru": "Йисгадаль"
+            "en": "Yitgadal",
+            "es": "Yitgadal",
+            "fr": "Yitgadal",
+            "it": "Yitgadal",
+            "ru": "Йитгадаль"
           }
         },
         {
@@ -56,11 +56,11 @@
             "he": "וְיִתְקַדֵּשׁ"
           },
           "transliteracoes": {
-            "en": "veyiskadash",
-            "es": "veyiskadash",
-            "fr": "véyiskadach",
-            "it": "veyiskadash",
-            "ru": "вэйискадаш"
+            "en": "veyitkadash",
+            "es": "veyitkadash",
+            "fr": "véyitkadach",
+            "it": "veyitkadash",
+            "ru": "вэйиткадаш"
           }
         },
         {
@@ -81,11 +81,11 @@
             "he": "שְׁמוֹ"
           },
           "transliteracoes": {
-            "en": "sh’mei",
-            "es": "sh’mei",
-            "fr": "ch’meï",
-            "it": "sh’mei",
-            "ru": "шмэй"
+            "en": "sh’me",
+            "es": "sh’me",
+            "fr": "ch’mé",
+            "it": "sh’me",
+            "ru": "шмэ"
           }
         },
         {
@@ -106,11 +106,11 @@
             "he": "הַגָּדוֹל"
           },
           "transliteracoes": {
-            "en": "rabo",
-            "es": "rabo",
-            "fr": "rabo",
-            "it": "rabo",
-            "ru": "робо"
+            "en": "raba",
+            "es": "raba",
+            "fr": "raba",
+            "it": "raba",
+            "ru": "раба"
           }
         }
       ],
@@ -152,11 +152,11 @@
             "he": "בָּעוֹלָם"
           },
           "transliteracoes": {
-            "en": "be’olmo",
-            "es": "be’olmo",
-            "fr": "be’olmo",
-            "it": "be’olmo",
-            "ru": "бэолмо"
+            "en": "be’alma",
+            "es": "be’alma",
+            "fr": "bé’alma",
+            "it": "be’alma",
+            "ru": "бэальма"
           }
         },
         {
@@ -202,11 +202,11 @@
             "he": "בָּרָא"
           },
           "transliteracoes": {
-            "en": "vero",
-            "es": "vero",
-            "fr": "véro",
-            "it": "vero",
-            "ru": "вэро"
+            "en": "vera",
+            "es": "vera",
+            "fr": "véra",
+            "it": "vera",
+            "ru": "вэра"
           }
         },
         {
@@ -227,11 +227,11 @@
             "he": "כִּרְצוֹנוֹ"
           },
           "transliteracoes": {
-            "en": "chir’usei",
-            "es": "jir’usei",
-            "fr": "’hir’ouseï",
-            "it": "chir’usei",
-            "ru": "хирусэй"
+            "en": "chir’utei",
+            "es": "jir’utei",
+            "fr": "’hir’outeï",
+            "it": "chir’utei",
+            "ru": "хирутэй"
           }
         }
       ],
@@ -298,11 +298,11 @@
             "he": "מַלְכוּתוֹ"
           },
           "transliteracoes": {
-            "en": "malchusei",
-            "es": "maljusei",
-            "fr": "mal’houseï",
-            "it": "malchusei",
-            "ru": "малхусэй"
+            "en": "malchutei",
+            "es": "maljutei",
+            "fr": "mal’houteï",
+            "it": "malchutei",
+            "ru": "малхутэй"
           }
         }
       ],
@@ -415,10 +415,10 @@
             "he": "וּבְחַיֵּי"
           },
           "transliteracoes": {
-            "en": "uv’chayei",
-            "es": "uv’jayei",
-            "fr": "ouve’hayeï",
-            "it": "uv’chayei",
+            "en": "uv’chaye",
+            "es": "uv’jaye",
+            "fr": "ouve’hayé",
+            "it": "uv’chaye",
             "ru": "увхаей"
           }
         },
@@ -465,11 +465,11 @@
             "he": "בֵּית"
           },
           "transliteracoes": {
-            "en": "beis",
-            "es": "beis",
-            "fr": "beïs",
-            "it": "beis",
-            "ru": "бэйс"
+            "en": "beit",
+            "es": "beit",
+            "fr": "beït",
+            "it": "beit",
+            "ru": "бэйт"
           }
         },
         {
@@ -490,11 +490,11 @@
             "he": "יִשְׂרָאֵל"
           },
           "transliteracoes": {
-            "en": "Yisroel",
-            "es": "Yisroel",
-            "fr": "Yisroël",
-            "it": "Yisroel",
-            "ru": "Исроэль"
+            "en": "Yisrael",
+            "es": "Yisrael",
+            "fr": "Yisraël",
+            "it": "Yisrael",
+            "ru": "Исраэль"
           }
         }
       ],
@@ -536,11 +536,11 @@
             "he": "בִּמְהֵרָה"
           },
           "transliteracoes": {
-            "en": "ba’agola",
-            "es": "ba’agola",
-            "fr": "ba’agola",
-            "it": "ba’agola",
-            "ru": "бааголо"
+            "en": "ba’agala",
+            "es": "ba’agala",
+            "fr": "ba’agala",
+            "it": "ba’agala",
+            "ru": "баагала"
           }
         },
         {
@@ -586,11 +586,11 @@
             "he": "קָרוֹב"
           },
           "transliteracoes": {
-            "en": "koriv",
-            "es": "koriv",
-            "fr": "koriv",
-            "it": "koriv",
-            "ru": "корив"
+            "en": "kariv",
+            "es": "kariv",
+            "fr": "kariv",
+            "it": "kariv",
+            "ru": "карив"
           }
         },
         {
@@ -611,11 +611,11 @@
             "he": "וְאִמְרוּ"
           },
           "transliteracoes": {
-            "en": "v’imru",
-            "es": "v’imru",
+            "en": "ve’imru",
+            "es": "ve’imru",
             "fr": "véïmrou",
-            "it": "v’imru",
-            "ru": "вимру"
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
@@ -636,11 +636,11 @@
             "he": "אָמֵן"
           },
           "transliteracoes": {
-            "en": "omein",
-            "es": "omein",
-            "fr": "omeïn",
-            "it": "omein",
-            "ru": "омэйн"
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
@@ -682,11 +682,11 @@
             "he": "יְהִי"
           },
           "transliteracoes": {
-            "en": "y’hei",
-            "es": "y’hei",
-            "fr": "yéheï",
-            "it": "y’hei",
-            "ru": "йехэй"
+            "en": "y’he",
+            "es": "y’he",
+            "fr": "yéhé",
+            "it": "y’he",
+            "ru": "йехэ"
           }
         },
         {
@@ -707,11 +707,11 @@
             "he": "שְׁמוֹ"
           },
           "transliteracoes": {
-            "en": "sh’mei",
-            "es": "sh’mei",
-            "fr": "ch’meï",
-            "it": "sh’mei",
-            "ru": "шмэй"
+            "en": "sh’me",
+            "es": "sh’me",
+            "fr": "ch’mé",
+            "it": "sh’me",
+            "ru": "шмэ"
           }
         },
         {
@@ -732,11 +732,11 @@
             "he": "הַגָּדוֹל"
           },
           "transliteracoes": {
-            "en": "rabo",
-            "es": "rabo",
-            "fr": "rabo",
-            "it": "rabo",
-            "ru": "рабо"
+            "en": "raba",
+            "es": "raba",
+            "fr": "raba",
+            "it": "raba",
+            "ru": "раба"
           }
         },
         {
@@ -757,11 +757,11 @@
             "he": "מְבֹרָךְ"
           },
           "transliteracoes": {
-            "en": "m’vorach",
-            "es": "m’voraj",
-            "fr": "mevora’h",
-            "it": "m’vorach",
-            "ru": "мэворох"
+            "en": "m’varach",
+            "es": "m’varaj",
+            "fr": "mevara’h",
+            "it": "m’varach",
+            "ru": "мэварах"
           }
         },
         {
@@ -782,11 +782,11 @@
             "he": "לְעוֹלָם"
           },
           "transliteracoes": {
-            "en": "l’olam",
-            "es": "l’olam",
-            "fr": "le’olam",
-            "it": "l’olam",
-            "ru": "лолам"
+            "en": "le’alam",
+            "es": "le’alam",
+            "fr": "le’alam",
+            "it": "le’alam",
+            "ru": "лэалам"
           }
         },
         {
@@ -807,11 +807,11 @@
             "he": "וּלְעוֹלְמֵי"
           },
           "transliteracoes": {
-            "en": "ul’olmei",
-            "es": "ul’olmei",
-            "fr": "oule’olmeï",
-            "it": "ul’olmei",
-            "ru": "улолмэй"
+            "en": "ul’almei",
+            "es": "ul’almei",
+            "fr": "oule’almeï",
+            "it": "ul’almei",
+            "ru": "улалмэй"
           }
         },
         {
@@ -832,11 +832,11 @@
             "he": "עוֹלָמִים"
           },
           "transliteracoes": {
-            "en": "olmayo",
-            "es": "olmayo",
-            "fr": "olmayo",
-            "it": "olmayo",
-            "ru": "олмайо"
+            "en": "almaya",
+            "es": "almaya",
+            "fr": "almaya",
+            "it": "almaya",
+            "ru": "алмая"
           }
         }
       ],
@@ -878,11 +878,11 @@
             "he": "יִתְבָּרֵךְ"
           },
           "transliteracoes": {
-            "en": "yisborach",
-            "es": "yisboraj",
-            "fr": "yisbora’h",
-            "it": "yisborach",
-            "ru": "йисборах"
+            "en": "yitbarach",
+            "es": "yitbaraj",
+            "fr": "yitbara’h",
+            "it": "yitbarach",
+            "ru": "йитбарах"
           }
         },
         {
@@ -928,11 +928,11 @@
             "he": "וְיִתְפָּאֵר"
           },
           "transliteracoes": {
-            "en": "v’yispoar",
-            "es": "v’yispoar",
-            "fr": "véyispoar",
-            "it": "v’yispoar",
-            "ru": "вэйиспоар"
+            "en": "v’yitpa’ar",
+            "es": "v’yitpa’ar",
+            "fr": "véyitpa’ar",
+            "it": "v’yitpa’ar",
+            "ru": "вэйитпаар"
           }
         }
       ],
@@ -974,11 +974,11 @@
             "he": "וְיִתְרוֹמֵם"
           },
           "transliteracoes": {
-            "en": "v’yisromam",
-            "es": "v’yisromam",
-            "fr": "véyisromam",
-            "it": "v’yisromam",
-            "ru": "вэйисромам"
+            "en": "v’yitromam",
+            "es": "v’yitromam",
+            "fr": "véyitromam",
+            "it": "v’yitromam",
+            "ru": "вэйитромам"
           }
         },
         {
@@ -999,11 +999,11 @@
             "he": "וְיִתְנַשֵּׂא"
           },
           "transliteracoes": {
-            "en": "v’yisnasse",
-            "es": "v’yisnasse",
-            "fr": "véyisnassé",
-            "it": "v’yisnasse",
-            "ru": "вэйиснассэ"
+            "en": "v’yitnasse",
+            "es": "v’yitnasse",
+            "fr": "véyitnassé",
+            "it": "v’yitnasse",
+            "ru": "вэйитнассэ"
           }
         },
         {
@@ -1024,11 +1024,11 @@
             "he": "וְיִתְהַדֵּר"
           },
           "transliteracoes": {
-            "en": "v’yishador",
-            "es": "v’yishador",
-            "fr": "véyichador",
-            "it": "v’yishador",
-            "ru": "вэйишадор"
+            "en": "v’yithadar",
+            "es": "v’yithadar",
+            "fr": "véyithadar",
+            "it": "v’yithadar",
+            "ru": "вэйитхадар"
           }
         }
       ],
@@ -1070,11 +1070,11 @@
             "he": "וְיִתְעַלֶּה"
           },
           "transliteracoes": {
-            "en": "v’yis’aleh",
-            "es": "v’yis’aleh",
-            "fr": "véyis’alé",
-            "it": "v’yis’aleh",
-            "ru": "вэйисалэх"
+            "en": "v’yit’aleh",
+            "es": "v’yit’aleh",
+            "fr": "véyit’alé",
+            "it": "v’yit’aleh",
+            "ru": "вэйиталэх"
           }
         },
         {
@@ -1095,11 +1095,11 @@
             "he": "וְיִתְהַלֵּל"
           },
           "transliteracoes": {
-            "en": "v’yis’halal",
-            "es": "v’yis’halal",
-            "fr": "véyis’halal",
-            "it": "v’yis’halal",
-            "ru": "вэйисхалаль"
+            "en": "v’yit’halal",
+            "es": "v’yit’halal",
+            "fr": "véyit’halal",
+            "it": "v’yit’halal",
+            "ru": "вэйитхалаль"
           }
         },
         {
@@ -1120,11 +1120,11 @@
             "he": "שְׁמוֹ"
           },
           "transliteracoes": {
-            "en": "sh’mei",
-            "es": "sh’mei",
-            "fr": "ch’meï",
-            "it": "sh’mei",
-            "ru": "шмэй"
+            "en": "sh’me",
+            "es": "sh’me",
+            "fr": "ch’mé",
+            "it": "sh’me",
+            "ru": "шмэ"
           }
         },
         {
@@ -1145,11 +1145,11 @@
             "he": "שֶׁל הַקָּדוֹשׁ"
           },
           "transliteracoes": {
-            "en": "d’kudsho",
-            "es": "d’kudsho",
-            "fr": "de’koudcho",
-            "it": "d’kudsho",
-            "ru": "дэкудшо"
+            "en": "d’kudsha",
+            "es": "d’kudsha",
+            "fr": "de’koudcha",
+            "it": "d’kudsha",
+            "ru": "дэкудша"
           }
         },
         {
@@ -1241,11 +1241,11 @@
             "he": "לְמַעְלָה"
           },
           "transliteracoes": {
-            "en": "l’eila",
-            "es": "l’eila",
-            "fr": "lé’eïla",
-            "it": "l’eila",
-            "ru": "лэйла"
+            "en": "l’ela",
+            "es": "l’ela",
+            "fr": "lé’ela",
+            "it": "l’ela",
+            "ru": "лээла"
           }
         },
         {
@@ -1268,7 +1268,7 @@
           "transliteracoes": {
             "en": "min",
             "es": "min",
-            "fr": "min",
+            "fr": "mine",
             "it": "min",
             "ru": "мин"
           }
@@ -1291,11 +1291,11 @@
             "he": "כָּל"
           },
           "transliteracoes": {
-            "en": "kol",
-            "es": "kol",
-            "fr": "kol",
-            "it": "kol",
-            "ru": "коль"
+            "en": "mikol",
+            "es": "mikol",
+            "fr": "mikol",
+            "it": "mikol",
+            "ru": "миколь"
           }
         },
         {
@@ -1316,11 +1316,11 @@
             "he": "הַבְּרָכוֹת"
           },
           "transliteracoes": {
-            "en": "birchosa",
-            "es": "birjosa",
-            "fr": "bir’hosa",
-            "it": "birchosa",
-            "ru": "бирхосо"
+            "en": "birchata",
+            "es": "birjata",
+            "fr": "bir’hata",
+            "it": "birchata",
+            "ru": "бирхата"
           }
         },
         {
@@ -1341,11 +1341,11 @@
             "he": "וְהַשִּׁירוֹת"
           },
           "transliteracoes": {
-            "en": "v’shirosa",
-            "es": "v’shirosa",
-            "fr": "véchirosa",
-            "it": "v’shirosa",
-            "ru": "вэширосо"
+            "en": "v’shirata",
+            "es": "v’shirata",
+            "fr": "véchirata",
+            "it": "v’shirata",
+            "ru": "вэширата"
           }
         }
       ],
@@ -1387,11 +1387,11 @@
             "he": "הַתִּשְׁבָּחוֹת"
           },
           "transliteracoes": {
-            "en": "tushb’chosa",
-            "es": "tushb’josa",
-            "fr": "touchbe’hosa",
-            "it": "tushb’chosa",
-            "ru": "тушбэхосо"
+            "en": "tushbechata",
+            "es": "tushbejata",
+            "fr": "touchbé’hata",
+            "it": "tushbechata",
+            "ru": "тушбэхата"
           }
         },
         {
@@ -1412,11 +1412,11 @@
             "he": "וְהַנֶּחָמוֹת"
           },
           "transliteracoes": {
-            "en": "v’nechemosa",
-            "es": "v’nejemosa",
-            "fr": "véné’hémosa",
-            "it": "v’nechemosa",
-            "ru": "вэнэхомосо"
+            "en": "v’nechemata",
+            "es": "v’nejemata",
+            "fr": "véné’hémata",
+            "it": "v’nechemata",
+            "ru": "вэнэхэмата"
           }
         },
         {
@@ -1437,11 +1437,11 @@
             "he": "הַנֶּאֱמָרוֹת"
           },
           "transliteracoes": {
-            "en": "da’amiron",
-            "es": "da’amiron",
-            "fr": "da’amirone",
-            "it": "da’amiron",
-            "ru": "даамирон"
+            "en": "da’amiran",
+            "es": "da’amiran",
+            "fr": "da’amirane",
+            "it": "da’amiran",
+            "ru": "даамиран"
           }
         },
         {
@@ -1462,11 +1462,11 @@
             "he": "בָּעוֹלָם"
           },
           "transliteracoes": {
-            "en": "b’olmo",
-            "es": "b’olmo",
-            "fr": "be’olmo",
-            "it": "b’olmo",
-            "ru": "болмо"
+            "en": "b’alma",
+            "es": "b’alma",
+            "fr": "béalma",
+            "it": "b’alma",
+            "ru": "бэалма"
           }
         },
         {
@@ -1487,11 +1487,11 @@
             "he": "וְאִמְרוּ"
           },
           "transliteracoes": {
-            "en": "v’imru",
-            "es": "v’imru",
+            "en": "ve’imru",
+            "es": "ve’imru",
             "fr": "véïmrou",
-            "it": "v’imru",
-            "ru": "вимру"
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
@@ -1512,11 +1512,11 @@
             "he": "אָמֵן"
           },
           "transliteracoes": {
-            "en": "omein",
-            "es": "omein",
-            "fr": "omeïn",
-            "it": "omein",
-            "ru": "омэйн"
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
@@ -1558,11 +1558,11 @@
             "he": "יְהִי"
           },
           "transliteracoes": {
-            "en": "y’hei",
-            "es": "y’hei",
-            "fr": "yéheï",
-            "it": "y’hei",
-            "ru": "йехэй"
+            "en": "y’he",
+            "es": "y’he",
+            "fr": "yéhé",
+            "it": "y’he",
+            "ru": "йехэ"
           }
         },
         {
@@ -1583,11 +1583,11 @@
             "he": "שָׁלוֹם"
           },
           "transliteracoes": {
-            "en": "shelomo",
-            "es": "shelomo",
-            "fr": "chélomo",
-            "it": "shelomo",
-            "ru": "шломо"
+            "en": "shelama",
+            "es": "shelama",
+            "fr": "chélama",
+            "it": "shelama",
+            "ru": "шлама"
           }
         },
         {
@@ -1608,11 +1608,11 @@
             "he": "הַגָּדוֹל"
           },
           "transliteracoes": {
-            "en": "rabo",
-            "es": "rabo",
-            "fr": "rabo",
-            "it": "rabo",
-            "ru": "рабо"
+            "en": "raba",
+            "es": "raba",
+            "fr": "raba",
+            "it": "raba",
+            "ru": "раба"
           }
         },
         {
@@ -1658,11 +1658,11 @@
             "he": "הַשָּׁמַיִם"
           },
           "transliteracoes": {
-            "en": "shemayo",
-            "es": "shemayo",
-            "fr": "chémayo",
-            "it": "shemayo",
-            "ru": "шмайо"
+            "en": "shemaya",
+            "es": "shemaya",
+            "fr": "chémaya",
+            "it": "shemaya",
+            "ru": "шмая"
           }
         },
         {
@@ -1683,11 +1683,11 @@
             "he": "וְחַיִּים"
           },
           "transliteracoes": {
-            "en": "v’chayim",
-            "es": "v’jayim",
-            "fr": "vé’hayim",
-            "it": "v’chayim",
-            "ru": "вэхайим"
+            "en": "chayim",
+            "es": "jayim",
+            "fr": "’hayim",
+            "it": "chayim",
+            "ru": "хайим"
           }
         },
         {
@@ -1733,11 +1733,11 @@
             "he": "וְעַל"
           },
           "transliteracoes": {
-            "en": "v’al",
-            "es": "v’al",
+            "en": "ve’al",
+            "es": "ve’al",
             "fr": "véal",
-            "it": "v’al",
-            "ru": "валь"
+            "it": "ve’al",
+            "ru": "вэаль"
           }
         },
         {
@@ -1783,11 +1783,11 @@
             "he": "יִשְׂרָאֵל"
           },
           "transliteracoes": {
-            "en": "Yisroel",
-            "es": "Yisroel",
-            "fr": "Yisroël",
-            "it": "Yisroel",
-            "ru": "Исроэль"
+            "en": "Yisrael",
+            "es": "Yisrael",
+            "fr": "Yisraël",
+            "it": "Yisrael",
+            "ru": "Исраэль"
           }
         },
         {
@@ -1808,11 +1808,11 @@
             "he": "וְאִמְרוּ"
           },
           "transliteracoes": {
-            "en": "v’imru",
-            "es": "v’imru",
+            "en": "ve’imru",
+            "es": "ve’imru",
             "fr": "véïmrou",
-            "it": "v’imru",
-            "ru": "вимру"
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
@@ -1833,11 +1833,11 @@
             "he": "אָמֵן"
           },
           "transliteracoes": {
-            "en": "omein",
-            "es": "omein",
-            "fr": "omeïn",
-            "it": "omein",
-            "ru": "омэйн"
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
@@ -1904,11 +1904,11 @@
             "he": "שָׁלוֹם"
           },
           "transliteracoes": {
-            "en": "sholom",
-            "es": "sholom",
-            "fr": "cholom",
-            "it": "sholom",
-            "ru": "шолом"
+            "en": "shalom",
+            "es": "shalom",
+            "fr": "chalom",
+            "it": "shalom",
+            "ru": "шалом"
           }
         },
         {
@@ -1929,11 +1929,11 @@
             "he": "בִּמְרוֹמָיו"
           },
           "transliteracoes": {
-            "en": "bimromov",
-            "es": "bimromov",
-            "fr": "bimromov",
-            "it": "bimromov",
-            "ru": "бимромов"
+            "en": "bimromav",
+            "es": "bimromav",
+            "fr": "bimromav",
+            "it": "bimromav",
+            "ru": "бимромав"
           }
         },
         {
@@ -2004,11 +2004,11 @@
             "he": "שָׁלוֹם"
           },
           "transliteracoes": {
-            "en": "sholom",
-            "es": "sholom",
-            "fr": "cholom",
-            "it": "sholom",
-            "ru": "шолом"
+            "en": "shalom",
+            "es": "shalom",
+            "fr": "chalom",
+            "it": "shalom",
+            "ru": "шалом"
           }
         },
         {
@@ -2054,11 +2054,11 @@
             "he": "וְעַל"
           },
           "transliteracoes": {
-            "en": "v’al",
-            "es": "v’al",
+            "en": "ve’al",
+            "es": "ve’al",
             "fr": "véal",
-            "it": "v’al",
-            "ru": "валь"
+            "it": "ve’al",
+            "ru": "вэаль"
           }
         },
         {
@@ -2104,11 +2104,11 @@
             "he": "יִשְׂרָאֵל"
           },
           "transliteracoes": {
-            "en": "Yisroel",
-            "es": "Yisroel",
-            "fr": "Yisroël",
-            "it": "Yisroel",
-            "ru": "Исроэль"
+            "en": "Yisrael",
+            "es": "Yisrael",
+            "fr": "Yisraël",
+            "it": "Yisrael",
+            "ru": "Исраэль"
           }
         },
         {
@@ -2129,11 +2129,11 @@
             "he": "וְאִמְרוּ"
           },
           "transliteracoes": {
-            "en": "v’imru",
-            "es": "v’imru",
+            "en": "ve’imru",
+            "es": "ve’imru",
             "fr": "véïmrou",
-            "it": "v’imru",
-            "ru": "вимру"
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
@@ -2154,11 +2154,11 @@
             "he": "אָמֵן"
           },
           "transliteracoes": {
-            "en": "omein",
-            "es": "omein",
-            "fr": "omeïn",
-            "it": "omein",
-            "ru": "омэйн"
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],

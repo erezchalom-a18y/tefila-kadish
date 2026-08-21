@@ -64,57 +64,35 @@ de transliteração. Não forcei.
 
 ---
 
-## O que só você pode resolver — e é importante
+## A pergunta que estava aberta — resolvida
 
-O documento não muda só a **grafia**. No Ashkenazi e no Chabad ele muda o **som**:
+O documento tem três colunas: Sefaradi, Ashkenazi e Chabad. As colunas Ashkenazi
+e Chabad usam a **pronúncia europeia tradicional**: *Yisgadal* em vez de
+*Yitgadal*, *beis* em vez de *beit*, *rabo* em vez de *raba*.
 
-| | nosso português | o documento |
+**O Erez ouviu a gravação em 21/08 e confirmou: o rabino diz "yit-gadal".**
+
+Como a transliteração existe para a pessoa ler **junto com o áudio**, uma que
+diga *Yisgadal* atrapalha em vez de ajudar. Então os três nussachim saem da
+**coluna Sefaradi**, que é a que traz a pronúncia que se ouve na gravação.
+
+Antes e depois, palavras que soavam diferente do nosso português:
+
+| nussach | antes | depois |
 |---|---|---|
-| §1 | Yitgadal veyitkadash | **Yisgadal veyiskadash** |
-| §2 | chirutei | **chirusei** |
-| §6 | beit yisrael | **beis yisrael** |
-| §9 | Yitbarach | **yisborach** |
+| ashkenaz | 23 | **8** |
+| chabad | 21 | **9** |
+| sefaradi | 7 | 7 |
 
-Medido, palavra a palavra:
+E a cobertura não caiu: continuam 569 palavras com as 5 línguas.
 
-| nussach | só mudam de grafia | **mudam de som** |
-|---|---|---|
-| sefaradi | 39 | **7** |
-| chabad | 41 | **21** |
-| ashkenaz | 59 | **23** |
+As 8 e 9 que sobram não são pronúncia trocada — são convenção de escrita
+(*qariv* / *kariv*, *dequdsha* / *d'kudsha*) ou prefixo escrito junto
+(*vatra* / *b'atra*).
 
-No **sefaradi** a mudança é cosmética (apóstrofos, *sh'me* em vez de *shemei*).
-No **ashkenaz e no chabad** é a pronúncia europeia tradicional — o próprio
-documento diz isso: *"a transliteração ashkenazi usa a pronúncia europeia
-tradicional, 'yisgadal' em vez de 'yitgadal', refletindo o kamatz como 'o'."*
-
-### O problema prático
-
-A transliteração serve para a pessoa **ler junto com o áudio**. Se a tela diz
-*Yisgadal* e o rabino diz *Yitgadal*, ela atrapalha em vez de ajudar — e isso
-agora vale para quem lê o app em inglês, espanhol, francês, italiano ou russo,
-nos nussachim ashkenaz e chabad.
-
-**A nossa transliteração portuguesa diz "Yitgadal" nos quatro nussachim.** Ela
-foi feita seguindo o áudio. Isso é indício forte de que o rabino diz *yitgadal*
-também no ashkenaz e no chabad — mas indício não é prova.
-
-### O teste, cinco segundos
-
-Abra o app em `?n=ashkenaz` e depois em `?n=chabad` e ouça o começo:
-
-- Ele diz **"yit**gadal" ou **"yis**gadal"?
-- No §9, ele diz "**ra**ba" ou "ra**bo**"?
-
-**Se ele disser "yitgadal"** — me avise. Eu troco as colunas Ashkenazi e Chabad
-pela coluna Sefaradi do mesmo documento (que diz *Yitgadal*), e a grafia
-melhorada continua valendo sem a pronúncia trocada. É um comando.
-
-**Se ele disser "yisgadal"** — está tudo certo como ficou, e aí a nossa
-transliteração *portuguesa* é que está descolada do áudio nesses dois nussachim,
-e isso passa a ser o defeito a consertar.
-
----
+**Nada de pronúncia foi inventado pela máquina.** Onde o texto do ashkenaz ou do
+chabad é realmente diferente do sefaradi, as palavras simplesmente não casam e
+continuam em português. Preferi perder cobertura a inventar.
 
 ## Como refazer, se precisar
 
