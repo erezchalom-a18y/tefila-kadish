@@ -5341,6 +5341,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     }
 
     /** Acende, no texto da tela, a palavra que o rabino esta falando agora. */
+    let acesoVerso = -1, acesoPalavra = -1;
     function acender() {
       if (!dados || !mapa || typeof highlightWord !== 'function') return;
       const t = audioEl().currentTime;
@@ -5357,9 +5358,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
       const wi = (vs[k].palavras || []).findIndex(p => t >= p.start && t < p.end);
       if (wi < 0) return;
+      // roda 60 vezes por segundo: so mexe na tela quando a palavra muda
+      if (k === acesoVerso && wi === acesoPalavra) return;
+      acesoVerso = k; acesoPalavra = wi;
       // o texto da tela vem do mesmo JSON: verso k, palavra wi
       highlightWord(k, wi);
-
     }
 
     async function montar() {
@@ -5387,7 +5390,23 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       } catch (e) { dados = null; console.error('sincronia nao carregou:', e); return; }
 
       mapa = trocarTexto(dados);
-      if (audio && !ouvindo) { audio.addEventListener('timeupdate', acender); ouvindo = true; }
+      acesoVerso = -1; acesoPalavra = -1;   // texto novo: o cache de destaque cai
+      // O destaque era movido pelo evento 'timeupdate', que o navegador dispara
+      // umas 4 vezes por segundo. Isso deixa o realce ate um quarto de segundo
+      // atrasado — e num trecho rapido como "yehei shmei raba", onde uma palavra
+      // dura 0,37s, o realce chega quando a palavra ja acabou. Era isso que o
+      // Erez ouvia como "fora de sincronia": os tempos do JSON estao certos
+      // (medidos contra o sinal), quem chegava tarde era a tela.
+      // Agora quem manda e o quadro do video (~60 vezes por segundo), e o
+      // 'timeupdate' fica so de rede de seguranca.
+      if (audio && !ouvindo) {
+        audio.addEventListener('timeupdate', acender);
+        const porQuadro = () => { acender(); if (!audio.paused) requestAnimationFrame(porQuadro); };
+        audio.addEventListener('play', () => requestAnimationFrame(porQuadro));
+        audio.addEventListener('seeking', () => { acesoVerso = -1; acesoPalavra = -1; });
+        if (!audio.paused) requestAnimationFrame(porQuadro);
+        ouvindo = true;
+      }
       const nPal = dados.versos.reduce((a, v) => a + (v.palavras || []).length, 0);
       console.log(`✓ ${nussach} ${tipo}: ${dados.versos.length} versos, ${nPal} palavras, texto do sync`);
 
