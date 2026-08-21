@@ -7,7 +7,6 @@
 <title>Tefilá · Kadish do Enlutado · v3</title>
 <script src="./hebraico.js"></script>
 <script src="./yahrzeit.js"></script>
-<script src="./sync-player.js"></script>
 <link rel="manifest" href='data:application/manifest+json,{"name":"Tefil%C3%A1 · Kadish","short_name":"Tefil%C3%A1","start_url":"./","display":"standalone","theme_color":"%238b6a3e","background_color":"%23f4ede0","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 192 192%22%3E%3Crect width%3D%22192%22 height%3D%22192%22 fill%3D%22%23f4ede0%22%2F%3E%3Ctext x%3D%2296%22 y%3D%22120%22 font-size%3D%22100%22 text-anchor%3D%22middle%22 fill%3D%22%238b6a3e%22%3E%E2%9C%A1%3C%2Ftext%3E%3C%2Fsvg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1013,10 +1012,11 @@
      justamente o estado NORMAL. Entao quem tem que ser limpo e o normal, e o
      Treino e que mostra os extras de estudo. Os nomes passam a dizer a verdade. */
   body:not(.modo-treino) .prayer-meta,
-  body:not(.modo-treino) .pictogram-row,
-  body:not(.modo-treino) #pictograms,
   body:not(.modo-treino) .speed-toggle,
   body:not(.modo-treino) .foot-note { display: none !important; }
+  /* A faixa "em pe · em minyan · em voz audivel" FICA. Custa 39px e nao custa
+     nenhum verso — e instrucao de como rezar, nao enfeite. Quem nunca disse
+     Kadish precisa saber que se diz de pe, que precisa de dez, e em voz alta. */
   body:not(.modo-treino) .learn-strip { padding: 7px 12px; }
   body:not(.modo-treino) .learn-strip small { display: none; }
   /* barra de baixo mais magra: o ▶ continua grande (quem reza de pe precisa
@@ -1535,8 +1535,6 @@
 
 
   /* Sincronizacao verso-a-verso */
-  /* Painel paralelo do sync-player: aposentado. O destaque agora acende no
-     proprio texto que a pessoa le, pela funcao highlightWord do app. */
   .verso-sync-display {
     display: none !important;
     padding: 1rem;
@@ -1913,7 +1911,6 @@
 </div>
 
 <audio id="audioPlayer" preload="auto"></audio>
-<div id="verso-sync-display" class="verso-sync-display"></div>
 
 <script>
 // ============================================================
@@ -3970,9 +3967,8 @@ function playFullPrayer(url) {
     playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
   };
 
-  // Sincronia real: o sync-player.js destaca palavra a palavra a partir do
-  // sync/*.json, que e medido do audio. Os temporizadores estimados abaixo
-  // brigariam com ele, entao nem sao montados.
+  // Sincronia real: o destaque vem do sync/*.json, medido do audio. Os
+  // temporizadores estimados abaixo brigariam com ele, entao nem sao montados.
   if (window.SYNC && window.SYNC.ativo()) {
     const pr = audioPlayer.play();
     if (pr && pr.catch) pr.catch(err => {
@@ -4932,7 +4928,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
   <script>
   // ============================================================
-  // SINCRONIA — liga o sync-player.js v5 ao audio de tefila-audio/
+  // SINCRONIA — liga o texto e o audio de tefila-audio/ aos sync/*.json
   // Caminhos todos relativos, para funcionar servido de subdiretorio
   // (GitHub Pages: /tefila-kadish/).
   // ============================================================
