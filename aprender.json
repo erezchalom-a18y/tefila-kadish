@@ -1,0 +1,13 @@
+{
+  "_leia": "Conteudo da pagina Aprender. Esta VAZIO de proposito: o conteudo e do Erez e do rabino, nao do modelo. Para preencher, edite este arquivo — nao precisa mexer em HTML. Cada bloco tem um 'tipo': texto, audio ou video. O campo 'titulo' e 'corpo' aceitam um objeto com as 8 linguas (pt, en, es, fr, it, de, ru, he) ou apenas um texto em portugues. Video NAO deve ser arquivo: ponha o endereco do YouTube ou Vimeo, porque video pesado nao cabe neste repositorio.",
+
+  "_como_preencher": {
+    "texto": { "tipo": "texto", "titulo": "O titulo da secao", "corpo": "O texto. Pule uma linha para separar paragrafos." },
+    "audio": { "tipo": "audio", "titulo": "O titulo", "arquivo": "aprender-audio/nome-do-arquivo.mp3", "corpo": "Uma frase dizendo o que a pessoa vai ouvir." },
+    "video": { "tipo": "video", "titulo": "O titulo", "url": "https://www.youtube.com/watch?v=...", "corpo": "Uma frase dizendo o que a pessoa vai ver." }
+  },
+
+  "revisado_pelo_rabino": false,
+
+  "secoes": []
+}

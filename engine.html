@@ -3985,7 +3985,11 @@ function applyLayerState(layer, state) {
 // Educational overlay
 const infoOverlay = document.getElementById('infoOverlay');
 document.getElementById('infoToggle').addEventListener('click', () => infoOverlay.classList.add('show'));
-document.getElementById('learnStrip').addEventListener('click', () => infoOverlay.classList.add('show'));
+// O cartao "Por que dizemos o Kadish?" leva a pagina Aprender, que guarda texto,
+// audio e video. Leva a lingua escolhida junto.
+document.getElementById('learnStrip').addEventListener('click', () => {
+  location.href = './aprender.html?lang=' + encodeURIComponent(state.lang || 'pt');
+});
 document.getElementById('infoClose').addEventListener('click', () => infoOverlay.classList.remove('show'));
 infoOverlay.addEventListener('click', (e) => {
   if (e.target === infoOverlay) infoOverlay.classList.remove('show');

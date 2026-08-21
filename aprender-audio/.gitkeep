@@ -1,0 +1,4 @@
+Ponha aqui os arquivos de audio da pagina Aprender (.mp3).
+Depois aponte para eles no aprender.json, assim:
+  { "tipo": "audio", "titulo": "...", "arquivo": "aprender-audio/nome.mp3" }
+Video NAO vai aqui: use o endereco do YouTube ou Vimeo.
