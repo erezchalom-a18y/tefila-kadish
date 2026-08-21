@@ -13,10 +13,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8.
 - node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado. VERDE nas 7.
 - node testar-treino.mjs  → Modo Treino e repetição, verso a verso.
+- node testar-revisar.mjs → a página de revisão das línguas (revisar.html).
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As sete rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As oito rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -196,6 +197,23 @@ aplicar-escolhas.mjs é o ÚNICO script que escreve no glossario.json, e só com
 sync/*.json, PROVA que nenhum tempo, nenhum hebraico e nenhuma âncora mudou, e
 roda as duas checagens. Qualquer coisa vermelha e ele desfaz tudo. Não faz push:
 mudança de texto litúrgico passa por olho humano antes da main.
+
+## A revisão das línguas pelo Erez
+
+revisar.html. É onde ele confere as línguas que sabe. Mostra, verso a verso: o
+hebraico, a transliteração em português E na língua escolhida, e a tradução em
+português E na língua escolhida — lado a lado, para comparar. Palavra sem
+transliteração própria naquela língua sai com borda tracejada e um aviso: ali
+falta fonte, não há o que corrigir.
+
+Ele marca "está certo" ou "corrigir" em cada verso, pode tocar numa palavra
+específica, e digitar como deveria ser. Tudo fica no aparelho (localStorage):
+dá para fechar e voltar. No fim, o botão monta um recado em português para ele
+copiar e mandar.
+
+A página SÓ LÊ os sync/*.json. Não escreve em lugar nenhum — mudança de texto
+continua passando por decisão humana, e o glossário só muda por
+aplicar-escolhas.mjs.
 
 ## O contador de Kadishim
 

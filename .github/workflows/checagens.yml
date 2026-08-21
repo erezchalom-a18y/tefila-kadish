@@ -62,3 +62,6 @@ jobs:
 
       - name: testar-treino.mjs (Modo Treino e repeticao)
         run: node testar-treino.mjs http://127.0.0.1:8896/tefila-kadish
+
+      - name: testar-revisar.mjs (a pagina de revisao das linguas)
+        run: node testar-revisar.mjs http://127.0.0.1:8896/tefila-kadish

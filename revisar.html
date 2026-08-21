@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revisar traduções · Kadish</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+  :root{--fundo:#f4ede0;--cartao:#fbf7ef;--linha:#ddd3c0;--txt:#2a1f15;--fraco:#6b6153;
+        --brass:#8b6a3e;--ok:#2f6b3a;--erro:#8a3a1a}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:17px/1.6 Georgia,"Times New Roman",serif;padding-bottom:110px}
+  header{padding:14px 18px;border-bottom:1px solid var(--linha);position:sticky;top:0;
+         background:var(--fundo);z-index:10}
+  .topo{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  a.voltar{color:var(--brass);text-decoration:none;white-space:nowrap;font-size:16px}
+  h1{font-size:19px;margin:0;font-weight:600;flex:1}
+  select{font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--linha);
+         border-radius:9px;background:var(--cartao);color:var(--txt);min-height:42px}
+  .andamento{font-size:14.5px;color:var(--fraco);margin-top:8px}
+  main{max-width:720px;margin:0 auto;padding:18px}
+  .verso{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+         padding:16px 18px;margin-bottom:16px}
+  .verso.certo{border-left:4px solid var(--ok)}
+  .verso.corrigir{border-left:4px solid var(--erro)}
+  .n{font-size:13px;color:var(--fraco);letter-spacing:.1em;text-transform:uppercase}
+  .heb{font-size:27px;line-height:1.9;direction:rtl;text-align:right;margin:8px 0 12px}
+  .par{margin:9px 0}
+  .rot{font-size:12.5px;color:var(--fraco);letter-spacing:.08em;text-transform:uppercase}
+  .val{font-size:18px}
+  .val.tl{font-style:italic;color:#5a4a34}
+  .val.rtl{direction:rtl;text-align:right}
+  .val.falta{color:var(--fraco);font-style:italic}
+  .palavras{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px;direction:rtl}
+  .pal{border:1px solid var(--linha);border-radius:9px;padding:6px 9px;background:#fff;
+       direction:ltr;text-align:center;min-width:76px;cursor:pointer}
+  .pal.marcada{border-color:var(--erro);background:#fdf3e6}
+  /* Palavra que nao tem transliteracao propria nesta lingua: a linha do meio
+     e o portugues. Fica marcada para o Erez nao "corrigir" o que nao existe. */
+  .pal.semfonte{background:#f6f1e6;border-style:dashed}
+  .pal.semfonte span{color:#a08d70}
+  .legenda{font-size:13px;color:var(--fraco);margin-top:6px}
+  .pal b{display:block;font-size:17px;font-weight:400;direction:rtl}
+  .pal span{display:block;font-size:13px;color:var(--fraco)}
+  .pal em{display:block;font-size:13.5px;color:var(--brass);font-style:normal}
+  .botoes{display:flex;gap:10px;margin-top:14px}
+  button{font:inherit;font-size:16px;border-radius:10px;padding:12px 16px;cursor:pointer;
+         border:1px solid var(--linha);background:#fff;color:var(--txt);min-height:46px;flex:1}
+  button.sim.ativo{background:var(--ok);border-color:var(--ok);color:#fff}
+  button.nao.ativo{background:var(--erro);border-color:var(--erro);color:#fff}
+  textarea{width:100%;font:inherit;font-size:16px;padding:11px;border:1px solid var(--linha);
+           border-radius:10px;background:#fff;color:var(--txt);margin-top:10px;min-height:76px}
+  .rodape{position:fixed;left:0;right:0;bottom:0;background:var(--cartao);
+          border-top:1px solid var(--linha);padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+          display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .rodape span{color:var(--fraco);font-size:14.5px}
+  .nota{font-size:15px;color:var(--fraco);background:var(--cartao);border:1px dashed var(--linha);
+        border-radius:12px;padding:14px 16px;margin-bottom:16px}
+  .saida{width:100%;min-height:230px;font-family:ui-monospace,monospace;font-size:13px}
+</style></head>
+<body>
+<header>
+  <div class="topo">
+    <a class="voltar" href="./">‹ voltar</a>
+    <h1>Revisar</h1>
+    <select id="lingua"></select>
+    <select id="qual"></select>
+  </div>
+  <div class="andamento" id="andamento"></div>
+</header>
+
+<main id="corpo"><p style="color:var(--fraco)">carregando…</p></main>
+
+<div class="rodape">
+  <span id="contagem"></span>
+  <button id="gerar" style="flex:0 0 auto">Gerar o recado para o Claude</button>
+</div>
+
+<script>
+const LINGUAS = { en:'inglês', es:'espanhol', fr:'francês', it:'italiano',
+                  de:'alemão', ru:'russo', he:'hebraico', pt:'português' };
+const ARQUIVOS = [
+  ['ashkenaz_yatom','Ashkenaz · Yatom'], ['ashkenaz_derabanan','Ashkenaz · deRabanan'],
+  ['chabad_yatom','Chabad · Yatom'],     ['chabad_derabanan','Chabad · deRabanan'],
+  ['sefard_yatom','Sefard · Yatom'],     ['sefard_derabanan','Sefard · deRabanan'],
+  ['sefaradi_yatom','Sefaradi · Yatom'], ['sefaradi_derabanan','Sefaradi · deRabanan'],
+];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chave = () => `revisar_${qual.value}_${lingua.value}`;
+
+const lingua = document.getElementById('lingua');
+const qual   = document.getElementById('qual');
+for (const [k, n] of Object.entries(LINGUAS)) lingua.add(new Option(n, k));
+for (const [k, n] of ARQUIVOS) qual.add(new Option(n, k));
+lingua.value = localStorage.getItem('revisar_lingua') || 'es';
+qual.value   = localStorage.getItem('revisar_qual')   || 'chabad_yatom';
+
+let dados = null, marcas = {};
+
+const ler = () => { try { return JSON.parse(localStorage.getItem(chave()) || '{}'); }
+                    catch (e) { return {}; } };
+const gravar = () => { try { localStorage.setItem(chave(), JSON.stringify(marcas)); } catch (e) {} };
+
+/** A transliteração daquela língua, montada das palavras; null quando não existe. */
+function transliteracaoDe(v, lg) {
+  const ps = v.palavras || [];
+  if (lg === 'pt' || lg === 'he') return null;
+  if (!ps.some(p => p.transliteracoes && p.transliteracoes[lg])) return null;
+  return ps.map(p => (p.transliteracoes && p.transliteracoes[lg]) || p.transliteration_pt || '').join(' ');
+}
+const traducaoDe = (v, lg) => lg === 'pt' ? (v.translation_pt || '')
+                                          : ((v.translations || {})[lg] || '');
+
+function desenhar() {
+  const lg = lingua.value, nome = LINGUAS[lg];
+  const alvo = document.getElementById('corpo');
+  marcas = ler();
+  let h = `<div class="nota">
+    Você está conferindo o <b>${esc(nome)}</b> em <b>${esc(qual.options[qual.selectedIndex].text)}</b>.
+    O hebraico e o português estão aí para comparar — eles não se revisam aqui.
+    <br><br>Toque em <b>Está certo</b> ou <b>Corrigir</b> em cada verso. Se algo estiver
+    errado só numa palavra, toque na palavra. Suas respostas ficam neste aparelho:
+    pode fechar e voltar depois.</div>`;
+
+  dados.versos.forEach((v, i) => {
+    const m = marcas[v.n] || {};
+    const tlLg = transliteracaoDe(v, lg);
+    const trLg = traducaoDe(v, lg);
+    const semTl = lg !== 'pt' && lg !== 'he' && !tlLg;
+    h += `<div class="verso ${m.estado === 'certo' ? 'certo' : m.estado === 'corrigir' ? 'corrigir' : ''}" id="v${v.n}">
+      <div class="n">verso ${v.n} de ${dados.versos.length}</div>
+      <div class="heb">${esc(v.hebrew)}</div>
+
+      <div class="par"><div class="rot">transliteração — português</div>
+        <div class="val tl">${esc(v.transliteration_pt || '')}</div></div>`;
+    if (lg !== 'pt' && lg !== 'he') {
+      h += `<div class="par"><div class="rot">transliteração — ${esc(nome)}</div>
+        <div class="val tl ${semTl ? 'falta' : ''}">${semTl
+          ? 'não existe nesta língua (fica o português)' : esc(tlLg)}</div></div>`;
+    }
+    h += `<div class="par"><div class="rot">tradução — português</div>
+        <div class="val">${esc(v.translation_pt || '')}</div></div>`;
+    if (lg !== 'pt') {
+      h += `<div class="par"><div class="rot">tradução — ${esc(nome)}</div>
+        <div class="val ${lg === 'he' ? 'rtl' : ''}">${esc(trLg)}</div></div>`;
+    }
+
+    h += `<div class="palavras">` + (v.palavras || []).map((p, j) => {
+      const marcada = (m.palavras || []).includes(j);
+      const glosa = (p.glosas && p.glosas[lg]) || '';
+      const propria = !!(p.transliteracoes && p.transliteracoes[lg]);
+      const semFonte = lg !== 'pt' && lg !== 'he' && !propria;
+      const tl = propria ? p.transliteracoes[lg] : (p.transliteration_pt || '');
+      return `<div class="pal ${marcada ? 'marcada' : ''} ${semFonte ? 'semfonte' : ''}"
+        data-v="${v.n}" data-p="${j}">
+        <b>${esc(p.hebrew)}</b><span>${esc(tl)}</span><em>${esc(glosa)}</em></div>`;
+    }).join('') + `</div>` +
+      ((v.palavras || []).some(p => lg !== 'pt' && lg !== 'he' &&
+         !(p.transliteracoes && p.transliteracoes[lg]))
+        ? `<div class="legenda">As palavras com borda tracejada não têm transliteração
+             própria em ${esc(nome)} — ali a linha do meio é o português. Não há o que
+             corrigir nelas; falta fonte.</div>` : '') + `
+
+      <div class="botoes">
+        <button class="sim ${m.estado === 'certo' ? 'ativo' : ''}" data-v="${v.n}" data-e="certo">Está certo</button>
+        <button class="nao ${m.estado === 'corrigir' ? 'ativo' : ''}" data-v="${v.n}" data-e="corrigir">Corrigir</button>
+      </div>
+      ${m.estado === 'corrigir' ? `<textarea data-v="${v.n}"
+        placeholder="Escreva como deveria ser, em ${esc(nome)}">${esc(m.texto || trLg)}</textarea>` : ''}
+    </div>`;
+  });
+  alvo.innerHTML = h;
+  atualizarContagem();
+}
+
+function atualizarContagem() {
+  const total = dados.versos.length;
+  const feitos = dados.versos.filter(v => (marcas[v.n] || {}).estado).length;
+  const ruins = dados.versos.filter(v => (marcas[v.n] || {}).estado === 'corrigir').length;
+  document.getElementById('andamento').textContent =
+    `${feitos} de ${total} versos conferidos · ${ruins} para corrigir`;
+  document.getElementById('contagem').textContent =
+    feitos === total ? 'terminou este' : `faltam ${total - feitos}`;
+}
+
+document.getElementById('corpo').addEventListener('click', e => {
+  const b = e.target.closest('button[data-v]');
+  if (b) {
+    const n = b.dataset.v;
+    marcas[n] = marcas[n] || {};
+    marcas[n].estado = marcas[n].estado === b.dataset.e ? null : b.dataset.e;
+    gravar(); desenhar();
+    const el = document.getElementById('v' + n);
+    if (el) el.scrollIntoView({ block: 'center' });
+    return;
+  }
+  const p = e.target.closest('.pal');
+  if (p) {
+    const n = p.dataset.v, j = Number(p.dataset.p);
+    marcas[n] = marcas[n] || {};
+    const lista = new Set(marcas[n].palavras || []);
+    lista.has(j) ? lista.delete(j) : lista.add(j);
+    marcas[n].palavras = [...lista];
+    if (lista.size && !marcas[n].estado) marcas[n].estado = 'corrigir';
+    gravar(); desenhar();
+    const el = document.getElementById('v' + n);
+    if (el) el.scrollIntoView({ block: 'center' });
+  }
+});
+
+document.getElementById('corpo').addEventListener('input', e => {
+  if (e.target.tagName !== 'TEXTAREA') return;
+  const n = e.target.dataset.v;
+  marcas[n] = marcas[n] || {};
+  marcas[n].texto = e.target.value;
+  gravar();
+});
+
+for (const s of [lingua, qual]) s.addEventListener('change', () => {
+  localStorage.setItem('revisar_lingua', lingua.value);
+  localStorage.setItem('revisar_qual', qual.value);
+  carregar();
+});
+
+document.getElementById('gerar').addEventListener('click', () => {
+  const lg = lingua.value;
+  const linhas = [];
+  for (const v of dados.versos) {
+    const m = marcas[v.n];
+    if (!m || m.estado !== 'corrigir') continue;
+    const palavras = (m.palavras || []).map(j => {
+      const p = v.palavras[j];
+      return `${p.hebrew} (${p.transliteration_pt}) = "${(p.glosas && p.glosas[lg]) || ''}"`;
+    });
+    linhas.push(`§${v.n}` +
+      (palavras.length ? `\n   palavra(s): ${palavras.join(' · ')}` : '') +
+      (m.texto && m.texto.trim() ? `\n   deveria ser: ${m.texto.trim()}` : '') +
+      `\n   está: ${traducaoDe(v, lg)}`);
+  }
+  const feitos = dados.versos.filter(v => (marcas[v.n] || {}).estado).length;
+  const recado = linhas.length
+    ? `Revisão de ${LINGUAS[lg]} — ${qual.options[qual.selectedIndex].text}\n` +
+      `(${feitos} de ${dados.versos.length} versos conferidos, ${linhas.length} para corrigir)\n\n` +
+      linhas.join('\n\n')
+    : `Revisão de ${LINGUAS[lg]} — ${qual.options[qual.selectedIndex].text}\n` +
+      `Conferi ${feitos} de ${dados.versos.length} versos. Nenhum para corrigir.`;
+  document.getElementById('corpo').innerHTML =
+    `<div class="nota">Copie tudo abaixo e mande para o Claude. Depois toque em voltar
+      para continuar revisando — nada se perdeu.</div>
+     <textarea class="saida" id="saida" readonly></textarea>
+     <div class="botoes"><button id="copiar">Copiar</button>
+       <button id="continuar">Voltar à revisão</button></div>`;
+  document.getElementById('saida').value = recado;
+  document.getElementById('copiar').onclick = () => {
+    const t = document.getElementById('saida');
+    t.select(); try { document.execCommand('copy'); } catch (e) {}
+    if (navigator.clipboard) navigator.clipboard.writeText(t.value).catch(() => {});
+    document.getElementById('copiar').textContent = 'Copiado ✓';
+  };
+  document.getElementById('continuar').onclick = desenhar;
+});
+
+function carregar() {
+  document.getElementById('corpo').innerHTML = '<p style="color:var(--fraco)">carregando…</p>';
+  fetch(`./sync/${qual.value}_sync.json`, { cache: 'no-cache' })
+    .then(r => r.json())
+    .then(d => { dados = d; desenhar(); })
+    .catch(e => { document.getElementById('corpo').innerHTML =
+      `<div class="nota">Não consegui abrir o texto: ${esc(e.message)}</div>`; });
+}
+carregar();
+
+if (localStorage.getItem('tefila_theme') === 'claro') document.body.style.background = '#fff';
+</script>
+</body></html>
