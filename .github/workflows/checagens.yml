@@ -24,6 +24,10 @@ jobs:
       - name: checar-ritos.mjs (marcas de rito)
         run: node checar-ritos.mjs
 
+      # Nao gasta nada: roda o worker do Cloudflare sobre o SQLite do proprio Node.
+      - name: testar-contador.mjs (o contador geral, sem sair do computador)
+        run: node testar-contador.mjs
+
       # Estes dois abrem o app num Chromium de verdade. Foram acrescentados
       # depois que dois defeitos passaram pelas checagens de dados e so
       # apareceram na tela: a voz sintetizada no lugar do rabino, e o painel

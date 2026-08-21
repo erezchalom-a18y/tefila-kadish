@@ -3,8 +3,12 @@
 Pedido: "gostaria de incluir um contador de quantos kadishim fez (oculto para o
 cliente) e um geral total, por país, por língua".
 
-São duas coisas bem diferentes. **A primeira já está pronta e funcionando. A
-segunda depende de uma decisão sua, porque custa dinheiro ou custa privacidade.**
+São duas coisas bem diferentes. **A primeira já está pronta e funcionando.**
+
+**Decisão do Erez (21/08): a segunda vai de Cloudflare — a opção A.** O
+programinha está escrito, conferido e esperando: falta só ele criar a conta.
+O passo a passo, para fazer do iPad, está em
+[`contador-cloudflare/COMO-LIGAR.md`](contador-cloudflare/COMO-LIGAR.md).
 
 ---
 
@@ -67,11 +71,29 @@ a acompanhar cada pessoa que abre o app — de onde é, que aparelho usa, quando
 e por quanto tempo — e a guardar isso nos servidores dele. Num app de reza para
 enlutados, acho que não vale.
 
-### O que preciso de você
+### O que já está feito (opção A)
 
-Só a resposta: **A, B, C ou D**. Se for A, eu escrevo o programinha do Cloudflare
-e o passo a passo de onde clicar — você só precisa criar a conta (é de graça e
-leva uns cinco minutos) e me passar o endereço que ele gerar.
+| Arquivo | O que é |
+|---|---|
+| `contador-cloudflare/worker.js` | O programinha. Recebe o aviso, soma, e devolve os totais. |
+| `contador-cloudflare/schema.sql` | A tabela: país, nussach, tipo, língua, dia, quantos. |
+| `contador-cloudflare/COMO-LIGAR.md` | Passo a passo pelo navegador, do iPad. 5 passos. |
+| `testar-contador.mjs` | Prova o programinha no computador, sem gastar API nenhuma. |
+
+O `testar-contador.mjs` roda o mesmo código sobre o mesmo SQLite que o Cloudflare
+usa, e confere: soma atômica (100 pessoas ao mesmo tempo dão 100, não 97), o país
+vem junto, lixo é recusado, pedido de fora do app não soma, o banco não tem coluna
+de IP nem de hora, e o app não quebra se o contador cair.
+
+A página `contador.html` já sabe mostrar o total geral. Foi testada nos três
+estados: desligado (explica o que falta), ligado (mostra os países em português),
+e ligado mas fora do ar (avisa, e a conta do aparelho continua valendo).
+
+### O que falta — só você pode fazer
+
+Criar a conta no Cloudflare (de graça, uns quinze minutos, tudo pelo navegador) e
+**me mandar o endereço** que ele gerar. Eu ponho no lugar, confiro que está
+somando, e te aviso. O passo a passo está em `contador-cloudflare/COMO-LIGAR.md`.
 
 ---
 

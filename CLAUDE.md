@@ -12,9 +12,10 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-app.mjs     → o app num Chromium: 8 combinações × 2 formatos.
 - node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8.
 - node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado. VERDE nas 7.
+- node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As cinco rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As seis rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -177,9 +178,22 @@ quando o áudio passa de 90% do último verso. Não aparece nada na tela de quem
 reza — quem vê é o Erez, em contador.html.
 
 O total geral (por país, por língua) precisa de serviço fora do GitHub Pages.
-O envio está escrito e DESLIGADO: enquanto ENDERECO_GERAL for string vazia, nada
-sai do aparelho. Não ligar sem decisão escrita do Erez. Opções e recomendação em
-RELATORIO-CONTADOR.md.
+O Erez decidiu por Cloudflare (21/08). Está tudo pronto em contador-cloudflare/:
+worker.js (o programinha), schema.sql (a tabela) e COMO-LIGAR.md (passo a passo
+pelo navegador, do iPad). Falta ele criar a conta e passar o endereço.
+
+O envio continua DESLIGADO: enquanto ENDERECO_GERAL em contador.js for string
+vazia, nada sai do aparelho. Ligar é só pôr o endereço ali.
+
+node testar-contador.mjs → roda o worker sobre o SQLite do próprio Node, com um
+adaptador que imita o D1. Prova soma atômica, recusa de lixo, e que o banco não
+guarda IP nem hora. Também confere que o SQL do COMO-LIGAR.md é o mesmo do
+schema.sql — se saírem de sincronia, o Erez monta a tabela errada e nada
+funciona, sem mensagem de erro. Não gasta nada; roda em segundos.
+
+O worker guarda SÓ: país · nussach · tipo · língua · dia · quantos. Nunca
+acrescentar IP, identificador de aparelho, hora ou qualquer coisa que volte a
+uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
 
 ## Pendências de conteúdo (não são de código)
 

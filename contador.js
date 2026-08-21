@@ -21,7 +21,11 @@
  */
 (function (raiz) {
   const CHAVE = 'tefila_contador';
-  const ENDERECO_GERAL = '';   // vazio = nao envia nada para lugar nenhum
+  // O endereco do contador geral no Cloudflare. VAZIO = nada sai do aparelho.
+  // Para ligar, ponha aqui o endereco que o Cloudflare deu, entre as aspas —
+  // algo como 'https://contador-kadish.SEU-NOME.workers.dev'.
+  // Passo a passo em contador-cloudflare/COMO-LIGAR.md.
+  const ENDERECO_GERAL = '';
 
   function ler() {
     try {
@@ -101,7 +105,17 @@
 
   function zerar() { try { localStorage.removeItem(CHAVE); } catch (e) {} }
 
-  raiz.Contador = { registrar, vigiar, resumo, ler, zerar, ENDERECO_GERAL };
+  /** Le os totais de todo mundo. null quando o geral esta desligado ou fora do ar. */
+  async function geral() {
+    if (!ENDERECO_GERAL) return null;
+    try {
+      const r = await fetch(ENDERECO_GERAL, { cache: 'no-cache' });
+      if (!r.ok) return null;
+      return await r.json();
+    } catch (e) { return null; }
+  }
+
+  raiz.Contador = { registrar, vigiar, resumo, ler, zerar, geral, ENDERECO_GERAL };
 })(typeof window !== 'undefined' ? window : globalThis);
 
 if (typeof module !== 'undefined' && module.exports) module.exports = globalThis.Contador;
