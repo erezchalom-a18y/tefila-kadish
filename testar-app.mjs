@@ -28,7 +28,12 @@ const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 // '' = o que o navegador escolher sozinho; 'mp3' = o caminho do Safari, forcado.
 const FORMATOS = ['', 'mp3'];
 
-const navegador = await chromium.launch();
+// Em maquina sem os navegadores do Playwright baixados (o container remoto ja
+// traz um Chromium pronto), da para apontar o executavel por variavel de
+// ambiente: CHROMIUM=/caminho/do/chrome node testar-app.mjs
+const navegador = await chromium.launch(
+  process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {}
+);
 let falhas = 0;
 const lacunas = [];   // texto que o app desenha nao cobre o audio
 

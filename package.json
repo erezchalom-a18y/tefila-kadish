@@ -1,0 +1,12 @@
+{
+  "name": "tefila-kadish",
+  "private": true,
+  "description": "App de Kadish com audio do rabino sincronizado palavra a palavra.",
+  "scripts": {
+    "checar": "node checar.mjs && node checar-ritos.mjs",
+    "testar-app": "node testar-app.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

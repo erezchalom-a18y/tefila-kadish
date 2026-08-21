@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#f4ede0">
 <title>Tefilá · Kadish do Enlutado · v3</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <script src="./hebraico.js"></script>
 <script src="./yahrzeit.js"></script>
 <link rel="manifest" href='data:application/manifest+json,{"name":"Tefil%C3%A1 · Kadish","short_name":"Tefil%C3%A1","start_url":"./","display":"standalone","theme_color":"%238b6a3e","background_color":"%23f4ede0","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 192 192%22%3E%3Crect width%3D%22192%22 height%3D%22192%22 fill%3D%22%23f4ede0%22%2F%3E%3Ctext x%3D%2296%22 y%3D%22120%22 font-size%3D%22100%22 text-anchor%3D%22middle%22 fill%3D%22%238b6a3e%22%3E%E2%9C%A1%3C%2Ftext%3E%3C%2Fsvg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
@@ -1034,6 +1036,11 @@
   .velocidade-nos-ajustes button.active {
     background: var(--brass); border-color: var(--brass); color: #fff; font-weight: 600;
   }
+
+  /* "Em memoria de" aparecia DUAS vezes: a faixa antiga no cabecalho e a
+     dedicatoria nova, antes do primeiro verso. Fica a de baixo, que rola junto
+     com o texto e nao rouba altura de leitura. */
+  .memorial-strip { display: none !important; }
 
   .foot-note {
     text-align: center;
@@ -5086,15 +5093,50 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       const { versos, frases } = adaptar(d);
       verses.length = 0;
       versos.forEach(v => verses.push(v));
+      // A traducao vai PALAVRA A PALAVRA, e nao como frase inteira.
+      // Frase inteira lia melhor, mas acendia toda de uma vez e nao acompanhava
+      // a voz — foi o que o Erez viu. Como o proprio app ja sabe desenhar glosa
+      // por palavra quando nao ha frase pronta, basta nao preencher as frases.
       if (typeof fullTranslations !== 'undefined') {
         for (const k of Object.keys(fullTranslations)) delete fullTranslations[k];
-        Object.assign(fullTranslations, frases);
       }
+      void frases;
       desenharVersos();
       if (typeof rerenderVerseText === 'function') rerenderVerseText();
       return true;
     }
 
+
+    let versoAnterior = -1;
+
+    /**
+     * Repetir o verso e pausar depois dele viviam no caminho antigo, o dos
+     * temporizadores estimados — que deixou de rodar quando a sincronia real
+     * entrou. Resultado: o Modo Treino parou de repetir. Regressao minha.
+     * Aqui isso volta, agora em cima do tempo REAL do audio.
+     */
+    function fimDeVerso(k) {
+      const a = audioEl();
+      const v = dados.versos[k];
+      if (!v) return;
+      if (typeof state === 'undefined') return;
+
+      if (state.repeatN > 0) {
+        if (state.repeatRestante === undefined || state.repeatVerso !== k) {
+          state.repeatVerso = k; state.repeatRestante = state.repeatN;
+        }
+        if (state.repeatRestante > 1) {
+          state.repeatRestante--;
+          a.currentTime = v.start;                       // de novo, do inicio do verso
+          if (typeof showToast === 'function')
+            showToast(`Repetição ${state.repeatN - state.repeatRestante + 1} de ${state.repeatN}`);
+          return true;
+        }
+        state.repeatRestante = undefined;
+      }
+      if (state.modoTreino) { a.pause(); return true; }  // pausa depois de cada verso
+      return false;
+    }
 
     /** Acende, no texto da tela, a palavra que o rabino esta falando agora. */
     function acender() {
@@ -5103,17 +5145,19 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       const vs = dados.versos;
       const k = vs.findIndex(v => t >= v.start && t < v.end);
       if (k === -1) return;
+      // passou para o verso seguinte? o anterior acabou de terminar
+      if (versoAnterior >= 0 && k !== versoAnterior) {
+        const anterior = versoAnterior;
+        versoAnterior = k;
+        if (fimDeVerso(anterior)) return;
+      }
+      versoAnterior = k;
+
       const wi = (vs[k].palavras || []).findIndex(p => t >= p.start && t < p.end);
       if (wi < 0) return;
-      // o texto da tela vem do mesmo JSON: verso k, palavra wi, sem traducao
+      // o texto da tela vem do mesmo JSON: verso k, palavra wi
       highlightWord(k, wi);
 
-      // A traducao e UMA FRASE por verso, marcada como palavra 0. Sem isto ela
-      // acendia so enquanto a primeira palavra era cantada e apagava no resto do
-      // verso, parecendo quebrada. Frase acompanha o VERSO; hebraico e
-      // transliteracao acompanham a PALAVRA.
-      const frases = document.querySelectorAll(`.verse[data-idx="${k}"] .phrase`);
-      if (frases.length === 1) frases[0].classList.add('active');
     }
 
     async function montar() {
