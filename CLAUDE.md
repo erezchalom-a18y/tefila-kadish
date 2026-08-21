@@ -225,7 +225,9 @@ uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
 ## Pendências de conteúdo (não são de código)
 
 - Revisão do rabino: glossario.json (42 entradas × 8 línguas) e as regras de
-  ritos.json. Documento pronto: revisao-rabino.html.
+  ritos.json. O documento que vai ao rabino é o ESCOLHA-RABINO.pdf.
+  (O CLAUDE.md citava revisao-rabino.html; esse arquivo nunca existiu no
+  repositório — mesmo caso do alinhar-global.py.)
 - Direitos: entradas origem=tehilat_hashem no glossario vieram de siddur
   publicado; decisão pendente. As 7 línguas além do pt são rascunho de IA
   (origem=claude) — precisam de revisão humana.
