@@ -82,7 +82,7 @@ for (const n of NUSSACHIM) {
       const info = window.SYNC.atual();
       const sync = await (await fetch(`./sync/${info.nussach}_${info.tipo}_sync.json`)).json();
       const v = sync.versos[Math.floor(sync.versos.length / 2)];
-      const p = v.palavras[Math.floor(v.palavras.length / 2)];
+      const p = v.palavras[v.palavras.length - 1];   // a ultima, onde falhava
       const alvo = (p.start + p.end) / 2;
       Object.defineProperty(a, 'currentTime', { get: () => alvo, configurable: true });
       a.dispatchEvent(new Event('timeupdate'));
@@ -95,6 +95,8 @@ for (const n of NUSSACHIM) {
         ligadas: info.palavrasLigadas,
         total: info.palavrasTotal,
         translitAcesa: !!document.querySelector('.twrd.active'),
+        // a traducao e uma frase por verso: tem que ficar acesa o verso inteiro,
+        // inclusive na ULTIMA palavra (era ali que ela apagava antes)
         traducaoAcesa: !!document.querySelector('.phrase.active'),
       };
     });
@@ -118,7 +120,7 @@ for (const n of NUSSACHIM) {
     // exige as tres linhas acesas: hebraico, transliteracao e traducao
     // hebraico e transliteracao tem span por palavra; a traducao do app e uma
     // frase por verso, entao nao se exige .phrase aceso.
-    const acertou = destaque.bate && destaque.translitAcesa
+    const acertou = destaque.bate && destaque.translitAcesa && destaque.traducaoAcesa
                     && destaque.total > 0 && destaque.ligadas / destaque.total >= 0.65;
     // nao basta tocar: tem que tocar o arquivo DESTE nussach e DESTE tipo
     const tocou = aoTocar.tocando && aoTocar.avancou && aoTocar.vozSintetica === 0
