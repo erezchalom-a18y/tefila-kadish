@@ -1,26 +1,24 @@
+# O site e estatico: nao tem build. O GitHub Pages ja serve tudo em
+# erezchalom-a18y.github.io/tefila-kadish/ — este arquivo so existe para o caso
+# de o Netlify ser ligado tambem.
 [build]
   publish = "."
-  command = "echo 'Static site — no build step'"
+  command = "echo 'site estatico — nada a compilar'"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# NAO redirecionar tudo para o index: o app busca sync/*.json e os audios por
+# caminho relativo, e um catch-all devolveria HTML no lugar deles.
 
-# Cache headers for audio files (1 week)
 [[headers]]
-  for = "/audio/*"
+  for = "/tefila-audio/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
-# Cache headers for HTML (no cache — always fresh)
 [[headers]]
-  for = "/*.html"
+  for = "/sync/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Service worker (no cache)
 [[headers]]
-  for = "/sw.js"
+  for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
