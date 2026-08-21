@@ -98,6 +98,47 @@ As 8 e 9 que sobram não são pronúncia trocada — são convenção de escrita
 chabad é realmente diferente do sefaradi, as palavras simplesmente não casam e
 continuam em português. Preferi perder cobertura a inventar.
 
+---
+
+## As 20 palavras que faltam — lista pronta para o rabino
+
+Estas ficam em **português** nas outras línguas, porque não existem no seu
+documento nem em nenhum outro nussach: não há de onde copiar. Decisão do Erez
+(21/08): **esperar fonte humana**, não deixar a máquina escrever.
+
+Quase todas são a lista de bênçãos do *Yehei shlama raba* sefaradi — *vida,
+fartura, salvação, consolo, livramento, cura, redenção, perdão, expiação,
+alívio e salvamento*. Os outros nussachim dizem só *"vida boa para nós"* e
+encerram; por isso essas palavras não existem lá.
+
+Basta preencher as colunas vazias e me avisar — entra num comando.
+
+| hebraico | como lemos em português | o que quer dizer | onde aparece | inglês | espanhol | francês | italiano | russo |
+|---|---|---|---|---|---|---|---|---|
+| וְשָׂבָע | *vesava* | e fartura | sefaradi |  |  |  |  |  |
+| וִישׁוּעָה | *vishua* | e salvação | sefaradi |  |  |  |  |  |
+| וְנֶחָמָה | *venechama* | e consolo | sefaradi |  |  |  |  |  |
+| וְשֵׁיזָבָא | *vesheizava* | e livramento | sefaradi |  |  |  |  |  |
+| וּרְפוּאָה | *urefua* | e cura | sefaradi |  |  |  |  |  |
+| וּגְאֻלָּה | *ugula* | e redenção | sefaradi |  |  |  |  |  |
+| וּסְלִיחָה | *uselicha* | e perdão | sefaradi |  |  |  |  |  |
+| וְכַפָּרָה | *vechapara* | e expiação | sefaradi |  |  |  |  |  |
+| וְרֶוַח | *verevach* | e alívio | sefaradi |  |  |  |  |  |
+| וְהַצָּלָה | *vehatsala* | e salvamento | sefaradi |  |  |  |  |  |
+| לָנוּ | *lanu* | para nós | sefaradi |  |  |  |  |  |
+| וּלְכָל | *ulechol* | e para todo | sefaradi |  |  |  |  |  |
+| עַמּוֹ | *amo* | Seu povo | sefaradi |  |  |  |  |  |
+| בְּרַחֲמָיו | *berachamav* | em Sua misericórdia | sefaradi, sefard |  |  |  |  |  |
+| לָנָא | *lana* | para nós | sefaradi (deRabanan) |  |  |  |  |  |
+| מָרֵא | *marei* | o Senhor de | sefaradi (deRabanan) |  |  |  |  |  |
+| וְאַרְעָא | *vara* | e na terra | sefaradi, ashkenaz, sefard |  |  |  |  |  |
+| וּמְזוֹנֵי | *umezonei* | e sustento | sefard (deRabanan) |  |  |  |  |  |
+| רְוִיחֵי | *revichei* | abundante | sefard (deRabanan) |  |  |  |  |  |
+| בִשְׁמַיָּא | *vishmaya* | nos céus | sefard (deRabanan) |  |  |  |  |  |
+
+*(Não é preciso preencher o russo em letra latina: o documento do Drive escreve
+o russo em cirílico, e é assim que entra no app.)*
+
 ## Como refazer, se precisar
 
 ```
