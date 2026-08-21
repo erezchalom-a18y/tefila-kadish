@@ -1478,8 +1478,10 @@
 
 
   /* Sincronizacao verso-a-verso */
+  /* Painel paralelo do sync-player: aposentado. O destaque agora acende no
+     proprio texto que a pessoa le, pela funcao highlightWord do app. */
   .verso-sync-display {
-    display: none;
+    display: none !important;
     padding: 1rem;
     margin: 1rem 0;
     border-left: 4px solid #8b6a3e;
@@ -1613,6 +1615,7 @@
       <div class="seg-control" data-setting="tradition">
         <button class="active" data-value="chabad">Chabad</button>
         <button data-value="sefard">Sefard</button>
+        <button data-value="sefaradi">Sefaradi</button>
         <button data-value="ashkenazi">Ashkenazi</button>
       </div>
     </div>
@@ -4719,19 +4722,22 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
   window.SYNC = (function () {
     const NUSSACHIM = ['ashkenaz', 'chabad', 'sefard', 'sefaradi'];
     const TIPOS = ['yatom', 'derabanan'];
-    let player = null, nussach = 'chabad', tipo = 'yatom';
+    // o app chama a tradicao de "ashkenazi"; a pasta do audio e "ashkenaz"
+    const APELIDO = { ashkenazi: 'ashkenaz' };
+    let nussach = 'chabad', tipo = 'yatom', dados = null, mapa = null, ouvindo = false;
 
     const param = k => new URLSearchParams(location.search).get(k);
-    // ATENCAO: `const state` no topo de outro <script> NAO vira window.state —
-    // const/let de topo ficam no escopo lexico global, nao no objeto window.
-    // Testar por window.state dava sempre falso, o audio nunca era entregue ao
-    // botao play, e o app caia na voz sintetizada do navegador.
     const temState = () => typeof state !== 'undefined' && state;
     const audioEl = () => document.getElementById('audioPlayer');
+    const norma = t => String(t).replace(/[\u0591-\u05C7]/g, '').replace(/[^\u05D0-\u05EA]/g, '');
+
+    function normalizarNome(x) { return APELIDO[x] || x; }
 
     function escolher() {
-      const n = param('n') || (temState() && state.tradition) || localStorage.getItem('tefila_tradition');
-      const t = param('t') || (temState() && state.kadishType) || localStorage.getItem('tefila_kadish_type');
+      const n = normalizarNome(param('n') || (temState() && state.tradition) ||
+                               localStorage.getItem('tefila_tradition'));
+      const t = param('t') || (temState() && state.kadishType) ||
+                localStorage.getItem('tefila_kadish_type');
       nussach = NUSSACHIM.includes(n) ? n : 'chabad';
       tipo = TIPOS.includes(t) ? t : 'yatom';
     }
@@ -4741,9 +4747,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     let _formato = null;
     function formatoAudio() {
       if (_formato) return _formato;
-      // ?audio=mp3  ou  ?audio=ogg  forca o formato — serve para testar o
-      // caminho do Safari em qualquer navegador
-      const pedido = param('audio');
+      const pedido = param('audio');   // ?audio=mp3 | ogg forca, para testar
       if (pedido === 'mp3' || pedido === 'ogg') return (_formato = pedido);
       const a = document.createElement('audio');
       _formato = a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
@@ -4751,9 +4755,61 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     }
     function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.${formatoAudio()}`; }
 
-    function montar() {
+    /**
+     * Liga cada PALAVRA do sync/*.json a palavra que o app ja desenha na tela.
+     *
+     * Alinhamento palavra a palavra, e nao verso a verso, porque o app quebra
+     * alguns versos de outro jeito que os nossos JSONs — comparando versos
+     * inteiros, tres deles ficavam de fora e nunca acendiam.
+     */
+    function montarMapa() {
+      if (typeof verses === 'undefined' || !dados) return null;
+
+      // todas as palavras da tela, em ordem, com onde cada uma mora
+      const naTela = [];
+      verses.forEach((v, vi) => (v.hebrew || []).forEach((w, wi) =>
+        naTela.push({ vi, wi, chave: norma(w) })));
+
+      const saida = [];
+      let cursor = 0;
+      for (const v of dados.versos) {
+        for (const p of v.palavras || []) {
+          const chave = norma(p.hebrew);
+          // procura para a frente a partir de onde parou; a janela evita casar
+          // com uma repeticao distante da mesma palavra
+          let achado = -1;
+          for (let k = cursor; k < Math.min(naTela.length, cursor + 40); k++) {
+            if (naTela[k].chave === chave) { achado = k; break; }
+          }
+          if (achado >= 0) { saida.push(naTela[achado]); cursor = achado + 1; }
+          else saida.push(null);
+        }
+      }
+      return saida;
+    }
+
+    /** Indice global da palavra, para casar com o mapa. */
+    function indiceGlobal(vi, wi) {
+      let n = 0;
+      for (let k = 0; k < vi; k++) n += (dados.versos[k].palavras || []).length;
+      return n + wi;
+    }
+
+    /** Acende, no texto da tela, a palavra que o rabino esta falando agora. */
+    function acender() {
+      if (!dados || !mapa || typeof highlightWord !== 'function') return;
+      const t = audioEl().currentTime;
+      const vs = dados.versos;
+      const k = vs.findIndex(v => t >= v.start && t < v.end);
+      if (k === -1) return;
+      const wi = (vs[k].palavras || []).findIndex(p => t >= p.start && t < p.end);
+      if (wi < 0) return;
+      const alvo = mapa[indiceGlobal(k, wi)];
+      if (alvo) highlightWord(alvo.vi, alvo.wi);
+    }
+
+    async function montar() {
       escolher();
-      // o audio completo de cada tipo, para o play() do app achar
       if (temState()) {
         // o play() do app escolhe o audio por state.kadishType — se o ?t= pedir
         // derabanan e o state continuar em yatom, toca o arquivo errado
@@ -4768,26 +4824,31 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         };
       }
       const audio = audioEl();
-      if (!audio || typeof SyncPlayer === 'undefined') return;
-      const novoSrc = caminhoAudio(nussach, tipo);
-      if (!audio.src || !audio.src.endsWith(novoSrc.replace('./', ''))) {
-        audio.src = novoSrc;
-      }
-      if (player) player.destroy();
-      const lang = (temState() && state.lang) || 'pt';
-      player = new SyncPlayer(audio, nussach, tipo, lang);
-      console.log('✓ sincronia:', nussach, tipo, lang);
+      if (audio) audio.src = caminhoAudio(nussach, tipo);
+
+      try {
+        const r = await fetch(`./sync/${nussach}_${tipo}_sync.json`, { cache: 'no-cache' });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        dados = await r.json();
+      } catch (e) { dados = null; console.error('sincronia nao carregou:', e); return; }
+
+      mapa = montarMapa();
+      const ligadas = mapa ? mapa.filter(Boolean).length : 0;
+      if (audio && !ouvindo) { audio.addEventListener('timeupdate', acender); ouvindo = true; }
+      console.log(`✓ sincronia: ${nussach} ${tipo} — ${ligadas}/${mapa.length} palavras ligadas a tela`);
     }
 
     return {
       montar,
-      ativo: () => !!(player && player.carregado),
-      atual: () => ({ nussach, tipo, carregado: !!(player && player.carregado), erro: player && player.erro }),
-      trocarLingua: lang => { if (player) player.setLang(lang); },
+      ativo: () => !!(dados && mapa && mapa.some(Boolean)),
+      atual: () => ({ nussach, tipo, carregado: !!dados,
+                      palavrasLigadas: mapa ? mapa.filter(Boolean).length : 0,
+                      palavrasTotal: mapa ? mapa.length : 0 }),
+      trocarLingua: () => {},   // o proprio app redesenha o texto ao trocar de lingua
       trocar: (n, t) => {
-        if (n) nussach = NUSSACHIM.includes(n) ? n : nussach;
-        if (t) tipo = TIPOS.includes(t) ? t : tipo;
-        montar();
+        if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) nussach = x; }
+        if (t && TIPOS.includes(t)) tipo = t;
+        return montar();
       },
     };
   })();
