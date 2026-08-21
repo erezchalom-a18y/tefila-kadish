@@ -59,12 +59,20 @@ for (const [nome, largura, altura] of TELAS) {
       pequenas, baixos,
       hebraico: heb ? parseFloat(getComputedStyle(heb).fontSize) : 0,
       altTopo: Math.round(topo.getBoundingClientRect().height),
+      // A barra de baixo tambem come altura. Ficava de fora desta conta, entao
+      // a garantia de "sobra X% para o Kadish" media so metade do problema.
+      altBaixo: (() => {
+        const b = document.querySelector('.audio-bar');
+        if (!b) return 0;
+        const r = b.getBoundingClientRect();
+        return getComputedStyle(b).display === 'none' ? 0 : Math.round(r.height);
+      })(),
       janela: innerHeight,
       rolaLado: document.documentElement.scrollWidth > innerWidth + 1,
     };
   });
 
-  const leitura = (r.janela - r.altTopo) / r.janela;
+  const leitura = (r.janela - r.altTopo - r.altBaixo) / r.janela;
   const problemas = [];
   if (r.pequenas.length) problemas.push('texto miudo: ' + r.pequenas.join(', '));
   if (r.baixos.length) problemas.push('botao baixo demais: ' + r.baixos.join(', '));
@@ -74,7 +82,8 @@ for (const [nome, largura, altura] of TELAS) {
 
   if (problemas.length) falhas++;
   console.log(`${problemas.length ? 'FALHA' : 'OK   '} ${nome.padEnd(19)} ${largura}x${altura} | ` +
-              `hebraico ${r.hebraico}px | cabecalho ${r.altTopo}px | sobra ${Math.round(leitura * 100)}%` +
+              `hebraico ${r.hebraico}px | cabecalho ${r.altTopo}px | barra ${r.altBaixo}px | ` +
+              `sobra ${Math.round(leitura * 100)}%` +
               (problemas.length ? '\n        ' + problemas.join('\n        ') : ''));
   await pag.close();
 }

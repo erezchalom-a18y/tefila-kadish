@@ -1015,8 +1015,11 @@
      justamente o estado NORMAL. Entao quem tem que ser limpo e o normal, e o
      Treino e que mostra os extras de estudo. Os nomes passam a dizer a verdade. */
   body:not(.modo-treino) .prayer-meta,
-  body:not(.modo-treino) .speed-toggle,
   body:not(.modo-treino) .foot-note { display: none !important; }
+  /* A velocidade FICA no Modo Reza. Ela estava escondida aqui e so existia
+     dentro do ⚙ — o Erez procurou e nao achou. E ajuste de reza, nao de
+     estudo: o ritmo muda de sinagoga para sinagoga, e quem esta de pe no
+     minyan precisa alcancar isso num toque, nao em tres. */
   /* A faixa "em pe · em minyan · em voz audivel" FICA. Custa 39px e nao custa
      nenhum verso — e instrucao de como rezar, nao enfeite. Quem nunca disse
      Kadish precisa saber que se diz de pe, que precisa de dez, e em voz alta. */
@@ -1638,10 +1641,27 @@
     .learn-strip { padding: 7px 12px !important; }
   }
 
+  /* A barra de baixo tambem come altura, e isso tinha passado despercebido:
+     104px num iPhone SE, contra 164px do cabecalho. Somadas, sobrava 60% da
+     tela para o Kadish em pe e 51% deitado. Aqui ela emagrece — o ▶ continua
+     grande, porque quem reza de pe precisa acertar o botao sem olhar; o que
+     encolhe e o espaco em volta. */
+  @media (max-width: 640px) {
+    .audio-bar { padding: 5px 16px calc(6px + env(safe-area-inset-bottom)) !important; }
+    .audio-bar-top { font-size: 11.5px !important; margin-bottom: 0 !important; }
+    .audio-controls { gap: 12px !important; }
+  }
+
   /* Deitado no celular sobra pouca altura: o cabecalho encolhe de proposito.
      Nada aqui reduz fonte abaixo de 12px — encolhe espaco, nunca legibilidade. */
   @media (max-height: 460px) and (orientation: landscape) {
     .pictograms { display: none; }
+    /* Deitado no celular a altura e o bem mais escasso. A linha que repete a
+       palavra que esta tocando sai: ela ja esta acesa no texto, logo acima. */
+    .audio-bar-top { display: none; }
+    .audio-bar { padding: 3px 16px calc(4px + env(safe-area-inset-bottom)) !important; }
+    .play-btn { width: 42px !important; height: 42px !important; }
+    .audio-controls { gap: 14px !important; }
     .brand { padding: 4px 12px 2px !important; }
     .prayer-meta { padding: 4px 16px !important; }
     .learn-strip { padding: 5px 12px !important; }
@@ -3800,12 +3820,15 @@ function highlightWord(vi, wi) {
   const phEl = document.querySelector(`.phrase[data-vi="${vi}"][data-wi="${wi}"]`);
   if (hebEl) {
     hebEl.classList.add('active');
-    // Auto-scroll: keep active word in upper-middle of viewport
-    const rect = hebEl.getBoundingClientRect();
-    const safeTop = 180;
-    const safeBottom = window.innerHeight - 220;
-    if (rect.top < safeTop || rect.bottom > safeBottom) {
-      hebEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // A rolagem de quem manda: quando a sincronia real esta ativa, quem rola e
+    // a camera do SYNC (desliza). Este caminho antigo so vale sem ela.
+    if (!(window.SYNC && window.SYNC.ativo())) {
+      const rect = hebEl.getBoundingClientRect();
+      const safeTop = 180;
+      const safeBottom = window.innerHeight - 220;
+      if (rect.top < safeTop || rect.bottom > safeBottom) {
+        hebEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }
   if (trEl) trEl.classList.add('active');
@@ -3998,10 +4021,19 @@ function pause() {
 // Word/verse highlights advance based on cumulative estimated durations.
 function playFullPrayer(url) {
   clearWordTimers();
-  showToast('▶ Tocando gravação: ' + url.split('/').pop());
-  audioPlayer.src = url;
+  // Isto era chamado a cada ▶, e sempre recomecava do zero: trocava o src e
+  // punha currentTime = 0. No Modo Treino, que pausa no fim de cada verso,
+  // o efeito era voltar ao primeiro verso a cada retomada — a reza nunca
+  // andava. Agora so recomeca quando muda o arquivo ou quando o audio acabou;
+  // no resto, retoma de onde parou.
+  const alvo = new URL(url, location.href).href;
+  const mesmoAudio = audioPlayer.src === alvo;
+  const acabou = audioPlayer.ended ||
+                 (audioPlayer.duration && audioPlayer.currentTime >= audioPlayer.duration - 0.05);
+  const retomar = mesmoAudio && !acabou && audioPlayer.currentTime > 0;
+  if (!mesmoAudio) audioPlayer.src = url;
   audioPlayer.playbackRate = state.speed;
-  audioPlayer.currentTime = 0;
+  if (!retomar) audioPlayer.currentTime = 0;
   // Add load error handler in addition to play error
   audioPlayer.onerror = () => {
     showToast('Erro carregando: ' + url.split('/').pop() + ' (verifique se o arquivo está em /audio/)');
@@ -4100,11 +4132,11 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 // TOGGLES
 // ============================================================
 document.getElementById('speedToggle').addEventListener('click', (e) => {
-  if (e.target.tagName !== 'BUTTON') return;
-  document.querySelectorAll('#speedToggle button').forEach(b => b.classList.remove('active'));
-  e.target.classList.add('active');
-  state.speed = parseFloat(e.target.dataset.speed);
-  if (audioPlayer && !audioPlayer.paused) audioPlayer.playbackRate = state.speed;
+  const b = e.target.closest('button[data-speed]');
+  // Passa pela mesma funcao do painel de ajustes: assim os dois controles
+  // mostram o mesmo numero, a escolha vale mesmo com o audio pausado, e fica
+  // guardada para a proxima vez.
+  if (b && typeof aplicarVelocidade === 'function') aplicarVelocidade(b.dataset.speed);
 });
 document.getElementById('modeToggleRemoved')?.addEventListener('click', () => {}); // legacy noop
 document.getElementById('studioToggle')?.addEventListener('click', () => {
@@ -5366,6 +5398,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
 
     let versoAnterior = -1;
+    // Para qual verso a repeticao acabou de rebobinar. Enquanto a voz nao
+    // chega la, nenhuma troca de verso conta como "acabou um verso": procurar
+    // num MP3 nao cai no ponto exato, e cair um pouco antes fazia a repeticao
+    // pular para o verso de tras e ficar presa nele.
+    let rebobinadoPara = -1;
 
     /**
      * Repetir o verso e pausar depois dele viviam no caminho antigo, o dos
@@ -5385,15 +5422,63 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         }
         if (state.repeatRestante > 1) {
           state.repeatRestante--;
-          a.currentTime = v.start;                       // de novo, do inicio do verso
+          // +30ms: procurar num MP3 nao cai no milissegundo exato, e cair um
+          // fio DE ANTES do verso fazia o contador de versos achar que o verso
+          // anterior tinha acabado. Inaudivel, e resolve.
+          a.currentTime = Math.min(v.start + 0.03, v.end - 0.01);
+          rebobinadoPara = k;
           if (typeof showToast === 'function')
             showToast(TXT('toast_repeat', { n: state.repeatN - state.repeatRestante + 1, t: state.repeatN }));
-          return true;
+          return 'repetiu';
         }
         state.repeatRestante = undefined;
       }
-      if (state.modoTreino) { a.pause(); return true; }  // pausa depois de cada verso
+      // Pausa depois de cada verso. Tem que ser a pausa DO APP, nao um
+      // a.pause() direto: parando so o elemento de audio, o app continuava
+      // achando que estava tocando, e o botao ▶ virava "pausar" — um clique
+      // que nao fazia nada. Era isso que travava o Modo Treino depois da
+      // primeira pausa.
+      if (state.modoTreino) {
+        if (typeof pause === 'function') pause(); else a.pause();
+        return 'pausou';
+      }
       return false;
+    }
+
+    // ---------- A camera: a pagina desliza atras da palavra ----------
+    // Antes a tela ficava parada, parada, parada, e de repente dava um pulo
+    // para recentralizar — so quando a palavra saia de uma faixa. O Erez pediu
+    // rolagem "mais dinamica": agora a pagina persegue a palavra um pouco a
+    // cada quadro, entao o texto anda junto com a voz em vez de saltar.
+    //
+    // Duas regras de convivencia: se a pessoa rolar com o dedo, a camera sai de
+    // cena por 3 segundos (ninguem quer brigar com a tela); e quem pediu menos
+    // animacao no aparelho recebe o salto seco, sem deslize.
+    const MENOS_ANIMACAO = window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ALTURA_DA_LEITURA = 0.40;   // a palavra fica a 40% do alto da tela
+    let alvoRolagem = null, seguindo = false, mexeuNaTela = 0;
+
+    ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(ev =>
+      window.addEventListener(ev, () => { mexeuNaTela = Date.now(); }, { passive: true }));
+
+    function passoDaCamera() {
+      if (alvoRolagem === null) { seguindo = false; return; }
+      if (Date.now() - mexeuNaTela < 3000) { seguindo = false; alvoRolagem = null; return; }
+      const falta = alvoRolagem - window.scrollY;
+      if (Math.abs(falta) < 1.5) { seguindo = false; alvoRolagem = null; return; }
+      window.scrollTo(0, window.scrollY + falta * 0.14);
+      requestAnimationFrame(passoDaCamera);
+    }
+
+    function mirar(el) {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const limite = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      alvoRolagem = Math.max(0, Math.min(limite,
+        window.scrollY + (r.top + r.height / 2) - window.innerHeight * ALTURA_DA_LEITURA));
+      if (MENOS_ANIMACAO) { window.scrollTo(0, alvoRolagem); alvoRolagem = null; return; }
+      if (!seguindo) { seguindo = true; requestAnimationFrame(passoDaCamera); }
     }
 
     /** Acende, no texto da tela, a palavra que o rabino esta falando agora. */
@@ -5405,12 +5490,33 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       const k = vs.findIndex(v => t >= v.start && t < v.end);
       if (k === -1) return;
       // passou para o verso seguinte? o anterior acabou de terminar
-      if (versoAnterior >= 0 && k !== versoAnterior) {
+      // So conta como "acabou o verso" quando a voz ANDA PARA A FRENTE, um
+      // verso de cada vez. Sem isto, o rebobinar da propria repeticao era lido
+      // como fim de outro verso: o Modo Treino entrava num vaivem entre o
+      // inicio de dois versos e nunca pausava. Foi o que o Erez viu ("trava
+      // depois da primeira vez"). Qualquer outro pulo — arrastar o audio,
+      // voltar — so re-arma, sem disparar nada.
+      if (rebobinadoPara >= 0) {
+        // Voltando para o verso repetido: nada conta ate chegar nele.
+        if (k < rebobinadoPara) { versoAnterior = rebobinadoPara; }
+        else { rebobinadoPara = -1; versoAnterior = k; }
+      } else if (versoAnterior >= 0 && k !== versoAnterior) {
         const anterior = versoAnterior;
+        // So conta como "acabou o verso" quando a voz anda PARA A FRENTE, um
+        // verso de cada vez. Arrastar o audio ou voltar so re-arma.
+        if (k === anterior + 1) {
+          const fim = fimDeVerso(anterior);
+          if (fim) {
+            // Depois de repetir, a voz voltou para o verso ANTERIOR: e nele que
+            // o contador fica armado.
+            versoAnterior = (fim === 'repetiu') ? anterior : k;
+            return;
+          }
+        }
         versoAnterior = k;
-        if (fimDeVerso(anterior)) return;
+      } else {
+        versoAnterior = k;
       }
-      versoAnterior = k;
 
       const wi = (vs[k].palavras || []).findIndex(p => t >= p.start && t < p.end);
       if (wi < 0) return;
@@ -5419,6 +5525,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       acesoVerso = k; acesoPalavra = wi;
       // o texto da tela vem do mesmo JSON: verso k, palavra wi
       highlightWord(k, wi);
+      mirar(document.querySelector(`.word[data-vi="${k}"][data-wi="${wi}"]`));
     }
 
     async function montar() {
@@ -5494,6 +5601,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
                  versos: dados ? dados.versos.length : 0 };
       },
       trocarLingua: () => { if (typeof rerenderVerseText === 'function') rerenderVerseText(); },
+      // Espiar de fora o que a sincronia esta pensando. So leitura; existe para
+      // os testes conseguirem explicar uma falha em vez de so constatar.
+      espiar: () => ({ versoAnterior, acesoVerso, acesoPalavra,
+                       repeatVerso: typeof state !== 'undefined' ? state.repeatVerso : null,
+                       repeatRestante: typeof state !== 'undefined' ? state.repeatRestante : null }),
       trocar: (n, t) => {
         if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) { nussach = x; escolhaExplicita = true; } }
         if (t && TIPOS.includes(t)) { tipo = t; escolhaExplicita = true; }

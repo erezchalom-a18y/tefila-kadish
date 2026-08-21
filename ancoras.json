@@ -1,10 +1,49 @@
 {
   "_leia": "Ancoras confirmadas de ouvido pelo Erez. Cada uma diz: a palavra N do verso V comeca no bloco de voz que inicia em T. O alinhador global e obrigado a respeitar.",
   "ashkenaz_yatom": [
-    { "verso": 7, "palavra": 7, "inicio": 29.42, "nota": "almaya" },
-    { "verso": 8, "palavra": 1, "inicio": 30.96, "nota": "Yitbarach" },
-    { "verso": 11, "palavra": 5, "inicio": 49.62, "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s)" },
-    { "verso": 12, "palavra": 1, "inicio": 50.54, "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush" },
-    { "verso": 12, "palavra": 2, "inicio": 53, "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez" }
+    {
+      "verso": 7,
+      "palavra": 7,
+      "inicio": 29.42,
+      "nota": "almaya"
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 30.96,
+      "nota": "Yitbarach"
+    },
+    {
+      "verso": 11,
+      "palavra": 5,
+      "inicio": 49.62,
+      "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s)"
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 50.54,
+      "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush"
+    },
+    {
+      "verso": 12,
+      "palavra": 2,
+      "inicio": 53,
+      "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez"
+    }
+  ],
+  "chabad_yatom": [
+    {
+      "verso": 6,
+      "palavra": 3,
+      "inicio": 20.16,
+      "nota": "Erez 21/08: 'vai muito rapido para o dechol, depois acerta'. beit comecava aos 19.42 e deixava dechol com 0.24s. O sinal tem inicio de voz em 20.16; com isso dechol fica com 0.96s e yisrael continua onde ja estava."
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 26.24,
+      "nota": "Erez 21/08: 'no yehe sheme raba o audio comeca antes do texto'. O verso comecava aos 26.49 e a voz comeca aos 26.24 no sinal — 0.25s de atraso no destaque."
+    }
   ]
 }

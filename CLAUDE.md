@@ -12,10 +12,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-app.mjs     → o app num Chromium: 8 combinações × 2 formatos.
 - node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8.
 - node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado. VERDE nas 7.
+- node testar-treino.mjs  → Modo Treino e repetição, verso a verso.
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As seis rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As sete rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -45,8 +46,14 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
    alinhar-global.py, função blocos_de_voz). O ouvido dele aponta, o sinal decide
    o número exato.
 3. Registrar como âncora em ancoras.json ({verso, palavra, inicio, nota}).
-4. Rodar: python3 alinhar-global.py   (requer: pip install numpy --break-system-packages;
-   ffmpeg no PATH; os áudios de tefila-audio/).
+4. Rodar: python3 aplicar-ancoras.py --confirmar
+   (alinhar-global.py é citado aqui desde o começo mas NUNCA foi commitado —
+   vivia fora do repositório. aplicar-ancoras.py não é ele: em vez de
+   realinhar o arquivo inteiro, só põe cada âncora no lugar e encosta nela a
+   fronteira vizinha. Prova, antes de gravar, que nenhum texto mudou, que os
+   tempos continuam subindo e que toda âncora ficou valendo; qualquer falha e
+   ele não grava nada. Rodá-lo sobre as 5 âncoras antigas não muda um byte —
+   é a prova de que ele é fiel ao que o alinhador tinha feito.)
 5. node checar.mjs → verde. Commit + push. Verificar no raw. Só então avisar o Erez.
 
 ## Como o alinhamento funciona
@@ -137,6 +144,9 @@ Para as que imprimem, também playwright + Chromium.
   Sem os navegadores do Playwright baixados: CHROMIUM=/caminho/do/chrome.
 - testar-linguas.mjs — abre o app nas 8 línguas e confere que não sobrou
   português na tela, no cartão de yahrzeit nem no arquivo de calendário.
+- testar-treino.mjs — o Modo Treino pausa no fim de cada verso, o ▶ retoma de
+  onde parou, e a repetição toca o verso o número de vezes pedido. Já quebrou
+  duas vezes; existe para não quebrar uma terceira.
 - testar-telas.mjs — 7 tamanhos (iPhone, iPad, computador), em pé e deitado.
   Reprova se algum texto do cabeçalho ficar abaixo de 12px, se um botão ficar
   com menos de 30px de altura, se a página rolar de lado, ou se sobrar menos de

@@ -429,7 +429,7 @@
           "hebrew": "דְכָל",
           "transliteration_pt": "dechol",
           "start": 19.18,
-          "end": 19.42,
+          "end": 20.16,
           "glosa_pt": "de toda",
           "glosas": {
             "pt": "de toda",
@@ -446,7 +446,7 @@
           "i": 2,
           "hebrew": "בֵּית",
           "transliteration_pt": "beit",
-          "start": 19.42,
+          "start": 20.16,
           "end": 20.7,
           "glosa_pt": "a casa",
           "glosas": {
@@ -493,7 +493,7 @@
     {
       "n": 7,
       "start": 22.02,
-      "end": 26.49,
+      "end": 26.24,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
       "transliteration_pt": "baagala uvezman qariv veimru amen",
       "translation_pt": "rapidamente e em breve — e dizei amém",
@@ -576,7 +576,7 @@
           "hebrew": "אָמֵן",
           "transliteration_pt": "amen",
           "start": 26.22,
-          "end": 26.49,
+          "end": 26.24,
           "glosa_pt": "amém",
           "glosas": {
             "pt": "amém",
@@ -603,7 +603,7 @@
     },
     {
       "n": 8,
-      "start": 26.49,
+      "start": 26.24,
       "end": 34.44,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
       "transliteration_pt": "Yehei shmei raba mevarach lalam ulalmei almaya",
@@ -614,7 +614,7 @@
           "i": 0,
           "hebrew": "יְהֵא",
           "transliteration_pt": "Yehei",
-          "start": 26.49,
+          "start": 26.24,
           "end": 27.64,
           "glosa_pt": "seja",
           "glosas": {
