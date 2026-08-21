@@ -1627,6 +1627,8 @@
         <button data-value="en">🇺🇸 EN</button>
         <button data-value="es">🇪🇸 ES</button>
         <button data-value="fr">🇫🇷 FR</button>
+        <button data-value="it">🇮🇹 IT</button>
+        <button data-value="de">🇩🇪 DE</button>
         <button data-value="ru">🇷🇺 RU</button>
         <button data-value="he">🇮🇱 HE</button>
       </div>
@@ -3134,143 +3136,150 @@ function normalizeVerseToSingleWords(v) {
   if (v.glosses) v.glosses = newGlosses;
   v.durations = newDurations;
 }
-verses.forEach(normalizeVerseToSingleWords);
+// Desenha a lista de versos. Virou funcao para poder ser chamada de novo
+// quando os dados trocam (o texto vem dos sync/*.json, nao mais de dentro
+// deste arquivo).
+function desenharVersos() {
+  verses.forEach(normalizeVerseToSingleWords);
 
-const main = document.getElementById('main');
-verses.forEach((v, vi) => {
-  const verseEl = document.createElement('div');
-  verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
-  verseEl.dataset.idx = vi;
-  verseEl.dataset.id = v.id;
+  const main = document.getElementById('main');
+  main.innerHTML = '';   // redesenhar substitui, nao empilha
+  verses.forEach((v, vi) => {
+    const verseEl = document.createElement('div');
+    verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
+    verseEl.dataset.idx = vi;
+    verseEl.dataset.id = v.id;
 
-  // Decorative line with audio dot
-  const line = document.createElement('div');
-  line.className = 'vm-line';
-  line.innerHTML = '<span class="vm-dot"></span>';
-  verseEl.appendChild(line);
+    // Decorative line with audio dot
+    const line = document.createElement('div');
+    line.className = 'vm-line';
+    line.innerHTML = '<span class="vm-dot"></span>';
+    verseEl.appendChild(line);
 
-  // Hebrew (line 1 - dominant, 28px)
-  const heb = document.createElement('div');
-  heb.className = 'hebrew';
-  v.hebrew.forEach((w, wi) => {
-    const span = document.createElement('span');
-    span.className = 'word';
-    span.dataset.vi = vi;
-    span.dataset.wi = wi;
-    span.textContent = w;
-    span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
-    heb.appendChild(span);
-    heb.appendChild(document.createTextNode(' '));
-  });
-  verseEl.appendChild(heb);
+    // Hebrew (line 1 - dominant, 28px)
+    const heb = document.createElement('div');
+    heb.className = 'hebrew';
+    v.hebrew.forEach((w, wi) => {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.dataset.vi = vi;
+      span.dataset.wi = wi;
+      span.textContent = w;
+      span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+      heb.appendChild(span);
+      heb.appendChild(document.createTextNode(' '));
+    });
+    verseEl.appendChild(heb);
 
-  // Transliteration (line 2 - functional, 19px italic)
-  const tr = document.createElement('div');
-  tr.className = 'translit';
-  const translitArr = (v.translit && v.translit[state.lang]) || (v.translit && v.translit.pt) || [];
-  translitArr.forEach((w, wi) => {
-    const span = document.createElement('span');
-    span.className = 'twrd';
-    span.dataset.vi = vi;
-    span.dataset.wi = wi;
-    span.textContent = w;
-    span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
-    tr.appendChild(span);
-    tr.appendChild(document.createTextNode(' '));
-  });
-  if (translitArr.length === 0) tr.style.display = 'none'; // Hide for Hebrew speakers
-  verseEl.appendChild(tr);
+    // Transliteration (line 2 - functional, 19px italic)
+    const tr = document.createElement('div');
+    tr.className = 'translit';
+    const translitArr = (v.translit && v.translit[state.lang]) || (v.translit && v.translit.pt) || [];
+    translitArr.forEach((w, wi) => {
+      const span = document.createElement('span');
+      span.className = 'twrd';
+      span.dataset.vi = vi;
+      span.dataset.wi = wi;
+      span.textContent = w;
+      span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+      tr.appendChild(span);
+      tr.appendChild(document.createTextNode(' '));
+    });
+    if (translitArr.length === 0) tr.style.display = 'none'; // Hide for Hebrew speakers
+    verseEl.appendChild(tr);
 
-  // Merged translation (line 3 - meaning, reads as natural sentence)
-  const pt = document.createElement('div');
-  pt.className = 'pt-merged';
-  if (state.lang === 'he') pt.style.fontFamily = "'Frank Ruhl Libre', serif";
+    // Merged translation (line 3 - meaning, reads as natural sentence)
+    const pt = document.createElement('div');
+    pt.className = 'pt-merged';
+    if (state.lang === 'he') pt.style.fontFamily = "'Frank Ruhl Libre', serif";
 
-  // Use full phrase translation when available (cleaner meaning),
-  // otherwise fall back to word-by-word merged array.
-  const fullT = (typeof fullTranslations !== 'undefined' && fullTranslations[v.id])
-    ? (fullTranslations[v.id][state.lang] || fullTranslations[v.id].pt)
-    : null;
+    // Use full phrase translation when available (cleaner meaning),
+    // otherwise fall back to word-by-word merged array.
+    const fullT = (typeof fullTranslations !== 'undefined' && fullTranslations[v.id])
+      ? (fullTranslations[v.id][state.lang] || fullTranslations[v.id].pt)
+      : null;
 
-  if (fullT) {
-    // Single phrase per verse — reads as natural sentence
-    const span = document.createElement('span');
-    span.className = 'phrase';
-    span.dataset.vi = vi;
-    span.dataset.wi = 0;
-    span.textContent = fullT;
-    pt.appendChild(span);
-  } else {
-    // Legacy fallback — word-by-word
-    const mergedArr = (v.merged && v.merged[state.lang]) || (v.merged && v.merged.pt) || [];
-    mergedArr.forEach((phrase, wi) => {
+    if (fullT) {
+      // Single phrase per verse — reads as natural sentence
       const span = document.createElement('span');
       span.className = 'phrase';
       span.dataset.vi = vi;
-      span.dataset.wi = wi;
-      span.textContent = phrase;
-      span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+      span.dataset.wi = 0;
+      span.textContent = fullT;
       pt.appendChild(span);
-      pt.appendChild(document.createTextNode(' '));
-    });
-  }
-  verseEl.appendChild(pt);
+    } else {
+      // Legacy fallback — word-by-word
+      const mergedArr = (v.merged && v.merged[state.lang]) || (v.merged && v.merged.pt) || [];
+      mergedArr.forEach((phrase, wi) => {
+        const span = document.createElement('span');
+        span.className = 'phrase';
+        span.dataset.vi = vi;
+        span.dataset.wi = wi;
+        span.textContent = phrase;
+        span.addEventListener('click', (e) => handleWordClick(e, vi, wi));
+        pt.appendChild(span);
+        pt.appendChild(document.createTextNode(' '));
+      });
+    }
+    verseEl.appendChild(pt);
 
-  // Tip — language-aware
-  if (v.tip) {
-    const tipText = (typeof v.tip === 'object') ? (v.tip[state.lang] || v.tip.pt) : v.tip;
-    const tip = document.createElement('div');
-    tip.className = 'tip';
-    tip.innerHTML = `<span class="tip-icon">✦</span><span>${tipText}</span>`;
-    verseEl.appendChild(tip);
-  }
+    // Tip — language-aware
+    if (v.tip) {
+      const tipText = (typeof v.tip === 'object') ? (v.tip[state.lang] || v.tip.pt) : v.tip;
+      const tip = document.createElement('div');
+      tip.className = 'tip';
+      tip.innerHTML = `<span class="tip-icon">✦</span><span>${tipText}</span>`;
+      verseEl.appendChild(tip);
+    }
 
-  // Community responds — language-aware
-  if (v.communityResponds) {
-    const respText = (typeof v.communityResponds === 'object') ? (v.communityResponds[state.lang] || v.communityResponds.pt) : v.communityResponds;
-    const resp = document.createElement('div');
-    resp.className = 'community-respond';
-    resp.dataset.communityRespond = '1';
-    resp.textContent = respText;
-    verseEl.appendChild(resp);
-  }
+    // Community responds — language-aware
+    if (v.communityResponds) {
+      const respText = (typeof v.communityResponds === 'object') ? (v.communityResponds[state.lang] || v.communityResponds.pt) : v.communityResponds;
+      const resp = document.createElement('div');
+      resp.className = 'community-respond';
+      resp.dataset.communityRespond = '1';
+      resp.textContent = respText;
+      verseEl.appendChild(resp);
+    }
 
-  // Studio strip
-  const strip = document.createElement('div');
-  strip.className = 'studio-strip';
-  strip.innerHTML = `
-    <div class="status" data-status="${v.id}">Sem gravação</div>
-    <button class="studio-btn rec-btn" data-action="record" data-id="${v.id}">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg>
-      <span class="btn-label">Gravar</span>
-    </button>
-    <button class="studio-btn upload-btn" data-action="upload" data-id="${v.id}">
-      <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zM5 18h14v2H5z"/></svg>
-      Carregar
-    </button>
-    <button class="studio-btn listen-btn" data-action="listen" data-id="${v.id}" disabled>
-      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      Ouvir
-    </button>
-    <button class="studio-btn mark-btn" data-action="mark" data-id="${v.id}" disabled>
-      ✦ Marcar
-    </button>
-    <button class="studio-btn del-btn" data-action="delete" data-id="${v.id}" disabled>✕</button>
-  `;
-  verseEl.appendChild(strip);
+    // Studio strip
+    const strip = document.createElement('div');
+    strip.className = 'studio-strip';
+    strip.innerHTML = `
+      <div class="status" data-status="${v.id}">Sem gravação</div>
+      <button class="studio-btn rec-btn" data-action="record" data-id="${v.id}">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg>
+        <span class="btn-label">Gravar</span>
+      </button>
+      <button class="studio-btn upload-btn" data-action="upload" data-id="${v.id}">
+        <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zM5 18h14v2H5z"/></svg>
+        Carregar
+      </button>
+      <button class="studio-btn listen-btn" data-action="listen" data-id="${v.id}" disabled>
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        Ouvir
+      </button>
+      <button class="studio-btn mark-btn" data-action="mark" data-id="${v.id}" disabled>
+        ✦ Marcar
+      </button>
+      <button class="studio-btn del-btn" data-action="delete" data-id="${v.id}" disabled>✕</button>
+    `;
+    verseEl.appendChild(strip);
 
-  // Calibration button — visible when verse has pre-loaded audio (from server manifest)
-  // Lets non-developers mark word timings without editing JSON
-  const calibBtn = document.createElement('button');
-  calibBtn.className = 'calibrate-btn';
-  calibBtn.dataset.id = v.id;
-  calibBtn.innerHTML = '🎯 <span>Calibrar sincronia</span>';
-  calibBtn.style.display = 'none';
-  calibBtn.addEventListener('click', () => startMarkMode(v.id));
-  verseEl.appendChild(calibBtn);
+    // Calibration button — visible when verse has pre-loaded audio (from server manifest)
+    // Lets non-developers mark word timings without editing JSON
+    const calibBtn = document.createElement('button');
+    calibBtn.className = 'calibrate-btn';
+    calibBtn.dataset.id = v.id;
+    calibBtn.innerHTML = '🎯 <span>Calibrar sincronia</span>';
+    calibBtn.style.display = 'none';
+    calibBtn.addEventListener('click', () => startMarkMode(v.id));
+    verseEl.appendChild(calibBtn);
 
-  main.appendChild(verseEl);
-});
+    main.appendChild(verseEl);
+  });
+}
+desenharVersos();
 
 // Studio button delegation
 main.addEventListener('click', (e) => {
@@ -4507,7 +4516,11 @@ document.querySelectorAll('.seg-control').forEach(seg => {
     if (setting === 'theme') applyTheme(value);
     else if (setting === 'fontscale') applyFontScale(value);
     else if (setting === 'language') applyLanguage(value);
-    else if (setting === 'tradition') applyTradition(value);
+    else if (setting === 'tradition') {
+      applyTradition(value);
+      // o texto e o audio vem do sync/*.json daquele nussach
+      if (window.SYNC) window.SYNC.trocar(value, null);
+    }
     else if (setting === 'explanations') applyExplanations(value);
     else if (setting === 'audiosrc') applyAudioSource(value);
   });
@@ -4755,45 +4768,63 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     }
     function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.${formatoAudio()}`; }
 
+    const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
+
     /**
-     * Liga cada PALAVRA do sync/*.json a palavra que o app ja desenha na tela.
+     * Traduz os nossos sync/*.json para o formato de verso que o app ja desenha.
      *
-     * Alinhamento palavra a palavra, e nao verso a verso, porque o app quebra
-     * alguns versos de outro jeito que os nossos JSONs — comparando versos
-     * inteiros, tres deles ficavam de fora e nunca acendiam.
+     * Antes, o texto vinha de uma copia PRESA dentro do engine.html: 27 versos,
+     * 3 tradicoes (sem o Sefaradi), 6 linguas, e a transliteracao velha, com
+     * apostrofos. Nada disso acompanhava as correcoes feitas no glossario.
+     * Agora vem dos nossos arquivos: as 4 tradicoes, as 8 linguas, a
+     * transliteracao corrigida, e as duracoes MEDIDAS do audio.
      */
-    function montarMapa() {
-      if (typeof verses === 'undefined' || !dados) return null;
+    function adaptar(d) {
+      const porLingua = fn => {
+        const o = {};
+        for (const L of LINGUAS) o[L] = fn(L);
+        return o;
+      };
+      const versos = d.versos.map(v => {
+        const ps = v.palavras || [];
+        return {
+          id: `kadish-${v.n}`,
+          classMod: '',
+          pictograms: [],
+          inDeRabanan: false,
+          hebrew: ps.map(p => p.hebrew),
+          // a transliteracao e uma so (portuguesa); serve de apoio em toda lingua
+          translit: porLingua(() => ps.map(p => p.transliteration_pt || '')),
+          // glosa palavra a palavra, nas 8 linguas
+          merged: porLingua(L => ps.map(p => (p.glosas && p.glosas[L]) || p.glosa_pt || '')),
+          // duracao real de cada palavra, medida do audio
+          durations: ps.map(p => Math.max(120, Math.round((p.end - p.start) * 1000))),
+        };
+      });
+      const frases = {};
+      d.versos.forEach(v => {
+        const t = { pt: v.translation_pt || '' };
+        for (const L of LINGUAS) if (L !== 'pt') t[L] = (v.translations && v.translations[L]) || t.pt;
+        frases[`kadish-${v.n}`] = t;
+      });
+      return { versos, frases };
+    }
 
-      // todas as palavras da tela, em ordem, com onde cada uma mora
-      const naTela = [];
-      verses.forEach((v, vi) => (v.hebrew || []).forEach((w, wi) =>
-        naTela.push({ vi, wi, chave: norma(w) })));
-
-      const saida = [];
-      let cursor = 0;
-      for (const v of dados.versos) {
-        for (const p of v.palavras || []) {
-          const chave = norma(p.hebrew);
-          // procura para a frente a partir de onde parou; a janela evita casar
-          // com uma repeticao distante da mesma palavra
-          let achado = -1;
-          for (let k = cursor; k < Math.min(naTela.length, cursor + 40); k++) {
-            if (naTela[k].chave === chave) { achado = k; break; }
-          }
-          if (achado >= 0) { saida.push(naTela[achado]); cursor = achado + 1; }
-          else saida.push(null);
-        }
+    /** Troca o texto da tela pelo do nussach e tipo escolhidos. */
+    function trocarTexto(d) {
+      if (typeof verses === 'undefined' || typeof desenharVersos !== 'function') return false;
+      const { versos, frases } = adaptar(d);
+      verses.length = 0;
+      versos.forEach(v => verses.push(v));
+      if (typeof fullTranslations !== 'undefined') {
+        for (const k of Object.keys(fullTranslations)) delete fullTranslations[k];
+        Object.assign(fullTranslations, frases);
       }
-      return saida;
+      desenharVersos();
+      if (typeof rerenderVerseText === 'function') rerenderVerseText();
+      return true;
     }
 
-    /** Indice global da palavra, para casar com o mapa. */
-    function indiceGlobal(vi, wi) {
-      let n = 0;
-      for (let k = 0; k < vi; k++) n += (dados.versos[k].palavras || []).length;
-      return n + wi;
-    }
 
     /** Acende, no texto da tela, a palavra que o rabino esta falando agora. */
     function acender() {
@@ -4804,8 +4835,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       if (k === -1) return;
       const wi = (vs[k].palavras || []).findIndex(p => t >= p.start && t < p.end);
       if (wi < 0) return;
-      const alvo = mapa[indiceGlobal(k, wi)];
-      if (alvo) highlightWord(alvo.vi, alvo.wi);
+      // o texto da tela vem do mesmo JSON: verso k, palavra wi, sem traducao
+      highlightWord(k, wi);
     }
 
     async function montar() {
@@ -4832,19 +4863,22 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         dados = await r.json();
       } catch (e) { dados = null; console.error('sincronia nao carregou:', e); return; }
 
-      mapa = montarMapa();
-      const ligadas = mapa ? mapa.filter(Boolean).length : 0;
+      mapa = trocarTexto(dados);
       if (audio && !ouvindo) { audio.addEventListener('timeupdate', acender); ouvindo = true; }
-      console.log(`✓ sincronia: ${nussach} ${tipo} — ${ligadas}/${mapa.length} palavras ligadas a tela`);
+      const nPal = dados.versos.reduce((a, v) => a + (v.palavras || []).length, 0);
+      console.log(`✓ ${nussach} ${tipo}: ${dados.versos.length} versos, ${nPal} palavras, texto do sync`);
     }
 
     return {
       montar,
-      ativo: () => !!(dados && mapa && mapa.some(Boolean)),
-      atual: () => ({ nussach, tipo, carregado: !!dados,
-                      palavrasLigadas: mapa ? mapa.filter(Boolean).length : 0,
-                      palavrasTotal: mapa ? mapa.length : 0 }),
-      trocarLingua: () => {},   // o proprio app redesenha o texto ao trocar de lingua
+      ativo: () => !!(dados && mapa),
+      atual: () => {
+        const n = dados ? dados.versos.reduce((a, v) => a + (v.palavras || []).length, 0) : 0;
+        return { nussach, tipo, carregado: !!dados, textoDoSync: !!mapa,
+                 palavrasLigadas: mapa ? n : 0, palavrasTotal: n,
+                 versos: dados ? dados.versos.length : 0 };
+      },
+      trocarLingua: () => { if (typeof rerenderVerseText === 'function') rerenderVerseText(); },
       trocar: (n, t) => {
         if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) nussach = x; }
         if (t && TIPOS.includes(t)) tipo = t;
