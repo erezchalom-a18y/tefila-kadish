@@ -30,6 +30,7 @@ const FORMATOS = ['', 'mp3'];
 
 const navegador = await chromium.launch();
 let falhas = 0;
+const lacunas = [];   // texto que o app desenha nao cobre o audio
 
 for (const fmt of FORMATOS) {
 for (const n of NUSSACHIM) {
@@ -73,40 +74,52 @@ for (const n of NUSSACHIM) {
       };
     });
 
-    // destaque palavra a palavra: pula para o meio de um verso e pede timeupdate
+    // Destaque no TEXTO DE VERDADE (.word.active), nao num painel a parte.
+    // O painel paralelo escondia o defeito: ele acendia certo enquanto o texto
+    // que a pessoa le nunca acendia.
     const destaque = await pag.evaluate(async () => {
       const a = document.getElementById('audioPlayer');
-      const sync = await (await fetch(`./sync/${window.SYNC.atual().nussach}_${window.SYNC.atual().tipo}_sync.json`)).json();
+      const info = window.SYNC.atual();
+      const sync = await (await fetch(`./sync/${info.nussach}_${info.tipo}_sync.json`)).json();
       const v = sync.versos[Math.floor(sync.versos.length / 2)];
       const p = v.palavras[Math.floor(v.palavras.length / 2)];
       const alvo = (p.start + p.end) / 2;
       Object.defineProperty(a, 'currentTime', { get: () => alvo, configurable: true });
       a.dispatchEvent(new Event('timeupdate'));
-      const el = document.querySelector('#verso-sync-display .sync-w.agora');
-      const painel = document.getElementById('verso-sync-display');
+      const el = document.querySelector('.word.active');
+      const norma = t => String(t).replace(/[\u0591-\u05C7]/g, '').replace(/[^\u05D0-\u05EA]/g, '');
       return {
-        aceso: el ? el.textContent : null,
+        aceso: el ? el.textContent.trim() : null,
         esperado: p.hebrew,
-        linhas: painel.querySelectorAll('div').length,
-        heb: !!painel.querySelector('.sync-hebrew'),
+        bate: !!el && norma(el.textContent) === norma(p.hebrew),
+        ligadas: info.palavrasLigadas,
+        total: info.palavrasTotal,
+        translitAcesa: !!document.querySelector('.twrd.active'),
+        traducaoAcesa: !!document.querySelector('.phrase.active'),
       };
     });
 
-    // as 8 linguas mudam a glosa
+    // as 8 linguas mudam o texto que aparece na tela (nao um painel a parte)
     const porLingua = await pag.evaluate(async (LINGUAS) => {
       const out = {};
+      const alvo = document.querySelector('.verse');
       for (const L of LINGUAS) {
-        window.SYNC.trocarLingua(L);
-        const g = document.querySelector('#verso-sync-display .sync-glosa');
-        out[L] = g ? g.textContent.trim().slice(0, 40) : null;
+        if (typeof applyLanguage === 'function') applyLanguage(L);
+        await new Promise(r => setTimeout(r, 60));
+        out[L] = alvo ? alvo.innerText.replace(/\s+/g, ' ').trim().slice(0, 120) : null;
       }
+      if (typeof applyLanguage === 'function') applyLanguage('pt');
       return out;
     }, LINGUAS);
 
     const distintas = new Set(Object.values(porLingua).filter(Boolean)).size;
     const audioOk = /\/tefila-audio\/[^/]+\/[^/]+\.(ogg|mp3)$/.test(info.audioSrc)
                     && info.audioSrc.includes(`/tefila-audio/${n}/${t}.`);
-    const acertou = destaque.aceso === destaque.esperado;
+    // exige as tres linhas acesas: hebraico, transliteracao e traducao
+    // hebraico e transliteracao tem span por palavra; a traducao do app e uma
+    // frase por verso, entao nao se exige .phrase aceso.
+    const acertou = destaque.bate && destaque.translitAcesa
+                    && destaque.total > 0 && destaque.ligadas / destaque.total >= 0.65;
     // nao basta tocar: tem que tocar o arquivo DESTE nussach e DESTE tipo
     const tocou = aoTocar.tocando && aoTocar.avancou && aoTocar.vozSintetica === 0
                   && aoTocar.fonte.startsWith(`${n}/${t}.`);
@@ -117,16 +130,24 @@ for (const n of NUSSACHIM) {
       ` | sync:${ok ? 'sim' : 'nao'}` +
       ` | audio:${audioOk ? 'ok' : info.audioSrc}` +
       ` | toca:${tocou ? aoTocar.fonte : `PARADO/SINTETICO (tocando=${aoTocar.tocando} t=${aoTocar.avancou} voz=${aoTocar.vozSintetica})`}` +
-      ` | destaque:${acertou ? destaque.aceso : `aceso=${destaque.aceso} esperado=${destaque.esperado}`}` +
+      ` | destaque:${acertou ? destaque.aceso
+            : `aceso=${destaque.aceso} esperado=${destaque.esperado} translit=${destaque.translitAcesa} palavras=${destaque.ligadas}/${destaque.total}`}` +
+      ` | ligadas:${destaque.ligadas}/${destaque.total}` +
       ` | linguas distintas:${distintas}/8` +
       (req404.length ? ` | 404: ${req404.slice(0, 2).join(', ')}` : '') +
       (erros.length ? ` | erros: ${erros.slice(0, 2).join(' | ')}` : '')
     );
+    if (destaque.total && destaque.ligadas / destaque.total < 0.95)
+      lacunas.push(`${n}_${t}: so ${destaque.ligadas}/${destaque.total} palavras do audio existem no texto da tela`);
     await pag.close();
   }
 }
 }
 await navegador.close();
+if (lacunas.length) {
+  console.log('\nLACUNAS DE TEXTO (o audio existe, o texto na tela nao cobre tudo):');
+  for (const l of [...new Set(lacunas)]) console.log('  ' + l);
+}
 console.log(falhas ? `\n${falhas} combinacao(oes) com problema`
                    : `\nVERDE: as 8 combinacoes passaram nos ${FORMATOS.length} formatos`);
 process.exit(falhas ? 1 : 0);
