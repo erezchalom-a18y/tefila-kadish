@@ -38,8 +38,8 @@
 </style></head>
 <body>
 <header>
-  <a class="voltar" href="./">‹ voltar</a>
-  <h1>Aprender sobre o Kadish</h1>
+  <a class="voltar" href="./" id="voltar">‹ voltar</a>
+  <h1 id="titulo">Aprender sobre o Kadish</h1>
 </header>
 
 <main id="conteudo"><p style="color:var(--fraco)">carregando…</p></main>
@@ -53,6 +53,54 @@ const lingua = new URLSearchParams(location.search).get('lang')
 // aceita tanto "texto simples" quanto {pt:"…", en:"…"}
 const naLingua = v => (v && typeof v === 'object') ? (v[lingua] || v.pt || '') : (v || '');
 
+// A moldura da pagina (titulo, voltar, avisos) tambem segue a lingua do app.
+// So as instrucoes de como preencher ficam em portugues: quem preenche e o Erez.
+const T = {
+  pt: { titulo:'Aprender sobre o Kadish', voltar:'‹ voltar',
+        vazioH:'Esta página ainda está vazia',
+        vazioP:'Ela está pronta para receber o conteúdo — texto, áudio e vídeo sobre o Kadish: o que é, de onde vem, quem diz, quando se diz.',
+        rascunho:'Rascunho — este conteúdo ainda não foi revisado pelo rabino.',
+        secao:'seção', secoes:'seções', erroH:'Não consegui ler o conteúdo', assistir:'assistir ▸' },
+  en: { titulo:'Learning about the Kaddish', voltar:'‹ back',
+        vazioH:'This page is not filled in yet',
+        vazioP:'It is ready for the content — text, audio and video about the Kaddish: what it is, where it comes from, who says it, when it is said.',
+        rascunho:'Draft — this content has not yet been reviewed by the rabbi.',
+        secao:'section', secoes:'sections', erroH:'Could not read the content', assistir:'watch ▸' },
+  es: { titulo:'Aprender sobre el Kadish', voltar:'‹ volver',
+        vazioH:'Esta página aún está vacía',
+        vazioP:'Está lista para recibir el contenido — texto, audio y video sobre el Kadish: qué es, de dónde viene, quién lo dice, cuándo se dice.',
+        rascunho:'Borrador — este contenido aún no fue revisado por el rabino.',
+        secao:'sección', secoes:'secciones', erroH:'No pude leer el contenido', assistir:'ver ▸' },
+  fr: { titulo:'Apprendre sur le Kaddish', voltar:'‹ retour',
+        vazioH:'Cette page est encore vide',
+        vazioP:'Elle est prête à recevoir le contenu — texte, audio et vidéo sur le Kaddish : ce que c’est, d’où il vient, qui le dit, quand on le dit.',
+        rascunho:'Brouillon — ce contenu n’a pas encore été validé par le rabbin.',
+        secao:'section', secoes:'sections', erroH:'Impossible de lire le contenu', assistir:'regarder ▸' },
+  it: { titulo:'Imparare sul Kaddish', voltar:'‹ indietro',
+        vazioH:'Questa pagina è ancora vuota',
+        vazioP:'È pronta per accogliere i contenuti — testo, audio e video sul Kaddish: che cos’è, da dove viene, chi lo dice, quando si dice.',
+        rascunho:'Bozza — questo contenuto non è ancora stato verificato dal rabbino.',
+        secao:'sezione', secoes:'sezioni', erroH:'Non sono riuscito a leggere il contenuto', assistir:'guarda ▸' },
+  de: { titulo:'Über das Kaddisch lernen', voltar:'‹ zurück',
+        vazioH:'Diese Seite ist noch leer',
+        vazioP:'Sie ist bereit für die Inhalte — Text, Ton und Video über das Kaddisch: was es ist, woher es kommt, wer es sagt, wann es gesagt wird.',
+        rascunho:'Entwurf — dieser Inhalt wurde noch nicht vom Rabbiner geprüft.',
+        secao:'Abschnitt', secoes:'Abschnitte', erroH:'Der Inhalt konnte nicht gelesen werden', assistir:'ansehen ▸' },
+  ru: { titulo:'О кадише', voltar:'‹ назад',
+        vazioH:'Эта страница пока пуста',
+        vazioP:'Она готова принять материалы — текст, аудио и видео о кадише: что это, откуда он, кто его читает, когда его читают.',
+        rascunho:'Черновик — этот материал ещё не проверен раввином.',
+        secao:'раздел', secoes:'разделов', erroH:'Не удалось прочитать материал', assistir:'смотреть ▸' },
+  he: { titulo:'ללמוד על הקדיש', voltar:'‹ חזרה',
+        vazioH:'הדף הזה עדיין ריק',
+        vazioP:'הוא מוכן לקבל את התוכן — טקסט, שמע ווידאו על הקדיש: מהו, מניין בא, מי אומר אותו ומתי.',
+        rascunho:'טיוטה — התוכן טרם נבדק על ידי הרב.',
+        secao:'פרק', secoes:'פרקים', erroH:'לא הצלחתי לקרוא את התוכן', assistir:'לצפייה ▸' }
+};
+const t = T[lingua] || T.pt;
+document.documentElement.lang = lingua;
+if (lingua === 'he') document.documentElement.dir = 'rtl';
+
 const paragrafos = t => naLingua(t).split(/\n\s*\n/).filter(Boolean)
   .map(p => `<p>${esc(p)}</p>`).join('');
 
@@ -64,14 +112,12 @@ function bloco(s) {
       <audio controls preload="none" src="${esc(s.arquivo)}"></audio></section>`;
   if (s.tipo === 'video')
     return `<section><h2>${titulo}</h2>${corpo}
-      <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">assistir ▸</a></section>`;
+      <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(t.assistir)}</a></section>`;
   return `<section><h2>${titulo}</h2>${corpo}</section>`;
 }
 
-const vazio = `<div class="vazio">
-  <h2>Esta página ainda está vazia</h2>
-  <p>Ela está pronta para receber o conteúdo — texto, áudio e vídeo sobre o Kadish:
-     o que é, de onde vem, quem diz, quando se diz.</p>
+// As instrucoes de preenchimento so aparecem em portugues: quem edita e o dono.
+const comoPreencher = lingua !== 'pt' ? '' : `
   <p><b>O conteúdo não é escrito pela máquina.</b> É seu, ou do rabino. Para preencher,
      edite <code>aprender.json</code> — não precisa mexer em HTML.</p>
   <ol>
@@ -81,7 +127,11 @@ const vazio = `<div class="vazio">
     <li>Salve. A página se monta sozinha.</li>
   </ol>
   <p style="margin-top:14px">Vídeo não deve ser arquivo: use o endereço do YouTube ou
-     do Vimeo. Vídeo pesado não cabe neste repositório.</p>
+     do Vimeo. Vídeo pesado não cabe neste repositório.</p>`;
+
+const vazio = `<div class="vazio">
+  <h2>${esc(t.vazioH)}</h2>
+  <p>${esc(t.vazioP)}</p>${comoPreencher}
 </div>`;
 
 fetch('./aprender.json', { cache: 'no-cache' })
@@ -89,18 +139,22 @@ fetch('./aprender.json', { cache: 'no-cache' })
   .then(d => {
     const secoes = Array.isArray(d.secoes) ? d.secoes : [];
     const aviso = d.revisado_pelo_rabino ? '' :
-      `<div class="aviso">Rascunho — este conteúdo ainda não foi revisado pelo rabino.</div>`;
+      `<div class="aviso">${esc(t.rascunho)}</div>`;
     document.getElementById('conteudo').innerHTML =
       (secoes.length ? aviso + secoes.map(bloco).join('') : vazio);
     document.getElementById('rodape').innerHTML = secoes.length
-      ? `<p>${secoes.length} ${secoes.length === 1 ? 'seção' : 'seções'}.
-         Para acrescentar ou corrigir, edite <code>aprender.json</code>.</p>` : '';
+      ? `<p>${secoes.length} ${secoes.length === 1 ? esc(t.secao) : esc(t.secoes)}.` +
+        (lingua === 'pt' ? ' Para acrescentar ou corrigir, edite <code>aprender.json</code>.' : '') + '</p>'
+      : '';
   })
   .catch(e => {
     document.getElementById('conteudo').innerHTML =
-      `<div class="vazio"><h2>Não consegui ler o conteúdo</h2>
-       <p>O arquivo <code>aprender.json</code> não abriu: ${esc(e.message)}.</p></div>`;
+      `<div class="vazio"><h2>${esc(t.erroH)}</h2>
+       <p><code>aprender.json</code>: ${esc(e.message)}</p></div>`;
   });
+
+document.getElementById('titulo').textContent = t.titulo;
+document.getElementById('voltar').textContent = t.voltar;
 
 // segue o tema escolhido no app
 if (localStorage.getItem('tefila_theme') === 'claro')

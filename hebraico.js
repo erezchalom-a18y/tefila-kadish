@@ -11,6 +11,36 @@
   const MESES = ['Nisan','Iyar','Sivan','Tamuz','Av','Elul','Tishrei','Cheshvan',
                  'Kislev','Tevet','Shvat','Adar','Adar I','Adar II'];
 
+  // Os nomes dos meses so existiam em transliteracao latina. Quem lia o app em
+  // hebraico via "Kislev" em letra latina; quem lia em russo, idem. Portugues,
+  // ingles, espanhol, frances e italiano usam a mesma transliteracao (MESES).
+  const MESES_LINGUA = {
+    // sem nikud: e data, e o siddur escreve data em letra simples
+    he: ['ניסן','אייר','סיון','תמוז','אב','אלול','תשרי','חשון',
+         'כסלו','טבת','שבט','אדר','אדר א׳','אדר ב׳'],
+    ru: ['Нисан','Ияр','Сиван','Таммуз','Ав','Элул','Тишрей','Хешван',
+         'Кислев','Тевет','Шват','Адар','Адар I','Адар II'],
+    de: ['Nissan','Ijar','Siwan','Tammus','Aw','Elul','Tischri','Cheschwan',
+         'Kislew','Tewet','Schwat','Adar','Adar I','Adar II']
+  };
+
+  // Numero em letras hebraicas (gematria), do jeito que o siddur escreve:
+  // 17 -> י"ז ; 5787 -> תשפ"ז (sem o milhar, como e o costume).
+  const UNI = ['','א','ב','ג','ד','ה','ו','ז','ח','ט'];
+  const DEZ = ['','י','כ','ל','מ','נ','ס','ע','פ','צ'];
+  const CEM = ['','ק','ר','ש','ת'];
+  function gematria(n) {
+    let letras = '';
+    let resto = n % 1000;                      // 5787 -> 787, o milhar nao se escreve
+    while (resto >= 400) { letras += 'ת'; resto -= 400; }
+    letras += CEM[Math.floor(resto / 100)]; resto %= 100;
+    if (resto === 15) letras += 'טו';          // 15 e 16 nao se escrevem יה nem יו
+    else if (resto === 16) letras += 'טז';
+    else { letras += DEZ[Math.floor(resto / 10)]; letras += UNI[resto % 10]; }
+    if (letras.length === 1) return letras + '׳';
+    return letras.slice(0, -1) + '"' + letras.slice(-1);
+  }
+
   const ehBissexto = a => ((7 * a + 1) % 19) < 7;
   const mesesNoAno = a => (ehBissexto(a) ? 13 : 12);
 
@@ -82,16 +112,15 @@
     return { ano: a, mes: m, dia: abs - absolutoDeGregoriano(a, m, 1) + 1 };
   }
 
-  /** Nome do mes hebraico, ciente de ano bissexto. */
-  function nomeMes(ano, mes) {
-    if (!ehBissexto(ano) && mes === 12) return 'Adar';
-    if (mes === 12) return 'Adar I';
-    if (mes === 13) return 'Adar II';
-    return MESES[mes - 1];
+  /** Nome do mes hebraico, ciente de ano bissexto e da lingua da tela. */
+  function nomeMes(ano, mes, lingua) {
+    const tab = MESES_LINGUA[lingua] || MESES;
+    if (!ehBissexto(ano) && mes === 12) return tab[11];
+    return tab[mes - 1];
   }
 
   const api = {
-    ehBissexto, mesesNoAno, diasNoMes, nomeMes, MESES,
+    ehBissexto, mesesNoAno, diasNoMes, nomeMes, MESES, MESES_LINGUA, gematria,
     absolutoDeHebraico, hebraicoDeAbsoluto, absolutoDeGregoriano, gregorianoDeAbsoluto,
     /** Date do navegador -> {ano, mes, dia} hebraico */
     deData: dt => hebraicoDeAbsoluto(absolutoDeGregoriano(dt.getFullYear(), dt.getMonth() + 1, dt.getDate())),

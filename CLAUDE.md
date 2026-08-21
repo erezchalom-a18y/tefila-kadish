@@ -7,11 +7,13 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 
 ## Checagens (rodar antes e depois de qualquer mudança)
 
-- node checar.mjs        → estrutura, contagem, ritmo. Tem que dar VERDE nos 8.
-- node checar-ritos.mjs  → marcas de rito. Tem que dar VERDE nos 8.
+- node checar.mjs         → estrutura, contagem, ritmo. Tem que dar VERDE nos 8.
+- node checar-ritos.mjs   → marcas de rito. Tem que dar VERDE nos 8.
+- node testar-app.mjs     → o app num Chromium: 8 combinações × 2 formatos.
+- node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As duas rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As quatro rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -27,6 +29,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
    e conferir que o número mudou. Três rodadas já foram perdidas por pular isso.
 5. Texto litúrgico: a autoridade é o siddur impresso e o rabino, nunca o modelo.
    Fontes por nussach em fontes/LIVROS.md.
+6. Tudo que aparece na tela existe nas 8 línguas (pt, en, es, fr, it, de, ru, he).
+   Texto novo nunca vai escrito direto no HTML: entra em tabela (I18N, SOBRE,
+   DEDICATORIA, CONVITE em engine.html; TEXTOS em yahrzeit.js; T em aprender.html
+   e em gerar-pdf.mjs), e testar-linguas.mjs confere. A transliteração é a única
+   exceção, e é declarada: existe uma só, com fonética portuguesa.
 
 ## O fluxo de correção de sincronia (o que funciona)
 
@@ -125,9 +132,14 @@ Para as que imprimem, também playwright + Chromium.
   em laço. Rodado sozinho por .github/workflows/status.yml a cada push na main.
 - testar-app.mjs — abre o app num Chromium e confere as 8 combinações servindo
   DE SUBDIRETÓRIO, como o GitHub Pages faz. É ali que caminho relativo quebra.
+  Sem os navegadores do Playwright baixados: CHROMIUM=/caminho/do/chrome.
+- testar-linguas.mjs — abre o app nas 8 línguas e confere que não sobrou
+  português na tela, no cartão de yahrzeit nem no arquivo de calendário.
 - gerar-pdf.mjs — os 8 folhetos imprimíveis, em folhetos/. Sempre com marca
-  d'água RASCUNHO — AGUARDANDO REVISÃO RABÍNICA. Não tire enquanto o rabino não
-  tiver revisado.
+  d'água RASCUNHO — AGUARDANDO REVISÃO RABÍNICA, na língua do folheto. Não tire
+  enquanto o rabino não tiver revisado. node gerar-pdf.mjs de → folhetos em
+  alemão, com sufixo _de no nome. Os commitados são os de português, que são os
+  que vão ao rabino.
 - gerar-escolha-rabino.mjs — ESCOLHA-RABINO.pdf/.html e escolha-rabino-itens.json.
 
 Todas só leem dados. Nenhuma escreve em sync/, ancoras.json, cortes.json ou

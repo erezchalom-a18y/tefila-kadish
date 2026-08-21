@@ -1794,7 +1794,7 @@
     </div>
     <div class="setup-field">
       <label data-i18n="setup_relation">Relação</label>
-      <input type="text" id="setupRelation" placeholder="Pai, mãe, avô...">
+      <input type="text" id="setupRelation" data-i18n="ph_relation" placeholder="Pai, mãe, avô...">
     </div>
     <div class="setup-field">
       <label data-i18n="setup_death_date">Data de falecimento (necessária pra yahrzeit)</label>
@@ -1821,29 +1821,13 @@
 <div class="info-overlay" id="infoOverlay">
   <div class="info-panel">
     <button class="info-close" id="infoClose">×</button>
-    <div class="info-eyebrow">Sobre esta reza</div>
-    <div class="info-title">O Kadish</div>
-
-    <div class="info-h">O que é</div>
-    <div class="info-p">"Kadish" significa <strong>"santificação"</strong> em aramaico — a língua que os judeus falavam no cotidiano, escolhida para que todos entendessem e respondessem. É uma prece de <strong>louvor e exaltação ao Nome de D'us</strong>.</div>
-    <div class="info-p">O detalhe mais profundo: o Kadish <strong>não menciona a morte em momento algum</strong>. Fala apenas do louvor a D'us e do desejo da vinda de Seu reino e da paz. Ensina que louvamos D'us mesmo na hora da dor mais profunda.</div>
-
-    <div class="info-h">Por que dizemos</div>
-    <div class="info-p">A maior honra que um filho pode dar a um pai falecido é <strong>levar a comunidade a santificar o Nome de D'us</strong>. Esse louvor público gera mérito (<em>zechut</em>) que eleva a alma de quem partiu.</div>
-    <div class="info-p">A base do costume é a história de <strong>Rabi Akiva</strong>, que encontra o espírito de um falecido em sofrimento e aprende que, se o filho liderar a congregação no louvor e ela responder <em>"amen, yehei shmei raba"</em>, a alma é elevada.</div>
-
-    <div class="info-h">Desde quando</div>
-    <div class="info-p">O texto é antigo — remonta ao <strong>período talmúdico</strong>. Surgiu não na sinagoga, mas na <strong>casa de estudo</strong>: após um sábio ensinar, os alunos se levantavam para louvar o Nome de D'us.</div>
-    <div class="info-p">O costume do enlutado recitar Kadish desenvolveu-se na <strong>Ashkenaz medieval (séc. XII-XIII)</strong>. Séculos depois, o <strong>Arizal</strong> (Rabi Isaac Luria, séc. XVI) deu-lhe profundo significado místico e o tornou universal em todas as comunidades.</div>
-
-    <div class="info-h">Por que em comunidade</div>
-    <div class="info-p">O Kadish exige <strong>minyan</strong> (10 adultos). O luto judaico não é solitário — acontece cercado de comunidade. A obrigação diária traz o enlutado ao minyan todos os dias, prevenindo o isolamento da dor.</div>
+    <div id="infoCorpo"></div>
 
     <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);text-align:center;">
       <a href="https://www.chabad.org/centers/default_cdo/jewish/Centers.htm" target="_blank" rel="noopener" class="chabad-link" data-i18n="find_chabad">Encontrar Beit Chabad próximo →</a>
     </div>
 
-    <div class="info-note">Conteúdo histórico em revisão pelo rabino validador. Tradição de referência: Chabad / Nusach Ari.</div>
+    <div class="info-note" id="infoNota"></div>
   </div>
 </div>
 
@@ -3022,7 +3006,7 @@ const audioPlayer = document.getElementById('audioPlayer');
 audioPlayer.addEventListener('error', (e) => {
   const err = audioPlayer.error;
   console.error('Audio error:', err);
-  if (err) showToast('Erro de áudio: ' + (err.message || 'código ' + err.code));
+  if (err) showToast(TXT('toast_audio_error') + ': ' + (err.message || err.code));
 });
 
 // ============================================================
@@ -3619,7 +3603,7 @@ function startMarkMode(verseId) {
   const p = audioPlayer.play();
   if (p && p.catch) p.catch(err => {
     console.error('Mark play failed:', err);
-    showToast('Áudio não tocou: ' + err.message);
+    showToast(TXT('toast_audio_failed') + ': ' + err.message);
     cancelMarkMode();
   });
   audioPlayer.onended = () => finishMarking(true);
@@ -3800,7 +3784,7 @@ function playVerse(vi, onComplete) {
     const p = audioPlayer.play();
     if (p && p.catch) p.catch(err => {
       console.error('Verse play failed:', err);
-      showToast('Áudio não tocou: ' + err.message);
+      showToast(TXT('toast_audio_failed') + ': ' + err.message);
     });
     clearWordTimers();
     state.timestamps[v.id].forEach((ts, wi) => {
@@ -3915,7 +3899,7 @@ function play() {
       // Verse finished — should we repeat?
       if (state.repeatN > 0 && state.repeatRemaining > 1) {
         state.repeatRemaining--;
-        showToast(`Repetição ${state.repeatN - state.repeatRemaining + 1} de ${state.repeatN}`);
+        showToast(TXT('toast_repeat', { n: state.repeatN - state.repeatRemaining + 1, t: state.repeatN }));
         setTimeout(() => playFromVerse(vi), 700 / state.speed);
       } else {
         state.repeatRemaining = 0;
@@ -3974,7 +3958,7 @@ function playFullPrayer(url) {
   if (window.SYNC && window.SYNC.ativo()) {
     const pr = audioPlayer.play();
     if (pr && pr.catch) pr.catch(err => {
-      showToast('Áudio não tocou: ' + err.message);
+      showToast(TXT('toast_audio_failed') + ': ' + err.message);
       state.isPlaying = false;
       playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
     });
@@ -4036,7 +4020,7 @@ function playFullPrayer(url) {
   const p = audioPlayer.play();
   if (p && p.catch) p.catch(err => {
     console.error('Full prayer play failed:', err);
-    showToast('Áudio não tocou: ' + err.message);
+    showToast(TXT('toast_audio_failed') + ': ' + err.message);
     state.isPlaying = false;
     playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
   });
@@ -4159,6 +4143,16 @@ repeatBtn.addEventListener('click', () => {
 // ---------- i18n strings ----------
 const I18N = {
   pt: {
+    toast_repeat: "Repetição {n} de {t}",
+    toast_mode_training: "Modo Treino · velocidade .75× · repetição 2× · pausa após cada verso",
+    toast_mode_prayer: "Modo Reza · leitura limpa, sem pausas",
+    toast_calendar_saved: "Abra o arquivo baixado para pôr no calendário",
+    toast_need_name: "Preencha pelo menos o nome",
+    toast_dedication_saved: "Dedicação salva",
+    toast_tradition_pending: "Conteúdo {n} em validação rabínica · usando Chabad por ora",
+    toast_audio_error: "Erro de áudio",
+    toast_audio_failed: "O áudio não tocou",
+    ph_relation: "Pai, mãe, avô...",
     modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
     treino_active: '⊙ Modo Treino · pausa após cada verso',
     settings_title: 'Configurações',
@@ -4189,6 +4183,16 @@ const I18N = {
     explanations_label: 'Explicações entre versos', explanations_off: 'Ocultar', explanations_on: 'Mostrar'
   },
   en: {
+    toast_repeat: "Repetition {n} of {t}",
+    toast_mode_training: "Practice mode · speed .75× · repeat 2× · pause after each verse",
+    toast_mode_prayer: "Prayer mode · clean reading, no pauses",
+    toast_calendar_saved: "Open the downloaded file to add it to your calendar",
+    toast_need_name: "Please fill in at least the name",
+    toast_dedication_saved: "Dedication saved",
+    toast_tradition_pending: "{n} text still under rabbinical review · using Chabad for now",
+    toast_audio_error: "Audio error",
+    toast_audio_failed: "The audio did not play",
+    ph_relation: "Father, mother, grandfather...",
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
     treino_active: '⊙ Practice Mode · pauses after each verse',
     settings_title: 'Settings',
@@ -4219,6 +4223,16 @@ const I18N = {
     explanations_label: 'Explanations between verses', explanations_off: 'Hide', explanations_on: 'Show'
   },
   es: {
+    toast_repeat: "Repetición {n} de {t}",
+    toast_mode_training: "Modo Práctica · velocidad .75× · repetición 2× · pausa tras cada versículo",
+    toast_mode_prayer: "Modo Rezo · lectura limpia, sin pausas",
+    toast_calendar_saved: "Abra el archivo descargado para añadirlo al calendario",
+    toast_need_name: "Complete al menos el nombre",
+    toast_dedication_saved: "Dedicatoria guardada",
+    toast_tradition_pending: "Contenido {n} en revisión rabínica · usando Chabad por ahora",
+    toast_audio_error: "Error de audio",
+    toast_audio_failed: "El audio no sonó",
+    ph_relation: "Padre, madre, abuelo...",
     modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
     treino_active: '⊙ Modo Práctica · pausa después de cada verso',
     settings_title: 'Ajustes',
@@ -4249,6 +4263,16 @@ const I18N = {
     explanations_label: 'Explicaciones entre versos', explanations_off: 'Ocultar', explanations_on: 'Mostrar'
   },
   fr: {
+    toast_repeat: "Répétition {n} sur {t}",
+    toast_mode_training: "Mode Entraînement · vitesse .75× · répétition 2× · pause après chaque verset",
+    toast_mode_prayer: "Mode Prière · lecture continue, sans pauses",
+    toast_calendar_saved: "Ouvrez le fichier téléchargé pour l’ajouter à votre agenda",
+    toast_need_name: "Indiquez au moins le nom",
+    toast_dedication_saved: "Dédicace enregistrée",
+    toast_tradition_pending: "Texte {n} en cours de validation rabbinique · Chabad pour l’instant",
+    toast_audio_error: "Erreur audio",
+    toast_audio_failed: "L’audio n’a pas démarré",
+    ph_relation: "Père, mère, grand-père...",
     modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
     treino_active: '⊙ Mode Pratique · pause après chaque verset',
     settings_title: 'Paramètres',
@@ -4265,7 +4289,7 @@ const I18N = {
     settings_hint: 'Activez <strong>Mettre en avant</strong> sur une couche pour vous concentrer dessus pendant que les autres s\'estompent.',
     honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
     in_memory_of: 'En mémoire de',
-    prayer_title: 'Kaddish du Endeuillé', prayer_source: 'Kaddish Yatom · récité debout',
+    prayer_title: "Kaddish de l'Endeuillé", prayer_source: 'Kaddish Yatom · récité debout',
     learn_title: 'Pourquoi disons-nous le Kaddish?', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
@@ -4279,6 +4303,16 @@ const I18N = {
     explanations_label: 'Explications entre versets', explanations_off: 'Masquer', explanations_on: 'Afficher'
   },
   it: {
+    toast_repeat: "Ripetizione {n} di {t}",
+    toast_mode_training: "Modalità Studio · velocità .75× · ripetizione 2× · pausa dopo ogni versetto",
+    toast_mode_prayer: "Modalità Preghiera · lettura continua, senza pause",
+    toast_calendar_saved: "Apra il file scaricato per aggiungerlo al calendario",
+    toast_need_name: "Inserisca almeno il nome",
+    toast_dedication_saved: "Dedica salvata",
+    toast_tradition_pending: "Testo {n} in verifica rabbinica · per ora si usa Chabad",
+    toast_audio_error: "Errore audio",
+    toast_audio_failed: "L’audio non è partito",
+    ph_relation: "Padre, madre, nonno...",
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
     treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
     settings_title: 'Impostazioni',
@@ -4309,6 +4343,16 @@ const I18N = {
     explanations_label: 'Spiegazioni tra i versetti', explanations_off: 'Nascondi', explanations_on: 'Mostra'
   },
   de: {
+    toast_repeat: "Wiederholung {n} von {t}",
+    toast_mode_training: "Übungsmodus · Tempo .75× · Wiederholung 2× · Pause nach jedem Vers",
+    toast_mode_prayer: "Gebetsmodus · durchgehendes Lesen, ohne Pausen",
+    toast_calendar_saved: "Öffnen Sie die geladene Datei, um sie in den Kalender zu übernehmen",
+    toast_need_name: "Bitte geben Sie zumindest den Namen an",
+    toast_dedication_saved: "Widmung gespeichert",
+    toast_tradition_pending: "{n}-Text noch in rabbinischer Prüfung · vorerst Chabad",
+    toast_audio_error: "Audiofehler",
+    toast_audio_failed: "Der Ton wurde nicht abgespielt",
+    ph_relation: "Vater, Mutter, Großvater...",
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
     treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
     settings_title: 'Einstellungen',
@@ -4339,6 +4383,16 @@ const I18N = {
     explanations_label: 'Erklärungen zwischen den Versen', explanations_off: 'Ausblenden', explanations_on: 'Anzeigen'
   },
   ru: {
+    toast_repeat: "Повтор {n} из {t}",
+    toast_mode_training: "Режим тренировки · скорость .75× · повтор 2× · пауза после каждого стиха",
+    toast_mode_prayer: "Режим молитвы · чтение без пауз",
+    toast_calendar_saved: "Откройте загруженный файл, чтобы добавить его в календарь",
+    toast_need_name: "Укажите хотя бы имя",
+    toast_dedication_saved: "Посвящение сохранено",
+    toast_tradition_pending: "Текст {n} ещё на раввинской проверке · пока используется Хабад",
+    toast_audio_error: "Ошибка звука",
+    toast_audio_failed: "Звук не воспроизвёлся",
+    ph_relation: "Отец, мать, дед...",
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     treino_active: '⊙ Режим Практики · пауза после каждого стиха',
     settings_title: 'Настройки',
@@ -4369,6 +4423,16 @@ const I18N = {
     explanations_label: 'Пояснения между стихами', explanations_off: 'Скрыть', explanations_on: 'Показать'
   },
   he: {
+    toast_repeat: "חזרה {n} מתוך {t}",
+    toast_mode_training: "מצב אימון · מהירות .75× · חזרה ×2 · עצירה אחרי כל פסוק",
+    toast_mode_prayer: "מצב תפילה · קריאה רצופה, ללא עצירות",
+    toast_calendar_saved: "פתחו את הקובץ שהורד כדי להוסיף אותו ליומן",
+    toast_need_name: "נא למלא לפחות את השם",
+    toast_dedication_saved: "ההקדשה נשמרה",
+    toast_tradition_pending: "נוסח {n} עדיין בבדיקה רבנית · בינתיים חב\"ד",
+    toast_audio_error: "שגיאת שמע",
+    toast_audio_failed: "השמע לא התנגן",
+    ph_relation: "אבא, אמא, סבא...",
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
     treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
     settings_title: 'הגדרות',
@@ -4410,6 +4474,14 @@ const LANG_META = {
   ru: {flag:'🇷🇺', code:'RU', dir:'ltr'},
   he: {flag:'🇮🇱', code:'HE', dir:'rtl'}
 };
+
+// Texto de mensagem, na lingua da tela. {n} e {t} viram os valores passados.
+function TXT(chave, vars) {
+  const tab = I18N[state.lang] || I18N.pt;
+  let txt = tab[chave] || (I18N.pt[chave] || chave);
+  if (vars) for (const k of Object.keys(vars)) txt = txt.split('{' + k + '}').join(vars[k]);
+  return txt;
+}
 
 function applyI18n(lang) {
   const t = I18N[lang] || I18N.pt;
@@ -4520,11 +4592,137 @@ function rerenderVerseText() {
   });
 }
 
+// ---------- "Sobre esta reza": o painel explicativo, nas 8 linguas ----------
+// Estava so em portugues, escrito direto no HTML. Quem lia em ingles, russo ou
+// hebraico abria o painel e encontrava portugues. Agora e tabela, como a
+// dedicatoria e o convite. Continua sendo texto EXPLICATIVO, nao liturgico:
+// vale a regra de sempre, a revisao final e do rabino.
+const SOBRE = {
+  pt: { nota: "Conteúdo histórico em revisão pelo rabino validador. Tradição de referência: Chabad / Nusach Ari.", eyebrow: `Sobre esta reza`, title: `O Kadish`, secoes: [
+    { h: `O que é`, ps: [
+      `"Kadish" significa <strong>"santificação"</strong> em aramaico — a língua que os judeus falavam no cotidiano, escolhida para que todos entendessem e respondessem. É uma prece de <strong>louvor e exaltação ao Nome de D'us</strong>.`,
+      `O detalhe mais profundo: o Kadish <strong>não menciona a morte em momento algum</strong>. Fala apenas do louvor a D'us e do desejo da vinda de Seu reino e da paz. Ensina que louvamos D'us mesmo na hora da dor mais profunda.` ] },
+    { h: `Por que dizemos`, ps: [
+      `A maior honra que um filho pode dar a um pai falecido é <strong>levar a comunidade a santificar o Nome de D'us</strong>. Esse louvor público gera mérito (<em>zechut</em>) que eleva a alma de quem partiu.`,
+      `A base do costume é a história de <strong>Rabi Akiva</strong>, que encontra o espírito de um falecido em sofrimento e aprende que, se o filho liderar a congregação no louvor e ela responder <em>"amen, yehei shmei raba"</em>, a alma é elevada.` ] },
+    { h: `Desde quando`, ps: [
+      `O texto é antigo — remonta ao <strong>período talmúdico</strong>. Surgiu não na sinagoga, mas na <strong>casa de estudo</strong>: após um sábio ensinar, os alunos se levantavam para louvar o Nome de D'us.`,
+      `O costume do enlutado recitar Kadish desenvolveu-se na <strong>Ashkenaz medieval (séc. XII-XIII)</strong>. Séculos depois, o <strong>Arizal</strong> (Rabi Isaac Luria, séc. XVI) deu-lhe profundo significado místico e o tornou universal em todas as comunidades.` ] },
+    { h: `Por que em comunidade`, ps: [
+      `O Kadish exige <strong>minyan</strong> (10 adultos). O luto judaico não é solitário — acontece cercado de comunidade. A obrigação diária traz o enlutado ao minyan todos os dias, prevenindo o isolamento da dor.` ] } ] },
+
+  en: { nota: "Historical content under review by the validating rabbi. Reference tradition: Chabad / Nusach Ari.", eyebrow: `About this prayer`, title: `The Kaddish`, secoes: [
+    { h: `What it is`, ps: [
+      `"Kaddish" means <strong>"sanctification"</strong> in Aramaic — the language Jews spoke day to day, chosen so that everyone would understand and answer. It is a prayer of <strong>praise and exaltation of G-d's Name</strong>.`,
+      `The deepest detail: the Kaddish <strong>never mentions death at all</strong>. It speaks only of praising G-d and of the longing for His kingdom and for peace. It teaches that we praise G-d even in the hour of the deepest grief.` ] },
+    { h: `Why we say it`, ps: [
+      `The greatest honour a child can give a departed parent is <strong>to lead the community in sanctifying G-d's Name</strong>. That public praise creates merit (<em>zechut</em>) that raises the soul of the one who has gone.`,
+      `The custom rests on the story of <strong>Rabbi Akiva</strong>, who meets the spirit of a dead man in torment and learns that if the son leads the congregation in praise and it answers <em>"amen, yehei shmei raba"</em>, the soul is raised.` ] },
+    { h: `How far back`, ps: [
+      `The text is ancient — it goes back to the <strong>Talmudic period</strong>. It arose not in the synagogue but in the <strong>house of study</strong>: after a sage taught, the students rose to praise G-d's Name.`,
+      `The mourner's custom of reciting Kaddish took shape in <strong>medieval Ashkenaz (12th-13th c.)</strong>. Centuries later the <strong>Arizal</strong> (Rabbi Isaac Luria, 16th c.) gave it deep mystical meaning and made it universal in every community.` ] },
+    { h: `Why with a community`, ps: [
+      `The Kaddish requires a <strong>minyan</strong> (10 adults). Jewish mourning is not solitary — it happens surrounded by community. The daily obligation brings the mourner to the minyan every day, keeping grief from turning into isolation.` ] } ] },
+
+  es: { nota: "Contenido histórico en revisión por el rabino validador. Tradición de referencia: Chabad / Nusaj Arí.", eyebrow: `Sobre esta oración`, title: `El Kadish`, secoes: [
+    { h: `Qué es`, ps: [
+      `"Kadish" significa <strong>"santificación"</strong> en arameo — la lengua que los judíos hablaban a diario, elegida para que todos entendieran y respondieran. Es una oración de <strong>alabanza y exaltación del Nombre de D-s</strong>.`,
+      `El detalle más profundo: el Kadish <strong>no menciona la muerte en ningún momento</strong>. Habla sólo de la alabanza a D-s y del deseo de la venida de Su reino y de la paz. Enseña que alabamos a D-s incluso en la hora del dolor más profundo.` ] },
+    { h: `Por qué lo decimos`, ps: [
+      `La mayor honra que un hijo puede dar a un padre fallecido es <strong>llevar a la comunidad a santificar el Nombre de D-s</strong>. Esa alabanza pública genera mérito (<em>zejut</em>) que eleva el alma de quien partió.`,
+      `La base de la costumbre es la historia de <strong>Rabí Akiva</strong>, que encuentra el espíritu de un difunto en sufrimiento y aprende que, si el hijo guía a la congregación en la alabanza y ella responde <em>"amén, yehei shmei rabá"</em>, el alma es elevada.` ] },
+    { h: `Desde cuándo`, ps: [
+      `El texto es antiguo — se remonta al <strong>período talmúdico</strong>. Surgió no en la sinagoga, sino en la <strong>casa de estudio</strong>: después de que un sabio enseñaba, los alumnos se levantaban para alabar el Nombre de D-s.`,
+      `La costumbre de que el enlutado recite Kadish se desarrolló en la <strong>Ashkenaz medieval (s. XII-XIII)</strong>. Siglos después, el <strong>Arizal</strong> (Rabí Isaac Luria, s. XVI) le dio profundo significado místico y lo hizo universal en todas las comunidades.` ] },
+    { h: `Por qué en comunidad`, ps: [
+      `El Kadish exige <strong>minián</strong> (10 adultos). El duelo judío no es solitario — ocurre rodeado de comunidad. La obligación diaria lleva al enlutado al minián todos los días, evitando el aislamiento del dolor.` ] } ] },
+
+  fr: { nota: "Contenu historique en cours de validation par le rabbin. Tradition de référence : Habad / Noussah Ari.", eyebrow: `À propos de cette prière`, title: `Le Kaddish`, secoes: [
+    { h: `Ce que c'est`, ps: [
+      `« Kaddish » signifie <strong>« sanctification »</strong> en araméen — la langue que les juifs parlaient au quotidien, choisie pour que tous comprennent et répondent. C'est une prière de <strong>louange et d'exaltation du Nom de D-eu</strong>.`,
+      `Le détail le plus profond : le Kaddish <strong>ne mentionne jamais la mort</strong>. Il ne parle que de la louange de D-eu et du désir de la venue de Son règne et de la paix. Il enseigne que l'on loue D-eu même à l'heure de la douleur la plus profonde.` ] },
+    { h: `Pourquoi on le dit`, ps: [
+      `Le plus grand honneur qu'un enfant puisse rendre à un parent défunt est <strong>d'amener la communauté à sanctifier le Nom de D-eu</strong>. Cette louange publique crée un mérite (<em>zekhout</em>) qui élève l'âme du disparu.`,
+      `La coutume repose sur l'histoire de <strong>Rabbi Akiva</strong>, qui rencontre l'esprit d'un défunt en souffrance et apprend que si le fils conduit l'assemblée dans la louange et qu'elle répond <em>« amen, yehei chmé raba »</em>, l'âme est élevée.` ] },
+    { h: `Depuis quand`, ps: [
+      `Le texte est ancien — il remonte à la <strong>période talmudique</strong>. Il est né non à la synagogue, mais à la <strong>maison d'étude</strong> : après l'enseignement d'un sage, les élèves se levaient pour louer le Nom de D-eu.`,
+      `La coutume, pour l'endeuillé, de réciter le Kaddish s'est développée dans l'<strong>Achkenaz médiéval (XIIe-XIIIe s.)</strong>. Des siècles plus tard, le <strong>Arizal</strong> (Rabbi Isaac Louria, XVIe s.) lui a donné un sens mystique profond et l'a rendue universelle dans toutes les communautés.` ] },
+    { h: `Pourquoi en communauté`, ps: [
+      `Le Kaddish exige un <strong>minyan</strong> (10 adultes). Le deuil juif n'est pas solitaire — il se vit entouré de la communauté. L'obligation quotidienne amène l'endeuillé au minyan chaque jour et empêche la douleur de tourner à l'isolement.` ] } ] },
+
+  it: { nota: "Contenuto storico in verifica presso il rabbino validante. Tradizione di riferimento: Chabad / Nusach Ari.", eyebrow: `Su questa preghiera`, title: `Il Kaddish`, secoes: [
+    { h: `Che cos'è`, ps: [
+      `«Kaddish» significa <strong>«santificazione»</strong> in aramaico — la lingua che gli ebrei parlavano ogni giorno, scelta perché tutti capissero e rispondessero. È una preghiera di <strong>lode ed esaltazione del Nome di D-o</strong>.`,
+      `Il dettaglio più profondo: il Kaddish <strong>non nomina mai la morte</strong>. Parla soltanto della lode a D-o e del desiderio della venuta del Suo regno e della pace. Insegna che si loda D-o anche nell'ora del dolore più profondo.` ] },
+    { h: `Perché lo diciamo`, ps: [
+      `Il più grande onore che un figlio possa dare a un genitore defunto è <strong>condurre la comunità a santificare il Nome di D-o</strong>. Quella lode pubblica genera merito (<em>zechut</em>) che eleva l'anima di chi è partito.`,
+      `Alla base dell'usanza c'è la storia di <strong>Rabbi Akiva</strong>, che incontra lo spirito di un defunto in sofferenza e apprende che, se il figlio guida la congregazione nella lode ed essa risponde <em>«amen, yehei shmei rabà»</em>, l'anima viene elevata.` ] },
+    { h: `Da quando`, ps: [
+      `Il testo è antico — risale al <strong>periodo talmudico</strong>. Nacque non in sinagoga, ma nella <strong>casa di studio</strong>: dopo che un saggio insegnava, gli allievi si alzavano per lodare il Nome di D-o.`,
+      `L'usanza che sia chi è in lutto a recitare il Kaddish si sviluppò nell'<strong>Ashkenaz medievale (XII-XIII sec.)</strong>. Secoli dopo, l'<strong>Arizal</strong> (Rabbi Isaac Luria, XVI sec.) le diede profondo significato mistico e la rese universale in tutte le comunità.` ] },
+    { h: `Perché in comunità`, ps: [
+      `Il Kaddish richiede il <strong>minyan</strong> (10 adulti). Il lutto ebraico non è solitario — si vive circondati dalla comunità. L'obbligo quotidiano porta chi è in lutto al minyan ogni giorno, impedendo che il dolore diventi isolamento.` ] } ] },
+
+  de: { nota: "Historischer Inhalt in Prüfung durch den bestätigenden Rabbiner. Bezugstradition: Chabad / Nussach Ari.", eyebrow: `Über dieses Gebet`, title: `Das Kaddisch`, secoes: [
+    { h: `Was es ist`, ps: [
+      `„Kaddisch" bedeutet auf Aramäisch <strong>„Heiligung"</strong> — Aramäisch war die Alltagssprache der Juden, gewählt, damit alle verstehen und antworten konnten. Es ist ein Gebet des <strong>Lobes und der Erhebung des Namens G-ttes</strong>.`,
+      `Das Tiefste daran: das Kaddisch <strong>erwähnt den Tod mit keinem Wort</strong>. Es spricht allein vom Lob G-ttes und vom Wunsch nach Seinem Reich und nach Frieden. Es lehrt, dass wir G-tt auch in der Stunde des tiefsten Schmerzes loben.` ] },
+    { h: `Warum wir es sagen`, ps: [
+      `Die größte Ehre, die ein Kind einem verstorbenen Elternteil erweisen kann, ist es, <strong>die Gemeinde dazu zu führen, den Namen G-ttes zu heiligen</strong>. Dieses öffentliche Lob schafft Verdienst (<em>Sechut</em>), das die Seele des Verstorbenen erhebt.`,
+      `Der Brauch gründet auf der Geschichte von <strong>Rabbi Akiva</strong>, der dem Geist eines leidenden Verstorbenen begegnet und erfährt: führt der Sohn die Gemeinde im Lob an und antwortet sie <em>„amen, jehe schme raba"</em>, so wird die Seele erhoben.` ] },
+    { h: `Seit wann`, ps: [
+      `Der Text ist alt — er reicht in die <strong>talmudische Zeit</strong> zurück. Er entstand nicht in der Synagoge, sondern im <strong>Lehrhaus</strong>: nachdem ein Weiser gelehrt hatte, erhoben sich die Schüler, um den Namen G-ttes zu loben.`,
+      `Der Brauch, dass der Trauernde Kaddisch spricht, entwickelte sich im <strong>mittelalterlichen Aschkenas (12.-13. Jh.)</strong>. Jahrhunderte später gab ihm der <strong>Arisal</strong> (Rabbi Jizchak Luria, 16. Jh.) tiefe mystische Bedeutung und machte ihn in allen Gemeinden allgemein üblich.` ] },
+    { h: `Warum in Gemeinschaft`, ps: [
+      `Das Kaddisch verlangt einen <strong>Minjan</strong> (10 Erwachsene). Jüdische Trauer ist nicht einsam — sie geschieht umgeben von Gemeinschaft. Die tägliche Pflicht führt den Trauernden jeden Tag zum Minjan und bewahrt ihn davor, im Schmerz zu vereinsamen.` ] } ] },
+
+  ru: { nota: "Исторический материал на проверке у раввина. Ориентир: Хабад / нусах Ари.", eyebrow: `Об этой молитве`, title: `Кадиш`, secoes: [
+    { h: `Что это`, ps: [
+      `«Кадиш» на арамейском означает <strong>«освящение»</strong> — арамейский был повседневным языком евреев, и его выбрали, чтобы все понимали и отвечали. Это молитва <strong>хвалы и возвеличивания Имени Б-га</strong>.`,
+      `Самое глубокое: Кадиш <strong>ни разу не упоминает смерть</strong>. В нём только хвала Б-гу и желание прихода Его царства и мира. Он учит, что мы славим Б-га даже в час самой глубокой боли.` ] },
+    { h: `Почему его читают`, ps: [
+      `Величайшая честь, которую сын может оказать умершему отцу, — <strong>привести общину к освящению Имени Б-га</strong>. Эта всенародная хвала создаёт заслугу (<em>зхут</em>), возвышающую душу ушедшего.`,
+      `В основе обычая — история <strong>рабби Акивы</strong>, который встречает страдающую душу умершего и узнаёт: если сын поведёт общину в хвале, а она ответит <em>«амен, йеѓе шме раба»</em>, душа будет возвышена.` ] },
+    { h: `С каких пор`, ps: [
+      `Текст древний — он восходит к <strong>талмудической эпохе</strong>. Он возник не в синагоге, а в <strong>доме учения</strong>: после урока мудреца ученики вставали, чтобы восславить Имя Б-га.`,
+      `Обычай, по которому Кадиш читает скорбящий, сложился в <strong>средневековом Ашкеназе (XII-XIII вв.)</strong>. Спустя века <strong>Аризаль</strong> (рабби Ицхак Лурия, XVI в.) придал ему глубокий мистический смысл и сделал всеобщим во всех общинах.` ] },
+    { h: `Почему в общине`, ps: [
+      `Кадиш требует <strong>миньяна</strong> (10 взрослых). Еврейский траур не одинок — он проходит в кругу общины. Ежедневная обязанность приводит скорбящего в миньян каждый день и не даёт горю обернуться одиночеством.` ] } ] },
+
+  he: { nota: "התוכן ההיסטורי בבדיקת הרב המאשר. נוסח הייחוס: חב\"ד / נוסח האר\"י.", eyebrow: `על התפילה הזאת`, title: `הקדיש`, secoes: [
+    { h: `מהו`, ps: [
+      `"קדיש" פירושו <strong>"קידוש"</strong> בארמית — הלשון שבה דיברו היהודים יום־יום, ונבחרה כדי שכולם יבינו ויענו. זו תפילת <strong>שבח והתרוממות לשמו של הקב"ה</strong>.`,
+      `הפרט העמוק ביותר: הקדיש <strong>אינו מזכיר את המוות כלל</strong>. הוא מדבר רק בשבחו של הקב"ה ובכיסופים למלכותו ולשלום. הוא מלמד שמשבחים את הקב"ה גם בשעת הכאב העמוק ביותר.` ] },
+    { h: `מדוע אומרים אותו`, ps: [
+      `הכבוד הגדול ביותר שבן יכול לתת להורה שנפטר הוא <strong>להביא את הציבור לקדש את שמו של הקב"ה</strong>. שבח ציבורי זה מוליד <em>זכות</em> המעלה את נשמת הנפטר.`,
+      `יסוד המנהג במעשה <strong>רבי עקיבא</strong>, שפגש את נפשו של נפטר בייסורים ולמד שאם הבן יעמוד לפני הציבור בשבח והציבור יענה <em>"אמן, יהא שמיה רבא"</em> — הנשמה מתעלה.` ] },
+    { h: `ממתי`, ps: [
+      `הנוסח עתיק — שורשיו ב<strong>תקופת התלמוד</strong>. הוא לא נולד בבית הכנסת אלא ב<strong>בית המדרש</strong>: לאחר שחכם דרש, עמדו התלמידים לשבח את שמו של הקב"ה.`,
+      `מנהג האבל לומר קדיש התפתח ב<strong>אשכנז של ימי הביניים (המאות הי"ב-הי"ג)</strong>. מאות שנים לאחר מכן נתן לו <strong>האר"י ז"ל</strong> (רבי יצחק לוריא, המאה הט"ז) משמעות מיסטית עמוקה, והפך אותו לנוהג בכל הקהילות.` ] },
+    { h: `מדוע בציבור`, ps: [
+      `הקדיש טעון <strong>מניין</strong> (עשרה מבוגרים). האבלות היהודית אינה בדד — היא מתרחשת מוקפת קהילה. החובה היומית מביאה את האבל למניין בכל יום ומונעת מן הכאב להפוך לבדידות.` ] } ] }
+};
+
+function desenharSobre() {
+  const alvo = document.getElementById('infoCorpo');
+  if (!alvo) return;
+  const s = SOBRE[state.lang] || SOBRE.pt;
+  let h = `<div class="info-eyebrow">${s.eyebrow}</div><div class="info-title">${s.title}</div>`;
+  for (const sec of s.secoes) {
+    h += `<div class="info-h">${sec.h}</div>`;
+    for (const p of sec.ps) h += `<div class="info-p">${p}</div>`;
+  }
+  alvo.innerHTML = h;
+  const nota = document.getElementById('infoNota');
+  if (nota) nota.textContent = s.nota;
+}
+
 function applyLanguage(lang) {
   state.lang = lang;
   localStorage.setItem('tefila_lang', lang);
   applyI18n(lang);
   if (typeof atualizarDedicatoria === 'function') atualizarDedicatoria();
+  if (typeof desenharSobre === 'function') desenharSobre();
   if (window.SYNC) window.SYNC.trocarLingua(lang);
   rerenderVerseText();
   // Re-apply Kadish type so the size label (pequeno/grande/short/long...) translates
@@ -4541,7 +4739,7 @@ function applyTradition(t) {
   const labels = {chabad:'Chabad', sefard:'Sefard', ashkenazi:'Ashkenazi'};
   document.getElementById('traditionBadge').textContent = labels[t] || t;
   if (t !== 'chabad') {
-    showToast('Conteúdo ' + labels[t] + ' em validação rabínica · usando Chabad por ora');
+    showToast(TXT('toast_tradition_pending', { n: labels[t] }));
   }
 }
 
@@ -4592,11 +4790,15 @@ function applyKadishType(t) {
     state.currentVerse = 0;
     state.elapsed = 0;
   }
+  // Faltavam o italiano e o alemao: quem lia nessas duas linguas via o titulo em
+  // portugues no alto da tela. O frances estava com o artigo errado.
   const titles = {
     pt: { yatom: 'Kadish do Enlutado', derabanan: 'Kadish dos Sábios' },
     en: { yatom: "Mourner's Kaddish", derabanan: "Rabbis' Kaddish" },
     es: { yatom: 'Kadish del Enlutado', derabanan: 'Kadish de los Sabios' },
-    fr: { yatom: 'Kaddish du Endeuillé', derabanan: 'Kaddish des Sages' },
+    fr: { yatom: "Kaddish de l'Endeuillé", derabanan: 'Kaddish des Sages' },
+    it: { yatom: 'Kaddish dei Dolenti', derabanan: 'Kaddish dei Maestri' },
+    de: { yatom: 'Trauerkaddisch', derabanan: 'Kaddisch der Gelehrten' },
     ru: { yatom: 'Кадиш сироты', derabanan: 'Кадиш мудрецов' },
     he: { yatom: 'קדיש יתום', derabanan: 'קדיש דרבנן' }
   };
@@ -4644,9 +4846,9 @@ function toggleModoTreino() {
       repCount.style.display = 'inline-block';
       repCount.textContent = '2×';
     }
-    showToast('Modo Treino · velocidade .75× · repetição 2× · pausa após cada verso');
+    showToast(TXT('toast_mode_training'));
   } else {
-    showToast('Modo Reza · leitura limpa, sem pausas');
+    showToast(TXT('toast_mode_prayer'));
   }
   updateTreinoLabel();
 }
@@ -4717,7 +4919,7 @@ function renderYahrzeit(m) {
   const nussach = (window.SYNC && SYNC.atual().nussach) || 'chabad';
   const morte = new Date(m.deathDate + 'T12:00:00');   // meio-dia evita fuso virar o dia
   let y = null;
-  try { y = Yahrzeit.proximoYahrzeit(morte, nussach); } catch (e) { console.error(e); }
+  try { y = Yahrzeit.proximoYahrzeit(morte, nussach, null, state.lang); } catch (e) { console.error(e); }
   if (!y) { card.style.display = 'none'; return; }
 
   const locais = { pt:'pt-BR', en:'en-US', es:'es-ES', fr:'fr-FR', it:'it-IT',
@@ -4732,11 +4934,11 @@ function renderYahrzeit(m) {
   avisos.innerHTML = y.avisos.map(a => '⚠ ' + a.replace(/[<>]/g, '')).join('<br><br>');
 
   document.getElementById('yzCalendario').onclick = () => {
-    const ics = Yahrzeit.gerarICS(morte, nussach, m.name || '', 20);
+    const ics = Yahrzeit.gerarICS(morte, nussach, m.name || '', 20, state.lang);
     const b = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     const u = URL.createObjectURL(b), a = document.createElement('a');
     a.href = u; a.download = 'yahrzeit.ics'; a.click(); URL.revokeObjectURL(u);
-    showToast('Abra o arquivo baixado para pôr no calendário');
+    showToast(TXT('toast_calendar_saved'));
   };
 }
 
@@ -4759,11 +4961,11 @@ document.getElementById('setupSave').addEventListener('click', () => {
     relation: document.getElementById('setupRelation').value.trim(),
     deathDate: document.getElementById('setupDeathDate').value
   };
-  if (!m.name) { showToast('Preencha pelo menos o nome'); return; }
+  if (!m.name) { showToast(TXT('toast_need_name')); return; }
   saveMemorial(m);
   renderMemorial();
   document.getElementById('setupModal').classList.remove('show');
-  showToast('Dedicação salva · ' + m.name);
+  showToast(TXT('toast_dedication_saved') + ' · ' + m.name);
 });
 
 document.getElementById('setupCancel').addEventListener('click', () => {
@@ -5129,7 +5331,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           state.repeatRestante--;
           a.currentTime = v.start;                       // de novo, do inicio do verso
           if (typeof showToast === 'function')
-            showToast(`Repetição ${state.repeatN - state.repeatRestante + 1} de ${state.repeatN}`);
+            showToast(TXT('toast_repeat', { n: state.repeatN - state.repeatRestante + 1, t: state.repeatN }));
           return true;
         }
         state.repeatRestante = undefined;

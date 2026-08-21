@@ -23,3 +23,26 @@ jobs:
 
       - name: checar-ritos.mjs (marcas de rito)
         run: node checar-ritos.mjs
+
+      # Estes dois abrem o app num Chromium de verdade. Foram acrescentados
+      # depois que dois defeitos passaram pelas checagens de dados e so
+      # apareceram na tela: a voz sintetizada no lugar do rabino, e o painel
+      # explicativo saindo em portugues para quem lia noutra lingua.
+      - name: Instalar Playwright e o Chromium
+        run: npm install playwright && npx playwright install --with-deps chromium
+
+      - name: Servir o repositorio de subdiretorio (como o GitHub Pages)
+        run: |
+          mkdir -p /tmp/servir
+          ln -s "$GITHUB_WORKSPACE" /tmp/servir/tefila-kadish
+          (cd /tmp/servir && python3 -m http.server 8896 --bind 127.0.0.1 &)
+          for i in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8896/tefila-kadish/engine.html -o /dev/null && break
+            sleep 1
+          done
+
+      - name: testar-app.mjs (as 8 combinacoes, nos 2 formatos de audio)
+        run: node testar-app.mjs http://127.0.0.1:8896/tefila-kadish
+
+      - name: testar-linguas.mjs (a tela inteira nas 8 linguas)
+        run: node testar-linguas.mjs http://127.0.0.1:8896/tefila-kadish
