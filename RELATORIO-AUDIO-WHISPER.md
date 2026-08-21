@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-20 20:01 UTC por `whisper-1`, sobre o commit `576001b`.
+Gerado em 2026-08-21 13:29 UTC por `whisper-1`, sobre o commit `5ed291b`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -25,10 +25,10 @@ Trate cada linha como *vale a pena ouvir este trecho*, nunca como *está errado*
 | --- | ---: | ---: | ---: |
 | ashkenaz_yatom | 75 | 80 | 36 |
 | ashkenaz_derabanan | 118 | 124 | 89 |
-| chabad_yatom | 80 | 80 | 27 |
+| chabad_yatom | 80 | 80 | 26 |
 | chabad_derabanan | 121 | 124 | 79 |
 | sefard_yatom | 81 | 86 | 49 |
-| sefard_derabanan | 124 | 126 | 37 |
+| sefard_derabanan | 124 | 126 | 38 |
 | sefaradi_yatom | 91 | 92 | 58 |
 | sefaradi_derabanan | 125 | 124 | 56 |
 | **total** | | | **431** |
@@ -305,10 +305,6 @@ comece a ouvir por aqui.
 - `בְרָא` *(vera)* — no texto em 6.22s, o Whisper não ouviu
 - `כִרְעוּתֵהּ` *(chirutei)* — no texto em 6.68s, o Whisper não ouviu
 - `חירותי` — o Whisper ouviu em 6.71999979019165s, não existe no nosso texto
-
-**§6**
-
-- `בֵּית` *(beit)* — nós: 19.42s · ouvido: 20.18000030517578s · diferença +0.76s
 
 **§8** — **já está no OUVIR-PRIMEIRO**
 
@@ -602,6 +598,10 @@ comece a ouvir por aqui.
 **§6**
 
 - `וּבְחַיֵּי` *(uvechayei)* — nós: 19.44s · ouvido: 18.6200008392334s · diferença -0.82s
+
+**§8**
+
+- `יְהֵא` *(Yehei)* — nós: 27.74s · ouvido: 26.5s · diferença -1.24s
 
 **§15**
 
