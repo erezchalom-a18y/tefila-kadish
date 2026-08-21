@@ -1688,7 +1688,7 @@
     </div>
 
     <div class="settings-row">
-      <div class="settings-row-label">Velocidade da leitura</div>
+      <div class="settings-row-label" data-i18n="speed_label">Velocidade da leitura</div>
       <div class="velocidade-nos-ajustes" id="velocidadeAjustes">
         <button data-speed="0.5">0,5×</button>
         <button data-speed="0.75">0,75×</button>
@@ -1754,13 +1754,8 @@
       <div class="yz-date" id="yzDate">—</div>
       <div class="yz-hebrew" id="yzHebrew">—</div>
       <div id="yzAvisos" style="margin-top:10px;font-size:12.5px;color:#8a5a12;line-height:1.5"></div>
-      <button id="yzCalendario" style="margin-top:12px;width:100%;background:var(--brass);color:#fff;border:0;border-radius:9px;padding:11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer">
-        pôr no calendário do telefone
-      </button>
-      <div style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">
-        Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da
-        véspera (hora de acender a vela) e na manhã do dia.
-      </div>
+      <button id="yzCalendario" data-i18n="yahrzeit_calendar_btn" style="margin-top:12px;width:100%;background:var(--brass);color:#fff;border:0;border-radius:9px;padding:11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer">pôr no calendário do telefone</button>
+      <div data-i18n="yahrzeit_reminder_note" style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da véspera (hora de acender a vela) e na manhã do dia.</div>
     </div>
 
     <div class="settings-hint" data-i18n="settings_hint">
@@ -4167,7 +4162,9 @@ const I18N = {
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destaque',
     dedication_title: 'Dedicação', edit_memorial: 'Editar perfil "Em memória de"',
     next_yahrzeit: 'Próximo Yahrzeit',
-    yahrzeit_reminder_note: 'App enviará lembrete por email 7 dias antes',
+    yahrzeit_reminder_note: 'Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da véspera (hora de acender a vela) e na manhã do dia.',
+    yahrzeit_calendar_btn: 'pôr no calendário do telefone',
+    speed_label: 'Velocidade da leitura',
     settings_hint: 'Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem.',
     honoring_intro: 'Junto com você, neste ano,', honoring_outro: 'almas estão sendo honradas pelo mundo',
     in_memory_of: 'Em memória de',
@@ -4195,7 +4192,9 @@ const I18N = {
     hide: 'Hide', normal: 'Normal', highlight: 'Highlight',
     dedication_title: 'Dedication', edit_memorial: 'Edit "In memory of" profile',
     next_yahrzeit: 'Next Yahrzeit',
-    yahrzeit_reminder_note: 'App will send email reminder 7 days before',
+    yahrzeit_reminder_note: 'Four reminders each year: one week before, three days before, on the afternoon of the eve (time to light the candle) and on the morning of the day.',
+    yahrzeit_calendar_btn: 'add to the phone calendar',
+    speed_label: 'Reading speed',
     settings_hint: 'Activate <strong>Highlight</strong> on a layer to focus on it while others fade.',
     honoring_intro: 'Together with you, this year,', honoring_outro: 'souls are being honored worldwide',
     in_memory_of: 'In memory of',
@@ -4223,7 +4222,9 @@ const I18N = {
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destacar',
     dedication_title: 'Dedicación', edit_memorial: 'Editar perfil "En memoria de"',
     next_yahrzeit: 'Próximo Yahrzeit',
-    yahrzeit_reminder_note: 'La app enviará recordatorio por email 7 días antes',
+    yahrzeit_reminder_note: 'Cuatro avisos cada año: una semana antes, tres días antes, la tarde de la víspera (hora de encender la vela) y la mañana del día.',
+    yahrzeit_calendar_btn: 'poner en el calendario del teléfono',
+    speed_label: 'Velocidad de lectura',
     settings_hint: 'Active <strong>Destacar</strong> en una capa para enfocarse en ella mientras las otras se atenúan.',
     honoring_intro: 'Junto a ti, este año,', honoring_outro: 'almas están siendo honradas en el mundo',
     in_memory_of: 'En memoria de',
@@ -4251,7 +4252,9 @@ const I18N = {
     hide: 'Masquer', normal: 'Normal', highlight: 'Mettre en avant',
     dedication_title: 'Dédicace', edit_memorial: 'Éditer le profil "En mémoire de"',
     next_yahrzeit: 'Prochain Yahrzeit',
-    yahrzeit_reminder_note: "L'app enverra un rappel par email 7 jours avant",
+    yahrzeit_reminder_note: 'Quatre rappels chaque année : une semaine avant, trois jours avant, l\'après-midi de la veille (heure d\'allumer la bougie) et le matin du jour.',
+    yahrzeit_calendar_btn: 'ajouter au calendrier du téléphone',
+    speed_label: 'Vitesse de lecture',
     settings_hint: 'Activez <strong>Mettre en avant</strong> sur une couche pour vous concentrer dessus pendant que les autres s\'estompent.',
     honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
     in_memory_of: 'En mémoire de',
@@ -4268,6 +4271,66 @@ const I18N = {
     find_chabad: 'Trouver Beth Habad proche →',
     explanations_label: 'Explications entre versets', explanations_off: 'Masquer', explanations_on: 'Afficher'
   },
+  it: {
+    modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
+    treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
+    settings_title: 'Impostazioni',
+    theme_label: 'Tema', theme_light: 'Chiaro', theme_dark: 'Scuro', theme_contrast: 'Contrasto',
+    font_size_label: 'Dimensione del testo', font_small: 'Piccola', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Molto grande',
+    tradition_label: 'Tradizione', language_label: 'Lingua',
+    layers_title: 'Livelli', layer_hebrew: 'Ebraico', layer_translit: 'Traslitterazione', layer_translation: 'Traduzione',
+    hide: 'Nascondi', normal: 'Normale', highlight: 'Evidenzia',
+    dedication_title: 'Dedica', edit_memorial: 'Modifica il profilo "In memoria di"',
+    next_yahrzeit: 'Prossimo Yahrzeit',
+    yahrzeit_reminder_note: 'Quattro avvisi ogni anno: una settimana prima, tre giorni prima, il pomeriggio della vigilia (ora di accendere la candela) e la mattina del giorno.',
+    yahrzeit_calendar_btn: 'aggiungi al calendario del telefono',
+    speed_label: 'Velocità della lettura',
+    settings_hint: 'Attiva <strong>Evidenzia</strong> su un livello per concentrarti su di esso mentre gli altri si attenuano.',
+    honoring_intro: 'Insieme a te, quest\'anno,', honoring_outro: 'anime vengono onorate nel mondo',
+    in_memory_of: 'In memoria di',
+    prayer_title: 'Kaddish dei Dolenti', prayer_source: 'Kaddish Yatom · recitato in piedi',
+    learn_title: 'Perché diciamo il Kaddish?', learn_sub: 'Il significato, la storia e chi lo istituì',
+    studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
+    setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
+    setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
+    setup_name: 'Nome (in italiano)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
+    setup_relation: 'Relazione', setup_death_date: 'Data del decesso (necessaria per lo yahrzeit)',
+    setup_skip_btn: 'Salta', setup_save: 'Salva', setup_skip_link: 'Più tardi, nel menu ⚙',
+    consent_title: 'Privacy', consent_text: 'Questa app raccoglie dati d\'uso anonimi e, se ti registri, il tuo nome e la data del decesso restano salvati solo sul tuo dispositivo. In base al GDPR puoi cancellare tutto in qualsiasi momento.',
+    consent_decline: 'Solo l\'essenziale', consent_accept: 'OK, continua',
+    find_chabad: 'Trova il Beit Chabad più vicino →',
+    explanations_label: 'Spiegazioni tra i versetti', explanations_off: 'Nascondi', explanations_on: 'Mostra'
+  },
+  de: {
+    modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
+    treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
+    settings_title: 'Einstellungen',
+    theme_label: 'Design', theme_light: 'Hell', theme_dark: 'Dunkel', theme_contrast: 'Kontrast',
+    font_size_label: 'Schriftgröße', font_small: 'Klein', font_normal: 'Normal', font_large: 'Groß', font_xlarge: 'Sehr groß',
+    tradition_label: 'Tradition', language_label: 'Sprache',
+    layers_title: 'Ebenen', layer_hebrew: 'Hebräisch', layer_translit: 'Umschrift', layer_translation: 'Übersetzung',
+    hide: 'Ausblenden', normal: 'Normal', highlight: 'Hervorheben',
+    dedication_title: 'Widmung', edit_memorial: 'Profil „Zum Andenken an" bearbeiten',
+    next_yahrzeit: 'Nächster Jahrzeit',
+    yahrzeit_reminder_note: 'Vier Erinnerungen pro Jahr: eine Woche vorher, drei Tage vorher, am Nachmittag des Vorabends (Zeit, die Kerze anzuzünden) und am Morgen des Tages.',
+    yahrzeit_calendar_btn: 'in den Kalender des Telefons eintragen',
+    speed_label: 'Lesegeschwindigkeit',
+    settings_hint: 'Aktivieren Sie <strong>Hervorheben</strong> bei einer Ebene, um sich auf sie zu konzentrieren, während die anderen zurücktreten.',
+    honoring_intro: 'Gemeinsam mit Ihnen werden in diesem Jahr', honoring_outro: 'Seelen weltweit geehrt',
+    in_memory_of: 'Zum Andenken an',
+    prayer_title: 'Trauerkaddisch', prayer_source: 'Kaddisch Jatom · im Stehen gesprochen',
+    learn_title: 'Warum sagen wir das Kaddisch?', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
+    studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
+    setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
+    setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
+    setup_name: 'Name (auf Deutsch)', setup_hebrew_name: 'Hebräischer Name (optional)',
+    setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (für den Jahrzeit nötig)',
+    setup_skip_btn: 'Überspringen', setup_save: 'Speichern', setup_skip_link: 'Später, im Menü ⚙',
+    consent_title: 'Datenschutz', consent_text: 'Diese App erfasst anonyme Nutzungsdaten. Wenn Sie sich eintragen, bleiben Name und Sterbedatum nur auf Ihrem Gerät gespeichert. Gemäß DSGVO können Sie jederzeit alles löschen.',
+    consent_decline: 'Nur das Nötigste', consent_accept: 'OK, weiter',
+    find_chabad: 'Nächstes Beit Chabad finden →',
+    explanations_label: 'Erklärungen zwischen den Versen', explanations_off: 'Ausblenden', explanations_on: 'Anzeigen'
+  },
   ru: {
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     treino_active: '⊙ Режим Практики · пауза после каждого стиха',
@@ -4279,7 +4342,9 @@ const I18N = {
     hide: 'Скрыть', normal: 'Норма', highlight: 'Выделить',
     dedication_title: 'Посвящение', edit_memorial: 'Редактировать профиль "В память о"',
     next_yahrzeit: 'Следующий Йорцайт',
-    yahrzeit_reminder_note: 'Приложение пришлёт напоминание за 7 дней',
+    yahrzeit_reminder_note: 'Четыре напоминания каждый год: за неделю, за три дня, во второй половине дня накануне (время зажечь свечу) и утром в сам день.',
+    yahrzeit_calendar_btn: 'добавить в календарь телефона',
+    speed_label: 'Скорость чтения',
     settings_hint: 'Активируйте <strong>Выделить</strong> на слое, чтобы сфокусироваться на нём.',
     honoring_intro: 'Вместе с вами, в этом году,', honoring_outro: 'душ почитаются по всему миру',
     in_memory_of: 'В память о',
@@ -4307,7 +4372,9 @@ const I18N = {
     hide: 'הסתר', normal: 'רגיל', highlight: 'הדגש',
     dedication_title: 'הקדשה', edit_memorial: 'עריכת פרופיל "לזכר"',
     next_yahrzeit: 'יארצייט הבא',
-    yahrzeit_reminder_note: 'האפליקציה תשלח תזכורת באימייל 7 ימים לפני',
+    yahrzeit_reminder_note: 'ארבע תזכורות בכל שנה: שבוע לפני, שלושה ימים לפני, אחר הצהריים של ערב היום (זמן הדלקת הנר) ובבוקר היום עצמו.',
+    yahrzeit_calendar_btn: 'להוסיף ליומן בטלפון',
+    speed_label: 'מהירות הקריאה',
     settings_hint: 'הפעל <strong>הדגשה</strong> בשכבה כדי להתמקד בה.',
     honoring_intro: 'יחד איתך, השנה,', honoring_outro: 'נשמות זוכות לכבוד ברחבי העולם',
     in_memory_of: 'לזכר',
