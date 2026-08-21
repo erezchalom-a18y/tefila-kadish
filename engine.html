@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#f4ede0">
 <title>Tefilá · Kadish do Enlutado · v3</title>
+<script src="./hebraico.js"></script>
+<script src="./yahrzeit.js"></script>
 <script src="./sync-player.js"></script>
 <link rel="manifest" href='data:application/manifest+json,{"name":"Tefil%C3%A1 · Kadish","short_name":"Tefil%C3%A1","start_url":"./","display":"standalone","theme_color":"%238b6a3e","background_color":"%23f4ede0","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 192 192%22%3E%3Crect width%3D%22192%22 height%3D%22192%22 fill%3D%22%23f4ede0%22%2F%3E%3Ctext x%3D%2296%22 y%3D%22120%22 font-size%3D%22100%22 text-anchor%3D%22middle%22 fill%3D%22%238b6a3e%22%3E%E2%9C%A1%3C%2Ftext%3E%3C%2Fsvg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1753,7 +1755,14 @@
       <div class="yz-label" data-i18n="next_yahrzeit">Próximo Yahrzeit</div>
       <div class="yz-date" id="yzDate">—</div>
       <div class="yz-hebrew" id="yzHebrew">—</div>
-      <div style="margin-top:10px;font-size:12px;color:var(--text-faint);font-style:italic;" data-i18n="yahrzeit_reminder_note">App enviará lembrete por email 7 dias antes <span class="yz-mock">mock</span></div>
+      <div id="yzAvisos" style="margin-top:10px;font-size:12.5px;color:#8a5a12;line-height:1.5"></div>
+      <button id="yzCalendario" style="margin-top:12px;width:100%;background:var(--brass);color:#fff;border:0;border-radius:9px;padding:11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer">
+        pôr no calendário do telefone
+      </button>
+      <div style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">
+        Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da
+        véspera (hora de acender a vela) e na manhã do dia.
+      </div>
     </div>
 
     <div class="settings-hint" data-i18n="settings_hint">
@@ -4628,19 +4637,37 @@ function renderMemorial() {
 
 function renderYahrzeit(m) {
   const card = document.getElementById('yahrzeitCard');
-  if (!card) return;
+  if (!card || !m.deathDate) return;
   card.style.display = 'block';
-  // Calculate next yahrzeit (mocked Hebrew calendar — for real, use Hebcal library)
-  const today = new Date();
-  const death = new Date(m.deathDate);
-  let next = new Date(death);
-  next.setFullYear(today.getFullYear());
-  if (next < today) next.setFullYear(today.getFullYear() + 1);
-  const opts = { day: 'numeric', month: 'long', year: 'numeric' };
-  const locales = { pt:'pt-BR', en:'en-US', es:'es-ES', fr:'fr-FR', ru:'ru-RU', he:'he-IL' };
-  document.getElementById('yzDate').textContent = next.toLocaleDateString(locales[state.lang] || 'pt-BR', opts);
-  // Mock Hebrew date (would be computed via Hebcal in production)
-  document.getElementById('yzHebrew').textContent = 'י"ז כסלו תשפ"ז · cálculo aproximado';
+
+  // Antes isto usava o aniversario no calendario CIVIL e mostrava uma data
+  // hebraica inventada, fixa no codigo ('י"ז כסלו תשפ"ז'), com ar de calculada.
+  // Agora e o calendario hebraico de verdade (hebraico.js), com a regra do
+  // nussach escolhido (yahrzeit.js).
+  const nussach = (window.SYNC && SYNC.atual().nussach) || 'chabad';
+  const morte = new Date(m.deathDate + 'T12:00:00');   // meio-dia evita fuso virar o dia
+  let y = null;
+  try { y = Yahrzeit.proximoYahrzeit(morte, nussach); } catch (e) { console.error(e); }
+  if (!y) { card.style.display = 'none'; return; }
+
+  const locais = { pt:'pt-BR', en:'en-US', es:'es-ES', fr:'fr-FR', it:'it-IT',
+                   de:'de-DE', ru:'ru-RU', he:'he-IL' };
+  document.getElementById('yzDate').textContent =
+    y.data.toLocaleDateString(locais[state.lang] || 'pt-BR',
+      { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('yzHebrew').textContent = y.rotulo;
+
+  // Todo caso duvidoso aparece escrito. A maquina calcula; o rabino decide.
+  const avisos = document.getElementById('yzAvisos');
+  avisos.innerHTML = y.avisos.map(a => '⚠ ' + a.replace(/[<>]/g, '')).join('<br><br>');
+
+  document.getElementById('yzCalendario').onclick = () => {
+    const ics = Yahrzeit.gerarICS(morte, nussach, m.name || '', 20);
+    const b = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const u = URL.createObjectURL(b), a = document.createElement('a');
+    a.href = u; a.download = 'yahrzeit.ics'; a.click(); URL.revokeObjectURL(u);
+    showToast('Abra o arquivo baixado para pôr no calendário');
+  };
 }
 
 document.getElementById('editMemorial').addEventListener('click', () => {
@@ -5054,6 +5081,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       if (audio && !ouvindo) { audio.addEventListener('timeupdate', acender); ouvindo = true; }
       const nPal = dados.versos.reduce((a, v) => a + (v.palavras || []).length, 0);
       console.log(`✓ ${nussach} ${tipo}: ${dados.versos.length} versos, ${nPal} palavras, texto do sync`);
+
+      // A regra do yahrzeit depende do nussach (Ashkenazi marca no Adar I,
+      // Sefaradi no Adar II). O cartao e desenhado na carga, antes daqui, entao
+      // sem este redesenho ele mostrava sempre a regra do nussach padrao.
+      if (typeof renderMemorial === 'function') { try { renderMemorial(); } catch (e) {} }
     }
 
     return {
