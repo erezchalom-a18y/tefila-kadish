@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aprender · Kadish</title>
+<style>
+  :root{--fundo:#f4ede0;--cartao:#fbf7ef;--linha:#ddd3c0;--txt:#2a1f15;--fraco:#6b6153;
+        --brass:#8b6a3e}
+  :root[data-tema="claro"]{--fundo:#fff;--cartao:#fff;--linha:#e6e6e6;--txt:#1a1a1a;--fraco:#5f5f5f}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:17px/1.65 Georgia,"Times New Roman",serif;padding-bottom:60px}
+  header{padding:18px 20px 14px;border-bottom:1px solid var(--linha);
+         display:flex;align-items:center;gap:14px;position:sticky;top:0;background:var(--fundo);z-index:5}
+  a.voltar{color:var(--brass);text-decoration:none;font-size:16px;white-space:nowrap}
+  h1{font-size:20px;margin:0;font-weight:600;letter-spacing:.02em}
+  main{max-width:680px;margin:0 auto;padding:22px 20px}
+  section{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+          padding:20px;margin-bottom:18px}
+  section h2{font-size:19px;margin:0 0 10px}
+  section p{margin:0 0 12px}
+  section p:last-child{margin-bottom:0}
+  audio{width:100%;margin-top:6px}
+  a.assistir{display:inline-block;background:var(--brass);color:#fff;text-decoration:none;
+             border-radius:9px;padding:11px 18px;font-size:16px;margin-top:6px}
+  .vazio{background:var(--cartao);border:1px dashed var(--linha);border-radius:12px;
+         padding:26px 22px;color:var(--fraco)}
+  .vazio h2{color:var(--txt);font-size:19px;margin:0 0 10px}
+  .vazio code{background:#efe7d8;padding:2px 6px;border-radius:4px;font-size:14px;
+              font-family:ui-monospace,monospace}
+  .vazio ol{margin:12px 0 0;padding-left:22px}
+  .vazio li{margin-bottom:8px}
+  .aviso{font-size:14.5px;color:#8a3a1a;background:#fdf3e6;border-left:3px solid #c0733a;
+         border-radius:8px;padding:12px 14px;margin-bottom:20px}
+  footer{max-width:680px;margin:0 auto;padding:0 20px;color:var(--fraco);font-size:14px}
+</style></head>
+<body>
+<header>
+  <a class="voltar" href="./">‹ voltar</a>
+  <h1>Aprender sobre o Kadish</h1>
+</header>
+
+<main id="conteudo"><p style="color:var(--fraco)">carregando…</p></main>
+<footer id="rodape"></footer>
+
+<script>
+const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const lingua = new URLSearchParams(location.search).get('lang')
+            || localStorage.getItem('tefila_lang') || 'pt';
+
+// aceita tanto "texto simples" quanto {pt:"…", en:"…"}
+const naLingua = v => (v && typeof v === 'object') ? (v[lingua] || v.pt || '') : (v || '');
+
+const paragrafos = t => naLingua(t).split(/\n\s*\n/).filter(Boolean)
+  .map(p => `<p>${esc(p)}</p>`).join('');
+
+function bloco(s) {
+  const titulo = esc(naLingua(s.titulo));
+  const corpo = paragrafos(s.corpo);
+  if (s.tipo === 'audio')
+    return `<section><h2>${titulo}</h2>${corpo}
+      <audio controls preload="none" src="${esc(s.arquivo)}"></audio></section>`;
+  if (s.tipo === 'video')
+    return `<section><h2>${titulo}</h2>${corpo}
+      <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">assistir ▸</a></section>`;
+  return `<section><h2>${titulo}</h2>${corpo}</section>`;
+}
+
+const vazio = `<div class="vazio">
+  <h2>Esta página ainda está vazia</h2>
+  <p>Ela está pronta para receber o conteúdo — texto, áudio e vídeo sobre o Kadish:
+     o que é, de onde vem, quem diz, quando se diz.</p>
+  <p><b>O conteúdo não é escrito pela máquina.</b> É seu, ou do rabino. Para preencher,
+     edite <code>aprender.json</code> — não precisa mexer em HTML.</p>
+  <ol>
+    <li>Abra <code>aprender.json</code> no GitHub e clique no lápis.</li>
+    <li>Dentro de <code>"secoes": []</code>, acrescente os blocos.
+        O próprio arquivo traz o modelo de cada tipo em <code>_como_preencher</code>.</li>
+    <li>Salve. A página se monta sozinha.</li>
+  </ol>
+  <p style="margin-top:14px">Vídeo não deve ser arquivo: use o endereço do YouTube ou
+     do Vimeo. Vídeo pesado não cabe neste repositório.</p>
+</div>`;
+
+fetch('./aprender.json', { cache: 'no-cache' })
+  .then(r => r.json())
+  .then(d => {
+    const secoes = Array.isArray(d.secoes) ? d.secoes : [];
+    const aviso = d.revisado_pelo_rabino ? '' :
+      `<div class="aviso">Rascunho — este conteúdo ainda não foi revisado pelo rabino.</div>`;
+    document.getElementById('conteudo').innerHTML =
+      (secoes.length ? aviso + secoes.map(bloco).join('') : vazio);
+    document.getElementById('rodape').innerHTML = secoes.length
+      ? `<p>${secoes.length} ${secoes.length === 1 ? 'seção' : 'seções'}.
+         Para acrescentar ou corrigir, edite <code>aprender.json</code>.</p>` : '';
+  })
+  .catch(e => {
+    document.getElementById('conteudo').innerHTML =
+      `<div class="vazio"><h2>Não consegui ler o conteúdo</h2>
+       <p>O arquivo <code>aprender.json</code> não abriu: ${esc(e.message)}.</p></div>`;
+  });
+
+// segue o tema escolhido no app
+if (localStorage.getItem('tefila_theme') === 'claro')
+  document.documentElement.dataset.tema = 'claro';
+</script>
+</body></html>
