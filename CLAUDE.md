@@ -35,8 +35,14 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 6. Tudo que aparece na tela existe nas 8 línguas (pt, en, es, fr, it, de, ru, he).
    Texto novo nunca vai escrito direto no HTML: entra em tabela (I18N, SOBRE,
    DEDICATORIA, CONVITE em engine.html; TEXTOS em yahrzeit.js; T em aprender.html
-   e em gerar-pdf.mjs), e testar-linguas.mjs confere. A transliteração é a única
-   exceção, e é declarada: existe uma só, com fonética portuguesa.
+   e em gerar-pdf.mjs), e testar-linguas.mjs confere.
+7. Transliteração: o PORTUGUÊS é o que sempre foi e não se mexe (decisão do
+   Erez). As outras línguas vêm de fonte humana — os .docx dele, copiados
+   verbatim para fontes/transliteracao-por-lingua.json — e entram por
+   aplicar-transliteracoes.mjs, nunca escritas pelo modelo. Onde não há fonte
+   (sefard inteiro, alemão, e um trecho do sefaradi), a palavra cai para o
+   português. Ver TRANSLITERACAO-POR-LINGUA.md, inclusive a pergunta aberta do
+   yisgadal x yitgadal, que é do rabino e do ouvido do Erez.
 
 ## O fluxo de correção de sincronia (o que funciona)
 
@@ -157,6 +163,12 @@ Para as que imprimem, também playwright + Chromium.
   alemão, com sufixo _de no nome. Os commitados são os de português, que são os
   que vão ao rabino.
 - gerar-escolha-rabino.mjs — ESCOLHA-RABINO.pdf/.html e escolha-rabino-itens.json.
+- aplicar-ancoras.py — põe em sync/*.json as âncoras de ancoras.json e prova que
+  nada mais mudou. Substitui o alinhar-global.py, que nunca foi commitado.
+- aplicar-transliteracoes.mjs — põe a transliteração por língua vinda de
+  fontes/transliteracao-por-lingua.json. Casa palavra a palavra (o documento
+  divide os versos diferente de nós) e só grava se nenhum tempo, hebraico ou
+  glosa tiver mudado.
 
 Todas só leem dados. Nenhuma escreve em sync/, ancoras.json, cortes.json ou
 glossario.json.

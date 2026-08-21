@@ -87,12 +87,26 @@ function traducao(v) {
   return (v.translations && v.translations[LINGUA]) || v.translation_pt || '';
 }
 
+/**
+ * A transliteracao do verso, na lingua do folheto. Ela e guardada por PALAVRA
+ * (o app acende palavra a palavra), entao aqui as palavras sao remontadas em
+ * linha. Onde a lingua nao tem fonte — o sefard inteiro, e alguns trechos do
+ * sefaradi — cada palavra cai para o portugues, que e o apoio de sempre.
+ */
+function transliteracao(v) {
+  const ps = v.palavras || [];
+  if (!ps.length) return v.transliteration_pt || '';
+  if (LINGUA === 'pt' || LINGUA === 'he') return v.transliteration_pt || '';
+  return ps.map(p => (p.transliteracoes && p.transliteracoes[LINGUA]) ||
+                     p.transliteration_pt || '').join(' ');
+}
+
 function html(nussach, tipo, sync) {
   const versos = sync.versos.map(v => `
     <section class="v">
       <div class="n">§${v.n}</div>
       <div class="heb" dir="rtl" lang="he">${esc(v.hebrew)}</div>
-      <div class="tl">${esc(v.transliteration_pt || '')}</div>
+      <div class="tl">${esc(transliteracao(v))}</div>
       <div class="tr"${LINGUA === 'he' ? ' dir="rtl" lang="he"' : ''}>${esc(traducao(v))}</div>
     </section>`).join('\n');
 

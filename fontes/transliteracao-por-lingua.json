@@ -1,0 +1,639 @@
+{
+  "_leia": "Transliteracao por lingua, copiada VERBATIM dos documentos do Erez no Google Drive (1/8/2026): kadish-derabanan-transliteration-{en,es,fr,it,ru}-3nusachim.docx. So Kadish deRabanan, so tres nussachim. As colunas do documento sao Sefaradi/Ashkenazi/Chabad; '—' e onde o ashkenazi omite o trecho. NAO ha portugues aqui: o portugues do app fica como esta, por decisao do Erez. Quem transforma isto em transliteracao por palavra e aplicar-transliteracoes.mjs.",
+  "origem": "Google Drive do Erez, 1/8/2026, kadish-derabanan-transliteration-*-3nusachim.docx",
+  "linguas": [
+    "en",
+    "es",
+    "fr",
+    "it",
+    "ru"
+  ],
+  "colunas": [
+    "sefaradi",
+    "ashkenaz",
+    "chabad"
+  ],
+  "versos": {
+    "1": {
+      "sefaradi": {
+        "en": "Yitgadal veyitkadash sh’me raba",
+        "es": "Yitgadal veyitkadash sh’me raba",
+        "fr": "Yitgadal véyitkadach ch’mé raba",
+        "it": "Yitgadal veyitkadash sh’me raba",
+        "ru": "Йитгадаль вэйиткадаш шмэ раба"
+      },
+      "ashkenaz": {
+        "en": "Yisgadal veyiskadash sh’mei rabo",
+        "es": "Yisgadal veyiskadash sh’mei rabo",
+        "fr": "Yisgadal véyiskadach ch’meï rabo",
+        "it": "Yisgadal veyiskadash sh’mei rabo",
+        "ru": "Йисгадаль вэйискадаш шмэй робо"
+      },
+      "chabad": {
+        "en": "Yisgadal veyiskadash sh’mei raba",
+        "es": "Yisgadal veyiskadash sh’mei raba",
+        "fr": "Yisgadal véyiskadach ch’meï raba",
+        "it": "Yisgadal veyiskadash sh’mei raba",
+        "ru": "Йисгадаль вэйискадаш шмэй раба"
+      }
+    },
+    "2": {
+      "sefaradi": {
+        "en": "be’alma di vera chir’utei",
+        "es": "be’alma di vera jir’utei",
+        "fr": "bé’alma di véra ’hir’outeï",
+        "it": "be’alma di vera chir’utei",
+        "ru": "бэальма ди вэра хирутэй"
+      },
+      "ashkenaz": {
+        "en": "be’olmo di vero chir’usei",
+        "es": "be’olmo di vero jir’usei",
+        "fr": "be’olmo di véro ’hir’ouseï",
+        "it": "be’olmo di vero chir’usei",
+        "ru": "бэолмо ди вэро хирусэй"
+      },
+      "chabad": {
+        "en": "b’olma di v’ra chirusei",
+        "es": "b’olma di v’ra jirusei",
+        "fr": "be’olma di véra ’hirouseï",
+        "it": "b’olma di v’ra chirusei",
+        "ru": "болма ди вра хирусэй"
+      }
+    },
+    "3": {
+      "sefaradi": {
+        "en": "v’yamlich malchutei",
+        "es": "v’yamlij maljutei",
+        "fr": "véyamli’h mal’houteï",
+        "it": "v’yamlich malchutei",
+        "ru": "вэямлих малхутэй"
+      },
+      "ashkenaz": {
+        "en": "v’yamlich malchusei",
+        "es": "v’yamlij maljusei",
+        "fr": "véyamli’h mal’houseï",
+        "it": "v’yamlich malchusei",
+        "ru": "вэямлих малхусэй"
+      },
+      "chabad": {
+        "en": "v’yamlich malchusei",
+        "es": "v’yamlij maljusei",
+        "fr": "véyamli’h mal’houseï",
+        "it": "v’yamlich malchusei",
+        "ru": "вэямлих малхусэй"
+      }
+    },
+    "4": {
+      "sefaradi": {
+        "en": "v’yatsmach purkane",
+        "es": "v’yatsmaj purkane",
+        "fr": "véyatsma’h pourkané",
+        "it": "v’yatsmach purkane",
+        "ru": "вэяцмах пурканэ"
+      },
+      "ashkenaz": {
+        "en": "—",
+        "es": "—",
+        "fr": "—",
+        "it": "—",
+        "ru": "—"
+      },
+      "chabad": {
+        "en": "v’yatzmach purkonei",
+        "es": "v’yatzmaj purkonei",
+        "fr": "véyatzma’h pourkoneï",
+        "it": "v’yatzmach purkonei",
+        "ru": "вэяцмах пурконэй"
+      }
+    },
+    "5": {
+      "sefaradi": {
+        "en": "vikarev meshichei",
+        "es": "vikarev meshijei",
+        "fr": "vikarev mechi’heï",
+        "it": "vikarev meshichei",
+        "ru": "викарэв мешихэй"
+      },
+      "ashkenaz": {
+        "en": "—",
+        "es": "—",
+        "fr": "—",
+        "it": "—",
+        "ru": "—"
+      },
+      "chabad": {
+        "en": "vikorev m’shichei",
+        "es": "vikorev m’shijei",
+        "fr": "vikorev mechi’heï",
+        "it": "vikorev m’shichei",
+        "ru": "викорэв мшихэй"
+      }
+    },
+    "6": {
+      "sefaradi": {
+        "en": "b’chayechon uv’yomechon",
+        "es": "b’jayejon uv’yomejon",
+        "fr": "be’hayé’hon ouve’yomé’hon",
+        "it": "b’chayechon uv’yomechon",
+        "ru": "бэхаейхон увйомэйхон"
+      },
+      "ashkenaz": {
+        "en": "b’chayechon uv’yomechon",
+        "es": "b’jayejon uv’yomejon",
+        "fr": "be’hayé’hon ouve’yomé’hon",
+        "it": "b’chayechon uv’yomechon",
+        "ru": "бэхаейхон увйомэйхон"
+      },
+      "chabad": {
+        "en": "b’chayechon uv’yomechon",
+        "es": "b’jayejon uv’yomejon",
+        "fr": "be’hayé’hon ouve’yomé’hon",
+        "it": "b’chayechon uv’yomechon",
+        "ru": "бэхаейхон увйомэйхон"
+      }
+    },
+    "7": {
+      "sefaradi": {
+        "en": "uv’chaye d’chol beit Yisrael",
+        "es": "uv’jaye d’jol beit Yisrael",
+        "fr": "ouve’hayé de’hol beït Yisraël",
+        "it": "uv’chaye d’chol beit Yisrael",
+        "ru": "увхаей дэхоль бэйт Исраэль"
+      },
+      "ashkenaz": {
+        "en": "uv’chayei d’chol beis Yisroel",
+        "es": "uv’jayei d’jol beis Yisroel",
+        "fr": "ouve’hayeï de’hol beïs Yisroël",
+        "it": "uv’chayei d’chol beis Yisroel",
+        "ru": "увхаей дэхоль бэйс Исроэль"
+      },
+      "chabad": {
+        "en": "uv’chayei d’chol beis Yisrael",
+        "es": "uv’jayei d’jol beis Yisrael",
+        "fr": "ouve’hayeï de’hol beïs Yisraël",
+        "it": "uv’chayei d’chol beis Yisrael",
+        "ru": "увхаей дэхоль бэйс Исраэль"
+      }
+    },
+    "8": {
+      "sefaradi": {
+        "en": "ba’agala uvizman kariv, ve’imru amen",
+        "es": "ba’agala uvizman kariv, ve’imru amen",
+        "fr": "ba’agala ouvizmane kariv, véïmrou amen",
+        "it": "ba’agala uvizman kariv, ve’imru amen",
+        "ru": "баагала увизман карив, вэимру амэн"
+      },
+      "ashkenaz": {
+        "en": "ba’agola uvizman koriv, v’imru omein",
+        "es": "ba’agola uvizman koriv, v’imru omein",
+        "fr": "ba’agola ouvizmane koriv, véïmrou omeïn",
+        "it": "ba’agola uvizman koriv, v’imru omein",
+        "ru": "бааголо увизман корив, вимру омэйн"
+      },
+      "chabad": {
+        "en": "ba’agala uvizman kariv, v’imru amen",
+        "es": "ba’agala uvizman kariv, v’imru amen",
+        "fr": "ba’agala ouvizmane kariv, véïmrou amen",
+        "it": "ba’agala uvizman kariv, v’imru amen",
+        "ru": "баагала увизман карив, вимру амэн"
+      }
+    },
+    "9": {
+      "sefaradi": {
+        "en": "y’he sh’me raba m’varach",
+        "es": "y’he sh’me raba m’varaj",
+        "fr": "yéhé ch’mé raba mevara’h",
+        "it": "y’he sh’me raba m’varach",
+        "ru": "йехэ шмэ раба мэварах"
+      },
+      "ashkenaz": {
+        "en": "y’hei sh’mei rabo m’vorach",
+        "es": "y’hei sh’mei rabo m’voraj",
+        "fr": "yéheï ch’meï rabo mevora’h",
+        "it": "y’hei sh’mei rabo m’vorach",
+        "ru": "йехэй шмэй рабо мэворох"
+      },
+      "chabad": {
+        "en": "y’hei sh’mei raba m’vorach",
+        "es": "y’hei sh’mei raba m’voraj",
+        "fr": "yéheï ch’meï raba mevora’h",
+        "it": "y’hei sh’mei raba m’vorach",
+        "ru": "йехэй шмэй раба мэворох"
+      }
+    },
+    "10": {
+      "sefaradi": {
+        "en": "le’alam ul’almei almaya",
+        "es": "le’alam ul’almei almaya",
+        "fr": "le’alam oule’almeï almaya",
+        "it": "le’alam ul’almei almaya",
+        "ru": "лэалам улалмэй алмая"
+      },
+      "ashkenaz": {
+        "en": "l’olam ul’olmei olmayo",
+        "es": "l’olam ul’olmei olmayo",
+        "fr": "le’olam oule’olmeï olmayo",
+        "it": "l’olam ul’olmei olmayo",
+        "ru": "лолам улолмэй олмайо"
+      },
+      "chabad": {
+        "en": "l’olam ul’olmei olmaya",
+        "es": "l’olam ul’olmei olmaya",
+        "fr": "le’olam oule’olmeï olmaya",
+        "it": "l’olam ul’olmei olmaya",
+        "ru": "лолам улолмэй олмая"
+      }
+    },
+    "11": {
+      "sefaradi": {
+        "en": "yitbarach v’yishtabach v’yitpa’ar",
+        "es": "yitbaraj v’yishtabaj v’yitpa’ar",
+        "fr": "yitbara’h véyichtaba’h véyitpa’ar",
+        "it": "yitbarach v’yishtabach v’yitpa’ar",
+        "ru": "йитбарах вэйиштабах вэйитпаар"
+      },
+      "ashkenaz": {
+        "en": "yisborach v’yishtabach v’yispoar",
+        "es": "yisboraj v’yishtabaj v’yispoar",
+        "fr": "yisbora’h véyichtaba’h véyispoar",
+        "it": "yisborach v’yishtabach v’yispoar",
+        "ru": "йисборах вэйиштабах вэйиспоар"
+      },
+      "chabad": {
+        "en": "yisborach v’yishtabach v’yispoar",
+        "es": "yisboraj v’yishtabaj v’yispoar",
+        "fr": "yisbora’h véyichtaba’h véyispoar",
+        "it": "yisborach v’yishtabach v’yispoar",
+        "ru": "йисборах вэйиштабах вэйиспоар"
+      }
+    },
+    "12": {
+      "sefaradi": {
+        "en": "v’yitromam v’yitnasse v’yithadar",
+        "es": "v’yitromam v’yitnasse v’yithadar",
+        "fr": "véyitromam véyitnassé véyithadar",
+        "it": "v’yitromam v’yitnasse v’yithadar",
+        "ru": "вэйитромам вэйитнассэ вэйитхадар"
+      },
+      "ashkenaz": {
+        "en": "v’yisromam v’yisnasse v’yishador",
+        "es": "v’yisromam v’yisnasse v’yishador",
+        "fr": "véyisromam véyisnassé véyichador",
+        "it": "v’yisromam v’yisnasse v’yishador",
+        "ru": "вэйисромам вэйиснассэ вэйишадор"
+      },
+      "chabad": {
+        "en": "v’yisromam v’yisnasei v’yishador",
+        "es": "v’yisromam v’yisnasei v’yishador",
+        "fr": "véyisromam véyisnasseï véyichador",
+        "it": "v’yisromam v’yisnasei v’yishador",
+        "ru": "вэйисромам вэйиснасэй вэйишадор"
+      }
+    },
+    "13": {
+      "sefaradi": {
+        "en": "v’yit’aleh v’yit’halal sh’me d’kudsha b’rich hu",
+        "es": "v’yit’aleh v’yit’halal sh’me d’kudsha b’rij hu",
+        "fr": "véyit’alé véyit’halal ch’mé de’koudcha be’ri’h hou",
+        "it": "v’yit’aleh v’yit’halal sh’me d’kudsha b’rich hu",
+        "ru": "вэйиталэх вэйитхалаль шмэ дэкудша брих ху"
+      },
+      "ashkenaz": {
+        "en": "v’yis’aleh v’yis’halal sh’mei d’kudsho b’rich hu",
+        "es": "v’yis’aleh v’yis’halal sh’mei d’kudsho b’rij hu",
+        "fr": "véyis’alé véyis’halal ch’meï de’koudcho be’ri’h hou",
+        "it": "v’yis’aleh v’yis’halal sh’mei d’kudsho b’rich hu",
+        "ru": "вэйисалэх вэйисхалаль шмэй дэкудшо брих ху"
+      },
+      "chabad": {
+        "en": "v’yis’aleh v’yis’halal sh’mei d’kudsha b’rich hu",
+        "es": "v’yis’aleh v’yis’halal sh’mei d’kudsha b’rij hu",
+        "fr": "véyis’alé véyis’halal ch’meï de’koudcha be’ri’h hou",
+        "it": "v’yis’aleh v’yis’halal sh’mei d’kudsha b’rich hu",
+        "ru": "вэйисалэх вэйисхалаль шмэй дэкудша брих ху"
+      }
+    },
+    "14": {
+      "sefaradi": {
+        "en": "l’ela l’ela mikol birchata v’shirata",
+        "es": "l’ela l’ela mikol birjata v’shirata",
+        "fr": "lé’ela lé’ela mikol bir’hata véchirata",
+        "it": "l’ela l’ela mikol birchata v’shirata",
+        "ru": "лээла лээла миколь бирхата вэширата"
+      },
+      "ashkenaz": {
+        "en": "l’eila min-kol birchosa v’shirosa",
+        "es": "l’eila min-kol birjosa v’shirosa",
+        "fr": "lé’eïla min-kol bir’hosa véchirosa",
+        "it": "l’eila min-kol birchosa v’shirosa",
+        "ru": "лэйла мин-коль бирхосо вэширосо"
+      },
+      "chabad": {
+        "en": "l’eila u’l’eila mikol birchata v’shirata",
+        "es": "l’eila u’l’eila mikol birjata v’shirata",
+        "fr": "lé’eïla oulé’eïla mikol bir’hata véchirata",
+        "it": "l’eila u’l’eila mikol birchata v’shirata",
+        "ru": "лэйла улэйла миколь бирхата вэширата"
+      }
+    },
+    "15": {
+      "sefaradi": {
+        "en": "tushbechata v’nechemata da’amiran b’alma, ve’imru amen",
+        "es": "tushbejata v’nejemata da’amiran b’alma, ve’imru amen",
+        "fr": "touchbé’hata véné’hémata da’amirane béalma, véïmrou amen",
+        "it": "tushbechata v’nechemata da’amiran b’alma, ve’imru amen",
+        "ru": "тушбэхата вэнэхэмата даамиран бэалма, вэимру амэн"
+      },
+      "ashkenaz": {
+        "en": "tushb’chosa v’nechemosa da’amiron b’olmo, v’imru omein",
+        "es": "tushb’josa v’nejemosa da’amiron b’olmo, v’imru omein",
+        "fr": "touchbe’hosa véné’hémosa da’amirone be’olmo, véïmrou omeïn",
+        "it": "tushb’chosa v’nechemosa da’amiron b’olmo, v’imru omein",
+        "ru": "тушбэхосо вэнэхомосо даамирон болмо, вимру омэйн"
+      },
+      "chabad": {
+        "en": "tushb’chata v’nechemata da’amiran b’alma, v’imru amen",
+        "es": "tushb’jata v’nejemata da’amiran b’alma, v’imru amen",
+        "fr": "touchbe’hata véné’hémata da’amirane be’alma, véïmrou amen",
+        "it": "tushb’chata v’nechemata da’amiran b’alma, v’imru amen",
+        "ru": "тушбэхата вэнэхэмата даамиран бэалма, вимру амэн"
+      }
+    },
+    "16": {
+      "sefaradi": {
+        "en": "al Yisrael ve’al rabanan",
+        "es": "al Yisrael ve’al rabanan",
+        "fr": "al Yisraël véal rabanane",
+        "it": "al Yisrael ve’al rabanan",
+        "ru": "аль Исраэль вэаль рабанан"
+      },
+      "ashkenaz": {
+        "en": "al Yisroel v’al rabonon",
+        "es": "al Yisroel v’al rabonon",
+        "fr": "al Yisroël véal rabonone",
+        "it": "al Yisroel v’al rabonon",
+        "ru": "аль Исроэль валь рабонон"
+      },
+      "chabad": {
+        "en": "al Yisrael v’al rabanan",
+        "es": "al Yisrael v’al rabanan",
+        "fr": "al Yisraël véal rabanane",
+        "it": "al Yisrael v’al rabanan",
+        "ru": "аль Исраэль валь рабанан"
+      }
+    },
+    "17": {
+      "sefaradi": {
+        "en": "ve’al talmidehon ve’al kol talmidei talmidehon",
+        "es": "ve’al talmidehon ve’al kol talmidei talmidehon",
+        "fr": "véal talmidéhone véal kol talmideï talmidéhone",
+        "it": "ve’al talmidehon ve’al kol talmidei talmidehon",
+        "ru": "вэаль талмидэхон вэаль коль талмидэй талмидэхон"
+      },
+      "ashkenaz": {
+        "en": "v’al talmideihon v’al kol talmidei talmideihon",
+        "es": "v’al talmideihon v’al kol talmidei talmideihon",
+        "fr": "véal talmideïhone véal kol talmideï talmideïhone",
+        "it": "v’al talmideihon v’al kol talmidei talmideihon",
+        "ru": "валь талмидэйхон валь коль талмидэй талмидэйхон"
+      },
+      "chabad": {
+        "en": "v’al talmideihon v’al kol talmidei talmideihon",
+        "es": "v’al talmideihon v’al kol talmidei talmideihon",
+        "fr": "véal talmideïhone véal kol talmideï talmideïhone",
+        "it": "v’al talmideihon v’al kol talmidei talmideihon",
+        "ru": "валь талмидэйхон валь коль талмидэй талмидэйхон"
+      }
+    },
+    "18": {
+      "sefaradi": {
+        "en": "ve’al kol man d’askin b’oraita kadishta",
+        "es": "ve’al kol man d’askin b’oraita kadishta",
+        "fr": "véal kol mane de’askine be’oraïta kadichta",
+        "it": "ve’al kol man d’askin b’oraita kadishta",
+        "ru": "вэаль коль ман дэаскин бэорайта кадишта"
+      },
+      "ashkenaz": {
+        "en": "v’al kol mon d’oskin b’oraiso",
+        "es": "v’al kol mon d’oskin b’oraiso",
+        "fr": "véal kol mone de’oskine be’oraïso",
+        "it": "v’al kol mon d’oskin b’oraiso",
+        "ru": "валь коль мон дэоскин бэорайсо"
+      },
+      "chabad": {
+        "en": "v’al kol man d’askin b’oraita",
+        "es": "v’al kol man d’askin b’oraita",
+        "fr": "véal kol mane de’askine be’oraïta",
+        "it": "v’al kol man d’askin b’oraita",
+        "ru": "валь коль ман дэаскин бэорайта"
+      }
+    },
+    "19": {
+      "sefaradi": {
+        "en": "di b’atra hadein v’di b’chol atar va’atar",
+        "es": "di b’atra hadein v’di b’jol atar va’atar",
+        "fr": "di be’atra hadeïne védi be’hol atar va’atar",
+        "it": "di b’atra hadein v’di b’chol atar va’atar",
+        "ru": "ди бэатра хадэйн вэди бэхоль атар ваатар"
+      },
+      "ashkenaz": {
+        "en": "di v’asra hadein v’di v’chol asar va’asar",
+        "es": "di v’asra hadein v’di v’jol asar va’asar",
+        "fr": "di véasra hadeïne védi vé’hol asar va’asar",
+        "it": "di v’asra hadein v’di v’chol asar va’asar",
+        "ru": "ди вэасра хадэйн вэди вэхоль асар ваасар"
+      },
+      "chabad": {
+        "en": "di v’asra hadein v’di v’chol asar va’asar",
+        "es": "di v’asra hadein v’di v’jol asar va’asar",
+        "fr": "di véasra hadeïne védi vé’hol asar va’asar",
+        "it": "di v’asra hadein v’di v’chol asar va’asar",
+        "ru": "ди вэасра хадэйн вэди вэхоль асар ваасар"
+      }
+    },
+    "20": {
+      "sefaradi": {
+        "en": "y’he lehon ulechon shelama raba",
+        "es": "y’he lehon ulejon shelama raba",
+        "fr": "yéhé léhone oulé’hone chélama raba",
+        "it": "y’he lehon ulechon shelama raba",
+        "ru": "йехэ лэхон улэхон шлама раба"
+      },
+      "ashkenaz": {
+        "en": "y’hei l’hon ulechon shelomo rabo",
+        "es": "y’hei l’hon ulejon shelomo rabo",
+        "fr": "yéheï léhone oulé’hone chélomo rabo",
+        "it": "y’hei l’hon ulechon shelomo rabo",
+        "ru": "йехэй лхон улэхон шломо рабо"
+      },
+      "chabad": {
+        "en": "y’hei l’hon ulechon shelama raba",
+        "es": "y’hei l’hon ulejon shelama raba",
+        "fr": "yéheï léhone oulé’hone chélama raba",
+        "it": "y’hei l’hon ulechon shelama raba",
+        "ru": "йехэй лхон улэхон шлама раба"
+      }
+    },
+    "21": {
+      "sefaradi": {
+        "en": "china v’chisda v’rachame",
+        "es": "jina v’jisda v’rajame",
+        "fr": "’hina vé’hisda véra’hamé",
+        "it": "china v’chisda v’rachame",
+        "ru": "хина вэхисда вэрахамэ"
+      },
+      "ashkenaz": {
+        "en": "chino v’chisdo v’rachamin",
+        "es": "jino v’jisdo v’rajamin",
+        "fr": "’hino vé’hisdo véra’hamine",
+        "it": "chino v’chisdo v’rachamin",
+        "ru": "хино вэхисдо вэрахамин"
+      },
+      "chabad": {
+        "en": "china v’chisda v’rachamei",
+        "es": "jina v’jisda v’rajamei",
+        "fr": "’hina vé’hisda véra’hameï",
+        "it": "china v’chisda v’rachamei",
+        "ru": "хина вэхисда вэрахамэй"
+      }
+    },
+    "22": {
+      "sefaradi": {
+        "en": "v’chayim v’chayim arichin um’zonei r’vichei",
+        "es": "v’jayim v’jayim arijin um’zonei r’vijei",
+        "fr": "vé’hayim vé’hayim ari’hine oume’zoneï re’vi’heï",
+        "it": "v’chayim v’chayim arichin um’zonei r’vichei",
+        "ru": "вэхайим вэхайим арихин умзонэй рэвихэй"
+      },
+      "ashkenaz": {
+        "en": "v’chayim arukim um’zono r’vicho",
+        "es": "v’jayim arukim um’zono r’vijo",
+        "fr": "vé’hayim aroukime oume’zono re’vi’ho",
+        "it": "v’chayim arukim um’zono r’vicho",
+        "ru": "вэхайим аруким умзоно рэвихо"
+      },
+      "chabad": {
+        "en": "v’chayin arichin um’zonei r’vichei",
+        "es": "v’jayin arijin um’zonei r’vijei",
+        "fr": "vé’hayine ari’hine oume’zoneï re’vi’heï",
+        "it": "v’chayin arichin um’zonei r’vichei",
+        "ru": "вэхайин арихин умзонэй рэвихэй"
+      }
+    },
+    "23": {
+      "sefaradi": {
+        "en": "ufurkana min kodam avuhon di vishmaya, ve’imru amen",
+        "es": "ufurkana min kodam avuhon di vishmaya, ve’imru amen",
+        "fr": "oufourkana mine kodam avouhone di vichmaya, véïmrou amen",
+        "it": "ufurkana min kodam avuhon di vishmaya, ve’imru amen",
+        "ru": "уфуркана мин кодам авухон ди вишмая, вэимру амэн"
+      },
+      "ashkenaz": {
+        "en": "ufurkono min kodom avuhon di vishmayo, v’imru omein",
+        "es": "ufurkono min kodom avuhon di vishmayo, v’imru omein",
+        "fr": "oufourkono mine kodome avouhone di vichmayo, véïmrou omeïn",
+        "it": "ufurkono min kodom avuhon di vishmayo, v’imru omein",
+        "ru": "уфурконо мин кодом авухон ди вишмайо, вимру омэйн"
+      },
+      "chabad": {
+        "en": "ufurkana min kodam avuhon di vishmaya, v’imru amen",
+        "es": "ufurkana min kodam avuhon di vishmaya, v’imru amen",
+        "fr": "oufourkana mine kodam avouhone di vichmaya, véïmrou amen",
+        "it": "ufurkana min kodam avuhon di vishmaya, v’imru amen",
+        "ru": "уфуркана мин кодам авухон ди вишмая, вимру амэн"
+      }
+    },
+    "24": {
+      "sefaradi": {
+        "en": "y’he shelama raba min shemaya, chayim tovim aleinu",
+        "es": "y’he shelama raba min shemaya, jayim tovim aleinu",
+        "fr": "yéhé chélama raba mine chémaya, ’hayim tovim aléïnou",
+        "it": "y’he shelama raba min shemaya, chayim tovim aleinu",
+        "ru": "йехэ шлама раба мин шмая, хайим товим алэйну"
+      },
+      "ashkenaz": {
+        "en": "y’hei shelomo rabo min shemayo, v’chayim aleinu",
+        "es": "y’hei shelomo rabo min shemayo, v’jayim aleinu",
+        "fr": "yéheï chélomo rabo mine chémayo, vé’hayim aléïnou",
+        "it": "y’hei shelomo rabo min shemayo, v’chayim aleinu",
+        "ru": "йехэй шломо рабо мин шмайо, вэхайим алэйну"
+      },
+      "chabad": {
+        "en": "y’hei shelama raba min shemaya, v’chayim tovim aleinu",
+        "es": "y’hei shelama raba min shemaya, v’jayim tovim aleinu",
+        "fr": "yéheï chélama raba mine chémaya, vé’hayim tovim aléïnou",
+        "it": "y’hei shelama raba min shemaya, v’chayim tovim aleinu",
+        "ru": "йехэй шлама раба мин шмая, вэхайим товим алэйну"
+      }
+    },
+    "25": {
+      "sefaradi": {
+        "en": "ve’al kol Yisrael, ve’imru amen",
+        "es": "ve’al kol Yisrael, ve’imru amen",
+        "fr": "véal kol Yisraël, véïmrou amen",
+        "it": "ve’al kol Yisrael, ve’imru amen",
+        "ru": "вэаль коль Исраэль, вэимру амэн"
+      },
+      "ashkenaz": {
+        "en": "v’al kol Yisroel, v’imru omein",
+        "es": "v’al kol Yisroel, v’imru omein",
+        "fr": "véal kol Yisroël, véïmrou omeïn",
+        "it": "v’al kol Yisroel, v’imru omein",
+        "ru": "валь коль Исроэль, вимру омэйн"
+      },
+      "chabad": {
+        "en": "v’al kol Yisrael, v’imru amen",
+        "es": "v’al kol Yisrael, v’imru amen",
+        "fr": "véal kol Yisraël, véïmrou amen",
+        "it": "v’al kol Yisrael, v’imru amen",
+        "ru": "валь коль Исраэль, вимру амэн"
+      }
+    },
+    "26": {
+      "sefaradi": {
+        "en": "oseh shalom bimromav",
+        "es": "oseh shalom bimromav",
+        "fr": "ossé chalom bimromav",
+        "it": "oseh shalom bimromav",
+        "ru": "осэ шалом бимромав"
+      },
+      "ashkenaz": {
+        "en": "oseh sholom bimromov",
+        "es": "oseh sholom bimromov",
+        "fr": "ossé cholom bimromov",
+        "it": "oseh sholom bimromov",
+        "ru": "осэ шолом бимромов"
+      },
+      "chabad": {
+        "en": "oseh shalom bimromav",
+        "es": "oseh shalom bimromav",
+        "fr": "ossé chalom bimromav",
+        "it": "oseh shalom bimromav",
+        "ru": "осэ шалом бимромав"
+      }
+    },
+    "27": {
+      "sefaradi": {
+        "en": "hu ya’aseh shalom aleinu ve’al kol Yisrael, ve’imru amen",
+        "es": "hu ya’aseh shalom aleinu ve’al kol Yisrael, ve’imru amen",
+        "fr": "hou ya’assé chalom aléïnou véal kol Yisraël, véïmrou amen",
+        "it": "hu ya’aseh shalom aleinu ve’al kol Yisrael, ve’imru amen",
+        "ru": "ху яасэ шалом алэйну вэаль коль Исраэль, вэимру амэн"
+      },
+      "ashkenaz": {
+        "en": "hu ya’aseh sholom aleinu v’al kol Yisroel, v’imru omein",
+        "es": "hu ya’aseh sholom aleinu v’al kol Yisroel, v’imru omein",
+        "fr": "hou ya’assé cholom aléïnou véal kol Yisroël, véïmrou omeïn",
+        "it": "hu ya’aseh sholom aleinu v’al kol Yisroel, v’imru omein",
+        "ru": "ху яасэ шолом алэйну валь коль Исроэль, вимру омэйн"
+      },
+      "chabad": {
+        "en": "hu ya’aseh shalom aleinu v’al kol Yisrael, v’imru amen",
+        "es": "hu ya’aseh shalom aleinu v’al kol Yisrael, v’imru amen",
+        "fr": "hou ya’assé chalom aléïnou véal kol Yisraël, véïmrou amen",
+        "it": "hu ya’aseh shalom aleinu v’al kol Yisrael, v’imru amen",
+        "ru": "ху яасэ шалом алэйну валь коль Исраэль, вимру амэн"
+      }
+    }
+  }
+}

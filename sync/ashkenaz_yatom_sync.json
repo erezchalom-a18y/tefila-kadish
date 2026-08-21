@@ -29,6 +29,13 @@
             "de": "Erhoben",
             "ru": "Да возвысится",
             "he": "יִתְעַלֶּה"
+          },
+          "transliteracoes": {
+            "en": "Yisgadal",
+            "es": "Yisgadal",
+            "fr": "Yisgadal",
+            "it": "Yisgadal",
+            "ru": "Йисгадаль"
           }
         },
         {
@@ -47,6 +54,13 @@
             "de": "und geheiligt",
             "ru": "и освятится",
             "he": "וְיִתְקַדֵּשׁ"
+          },
+          "transliteracoes": {
+            "en": "veyiskadash",
+            "es": "veyiskadash",
+            "fr": "véyiskadach",
+            "it": "veyiskadash",
+            "ru": "вэйискадаш"
           }
         },
         {
@@ -65,6 +79,13 @@
             "de": "Sein Name",
             "ru": "Имя Его",
             "he": "שְׁמוֹ"
+          },
+          "transliteracoes": {
+            "en": "sh’mei",
+            "es": "sh’mei",
+            "fr": "ch’meï",
+            "it": "sh’mei",
+            "ru": "шмэй"
           }
         },
         {
@@ -83,6 +104,13 @@
             "de": "großer",
             "ru": "великое",
             "he": "הַגָּדוֹל"
+          },
+          "transliteracoes": {
+            "en": "rabo",
+            "es": "rabo",
+            "fr": "rabo",
+            "it": "rabo",
+            "ru": "робо"
           }
         }
       ],
@@ -122,6 +150,13 @@
             "de": "in der Welt",
             "ru": "в мире",
             "he": "בָּעוֹלָם"
+          },
+          "transliteracoes": {
+            "en": "be’olmo",
+            "es": "be’olmo",
+            "fr": "be’olmo",
+            "it": "be’olmo",
+            "ru": "бэолмо"
           }
         },
         {
@@ -140,6 +175,13 @@
             "de": "die",
             "ru": "который",
             "he": "אֲשֶׁר"
+          },
+          "transliteracoes": {
+            "en": "di",
+            "es": "di",
+            "fr": "di",
+            "it": "di",
+            "ru": "ди"
           }
         },
         {
@@ -158,6 +200,13 @@
             "de": "Er erschuf",
             "ru": "Он сотворил",
             "he": "בָּרָא"
+          },
+          "transliteracoes": {
+            "en": "vero",
+            "es": "vero",
+            "fr": "véro",
+            "it": "vero",
+            "ru": "вэро"
           }
         },
         {
@@ -176,6 +225,13 @@
             "de": "nach Seinem Willen",
             "ru": "по воле Своей",
             "he": "כִּרְצוֹנוֹ"
+          },
+          "transliteracoes": {
+            "en": "chir’usei",
+            "es": "jir’usei",
+            "fr": "’hir’ouseï",
+            "it": "chir’usei",
+            "ru": "хирусэй"
           }
         }
       ],
@@ -215,6 +271,13 @@
             "de": "und Er lasse herrschen",
             "ru": "и да воцарится",
             "he": "וְיַמְלִיךְ"
+          },
+          "transliteracoes": {
+            "en": "v’yamlich",
+            "es": "v’yamlij",
+            "fr": "véyamli’h",
+            "it": "v’yamlich",
+            "ru": "вэямлих"
           }
         },
         {
@@ -233,6 +296,13 @@
             "de": "Sein Reich",
             "ru": "царство Его",
             "he": "מַלְכוּתוֹ"
+          },
+          "transliteracoes": {
+            "en": "malchusei",
+            "es": "maljusei",
+            "fr": "mal’houseï",
+            "it": "malchusei",
+            "ru": "малхусэй"
           }
         }
       ],
@@ -272,6 +342,13 @@
             "de": "in eurem Leben",
             "ru": "при жизни вашей",
             "he": "בְּחַיֵּיכֶם"
+          },
+          "transliteracoes": {
+            "en": "b’chayechon",
+            "es": "b’jayejon",
+            "fr": "be’hayé’hon",
+            "it": "b’chayechon",
+            "ru": "бэхаейхон"
           }
         },
         {
@@ -290,6 +367,13 @@
             "de": "und in euren Tagen",
             "ru": "и во дни ваши",
             "he": "וּבִימֵיכֶם"
+          },
+          "transliteracoes": {
+            "en": "uv’yomechon",
+            "es": "uv’yomejon",
+            "fr": "ouve’yomé’hon",
+            "it": "uv’yomechon",
+            "ru": "увйомэйхон"
           }
         }
       ],
@@ -329,6 +413,13 @@
             "de": "und im Leben",
             "ru": "и при жизни",
             "he": "וּבְחַיֵּי"
+          },
+          "transliteracoes": {
+            "en": "uv’chayei",
+            "es": "uv’jayei",
+            "fr": "ouve’hayeï",
+            "it": "uv’chayei",
+            "ru": "увхаей"
           }
         },
         {
@@ -347,6 +438,13 @@
             "de": "des ganzen",
             "ru": "всего",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "d’chol",
+            "es": "d’jol",
+            "fr": "de’hol",
+            "it": "d’chol",
+            "ru": "дэхоль"
           }
         },
         {
@@ -365,6 +463,13 @@
             "de": "Hauses",
             "ru": "дома",
             "he": "בֵּית"
+          },
+          "transliteracoes": {
+            "en": "beis",
+            "es": "beis",
+            "fr": "beïs",
+            "it": "beis",
+            "ru": "бэйс"
           }
         },
         {
@@ -383,6 +488,13 @@
             "de": "Israel",
             "ru": "Израиля",
             "he": "יִשְׂרָאֵל"
+          },
+          "transliteracoes": {
+            "en": "Yisroel",
+            "es": "Yisroel",
+            "fr": "Yisroël",
+            "it": "Yisroel",
+            "ru": "Исроэль"
           }
         }
       ],
@@ -422,6 +534,13 @@
             "de": "bald",
             "ru": "вскоре",
             "he": "בִּמְהֵרָה"
+          },
+          "transliteracoes": {
+            "en": "ba’agola",
+            "es": "ba’agola",
+            "fr": "ba’agola",
+            "it": "ba’agola",
+            "ru": "бааголо"
           }
         },
         {
@@ -440,6 +559,13 @@
             "de": "und in naher",
             "ru": "и во время",
             "he": "וּבִזְמַן"
+          },
+          "transliteracoes": {
+            "en": "uvizman",
+            "es": "uvizman",
+            "fr": "ouvizmane",
+            "it": "uvizman",
+            "ru": "увизман"
           }
         },
         {
@@ -458,6 +584,13 @@
             "de": "Zeit",
             "ru": "близкое",
             "he": "קָרוֹב"
+          },
+          "transliteracoes": {
+            "en": "koriv",
+            "es": "koriv",
+            "fr": "koriv",
+            "it": "koriv",
+            "ru": "корив"
           }
         },
         {
@@ -476,6 +609,13 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "v’imru",
+            "es": "v’imru",
+            "fr": "véïmrou",
+            "it": "v’imru",
+            "ru": "вимру"
           }
         },
         {
@@ -494,6 +634,13 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "omein",
+            "es": "omein",
+            "fr": "omeïn",
+            "it": "omein",
+            "ru": "омэйн"
           }
         }
       ],
@@ -533,6 +680,13 @@
             "de": "es sei",
             "ru": "да будет",
             "he": "יְהִי"
+          },
+          "transliteracoes": {
+            "en": "y’hei",
+            "es": "y’hei",
+            "fr": "yéheï",
+            "it": "y’hei",
+            "ru": "йехэй"
           }
         },
         {
@@ -551,6 +705,13 @@
             "de": "Sein Name",
             "ru": "Имя Его",
             "he": "שְׁמוֹ"
+          },
+          "transliteracoes": {
+            "en": "sh’mei",
+            "es": "sh’mei",
+            "fr": "ch’meï",
+            "it": "sh’mei",
+            "ru": "шмэй"
           }
         },
         {
@@ -569,6 +730,13 @@
             "de": "großer",
             "ru": "великое",
             "he": "הַגָּדוֹל"
+          },
+          "transliteracoes": {
+            "en": "rabo",
+            "es": "rabo",
+            "fr": "rabo",
+            "it": "rabo",
+            "ru": "рабо"
           }
         },
         {
@@ -587,6 +755,13 @@
             "de": "gepriesen",
             "ru": "благословенно",
             "he": "מְבֹרָךְ"
+          },
+          "transliteracoes": {
+            "en": "m’vorach",
+            "es": "m’voraj",
+            "fr": "mevora’h",
+            "it": "m’vorach",
+            "ru": "мэворох"
           }
         },
         {
@@ -605,6 +780,13 @@
             "de": "für immer",
             "ru": "вовеки",
             "he": "לְעוֹלָם"
+          },
+          "transliteracoes": {
+            "en": "l’olam",
+            "es": "l’olam",
+            "fr": "le’olam",
+            "it": "l’olam",
+            "ru": "лолам"
           }
         },
         {
@@ -623,6 +805,13 @@
             "de": "und in alle",
             "ru": "и во веки",
             "he": "וּלְעוֹלְמֵי"
+          },
+          "transliteracoes": {
+            "en": "ul’olmei",
+            "es": "ul’olmei",
+            "fr": "oule’olmeï",
+            "it": "ul’olmei",
+            "ru": "улолмэй"
           }
         },
         {
@@ -641,6 +830,13 @@
             "de": "Ewigkeit",
             "ru": "веков",
             "he": "עוֹלָמִים"
+          },
+          "transliteracoes": {
+            "en": "olmayo",
+            "es": "olmayo",
+            "fr": "olmayo",
+            "it": "olmayo",
+            "ru": "олмайо"
           }
         }
       ],
@@ -680,6 +876,13 @@
             "de": "gepriesen",
             "ru": "благословенно",
             "he": "יִתְבָּרֵךְ"
+          },
+          "transliteracoes": {
+            "en": "yisborach",
+            "es": "yisboraj",
+            "fr": "yisbora’h",
+            "it": "yisborach",
+            "ru": "йисборах"
           }
         },
         {
@@ -698,6 +901,13 @@
             "de": "und gelobt",
             "ru": "и восхваляемо",
             "he": "וְיִשְׁתַּבֵּחַ"
+          },
+          "transliteracoes": {
+            "en": "v’yishtabach",
+            "es": "v’yishtabaj",
+            "fr": "véyichtaba’h",
+            "it": "v’yishtabach",
+            "ru": "вэйиштабах"
           }
         },
         {
@@ -716,6 +926,13 @@
             "de": "und verherrlicht",
             "ru": "и прославляемо",
             "he": "וְיִתְפָּאֵר"
+          },
+          "transliteracoes": {
+            "en": "v’yispoar",
+            "es": "v’yispoar",
+            "fr": "véyispoar",
+            "it": "v’yispoar",
+            "ru": "вэйиспоар"
           }
         }
       ],
@@ -755,6 +972,13 @@
             "de": "und erhoben",
             "ru": "и возвышаемо",
             "he": "וְיִתְרוֹמֵם"
+          },
+          "transliteracoes": {
+            "en": "v’yisromam",
+            "es": "v’yisromam",
+            "fr": "véyisromam",
+            "it": "v’yisromam",
+            "ru": "вэйисромам"
           }
         },
         {
@@ -773,6 +997,13 @@
             "de": "und erhöht",
             "ru": "и превозносимо",
             "he": "וְיִתְנַשֵּׂא"
+          },
+          "transliteracoes": {
+            "en": "v’yisnasse",
+            "es": "v’yisnasse",
+            "fr": "véyisnassé",
+            "it": "v’yisnasse",
+            "ru": "вэйиснассэ"
           }
         },
         {
@@ -791,6 +1022,13 @@
             "de": "und geehrt",
             "ru": "и почитаемо",
             "he": "וְיִתְהַדֵּר"
+          },
+          "transliteracoes": {
+            "en": "v’yishador",
+            "es": "v’yishador",
+            "fr": "véyichador",
+            "it": "v’yishador",
+            "ru": "вэйишадор"
           }
         }
       ],
@@ -830,6 +1068,13 @@
             "de": "und gefeiert",
             "ru": "и возвеличиваемо",
             "he": "וְיִתְעַלֶּה"
+          },
+          "transliteracoes": {
+            "en": "v’yis’aleh",
+            "es": "v’yis’aleh",
+            "fr": "véyis’alé",
+            "it": "v’yis’aleh",
+            "ru": "вэйисалэх"
           }
         },
         {
@@ -848,6 +1093,13 @@
             "de": "und gerühmt",
             "ru": "и воспеваемо",
             "he": "וְיִתְהַלֵּל"
+          },
+          "transliteracoes": {
+            "en": "v’yis’halal",
+            "es": "v’yis’halal",
+            "fr": "véyis’halal",
+            "it": "v’yis’halal",
+            "ru": "вэйисхалаль"
           }
         },
         {
@@ -866,6 +1118,13 @@
             "de": "Sein Name",
             "ru": "Имя Его",
             "he": "שְׁמוֹ"
+          },
+          "transliteracoes": {
+            "en": "sh’mei",
+            "es": "sh’mei",
+            "fr": "ch’meï",
+            "it": "sh’mei",
+            "ru": "шмэй"
           }
         },
         {
@@ -884,6 +1143,13 @@
             "de": "des Heiligen",
             "ru": "Святого",
             "he": "שֶׁל הַקָּדוֹשׁ"
+          },
+          "transliteracoes": {
+            "en": "d’kudsho",
+            "es": "d’kudsho",
+            "fr": "de’koudcho",
+            "it": "d’kudsho",
+            "ru": "дэкудшо"
           }
         },
         {
@@ -902,6 +1168,13 @@
             "de": "gepriesen",
             "ru": "благословен",
             "he": "בָּרוּךְ"
+          },
+          "transliteracoes": {
+            "en": "b’rich",
+            "es": "b’rij",
+            "fr": "be’ri’h",
+            "it": "b’rich",
+            "ru": "брих"
           }
         },
         {
@@ -920,6 +1193,13 @@
             "de": "sei Er",
             "ru": "Он",
             "he": "הוּא"
+          },
+          "transliteracoes": {
+            "en": "hu",
+            "es": "hu",
+            "fr": "hou",
+            "it": "hu",
+            "ru": "ху"
           }
         }
       ],
@@ -959,6 +1239,13 @@
             "de": "über",
             "ru": "превыше",
             "he": "לְמַעְלָה"
+          },
+          "transliteracoes": {
+            "en": "l’eila",
+            "es": "l’eila",
+            "fr": "lé’eïla",
+            "it": "l’eila",
+            "ru": "лэйла"
           }
         },
         {
@@ -977,6 +1264,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "min",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {
@@ -995,6 +1289,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "kol",
+            "es": "kol",
+            "fr": "kol",
+            "it": "kol",
+            "ru": "коль"
           }
         },
         {
@@ -1013,6 +1314,13 @@
             "de": "Segnungen",
             "ru": "благословений",
             "he": "הַבְּרָכוֹת"
+          },
+          "transliteracoes": {
+            "en": "birchosa",
+            "es": "birjosa",
+            "fr": "bir’hosa",
+            "it": "birchosa",
+            "ru": "бирхосо"
           }
         },
         {
@@ -1031,6 +1339,13 @@
             "de": "und Lieder",
             "ru": "и песнопений",
             "he": "וְהַשִּׁירוֹת"
+          },
+          "transliteracoes": {
+            "en": "v’shirosa",
+            "es": "v’shirosa",
+            "fr": "véchirosa",
+            "it": "v’shirosa",
+            "ru": "вэширосо"
           }
         }
       ],
@@ -1070,6 +1385,13 @@
             "de": "Lobpreisungen",
             "ru": "восхвалений",
             "he": "הַתִּשְׁבָּחוֹת"
+          },
+          "transliteracoes": {
+            "en": "tushb’chosa",
+            "es": "tushb’josa",
+            "fr": "touchbe’hosa",
+            "it": "tushb’chosa",
+            "ru": "тушбэхосо"
           }
         },
         {
@@ -1088,6 +1410,13 @@
             "de": "und Tröstungen",
             "ru": "и утешений",
             "he": "וְהַנֶּחָמוֹת"
+          },
+          "transliteracoes": {
+            "en": "v’nechemosa",
+            "es": "v’nejemosa",
+            "fr": "véné’hémosa",
+            "it": "v’nechemosa",
+            "ru": "вэнэхомосо"
           }
         },
         {
@@ -1106,6 +1435,13 @@
             "de": "die gesprochen werden",
             "ru": "произносимых",
             "he": "הַנֶּאֱמָרוֹת"
+          },
+          "transliteracoes": {
+            "en": "da’amiron",
+            "es": "da’amiron",
+            "fr": "da’amirone",
+            "it": "da’amiron",
+            "ru": "даамирон"
           }
         },
         {
@@ -1124,6 +1460,13 @@
             "de": "in der Welt",
             "ru": "в мире",
             "he": "בָּעוֹלָם"
+          },
+          "transliteracoes": {
+            "en": "b’olmo",
+            "es": "b’olmo",
+            "fr": "be’olmo",
+            "it": "b’olmo",
+            "ru": "болмо"
           }
         },
         {
@@ -1142,6 +1485,13 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "v’imru",
+            "es": "v’imru",
+            "fr": "véïmrou",
+            "it": "v’imru",
+            "ru": "вимру"
           }
         },
         {
@@ -1160,6 +1510,13 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "omein",
+            "es": "omein",
+            "fr": "omeïn",
+            "it": "omein",
+            "ru": "омэйн"
           }
         }
       ],
@@ -1199,6 +1556,13 @@
             "de": "es sei",
             "ru": "да будет",
             "he": "יְהִי"
+          },
+          "transliteracoes": {
+            "en": "y’hei",
+            "es": "y’hei",
+            "fr": "yéheï",
+            "it": "y’hei",
+            "ru": "йехэй"
           }
         },
         {
@@ -1217,6 +1581,13 @@
             "de": "Frieden",
             "ru": "мир",
             "he": "שָׁלוֹם"
+          },
+          "transliteracoes": {
+            "en": "shelomo",
+            "es": "shelomo",
+            "fr": "chélomo",
+            "it": "shelomo",
+            "ru": "шломо"
           }
         },
         {
@@ -1235,6 +1606,13 @@
             "de": "großer",
             "ru": "великое",
             "he": "הַגָּדוֹל"
+          },
+          "transliteracoes": {
+            "en": "rabo",
+            "es": "rabo",
+            "fr": "rabo",
+            "it": "rabo",
+            "ru": "рабо"
           }
         },
         {
@@ -1253,6 +1631,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "mine",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {
@@ -1271,6 +1656,13 @@
             "de": "dem Himmel",
             "ru": "небес",
             "he": "הַשָּׁמַיִם"
+          },
+          "transliteracoes": {
+            "en": "shemayo",
+            "es": "shemayo",
+            "fr": "chémayo",
+            "it": "shemayo",
+            "ru": "шмайо"
           }
         },
         {
@@ -1289,6 +1681,13 @@
             "de": "und Leben",
             "ru": "и жизнь",
             "he": "וְחַיִּים"
+          },
+          "transliteracoes": {
+            "en": "v’chayim",
+            "es": "v’jayim",
+            "fr": "vé’hayim",
+            "it": "v’chayim",
+            "ru": "вэхайим"
           }
         },
         {
@@ -1307,6 +1706,13 @@
             "de": "über uns",
             "ru": "нам",
             "he": "עָלֵינוּ"
+          },
+          "transliteracoes": {
+            "en": "aleinu",
+            "es": "aleinu",
+            "fr": "aléïnou",
+            "it": "aleinu",
+            "ru": "алэйну"
           }
         },
         {
@@ -1325,6 +1731,13 @@
             "de": "und über",
             "ru": "и всему",
             "he": "וְעַל"
+          },
+          "transliteracoes": {
+            "en": "v’al",
+            "es": "v’al",
+            "fr": "véal",
+            "it": "v’al",
+            "ru": "валь"
           }
         },
         {
@@ -1343,6 +1756,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "kol",
+            "es": "kol",
+            "fr": "kol",
+            "it": "kol",
+            "ru": "коль"
           }
         },
         {
@@ -1361,6 +1781,13 @@
             "de": "Israel",
             "ru": "Израиля",
             "he": "יִשְׂרָאֵל"
+          },
+          "transliteracoes": {
+            "en": "Yisroel",
+            "es": "Yisroel",
+            "fr": "Yisroël",
+            "it": "Yisroel",
+            "ru": "Исроэль"
           }
         },
         {
@@ -1379,6 +1806,13 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "v’imru",
+            "es": "v’imru",
+            "fr": "véïmrou",
+            "it": "v’imru",
+            "ru": "вимру"
           }
         },
         {
@@ -1397,6 +1831,13 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "omein",
+            "es": "omein",
+            "fr": "omeïn",
+            "it": "omein",
+            "ru": "омэйн"
           }
         }
       ],
@@ -1436,6 +1877,13 @@
             "de": "Der Frieden stiftet",
             "ru": "Творящий",
             "he": "עוֹשֶׂה"
+          },
+          "transliteracoes": {
+            "en": "oseh",
+            "es": "oseh",
+            "fr": "ossé",
+            "it": "oseh",
+            "ru": "осэ"
           }
         },
         {
@@ -1454,6 +1902,13 @@
             "de": "Frieden",
             "ru": "мир",
             "he": "שָׁלוֹם"
+          },
+          "transliteracoes": {
+            "en": "sholom",
+            "es": "sholom",
+            "fr": "cholom",
+            "it": "sholom",
+            "ru": "шолом"
           }
         },
         {
@@ -1472,6 +1927,13 @@
             "de": "in Seinen Höhen",
             "ru": "в высотах Своих",
             "he": "בִּמְרוֹמָיו"
+          },
+          "transliteracoes": {
+            "en": "bimromov",
+            "es": "bimromov",
+            "fr": "bimromov",
+            "it": "bimromov",
+            "ru": "бимромов"
           }
         },
         {
@@ -1490,6 +1952,13 @@
             "de": "sei Er",
             "ru": "Он",
             "he": "הוּא"
+          },
+          "transliteracoes": {
+            "en": "hu",
+            "es": "hu",
+            "fr": "hou",
+            "it": "hu",
+            "ru": "ху"
           }
         },
         {
@@ -1508,6 +1977,13 @@
             "de": "stifte",
             "ru": "дарует",
             "he": "יַעֲשֶׂה"
+          },
+          "transliteracoes": {
+            "en": "ya’aseh",
+            "es": "ya’aseh",
+            "fr": "ya’assé",
+            "it": "ya’aseh",
+            "ru": "яасэ"
           }
         },
         {
@@ -1526,6 +2002,13 @@
             "de": "Frieden",
             "ru": "мир",
             "he": "שָׁלוֹם"
+          },
+          "transliteracoes": {
+            "en": "sholom",
+            "es": "sholom",
+            "fr": "cholom",
+            "it": "sholom",
+            "ru": "шолом"
           }
         },
         {
@@ -1544,6 +2027,13 @@
             "de": "über uns",
             "ru": "нам",
             "he": "עָלֵינוּ"
+          },
+          "transliteracoes": {
+            "en": "aleinu",
+            "es": "aleinu",
+            "fr": "aléïnou",
+            "it": "aleinu",
+            "ru": "алэйну"
           }
         },
         {
@@ -1562,6 +2052,13 @@
             "de": "und über",
             "ru": "и всему",
             "he": "וְעַל"
+          },
+          "transliteracoes": {
+            "en": "v’al",
+            "es": "v’al",
+            "fr": "véal",
+            "it": "v’al",
+            "ru": "валь"
           }
         },
         {
@@ -1580,6 +2077,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "kol",
+            "es": "kol",
+            "fr": "kol",
+            "it": "kol",
+            "ru": "коль"
           }
         },
         {
@@ -1598,6 +2102,13 @@
             "de": "Israel",
             "ru": "Израиля",
             "he": "יִשְׂרָאֵל"
+          },
+          "transliteracoes": {
+            "en": "Yisroel",
+            "es": "Yisroel",
+            "fr": "Yisroël",
+            "it": "Yisroel",
+            "ru": "Исроэль"
           }
         },
         {
@@ -1616,6 +2127,13 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "v’imru",
+            "es": "v’imru",
+            "fr": "véïmrou",
+            "it": "v’imru",
+            "ru": "вимру"
           }
         },
         {
@@ -1634,6 +2152,13 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "omein",
+            "es": "omein",
+            "fr": "omeïn",
+            "it": "omein",
+            "ru": "омэйн"
           }
         }
       ],

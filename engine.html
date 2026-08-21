@@ -5360,8 +5360,13 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           pictograms: [],
           inDeRabanan: false,
           hebrew: ps.map(p => p.hebrew),
-          // a transliteracao e uma so (portuguesa); serve de apoio em toda lingua
-          translit: porLingua(() => ps.map(p => p.transliteration_pt || '')),
+          // Transliteracao na lingua da tela quando ela existe; portugues quando
+          // nao existe. O portugues fica como sempre esteve, por decisao do
+          // Erez. As outras vieram dos documentos dele (fontes/transliteracao-
+          // por-lingua.json) e cobrem 6 dos 8 arquivos — o sefard e alguns
+          // trechos do sefaradi nao tem fonte, e la o apoio continua portugues.
+          translit: porLingua(L => ps.map(p =>
+            (p.transliteracoes && p.transliteracoes[L]) || p.transliteration_pt || '')),
           // glosa palavra a palavra, nas 8 linguas
           merged: porLingua(L => ps.map(p => (p.glosas && p.glosas[L]) || p.glosa_pt || '')),
           // duracao real de cada palavra, medida do audio
