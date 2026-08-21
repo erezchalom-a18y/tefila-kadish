@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-21 13:29 UTC por `whisper-1`, sobre o commit `5ed291b`.
+Gerado em 2026-08-21 13:52 UTC por `whisper-1`, sobre o commit `46641c8`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -28,14 +28,14 @@ Trate cada linha como *vale a pena ouvir este trecho*, nunca como *está errado*
 | chabad_yatom | 80 | 80 | 26 |
 | chabad_derabanan | 121 | 124 | 79 |
 | sefard_yatom | 81 | 86 | 49 |
-| sefard_derabanan | 124 | 126 | 38 |
+| sefard_derabanan | 124 | 126 | 37 |
 | sefaradi_yatom | 91 | 92 | 58 |
 | sefaradi_derabanan | 125 | 124 | 56 |
-| **total** | | | **431** |
+| **total** | | | **430** |
 
 Por eixo:
 
-- começa em hora diferente: **286**
+- começa em hora diferente: **285**
 - está no texto, não foi ouvida: **62**
 - foi ouvida, não está no texto: **83**
 
@@ -44,7 +44,7 @@ Por eixo:
 A auditoria de sinal de 20/08 listou 36 suspeitos, espalhados por
 28 versos diferentes.
 
-Dos 431 apontamentos do Whisper, **120** caem em versos que já
+Dos 430 apontamentos do Whisper, **120** caem em versos que já
 estavam naquela lista — cobrindo **27** dos 28 versos suspeitos.
 
 Onde os dois métodos concordam, a chance de haver defeito real é bem maior:
@@ -598,10 +598,6 @@ comece a ouvir por aqui.
 **§6**
 
 - `וּבְחַיֵּי` *(uvechayei)* — nós: 19.44s · ouvido: 18.6200008392334s · diferença -0.82s
-
-**§8**
-
-- `יְהֵא` *(Yehei)* — nós: 27.74s · ouvido: 26.5s · diferença -1.24s
 
 **§15**
 
