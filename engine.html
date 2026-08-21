@@ -978,6 +978,30 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* ============ FOOTER ============ */
+  .dedicatoria {
+    text-align: center;
+    margin: 6px 0 26px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line, #ddd3c0);
+  }
+  .dedicatoria .ded-rotulo {
+    display: block; font-size: 0.78rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--text-faint, #8a8070); margin-bottom: 6px;
+  }
+  .dedicatoria .ded-nome {
+    display: block; font-size: 1.35rem; line-height: 1.4; color: var(--text, #2a1f15);
+  }
+  .dedicatoria .ded-rel {
+    display: block; font-size: 0.9rem; font-style: italic;
+    color: var(--text-faint, #8a8070); margin-top: 4px;
+  }
+  .convite-dedicar {
+    display: block; margin: 30px auto 8px; background: none;
+    border: 1px dashed var(--line, #ddd3c0); border-radius: 10px;
+    padding: 12px 18px; font: inherit; font-size: 0.95rem;
+    color: var(--text-faint, #8a8070); cursor: pointer;
+  }
+  .convite-dedicar:hover { color: var(--brass, #8b6a3e); border-color: var(--brass, #8b6a3e); }
   .foot-note {
     text-align: center;
     padding: 32px 20px 12px;
@@ -3139,11 +3163,76 @@ function normalizeVerseToSingleWords(v) {
 // Desenha a lista de versos. Virou funcao para poder ser chamada de novo
 // quando os dados trocam (o texto vem dos sync/*.json, nao mais de dentro
 // deste arquivo).
+// "Em memoria de", nas 8 linguas. Sao textos de interface, nao liturgia — mas o
+// hebraico usa a formula corrente (לזכר נשמת) e vale confirmar com o rabino.
+const DEDICATORIA = {
+  pt: 'Em memória de', en: 'In memory of', es: 'En memoria de', fr: 'À la mémoire de',
+  it: 'In memoria di', de: 'Zum Andenken an', ru: 'В память о', he: 'לְזֵכֶר נִשְׁמַת',
+};
+const CONVITE = {
+  pt: 'dedicar este Kadish a alguém', en: 'dedicate this Kaddish to someone',
+  es: 'dedicar este Kadish a alguien', fr: 'dédier ce Kaddish à quelqu’un',
+  it: 'dedicare questo Kaddish a qualcuno', de: 'dieses Kaddisch jemandem widmen',
+  ru: 'посвятить этот кадиш', he: 'לְהַקְדִּישׁ קַדִּישׁ זֶה',
+};
+
+/**
+ * A dedicatoria vai ANTES do primeiro verso e rola junto com o texto, como a
+ * dedicatoria de um livro — nao como faixa fixa, que roubaria altura de leitura
+ * e brigaria com o hebraico pela atencao.
+ *
+ * Sem nome preenchido nao aparece NADA: nem espaco vazio, nem "clique aqui".
+ * O convite para dedicar fica no fim do texto, fora do caminho de quem so quer rezar.
+ */
+function desenharDedicatoria(main) {
+  const m = (typeof loadMemorial === 'function') ? loadMemorial() : null;
+  if (!m || !m.name) return;
+  const L = (typeof state !== 'undefined' && state.lang) || 'pt';
+  const el = document.createElement('div');
+  el.className = 'dedicatoria';
+  if (L === 'he') el.dir = 'rtl';
+  const quem = [m.name, m.hebrew].filter(Boolean);
+  el.innerHTML = `<span class="ded-rotulo">${DEDICATORIA[L] || DEDICATORIA.pt}</span>` +
+    `<span class="ded-nome">${quem.map(x => x.replace(/[&<>]/g, '')).join(' · ')}</span>` +
+    (m.relation ? `<span class="ded-rel">${String(m.relation).replace(/[&<>]/g, '')}</span>` : '');
+  main.appendChild(el);
+}
+
+function desenharConvite(main) {
+  const m = (typeof loadMemorial === 'function') ? loadMemorial() : null;
+  if (m && m.name) return;                       // ja tem dedicatoria
+  const L = (typeof state !== 'undefined' && state.lang) || 'pt';
+  const b = document.createElement('button');
+  b.className = 'convite-dedicar';
+  b.textContent = '✦ ' + (CONVITE[L] || CONVITE.pt);
+  b.addEventListener('click', () => {
+    const ed = document.getElementById('editMemorial');
+    if (ed) ed.click();
+    else document.getElementById('setupModal').classList.add('show');
+  });
+  main.appendChild(b);
+}
+
+/** Redesenha so a dedicatoria e o convite — chamada ao trocar de lingua. */
+function atualizarDedicatoria() {
+  const main = document.getElementById('main');
+  if (!main) return;
+  main.querySelectorAll('.dedicatoria, .convite-dedicar').forEach(e => e.remove());
+  const ded = document.createElement('div');
+  main.prepend(ded);
+  desenharDedicatoria(main);
+  const nova = main.querySelector('.dedicatoria');
+  if (nova) main.prepend(nova);          // dedicatoria sempre antes do 1o verso
+  ded.remove();
+  desenharConvite(main);                 // convite sempre no fim
+}
+
 function desenharVersos() {
   verses.forEach(normalizeVerseToSingleWords);
 
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
+  desenharDedicatoria(main);
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
@@ -3278,6 +3367,7 @@ function desenharVersos() {
 
     main.appendChild(verseEl);
   });
+  desenharConvite(main);
 }
 desenharVersos();
 
@@ -4310,6 +4400,7 @@ function applyLanguage(lang) {
   state.lang = lang;
   localStorage.setItem('tefila_lang', lang);
   applyI18n(lang);
+  if (typeof atualizarDedicatoria === 'function') atualizarDedicatoria();
   if (window.SYNC) window.SYNC.trocarLingua(lang);
   rerenderVerseText();
   // Re-apply Kadish type so the size label (pequeno/grande/short/long...) translates
@@ -4592,11 +4683,15 @@ document.getElementById('consentDecline').addEventListener('click', () => {
   document.querySelectorAll('[data-setting="audiosrc"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedAudioSrc));
 
   renderMemorial();
-  // Show first-time setup if no memorial saved
-  if (!loadMemorial() && !localStorage.getItem('tefila_setup_dismissed')) {
-    setTimeout(() => document.getElementById('setupModal').classList.add('show'), 800);
-    localStorage.setItem('tefila_setup_dismissed', '1');
-  }
+  // O app abre DIRETO no Kadish.
+  //
+  // Antes, na primeira visita, aparecia um formulario pedindo nome, relacao e
+  // DATA DE FALECIMENTO antes de mostrar uma letra do Kadish. Quem abre este app
+  // pode ter enterrado o pai ontem, e no minyan nao ha tempo de preencher
+  // formulario: o Kadish comeca quando o chazan chega nele.
+  //
+  // O convite para dedicar continua existindo — no fim do texto e na engrenagem
+  // —, mas oferecido DEPOIS, a quem quiser, e nunca barrando a reza.
   showConsentIfNeeded();
 })();
 
