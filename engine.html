@@ -4841,6 +4841,13 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       if (wi < 0) return;
       // o texto da tela vem do mesmo JSON: verso k, palavra wi, sem traducao
       highlightWord(k, wi);
+
+      // A traducao e UMA FRASE por verso, marcada como palavra 0. Sem isto ela
+      // acendia so enquanto a primeira palavra era cantada e apagava no resto do
+      // verso, parecendo quebrada. Frase acompanha o VERSO; hebraico e
+      // transliteracao acompanham a PALAVRA.
+      const frases = document.querySelectorAll(`.verse[data-idx="${k}"] .phrase`);
+      if (frases.length === 1) frases[0].classList.add('active');
     }
 
     async function montar() {
