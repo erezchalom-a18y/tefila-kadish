@@ -79,8 +79,11 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
-    background: #f4ede0;
-    background-color: #f4ede0;
+    /* Estava fixo em #f4ede0 (pergaminho). Por isso NENHUM tema mudava o fundo:
+       o Claro nunca ficava branco, e o Escuro punha letra branca sobre creme —
+       contraste 1,16, praticamente ilegivel. Uma linha derrubava os quatro temas. */
+    background: var(--bg);
+    background-color: var(--bg);
     color: var(--text);
     font-family: 'Lora', Georgia, serif;
     min-height: 100vh;
@@ -1002,6 +1005,34 @@
     color: var(--text-faint, #8a8070); cursor: pointer;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); border-color: var(--brass, #8b6a3e); }
+  /* ===== Modo Reza (o normal): so o Kadish =====
+     O botao ja existia mas nao liberava um pixel — media 346px de moldura antes
+     e depois de aperta-lo. O que ele liga chama-se modo-treino, e "Modo Reza" e
+     justamente o estado NORMAL. Entao quem tem que ser limpo e o normal, e o
+     Treino e que mostra os extras de estudo. Os nomes passam a dizer a verdade. */
+  body:not(.modo-treino) .prayer-meta,
+  body:not(.modo-treino) .pictogram-row,
+  body:not(.modo-treino) #pictograms,
+  body:not(.modo-treino) .speed-toggle,
+  body:not(.modo-treino) .foot-note { display: none !important; }
+  body:not(.modo-treino) .learn-strip { padding: 7px 12px; }
+  body:not(.modo-treino) .learn-strip small { display: none; }
+  /* barra de baixo mais magra: o ▶ continua grande (quem reza de pe precisa
+     acertar pausar sem olhar), o resto e que encolhe */
+  body:not(.modo-treino) .audio-bar { padding: 8px 20px calc(10px + env(safe-area-inset-bottom)); }
+  body:not(.modo-treino) .audio-bar-top { font-size: 12px; margin-bottom: 2px; }
+
+  /* a velocidade sai da barra fixa e vai para os ajustes */
+  .velocidade-nos-ajustes { display: flex; gap: 6px; flex-wrap: wrap; }
+  .velocidade-nos-ajustes button {
+    flex: 1 1 auto; background: var(--bg-elevated); border: 1px solid var(--line);
+    border-radius: 8px; padding: 9px 6px; font: inherit; font-size: 14px;
+    color: var(--text); cursor: pointer;
+  }
+  .velocidade-nos-ajustes button.active {
+    background: var(--brass); border-color: var(--brass); color: #fff; font-weight: 600;
+  }
+
   .foot-note {
     text-align: center;
     padding: 32px 20px 12px;
@@ -1561,7 +1592,7 @@
 
 <div class="topbar">
   <div class="brand">
-    <div class="brand-mark">Tefilá · v3.0<span class="tradition-badge" id="traditionBadge">Chabad</span><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button></div>
+    <div class="brand-mark"><button class="tradition-badge" id="traditionBadge" title="Trocar tradição">Chabad</button><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button></div>
     <div class="brand-right">
       <button class="treino-toggle" id="treinoToggle" data-i18n="modo_reza">Modo Reza</button>
       <button class="lang-toggle" id="langToggle" title="Idioma">
@@ -1619,8 +1650,6 @@
       <div class="seg-control" data-setting="theme">
         <button class="active" data-value="pergaminho">Pergaminho</button>
         <button data-value="claro" data-i18n="theme_light">Claro</button>
-        <button data-value="escuro" data-i18n="theme_dark">Escuro</button>
-        <button data-value="contraste" data-i18n="theme_contrast">Contraste</button>
       </div>
     </div>
 
@@ -1655,6 +1684,17 @@
         <button data-value="de">🇩🇪 DE</button>
         <button data-value="ru">🇷🇺 RU</button>
         <button data-value="he">🇮🇱 HE</button>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label">Velocidade da leitura</div>
+      <div class="velocidade-nos-ajustes" id="velocidadeAjustes">
+        <button data-speed="0.5">0,5×</button>
+        <button data-speed="0.75">0,75×</button>
+        <button class="active" data-speed="1">1×</button>
+        <button data-speed="1.25">1,25×</button>
+        <button data-speed="1.5">1,5×</button>
       </div>
     </div>
 
@@ -4313,6 +4353,11 @@ function applyI18n(lang) {
 
 // ---------- Theme ----------
 function applyTheme(theme) {
+  // Ficaram dois temas: Pergaminho e Claro. Quem tinha Escuro ou Contraste
+  // guardado do uso anterior volta para Pergaminho em vez de ficar sem tema.
+  // (O CSS do Escuro continua no arquivo e agora FUNCIONA, porque o fundo passou
+  //  a obedecer a variavel; devolver o botao e uma linha.)
+  if (theme !== 'pergaminho' && theme !== 'claro') theme = 'pergaminho';
   document.body.classList.remove('theme-claro', 'theme-escuro', 'theme-contraste');
   if (theme !== 'pergaminho') document.body.classList.add(`theme-${theme}`);
   localStorage.setItem('tefila_theme', theme);
@@ -4527,6 +4572,39 @@ function toggleModoTreino() {
   updateTreinoLabel();
 }
 document.getElementById('treinoToggle').addEventListener('click', toggleModoTreino);
+
+// ---------- Tradicao e velocidade ----------
+// A tradicao e o tipo sao as duas coisas que mudam de verdade no dia a dia.
+// Estavam enterradas no menu; agora giram no proprio topo, num toque.
+const NOME_TRADICAO = { chabad: 'Chabad', sefard: 'Sefard', sefaradi: 'Sefaradi', ashkenazi: 'Ashkenazi' };
+const GIRO_TRADICAO = ['chabad', 'sefard', 'sefaradi', 'ashkenazi'];
+document.getElementById('traditionBadge').addEventListener('click', () => {
+  const atual = state.tradition || 'chabad';
+  const prox = GIRO_TRADICAO[(GIRO_TRADICAO.indexOf(atual) + 1) % GIRO_TRADICAO.length];
+  applyTradition(prox);
+  document.getElementById('traditionBadge').textContent = NOME_TRADICAO[prox] || prox;
+  document.querySelectorAll('[data-setting="tradition"] button')
+    .forEach(b => b.classList.toggle('active', b.dataset.value === prox));
+  if (window.SYNC) window.SYNC.trocar(prox, null);
+  showToast(NOME_TRADICAO[prox] || prox);
+});
+
+// a velocidade saiu da barra fixa; os dois controles andam juntos
+function aplicarVelocidade(v) {
+  state.speed = parseFloat(v);
+  if (typeof audioPlayer !== 'undefined') audioPlayer.playbackRate = state.speed;
+  document.querySelectorAll('#speedToggle button, #velocidadeAjustes button')
+    .forEach(b => b.classList.toggle('active', parseFloat(b.dataset.speed) === state.speed));
+  localStorage.setItem('tefila_speed', String(state.speed));
+}
+document.getElementById('velocidadeAjustes').addEventListener('click', e => {
+  const b = e.target.closest('button[data-speed]');
+  if (b) aplicarVelocidade(b.dataset.speed);
+});
+{
+  const guardada = localStorage.getItem('tefila_speed');
+  if (guardada) aplicarVelocidade(guardada);
+}
 
 // ---------- Memorial / Em memória de ----------
 function loadMemorial() {
@@ -4845,7 +4923,10 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
     function normalizarNome(x) { return APELIDO[x] || x; }
 
+    let escolhaExplicita = false;   // depois que alguem escolhe, a URL nao manda mais
+
     function escolher() {
+      if (escolhaExplicita) return;   // senao o ?n= da URL desfazia a troca no topo
       const n = normalizarNome(param('n') || (temState() && state.tradition) ||
                                localStorage.getItem('tefila_tradition'));
       const t = param('t') || (temState() && state.kadishType) ||
@@ -4986,8 +5067,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       },
       trocarLingua: () => { if (typeof rerenderVerseText === 'function') rerenderVerseText(); },
       trocar: (n, t) => {
-        if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) nussach = x; }
-        if (t && TIPOS.includes(t)) tipo = t;
+        if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) { nussach = x; escolhaExplicita = true; } }
+        if (t && TIPOS.includes(t)) { tipo = t; escolhaExplicita = true; }
         return montar();
       },
     };
