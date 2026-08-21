@@ -46,3 +46,6 @@ jobs:
 
       - name: testar-linguas.mjs (a tela inteira nas 8 linguas)
         run: node testar-linguas.mjs http://127.0.0.1:8896/tefila-kadish
+
+      - name: testar-telas.mjs (7 tamanhos de tela, em pe e deitado)
+        run: node testar-telas.mjs http://127.0.0.1:8896/tefila-kadish

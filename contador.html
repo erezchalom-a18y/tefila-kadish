@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kadishim ditos · Tefilá</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+  :root{--fundo:#f4ede0;--cartao:#fbf7ef;--linha:#ddd3c0;--txt:#2a1f15;--fraco:#6b6153;--brass:#8b6a3e}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:17px/1.6 Georgia,"Times New Roman",serif;padding:0 0 60px}
+  header{padding:18px 20px 14px;border-bottom:1px solid var(--linha);
+         display:flex;align-items:center;gap:14px}
+  a.voltar{color:var(--brass);text-decoration:none;white-space:nowrap}
+  h1{font-size:20px;margin:0;font-weight:600}
+  main{max-width:640px;margin:0 auto;padding:22px 20px}
+  .grande{font-size:64px;line-height:1;color:var(--brass);font-weight:600;text-align:center;margin:10px 0 4px}
+  .legenda{text-align:center;color:var(--fraco);margin-bottom:26px}
+  section{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+          padding:18px 20px;margin-bottom:16px}
+  section h2{font-size:17px;margin:0 0 12px;color:var(--fraco);font-weight:600;
+             letter-spacing:.04em;text-transform:uppercase}
+  table{width:100%;border-collapse:collapse}
+  td{padding:7px 0;border-bottom:1px solid var(--linha)}
+  tr:last-child td{border-bottom:none}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;color:var(--brass);font-weight:600}
+  .nota{font-size:15px;color:var(--fraco);background:var(--cartao);border:1px dashed var(--linha);
+        border-radius:12px;padding:16px 18px;margin-top:20px}
+  button{font:inherit;font-size:15px;background:transparent;border:1px solid var(--linha);
+         color:var(--fraco);border-radius:9px;padding:10px 16px;cursor:pointer}
+  .vazio{color:var(--fraco);text-align:center;padding:24px 0}
+</style></head>
+<body>
+<header>
+  <a class="voltar" href="./">‹ voltar</a>
+  <h1>Kadishim ditos</h1>
+</header>
+<main id="corpo"></main>
+
+<script src="./contador.js"></script>
+<script>
+const NOMES = { ashkenaz:'Ashkenaz', chabad:'Chabad', sefard:'Sefard', sefaradi:'Sefaradi',
+                yatom:'Yatom (do enlutado)', derabanan:'deRabanan',
+                pt:'português', en:'inglês', es:'espanhol', fr:'francês',
+                it:'italiano', de:'alemão', ru:'russo', he:'hebraico' };
+const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const nome = k => NOMES[k] || k;
+
+function tabela(titulo, pares) {
+  if (!pares.length) return '';
+  return `<section><h2>${esc(titulo)}</h2><table>` +
+    pares.map(([k, n]) => `<tr><td>${esc(nome(k))}</td><td class="n">${n}</td></tr>`).join('') +
+    '</table></section>';
+}
+
+function desenhar() {
+  const r = Contador.resumo();
+  const dia = d => d ? new Date(d).toLocaleDateString('pt-BR') : '—';
+  let h = `<div class="grande">${r.total}</div>
+           <div class="legenda">${r.total === 1 ? 'Kadish dito neste aparelho' : 'Kadishim ditos neste aparelho'}</div>`;
+  if (!r.total) {
+    h += `<div class="vazio">Ainda nenhum. Um Kadish é contado quando o áudio chega ao fim.</div>`;
+  } else {
+    h += tabela('por nussach', r.porNussach);
+    h += tabela('por tipo', r.porTipo);
+    h += tabela('por língua da tela', r.porLingua);
+    h += `<section><h2>quando</h2><table>
+            <tr><td>primeiro</td><td class="n">${esc(dia(r.primeiro))}</td></tr>
+            <tr><td>último</td><td class="n">${esc(dia(r.ultimo))}</td></tr>
+            <tr><td>dias diferentes</td><td class="n">${r.dias}</td></tr>
+          </table></section>`;
+  }
+  h += `<div class="nota">
+    <p><b>Esta conta é só deste aparelho.</b> Fica guardada aqui dentro, não sai para
+       servidor nenhum e não identifica ninguém. Se você abrir o app noutro celular,
+       a conta lá começa do zero.</p>
+    <p><b>O total geral — por país e por língua — ainda não existe.</b> O GitHub Pages só
+       entrega arquivo; ele não tem onde guardar contagem de todo mundo. Isso precisa de
+       um serviço fora, e é decisão sua. As opções estão em
+       <code>RELATORIO-CONTADOR.md</code>. O código de envio já está pronto e
+       <b>desligado</b>: enquanto ninguém puser um endereço, nada é enviado.</p>
+    <p style="margin-bottom:0">Envio para o total geral:
+       <b>${Contador.ENDERECO_GERAL ? 'ligado' : 'desligado'}</b></p>
+  </div>
+  <p style="text-align:center;margin-top:22px"><button id="zerar">Zerar a conta deste aparelho</button></p>`;
+  document.getElementById('corpo').innerHTML = h;
+  const b = document.getElementById('zerar');
+  if (b) b.onclick = () => {
+    if (confirm('Zerar a contagem deste aparelho? Não dá para desfazer.')) { Contador.zerar(); desenhar(); }
+  };
+}
+desenhar();
+
+// segue o tema escolhido no app
+if (localStorage.getItem('tefila_theme') === 'claro')
+  document.body.style.background = '#fff';
+</script>
+</body></html>

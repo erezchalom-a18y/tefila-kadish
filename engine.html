@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <script src="./hebraico.js"></script>
 <script src="./yahrzeit.js"></script>
+<script src="./contador.js"></script>
 <link rel="manifest" href='data:application/manifest+json,{"name":"Tefil%C3%A1 · Kadish","short_name":"Tefil%C3%A1","start_url":"./","display":"standalone","theme_color":"%238b6a3e","background_color":"%23f4ede0","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 192 192%22%3E%3Crect width%3D%22192%22 height%3D%22192%22 fill%3D%22%23f4ede0%22%2F%3E%3Ctext x%3D%2296%22 y%3D%22120%22 font-size%3D%22100%22 text-anchor%3D%22middle%22 fill%3D%22%238b6a3e%22%3E%E2%9C%A1%3C%2Ftext%3E%3C%2Fsvg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1593,6 +1594,61 @@
     }
   }
 
+
+  /* ---------- Tamanhos legiveis no cabecalho ----------
+     O Erez viu: "o menu em cima esta desproporcional, textos com fonte pequena
+     comparados ao texto do Kadish". Estava mesmo. Medido num iPhone SE: o menor
+     texto do cabecalho tinha 9,2px contra 26px do hebraico — quase tres vezes
+     menor, e abaixo dos 11px que a Apple trata como piso de legibilidade. Havia
+     oito textos entre 9 e 11px, e botoes de 19 a 26px de altura, quando o dedo
+     precisa de perto de 44px.
+
+     Aqui nada fica abaixo de 12px, os botoes ganham area de toque de verdade, e
+     a altura que isso custaria e devolvida apertando o espacamento — para o
+     Kadish continuar ocupando a maior parte da tela, que e o que importa. */
+  .topbar .tradition-badge,
+  .topbar .kadish-type-toggle,
+  .topbar .lang-toggle,
+  .topbar .treino-toggle { font-size: 13px !important; }
+  .topbar .kadish-type-toggle .kt-size,
+  .topbar .lang-toggle .lang-flag,
+  .topbar .lang-toggle .arr { font-size: 12px !important; }
+  .topbar .picto { font-size: 12px !important; }
+  .topbar .prayer-source { font-size: 12.5px !important; }
+
+  /* area de toque: o alvo cresce sem o texto crescer junto */
+  .topbar .lang-toggle,
+  .topbar .treino-toggle,
+  .topbar .kadish-type-toggle {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .topbar .tradition-badge { min-height: 30px; display: inline-flex; align-items: center; }
+  .topbar .info-toggle { min-width: 38px !important; min-height: 38px !important; }
+
+  /* a altura devolvida: espacamento mais justo no cabecalho */
+  @media (max-width: 640px) {
+    .brand { padding: 6px 12px 4px !important; row-gap: 4px !important; }
+    .brand-right { row-gap: 4px !important; }
+    .prayer-meta { padding: 6px 16px !important; }
+    .pictograms { padding: 7px 14px !important; gap: 12px !important; }
+    .learn-strip { padding: 7px 12px !important; }
+  }
+
+  /* Deitado no celular sobra pouca altura: o cabecalho encolhe de proposito.
+     Nada aqui reduz fonte abaixo de 12px — encolhe espaco, nunca legibilidade. */
+  @media (max-height: 460px) and (orientation: landscape) {
+    .pictograms { display: none; }
+    .brand { padding: 4px 12px 2px !important; }
+    .prayer-meta { padding: 4px 16px !important; }
+    .learn-strip { padding: 5px 12px !important; }
+    .topbar .lang-toggle,
+    .topbar .treino-toggle,
+    .topbar .kadish-type-toggle { min-height: 32px; }
+  }
 </style>
 </head>
 <body>
@@ -5414,6 +5470,18 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // Sefaradi no Adar II). O cartao e desenhado na carga, antes daqui, entao
       // sem este redesenho ele mostrava sempre a regra do nussach padrao.
       if (typeof renderMemorial === 'function') { try { renderMemorial(); } catch (e) {} }
+
+      // Contador de Kadishim ditos. Nao aparece nada na tela: e para o Erez
+      // saber quantos foram ditos, nao para cobrar quem reza. So conta quando a
+      // pessoa chega ao fim do audio.
+      if (typeof Contador !== 'undefined' && audio) {
+        Contador.vigiar(audio, dados.versos, () => ({
+          nussach, tipo, lingua: (typeof state !== 'undefined' && state.lang) || 'pt'
+        }));
+      }
+      if (new URLSearchParams(location.search).has('contador')) {
+        console.log('Kadishim ditos neste aparelho:', Contador.resumo());
+      }
     }
 
     return {

@@ -11,9 +11,10 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node checar-ritos.mjs   → marcas de rito. Tem que dar VERDE nos 8.
 - node testar-app.mjs     → o app num Chromium: 8 combinações × 2 formatos.
 - node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8.
+- node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado. VERDE nas 7.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As quatro rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As cinco rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -135,6 +136,10 @@ Para as que imprimem, também playwright + Chromium.
   Sem os navegadores do Playwright baixados: CHROMIUM=/caminho/do/chrome.
 - testar-linguas.mjs — abre o app nas 8 línguas e confere que não sobrou
   português na tela, no cartão de yahrzeit nem no arquivo de calendário.
+- testar-telas.mjs — 7 tamanhos (iPhone, iPad, computador), em pé e deitado.
+  Reprova se algum texto do cabeçalho ficar abaixo de 12px, se um botão ficar
+  com menos de 30px de altura, se a página rolar de lado, ou se sobrar menos de
+  60% da altura para o Kadish.
 - gerar-pdf.mjs — os 8 folhetos imprimíveis, em folhetos/. Sempre com marca
   d'água RASCUNHO — AGUARDANDO REVISÃO RABÍNICA, na língua do folheto. Não tire
   enquanto o rabino não tiver revisado. node gerar-pdf.mjs de → folhetos em
@@ -163,6 +168,18 @@ aplicar-escolhas.mjs é o ÚNICO script que escreve no glossario.json, e só com
 sync/*.json, PROVA que nenhum tempo, nenhum hebraico e nenhuma âncora mudou, e
 roda as duas checagens. Qualquer coisa vermelha e ele desfaz tudo. Não faz push:
 mudança de texto litúrgico passa por olho humano antes da main.
+
+## O contador de Kadishim
+
+contador.js + contador.html. A conta de cada aparelho já funciona: fica no
+localStorage, não sai do aparelho, não identifica ninguém, e um Kadish só conta
+quando o áudio passa de 90% do último verso. Não aparece nada na tela de quem
+reza — quem vê é o Erez, em contador.html.
+
+O total geral (por país, por língua) precisa de serviço fora do GitHub Pages.
+O envio está escrito e DESLIGADO: enquanto ENDERECO_GERAL for string vazia, nada
+sai do aparelho. Não ligar sem decisão escrita do Erez. Opções e recomendação em
+RELATORIO-CONTADOR.md.
 
 ## Pendências de conteúdo (não são de código)
 
