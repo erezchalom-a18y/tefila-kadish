@@ -1385,6 +1385,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "mine",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {

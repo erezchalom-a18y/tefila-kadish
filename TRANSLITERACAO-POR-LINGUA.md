@@ -26,43 +26,47 @@ O português **não foi tocado**, como você pediu.
 
 ## O que entrou
 
-| arquivo | palavras com as 5 línguas | |
+**774 das 815 palavras (95%)** ganharam inglês, espanhol, francês, italiano e
+russo.
+
+| arquivo | com as 5 línguas | |
 |---|---|---|
+| chabad_derabanan | 121 / 121 | 100% |
 | chabad_yatom | 80 / 80 | 100% |
 | ashkenaz_yatom | 75 / 75 | 100% |
-| chabad_derabanan | 120 / 121 | 99% |
-| ashkenaz_derabanan | 114 / 118 | 97% |
-| sefaradi_yatom | 76 / 91 | 84% |
-| sefaradi_derabanan | 104 / 125 | 83% |
-| **sefard_yatom** | 0 / 81 | **sem fonte** |
-| **sefard_derabanan** | 0 / 124 | **sem fonte** |
+| sefard_yatom | 80 / 81 | 99% |
+| ashkenaz_derabanan | 116 / 118 | 98% |
+| sefard_derabanan | 119 / 124 | 96% |
+| sefaradi_yatom | 79 / 91 | 87% |
+| sefaradi_derabanan | 107 / 125 | 86% |
 
-**569 palavras** ganharam inglês, espanhol, francês, italiano e russo.
+## Como o Sefard entrou, se não está no documento
 
-## O que faltou, e por quê
+O documento compara três tradições — Sefaradi, Ashkenazi e Chabad — e o
+**Sefard** não está lá. Decisão do Erez (21/08): *"Sefard, em outras línguas use
+a transliteração dos outros nussachim como base, é muito parecido."*
 
-**1. O Sefard inteiro.** O documento compara três tradições — Sefaradi,
-Ashkenazi e Chabad. O **Sefard** não está lá. Esses dois arquivos continuam com
-o apoio em português.
+Foi o que se fez, com um critério estreito: **só empresta quando a palavra
+hebraica é exatamente a mesma**. Não há adivinhação — se a palavra do Sefard não
+existe igual em nenhum dos outros três, ela fica em português. Assim entraram
+119 das 124 do deRabanan e 80 das 81 do Yatom.
 
-**2. Não há Yatom no documento.** Ele só traz o deRabanan. Como o Yatom é quase
-um recorte do deRabanan, casei palavra por palavra pelo **hebraico** dentro do
-mesmo nussach — por isso o Yatom do chabad e do ashkenaz ficaram em 100%.
+O mesmo empréstimo completou os buracos dos outros: sefaradi +3, ashkenaz +2,
+chabad +1.
 
-**3. O alemão não existe no conjunto.** Os documentos são en, es, fr, it, ru,
-árabe e português — não há alemão. Quem lê o app em alemão continua com a
-transliteração portuguesa.
+## O que ainda falta, e por quê
 
-**4. Faltam 41 palavras no sefaradi.** Não é falha de casamento: o nosso texto
-sefaradi tem um trecho que o documento não traz — *vesava, vishua, venechama,
-vesheizava, urefua, ugula, uselicha, vechapara, verevach, vehatsala…* — a
-expansão sefaradi do *yehei shlama raba*. Onde não há fonte, fica o português.
+**As 41 palavras que sobram são quase todas do sefaradi** — a expansão sefaradi
+do *yehei shlama raba* (*vesava, vishua, venechama, vesheizava, urefua, ugula,
+uselicha, vechapara, verevach, vehatsala…*). Esse trecho não existe no documento
+**nem nos outros nussachim**, então não há de onde emprestar. Fica em português.
 
-**5. Sobrou um `min` no chabad.** O nosso texto diz *leila **min kol** birchata*;
-o documento diz *l'eila u'l'eila **mikol** birchata*. É diferença de texto, não
-de transliteração. Não forcei.
+## O alemão
 
----
+Os documentos são en, es, fr, it, ru, árabe e português — **não há alemão**.
+Decisão do Erez: em alemão, **tirar a linha da transliteração**. Mostrar a
+portuguesa para quem lê alemão não ajudaria: o "z" alemão soa "ts" e o "y" soa
+"u" — sairia outra palavra. Quem lê em alemão vê o hebraico e a tradução.
 
 ## A pergunta que estava aberta — resolvida
 

@@ -665,6 +665,11 @@
   /* ============ LAYER VISIBILITY & FOCUS ============ */
   body.heb-hidden .hebrew { display: none; }
   body.tr-hidden .translit { display: none; }
+  /* Alemao nao tem transliteracao propria: os documentos do Erez sao en, es,
+     fr, it, ru, arabe e portugues. Mostrar a portuguesa para quem le alemao
+     nao ajuda — o "z" alemao soa "ts", o "y" soa "u"; sairia outra palavra.
+     Decisao do Erez (21/08): em alemao, tira a linha. */
+  body.sem-translit .translit { display: none; }
   body.pt-hidden .pt-merged { display: none; }
 
   /* Focus modes - one layer big, others small + faded */
@@ -1110,25 +1115,25 @@
   /* ============ V3 NEW COMPONENTS ============ */
 
   /* Modo Treino banner */
+  /* Esta faixa flutuava a 64px do topo (position: fixed) e caia EM CIMA dos
+     botoes do cabecalho no celular — o Erez mandou a foto. Com letter-spacing
+     de 0.25em ainda quebrava em tres linhas e tapava tres botoes de uma vez.
+     Agora ela fica no fluxo, como as outras faixas: uma linha fina, largura
+     inteira, que empurra o texto para baixo em vez de cobrir alguma coisa. */
   .treino-banner {
     display: none;
-    position: fixed;
-    top: 64px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
     background: var(--brass);
     color: var(--bg);
     font-family: 'Cormorant Garamond', serif;
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 500;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 100px;
+    padding: 4px 14px;
+    text-align: center;
+    justify-content: center;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     pointer-events: none;
   }
   body.modo-treino .treino-banner { display: flex; }
@@ -4805,8 +4810,13 @@ function desenharSobre() {
   if (nota) nota.textContent = s.nota;
 }
 
+// Linguas sem transliteracao propria: a linha some em vez de mostrar a
+// portuguesa, que soaria errado na boca de quem le essa lingua.
+const SEM_TRANSLITERACAO = ['de'];
+
 function applyLanguage(lang) {
   state.lang = lang;
+  document.body.classList.toggle('sem-translit', SEM_TRANSLITERACAO.includes(lang));
   localStorage.setItem('tefila_lang', lang);
   applyI18n(lang);
   if (typeof atualizarDedicatoria === 'function') atualizarDedicatoria();
@@ -5403,11 +5413,23 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
 
     let versoAnterior = -1;
-    // Para qual verso a repeticao acabou de rebobinar. Enquanto a voz nao
-    // chega la, nenhuma troca de verso conta como "acabou um verso": procurar
-    // num MP3 nao cai no ponto exato, e cair um pouco antes fazia a repeticao
-    // pular para o verso de tras e ficar presa nele.
-    let rebobinadoPara = -1;
+    // A repeticao pede para o audio voltar, mas o audio nao volta na hora — no
+    // Safari do iPhone demora varios quadros. Nesse meio-tempo o relogio ainda
+    // marca o verso SEGUINTE, e sem trava o codigo rodava de novo: acendia por
+    // um instante a palavra do verso de baixo (o Erez viu isso), e gastava a
+    // repeticao adiantado, pausando antes da hora.
+    //
+    // Por isso a trava e pelo TEMPO, nao pelo numero do verso: depois de pedir
+    // a volta, nada acontece ate o relogio realmente cair no ponto pedido.
+    // O prazo existe para o caso de o navegador ignorar o pedido — melhor
+    // destravar do que congelar o destaque.
+    let rebobinadoAte = null, prazoDaVolta = 0;
+    // Ligado quando o Modo Treino pausa no fim de um verso. A pausa nao e
+    // instantanea: sobrava um quadro em que o relogio ja estava no verso
+    // seguinte e o destaque acendia a primeira palavra dele — a piscada que o
+    // Erez viu. Enquanto isto estiver ligado e o audio parado, o destaque nao
+    // anda; ele fica na ultima palavra do verso que acabou.
+    let paradoNoFimDoVerso = false;
 
     /**
      * Repetir o verso e pausar depois dele viviam no caminho antigo, o dos
@@ -5430,8 +5452,10 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           // +30ms: procurar num MP3 nao cai no milissegundo exato, e cair um
           // fio DE ANTES do verso fazia o contador de versos achar que o verso
           // anterior tinha acabado. Inaudivel, e resolve.
-          a.currentTime = Math.min(v.start + 0.03, v.end - 0.01);
-          rebobinadoPara = k;
+          const destino = Math.min(v.start + 0.03, v.end - 0.01);
+          a.currentTime = destino;
+          rebobinadoAte = destino;
+          prazoDaVolta = Date.now() + 2000;
           if (typeof showToast === 'function')
             showToast(TXT('toast_repeat', { n: state.repeatN - state.repeatRestante + 1, t: state.repeatN }));
           return 'repetiu';
@@ -5445,6 +5469,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // primeira pausa.
       if (state.modoTreino) {
         if (typeof pause === 'function') pause(); else a.pause();
+        paradoNoFimDoVerso = true;
         return 'pausou';
       }
       return false;
@@ -5494,6 +5519,12 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       const vs = dados.versos;
       const k = vs.findIndex(v => t >= v.start && t < v.end);
       if (k === -1) return;
+      // Enquanto a volta da repeticao nao chegou, nem acende nem conta verso:
+      // acender aqui e o que fazia piscar a palavra do verso seguinte.
+      if (rebobinadoAte !== null && t > rebobinadoAte + 0.5 && Date.now() < prazoDaVolta) return;
+      // Pausado no fim de um verso: o destaque fica onde esta ate o ▶.
+      if (paradoNoFimDoVerso && audioEl().paused) return;
+      paradoNoFimDoVerso = false;
       // passou para o verso seguinte? o anterior acabou de terminar
       // So conta como "acabou o verso" quando a voz ANDA PARA A FRENTE, um
       // verso de cada vez. Sem isto, o rebobinar da propria repeticao era lido
@@ -5501,10 +5532,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // inicio de dois versos e nunca pausava. Foi o que o Erez viu ("trava
       // depois da primeira vez"). Qualquer outro pulo — arrastar o audio,
       // voltar — so re-arma, sem disparar nada.
-      if (rebobinadoPara >= 0) {
-        // Voltando para o verso repetido: nada conta ate chegar nele.
-        if (k < rebobinadoPara) { versoAnterior = rebobinadoPara; }
-        else { rebobinadoPara = -1; versoAnterior = k; }
+      if (rebobinadoAte !== null) {
+        // Ainda voltando: o relogio nao caiu no ponto pedido. Nao mexe em nada.
+        if (t > rebobinadoAte + 0.5 && Date.now() < prazoDaVolta) return;
+        rebobinadoAte = null;
+        versoAnterior = k;
       } else if (versoAnterior >= 0 && k !== versoAnterior) {
         const anterior = versoAnterior;
         // So conta como "acabou o verso" quando a voz anda PARA A FRENTE, um

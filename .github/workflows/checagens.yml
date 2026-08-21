@@ -35,15 +35,21 @@ jobs:
       - name: Instalar Playwright e o Chromium
         run: npm install playwright && npx playwright install --with-deps chromium
 
+      # Tem que ser este servidor, e nao o `python3 -m http.server`: aquele nao
+      # responde a pedidos Range, e sem Range o navegador nao consegue mover o
+      # audio — todo seek cai no zero. O teste do Modo Treino chegou a dar
+      # verde medindo essa ficcao. O GitHub Pages responde Range; o teste
+      # tambem precisa responder.
       - name: Servir o repositorio de subdiretorio (como o GitHub Pages)
         run: |
-          mkdir -p /tmp/servir
-          ln -s "$GITHUB_WORKSPACE" /tmp/servir/tefila-kadish
-          (cd /tmp/servir && python3 -m http.server 8896 --bind 127.0.0.1 &)
+          node servidor-teste.mjs 8896 "$GITHUB_WORKSPACE" &
           for i in $(seq 1 20); do
             curl -sf http://127.0.0.1:8896/tefila-kadish/engine.html -o /dev/null && break
             sleep 1
           done
+          code=$(curl -s -o /dev/null -w '%{http_code}' -H 'Range: bytes=0-99' \
+            http://127.0.0.1:8896/tefila-kadish/tefila-audio/chabad/yatom.mp3)
+          test "$code" = "206" || { echo "servidor sem Range (deu $code)"; exit 1; }
 
       - name: testar-app.mjs (as 8 combinacoes, nos 2 formatos de audio)
         run: node testar-app.mjs http://127.0.0.1:8896/tefila-kadish

@@ -37,6 +37,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const CONFIRMAR = process.argv.includes('--confirmar');
 const FONTE = 'fontes/transliteracao-por-lingua.json';
 const NUSSACHIM = ['sefaradi', 'ashkenaz', 'chabad'];
+// O documento nao tem o Sefard. O Erez decidiu (21/08): "Sefard, em outras
+// linguas use a transliteracao dos outros nussachim como base, e muito
+// parecido". Entao o Sefard sai do casamento pelo HEBRAICO com os outros tres,
+// palavra por palavra — e so quando a palavra hebraica e a mesma.
+const EMPRESTADOS = ['sefard_derabanan', 'sefard_yatom'];
 
 /**
  * De qual COLUNA do documento sai cada nussach.
@@ -56,7 +61,7 @@ const NUSSACHIM = ['sefaradi', 'ashkenaz', 'chabad'];
  * quantas. Preferi perder cobertura a inventar.
  */
 const COLUNA = { sefaradi: 'sefaradi', ashkenaz: 'sefaradi', chabad: 'sefaradi' };
-const SEM_FONTE = ['sefard_derabanan', 'sefard_yatom'];
+
 const LIMIAR = 0.45;      // semelhanca minima para aceitar um par
 
 const src = JSON.parse(readFileSync(FONTE, 'utf8'));
@@ -176,32 +181,26 @@ for (const nussach of NUSSACHIM) {
     heb: semNikud(p.hebrew), pt: p.transliteration_pt || '', tl: p.transliteracoes || null }));
 }
 
-// ---------- 2. os Yatom, casando o hebraico com o deRabanan ----------
-for (const nussach of NUSSACHIM) {
-  const arquivo = `sync/${nussach}_yatom_sync.json`;
-  const antes = ler(arquivo);
-  const depois = ler(arquivo);
-  const nossas = depois.versos.flatMap(v => (v.palavras || []).map(p => p));
-  for (const p of nossas) delete p.transliteracoes;
-  const base = dicionarioPorNussach[nussach];
-
+/**
+ * Casa uma lista de palavras nossas contra um dicionario de referencia, pelo
+ * hebraico sem nikud; o que sobrar tenta de novo pela transliteracao
+ * portuguesa (a mesma palavra aparece escrita cheia num arquivo e defectiva
+ * noutro, e ai o hebraico nao bate).
+ */
+function casarComBase(nossas, base) {
   const pares = alinhar(nossas.map(p => semNikud(p.hebrew)), base.map(b => b.heb),
                         (x, y) => (x && x === y ? 1 : 0));
-  let postas = 0, porEscrita = 0; const semPar = [];
-  const sobraram = [];
+  let postas = 0, porEscrita = 0; const sobraram = [];
   for (const [a, b] of pares) {
     if (a === null) continue;
+    if (nossas[a].transliteracoes) { postas++; continue; }        // ja tem
     if (b === null || !base[b].tl || semNikud(nossas[a].hebrew) !== base[b].heb) {
       sobraram.push(a); continue;
     }
     nossas[a].transliteracoes = { ...base[b].tl };
     postas++;
   }
-  // Segunda tentativa, so para o que sobrou: a mesma palavra aparece escrita
-  // cheia num arquivo e defectiva no outro (עוֹשֶׂה x עֹשֶׂה), e ai o hebraico
-  // sem nikud nao bate. Cai para a transliteracao portuguesa, que e nossa e
-  // ja esta conferida — e so aceita quando TODAS as ocorrencias no deRabanan
-  // concordam, para nao escolher por conta propria.
+  const semPar = [];
   for (const a of sobraram) {
     const chave = simplificar(nossas[a].transliteration_pt || '');
     const candidatos = base.filter(x => x.tl && simplificar(x.pt || '') === chave);
@@ -213,37 +212,102 @@ for (const nussach of NUSSACHIM) {
       semPar.push(nossas[a].transliteration_pt);
     }
   }
-  if (porEscrita) relatorioExtra.push(
-    `   ${arquivo.replace('sync/','').replace('_sync.json','')}: ${porEscrita} palavra(s) casada(s) pela transliteracao portuguesa (grafia hebraica diferente entre os dois arquivos)`);
+  return { postas, porEscrita, semPar };
+}
+
+// ---------- 2. os Yatom, casando o hebraico com o deRabanan ----------
+for (const nussach of NUSSACHIM) {
+  const arquivo = `sync/${nussach}_yatom_sync.json`;
+  const antes = ler(arquivo);
+  const depois = ler(arquivo);
+  const nossas = depois.versos.flatMap(v => (v.palavras || []).map(p => p));
+  for (const p of nossas) delete p.transliteracoes;
+
+  const r = casarComBase(nossas, dicionarioPorNussach[nussach]);
   if (assinatura(antes) !== assinatura(depois))
     throw new Error(`${arquivo}: alguma coisa fora da transliteracao mudou`);
+  if (r.porEscrita) relatorioExtra.push(
+    `   ${arquivo.replace('sync/','').replace('_sync.json','')}: ${r.porEscrita} palavra(s) pela transliteracao portuguesa (grafia hebraica diferente)`);
 
-  relatorio.push({ arquivo, total: nossas.length, postas, semPar });
-  totalPostas += postas; totalSem += semPar.length;
+  relatorio.push({ arquivo, total: nossas.length, postas: r.postas, semPar: r.semPar });
+  totalPostas += r.postas; totalSem += r.semPar.length;
+  paraGravar[arquivo] = depois;
+  dicionarioPorNussach[nussach + '_yatom'] = nossas.map(p => ({
+    heb: semNikud(p.hebrew), pt: p.transliteration_pt || '', tl: p.transliteracoes || null }));
+}
+
+// ---------- 3. o que sobrou: completar de um nussach com os outros ----------
+// Vale para o Sefard, que nao esta no documento, e para os trechos do Sefaradi
+// que o documento nao traz. O criterio e o mesmo: so casa palavra hebraica
+// igual. Onde nem isso existe, fica em portugues.
+const TODOS = [
+  'sefaradi_derabanan', 'ashkenaz_derabanan', 'chabad_derabanan',
+  'sefaradi_yatom', 'ashkenaz_yatom', 'chabad_yatom',
+  'sefard_derabanan', 'sefard_yatom',
+];
+const emprestimo = [];
+
+// banco unico com tudo o que ja tem transliteracao, para servir de emprestimo
+const banco = [];
+for (const [f, d] of Object.entries(paraGravar))
+  for (const v of d.versos) for (const p of (v.palavras || []))
+    if (p.transliteracoes) banco.push({ heb: semNikud(p.hebrew),
+      pt: p.transliteration_pt || '', tl: p.transliteracoes });
+
+for (const nome of TODOS) {
+  const arquivo = `sync/${nome}_sync.json`;
+  const jaFeito = paraGravar[arquivo];
+  const antes = ler(arquivo);
+  const depois = jaFeito || ler(arquivo);
+  const nossas = depois.versos.flatMap(v => (v.palavras || []).map(p => p));
+  const faltavam = nossas.filter(p => !p.transliteracoes).length;
+  if (!faltavam) continue;
+
+  const r = casarComBase(nossas, banco);
+  const ganhou = nossas.filter(p => p.transliteracoes).length - (nossas.length - faltavam);
+  if (assinatura(jaFeito ? antes : antes) !== assinatura(depois) && !jaFeito)
+    throw new Error(`${arquivo}: alguma coisa fora da transliteracao mudou`);
+  if (ganhou > 0) {
+    emprestimo.push(`   ${nome.padEnd(20)} +${ganhou} palavra(s) emprestadas dos outros nussachim ` +
+                    `(faltavam ${faltavam}, sobram ${r.semPar.length})`);
+    totalPostas += ganhou; totalSem -= ganhou;
+    const linha = relatorio.find(x => x.arquivo === arquivo);
+    if (linha) { linha.postas += ganhou; linha.semPar = r.semPar; }
+    else relatorio.push({ arquivo, total: nossas.length,
+                          postas: nossas.length - r.semPar.length, semPar: r.semPar });
+  }
   paraGravar[arquivo] = depois;
 }
 
 // ---------- relatorio ----------
 console.log('lingua(s) do documento:', LINGUAS.join(', '), '(o portugues fica como esta)');
 console.log('coluna usada por nussach:',
-  NUSSACHIM.map(n => `${n} <- ${COLUNA[n]}`).join(' · '), '\n');
-for (const r of relatorio) {
-  const pct = (r.postas / r.total * 100).toFixed(1);
-  console.log(`${r.arquivo.replace('sync/','').replace('_sync.json','').padEnd(20)} ` +
-              `${String(r.postas).padStart(3)}/${String(r.total).padEnd(3)} palavras (${pct}%)`);
-  if (r.semPar.length) console.log('   sem par: ' + r.semPar.join(', '));
+  NUSSACHIM.map(n => `${n} <- ${COLUNA[n]}`).join(' \u00b7 '), '\n');
+
+// A conta sai dos dados, nao de somas pelo caminho: e mais dificil de errar.
+let totalPalavras = 0, totalComLingua = 0;
+for (const nome of TODOS) {
+  const arquivo = `sync/${nome}_sync.json`;
+  const d = paraGravar[arquivo] || ler(arquivo);
+  const ps = d.versos.flatMap(v => (v.palavras || []).map(p => p));
+  const com = ps.filter(p => p.transliteracoes);
+  const sem = ps.filter(p => !p.transliteracoes).map(p => p.transliteration_pt);
+  totalPalavras += ps.length; totalComLingua += com.length;
+  console.log(`${nome.padEnd(20)} ${String(com.length).padStart(3)}/${String(ps.length).padEnd(3)} ` +
+              `palavras (${(com.length / ps.length * 100).toFixed(1)}%)`);
+  if (sem.length) console.log('   sem fonte: ' + sem.join(', '));
 }
+
 if (relatorioExtra.length) {
-  console.log('\nsegunda tentativa:');
+  console.log('\nsegunda tentativa (grafia hebraica diferente entre arquivos):');
   relatorioExtra.forEach(l => console.log(l));
 }
-console.log('\nsem fonte nenhuma (o documento nao cobre):');
-for (const f of SEM_FONTE) {
-  const d = ler(`sync/${f}_sync.json`);
-  const n = d.versos.reduce((a, v) => a + (v.palavras || []).length, 0);
-  console.log(`   ${f.padEnd(20)} ${n} palavras — continuam so em portugues`);
+if (emprestimo.length) {
+  console.log('\nemprestado dos outros nussachim (palavra hebraica igual):');
+  emprestimo.forEach(l => console.log(l));
 }
-console.log(`\ntotal: ${totalPostas} palavras ganharam as 5 linguas; ${totalSem} ficaram sem par.`);
+console.log(`\ntotal: ${totalComLingua} de ${totalPalavras} palavras com as 5 linguas ` +
+            `(${(totalComLingua / totalPalavras * 100).toFixed(1)}%).`);
 
 if (!CONFIRMAR) {
   console.log('\nENSAIO — nada foi gravado. Para valer: node aplicar-transliteracoes.mjs --confirmar');

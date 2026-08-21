@@ -1385,6 +1385,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "mine",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {
@@ -2322,6 +2329,13 @@
             "de": "und euch",
             "ru": "и вам",
             "he": "וְלָכֶם"
+          },
+          "transliteracoes": {
+            "en": "ulechon",
+            "es": "ulejon",
+            "fr": "oulé’hone",
+            "it": "ulechon",
+            "ru": "улэхон"
           }
         },
         {
@@ -2504,6 +2518,13 @@
             "de": "dem Himmel",
             "ru": "небес",
             "he": "הַשָּׁמַיִם"
+          },
+          "transliteracoes": {
+            "en": "shemaya",
+            "es": "shemaya",
+            "fr": "chémaya",
+            "it": "shemaya",
+            "ru": "шмая"
           }
         },
         {

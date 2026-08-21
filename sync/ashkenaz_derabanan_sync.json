@@ -1264,6 +1264,13 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "mine",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {
@@ -2646,6 +2653,13 @@
             "de": "im Himmel",
             "ru": "небесного",
             "he": "שֶׁבַּשָּׁמַיִם"
+          },
+          "transliteracoes": {
+            "en": "vishmaya",
+            "es": "vishmaya",
+            "fr": "vichmaya",
+            "it": "vishmaya",
+            "ru": "вишмая"
           }
         },
         {

@@ -153,6 +153,11 @@ Para as que imprimem, também playwright + Chromium.
 - testar-treino.mjs — o Modo Treino pausa no fim de cada verso, o ▶ retoma de
   onde parou, e a repetição toca o verso o número de vezes pedido. Já quebrou
   duas vezes; existe para não quebrar uma terceira.
+- servidor-teste.mjs — servidor estático para os testes, COM suporte a Range.
+  Tem que ser ele, não o `python3 -m http.server`: aquele não responde Range, e
+  sem Range o navegador não consegue mover o áudio — todo seek cai no zero. O
+  testar-treino.mjs chegou a dar verde medindo essa ficção. Ele agora confere o
+  servidor na primeira linha e reprova se não servir.
 - testar-telas.mjs — 7 tamanhos (iPhone, iPad, computador), em pé e deitado.
   Reprova se algum texto do cabeçalho ficar abaixo de 12px, se um botão ficar
   com menos de 30px de altura, se a página rolar de lado, ou se sobrar menos de
