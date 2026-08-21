@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-21 15:30 UTC por `whisper-1`, sobre o commit `f271138`.
+Gerado em 2026-08-21 16:25 UTC por `whisper-1`, sobre o commit `e15e38b`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -23,28 +23,28 @@ Trate cada linha como *vale a pena ouvir este trecho*, nunca como *está errado*
 
 | Nussach | Palavras nossas | Palavras ouvidas | Apontamentos |
 | --- | ---: | ---: | ---: |
-| ashkenaz_yatom | 75 | 80 | 37 |
+| ashkenaz_yatom | 75 | 80 | 36 |
 | ashkenaz_derabanan | 118 | 124 | 89 |
 | chabad_yatom | 80 | 80 | 26 |
 | chabad_derabanan | 121 | 124 | 79 |
 | sefard_yatom | 81 | 86 | 49 |
-| sefard_derabanan | 124 | 126 | 38 |
+| sefard_derabanan | 124 | 126 | 37 |
 | sefaradi_yatom | 91 | 92 | 58 |
 | sefaradi_derabanan | 125 | 124 | 56 |
-| **total** | | | **432** |
+| **total** | | | **430** |
 
 Por eixo:
 
 - começa em hora diferente: **285**
-- está no texto, não foi ouvida: **63**
-- foi ouvida, não está no texto: **84**
+- está no texto, não foi ouvida: **62**
+- foi ouvida, não está no texto: **83**
 
 ## Cruzamento com OUVIR-PRIMEIRO.md
 
 A auditoria de sinal de 20/08 listou 36 suspeitos, espalhados por
 28 versos diferentes.
 
-Dos 432 apontamentos do Whisper, **120** caem em versos que já
+Dos 430 apontamentos do Whisper, **120** caem em versos que já
 estavam naquela lista — cobrindo **27** dos 28 versos suspeitos.
 
 Onde os dois métodos concordam, a chance de haver defeito real é bem maior:
@@ -113,7 +113,7 @@ comece a ouvir por aqui.
 
 - `על` — o Whisper ouviu em 29.219999313354492s, não existe no nosso texto
 - `עָלְמַיָּא` *(almaya)* — no texto em 29.42s, o Whisper não ouviu
-- `מיה` — o Whisper ouviu em 29.68000030517578s, não existe no nosso texto
+- `מיה` — o Whisper ouviu em 29.65999984741211s, não existe no nosso texto
 
 **§10**
 
@@ -121,33 +121,32 @@ comece a ouvir por aqui.
 - `וְיִתְהַלָּל` *(veyithalal)* — nós: 41.1s · ouvido: 40.34000015258789s · diferença -0.76s
 - `בקבוצה` — o Whisper ouviu em 42.86000061035156s, não existe no nosso texto
 - `דְּקֻדְשָׁא` *(dequdsha)* — no texto em 43s, o Whisper não ouviu
+- `לאלה` — o Whisper ouviu em 45.18000030517578s, não existe no nosso texto
 
 **§11**
 
 - `לְעֵלָּא` *(leila)* — no texto em 45.82s, o Whisper não ouviu
-- `לאלה` — o Whisper ouviu em 46.31999969482422s, não existe no nosso texto
 
 **§12**
 
-- `תֻּשְׁבְּחָתָא` *(tushbechata)* — no texto em 50.54s, o Whisper não ouviu
-- `תושבכתה` — o Whisper ouviu em 51.41999816894531s, não existe no nosso texto
+- `תֻּשְׁבְּחָתָא` *(tushbechata)* — nós: 50.54s · ouvido: 51.41999816894531s · diferença +0.88s
 - `דה` — o Whisper ouviu em 55.29999923706055s, não existe no nosso texto
 
 **§13** — **já está no OUVIR-PRIMEIRO**
 
-- `יְהֵא` *(Yehei)* — nós: 61.5s · ouvido: 59.97999954223633s · diferença -1.52s
-- `שְׁלָמָא` *(shlama)* — nós: 62.48s · ouvido: 60.7400016784668s · diferença -1.74s
-- `רַבָּא` *(raba)* — nós: 63.06s · ouvido: 61.34000015258789s · diferença -1.72s
+- `יְהֵא` *(Yehei)* — nós: 61.5s · ouvido: 59.599998474121094s · diferença -1.9s
+- `שְׁלָמָא` *(shlama)* — nós: 62.48s · ouvido: 60.720001220703125s · diferença -1.76s
+- `רַבָּא` *(raba)* — nós: 63.06s · ouvido: 61.31999969482422s · diferença -1.74s
 - `מִן` *(min)* — nós: 63.55s · ouvido: 62s · diferença -1.55s
 - `שְׁמַיָּא` *(shamaya)* — nós: 64.28s · ouvido: 63.13999938964844s · diferença -1.14s
-- `וְחַיִּים` *(vechayim)* — nós: 65.42s · ouvido: 63.79999923706055s · diferença -1.62s
-- `עָלֵינוּ` *(aleinu)* — nós: 66.64s · ouvido: 65.16000366210938s · diferença -1.48s
-- `וְעַל` *(val)* — nós: 67.52s · ouvido: 66.31999969482422s · diferença -1.2s
+- `וְחַיִּים` *(vechayim)* — nós: 65.42s · ouvido: 64.33999633789062s · diferença -1.08s
+- `עָלֵינוּ` *(aleinu)* — nós: 66.64s · ouvido: 65.26000213623047s · diferença -1.38s
+- `וְעַל` *(val)* — nós: 67.52s · ouvido: 66.27999877929688s · diferença -1.24s
 - `כָּל` *(kol)* — nós: 67.98s · ouvido: 67.23999786376953s · diferença -0.74s
 
 **§14** — **já está no OUVIR-PRIMEIRO**
 
-- `הוּא` *(hu)* — nós: 74.49s · ouvido: 75.66000366210938s · diferença +1.17s
+- `הוּא` *(hu)* — nós: 74.49s · ouvido: 75.62000274658203s · diferença +1.13s
 
 ### ashkenaz_derabanan
 
@@ -599,10 +598,6 @@ comece a ouvir por aqui.
 **§6**
 
 - `וּבְחַיֵּי` *(uvechayei)* — nós: 19.44s · ouvido: 18.6200008392334s · diferença -0.82s
-
-**§8**
-
-- `יְהֵא` *(Yehei)* — nós: 27.74s · ouvido: 26.5s · diferença -1.24s
 
 **§15**
 
