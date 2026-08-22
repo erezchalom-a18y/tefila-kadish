@@ -208,16 +208,22 @@ aparece uma vez só, mesmo estando nos 8 kadishim — e o que ele marcar vale pa
 todos. "Amen" está 36 vezes nos arquivos e aparece 2 vezes na tela (uma para a
 transliteração, uma para a tradução da palavra).
 
-Isso encolhe o trabalho: 6.520 palavras nos 8 arquivos viram **250 itens por
+Isso encolhe o trabalho: 6.520 palavras nos 8 arquivos viram **270 itens por
 língua** (155 em alemão e hebraico, que não têm transliteração).
 
 Três coisas são revisáveis: a tradução do verso, a tradução da palavra e a
 transliteração.
 
-"Só o que falta" (ligado por padrão) esconde o que já está CERTO, mas mantém o
-que foi marcado para corrigir — senão a caixa de texto sumia no mesmo toque que
-a abria. Palavra sem transliteração própria não entra na conta e só aparece com
-o filtro desligado, com o aviso de que falta fonte.
+As 20 palavras sem fonte (vesava, vishua…) ENTRAM na conta, por decisão do Erez
+(21/08): ele mesmo é a fonte humana que faltava. Ali os botões são outros —
+"Escrever" ou "Deixar em português" — e o recado separa o que ele escreveu do
+que ele corrigiu, para a origem ficar registrada. Alemão e hebraico não têm
+linha de transliteração no app e por isso não pedem nada disso; sem essa regra,
+o alemão pedia as 113 palavras a mão.
+
+"Só o que falta" (ligado por padrão) esconde o que já está resolvido — o que
+ficou certo, e a palavra que ele decidiu deixar em português. O que espera
+texto continua na tela; escondê-lo tirava a caixa no mesmo toque que a abria.
 
 Tudo fica no aparelho (localStorage), por língua. No fim, o botão monta um
 recado em português para ele copiar e mandar.

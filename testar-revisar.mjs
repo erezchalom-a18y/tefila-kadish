@@ -13,8 +13,10 @@
  *   - "so o que falta" esconde o que ja esta CERTO, mas mantem o que foi
  *     marcado para corrigir — senao a caixa de texto some no mesmo toque que a
  *     abre (foi assim que quebrou uma vez);
- *   - palavra sem transliteracao propria nao entra na conta e so aparece com o
- *     filtro desligado, com o aviso de que falta fonte;
+ *   - palavra sem transliteracao propria ENTRA na conta e da para escrever ali
+ *     mesmo (o Erez e a fonte humana que faltava), ou deixar em portugues;
+ *   - alemao e hebraico nao tem linha de transliteracao nenhuma, entao nao
+ *     pedem nada disso — sem essa regra o alemao pedia 113 palavras a mao;
  *   - as marcas sobrevivem a fechar e abrir.
  *
  * Uso: node servidor-teste.mjs 8896 . &
@@ -116,30 +118,45 @@ confere('o recado traz a correcao e diz que vale para os 8',
 await pag.click('#continuar');
 await pag.waitForTimeout(500);
 
-// ---------- palavra sem fonte ----------
+// ---------- palavra sem fonte: da para escrever ----------
 await pag.selectOption('#lingua', 'en');
-await pag.waitForTimeout(1200);
-const comFiltro = await contar();
-await pag.uncheck('#sofalta');
-await pag.waitForTimeout(900);
-const semFiltro = await contar();
-confere('palavra sem transliteracao nao entra na conta',
-  comFiltro.semFonte === 0 && semFiltro.semFonte > 0,
-  `com filtro: ${comFiltro.semFonte}, sem filtro: ${semFiltro.semFonte}`);
-const aviso = await pag.evaluate(() =>
-  (document.querySelector('.txt.falta') || {}).textContent || '');
-confere('e o aviso explica que falta fonte', /falta fonte/i.test(aviso), aviso.slice(0, 90));
-await pag.check('#sofalta');
-await pag.waitForTimeout(600);
+await pag.waitForTimeout(1300);
+const ingles = await contar();
+confere('as palavras sem fonte entram na conta',
+  (ingles.tipos['tl-falta'] || 0) === 20,
+  `${ingles.tipos['tl-falta'] || 0} na lista (esperado 20)`);
 
-// ---------- alemao nao tem transliteracao nenhuma ----------
-await pag.selectOption('#lingua', 'de');
-await pag.waitForTimeout(1200);
-const alemao = await contar();
-confere('no alemao nao ha item de transliteracao', !alemao.tipos.tl,
-  JSON.stringify(alemao.tipos));
-confere('e o alemao tem menos itens que o espanhol', alemao.itens < 250,
-  `alemao: ${alemao.itens}`);
+const semFonte = await pag.evaluate(() => {
+  const i = [...document.querySelectorAll('.item[data-ch]')]
+    .find(x => x.dataset.ch.startsWith('tl-falta'));
+  return i ? i.dataset.ch : null;
+});
+confere('ha uma palavra sem fonte para escrever', !!semFonte);
+await pag.evaluate(ch =>
+  document.querySelector(`.item[data-ch="${CSS.escape(ch)}"] .nao`).click(), semFonte);
+await pag.waitForTimeout(500);
+await pag.evaluate(ch => {
+  const e = document.querySelector(`.item[data-ch="${CSS.escape(ch)}"] input.corr`);
+  e.value = 'escrito por mim'; e.dispatchEvent(new Event('input', { bubbles: true }));
+}, semFonte);
+await pag.waitForTimeout(400);
+await pag.click('#gerar');
+await pag.waitForTimeout(600);
+const recado2 = await pag.inputValue('#saida');
+confere('o recado separa o que ele escreveu do que ele corrigiu',
+  /TRANSLITERAÇÕES QUE EU ESCREVI/.test(recado2) && /escrito por mim/.test(recado2),
+  recado2.slice(0, 220));
+await pag.click('#continuar');
+await pag.waitForTimeout(500);
+
+// ---------- alemao e hebraico: transliteracao nem aparece ----------
+for (const lg of ['de', 'he']) {
+  await pag.selectOption('#lingua', lg);
+  await pag.waitForTimeout(1300);
+  const r2 = await contar();
+  confere(`em ${lg} a transliteracao nao e pedida`,
+    !r2.tipos.tl && !r2.tipos['tl-falta'], JSON.stringify(r2.tipos));
+}
 
 // ---------- tela ----------
 const rolaLado = await pag.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
