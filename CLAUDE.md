@@ -200,16 +200,27 @@ mudança de texto litúrgico passa por olho humano antes da main.
 
 ## A revisão das línguas pelo Erez
 
-revisar.html. É onde ele confere as línguas que sabe. Mostra, verso a verso: o
-hebraico, a transliteração em português E na língua escolhida, e a tradução em
-português E na língua escolhida — lado a lado, para comparar. Palavra sem
-transliteração própria naquela língua sai com borda tracejada e um aviso: ali
-falta fonte, não há o que corrigir.
+revisar.html. É onde ele confere as línguas que sabe.
 
-Ele marca "está certo" ou "corrigir" em cada verso, pode tocar numa palavra
-específica, e digitar como deveria ser. Tudo fica no aparelho (localStorage):
-dá para fechar e voltar. No fim, o botão monta um recado em português para ele
-copiar e mandar.
+A unidade de revisão é o CONTEÚDO, não a posição: a chave de um item é a
+palavra hebraica (sem nikud) + a língua + o texto atual. Por isso o mesmo item
+aparece uma vez só, mesmo estando nos 8 kadishim — e o que ele marcar vale para
+todos. "Amen" está 36 vezes nos arquivos e aparece 2 vezes na tela (uma para a
+transliteração, uma para a tradução da palavra).
+
+Isso encolhe o trabalho: 6.520 palavras nos 8 arquivos viram **250 itens por
+língua** (155 em alemão e hebraico, que não têm transliteração).
+
+Três coisas são revisáveis: a tradução do verso, a tradução da palavra e a
+transliteração.
+
+"Só o que falta" (ligado por padrão) esconde o que já está CERTO, mas mantém o
+que foi marcado para corrigir — senão a caixa de texto sumia no mesmo toque que
+a abria. Palavra sem transliteração própria não entra na conta e só aparece com
+o filtro desligado, com o aviso de que falta fonte.
+
+Tudo fica no aparelho (localStorage), por língua. No fim, o botão monta um
+recado em português para ele copiar e mandar.
 
 A página SÓ LÊ os sync/*.json. Não escreve em lugar nenhum — mudança de texto
 continua passando por decisão humana, e o glossário só muda por
