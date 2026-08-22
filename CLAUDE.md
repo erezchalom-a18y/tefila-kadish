@@ -209,7 +209,11 @@ todos. "Amen" está 36 vezes nos arquivos e aparece 2 vezes na tela (uma para a
 transliteração, uma para a tradução da palavra).
 
 Isso encolhe o trabalho: 6.520 palavras nos 8 arquivos viram **270 itens por
-língua** (155 em alemão e hebraico, que não têm transliteração).
+língua** (155 em português, alemão e hebraico, que não têm transliteração ali).
+
+O português também está na lista: o Erez é a autoridade nele e as traduções
+portuguesas ainda são rascunho. Só as traduções — a transliteração portuguesa
+fica como está, decisão dele.
 
 Três coisas são revisáveis: a tradução do verso, a tradução da palavra e a
 transliteração.

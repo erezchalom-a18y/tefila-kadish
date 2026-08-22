@@ -80,14 +80,18 @@
 </div>
 
 <script>
-const LINGUAS = { en:'inglês', es:'espanhol', fr:'francês', it:'italiano',
-                  de:'alemão', ru:'russo', he:'hebraico' };
+const LINGUAS = { pt:'português', en:'inglês', es:'espanhol', fr:'francês',
+                  it:'italiano', de:'alemão', ru:'russo', he:'hebraico' };
 // Linguas que nao tem linha de transliteracao no app, e por isso nao entram na
 // revisao dela: o hebraico (quem le hebraico le o hebraico) e o alemao, que o
 // Erez mandou tirar (21/08) — a portuguesa soaria errado na boca de quem le
 // alemao, e nao ha documento alemao nenhum. Sem esta lista, o alemao pedia
 // para ele escrever as 113 palavras a mao.
-const SEM_TRANSLITERACAO = ['de', 'he'];
+// Portugues entra na lista tambem: o Erez e a autoridade nele, e as traducoes
+// portuguesas ainda sao rascunho. A transliteracao portuguesa NAO entra — ele
+// decidiu que ela e o que sempre foi e nao se mexe. Alemao nao entra porque ele
+// mandou tirar; hebraico nao precisa (quem le hebraico le o hebraico).
+const SEM_TRANSLITERACAO = ['pt', 'de', 'he'];
 // Ordem de leitura: o mesmo item aparece uma vez só, no primeiro lugar em que
 // surge. Como as palavras se repetem entre os 8, isso encolhe 6.520 palavras
 // para ~113 distintas por língua.
@@ -103,7 +107,14 @@ const nomeArquivo = a => { const [n, t] = a.split('_'); return `${NOMES[n]} · $
 const lingua = document.getElementById('lingua');
 const soFalta = document.getElementById('sofalta');
 for (const [k, n] of Object.entries(LINGUAS)) lingua.add(new Option(n, k));
-lingua.value = localStorage.getItem('revisar_lingua') || 'es';
+// A escolha guardada no aparelho pode ser de uma versao anterior da pagina.
+// A primeira versao tinha "portugues" na lista; esta nao tem. Sem esta
+// conferencia o seletor ficava VAZIO, e com lingua vazia nenhuma palavra tinha
+// transliteracao — a pagina dizia "falta fonte" nas 113, inclusive no Yitgadal,
+// que tem fonte. Foi o que o Erez viu.
+const guardada = localStorage.getItem('revisar_lingua');
+lingua.value = Object.keys(LINGUAS).includes(guardada) ? guardada : 'es';
+if (!lingua.value) lingua.value = 'es';
 soFalta.checked = localStorage.getItem('revisar_sofalta') !== 'nao';
 
 let arquivos = {}, blocos = [], marcas = {};
@@ -121,6 +132,7 @@ const gravar = () => { try { localStorage.setItem(chaveGuardada(), JSON.stringif
  */
 function montar() {
   const lg = lingua.value;
+  if (!LINGUAS[lg]) { blocos = []; return; }   // nunca montar com lingua invalida
   const vistos = new Set();
   blocos = [];
   for (const nome of ARQUIVOS) {
@@ -129,7 +141,7 @@ function montar() {
     for (const v of d.versos) {
       const itens = [];
 
-      const trad = (v.translations || {})[lg];
+      const trad = lg === 'pt' ? (v.translation_pt || '') : (v.translations || {})[lg];
       if (trad) {
         const ch = `trad|${semNikud(v.hebrew)}|${lg}|${trad}`;
         if (!vistos.has(ch)) { vistos.add(ch);
@@ -153,7 +165,8 @@ function montar() {
                            heb: p.hebrew, pt: p.transliteration_pt || '', alvo: null }); }
           }
         }
-        const g = (p.glosas || {})[lg];
+        const g = lg === 'pt' ? ((p.glosas || {}).pt || p.glosa_pt || '')
+                              : (p.glosas || {})[lg];
         if (g) {
           const ch = `glosa|${hp}|${lg}|${g}`;
           if (!vistos.has(ch)) { vistos.add(ch);
@@ -180,7 +193,7 @@ const feito = i => !!(marcas[i.ch] || {}).estado;
 const resolvido = i => ['certo', 'portugues'].includes((marcas[i.ch] || {}).estado);
 
 function desenhar() {
-  const lg = lingua.value, nome = LINGUAS[lg];
+  const lg = lingua.value, nome = LINGUAS[lg] || lg;
   const todos = revisaveis();
   const prontos = todos.filter(feito).length;
   const pct = todos.length ? Math.round(prontos / todos.length * 100) : 0;
@@ -199,6 +212,8 @@ function desenhar() {
   let h = `<div class="nota">
     Cada palavra aparece <b>uma vez só</b>, mesmo estando nos 8 kadishim — o que
     você marcar aqui vale para todos eles. São ${todos.length} itens em ${esc(nome)}.
+    ${lg === 'pt' ? '<br><br>Em português aparecem só as <b>traduções</b>. ' +
+      'A transliteração portuguesa fica como está — decisão sua.' : ''}
     <br><br>Onde estiver escrito <b>falta fonte</b>, a palavra não existe nesta língua
     em documento nenhum. Se você souber como se escreve, digite ali — o que você
     escrever é fonte humana, e é assim que essas palavras entram.
@@ -241,8 +256,8 @@ function desenhar() {
       h += `<div class="item ${m.estado || ''}" data-ch="${esc(i.ch)}">
         <div class="rot">${esc(i.rot)}</div>
         ${i.tipo === 'trad' ? '' : `<div class="hebp">${esc(i.heb)}</div>`}
-        <div class="linha"><span class="lado">pt</span>
-          <span class="txt ${i.tipo === 'tl' ? 'tl' : ''}">${esc(i.pt)}</span></div>
+        ${lg === 'pt' ? '' : `<div class="linha"><span class="lado">pt</span>
+          <span class="txt ${i.tipo === 'tl' ? 'tl' : ''}">${esc(i.pt)}</span></div>`}
         <div class="linha"><span class="lado">${esc(lg)}</span>
           <span class="txt ${i.tipo === 'tl' ? 'tl' : ''} ${rtl ? 'rtl' : ''}">${esc(i.alvo)}</span></div>
         <div class="acoes">

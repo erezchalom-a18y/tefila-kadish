@@ -17,7 +17,11 @@
  *     mesmo (o Erez e a fonte humana que faltava), ou deixar em portugues;
  *   - alemao e hebraico nao tem linha de transliteracao nenhuma, entao nao
  *     pedem nada disso — sem essa regra o alemao pedia 113 palavras a mao;
- *   - as marcas sobrevivem a fechar e abrir.
+ *   - as marcas sobrevivem a fechar e abrir;
+ *   - uma lingua guardada no aparelho por uma versao ANTERIOR da pagina nao
+ *     pode quebrar nada. A primeira versao tinha "portugues" na lista; quando
+ *     ele foi tirado, o seletor ficava vazio e a pagina dizia "falta fonte" nas
+ *     113 palavras — inclusive no Yitgadal, que tem fonte. O Erez viu isso.
  *
  * Uso: node servidor-teste.mjs 8896 . &
  *      node testar-revisar.mjs [http://127.0.0.1:8896/tefila-kadish]
@@ -157,6 +161,32 @@ for (const lg of ['de', 'he']) {
   confere(`em ${lg} a transliteracao nao e pedida`,
     !r2.tipos.tl && !r2.tipos['tl-falta'], JSON.stringify(r2.tipos));
 }
+
+// ---------- lingua velha guardada no aparelho ----------
+await pag.evaluate(() => localStorage.setItem('revisar_lingua', 'klingon'));
+await pag.reload();
+await pag.waitForTimeout(2500);
+const recuperado = await pag.evaluate(() => ({
+  valor: document.getElementById('lingua').value,
+  andamento: document.getElementById('andamento').textContent,
+  falta: [...document.querySelectorAll('.item[data-ch]')]
+    .filter(i => i.dataset.ch.startsWith('tl-falta')).length,
+}));
+confere('lingua invalida guardada no aparelho nao quebra a pagina',
+  !!recuperado.valor && !/undefined/.test(recuperado.andamento) && recuperado.falta <= 20,
+  JSON.stringify(recuperado));
+
+// ---------- portugues ----------
+await pag.selectOption('#lingua', 'pt');
+await pag.waitForTimeout(1300);
+const pt = await contar();
+confere('em portugues so ha traducoes, sem transliteracao',
+  pt.tipos.trad > 0 && pt.tipos.glosa > 0 && !pt.tipos.tl && !pt.tipos['tl-falta'],
+  JSON.stringify(pt.tipos));
+const linhasPt = await pag.evaluate(() =>
+  document.querySelector('.item[data-ch]').querySelectorAll('.linha').length);
+confere('e o cartao em portugues nao repete a mesma linha duas vezes', linhasPt === 1,
+  `${linhasPt} linhas`);
 
 // ---------- tela ----------
 const rolaLado = await pag.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
