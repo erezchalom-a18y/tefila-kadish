@@ -153,6 +153,18 @@ const inicio = p => {
 // como correcao mesmo depois de eu ter aplicado a ancora — e o arquivo ja
 // estar com aquele numero. O Erez mandou um recado inteiro assim: 70 linhas
 // dizendo "estava 27.66s, ponha em 27.66s".
+// O FIM de uma palavra e o COMECO da seguinte. Nao existe fim proprio: as
+// palavras se tocam de ponta a ponta, no arquivo e no aplicar-ancoras.py, que
+// encosta a fronteira vizinha em cada ancora. Sem isto, arrastar o comeco de
+// uma palavra deixava o fim parado e nascia bobagem: o Erez viu "shemê nao tem
+// voz nenhuma: de 2.70s a 2.70s" e "bealma: de 4.38s a 4.36s" — comeco depois
+// do fim.
+let ordem = [];
+function fim(p) {
+  const s = ordem[p.ord + 1];
+  return s ? inicio(s) : p.end;
+}
+
 const mexida = p => {
   const m = mexidas[`${p.verso}|${p.i}`];
   return m !== undefined && Math.abs(m - p.start) > MINIMO;
@@ -172,9 +184,16 @@ function limparVelharia() {
   return tirou;
 }
 
-// grava so o que anda o bastante; se voltou para perto do original, apaga
+// Grava so o que anda o bastante; se voltou para perto do original, apaga.
+// A trava contra passar por cima do vizinho mora AQUI, e nao no arrasto, para
+// valer tambem no "empurrar o verso" — que sem ela punha duas palavras no
+// mesmo segundo (vi 2|1 e 2|2 as duas em 6.70s). Os tempos tem que subir
+// sempre; o aplicar-ancoras.py reprova se nao subirem.
 function pôr(p, t) {
   const k = `${p.verso}|${p.i}`;
+  const ant = ordem[p.ord - 1], dep = ordem[p.ord + 1];
+  if (ant) t = Math.max(t, inicio(ant) + 0.10);
+  if (dep) t = Math.min(t, inicio(dep) - 0.10);
   if (Math.abs(t - p.start) <= MINIMO) delete mexidas[k];
   else mexidas[k] = Math.round(t * 1000) / 1000;
 }
@@ -187,7 +206,10 @@ function pôr(p, t) {
 // "o proximo inicio" as vezes esta a 0,03s — que nao move nada e ainda cai
 // abaixo do MINIMO, entao a palavra nem contava. O bloco verde e o que ele ve.
 function empurrarVerso(n, passos) {
+  // Para FRENTE, mexer da ultima para a primeira; para TRAS, da primeira para a
+  // ultima. Na ordem errada cada palavra trava na vizinha que ainda nao andou.
   const ps = diagnosticar().filter(p => p.verso === n);
+  if (passos > 0) ps.reverse();
   const grade = desenho.blocos.map(b => b[0]);
   for (const p of ps) {
     let t = inicio(p);
@@ -204,8 +226,9 @@ function empurrarVerso(n, passos) {
 
 // ---------- ler os dados ----------
 function palavras() {
+  let n = 0;
   return sync.versos.flatMap(v => (v.palavras || []).map(p => ({
-    verso: v.n, i: p.i, hebrew: p.hebrew,
+    verso: v.n, i: p.i, hebrew: p.hebrew, ord: n++,
     tl: p.transliteration_pt || '', start: p.start, end: p.end,
   })));
 }
@@ -234,11 +257,12 @@ const FOLGA_CORTE = 0.08;      // 2 quadros: nao acusar por um triz
 function blocosDentro(p) {
   return desenho.blocos.filter(([a, z]) => {
     const meio = (a + z) / 2;
-    return meio >= inicio(p) && meio < p.end;
+    return meio >= inicio(p) && meio < fim(p);
   });
 }
 function cortada(p) {
-  return desenho.blocos.find(([a, z]) => p.end > a + FOLGA_CORTE && p.end < z - FOLGA_CORTE) || null;
+  const f = fim(p);
+  return desenho.blocos.find(([a, z]) => f > a + FOLGA_CORTE && f < z - FOLGA_CORTE) || null;
 }
 function muda(p) { return blocosDentro(p).length === 0; }
 function engolindo(p) {
@@ -254,6 +278,7 @@ const partida = p => cortada(p) || muda(p) || engolindo(p);
 // Para cada palavra, a razao em portugues simples de por que ela esta suspeita.
 function diagnosticar() {
   const ps = palavras();
+  ordem = ps;
   const inicios = desenho.inicios_de_voz;
   const blocos = desenho.blocos;
 
@@ -449,11 +474,11 @@ function escreverDiag(n, pv) {
     const nome = `<b>${esc(p.tl || p.hebrew)}</b>`;
     const c = cortada(p);
     if (c) return `<div style="color:var(--erro)">${nome} <b>está partida ao meio</b>: ` +
-      `ela acaba aos ${seg(p.end)}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
+      `ela acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
       `Você vai ouvir só um pedaço dela — o resto vai para a palavra seguinte. ` +
       `O fim dela devia ser ${seg(c[1])}.</div>`;
     if (muda(p)) return `<div style="color:var(--erro)">${nome} <b>não tem voz nenhuma</b>: ` +
-      `de ${seg(inicio(p))} a ${seg(p.end)} o rabino não está falando.</div>`;
+      `de ${seg(inicio(p))} a ${seg(fim(p))} o rabino não está falando.</div>`;
     const b = engolindo(p);
     if (b) return `<div style="color:var(--erro)">${nome} <b>engole outra voz</b>: depois ` +
       `dela vem silêncio e, aos ${seg(b[0])}, o rabino fala de novo até ${seg(b[1])} — ` +
@@ -504,7 +529,7 @@ el('corpo').addEventListener('click', e => {
     document.querySelectorAll(`.w[data-v="${sel.verso}"][data-i="${sel.i}"]`)
       .forEach(x => x.classList.add('sel'));
     repintarTudo();
-    tocar(inicio(p) - 0.05, p.end + 0.1);
+    tocar(inicio(p) - 0.05, fim(p) + 0.1);
   }
 });
 

@@ -210,13 +210,22 @@ confere('um cutucao de nada NAO vira correcao',
 await pag.evaluate(() => localStorage.clear());
 await pag.reload(); await pag.waitForTimeout(2200);
 const nPalavras = await pag.evaluate(() => document.querySelector('canvas')._ps.length);
+const versoEmpurrado = await pag.evaluate(() =>
+  document.querySelectorAll('button[data-empurrar]')[1].dataset.empurrar);
 await pag.locator('button[data-empurrar]').nth(1).click();   // um bloco a frente
 await pag.waitForTimeout(700);
 const movidas = await pag.evaluate(() =>
   Object.keys(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')).length);
 confere('empurrar o verso move todas as palavras dele de uma vez',
   movidas === nPalavras, `${movidas} de ${nPalavras} palavras`);
-await pag.locator('button[data-devolver]').first().click();
+const tempos = await pag.evaluate(() =>
+  Object.values(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')));
+confere('e nenhuma palavra fica no mesmo segundo que a vizinha',
+  new Set(tempos).size === tempos.length, JSON.stringify(tempos));
+// O desfazer TEM que ser o do mesmo verso: depois do empurrao aparecem versos
+// novos na lista (ficaram com palavra partida), e o primeiro botao da tela ja
+// nao e o deste verso. O teste caiu nessa uma vez.
+await pag.locator(`button[data-devolver="${versoEmpurrado}"]`).click();
 await pag.waitForTimeout(500);
 confere('e o desfazer devolve o verso inteiro',
   (await pag.evaluate(() =>
