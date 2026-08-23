@@ -84,11 +84,15 @@
  * O Erez pediu isto em 23/08, com estas palavras: "queria um sistema mais
  * facil, pois dificil saber o motivo das diferencas de sincronia". O
  * conferidor toca; esta pagina MOSTRA. O motivo de quase toda diferenca e um
- * destes tres, e os tres ficam obvios no desenho:
+ * destes quatro, e os quatro ficam obvios no desenho:
  *   1. a palavra caiu dentro de um silencio (o rabino nao estava falando ali);
  *   2. varias palavras foram espremidas num bloco de voz so (ele disse
  *      coladas, e o corte entre elas foi chute);
- *   3. a palavra esta perto de um comeco de voz, mas nao em cima dele.
+ *   3. a palavra esta perto de um comeco de voz, mas nao em cima dele;
+ *   4. uma palavra ENGOLE a seguinte: tem, dentro dela, um silencio grande e
+ *      depois mais voz. Foi o caso do tushbechata, e este e o unico dos quatro
+ *      que a MEDIDA nao ve — ela olha o comeco de cada palavra, e o comeco do
+ *      veshirata estava certo; o que estava errado era o fim.
  *
  * A pagina SO LE. Nao escreve em sync/*.json, ancoras.json nem cortes.json —
  * ela monta um recado para o Erez copiar e mandar, e a ancora entra depois,
@@ -184,6 +188,31 @@ function palavras() {
   })));
 }
 
+// PALAVRA QUE ENGOLE OUTRA. Esta e a pista que faltava, e a que teria achado
+// o tushbechata na hora.
+//
+// "Voz orfa" — bloco que ninguem cobre — nao existe: as palavras se tocam de
+// ponta a ponta, entao todo bloco cai dentro de ALGUMA palavra. Eu escrevi
+// esse detector primeiro e ele nunca acusou nada, em Kadish nenhum. O problema
+// real e outro: a palavra estava coberta pela palavra ERRADA. O veshirata ia
+// de 50.52 a 53.22 e engolia, la dentro, o bloco 52.30-53.14 — que era o
+// tushbechata inteiro, separado por 0,84s de silencio. O Erez ouviu isso:
+// "so da para ouvir o ultimo A do tushbechata".
+//
+// Entao: palavra que tem, dentro dela, um silencio grande e DEPOIS mais voz,
+// esta engolindo a palavra seguinte.
+const SILENCIO_GRANDE = 0.35;
+function engolindo(p) {
+  const dentro = desenho.blocos.filter(([a, z]) => {
+    const meio = (a + z) / 2;
+    return meio >= inicio(p) && meio < p.end;
+  });
+  for (let k = 1; k < dentro.length; k++) {
+    if (dentro[k][0] - dentro[k - 1][1] >= SILENCIO_GRANDE) return dentro[k];
+  }
+  return null;
+}
+
 // ---------- o motivo ----------
 // Para cada palavra, a razao em portugues simples de por que ela esta suspeita.
 function diagnosticar() {
@@ -248,10 +277,13 @@ function pintar(cv, ps, v) {
   const x = t => (t - t0) / (t1 - t0) * L;
   const passo = desenho.passo, linha = desenho.linha;
 
-  // 1) os trechos em que ele esta falando, ao fundo
-  c.fillStyle = getComputedStyle(document.body).getPropertyValue('--voz') || '#cfe0cf';
+  // 1) os trechos em que ele esta falando, ao fundo. Vermelho claro onde
+  //    ninguem reivindica aquela voz — e ali que quase sempre esta o erro.
+  const orfas = cv._ps.map(p => [p, engolindo(p)]).filter(x => x[1]);
   for (const [a, z] of desenho.blocos) {
     if (z < t0 || a > t1) continue;
+    const orfa = orfas.some(([, b]) => b[0] === a && b[1] === z);
+    c.fillStyle = orfa ? '#f6d8cc' : (getComputedStyle(document.body).getPropertyValue('--voz') || '#cfe0cf');
     c.fillRect(x(a), 16, Math.max(1, x(z) - x(a)), A - 40);
   }
 
@@ -332,7 +364,8 @@ function desenhar_tela() {
     <br><br>Toque numa palavra para ouvir só ela. <b>Arraste o risco</b> para o
     lugar certo — a página diz o segundo. Nada é gravado aqui: no fim, o botão
     monta um recado para você me mandar.
-    <div class="legenda"><i></i> o rabino falando</div></div>`;
+    <div class="legenda"><i></i> o rabino falando &nbsp;
+      <i style="background:#f6d8cc"></i> voz engolida por uma palavra — olhe aqui primeiro</div></div>`;
 
   for (const { v, ps: pv } of versos) {
     const mau = pv.filter(p => p.grau > 0);
@@ -360,7 +393,10 @@ function desenhar_tela() {
     const v = sync.versos.find(x => x.n === n);
     cv._ps = ps.filter(p => p.verso === n);
     cv._v = v;
-    const folga = 0.6;
+    // 1,5s de folga, nao 0,6. Com 0,6 o bloco de voz do tushbechata (52.30)
+    // caia fora da janela do verso 13, que comecava aos 53.22 — e o Erez
+    // arrastou para o unico bloco que dava para ver.
+    const folga = 1.5;
     cv._t0 = Math.max(0, v.start - folga);
     cv._t1 = Math.min(desenho.duracao, v.end + folga);
     pintar(cv, cv._ps, v);
@@ -370,10 +406,18 @@ function desenhar_tela() {
 
 function escreverDiag(n, pv) {
   const mau = pv.filter(p => p.grau > 0);
-  el('diag' + n).innerHTML = mau.length
+  const v = sync.versos.find(x => x.n === n);
+  const engole = pv.map(p => [p, engolindo(p)]).filter(x => x[1]);
+  const avisoOrfa = engole.length
+    ? engole.map(([p, b]) => `<div style="color:var(--erro)"><b>${esc(p.tl || p.hebrew)}</b> ` +
+        `engole outra voz: depois dela vem silêncio e, aos ${seg(b[0])}, o rabino ` +
+        `fala de novo até ${seg(b[1])} — ainda dentro desta palavra. Quase sempre ` +
+        `isso é a palavra seguinte, que devia começar aos ${seg(b[0])}.</div>`).join('')
+    : '';
+  el('diag' + n).innerHTML = avisoOrfa + (mau.length
     ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> — ${p.motivo}
         ${mexida(p) ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
-    : '<div style="color:var(--ok)">Todas as palavras caem em cima da voz.</div>';
+    : (avisoOrfa ? '' : '<div style="color:var(--ok)">Todas as palavras caem em cima da voz.</div>'));
 }
 
 // ---------- tocar ----------

@@ -1338,7 +1338,7 @@
     {
       "n": 12,
       "start": 47.38,
-      "end": 53.22,
+      "end": 52.3,
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
       "transliteration_pt": "leela min kol birchatá veshiratá",
       "translation_pt": "acima de todas as bênçãos, cânticos",
@@ -1449,7 +1449,7 @@
           "hebrew": "וְשִׁירָתָא",
           "transliteration_pt": "veshiratá",
           "start": 50.52,
-          "end": 53.22,
+          "end": 52.3,
           "glosa_pt": "cânticos",
           "glosas": {
             "pt": "cânticos",
@@ -1483,7 +1483,7 @@
     },
     {
       "n": 13,
-      "start": 53.22,
+      "start": 52.3,
       "end": 59.76,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú amên",
@@ -1494,7 +1494,7 @@
           "i": 0,
           "hebrew": "תֻּשְׁבְּחָתָא",
           "transliteration_pt": "tushbechata",
-          "start": 53.22,
+          "start": 52.3,
           "end": 53.76,
           "glosa_pt": "louvores",
           "glosas": {

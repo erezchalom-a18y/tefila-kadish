@@ -96,8 +96,8 @@
     {
       "verso": 13,
       "palavra": 1,
-      "inicio": 53.22,
-      "nota": "tushbechata — o audio dela estava dentro do verso 12 (sincronia.html, Erez 23/08)"
+      "inicio": 52.3,
+      "nota": "tushbechata — o Erez ouviu que so pegava o ultimo A; o sinal poe a palavra inteira em 52.30-53.14 (Erez 23/08)"
     },
     {
       "verso": 13,
@@ -175,6 +175,21 @@
         "inicio": 27.66
       },
       "porque": "Em 21/08 o Erez disse 'no yehe sheme raba o audio comeca antes do texto' e eu pus o comeco do verso 8 aos 26.24, onde o sinal via voz. Em 23/08, vendo o desenho no sincronia.html, ele viu que aquele som e o AMEN do verso 7 — que estava espremido em 0,02s (26.22 a 26.24). O Yehe comeca mesmo aos 27.66. A ancora de 21/08 nao era o ouvido dele errando: era eu escolhendo o bloco de voz errado para o que ele descreveu. Fica registrada porque nao se apaga reparo de ouvido em silencio."
+    },
+    {
+      "nussach": "chabad_yatom",
+      "era": {
+        "verso": 13,
+        "palavra": 1,
+        "inicio": 53.22,
+        "nota": "tushbechata — o audio dela estava dentro do verso 12 (sincronia.html, Erez 23/08)"
+      },
+      "substituida_por": {
+        "verso": 13,
+        "palavra": 1,
+        "inicio": 52.3
+      },
+      "porque": "Ele arrastou para 53.22 e depois ouviu: 'quando rodo o audio na linha 13 so da para ouvir o ultimo A do tushbechata'. O sinal explica: o bloco de voz 52.30-53.14 (0,84s) e a palavra inteira, e 53.22-53.40 (0,18s) e so a cauda dela. Ele arrastou para o bloco que DAVA PARA VER — o certo estava fora da janela que a pagina desenhava (folga de 0,6s antes do verso). A pagina foi consertada junto: agora mostra 1,5s de folga e acusa bloco de voz que nenhuma palavra cobre."
     }
   ]
 }

@@ -92,6 +92,30 @@ for (const a of ALVOS) {
     naTela === porFora, `tela: "${txt}"`);
 }
 
+// A pista que achou o tushbechata: palavra que engole a seguinte.
+// O veshirata ia de 50.52 a 53.22 e tinha, la dentro, 0,84s de silencio e
+// depois o bloco 52.30-53.14 — que era o tushbechata inteiro. O Erez ouviu
+// ("so da para ouvir o ultimo A") e o sinal confirmou. Aqui a regra e cobrada
+// em cima de palavras inventadas, para nao depender de defeito que um dia sera
+// consertado — o chabad_yatom ja nao tem nenhum.
+await pag.selectOption('#alvo', 'chabad_yatom');
+await pag.waitForTimeout(1400);
+const engolir = await pag.evaluate(() => {
+  const b = desenho.blocos;
+  // acha um par de blocos com um silencio grande entre eles
+  let par = null;
+  for (let k = 1; k < b.length; k++) if (b[k][0] - b[k - 1][1] >= 0.5) { par = [b[k - 1], b[k]]; break; }
+  if (!par) return { semPar: true };
+  const engole = { verso: -1, i: 0, start: par[0][0] - 0.02, end: par[1][1] + 0.02 };
+  const certa  = { verso: -1, i: 1, start: par[0][0] - 0.02, end: par[0][1] + 0.02 };
+  return { engole: !!engolindo(engole), certa: !!engolindo(certa),
+           silencio: +(par[1][0] - par[0][1]).toFixed(2) };
+});
+confere('acusa a palavra que engole a seguinte',
+  engolir.engole === true, JSON.stringify(engolir));
+confere('e nao acusa a palavra que cobre so a propria voz',
+  engolir.certa === false, JSON.stringify(engolir));
+
 // arrastar
 await pag.selectOption('#alvo', 'chabad_yatom');
 await pag.waitForTimeout(1400);
