@@ -92,6 +92,36 @@ for (const a of ALVOS) {
     naTela === porFora, `tela: "${txt}"`);
 }
 
+// Sobra de sessao anterior NAO pode virar correcao. Foi assim que o Erez
+// mandou um recado inteiro de 70 linhas dizendo "estava 27.66s, ponha em
+// 27.66s": ele arrastou, eu apliquei as ancoras, o arquivo alcancou aqueles
+// numeros — e o que estava guardado no aparelho continuou contando.
+await pag.selectOption('#alvo', 'chabad_yatom');
+await pag.waitForTimeout(1200);
+await pag.evaluate(() => {
+  // planta no aparelho exatamente o que o arquivo ja diz, e um encostao de 0,02s
+  const ps = palavras().slice(0, 5);
+  const m = {};
+  ps.forEach((p, k) => { m[`${p.verso}|${p.i}`] = k === 0 ? p.start + 0.02 : p.start; });
+  localStorage.setItem('sinc_mex_chabad_yatom', JSON.stringify(m));
+});
+await pag.reload();
+await pag.waitForTimeout(2200);
+const sobra = await pag.textContent('#contagem');
+confere('sobra do aparelho igual ao arquivo nao conta como correcao',
+  sobra === 'nada arrastado ainda', `contagem: "${sobra}"`);
+await pag.click('#gerar');
+await pag.waitForTimeout(500);
+const recadoVazio = await pag.inputValue('#saida');
+confere('e o recado nao lista "estava X, ponha em X"',
+  /Nada a mudar/.test(recadoVazio) && !/ponha em/.test(recadoVazio),
+  recadoVazio.slice(0, 160));
+await pag.click('#continuar');
+await pag.waitForTimeout(600);
+confere('a velharia e apagada do aparelho, nao so escondida',
+  (await pag.evaluate(() =>
+    Object.keys(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')).length)) === 0);
+
 // A pista que achou o tushbechata: palavra que engole a seguinte.
 // O veshirata ia de 50.52 a 53.22 e tinha, la dentro, 0,84s de silencio e
 // depois o bloco 52.30-53.14 — que era o tushbechata inteiro. O Erez ouviu
@@ -115,6 +145,22 @@ confere('acusa a palavra que engole a seguinte',
   engolir.engole === true, JSON.stringify(engolir));
 confere('e nao acusa a palavra que cobre so a propria voz',
   engolir.certa === false, JSON.stringify(engolir));
+
+// A pista que o Erez deu tres vezes: "so da para ouvir o 'ra' do raba".
+// A palavra acaba no MEIO de um bloco de voz — esta partida.
+const cortar = await pag.evaluate(() => {
+  const b = desenho.blocos.find(([a, z]) => z - a > 0.4);
+  const meio = { verso: -1, i: 0, start: b[0], end: (b[0] + b[1]) / 2 };  // acaba no meio
+  const inteira = { verso: -1, i: 1, start: b[0], end: b[1] + 0.05 };     // pega o bloco todo
+  return { meio: !!cortada(meio), inteira: !!cortada(inteira),
+           semVoz: muda({ verso: -1, i: 2, start: b[1] + 0.02, end: b[1] + 0.06 }) };
+});
+confere('acusa a palavra que acaba no meio da voz (o "ra" do raba)',
+  cortar.meio === true, JSON.stringify(cortar));
+confere('e nao acusa a que pega o bloco inteiro',
+  cortar.inteira === false, JSON.stringify(cortar));
+confere('acusa a palavra sem voz nenhuma dentro',
+  cortar.semVoz === true, JSON.stringify(cortar));
 
 // arrastar
 await pag.selectOption('#alvo', 'chabad_yatom');

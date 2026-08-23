@@ -148,7 +148,29 @@ const inicio = p => {
   const m = mexidas[`${p.verso}|${p.i}`];
   return m === undefined ? p.start : m;
 };
-const mexida = p => mexidas[`${p.verso}|${p.i}`] !== undefined;
+// MEXIDA e a que esta LONGE do arquivo, nao a que tem uma chave guardada.
+// Sem isso, o que ficou no aparelho de uma sessao anterior continua contando
+// como correcao mesmo depois de eu ter aplicado a ancora — e o arquivo ja
+// estar com aquele numero. O Erez mandou um recado inteiro assim: 70 linhas
+// dizendo "estava 27.66s, ponha em 27.66s".
+const mexida = p => {
+  const m = mexidas[`${p.verso}|${p.i}`];
+  return m !== undefined && Math.abs(m - p.start) > MINIMO;
+};
+
+// Limpa o que sobrou no aparelho e ja nao diz nada: ou porque a ancora foi
+// aplicada e o arquivo alcancou o numero, ou porque era um encostao de 0,02s.
+function limparVelharia() {
+  let tirou = 0;
+  for (const p of palavras()) {
+    const k = `${p.verso}|${p.i}`;
+    if (mexidas[k] !== undefined && Math.abs(mexidas[k] - p.start) <= MINIMO) {
+      delete mexidas[k]; tirou++;
+    }
+  }
+  if (tirou) gravarMex();
+  return tirou;
+}
 
 // grava so o que anda o bastante; se voltou para perto do original, apaga
 function pôr(p, t) {
@@ -188,30 +210,45 @@ function palavras() {
   })));
 }
 
-// PALAVRA QUE ENGOLE OUTRA. Esta e a pista que faltava, e a que teria achado
-// o tushbechata na hora.
+// AS TRES PISTAS QUE A MEDIDA NAO VE.
 //
-// "Voz orfa" — bloco que ninguem cobre — nao existe: as palavras se tocam de
-// ponta a ponta, entao todo bloco cai dentro de ALGUMA palavra. Eu escrevi
-// esse detector primeiro e ele nunca acusou nada, em Kadish nenhum. O problema
-// real e outro: a palavra estava coberta pela palavra ERRADA. O veshirata ia
-// de 50.52 a 53.22 e engolia, la dentro, o bloco 52.30-53.14 — que era o
-// tushbechata inteiro, separado por 0,84s de silencio. O Erez ouviu isso:
-// "so da para ouvir o ultimo A do tushbechata".
+// O medir-desvio.py olha o COMECO de cada palavra e pergunta se ele cai num
+// comeco de voz. Isso deixa passar tres coisas, e o Erez achou as tres de
+// ouvido antes de eu ter detector nenhum:
 //
-// Entao: palavra que tem, dentro dela, um silencio grande e DEPOIS mais voz,
-// esta engolindo a palavra seguinte.
+//  1. CORTADA — o fim da palavra cai no MEIO de um bloco de voz. A palavra
+//     esta partida ao meio, e ele ouve so um pedaco. Ele descreveu isso tres
+//     vezes: "so da para ouvir o ultimo A do tushbechata", "so da para ouvir o
+//     'ra' do raba", "o chirute para no chir'u".
+//  2. MUDA — nao ha voz nenhuma dentro da palavra. O rabino nao esta falando
+//     durante ela.
+//  3. ENGOLINDO — dentro da palavra ha um silencio grande e DEPOIS mais voz:
+//     ela esta engolindo a palavra seguinte. Foi o caso do veshirata.
+//
+// Nenhuma das tres entra na conta de "para olhar", que continua sendo a mesma
+// da medida — a pagina nunca pode acusar mais que o sinal. Elas aparecem numa
+// conta propria.
 const SILENCIO_GRANDE = 0.35;
-function engolindo(p) {
-  const dentro = desenho.blocos.filter(([a, z]) => {
+const FOLGA_CORTE = 0.08;      // 2 quadros: nao acusar por um triz
+
+function blocosDentro(p) {
+  return desenho.blocos.filter(([a, z]) => {
     const meio = (a + z) / 2;
     return meio >= inicio(p) && meio < p.end;
   });
+}
+function cortada(p) {
+  return desenho.blocos.find(([a, z]) => p.end > a + FOLGA_CORTE && p.end < z - FOLGA_CORTE) || null;
+}
+function muda(p) { return blocosDentro(p).length === 0; }
+function engolindo(p) {
+  const dentro = blocosDentro(p);
   for (let k = 1; k < dentro.length; k++) {
     if (dentro[k][0] - dentro[k - 1][1] >= SILENCIO_GRANDE) return dentro[k];
   }
   return null;
 }
+const partida = p => cortada(p) || muda(p) || engolindo(p);
 
 // ---------- o motivo ----------
 // Para cada palavra, a razao em portugues simples de por que ela esta suspeita.
@@ -279,7 +316,7 @@ function pintar(cv, ps, v) {
 
   // 1) os trechos em que ele esta falando, ao fundo. Vermelho claro onde
   //    ninguem reivindica aquela voz — e ali que quase sempre esta o erro.
-  const orfas = cv._ps.map(p => [p, engolindo(p)]).filter(x => x[1]);
+  const orfas = cv._ps.map(p => [p, cortada(p) || engolindo(p)]).filter(x => x[1]);
   for (const [a, z] of desenho.blocos) {
     if (z < t0 || a > t1) continue;
     const orfa = orfas.some(([, b]) => b[0] === a && b[1] === z);
@@ -337,9 +374,10 @@ function desenhar_tela() {
   const ruins = ps.filter(p => p.grau > 0);
   el('andamento').textContent =
     `${ps.length} palavras · ${ruins.length} para olhar · ` +
-    `${Object.keys(mexidas).length} arrastadas por você`;
-  el('contagem').textContent = Object.keys(mexidas).length
-    ? `${Object.keys(mexidas).length} correção(ões) prontas` : 'nada arrastado ainda';
+    `${ps.filter(partida).length} partidas ao meio · ` +
+    `${ps.filter(mexida).length} arrastadas por você`;
+  el('contagem').textContent = ps.filter(mexida).length
+    ? `${ps.filter(mexida).length} correção(ões) prontas` : 'nada arrastado ainda';
 
   // "So o suspeito" esconde o que esta certo E que ele nao mexeu. Verso em que
   // ele mexeu FICA, mesmo tendo ficado bom — senao empurrar o verso o fazia
@@ -348,7 +386,7 @@ function desenhar_tela() {
   const versos = sync.versos
     .map(v => ({ v, ps: ps.filter(p => p.verso === v.n) }))
     .filter(x => x.ps.length &&
-      (!soFalta || x.ps.some(p => p.grau > 0) || x.ps.some(mexida)));
+      (!soFalta || x.ps.some(p => p.grau > 0) || x.ps.some(partida) || x.ps.some(mexida)));
 
   if (!versos.length) {
     el('corpo').innerHTML = `<div class="nota">Nenhum verso suspeito neste Kadish.
@@ -365,7 +403,7 @@ function desenhar_tela() {
     lugar certo — a página diz o segundo. Nada é gravado aqui: no fim, o botão
     monta um recado para você me mandar.
     <div class="legenda"><i></i> o rabino falando &nbsp;
-      <i style="background:#f6d8cc"></i> voz engolida por uma palavra — olhe aqui primeiro</div></div>`;
+      <i style="background:#f6d8cc"></i> voz partida ao meio — olhe aqui primeiro</div></div>`;
 
   for (const { v, ps: pv } of versos) {
     const mau = pv.filter(p => p.grau > 0);
@@ -407,13 +445,22 @@ function desenhar_tela() {
 function escreverDiag(n, pv) {
   const mau = pv.filter(p => p.grau > 0);
   const v = sync.versos.find(x => x.n === n);
-  const engole = pv.map(p => [p, engolindo(p)]).filter(x => x[1]);
-  const avisoOrfa = engole.length
-    ? engole.map(([p, b]) => `<div style="color:var(--erro)"><b>${esc(p.tl || p.hebrew)}</b> ` +
-        `engole outra voz: depois dela vem silêncio e, aos ${seg(b[0])}, o rabino ` +
-        `fala de novo até ${seg(b[1])} — ainda dentro desta palavra. Quase sempre ` +
-        `isso é a palavra seguinte, que devia começar aos ${seg(b[0])}.</div>`).join('')
-    : '';
+  const avisoOrfa = pv.map(p => {
+    const nome = `<b>${esc(p.tl || p.hebrew)}</b>`;
+    const c = cortada(p);
+    if (c) return `<div style="color:var(--erro)">${nome} <b>está partida ao meio</b>: ` +
+      `ela acaba aos ${seg(p.end)}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
+      `Você vai ouvir só um pedaço dela — o resto vai para a palavra seguinte. ` +
+      `O fim dela devia ser ${seg(c[1])}.</div>`;
+    if (muda(p)) return `<div style="color:var(--erro)">${nome} <b>não tem voz nenhuma</b>: ` +
+      `de ${seg(inicio(p))} a ${seg(p.end)} o rabino não está falando.</div>`;
+    const b = engolindo(p);
+    if (b) return `<div style="color:var(--erro)">${nome} <b>engole outra voz</b>: depois ` +
+      `dela vem silêncio e, aos ${seg(b[0])}, o rabino fala de novo até ${seg(b[1])} — ` +
+      `ainda dentro desta palavra. Quase sempre isso é a palavra seguinte, que devia ` +
+      `começar aos ${seg(b[0])}.</div>`;
+    return '';
+  }).join('');
   el('diag' + n).innerHTML = avisoOrfa + (mau.length
     ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> — ${p.motivo}
         ${mexida(p) ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
@@ -499,7 +546,7 @@ el('corpo').addEventListener('pointerup', () => {
   for (const cv of document.querySelectorAll('canvas')) cv._ps = ps.filter(p => p.verso === Number(cv.dataset.v));
   repintarTudo();
   escreverDiag(n, ps.filter(p => p.verso === n));
-  el('contagem').textContent = `${Object.keys(mexidas).length} correção(ões) prontas`;
+  el('contagem').textContent = `${ps.filter(mexida).length} correção(ões) prontas`;
 });
 
 // ---------- botoes ----------
@@ -559,6 +606,7 @@ async function carregar() {
       fetch(`./sinal/${alvo}.json`, { cache: 'no-cache' }).then(r => r.json()),
     ]);
     sync = s; desenho = d; mexidas = lerMex(); sel = null;
+    limparVelharia();
     au.src = `./tefila-audio/${n}/${t}.${formato()}`;
     el('soFalta').textContent = `só o suspeito: ${soFalta ? 'sim' : 'não'}`;
     desenhar_tela();
