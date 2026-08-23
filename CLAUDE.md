@@ -195,8 +195,15 @@ glossario.json.
 4. node aplicar-escolhas.mjs escolhas.json          → ensaio, só mostra
    node aplicar-escolhas.mjs escolhas.json --confirmar → aplica
 
-aplicar-escolhas.mjs é o ÚNICO script que escreve no glossario.json, e só com
---confirmar. Ele aplica, roda aplicar-glossario.mjs, propaga as glosas para
+Dois scripts escrevem no glossario.json, e só com --confirmar: este e o
+aplicar-revisao.mjs. Eram um só até 23/08; o segundo entrou quando o Erez
+mandou o resultado da revisão do português. Não dava para escrever só em
+sync/: o aplicar-glossario.mjs reescreve o texto do verso a partir do
+glossário, e a correção dele seria desfeita na rodada seguinte, sem aviso.
+A intenção da regra continua de pé — nenhum MODELO escreve texto litúrgico;
+os dois scripts só copiam o que um humano decidiu.
+
+aplicar-escolhas.mjs Ele aplica, roda aplicar-glossario.mjs, propaga as glosas para
 sync/*.json, PROVA que nenhum tempo, nenhum hebraico e nenhuma âncora mudou, e
 roda as duas checagens. Qualquer coisa vermelha e ele desfaz tudo. Não faz push:
 mudança de texto litúrgico passa por olho humano antes da main.
@@ -222,6 +229,20 @@ transliteração portuguesa é a original, toda palavra já tem a sua.
 
 Três coisas são revisáveis: a tradução do verso, a tradução da palavra e a
 transliteração.
+
+A glosa de uma palavra NÃO é uma-para-uma com a frase (regra dele, 23/08): ela
+pode cobrir duas ou mais palavras. "uvizmán" fica "e em" e "kariv" fica
+"breve", que juntas dão "e em breve". Nunca criar checagem que cobre 1:1 ali —
+eu tentei uma como pista e ela acusou 45 falsos.
+
+O que ele manda de volta entra por **aplicar-revisao.mjs**:
+  node aplicar-revisao.mjs revisoes/pt-2026-08-23.txt              → ensaio
+  node aplicar-revisao.mjs revisoes/pt-2026-08-23.txt --confirmar  → aplica
+Casa por conteúdo (mesma chave da página), escreve em sync/*.json E no
+glossário, e PROVA antes de gravar que nenhum tempo, nenhum hebraico, nenhuma
+âncora e nenhuma das outras 7 línguas mudou. O recado fica commitado em
+revisoes/ como registro. O que ele precisa decidir antes de entrar fica em
+revisoes/<arquivo>-adiados.json, com o motivo escrito.
 
 As 20 palavras sem fonte (vesava, vishua…) ENTRAM na conta, por decisão do Erez
 (21/08): ele mesmo é a fonte humana que faltava. Ali os botões são outros —

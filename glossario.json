@@ -68,14 +68,14 @@
     },
     "בעלמאדיבראכרעותה": {
       "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
-      "transliteration_pt": "balma di vera chirutei",
-      "translation_pt": "no mundo que Ele criou segundo Sua vontade",
+      "transliteration_pt": "bealma di verá chirutei",
+      "translation_pt": "no mundo que Ele criou de acordo com Sua vontade",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "no mundo",
         "que",
         "Ele criou",
-        "por Sua vontade"
+        "de acordo com Sua vontade"
       ],
       "translations": {
         "en": "in the world He created according to His will",
@@ -133,12 +133,12 @@
     },
     "וימליךמלכותה": {
       "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
-      "transliteration_pt": "veyamlich malchutei",
-      "translation_pt": "e que faça reinar o Seu reino",
+      "transliteration_pt": "veyamlich malchutêh",
+      "translation_pt": "e que nele estabeleça o Seu reinado",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e faça reinar",
-        "Seu reino"
+        "e que nele estabeleça",
+        "Seu reinado"
       ],
       "translations": {
         "en": "and may He establish His kingdom",
@@ -182,14 +182,14 @@
     },
     "ויצמחפורקנהויקרבמשיחה": {
       "hebrew": "וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
-      "transliteration_pt": "veyatsmach purkanei vikarev meshichei",
+      "transliteration_pt": "veyatsmách purkanêh vikarev meshichêh",
       "translation_pt": "e que floresça Sua redenção e aproxime o Seu Mashiach",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e faça florescer",
+        "e faça brotar",
         "Sua redenção",
-        "e aproxime",
-        "Seu Mashiach"
+        "e apresse",
+        "a vinda de Seu Mashiach"
       ],
       "translations": {
         "en": "and may His redemption sprout and His Mashiach draw near",
@@ -247,12 +247,12 @@
     },
     "בחייכוןוביומיכון": {
       "hebrew": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
-      "transliteration_pt": "bechayeichon uveyomeichon",
-      "translation_pt": "em vossas vidas e em vossos dias",
+      "transliteration_pt": "bechayechon uveyomechon",
+      "translation_pt": "em sua vida e em seus dias",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "em vossas vidas",
-        "e em vossos dias"
+        "em sua vida",
+        "e em seus dias"
       ],
       "translations": {
         "en": "in your lifetime and in your days",
@@ -296,11 +296,11 @@
     },
     "ובחיידכלביתישראל": {
       "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
-      "transliteration_pt": "uvechayei dechol beit yisrael",
-      "translation_pt": "e na vida de toda a casa de Israel",
+      "transliteration_pt": "uvechayê dechol beit Israel",
+      "translation_pt": "e durante a vida de toda a casa de Israel",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e na vida",
+        "e durante a vida",
         "de toda",
         "a casa",
         "de Israel"
@@ -361,15 +361,15 @@
     },
     "בעגלאובזמןקריבואמרואמן": {
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "baagala uvezman qariv veimru amen",
-      "translation_pt": "rapidamente e em breve — e dizei amém",
+      "transliteration_pt": "baagalá uvizmán carív veimrú amên",
+      "translation_pt": "rapidamente e em breve — e digam amém",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "rapidamente",
-        "e em tempo",
-        "próximo",
-        "e dizei",
-        "amém"
+        "e em",
+        "breve",
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "speedily and soon — and say amen",
@@ -434,17 +434,17 @@
     },
     "יהאשמהרבאמברךלעלםולעלמיעלמיא": {
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
-      "transliteration_pt": "Yehei shmei raba mevarach lalam ulalmei almaya",
-      "translation_pt": "Que Seu grande Nome seja abençoado eternamente e para sempre",
+      "transliteration_pt": "Yehei shmei raba mevarách lealám ul'almei almayá",
+      "translation_pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "seja",
+        "Que seja",
         "Seu Nome",
         "grande",
         "abençoado",
         "para sempre",
-        "e por todas",
-        "as eternidades"
+        "e para toda",
+        "a eternidade"
       ],
       "translations": {
         "en": "May His great Name be blessed forever and for all eternity",
@@ -523,13 +523,13 @@
     },
     "יתברךוישתבחויתפאר": {
       "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
-      "translation_pt": "Bendito, louvado e glorificado seja",
+      "transliteration_pt": "Yitbarêch veyishtabach veyitpaar",
+      "translation_pt": "Seja abençoado, louvado e glorificado",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "bendito",
-        "e louvado",
-        "e glorificado"
+        "abençoado",
+        "louvado",
+        "glorificado"
       ],
       "translations": {
         "en": "Blessed, praised and glorified be He",
@@ -580,13 +580,13 @@
     },
     "ויתרומםויתנשאויתהדר": {
       "hebrew": "וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
-      "transliteration_pt": "veyitromam veyitnassa veyithadar",
+      "transliteration_pt": "veyitromam veyitnasse veyithadar",
       "translation_pt": "exaltado, elevado e honrado seja",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e exaltado",
-        "e elevado",
-        "e honrado"
+        "exaltado",
+        "enaltecido",
+        "honrado"
       ],
       "translations": {
         "en": "exalted, uplifted and honored be He",
@@ -637,16 +637,16 @@
     },
     "ויתעלהויתהללשמהדקדשאבריךהוא": {
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
-      "transliteration_pt": "veyitaleh veyithalal shmei dequdsha berich hu",
-      "translation_pt": "e elevado e exaltado seja o Nome do Santo Bendito Seja",
+      "transliteration_pt": "veyitaleh veyithalal shmei decudshá berich hu",
+      "translation_pt": "elevado e elogiado o Nome do Santo Bendito é ele",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e enaltecido",
-        "e celebrado",
+        "elevado",
+        "e elogiado",
         "Seu Nome",
         "do Santo",
-        "Bendito",
-        "Ele"
+        "bendito",
+        "Ele é"
       ],
       "translations": {
         "en": "elevated and lauded be the Name of the Holy One, blessed be He",
@@ -718,15 +718,15 @@
     },
     "לעלאמןכלברכתאושירתא": {
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
-      "transliteration_pt": "leila min kol birchata veshirata",
-      "translation_pt": "acima de todas as bênçãos e cânticos",
+      "transliteration_pt": "leela min kol birchatá veshiratá",
+      "translation_pt": "acima de todas as bênçãos, cânticos",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "acima",
         "de",
         "todas",
         "as bênçãos",
-        "e cânticos"
+        "cânticos"
       ],
       "translations": {
         "en": "above all blessings and songs",
@@ -791,16 +791,16 @@
     },
     "תשבחתאונחמתאדאמירןבעלמאואמרואמן": {
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechamata daamiran balma veimru amen",
-      "translation_pt": "louvores e consolações que se recitam no mundo — e dizei amém",
+      "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú amên",
+      "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "louvores",
-        "e consolações",
-        "que se dizem",
+        "e consolos",
+        "que são proferidos",
         "no mundo",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "praises and consolations uttered in the world — and say amen",
@@ -872,23 +872,23 @@
     },
     "יהאשלמארבאמןשמיאוחייםטוביםעלינוועלכלישראלואמרואמן": {
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehei shlama raba min shamaya vechayim tovim aleinu val kol yisrael veimru amen",
-      "translation_pt": "Que grande paz do céu e boa vida venha sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "Yehei shelamá raba min shamaya vechayim tovim aleinu veal kol Israel veimrú amên",
+      "translation_pt": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "seja",
+        "Que seja",
         "paz",
         "grande",
         "de",
-        "o céu",
+        "vinda dos céus",
         "e vida",
         "boa",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "May abundant peace from heaven, and good life, come upon us and upon all Israel — and say amen",
@@ -1009,13 +1009,13 @@
     },
     "עשהשלוםבמרומיו": {
       "hebrew": "עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
-      "transliteration_pt": "Oseh shalom bimromav",
-      "translation_pt": "Aquele que faz paz em Suas alturas",
+      "transliteration_pt": "Ossê shalom bimromav",
+      "translation_pt": "Aquele que faz paz em Suas alturas celestiais",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "Aquele que faz",
         "paz",
-        "em Suas alturas"
+        "em Suas alturas celestiais"
       ],
       "translations": {
         "en": "He who makes peace in His heights",
@@ -1066,19 +1066,19 @@
     },
     "הואיעשהשלוםעלינוועלכלישראלואמרואמן": {
       "hebrew": "הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu yaaseh shalom aleinu val kol yisrael veimru amen",
-      "translation_pt": "que Ele faça paz sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "hu yaassê shalom aleinu veal kol Israel veimrú amên",
+      "translation_pt": "que Ele faça paz para nós e para todo seu povo Israel — e digam Amen",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "Ele",
+        "Ele é",
         "fará",
         "paz",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "may He make peace upon us and upon all Israel — and say amen",
@@ -1171,14 +1171,14 @@
     },
     "עלישראלועלרבנן": {
       "hebrew": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן",
-      "transliteration_pt": "Al yisrael val rabanan",
-      "translation_pt": "Sobre Israel e sobre os mestres",
+      "transliteration_pt": "Al Israel veal rabanan",
+      "translation_pt": "Sobre Israel e sobre os nossos sábios",
       "origem": "claude",
       "glosas_pt": [
         "sobre",
         "de Israel",
-        "e sobre",
-        "os mestres"
+        "e para",
+        "os nossos sábios"
       ],
       "translations": {
         "en": "Upon Israel and upon the sages",
@@ -1236,13 +1236,13 @@
     },
     "ועלתלמידיהוןועלכלתלמידיתלמידיהון": {
       "hebrew": "וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן",
-      "transliteration_pt": "val talmideihon val kol talmidei talmideihon",
+      "transliteration_pt": "veal talmidehon veal kol talmidei talmidehon",
       "translation_pt": "e sobre seus discípulos e sobre todos os discípulos de seus discípulos",
       "origem": "claude",
       "glosas_pt": [
-        "e sobre",
+        "e para",
         "seus discípulos",
-        "e sobre",
+        "e para",
         "todas",
         "os discípulos",
         "seus discípulos"
@@ -1317,15 +1317,15 @@
     },
     "ועלכלמאןדעסקיןבאוריתא": {
       "hebrew": "וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא",
-      "transliteration_pt": "val kol man dasekin boraita",
-      "translation_pt": "e sobre todos os que se dedicam à Torá",
+      "transliteration_pt": "veal kol man daaskin beoraytá",
+      "translation_pt": "e sobre todos os que se dedicam ao estudo da Torá",
       "origem": "claude",
       "glosas_pt": [
-        "e sobre",
+        "e para",
         "todas",
         "aquele",
         "que se dedicam",
-        "à Torá"
+        "ao estudo da Torá"
       ],
       "translations": {
         "en": "and upon all who engage in Torah",
@@ -1390,12 +1390,12 @@
     },
     "דעסקיןבאוריתאקדשתא": {
       "hebrew": "דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא",
-      "transliteration_pt": "dasekin boraita kadishta",
-      "translation_pt": "que se dedicam à Torá sagrada",
+      "transliteration_pt": "daaskin beoraytá kadishtá",
+      "translation_pt": "que se dedicam ao estudo da Torá sagrada",
       "origem": "claude",
       "glosas_pt": [
         "que se dedicam",
-        "à Torá",
+        "ao estudo da Torá",
         "sagrada"
       ],
       "translations": {
@@ -1447,14 +1447,14 @@
     },
     "דיבאתראהדיןודיבכלאתרואתר": {
       "hebrew": "דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר",
-      "transliteration_pt": "di vatra hadein vedi vechol atar vaatar",
+      "transliteration_pt": "di veatrá haden vedi vechol atar vaatár",
       "translation_pt": "neste lugar e em todo e qualquer lugar",
       "origem": "claude",
       "glosas_pt": [
         "que",
         "neste lugar",
         "aqui",
-        "e que",
+        "e em",
         "em todo",
         "lugar",
         "e lugar"
@@ -1536,13 +1536,13 @@
     },
     "יהאלהוןולכוןשלמארבא": {
       "hebrew": "יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא",
-      "transliteration_pt": "yehei lehon ulechon shlama raba",
-      "translation_pt": "que haja para eles e para vós grande paz",
+      "transliteration_pt": "yehei lehon ulechon shelamá raba",
+      "translation_pt": "que haja sobre eles e para vocês grande paz",
       "origem": "claude",
       "glosas_pt": [
-        "seja",
+        "Que seja",
         "para eles",
-        "e para vós",
+        "e para vocês",
         "paz",
         "grande"
       ],
@@ -1609,17 +1609,17 @@
     },
     "יהאלנאולהוןולכוןחנאוחסדאורחמי": {
       "hebrew": "יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי",
-      "transliteration_pt": "yehei lana ulehon ulechon china vechisda verachamei",
-      "translation_pt": "que haja para nós, para eles e para vós graça, bondade e misericórdia",
+      "transliteration_pt": "yehei lána ul'hon ulechon chiná vechisdá verachamei",
+      "translation_pt": "que haja para nós, para eles e para vocês graça, bondade e compaixão",
       "origem": "claude",
       "glosas_pt": [
-        "seja",
+        "Que seja",
         "para nós",
         "e para eles",
-        "e para vós",
+        "e para vocês",
         "graça",
-        "e bondade",
-        "e misericórdia"
+        "bondade",
+        "e compaixão"
       ],
       "translations": {
         "en": "may there be for us, for them and for you grace, kindness and mercy",
@@ -1698,13 +1698,13 @@
     },
     "חנאוחסדאורחמין": {
       "hebrew": "חִנָּא וְחִסְדָּא וְרַחֲמִין",
-      "transliteration_pt": "china vechisda verachamin",
+      "transliteration_pt": "chiná vechisdá verachamin",
       "translation_pt": "graça, bondade e misericórdia",
       "origem": "claude",
       "glosas_pt": [
         "graça",
-        "e bondade",
-        "e misericórdia"
+        "bondade",
+        "misericórdia"
       ],
       "translations": {
         "en": "grace, kindness and mercy",
@@ -1756,13 +1756,13 @@
     "וחייןאריכיןומזונארויחא": {
       "hebrew": "וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא",
       "transliteration_pt": "vechayin arichin umezona revicha",
-      "translation_pt": "vida longa e sustento abundante",
+      "translation_pt": "vida longa e sustento em abundância",
       "origem": "claude",
       "glosas_pt": [
         "e vida",
         "longa",
         "e sustento",
-        "abundante"
+        "em abundância"
       ],
       "translations": {
         "en": "long life and abundant sustenance",
@@ -1821,13 +1821,13 @@
     "וחייןאריכיןומזונירויחי": {
       "hebrew": "וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי",
       "transliteration_pt": "vechayin arichin umezonei revichei",
-      "translation_pt": "vida longa e sustento abundante",
+      "translation_pt": "vida longa e sustento em abundância",
       "origem": "claude",
       "glosas_pt": [
         "e vida",
         "longa",
         "e sustento",
-        "abundante"
+        "em abundância"
       ],
       "translations": {
         "en": "long life and abundant sustenance",
@@ -1885,8 +1885,8 @@
     },
     "ופורקנאמןקדםאבוהוןדבשמיאואמרואמן": {
       "hebrew": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "ufurkana min kodam avuhon divishmaya veimru amen",
-      "translation_pt": "e redenção de diante de seu Pai que está nos céus — e dizei amém",
+      "transliteration_pt": "ufurkaná min kodam avuhon di-vishmayá veimrú amên",
+      "translation_pt": "e redenção vinda do seu Pai que está nos céus — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
         "e redenção",
@@ -1894,8 +1894,8 @@
         "diante de",
         "seu Pai",
         "que está nos céus",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "and deliverance from before their Father in heaven — and say amen",
@@ -1974,8 +1974,8 @@
     },
     "ופורקנאמןקדםאבוהוןדבשמיאוארעאואמרואמן": {
       "hebrew": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "ufurkana min kodam avuhon divishmaya vara veimru amen",
-      "translation_pt": "e redenção de diante de seu Pai que está nos céus e na terra — e dizei amém",
+      "transliteration_pt": "ufurkaná min kodam avuhon di-vishmayá vear-á veimrú amên",
+      "translation_pt": "e redenção de diante de seu Pai que está nos céus e na terra — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
         "e redenção",
@@ -1984,8 +1984,8 @@
         "seu Pai",
         "que está nos céus",
         "e na terra",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "and deliverance from before their Father in heaven and earth — and say amen",
@@ -2071,8 +2071,8 @@
     },
     "ופרקנאמןקדםאבוהוןדיבשמיאוארעאואמרואמן": {
       "hebrew": "וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "ufurkana min kodam avuhon di vishmaya vara veimru amen",
-      "translation_pt": "e redenção de diante de seu Pai que está nos céus e na terra — e dizei amém",
+      "transliteration_pt": "ufurkaná min kodam avuhon di vishmayá vear-á veimrú amên",
+      "translation_pt": "e redenção de diante de seu Pai que está nos céus e na terra — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
         "e redenção",
@@ -2082,8 +2082,8 @@
         "que",
         "nos céus",
         "e na terra",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "and deliverance from before their Father in heaven and earth — and say amen",
@@ -2176,17 +2176,17 @@
     },
     "מןקדםמראשמיאוארעאואמרואמן": {
       "hebrew": "מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "min kodam marei shmaya vara veimru amen",
-      "translation_pt": "de diante do Senhor do céu e da terra — e dizei amém",
+      "transliteration_pt": "min kodam marê shmaya vear-á veimrú amên",
+      "translation_pt": "de diante do Senhor dos céus e da terra — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
         "de",
         "diante de",
         "o Senhor de",
-        "o céu",
+        "vinda dos céus",
         "e na terra",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "from before the Master of heaven and earth — and say amen",
@@ -2265,15 +2265,15 @@
     },
     "יהאשלמארבאמןשמיא": {
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא",
-      "transliteration_pt": "Yehei shlama raba min shamaya",
-      "translation_pt": "Que venha grande paz do céu",
+      "transliteration_pt": "Yehei shelamá raba min shamaya",
+      "translation_pt": "Que venha paz em abundância a partir dos céus",
       "origem": "claude",
       "glosas_pt": [
-        "seja",
+        "Que seja",
         "paz",
         "grande",
         "de",
-        "o céu"
+        "vinda dos céus"
       ],
       "translations": {
         "en": "May abundant peace come from heaven",
@@ -2338,22 +2338,22 @@
     },
     "יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן": {
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehei shlama raba min shamaya vechayim aleinu val kol yisrael veimru amen",
+      "transliteration_pt": "Yehei shelamá raba min shamaya vechayim aleinu veal kol Israel veimrú amên",
       "translation_pt": "Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém",
       "origem": "claude",
       "glosas_pt": [
-        "seja",
+        "Que seja",
         "paz",
         "grande",
         "de",
-        "o céu",
+        "vinda dos céus",
         "e vida",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "May abundant peace from heaven, and life, come upon us and upon all Israel — and say amen",
@@ -2467,15 +2467,15 @@
     },
     "חייםושבעוישועהונחמהושיזבא": {
       "hebrew": "חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא",
-      "transliteration_pt": "chayim vesava vishua venechama vesheizava",
-      "translation_pt": "vida, fartura, salvação, consolo e livramento",
+      "transliteration_pt": "chayim vessavá vishuá venechamá veshezavá",
+      "translation_pt": "vida, fartura, salvação, consolo, libertação",
       "origem": "claude",
       "glosas_pt": [
         "vida",
-        "e fartura",
-        "e salvação",
-        "e consolo",
-        "e livramento"
+        "fartura",
+        "salvação",
+        "consolo",
+        "libertação"
       ],
       "translations": {
         "en": "life, plenty, salvation, comfort and rescue",
@@ -2540,14 +2540,14 @@
     },
     "ורפואהוגאלהוסליחהוכפרה": {
       "hebrew": "וּרְפוּאָה וּגְאֻלָּה וּסְלִיחָה וְכַפָּרָה",
-      "transliteration_pt": "urefua ugula uselicha vechapara",
+      "transliteration_pt": "urfuá ug'ulá usslichá vechapará",
       "translation_pt": "cura, redenção, perdão e expiação",
       "origem": "claude",
       "glosas_pt": [
-        "e cura",
-        "e redenção",
-        "e perdão",
-        "e expiação"
+        "cura",
+        "redenção",
+        "perdão",
+        "expiação"
       ],
       "translations": {
         "en": "healing, redemption, forgiveness and atonement",
@@ -2605,18 +2605,18 @@
     },
     "ורוחוהצלהלנוולכלעמוישראלואמרואמן": {
       "hebrew": "וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "verevach vehatsala lanu ulechol amo yisrael veimru amen",
-      "translation_pt": "alívio e salvação, para nós e para todo o Seu povo Israel — e dizei amém",
+      "transliteration_pt": "verêvach vehatsalá lanu ulechol amô Israel veimrú amên",
+      "translation_pt": "alívio e salvação, para nós e para todo o Seu povo Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "e alívio",
-        "e salvamento",
+        "alívio",
+        "e salvação",
         "para nós",
         "e para todo",
         "Seu povo",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "relief and deliverance, for us and for all His people Israel — and say amen",
@@ -2702,13 +2702,13 @@
     },
     "עושהשלוםבמרומיו": {
       "hebrew": "עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
-      "transliteration_pt": "Oseh shalom bimromav",
-      "translation_pt": "Aquele que faz paz em Suas alturas",
+      "transliteration_pt": "Ossê shalom bimromav",
+      "translation_pt": "Aquele que faz paz nas Suas alturas celestiais",
       "origem": "claude",
       "glosas_pt": [
         "Aquele que faz",
         "paz",
-        "em Suas alturas"
+        "em Suas alturas celestiais"
       ],
       "translations": {
         "en": "He who makes peace in His heights",
@@ -2759,20 +2759,20 @@
     },
     "הואברחמיויעשהשלוםעלינוועלכלישראלואמרואמן": {
       "hebrew": "הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu berachamav yaaseh shalom aleinu val kol yisrael veimru amen",
-      "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "hu berachamav yaassê shalom aleinu veal kol Israel veimrú amên",
+      "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Ele",
+        "Ele é",
         "em Sua misericórdia",
         "fará",
         "paz",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "may He, in His mercy, make peace upon us and upon all Israel — and say amen",
@@ -2872,21 +2872,21 @@
     },
     "הואברחמיויעשהשלוםעלינוועלכלעמוישראלואמרואמן": {
       "hebrew": "הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu berachamav yaaseh shalom aleinu val kol amo yisrael veimru amen",
-      "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e dizei amém",
+      "transliteration_pt": "hu berachamav yaassê shalom aleinu veal kol amô Israel veimrú amên",
+      "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Ele",
+        "Ele é",
         "em Sua misericórdia",
         "fará",
         "paz",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "Seu povo",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "may He, in His mercy, make peace upon us and upon all His people Israel — and say amen",
@@ -2993,20 +2993,20 @@
     },
     "הואיעשהברחמיושלוםעלינוועלכלישראלואמרואמן": {
       "hebrew": "הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu yaaseh verachamav shalom aleinu val kol yisrael veimru amen",
-      "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "hu yaassê verachamav shalom aleinu veal kol Israel veimrú amên",
+      "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Ele",
+        "Ele é",
         "fará",
         "em Sua misericórdia",
         "paz",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "may He, in His mercy, make peace upon us and upon all Israel — and say amen",
@@ -3106,22 +3106,22 @@
     },
     "עושהשלוםבמרומיוהואיעשהשלוםעלינוועלכלישראלואמרואמן": {
       "hebrew": "עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Oseh shalom bimromav hu yaaseh shalom aleinu val kol yisrael veimru amen",
-      "translation_pt": "Aquele que faz paz em Suas alturas, que Ele faça paz sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "Ossê shalom bimromav hu yaassê shalom aleinu veal kol Israel veimrú amên",
+      "translation_pt": "Aquele que faz paz nas Suas alturas celestiais, que Ele faça a paz para nós e sobre todo seu povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
         "Aquele que faz",
         "paz",
-        "em Suas alturas",
-        "Ele",
+        "em Suas alturas celestiais",
+        "Ele é",
         "fará",
         "paz",
-        "sobre nós",
-        "e sobre",
+        "para nós",
+        "e para",
         "todas",
         "de Israel",
-        "e dizei",
-        "amém"
+        "e digam",
+        "amên"
       ],
       "translations": {
         "en": "He who makes peace in His heights, may He make peace upon us and upon all Israel — and say amen",
@@ -3235,14 +3235,14 @@
     },
     "ויצמחפרקנהויקרבמשיחה": {
       "hebrew": "וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
-      "transliteration_pt": "veyatsmach purkanei vikarev meshichei",
-      "translation_pt": "e que floresça Sua redenção e aproxime o Seu Mashiach",
+      "transliteration_pt": "veyatsmách purkanêh vikarev meshichêh",
+      "translation_pt": "e que faça brotar Sua redenção e aproxime o Seu Mashiach",
       "origem": "claude",
       "glosas_pt": [
-        "e faça florescer",
+        "e faça brotar",
         "Sua redenção",
-        "e aproxime",
-        "Seu Mashiach"
+        "e apresse",
+        "a vinda de Seu Mashiach"
       ],
       "translations": {
         "en": "and may His redemption sprout and His Mashiach draw near",
@@ -3300,7 +3300,7 @@
     },
     "לעלאמןכלברכתאשירתא": {
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא",
-      "transliteration_pt": "leila min kol birchata shirata",
+      "transliteration_pt": "leela min kol birchatá shirata",
       "translation_pt": "acima de todas as bênçãos e cânticos",
       "origem": "claude",
       "glosas_pt": [

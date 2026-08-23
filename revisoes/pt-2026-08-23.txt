@@ -1,0 +1,625 @@
+Revisão de português — 272 de 272 itens conferidos.
+155 para corrigir · 0 transliterações escritas por mim
+(cada item vale para os 8 kadishim)
+
+— PARA CORRIGIR —
+
+transliteração — שְׁמֵהּ
+   está: shemei
+   deveria ser: shemê
+
+tradução do verso — בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ
+   está: no mundo que Ele criou segundo Sua vontade
+   deveria ser: no mundo que Ele criou de acordo com Sua vontade
+
+transliteração — בְּעָלְמָא
+   está: balma
+   deveria ser: bealma
+
+transliteração — בְרָא
+   está: vera
+   deveria ser: verá
+
+transliteração — כִרְעוּתֵהּ
+   está: chirutei
+   deveria ser: chir' utêh
+
+tradução da palavra — כִרְעוּתֵהּ
+   está: por Sua vontade
+   deveria ser: de acordo com Sua vontade
+
+tradução do verso — וְיַמְלִיךְ מַלְכוּתֵהּ
+   está: e que faça reinar o Seu reino
+   deveria ser: e que nele estabeleça o Seu reinado
+
+tradução da palavra — וְיַמְלִיךְ
+   está: e faça reinar
+   deveria ser: e que nele estabeleça
+
+transliteração — מַלְכוּתֵהּ
+   está: malchutei
+   deveria ser: malchutêh
+
+tradução da palavra — מַלְכוּתֵהּ
+   está: Seu reino
+   deveria ser: Seu reinado
+
+tradução do verso — וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
+   está: e que floresça Sua redenção e aproxime o Seu Mashiach
+   deveria ser: e que faça brotar Sua redenção e apresse a vida de seu Mashiach
+
+transliteração — וְיַצְמַח
+   está: veyatsmach
+   deveria ser: veyatsmách
+
+tradução da palavra — וְיַצְמַח
+   está: e faça florescer
+   deveria ser: e faça brotar
+
+transliteração — פּוּרְקָנֵהּ
+   está: purkanei
+   deveria ser: purkanêh
+
+tradução da palavra — וִיקָרֵב
+   está: e aproxime
+   deveria ser: e apresse
+
+transliteração — מְשִׁיחֵהּ
+   está: meshichei
+   deveria ser: meshichêh
+
+tradução da palavra — מְשִׁיחֵהּ
+   está: Seu Mashiach
+   deveria ser: a vinda de Seu Mashiach
+
+tradução do verso — בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן
+   está: em vossas vidas e em vossos dias
+   deveria ser: em sua vida e em seus dias
+
+transliteração — בְּחַיֵּיכוֹן
+   está: bechayeichon
+   deveria ser: bechayechon
+
+tradução da palavra — בְּחַיֵּיכוֹן
+   está: em vossas vidas
+   deveria ser: em sua vida
+
+transliteração — וּבְיוֹמֵיכוֹן
+   está: uveyomeichon
+   deveria ser: uveyomechon
+
+tradução da palavra — וּבְיוֹמֵיכוֹן
+   está: e em vossos dias
+   deveria ser: e em seus dias
+
+tradução do verso — וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל
+   está: e na vida de toda a casa de Israel
+   deveria ser: e durante a vida de toda a casa de Israel
+
+transliteração — וּבְחַיֵּי
+   está: uvechayei
+   deveria ser: uvechayê
+
+tradução da palavra — וּבְחַיֵּי
+   está: e na vida
+   deveria ser: e durante a vida
+
+transliteração — יִשְׂרָאֵל
+   está: yisrael
+   deveria ser: Israel
+
+tradução do verso — בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
+   está: rapidamente e em breve — e dizei amém
+   deveria ser: rapidamente e em breve — e digam amém
+
+transliteração — בַּעֲגָלָא
+   está: baagala
+   deveria ser: baagalá
+
+transliteração — וּבִזְמַן
+   está: uvezman
+   deveria ser: uvizmán
+
+tradução da palavra — וּבִזְמַן
+   está: e em tempo
+   deveria ser: e em
+
+transliteração — קָרִיב
+   está: qariv
+   deveria ser: carív
+
+tradução da palavra — קָרִיב
+   está: próximo
+   deveria ser: breve
+
+transliteração — וְאִמְרוּ
+   está: veimru
+   deveria ser: veimrú
+
+tradução da palavra — וְאִמְרוּ
+   está: e dizei
+   deveria ser: e digam
+
+transliteração — אָמֵן
+   está: amen
+   deveria ser: amên
+
+tradução da palavra — אָמֵן
+   está: amém
+   deveria ser: amên
+
+tradução do verso — יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
+   está: Que Seu grande Nome seja abençoado eternamente e para sempre
+   deveria ser: Que Seu grande Nome seja abençoado para sempre e para toda eternidade
+
+transliteração — יְהֵא
+   está: Yehei
+   deveria ser: Yehêh
+
+tradução da palavra — יְהֵא
+   está: seja
+   deveria ser: Que seja
+
+transliteração — שְׁמֵהּ
+   está: shmei
+   deveria ser: shemêh
+
+transliteração — מְבָרַךְ
+   está: mevarach
+   deveria ser: mevarách
+
+transliteração — לְעָלַם
+   está: lalam
+   deveria ser: lealám
+
+transliteração — וּלְעָלְמֵי
+   está: ulalmei
+   deveria ser: ul'almei
+
+tradução da palavra — וּלְעָלְמֵי
+   está: e por todas
+   deveria ser: e para toda
+
+transliteração — עָלְמַיָּא
+   está: almaya
+   deveria ser: almayá
+
+tradução da palavra — עָלְמַיָּא
+   está: as eternidades
+   deveria ser: a eternidade
+
+tradução do verso — יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
+   está: Bendito, louvado e glorificado seja
+   deveria ser: Seja abençoado, louvado e glorificado
+
+transliteração — יִתְבָּרֵךְ
+   está: Yitbarach
+   deveria ser: Yitbarêch
+
+tradução da palavra — יִתְבָּרֵךְ
+   está: bendito
+   deveria ser: abençoado
+
+tradução da palavra — וְיִשְׁתַּבַּח
+   está: e louvado
+   deveria ser: louvado
+
+tradução da palavra — וְיִתְפָּאַר
+   está: e glorificado
+   deveria ser: glorificado
+
+tradução do verso — וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
+   está: exaltado, elevado e honrado seja
+   deveria ser: elevado, enalteciso e honrado
+
+tradução da palavra — וְיִתְרוֹמָם
+   está: e exaltado
+   deveria ser: exaltado
+
+transliteração — וְיִתְנַשֵּׂא
+   está: veyitnassa
+   deveria ser: veyitnasse
+
+tradução da palavra — וְיִתְנַשֵּׂא
+   está: e elevado
+   deveria ser: enaltecido
+
+tradução da palavra — וְיִתְהַדָּר
+   está: e honrado
+   deveria ser: honrado
+
+tradução do verso — וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא
+   está: e elevado e exaltado seja o Nome do Santo Bendito Seja
+   deveria ser: elevado e elogiado o Nome do Santo Bendito é ele
+
+tradução da palavra — וְיִתְעַלֶּה
+   está: e enaltecido
+   deveria ser: elevado
+
+tradução da palavra — וְיִתְהַלָּל
+   está: e celebrado
+   deveria ser: e elogiado
+
+transliteração — דְּקֻדְשָׁא
+   está: dequdsha
+   deveria ser: decudshá
+
+tradução da palavra — בְּרִיךְ
+   está: Bendito
+   deveria ser: bendito
+
+tradução da palavra — הוּא
+   está: Ele
+   deveria ser: Ele é
+
+tradução do verso — לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
+   está: acima de todas as bênçãos e cânticos
+   deveria ser: acima de todas as bênçãos, cânticos
+
+transliteração — לְעֵלָּא
+   está: leila
+   deveria ser: leela
+
+transliteração — בִּרְכָתָא
+   está: birchata
+   deveria ser: birchatá
+
+transliteração — וְשִׁירָתָא
+   está: veshirata
+   deveria ser: veshiratá
+
+tradução da palavra — וְשִׁירָתָא
+   está: e cânticos
+   deveria ser: cânticos
+
+tradução do verso — תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן
+   está: louvores e consolações que se recitam no mundo — e dizei amém
+   deveria ser: louvores e consolos que são proferidos no mundo — e digam Amen
+
+tradução da palavra — וְנֶחָמָתָא
+   está: e consolações
+   deveria ser: e consolos
+
+transliteração — דַּאֲמִירָן
+   está: daamiran
+   deveria ser: dáamiran
+
+tradução da palavra — דַּאֲמִירָן
+   está: que se dizem
+   deveria ser: que são proferidos
+
+tradução do verso — יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: Que grande paz do céu e boa vida venha sobre nós e sobre toda Israel — e dizei amém
+   deveria ser: Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen
+
+transliteração — שְׁלָמָא
+   está: shlama
+   deveria ser: shelamá
+
+transliteração — שְׁמַיָּא
+   está: shamaya
+   deveria ser: shamayá
+
+tradução da palavra — שְׁמַיָּא
+   está: o céu
+   deveria ser: vinda dos céus
+
+tradução da palavra — עָלֵינוּ
+   está: sobre nós
+   deveria ser: para nós
+
+transliteração — וְעַל
+   está: val
+   deveria ser: veal
+
+tradução da palavra — וְעַל
+   está: e sobre
+   deveria ser: e para
+
+tradução do verso — עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
+   está: Aquele que faz paz em Suas alturas
+   deveria ser: Aquele que faz paz em Suas alturas celestiais
+
+transliteração — עֹשֶׂה
+   está: Oseh
+   deveria ser: Ossê
+
+tradução da palavra — בִּמְרוֹמָיו
+   está: em Suas alturas
+   deveria ser: em Suas alturas celestiais
+
+tradução do verso — הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: que Ele faça paz sobre nós e sobre toda Israel — e dizei amém
+   deveria ser: que Ele faça paz para nós e para todo seu povo Israel — e digam Amen
+
+transliteração — יַעֲשֶׂה
+   está: yaaseh
+   deveria ser: yaassê
+
+tradução do verso — עַל יִשְׂרָאֵל וְעַל רַבָּנָן
+   está: Sobre Israel e sobre os mestres
+   deveria ser: Sobre Israel e sobre os nossos sábios
+
+tradução da palavra — רַבָּנָן
+   está: os mestres
+   deveria ser: os nossos sábios
+
+transliteração — תַּלְמִידֵיהוֹן
+   está: talmideihon
+   deveria ser: talmidehon
+
+tradução do verso — וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא
+   está: e sobre todos os que se dedicam à Torá
+   deveria ser: e sobre todos os que se dedicam ao estudo da Torá
+
+transliteração — דְּעָסְקִין
+   está: dasekin
+   deveria ser: daaskin
+
+transliteração — בְּאוֹרַיְתָא
+   está: boraita
+   deveria ser: beoraytá
+
+tradução da palavra — בְּאוֹרַיְתָא
+   está: à Torá
+   deveria ser: ao estudo da Torá
+
+transliteração — בְאַתְרָא
+   está: vatra
+   deveria ser: veatrá
+
+transliteração — הָדֵין
+   está: hadein
+   deveria ser: haden
+
+tradução da palavra — וְדִי
+   está: e que
+   deveria ser: e em
+
+transliteração — וַאֲתַר
+   está: vaatar
+   deveria ser: vaatár
+
+tradução do verso — יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
+   está: que haja para eles e para vós grande paz
+   deveria ser: que haja sobre eles e para vocês grande paz
+
+transliteração — יְהֵא
+   está: yehei
+   deveria ser: yehê
+
+tradução da palavra — וּלְכוֹן
+   está: e para vós
+   deveria ser: e para vocês
+
+transliteração — חִנָּא
+   está: china
+   deveria ser: chiná
+
+transliteração — וְחִסְדָּא
+   está: vechisda
+   deveria ser: vechisdá
+
+tradução da palavra — וְחִסְדָּא
+   está: e bondade
+   deveria ser: bondade
+
+tradução da palavra — וְרַחֲמִין
+   está: e misericórdia
+   deveria ser: misericórdia
+
+tradução do verso — וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
+   está: vida longa e sustento abundante
+   deveria ser: vida longa e sustento em abundância
+
+tradução da palavra — רְוִיחָא
+   está: abundante
+   deveria ser: em abundância
+
+tradução do verso — וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן
+   está: e redenção de diante de seu Pai que está nos céus — e dizei amém
+   deveria ser: e redenção vinda do seu Pai que está nos céus — e digam Amen
+
+transliteração — וּפוּרְקָנָא
+   está: ufurkana
+   deveria ser: ufurkaná
+
+transliteração — דְּבִשְׁמַיָּא
+   está: divishmaya
+   deveria ser: di-vishmayá
+
+tradução do verso — יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém
+   deveria ser: Que haja  uma paz abundante emenaa dos céus, e vida para nós e para todo o povo de Israel — e digam Amen
+
+tradução do verso — עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: Aquele que faz paz em Suas alturas, que Ele faça paz sobre nós e sobre toda Israel — e dizei amém
+   deveria ser: Aquele que faz paz nas Suas alturas celestiais, que Ele faça a paz para nós e sobre todo seu povo de Israel — e digam Amen
+
+transliteração — עוֹשֶׂה
+   está: Oseh
+   deveria ser: Ossê
+
+tradução do verso — וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
+   está: e redenção de diante de seu Pai que está nos céus e na terra — e dizei amém
+   deveria ser: e redenção de diante de seu Pai que está nos céus e na terra — e digam Amen
+
+transliteração — וְאַרְעָא
+   está: vara
+   deveria ser: vear-á
+
+tradução do verso — הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: que Ele, em Sua misericórdia, faça paz sobre nós e sobre toda Israel — e dizei amém
+   deveria ser: que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen
+
+tradução do verso — וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
+   está: e que floresça Sua redenção e aproxime o Seu Mashiach
+   deveria ser: e que faça brotar Sua redenção e aproxime o Seu Mashiach
+
+transliteração — פֻּרְקָנֵהּ
+   está: purkanei
+   deveria ser: purkanêh
+
+tradução do verso — הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: que Ele, em Sua misericórdia, faça paz sobre nós e sobre toda Israel — e dizei amém
+   deveria ser: que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen
+
+tradução do verso — וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
+   está: vida longa e sustento abundante
+   deveria ser: vida longa e sustento em abundância
+
+tradução da palavra — רְוִיחֵי
+   está: abundante
+   deveria ser: em abundância
+
+tradução do verso — וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
+   está: e redenção de diante de seu Pai que está nos céus e na terra — e dizei amém
+   deveria ser: e redenção de diante de seu Pai que está nos céus e na terra — e digam Amen
+
+transliteração — וּפֻרְקָנָא
+   está: ufurkana
+   deveria ser: ufurkaná
+
+transliteração — בִשְׁמַיָּא
+   está: vishmaya
+   deveria ser: vishmayá
+
+tradução do verso — יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
+   está: Que venha grande paz do céu
+   deveria ser: Que venha paz em abundância a partir dos céus
+
+tradução do verso — חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
+   está: vida, fartura, salvação, consolo e livramento
+   deveria ser: vida, fartura, salvação, consolo, libertação
+
+transliteração — וְשָׂבָע
+   está: vesava
+   deveria ser: vessavá
+
+tradução da palavra — וְשָׂבָע
+   está: e fartura
+   deveria ser: fartura
+
+transliteração — וִישׁוּעָה
+   está: vishua
+   deveria ser: vishuá
+
+tradução da palavra — וִישׁוּעָה
+   está: e salvação
+   deveria ser: salvação
+
+transliteração — וְנֶחָמָה
+   está: venechama
+   deveria ser: venechamá
+
+tradução da palavra — וְנֶחָמָה
+   está: e consolo
+   deveria ser: consolo
+
+transliteração — וְשֵׁיזָבָא
+   está: vesheizava
+   deveria ser: veshezavá
+
+tradução da palavra — וְשֵׁיזָבָא
+   está: e livramento
+   deveria ser: libertação
+
+transliteração — וּרְפוּאָה
+   está: urefua
+   deveria ser: urfuá
+
+tradução da palavra — וּרְפוּאָה
+   está: e cura
+   deveria ser: cura
+
+transliteração — וּגְאֻלָּה
+   está: ugula
+   deveria ser: ug'ulá
+
+tradução da palavra — וּגְאֻלָּה
+   está: e redenção
+   deveria ser: redenção
+
+transliteração — וּסְלִיחָה
+   está: uselicha
+   deveria ser: usslichá
+
+tradução da palavra — וּסְלִיחָה
+   está: e perdão
+   deveria ser: perdão
+
+transliteração — וְכַפָּרָה
+   está: vechapara
+   deveria ser: vechapará
+
+tradução da palavra — וְכַפָּרָה
+   está: e expiação
+   deveria ser: expiação
+
+tradução do verso — וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: alívio e salvação, para nós e para todo o Seu povo Israel — e dizei amém
+   deveria ser: alívio e salvação, para nós e para todo o Seu povo Israel — e digam Amen
+
+transliteração — וְרֶוַח
+   está: verevach
+   deveria ser: verêvach
+
+tradução da palavra — וְרֶוַח
+   está: e alívio
+   deveria ser: alívio
+
+transliteração — וְהַצָּלָה
+   está: vehatsala
+   deveria ser: vehatsalá
+
+tradução da palavra — וְהַצָּלָה
+   está: e salvamento
+   deveria ser: e salvação
+
+transliteração — עַמּוֹ
+   está: amo
+   deveria ser: amô
+
+tradução do verso — עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
+   está: Aquele que faz paz em Suas alturas
+   deveria ser: Aquele que faz paz nas Suas alturas celestiais
+
+tradução do verso — הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e dizei amém
+   deveria ser: que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e digam Amen
+
+tradução do verso — דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
+   está: que se dedicam à Torá sagrada
+   deveria ser: que se dedicam ao estudo da Torá sagrada
+
+transliteração — קַדִּשְׁתָּא
+   está: kadishta
+   deveria ser: kadishtá
+
+tradução do verso — יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי
+   está: que haja para nós, para eles e para vós graça, bondade e misericórdia
+   deveria ser: que haja para nós, para eles e para vocês graça, bondade e compaixão
+
+transliteração — לָנָא
+   está: lana
+   deveria ser: lána
+
+transliteração — וּלְהוֹן
+   está: ulehon
+   deveria ser: ul'hon
+
+tradução da palavra — וְרַחֲמֵי
+   está: e misericórdia
+   deveria ser: e compaixão
+
+tradução do verso — מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
+   está: de diante do Senhor do céu e da terra — e dizei amém
+   deveria ser: de diante do Senhor dos céus e da terra — e digam Amen
+
+transliteração — מָרֵא
+   está: marei
+   deveria ser: marê
+
+transliteração — שְׁמַיָּא
+   está: shmaya
+   deveria ser: shemayá

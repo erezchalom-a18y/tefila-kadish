@@ -1,0 +1,45 @@
+{
+  "_leia": "Correcoes do recado que NAO foram aplicadas, cada uma com o motivo. Nao sao discordancia minha: sao coisas que so o Erez pode decidir. Assim que ele responder, sai daqui e entra. A chave e tipo|hebraico-sem-nikud|texto-que-estava-la, igual a do revisar.html.",
+  "adiados": [
+    {
+      "chave": "tl|שמה|shemei",
+      "motivo": "conflito: a MESMA palavra hebraica שְׁמֵהּ recebeu shemê aqui e shemêh no outro lugar. Nao da para gravar as duas."
+    },
+    {
+      "chave": "tl|שמה|shmei",
+      "motivo": "conflito: ver acima."
+    },
+    {
+      "chave": "tl|יהא|Yehei",
+      "motivo": "conflito: a MESMA palavra יְהֵא recebeu Yehêh aqui e yehê no outro lugar (a maiuscula do comeco de verso e outra conversa; a diferenca e o êh x ê)."
+    },
+    {
+      "chave": "tl|יהא|yehei",
+      "motivo": "conflito: ver acima."
+    },
+    {
+      "chave": "tl|שמיא|shamaya",
+      "motivo": "conflito: a MESMA palavra שְׁמַיָּא recebeu shamayá aqui e shemayá no outro lugar."
+    },
+    {
+      "chave": "tl|שמיא|shmaya",
+      "motivo": "conflito: ver acima."
+    },
+    {
+      "chave": "trad|ויתרומםויתנשאויתהדר|exaltado, elevado e honrado seja",
+      "motivo": "parece engano de digitacao: 'elevado, enalteciso e honrado'. A glosa da mesma palavra, no mesmo recado, diz 'enaltecido'."
+    },
+    {
+      "chave": "trad|יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן|Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém",
+      "motivo": "parece engano de digitacao: 'uma paz abundante emenaa dos céus' (emanada? vinda?), e ficaram dois espacos depois de 'Que haja'."
+    },
+    {
+      "chave": "tl|כרעותה|chirutei",
+      "motivo": "tem um espaco no meio: \"chir' utêh\". Nas outras voce escreveu sem espaco (ul'almei, ug'ulá, ul'hon). Confirmar se e chir'utêh."
+    },
+    {
+      "chave": "trad|ויצמחפורקנהויקרבמשיחה|e que floresça Sua redenção e aproxime o Seu Mashiach",
+      "motivo": "o verso diz 'a vida de seu Mashiach' e a glosa da mesma palavra, no mesmo recado, diz 'a vinda de Seu Mashiach'. vida ou vinda?"
+    }
+  ]
+}
