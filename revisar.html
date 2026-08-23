@@ -102,6 +102,11 @@ const ARQUIVOS = ['chabad_yatom','chabad_derabanan','ashkenaz_yatom','ashkenaz_d
                   'sefard_yatom','sefard_derabanan','sefaradi_yatom','sefaradi_derabanan'];
 const NOMES = { chabad:'Chabad', ashkenaz:'Ashkenaz', sefard:'Sefard', sefaradi:'Sefaradi',
                 yatom:'Yatom', derabanan:'deRabanan' };
+// Marca da versao, so para saber se o aparelho esta com a pagina velha. O
+// Safari do iPad guarda o HTML; ja aconteceu de o Erez estar vendo uma versao
+// anterior e o defeito ja estar consertado aqui.
+const VERSAO = '23/08';
+
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const semNikud = s => (s || '').normalize('NFD').replace(/[֑-ׇ̀-ͯ]/g, '')
                                 .replace(/[^א-ת]/g, '');
@@ -223,7 +228,10 @@ function desenhar() {
     <br><br>Onde estiver escrito <b>falta fonte</b>, a palavra não existe nesta língua
     em documento nenhum. Se você souber como se escreve, digite ali — o que você
     escrever é fonte humana, e é assim que essas palavras entram.
-    <br><br>Suas respostas ficam neste aparelho: pode fechar e voltar depois.</div>`;
+    <br><br>Suas respostas ficam neste aparelho: pode fechar e voltar depois.
+    <br><br><small style="color:var(--fraco)">versão ${VERSAO} — se aqui aparecer
+    outra data, o iPad guardou a página velha: puxe a tela para baixo para
+    recarregar.</small></div>`;
 
   if (!mostrar.length) {
     h += `<div class="fim"><b>Nada faltando em ${esc(nome)}.</b>
@@ -283,7 +291,11 @@ function desenhar() {
 document.getElementById('corpo').addEventListener('click', e => {
   const b = e.target.closest('.acoes button');
   if (!b) return;
-  const item = b.closest('.item'), ch = item.dataset.ch;
+  // A tela do recado tambem tem .acoes (Copiar / Voltar a revisao). Sem esta
+  // linha, tocar num deles estourava aqui — item vinha null.
+  const item = b.closest('.item');
+  if (!item) return;
+  const ch = item.dataset.ch;
   marcas[ch] = marcas[ch] || {};
   marcas[ch].estado = marcas[ch].estado === b.dataset.e ? null : b.dataset.e;
   if (!marcas[ch].estado) delete marcas[ch];

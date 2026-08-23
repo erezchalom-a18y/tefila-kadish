@@ -44,6 +44,11 @@ const erros = [];
 pag.on('console', m => {
   if (m.type() === 'error' && !/fonts\.|ERR_CONNECTION_RESET/.test(m.text())) erros.push(m.text());
 });
+// Erro que ESTOURA dentro de um listener nao chega no evento 'console' do
+// Playwright — chega em 'pageerror'. Sem esta linha o teste dava verde com a
+// pagina quebrando: tocar em "Copiar" ou "Voltar a revisao" estourava, porque
+// a tela do recado tambem tem .acoes e o clique caia no handler dos itens.
+pag.on('pageerror', e => erros.push('pageerror: ' + e.message));
 await pag.goto(`${BASE}/revisar.html`);
 await pag.waitForTimeout(2500);
 
@@ -119,8 +124,14 @@ await pag.waitForTimeout(600);
 const recado = await pag.inputValue('#saida');
 confere('o recado traz a correcao e diz que vale para os 8',
   /como deveria ser/.test(recado) && /8 kadishim/.test(recado), recado.slice(0, 220));
+await pag.click('#copiar');
+await pag.waitForTimeout(300);
+confere('o botao Copiar responde e nao estoura',
+  (await pag.textContent('#copiar')).includes('Copiado'), await pag.textContent('#copiar'));
 await pag.click('#continuar');
 await pag.waitForTimeout(500);
+confere('e o Voltar a revisao traz os itens de volta',
+  (await pag.locator('.item[data-ch]').count()) > 0);
 
 // ---------- palavra sem fonte: da para escrever ----------
 await pag.selectOption('#lingua', 'en');
