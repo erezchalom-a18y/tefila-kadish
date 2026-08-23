@@ -103,8 +103,36 @@ await pag.waitForTimeout(400);
 const caixa = await pag.evaluate(() => !!document.querySelector('.item.corrigir input.corr'));
 confere('marcar "corrigir" mantem o item e abre a caixa de texto', caixa);
 
+// A reclamacao do Erez em 23/08: "nao esta corrigindo — a palavra continua la,
+// igual". Escrever a correcao tem que resolver o item, do mesmo jeito que o
+// "Esta certo": o item sai da lista e o contador anda. Mas so ao SAIR da
+// caixa; a cada tecla, nao — senao volta o defeito de ontem, de a caixa sumir
+// debaixo do dedo.
+const chCorrigido = await pag.evaluate(() =>
+  document.querySelector('.item.corrigir').dataset.ch);
+const naTela = () => pag.locator(`.item[data-ch="${chCorrigido.replace(/"/g, '\\"')}"]`).count();
+const naListaAntes = await pag.locator('.item[data-ch]').count();
+
+await pag.click('.item.corrigir input.corr');
+await pag.type('.item.corrigir input.corr', 'X');   // uma tecla, ainda dentro da caixa
+await pag.waitForTimeout(300);
+confere('digitando, a caixa NAO some debaixo do dedo',
+  await pag.locator('.item.corrigir input.corr').count() === 1);
+
 await pag.fill('.item.corrigir input.corr', 'como deveria ser');
-await pag.waitForTimeout(400);
+await pag.locator('.item.corrigir input.corr').blur();
+await pag.waitForTimeout(500);
+confere('escrever a correcao tira o item da lista, como o "esta certo"',
+  await naTela() === 0);
+confere('e a lista encolhe de verdade',
+  await pag.locator('.item[data-ch]').count() === naListaAntes - 1,
+  `antes: ${naListaAntes} depois: ${await pag.locator('.item[data-ch]').count()}`);
+
+// Com o filtro desligado ele ve o item de novo, com a correcao e o "anotado".
+await pag.uncheck('#sofalta');
+await pag.waitForTimeout(500);
+confere('desligando o filtro, o item volta com o aviso de anotado',
+  await pag.locator('.item.corrigir .anotado').count() > 0);
 
 // ---------- sobrevive a fechar e abrir ----------
 const andamentoAntes = (await contar()).andamento;

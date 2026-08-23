@@ -45,6 +45,7 @@
   .acoes button.nao.ativo{background:var(--erro);border-color:var(--erro);color:#fff}
   .item.certo{opacity:.55}
   .item.corrigir{background:#fdf3e6;margin:0 -16px;padding:11px 16px}
+  .anotado{color:var(--ok);font-size:14px;margin-top:7px}
   input.corr{width:100%;font:inherit;font-size:16.5px;padding:10px;border:1px solid var(--linha);
              border-radius:9px;background:#fff;color:var(--txt);margin-top:8px}
   .rodape{position:fixed;left:0;right:0;bottom:0;background:var(--cartao);
@@ -197,11 +198,25 @@ function montar() {
 // portugues".
 const revisaveis = () => blocos.flatMap(b => b.itens);
 const feito = i => !!(marcas[i.ch] || {}).estado;
-// "So o que falta" esconde o que ja esta resolvido: o que ficou CERTO, e a
-// palavra sem fonte que ele decidiu DEIXAR em portugues. O que espera texto —
-// uma correcao ou uma transliteracao nova — continua na tela; escondê-lo
-// tirava a caixa de texto no mesmo toque que a abria.
-const resolvido = i => ['certo', 'portugues'].includes((marcas[i.ch] || {}).estado);
+// "So o que falta" esconde o que ja esta RESOLVIDO. Resolvido e:
+//   - "esta certo";
+//   - a palavra sem fonte que ele decidiu deixar em portugues;
+//   - a correcao (ou a transliteracao nova) que ele JA ESCREVEU.
+//
+// O terceiro caso entrou em 23/08. O Erez disse "nao esta corrigindo": ele
+// escrevia a correcao e a palavra continuava ali, igual, como se nada tivesse
+// acontecido. Estava certo em reclamar — so o "Esta certo" tirava o item da
+// lista, e escrever a correcao nao tirava nada.
+//
+// O que NAO da para fazer e esconder no mesmo toque que abre a caixa: foi esse
+// o defeito de ontem. Por isso o esconder so acontece quando ele SAI da caixa
+// (evento 'change'), nunca a cada tecla ('input' so grava).
+const temTexto = m => !!((m || {}).texto ?? '').trim();
+const resolvido = i => {
+  const m = marcas[i.ch] || {};
+  return ['certo', 'portugues'].includes(m.estado) ||
+         (['corrigir', 'escrever'].includes(m.estado) && temTexto(m));
+};
 
 function desenhar() {
   const lg = lingua.value, nome = LINGUAS[lg] || lg;
@@ -228,6 +243,10 @@ function desenhar() {
     <br><br>Onde estiver escrito <b>falta fonte</b>, a palavra não existe nesta língua
     em documento nenhum. Se você souber como se escreve, digite ali — o que você
     escrever é fonte humana, e é assim que essas palavras entram.
+    <br><br>Quando você escrever uma correção e sair da caixa, o item sai da
+    lista e o contador anda — está anotado. <b>A palavra no app continua a
+    mesma:</b> ela só muda depois que eu aplicar o seu recado, porque texto de
+    reza não se altera sem decisão sua.
     <br><br>Suas respostas ficam neste aparelho: pode fechar e voltar depois.
     <br><br><small style="color:var(--fraco)">versão ${VERSAO} — se aqui aparecer
     outra data, o iPad guardou a página velha: puxe a tela para baixo para
@@ -262,7 +281,9 @@ function desenhar() {
           </div>
           ${m.estado === 'escrever'
             ? `<input class="corr" value="${esc(m.texto ?? '')}"
-                 placeholder="como se escreve em ${esc(nome)}">` : ''}
+                 placeholder="como se escreve em ${esc(nome)}">
+               ${temTexto(m) ? '<div class="anotado">✓ anotado — vale para os 8 kadishim. ' +
+                 'O texto do app só muda depois que eu aplicar.</div>' : ''}` : ''}
         </div>`;
         continue;
       }
@@ -280,7 +301,9 @@ function desenhar() {
         </div>
         ${m.estado === 'corrigir'
           ? `<input class="corr" value="${esc(m.texto ?? i.alvo)}"
-               placeholder="como deveria ser em ${esc(nome)}">` : ''}
+               placeholder="como deveria ser em ${esc(nome)}">
+             ${temTexto(m) ? '<div class="anotado">✓ anotado — vale para os 8 kadishim. ' +
+               'O texto do app só muda depois que eu aplicar.</div>' : ''}` : ''}
       </div>`;
     }
     h += `</div>`;
@@ -306,11 +329,21 @@ document.getElementById('corpo').addEventListener('click', e => {
   if (novo) window.scrollBy(0, novo.getBoundingClientRect().top - y);
 });
 
+// A cada tecla: so GRAVA. Nunca redesenha — redesenhar aqui tirava a caixa
+// debaixo do dedo dele.
 document.getElementById('corpo').addEventListener('input', e => {
   if (!e.target.classList.contains('corr')) return;
   const ch = e.target.closest('.item').dataset.ch;
   marcas[ch] = marcas[ch] || {}; marcas[ch].texto = e.target.value;
   gravar();
+});
+
+// Ao SAIR da caixa: redesenha. E aqui que o item escrito vira resolvido, some
+// da lista de "so o que falta" e o contador anda — que era o que faltava para
+// o Erez ver que a correcao dele foi anotada.
+document.getElementById('corpo').addEventListener('change', e => {
+  if (!e.target.classList.contains('corr')) return;
+  desenhar();
 });
 
 lingua.addEventListener('change', () => {
