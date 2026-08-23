@@ -42,8 +42,139 @@
     {
       "verso": 8,
       "palavra": 1,
-      "inicio": 26.24,
-      "nota": "Erez 21/08: 'no yehe sheme raba o audio comeca antes do texto'. O verso comecava aos 26.49 e a voz comeca aos 26.24 no sinal — 0.25s de atraso no destaque."
+      "inicio": 27.66,
+      "nota": "Yehe — o amen do verso 7 tinha 0,02s; o audio dele estava aqui (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 2,
+      "inicio": 28.52,
+      "nota": "sheme (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 3,
+      "inicio": 29.38,
+      "nota": "raba (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 4,
+      "inicio": 30.24,
+      "nota": "mevarach (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 5,
+      "inicio": 31.4,
+      "nota": "lealam (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 6,
+      "inicio": 32.48,
+      "nota": "ul'almei (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 7,
+      "inicio": 33.46,
+      "nota": "almaya (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 12,
+      "palavra": 3,
+      "inicio": 48.76,
+      "nota": "kol (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 12,
+      "palavra": 4,
+      "inicio": 49.16,
+      "nota": "birchata (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 1,
+      "inicio": 53.22,
+      "nota": "tushbechata — o audio dela estava dentro do verso 12 (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 2,
+      "inicio": 53.76,
+      "nota": "venechamata (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 3,
+      "inicio": 55.72,
+      "nota": "daamiran (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 4,
+      "inicio": 56.6,
+      "nota": "bealma (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 5,
+      "inicio": 57.6,
+      "nota": "veimru (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 6,
+      "inicio": 58.72,
+      "nota": "amen (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 59.76,
+      "nota": "Yehe (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 14,
+      "palavra": 5,
+      "inicio": 62.96,
+      "nota": "shemaya (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 14,
+      "palavra": 10,
+      "inicio": 68.04,
+      "nota": "kol (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 16,
+      "palavra": 6,
+      "inicio": 80.58,
+      "nota": "kol (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 16,
+      "palavra": 7,
+      "inicio": 81.0,
+      "nota": "Israel (sincronia.html, Erez 23/08)"
+    }
+  ],
+  "_substituidas": [
+    {
+      "nussach": "chabad_yatom",
+      "era": {
+        "verso": 8,
+        "palavra": 1,
+        "inicio": 26.24,
+        "nota": "Erez 21/08: 'no yehe sheme raba o audio comeca antes do texto'. O verso comecava aos 26.49 e a voz comeca aos 26.24 no sinal — 0.25s de atraso no destaque."
+      },
+      "substituida_por": {
+        "verso": 8,
+        "palavra": 1,
+        "inicio": 27.66
+      },
+      "porque": "Em 21/08 o Erez disse 'no yehe sheme raba o audio comeca antes do texto' e eu pus o comeco do verso 8 aos 26.24, onde o sinal via voz. Em 23/08, vendo o desenho no sincronia.html, ele viu que aquele som e o AMEN do verso 7 — que estava espremido em 0,02s (26.22 a 26.24). O Yehe comeca mesmo aos 27.66. A ancora de 21/08 nao era o ouvido dele errando: era eu escolhendo o bloco de voz errado para o que ele descreveu. Fica registrada porque nao se apaga reparo de ouvido em silencio."
     }
   ]
 }

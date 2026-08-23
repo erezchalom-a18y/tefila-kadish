@@ -130,11 +130,51 @@ const lerMex = () => { try { return JSON.parse(localStorage.getItem(chaveMex()) 
                        catch (e) { return {}; } };
 const gravarMex = () => { try { localStorage.setItem(chaveMex(), JSON.stringify(mexidas)); } catch (e) {} };
 
+// Quanto o arrasto tem que andar para CONTAR como correcao. O risco encosta
+// sozinho no comeco de voz mais proximo quando chega a menos de 0.06s; sem
+// esta regra, so encostar o dedo num risco ja "corrigia" a palavra em 0,02s.
+// Foi o que aconteceu na primeira rodada do Erez: das 71 correcoes que ele
+// mandou, 49 eram de 0,02s — a pagina encostando, nao o ouvido dele. Ninguem
+// escuta 0,02s, e cada uma dessas viraria uma ancora a toa num arquivo que e
+// so o ouvido dele.
+const MINIMO = 0.06;
+
 // o comeco valendo agora: o que ele arrastou, ou o do arquivo
 const inicio = p => {
   const m = mexidas[`${p.verso}|${p.i}`];
   return m === undefined ? p.start : m;
 };
+const mexida = p => mexidas[`${p.verso}|${p.i}`] !== undefined;
+
+// grava so o que anda o bastante; se voltou para perto do original, apaga
+function pôr(p, t) {
+  const k = `${p.verso}|${p.i}`;
+  if (Math.abs(t - p.start) <= MINIMO) delete mexidas[k];
+  else mexidas[k] = Math.round(t * 1000) / 1000;
+}
+
+// Empurrar o VERSO INTEIRO um bloco de voz para frente ou para tras.
+// Existe porque o Erez precisou de 7 arrastos para dizer uma coisa so — "este
+// verso todo esta um bloco adiantado". Um gesto, um recado.
+// Anda pelo comeco dos BLOCOS verdes, nao pela lista de inicios de voz: os
+// inicios sao mais densos que as palavras (109 para 80 no chabad_yatom), e
+// "o proximo inicio" as vezes esta a 0,03s — que nao move nada e ainda cai
+// abaixo do MINIMO, entao a palavra nem contava. O bloco verde e o que ele ve.
+function empurrarVerso(n, passos) {
+  const ps = diagnosticar().filter(p => p.verso === n);
+  const grade = desenho.blocos.map(b => b[0]);
+  for (const p of ps) {
+    let t = inicio(p);
+    for (let k = 0; k < Math.abs(passos); k++) {
+      const prox = passos > 0 ? grade.find(x => x > t + MINIMO)
+                              : [...grade].reverse().find(x => x < t - MINIMO);
+      if (prox === undefined) break;
+      t = prox;
+    }
+    pôr(p, t);
+  }
+  gravarMex();
+}
 
 // ---------- ler os dados ----------
 function palavras() {
@@ -236,7 +276,7 @@ function pintar(cv, ps, v) {
     c.beginPath(); c.moveTo(px, 14); c.lineTo(px, A - 22); c.stroke();
     c.fillStyle = cor;
     c.fillText((p.tl || p.hebrew).slice(0, 12), Math.min(px + 3, L - 70), 12);
-    if (mexidas[`${p.verso}|${p.i}`] !== undefined) {   // marca do que ele arrastou
+    if (mexida(p)) {                                  // marca do que ele arrastou
       c.fillStyle = '#8b6a3e'; c.beginPath(); c.arc(px, A - 18, 4, 0, 7); c.fill();
     }
   }
@@ -269,9 +309,14 @@ function desenhar_tela() {
   el('contagem').textContent = Object.keys(mexidas).length
     ? `${Object.keys(mexidas).length} correção(ões) prontas` : 'nada arrastado ainda';
 
+  // "So o suspeito" esconde o que esta certo E que ele nao mexeu. Verso em que
+  // ele mexeu FICA, mesmo tendo ficado bom — senao empurrar o verso o fazia
+  // sumir no mesmo toque, sem ele ver o resultado nem poder desfazer. E o
+  // mesmo defeito que ja quebrou a pagina de revisao uma vez.
   const versos = sync.versos
     .map(v => ({ v, ps: ps.filter(p => p.verso === v.n) }))
-    .filter(x => x.ps.length && (!soFalta || x.ps.some(p => p.grau > 0)));
+    .filter(x => x.ps.length &&
+      (!soFalta || x.ps.some(p => p.grau > 0) || x.ps.some(mexida)));
 
   if (!versos.length) {
     el('corpo').innerHTML = `<div class="nota">Nenhum verso suspeito neste Kadish.
@@ -301,6 +346,8 @@ function desenhar_tela() {
       <canvas data-v="${v.n}"></canvas>
       <div class="acoes">
         <button data-tocar="${v.n}">▶ ouvir o verso</button>
+        <button data-empurrar="${v.n}" data-passos="-1">◀ o verso todo, um bloco atrás</button>
+        <button data-empurrar="${v.n}" data-passos="1">o verso todo, um bloco à frente ▶</button>
         <button data-devolver="${v.n}">desfazer o que arrastei</button>
       </div>
       <div class="diag" id="diag${v.n}"></div>
@@ -325,8 +372,7 @@ function escreverDiag(n, pv) {
   const mau = pv.filter(p => p.grau > 0);
   el('diag' + n).innerHTML = mau.length
     ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> — ${p.motivo}
-        ${mexidas[`${p.verso}|${p.i}`] !== undefined
-          ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
+        ${mexida(p) ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
     : '<div style="color:var(--ok)">Todas as palavras caem em cima da voz.</div>';
 }
 
@@ -349,6 +395,10 @@ el('corpo').addEventListener('click', e => {
   if (b && b.dataset.tocar) {
     const v = sync.versos.find(x => x.n === Number(b.dataset.tocar));
     return tocar(v.start, v.end + 0.15);
+  }
+  if (b && b.dataset.empurrar) {
+    empurrarVerso(Number(b.dataset.empurrar), Number(b.dataset.passos));
+    return desenhar_tela();
   }
   if (b && b.dataset.devolver) {
     const n = Number(b.dataset.devolver);
@@ -393,7 +443,7 @@ el('corpo').addEventListener('pointermove', e => {
   // encosta no comeco de voz mais proximo, se estiver bem perto — o sinal e
   // que sabe o numero exato; o dedo dele so aponta
   for (const x of desenho.inicios_de_voz) if (Math.abs(x - t) < 0.06) t = x;
-  mexidas[`${p.verso}|${p.i}`] = Math.round(t * 1000) / 1000;
+  pôr(p, t);
   repintarTudo();
   e.preventDefault();
 });
@@ -425,10 +475,10 @@ addEventListener('resize', repintarTudo);
 
 el('gerar').addEventListener('click', () => {
   const ps = diagnosticar();
-  const feitas = ps.filter(p => mexidas[`${p.verso}|${p.i}`] !== undefined);
+  const feitas = ps.filter(p => mexida(p));
   const [n, t] = alvoSel.value.split('_');
   const linhas = feitas.map(p =>
-    `verso ${p.verso}, palavra ${p.i} (${p.tl || p.hebrew})\n` +
+    `verso ${p.verso}, palavra ${p.i + 1} (${p.tl || p.hebrew})\n` +
     `   estava: ${seg(p.start)}\n   ponha em: ${seg(inicio(p))}`);
   const recado =
     `Sincronia — ${NUSSACH[n]} · ${TIPO[t]} (${alvoSel.value})\n` +

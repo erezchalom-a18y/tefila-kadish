@@ -116,11 +116,55 @@ const depoisTxt = await pag.textContent('#contagem');
 confere('arrastar um risco conta como correcao', depoisTxt !== antesTxt,
   `antes: "${antesTxt}" depois: "${depoisTxt}"`);
 
+// Um cutucao de nada NAO pode contar como correcao. Foi assim que 49 das 71
+// "correcoes" da primeira rodada do Erez nasceram: o risco encosta sozinho no
+// comeco de voz mais proximo, e so encostar o dedo ja mexia 0,02s. Ninguem
+// escuta 0,02s, e cada uma viraria uma ancora a toa.
+const antesCutucao = await pag.textContent('#contagem');
+await pag.mouse.move(xRisco + 200, cx.y + cx.height / 2);
+const xOutro = await pag.evaluate(() => {
+  const c = document.querySelector('canvas');
+  const p = c._ps[1] || c._ps[0];
+  return (p.start - c._t0) / (c._t1 - c._t0);
+});
+await pag.mouse.move(cx.x + cx.width * xOutro, cx.y + cx.height / 2);
+await pag.mouse.down();
+await pag.mouse.move(cx.x + cx.width * xOutro + 2, cx.y + cx.height / 2, { steps: 2 });
+await pag.mouse.up();
+await pag.waitForTimeout(400);
+confere('um cutucao de nada NAO vira correcao',
+  (await pag.textContent('#contagem')) === antesCutucao,
+  `antes: "${antesCutucao}" depois: "${await pag.textContent('#contagem')}"`);
+
+// empurrar o verso inteiro: um gesto para dizer "este verso esta um bloco fora"
+await pag.evaluate(() => localStorage.clear());
+await pag.reload(); await pag.waitForTimeout(2200);
+const nPalavras = await pag.evaluate(() => document.querySelector('canvas')._ps.length);
+await pag.locator('button[data-empurrar]').nth(1).click();   // um bloco a frente
+await pag.waitForTimeout(700);
+const movidas = await pag.evaluate(() =>
+  Object.keys(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')).length);
+confere('empurrar o verso move todas as palavras dele de uma vez',
+  movidas === nPalavras, `${movidas} de ${nPalavras} palavras`);
+await pag.locator('button[data-devolver]').first().click();
+await pag.waitForTimeout(500);
+confere('e o desfazer devolve o verso inteiro',
+  (await pag.evaluate(() =>
+    Object.keys(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')).length)) === 0);
+
+// refaz um arrasto de verdade, para as checagens seguintes terem o que ver
+await pag.mouse.move(xRisco, cx.y + cx.height / 2);
+await pag.mouse.down();
+await pag.mouse.move(xRisco + 30, cx.y + cx.height / 2, { steps: 6 });
+await pag.mouse.up();
+await pag.waitForTimeout(500);
+const depoisTxt2 = await pag.textContent('#contagem');
+
 // sobrevive a recarregar
 await pag.reload();
 await pag.waitForTimeout(2200);
 confere('o que ele arrastou sobrevive a fechar e abrir',
-  (await pag.textContent('#contagem')) === depoisTxt,
+  (await pag.textContent('#contagem')) === depoisTxt2,
   `ficou: "${await pag.textContent('#contagem')}"`);
 
 // o recado
