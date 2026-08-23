@@ -37,8 +37,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
    Texto novo nunca vai escrito direto no HTML: entra em tabela (I18N, SOBRE,
    DEDICATORIA, CONVITE em engine.html; TEXTOS em yahrzeit.js; T em aprender.html
    e em gerar-pdf.mjs), e testar-linguas.mjs confere.
-7. Transliteração: o PORTUGUÊS é o que sempre foi e não se mexe (decisão do
-   Erez). As outras línguas vêm de fonte humana — os .docx dele, copiados
+7. Transliteração: o PORTUGUÊS é a original e serve de apoio às outras. Ficou
+   anos sem se mexer por decisão do Erez; em 23/08 ele mudou de ideia e pediu
+   para conferi-la também, e ela entrou na revisão em revisar.html. Continua
+   valendo que só ele decide o que muda ali — o modelo nunca reescreve.
+   As outras línguas vêm de fonte humana — os .docx dele, copiados
    verbatim para fontes/transliteracao-por-lingua.json — e entram por
    aplicar-transliteracoes.mjs, nunca escritas pelo modelo. Onde não há fonte
    (sefard inteiro, alemão, e um trecho do sefaradi), a palavra cai para o
@@ -209,11 +212,13 @@ todos. "Amen" está 36 vezes nos arquivos e aparece 2 vezes na tela (uma para a
 transliteração, uma para a tradução da palavra).
 
 Isso encolhe o trabalho: 6.520 palavras nos 8 arquivos viram **270 itens por
-língua** (155 em português, alemão e hebraico, que não têm transliteração ali).
+língua** (272 em português, 155 em alemão e hebraico, que não têm
+transliteração ali).
 
 O português também está na lista: o Erez é a autoridade nele e as traduções
-portuguesas ainda são rascunho. Só as traduções — a transliteração portuguesa
-fica como está, decisão dele.
+portuguesas ainda são rascunho. Desde 23/08 a transliteração portuguesa entra
+junto, a pedido dele — antes ficava de fora. Ali não existe "falta fonte": a
+transliteração portuguesa é a original, toda palavra já tem a sua.
 
 Três coisas são revisáveis: a tradução do verso, a tradução da palavra e a
 transliteração.

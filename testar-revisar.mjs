@@ -180,9 +180,13 @@ confere('lingua invalida guardada no aparelho nao quebra a pagina',
 await pag.selectOption('#lingua', 'pt');
 await pag.waitForTimeout(1300);
 const pt = await contar();
-confere('em portugues so ha traducoes, sem transliteracao',
-  pt.tipos.trad > 0 && pt.tipos.glosa > 0 && !pt.tipos.tl && !pt.tipos['tl-falta'],
+// Desde 23/08 o portugues TEM transliteracao para conferir, a pedido do Erez.
+// E a original: nao existe "falta fonte" nela — toda palavra ja tem a sua.
+confere('em portugues ha traducoes E transliteracao',
+  pt.tipos.trad > 0 && pt.tipos.glosa > 0 && pt.tipos.tl > 0,
   JSON.stringify(pt.tipos));
+confere('e nenhuma palavra em portugues aparece como "falta fonte"',
+  !pt.tipos['tl-falta'], JSON.stringify(pt.tipos));
 const linhasPt = await pag.evaluate(() =>
   document.querySelector('.item[data-ch]').querySelectorAll('.linha').length);
 confere('e o cartao em portugues nao repete a mesma linha duas vezes', linhasPt === 1,
