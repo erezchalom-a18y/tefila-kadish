@@ -3,7 +3,7 @@
   "entradas": {
     "יתגדלויתקדששמהרבא": {
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
-      "transliteration_pt": "Yitgadal veyitkadash shemei raba",
+      "transliteration_pt": "Yitgadal veyitkadash shemê raba",
       "translation_pt": "Exaltado e santificado seja o Seu grande Nome",
       "origem": "tehilat_hashem",
       "glosas_pt": [
@@ -68,7 +68,7 @@
     },
     "בעלמאדיבראכרעותה": {
       "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
-      "transliteration_pt": "bealma di verá chirutei",
+      "transliteration_pt": "bealma di verá chir'utêh",
       "translation_pt": "no mundo que Ele criou de acordo com Sua vontade",
       "origem": "tehilat_hashem",
       "glosas_pt": [
@@ -183,7 +183,7 @@
     "ויצמחפורקנהויקרבמשיחה": {
       "hebrew": "וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
       "transliteration_pt": "veyatsmách purkanêh vikarev meshichêh",
-      "translation_pt": "e que floresça Sua redenção e aproxime o Seu Mashiach",
+      "translation_pt": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "e faça brotar",
@@ -434,7 +434,7 @@
     },
     "יהאשמהרבאמברךלעלםולעלמיעלמיא": {
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
-      "transliteration_pt": "Yehei shmei raba mevarách lealám ul'almei almayá",
+      "transliteration_pt": "Yehê shemê raba mevarách lealám ul'almei almayá",
       "translation_pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "origem": "tehilat_hashem",
       "glosas_pt": [
@@ -581,7 +581,7 @@
     "ויתרומםויתנשאויתהדר": {
       "hebrew": "וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
       "transliteration_pt": "veyitromam veyitnasse veyithadar",
-      "translation_pt": "exaltado, elevado e honrado seja",
+      "translation_pt": "elevado, enaltecido e honrado",
       "origem": "tehilat_hashem",
       "glosas_pt": [
         "exaltado",
@@ -637,7 +637,7 @@
     },
     "ויתעלהויתהללשמהדקדשאבריךהוא": {
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
-      "transliteration_pt": "veyitaleh veyithalal shmei decudshá berich hu",
+      "transliteration_pt": "veyitaleh veyithalal shemê decudshá berich hu",
       "translation_pt": "elevado e elogiado o Nome do Santo Bendito é ele",
       "origem": "tehilat_hashem",
       "glosas_pt": [
@@ -872,7 +872,7 @@
     },
     "יהאשלמארבאמןשמיאוחייםטוביםעלינוועלכלישראלואמרואמן": {
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehei shelamá raba min shamaya vechayim tovim aleinu veal kol Israel veimrú amên",
+      "transliteration_pt": "Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú amên",
       "translation_pt": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
       "origem": "tehilat_hashem",
       "glosas_pt": [
@@ -1536,7 +1536,7 @@
     },
     "יהאלהוןולכוןשלמארבא": {
       "hebrew": "יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא",
-      "transliteration_pt": "yehei lehon ulechon shelamá raba",
+      "transliteration_pt": "yehê lehon ulechon shelamá raba",
       "translation_pt": "que haja sobre eles e para vocês grande paz",
       "origem": "claude",
       "glosas_pt": [
@@ -1609,7 +1609,7 @@
     },
     "יהאלנאולהוןולכוןחנאוחסדאורחמי": {
       "hebrew": "יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי",
-      "transliteration_pt": "yehei lána ul'hon ulechon chiná vechisdá verachamei",
+      "transliteration_pt": "yehê lána ul'hon ulechon chiná vechisdá verachamei",
       "translation_pt": "que haja para nós, para eles e para vocês graça, bondade e compaixão",
       "origem": "claude",
       "glosas_pt": [
@@ -2176,7 +2176,7 @@
     },
     "מןקדםמראשמיאוארעאואמרואמן": {
       "hebrew": "מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "min kodam marê shmaya vear-á veimrú amên",
+      "transliteration_pt": "min kodam marê shemayá vear-á veimrú amên",
       "translation_pt": "de diante do Senhor dos céus e da terra — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
@@ -2265,7 +2265,7 @@
     },
     "יהאשלמארבאמןשמיא": {
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא",
-      "transliteration_pt": "Yehei shelamá raba min shamaya",
+      "transliteration_pt": "Yehê shelamá raba min shemayá",
       "translation_pt": "Que venha paz em abundância a partir dos céus",
       "origem": "claude",
       "glosas_pt": [
@@ -2338,8 +2338,8 @@
     },
     "יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן": {
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehei shelamá raba min shamaya vechayim aleinu veal kol Israel veimrú amên",
-      "translation_pt": "Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú amên",
+      "translation_pt": "Que haja uma paz abundante emenada dos céus, e vida para nós e para todo o povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
         "Que seja",

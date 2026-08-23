@@ -1,45 +1,19 @@
 {
-  "_leia": "Correcoes do recado que NAO foram aplicadas, cada uma com o motivo. Nao sao discordancia minha: sao coisas que so o Erez pode decidir. Assim que ele responder, sai daqui e entra. A chave e tipo|hebraico-sem-nikud|texto-que-estava-la, igual a do revisar.html.",
-  "adiados": [
-    {
-      "chave": "tl|שמה|shemei",
-      "motivo": "conflito: a MESMA palavra hebraica שְׁמֵהּ recebeu shemê aqui e shemêh no outro lugar. Nao da para gravar as duas."
-    },
-    {
-      "chave": "tl|שמה|shmei",
-      "motivo": "conflito: ver acima."
-    },
-    {
-      "chave": "tl|יהא|Yehei",
-      "motivo": "conflito: a MESMA palavra יְהֵא recebeu Yehêh aqui e yehê no outro lugar (a maiuscula do comeco de verso e outra conversa; a diferenca e o êh x ê)."
-    },
-    {
-      "chave": "tl|יהא|yehei",
-      "motivo": "conflito: ver acima."
-    },
-    {
-      "chave": "tl|שמיא|shamaya",
-      "motivo": "conflito: a MESMA palavra שְׁמַיָּא recebeu shamayá aqui e shemayá no outro lugar."
-    },
-    {
-      "chave": "tl|שמיא|shmaya",
-      "motivo": "conflito: ver acima."
-    },
-    {
-      "chave": "trad|ויתרומםויתנשאויתהדר|exaltado, elevado e honrado seja",
-      "motivo": "parece engano de digitacao: 'elevado, enalteciso e honrado'. A glosa da mesma palavra, no mesmo recado, diz 'enaltecido'."
-    },
-    {
-      "chave": "trad|יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן|Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém",
-      "motivo": "parece engano de digitacao: 'uma paz abundante emenaa dos céus' (emanada? vinda?), e ficaram dois espacos depois de 'Que haja'."
-    },
-    {
-      "chave": "tl|כרעותה|chirutei",
-      "motivo": "tem um espaco no meio: \"chir' utêh\". Nas outras voce escreveu sem espaco (ul'almei, ug'ulá, ul'hon). Confirmar se e chir'utêh."
-    },
-    {
-      "chave": "trad|ויצמחפורקנהויקרבמשיחה|e que floresça Sua redenção e aproxime o Seu Mashiach",
-      "motivo": "o verso diz 'a vida de seu Mashiach' e a glosa da mesma palavra, no mesmo recado, diz 'a vinda de Seu Mashiach'. vida ou vinda?"
-    }
+  "_leia": "Correcoes do recado que ficaram esperando decisao do Erez. Ele respondeu todas em 23/08, e as respostas entraram por revisoes/pt-2026-08-23-b.txt. A lista fica vazia de proposito, e o historico fica em 'resolvidos' — quem abrir isto amanha precisa saber que essas 10 nao foram esquecidas.",
+  "adiados": [],
+  "resolvidos": [
+    { "chave": "tl|שמה|shemei",  "pergunta": "shemê ou shemêh?", "resposta": "shemê" },
+    { "chave": "tl|שמה|shmei",   "pergunta": "shemê ou shemêh?", "resposta": "shemê" },
+    { "chave": "tl|יהא|Yehei",   "pergunta": "Yehêh ou yehê?",   "resposta": "yehê — e como esta comeca o verso com M grande, ficou Yehê. Ele decidiu a grafia; a maiuscula ja estava la." },
+    { "chave": "tl|יהא|yehei",   "pergunta": "Yehêh ou yehê?",   "resposta": "yehê" },
+    { "chave": "tl|שמיא|shamaya", "pergunta": "shamayá ou shemayá?", "resposta": "shemayá" },
+    { "chave": "tl|שמיא|shmaya",  "pergunta": "shamayá ou shemayá?", "resposta": "shemayá" },
+    { "chave": "tl|כרעותה|chirutei", "pergunta": "chir' utêh tinha espaco no meio", "resposta": "chir'utêh, sem espaco" },
+    { "chave": "trad|ויתרומםויתנשאויתהדר|exaltado, elevado e honrado seja",
+      "pergunta": "enalteciso?", "resposta": "elevado, enaltecido e honrado" },
+    { "chave": "trad|יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן|Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém",
+      "pergunta": "emenaa?", "resposta": "Que haja uma paz abundante emenada dos céus, e vida para nós e para todo o povo de Israel — e digam Amen. ATENCAO: ele escreveu 'emenada'. Eu tinha perguntado por causa de 'emenaa'; ele reescreveu e ficou 'emenada'. Gravei o que ele mandou, verbatim, e avisei. Se era 'emanada', e uma linha para trocar." },
+    { "chave": "trad|ויצמחפורקנהויקרבמשיחה|e que floresça Sua redenção e aproxime o Seu Mashiach",
+      "pergunta": "a vida ou a vinda do Mashiach?", "resposta": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach" }
   ]
 }

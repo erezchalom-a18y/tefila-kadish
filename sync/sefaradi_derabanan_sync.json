@@ -9,7 +9,7 @@
       "start": 0.16,
       "end": 5.62,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
-      "transliteration_pt": "Yitgadal veyitkadash shemei raba",
+      "transliteration_pt": "Yitgadal veyitkadash shemê raba",
       "translation_pt": "Exaltado e santificado seja o Seu grande Nome",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -66,7 +66,7 @@
         {
           "i": 2,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shemei",
+          "transliteration_pt": "shemê",
           "start": 2.7,
           "end": 4.58,
           "glosa_pt": "Seu Nome",
@@ -130,7 +130,7 @@
       "start": 5.62,
       "end": 9.44,
       "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
-      "transliteration_pt": "bealma di verá chirutei",
+      "transliteration_pt": "bealma di verá chir'utêh",
       "translation_pt": "no mundo que Ele criou de acordo com Sua vontade",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -212,7 +212,7 @@
         {
           "i": 3,
           "hebrew": "כִרְעוּתֵהּ",
-          "transliteration_pt": "chirutei",
+          "transliteration_pt": "chir'utêh",
           "start": 7.74,
           "end": 9.44,
           "glosa_pt": "de acordo com Sua vontade",
@@ -781,14 +781,14 @@
       "start": 27.86,
       "end": 33.94,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
-      "transliteration_pt": "Yehei shmei raba mevarách lealám ul'almei almayá",
+      "transliteration_pt": "Yehê shemê raba mevarách lealám ul'almei almayá",
       "translation_pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יְהֵא",
-          "transliteration_pt": "Yehei",
+          "transliteration_pt": "Yehê",
           "start": 27.86,
           "end": 28.04,
           "glosa_pt": "Que seja",
@@ -813,7 +813,7 @@
         {
           "i": 1,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shmei",
+          "transliteration_pt": "shemê",
           "start": 28.04,
           "end": 28.62,
           "glosa_pt": "Seu Nome",
@@ -1074,7 +1074,7 @@
       "end": 41,
       "hebrew": "וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
       "transliteration_pt": "veyitromam veyitnasse veyithadar",
-      "translation_pt": "exaltado, elevado e honrado seja",
+      "translation_pt": "elevado, enaltecido e honrado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
@@ -1154,7 +1154,7 @@
         }
       ],
       "translations": {
-        "pt": "exaltado, elevado e honrado seja",
+        "pt": "elevado, enaltecido e honrado",
         "en": "exalted, uplifted and honored be He",
         "es": "exaltado, elevado y honrado sea",
         "fr": "exalté, élevé et honoré soit-Il",
@@ -1169,7 +1169,7 @@
       "start": 41,
       "end": 48.62,
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
-      "transliteration_pt": "veyitaleh veyithalal shmei decudshá berich hu",
+      "transliteration_pt": "veyitaleh veyithalal shemê decudshá berich hu",
       "translation_pt": "elevado e elogiado o Nome do Santo Bendito é ele",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -1226,7 +1226,7 @@
         {
           "i": 2,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shmei",
+          "transliteration_pt": "shemê",
           "start": 43.98,
           "end": 45.26,
           "glosa_pt": "Seu Nome",
@@ -2241,14 +2241,14 @@
       "start": 83.76,
       "end": 92.3,
       "hebrew": "יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי",
-      "transliteration_pt": "yehei lána ul'hon ulechon chiná vechisdá verachamei",
+      "transliteration_pt": "yehê lána ul'hon ulechon chiná vechisdá verachamei",
       "translation_pt": "que haja para nós, para eles e para vocês graça, bondade e compaixão",
       "origem_texto": "claude",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יְהֵא",
-          "transliteration_pt": "yehei",
+          "transliteration_pt": "yehê",
           "start": 83.76,
           "end": 84.48,
           "glosa_pt": "Que seja",
@@ -2430,7 +2430,7 @@
       "start": 92.3,
       "end": 100.14,
       "hebrew": "מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "min kodam marê shmaya vear-á veimrú amên",
+      "transliteration_pt": "min kodam marê shemayá vear-á veimrú amên",
       "translation_pt": "de diante do Senhor dos céus e da terra — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
@@ -2505,7 +2505,7 @@
         {
           "i": 3,
           "hebrew": "שְׁמַיָּא",
-          "transliteration_pt": "shmaya",
+          "transliteration_pt": "shemayá",
           "start": 95.82,
           "end": 97.16,
           "glosa_pt": "vinda dos céus",
@@ -2612,14 +2612,14 @@
       "start": 100.14,
       "end": 104.28,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא",
-      "transliteration_pt": "Yehei shelamá raba min shamaya",
+      "transliteration_pt": "Yehê shelamá raba min shemayá",
       "translation_pt": "Que venha paz em abundância a partir dos céus",
       "origem_texto": "claude",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יְהֵא",
-          "transliteration_pt": "Yehei",
+          "transliteration_pt": "Yehê",
           "start": 100.14,
           "end": 100.48,
           "glosa_pt": "Que seja",
@@ -2719,7 +2719,7 @@
         {
           "i": 4,
           "hebrew": "שְׁמַיָּא",
-          "transliteration_pt": "shamaya",
+          "transliteration_pt": "shemayá",
           "start": 102.8,
           "end": 104.28,
           "glosa_pt": "vinda dos céus",

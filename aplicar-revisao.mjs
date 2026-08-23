@@ -112,9 +112,12 @@ for (const i of aplicaveis) {
   if (!porPalavra.has(k)) porPalavra.set(k, new Map());
   porPalavra.get(k).set(i.de, i.para);
 }
+// Maiuscula NAO conta como conflito: יְהֵא comeca um verso com M grande e outro
+// com minuscula, e isso ja era assim antes. O que nao pode e a mesma palavra
+// sair escrita de dois jeitos DIFERENTES.
 const conflitos = [];
 for (const [k, destinos] of porPalavra) {
-  const vals = [...new Set(destinos.values())];
+  const vals = [...new Set([...destinos.values()].map(v => v.toLowerCase()))];
   if (vals.length > 1) conflitos.push({ k, destinos: [...destinos.entries()] });
 }
 
@@ -233,6 +236,14 @@ if (conflitos.length) {
     console.log(`  ${c.k}`);
     for (const [de, para] of c.destinos) console.log(`      ${de}  ->  ${para}`);
   }
+}
+
+// Rodar de novo um recado ja aplicado nao acha nada, porque o "estava" nao
+// existe mais. Isso e a prova de que ele nao aplica duas vezes — nao um erro.
+if (usados.size === 0 && aplicaveis.length > 0) {
+  console.log('\nNada a fazer: todas estas correcoes ja estao no lugar.');
+  console.log('(Um recado ja aplicado nao acha mais o texto antigo. E assim que se sabe.)');
+  process.exit(0);
 }
 
 if (naoUsados.length) {
