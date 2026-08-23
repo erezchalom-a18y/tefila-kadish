@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `3fe522f`, de 23/08/2026 23:04.
+Gerado por `gerar-status.py` no commit `4848cd3`, de 23/08/2026 23:37.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -16,7 +16,7 @@ sabe procurar não estão aí.
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
 | ChatGPT (glossário) | 23/08/2026 18:00 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 23/08/2026 22:40 | os 8 áudios contra os sync/*.json |
+| Whisper (áudio) | 23/08/2026 23:05 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
@@ -24,7 +24,7 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
 | Nussach | Palavras em cima da voz | Desvio que o sinal sugere | Mediana do Whisper | Palavras fora da voz | Versos na lista curta | Âncoras |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ashkenaz_yatom | 69/75 (92.0%) | -0.10s | -1.14s | 3 | 2 | 5 |
+| ashkenaz_yatom | 69/75 (92.0%) | -0.10s | -1.34s | 3 | 2 | 5 |
 | ashkenaz_derabanan | 108/118 (91.5%) | -0.04s | -1.59s | 6 | 2 | 0 |
 | chabad_yatom | 79/80 (98.8%) | -0.08s | -1.44s | 1 | 0 | 21 |
 | chabad_derabanan | 110/121 (90.9%) | -0.10s | +1.75s | 4 | 0 | 0 |
