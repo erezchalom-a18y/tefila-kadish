@@ -19,10 +19,10 @@
   },
   "chabad_yatom": {
     "palavras": 80,
-    "em_cima_da_voz": 74,
-    "pct": 92.5,
+    "em_cima_da_voz": 79,
+    "pct": 98.8,
     "desvio_global": -0.08,
-    "ganho_do_desvio": 3,
+    "ganho_do_desvio": 0,
     "mediana_distancia": 0.02,
     "palavras_fora": 1
   },
