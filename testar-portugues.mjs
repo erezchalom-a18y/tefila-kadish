@@ -1,0 +1,167 @@
+/**
+ * testar-portugues.mjs — o portugues do Erez, do jeito que ele decidiu, nos 8.
+ *
+ * Existe porque em 23/08 ele revisou os 272 itens em portugues, mandou 155
+ * correcoes, e a pergunta seguinte foi "quero testar todos em portugues".
+ * Conferir isso a mao sao 8 kadishim x 161 versos. Aqui e uma linha.
+ *
+ * NAO tem lista de palavras escrita a mao. Ele le os proprios recados em
+ * revisoes/pt-*.txt e cobra o que ESTA ESCRITO LA:
+ *   1. nenhum texto antigo sobrou em sync/*.json nem no glossario.json;
+ *   2. o texto final dele esta la;
+ *   3. abrindo os 8 num navegador com ?lang=pt, a tela mostra exatamente o que
+ *      esta no arquivo — sem sobra do que ficou guardado no aparelho.
+ * Assim a checagem nunca envelhece: quando ele revisar de novo, e so salvar o
+ * recado novo em revisoes/ e ela ja cobra o novo.
+ *
+ * Um recado pode corrigir o que outro corrigiu (o "emenaa -> emenada ->
+ * emanada" levou tres rodadas) e pode ate desdizer o anterior. Por isso os
+ * recados se chamam -a, -b, -c: em ordem alfabetica tem que sair a ordem em
+ * que ele decidiu. Se um dia alguem salvar um recado sem essa letra, ele vai
+ * parar DEPOIS dos com letra no sort, e a conta sai errada.
+ *
+ * Uso: node servidor-teste.mjs 8899 . &
+ *      node testar-portugues.mjs [http://127.0.0.1:8899/tefila-kadish]
+ */
+import { readFileSync, readdirSync } from 'node:fs';
+
+const BASE = process.argv[2] || 'http://127.0.0.1:8896/tefila-kadish';
+const semNikud = s => String(s || '').normalize('NFD')
+  .replace(/[֑-ׇ̀-ͯ]/g, '').replace(/[^א-ת]/g, '');
+const TIPOS = { 'tradução do verso': 'trad', 'tradução da palavra': 'glosa', 'transliteração': 'tl' };
+
+let problemas = 0;
+const confere = (o, ok, det = '') => {
+  console.log(`${ok ? 'OK  ' : 'FALHA'} ${o}${ok || !det ? '' : '\n        ' + det}`);
+  if (!ok) problemas++;
+};
+
+// ---------- ler os recados, em ordem, encadeando ----------
+const recados = readdirSync('revisoes').filter(f => /^pt-.*\.txt$/.test(f)).sort();
+if (!recados.length) { console.error('nao ha recado nenhum em revisoes/'); process.exit(2); }
+
+// Cada correcao e uma seta: de -> para. Elas nao sao uma fila:
+//   - "shemei -> shemê" e "shmei -> shemê" sao DUAS grafias antigas indo para
+//     a mesma nova;
+//   - "emenaa -> emenada -> emanada" e uma corrente de tres;
+//   - e o mesmo "de" pode aparecer duas vezes com destinos diferentes, quando
+//     um recado mais novo corrige o que o anterior tinha dito (o "shmei" foi
+//     para shemêh no primeiro e para shemê no segundo). Nesse caso vale o
+//     ULTIMO — e por isso o nome dos arquivos importa, e eles se chamam -a,
+//     -b, -c: em ordem alfabetica tem que sair a ordem em que ele decidiu.
+// No fim, o que vale e o destino que nunca e origem de outra seta. Tem que ser
+// um so: a mesma palavra escrita de dois jeitos e exatamente o que ele mandou
+// nao existir.
+const setas = new Map();   // tipo|heb -> Map(de -> para), o ultimo manda
+for (const r of recados) {
+  const t = readFileSync(`revisoes/${r}`, 'utf8');
+  for (const b of t.split(/\n(?=tradução do verso —|tradução da palavra —|transliteração —)/)) {
+    const m = b.match(/^(tradução do verso|tradução da palavra|transliteração) — (.+)\n\s*está: (.*)\n\s*deveria ser: (.*)$/m);
+    if (!m) continue;
+    const k = `${TIPOS[m[1]]}|${semNikud(m[2])}`;
+    if (!setas.has(k)) setas.set(k, new Map());
+    setas.get(k).set(m[3].trim(), m[4].trim());   // recado mais novo sobrescreve
+  }
+}
+console.log(`${recados.length} recado(s) em revisoes/: ${recados.join(', ')}`);
+console.log(`${setas.size} palavras/versos com decisao do Erez\n`);
+
+const finais = new Map(), velhos = new Map(), duplos = [];
+for (const [k, mapa] of setas) {
+  const origens = new Set(mapa.keys());
+  const pontas = [...new Set(mapa.values())].filter(p => !origens.has(p));
+  // maiuscula de comeco de verso nao conta: Yehê e yehê sao a mesma grafia
+  if (new Set(pontas.map(p => p.toLowerCase())).size > 1) duplos.push(`${k}: ${pontas.join(' / ')}`);
+  finais.set(k, pontas);
+  velhos.set(k, [...origens]);
+}
+confere('nenhuma palavra ficou com duas grafias decididas', duplos.length === 0, duplos.join('\n        '));
+
+// ---------- 1 e 2: nos arquivos ----------
+const ARQUIVOS = readdirSync('sync').filter(f => f.endsWith('_sync.json')).sort();
+const sync = Object.fromEntries(ARQUIVOS.map(f => [f, JSON.parse(readFileSync(`sync/${f}`, 'utf8'))]));
+
+const sobrou = [], faltou = [];
+const vistos = new Set();
+for (const f of ARQUIVOS) for (const v of sync[f].versos) {
+  const kv = `trad|${semNikud(v.hebrew)}`;
+  if (finais.has(kv)) {
+    vistos.add(kv);
+    if (velhos.get(kv).includes(v.translation_pt)) sobrou.push(`${f} §${v.n}: "${v.translation_pt}"`);
+    if (!finais.get(kv).includes(v.translation_pt))
+      faltou.push(`${f} §${v.n} verso: e "${v.translation_pt}", devia ser "${finais.get(kv).join(' / ')}"`);
+  }
+  for (const p of v.palavras) {
+    for (const [tipo, campo] of [['glosa', 'glosa_pt'], ['tl', 'transliteration_pt']]) {
+      const k = `${tipo}|${semNikud(p.hebrew)}`;
+      if (!finais.has(k)) continue;
+      vistos.add(k);
+      if (velhos.get(k).includes(p[campo])) sobrou.push(`${f} §${v.n} ${p.hebrew}: "${p[campo]}"`);
+      // maiuscula de comeco de verso e legitima: comparo sem ela
+      if (!finais.get(k).some(x => x.toLowerCase() === p[campo].toLowerCase()))
+        faltou.push(`${f} §${v.n} ${p.hebrew}: e "${p[campo]}", devia ser "${finais.get(k).join(' / ')}"`);
+    }
+  }
+}
+confere('nenhum texto antigo sobrou nos sync/*.json', sobrou.length === 0, sobrou.slice(0, 6).join('\n        '));
+confere('o texto decidido pelo Erez esta la', faltou.length === 0, faltou.slice(0, 6).join('\n        '));
+
+const orfaos = [...finais.keys()].filter(k => !vistos.has(k));
+confere('toda decisao dele tem onde valer', orfaos.length === 0, orfaos.join(', '));
+
+// o glossario nao pode discordar, senao o aplicar-glossario.mjs desfaz tudo
+const gloss = JSON.parse(readFileSync('glossario.json', 'utf8'));
+const discorda = [];
+for (const [chave, e] of Object.entries(gloss.entradas)) {
+  let v = null;
+  for (const f of ARQUIVOS) { v = sync[f].versos.find(x => semNikud(x.hebrew) === chave); if (v) break; }
+  if (!v) continue;
+  if (e.translation_pt !== v.translation_pt) discorda.push(`${chave.slice(0, 18)}: traducao`);
+  if (e.transliteration_pt !== v.transliteration_pt) discorda.push(`${chave.slice(0, 18)}: transliteracao`);
+}
+confere('o glossario concorda com os sync (senao seria desfeito na proxima rodada)',
+  discorda.length === 0, discorda.slice(0, 6).join('\n        '));
+
+// ---------- 3: os 8 na tela, em portugues ----------
+const CHROMIUM = process.env.CHROMIUM;
+const { chromium } = await import('playwright').then(m => m.default || m);
+const nav = await chromium.launch(CHROMIUM ? { executablePath: CHROMIUM } : {});
+
+for (const n of ['ashkenaz', 'chabad', 'sefard', 'sefaradi'])
+  for (const t of ['yatom', 'derabanan']) {
+    const pag = await nav.newPage({ viewport: { width: 900, height: 1000 } });
+    const erros = [];
+    pag.on('pageerror', e => erros.push(e.message));
+    await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}&lang=pt`);
+    await pag.waitForTimeout(2600);
+    const r = await pag.evaluate(() => ({
+      lang: typeof state !== 'undefined' ? state.lang : '?',
+      // SO o Kadish. Os quadros de explicacao citam "yehei shmei raba" de
+      // proposito, e nao sao texto de reza — nao entram nesta conferencia.
+      versos: [...document.querySelectorAll('.verse')].map(e => e.innerText),
+    }));
+    const d = sync[`${n}_${t}_sync.json`];
+    // Cada .verse mostra tres linhas: hebraico, transliteracao, e as glosas
+    // das palavras juntadas. A traducao do VERSO inteiro nao esta ali — ela e
+    // conferida nos arquivos, mais acima. Aqui cobro o que a tela mostra.
+    const erradas = [];
+    d.versos.forEach((v, i) => {
+      const linhas = (r.versos[i] || '').split('\n');
+      const tl = v.palavras.map(p => p.transliteration_pt).join(' ');
+      const gl = v.palavras.map(p => p.glosa_pt).join(' ');
+      if (!linhas.includes(tl)) erradas.push(`§${v.n} transliteracao: tela "${linhas[1]}" x arquivo "${tl}"`);
+      if (!linhas.includes(gl)) erradas.push(`§${v.n} glosas: tela "${linhas[2]}" x arquivo "${gl}"`);
+    });
+    const ok = r.lang === 'pt' && r.versos.length === d.versos.length &&
+               erradas.length === 0 && erros.length === 0;
+    confere(`${(n + '_' + t).padEnd(20)} ${String(r.versos.length).padStart(2)}v em portugues`, ok,
+      [r.lang !== 'pt' ? `lingua saiu ${r.lang}` : '',
+       r.versos.length !== d.versos.length ? `${r.versos.length} versos na tela, ${d.versos.length} no arquivo` : '',
+       ...erradas.slice(0, 2),
+       erros[0] || ''].filter(Boolean).join('; '));
+    await pag.close();
+  }
+await nav.close();
+
+console.log(problemas ? `\n${problemas} problema(s) no portugues` : '\nVERDE: o portugues do Erez esta nos 8, na tela e no arquivo');
+process.exit(problemas ? 1 : 0);

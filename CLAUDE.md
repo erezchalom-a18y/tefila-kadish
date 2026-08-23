@@ -15,9 +15,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-treino.mjs  → Modo Treino e repetição, verso a verso.
 - node testar-revisar.mjs → a página de revisão das línguas (revisar.html).
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
+- node testar-portugues.mjs → o português que o Erez decidiu, nos 8, na tela e
+  no arquivo. Não tem lista escrita à mão: lê os recados dele em revisoes/pt-*.txt.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As oito rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As nove rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -243,6 +245,16 @@ glossário, e PROVA antes de gravar que nenhum tempo, nenhum hebraico, nenhuma
 âncora e nenhuma das outras 7 línguas mudou. O recado fica commitado em
 revisoes/ como registro. O que ele precisa decidir antes de entrar fica em
 revisoes/<arquivo>-adiados.json, com o motivo escrito.
+
+Os recados se chamam pt-<data>-a.txt, -b, -c… A LETRA IMPORTA: um recado pode
+desdizer o anterior (o "emenaa → emenada → emanada" levou três rodadas), e o
+testar-portugues.mjs lê os arquivos em ordem alfabética para saber qual é a
+última palavra dele. Um recado salvo sem letra vai parar no fim do sort e a
+conta sai errada.
+
+O app aceita ?lang=pt no endereço, e isso manda mais que a língua guardada no
+aparelho. Existe só para poder testar: sem isso, um link não garante a língua.
+Quem reza nunca vê — a língua continua vindo do aparelho.
 
 As 20 palavras sem fonte (vesava, vishua…) ENTRAM na conta, por decisão do Erez
 (21/08): ele mesmo é a fonte humana que faltava. Ali os botões são outros —

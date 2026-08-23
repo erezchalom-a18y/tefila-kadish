@@ -4614,7 +4614,14 @@ function applyFontScale(scale) {
 }
 
 // ---------- Language ----------
-state.lang = localStorage.getItem('tefila_lang') || 'pt';
+// ?lang=pt no endereco manda mais que o que esta guardado no aparelho. Existe
+// para poder TESTAR: sem isso, um link nao garante a lingua, e o Erez abriria
+// os 8 kadishim na lingua que tivesse ficado no aparelho dele. Quem so reza
+// nunca ve isto — a lingua continua vindo do aparelho.
+const langDaURL = new URLSearchParams(location.search).get('lang');
+state.lang = (LANG_META[langDaURL] ? langDaURL : null) ||
+             localStorage.getItem('tefila_lang') || 'pt';
+if (LANG_META[langDaURL]) localStorage.setItem('tefila_lang', langDaURL);
 function rerenderVerseText() {
   document.querySelectorAll('.verse').forEach((verseEl, vi) => {
     const v = verses[vi];

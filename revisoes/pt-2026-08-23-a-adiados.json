@@ -1,0 +1,56 @@
+{
+  "_leia": "Correcoes do recado que ficaram esperando decisao do Erez. Ele respondeu todas em 23/08, e as respostas entraram por revisoes/pt-2026-08-23-b.txt. A lista fica vazia de proposito, e o historico fica em 'resolvidos' — quem abrir isto amanha precisa saber que essas 10 nao foram esquecidas.",
+  "adiados": [],
+  "resolvidos": [
+    {
+      "chave": "tl|שמה|shemei",
+      "pergunta": "shemê ou shemêh?",
+      "resposta": "shemê"
+    },
+    {
+      "chave": "tl|שמה|shmei",
+      "pergunta": "shemê ou shemêh?",
+      "resposta": "shemê"
+    },
+    {
+      "chave": "tl|יהא|Yehei",
+      "pergunta": "Yehêh ou yehê?",
+      "resposta": "yehê — e como esta comeca o verso com M grande, ficou Yehê. Ele decidiu a grafia; a maiuscula ja estava la."
+    },
+    {
+      "chave": "tl|יהא|yehei",
+      "pergunta": "Yehêh ou yehê?",
+      "resposta": "yehê"
+    },
+    {
+      "chave": "tl|שמיא|shamaya",
+      "pergunta": "shamayá ou shemayá?",
+      "resposta": "shemayá"
+    },
+    {
+      "chave": "tl|שמיא|shmaya",
+      "pergunta": "shamayá ou shemayá?",
+      "resposta": "shemayá"
+    },
+    {
+      "chave": "tl|כרעותה|chirutei",
+      "pergunta": "chir' utêh tinha espaco no meio",
+      "resposta": "chir'utêh, sem espaco"
+    },
+    {
+      "chave": "trad|ויתרומםויתנשאויתהדר|exaltado, elevado e honrado seja",
+      "pergunta": "enalteciso?",
+      "resposta": "elevado, enaltecido e honrado"
+    },
+    {
+      "chave": "trad|יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן|Que venha grande paz do céu, e vida, sobre nós e sobre toda Israel — e dizei amém",
+      "pergunta": "emenaa?",
+      "resposta": "Que haja uma paz abundante emanada dos céus, e vida para nós e para todo o povo de Israel — e digam Amen. Levou tres rodadas: emenaa -> emenada -> emanada. Aplicado por revisoes/pt-2026-08-23-c.txt."
+    },
+    {
+      "chave": "trad|ויצמחפורקנהויקרבמשיחה|e que floresça Sua redenção e aproxime o Seu Mashiach",
+      "pergunta": "a vida ou a vinda do Mashiach?",
+      "resposta": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach"
+    }
+  ]
+}
