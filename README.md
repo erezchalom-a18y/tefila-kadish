@@ -27,6 +27,7 @@ colar dentro do GitHub não funciona.
 |---|---|
 | **[Revisar as traduções](https://erezchalom-a18y.github.io/tefila-kadish/revisar.html)** | conferir as línguas que você sabe, verso a verso |
 | [Kadishim ditos](https://erezchalom-a18y.github.io/tefila-kadish/contador.html) | o contador |
+| **[Sincronia — ver a voz](https://erezchalom-a18y.github.io/tefila-kadish/sincronia.html)** | ver a voz do rabino desenhada com as palavras em cima, entender por que uma está fora do lugar, e arrastar |
 | [Conferidor de sincronia](https://erezchalom-a18y.github.io/tefila-kadish/conferidor.html) | ouvir verso a verso e achar o segundo exato |
 | [Roteiro de testes](https://erezchalom-a18y.github.io/tefila-kadish/testes.html) | os 9 testes que uma pessoa precisa fazer |
 
@@ -39,6 +40,7 @@ engine.html              o app
 index.html               abre direto no Kadish
 revisar.html             revisão das línguas (só lê)
 contador.html            os Kadishim ditos (só deste aparelho)
+sincronia.html           ver a voz desenhada e arrastar a palavra (só lê)
 conferidor.html          ouvir e conferir a sincronia
 aprender.html            página de conteúdo (aprender.json)
 

@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sincronia — ver a voz · Kadish</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+  :root{--fundo:#f4ede0;--cartao:#fbf7ef;--linha:#ddd3c0;--txt:#2a1f15;--fraco:#6b6153;
+        --brass:#8b6a3e;--ok:#2f6b3a;--erro:#8a3a1a;--voz:#cfe0cf}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:17px/1.5 Georgia,"Times New Roman",serif;padding-bottom:110px}
+  header{padding:10px 14px;border-bottom:1px solid var(--linha);position:sticky;top:0;
+         background:var(--fundo);z-index:10}
+  .topo{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  a.voltar{color:var(--brass);text-decoration:none;white-space:nowrap;font-size:16px}
+  h1{font-size:18px;margin:0;font-weight:600}
+  select,button{font:inherit;font-size:16px;border:1px solid var(--linha);border-radius:9px;
+       background:var(--cartao);color:var(--txt);min-height:40px;padding:7px 11px}
+  button{cursor:pointer}
+  button.forte{background:var(--brass);color:#fff;border-color:var(--brass)}
+  button:disabled{opacity:.4}
+  main{padding:14px}
+  .nota{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+        padding:13px 15px;margin-bottom:14px;font-size:15px;color:var(--fraco)}
+  .verso{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+         padding:13px 15px;margin-bottom:16px}
+  .cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+       font-size:13px;color:var(--fraco);margin-bottom:6px}
+  .heb{font-size:24px;direction:rtl;text-align:right;line-height:1.7;margin-bottom:4px}
+  .heb .w{padding:1px 3px;border-radius:5px;cursor:pointer}
+  .heb .w.mal{background:#f6ddd0}
+  .heb .w.sel{background:var(--brass);color:#fff}
+  .tl{font-size:14px;color:var(--fraco);margin-bottom:9px;word-spacing:3px}
+  .tl .w{padding:1px 3px;border-radius:5px;cursor:pointer}
+  .tl .w.mal{background:#f6ddd0;color:var(--erro)}
+  .tl .w.sel{background:var(--brass);color:#fff}
+  canvas{width:100%;height:132px;display:block;border-radius:9px;background:#fff;
+         border:1px solid var(--linha);touch-action:none}
+  .diag{margin-top:9px;font-size:15px}
+  .diag div{margin:5px 0}
+  .diag b{color:var(--erro)}
+  .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .rodape{position:fixed;left:0;right:0;bottom:0;background:var(--cartao);
+          border-top:1px solid var(--linha);padding:10px 14px;display:flex;gap:9px;
+          align-items:center;justify-content:space-between;flex-wrap:wrap;
+          padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .saida{width:100%;height:300px;font:14px/1.45 ui-monospace,Menlo,monospace;
+         border:1px solid var(--linha);border-radius:10px;padding:11px;background:#fff;
+         color:var(--txt)}
+  .legenda{font-size:13px;color:var(--fraco);margin-top:6px}
+  .legenda i{display:inline-block;width:11px;height:11px;border-radius:3px;
+             background:var(--voz);vertical-align:-1px;margin-right:3px}
+</style>
+</head>
+<body>
+<header>
+  <div class="topo">
+    <a class="voltar" href="./">‹ voltar</a>
+    <h1>Sincronia</h1>
+    <select id="alvo"></select>
+    <button id="soFalta" title="mostrar só os versos com suspeita">só o suspeito: sim</button>
+  </div>
+  <div id="andamento" style="font-size:13px;color:var(--fraco);margin-top:5px"></div>
+</header>
+
+<main id="corpo"><p style="color:var(--fraco)">carregando…</p></main>
+
+<div class="rodape">
+  <span id="contagem" style="font-size:14px;color:var(--fraco)"></span>
+  <span>
+    <button id="devagar">meia velocidade: não</button>
+    <button id="gerar" class="forte">Gerar o recado</button>
+  </span>
+</div>
+
+<audio id="au" preload="metadata"></audio>
+
+<script>
+/**
+ * sincronia.html — VER a voz do rabino com as palavras em cima.
+ *
+ * O Erez pediu isto em 23/08, com estas palavras: "queria um sistema mais
+ * facil, pois dificil saber o motivo das diferencas de sincronia". O
+ * conferidor toca; esta pagina MOSTRA. O motivo de quase toda diferenca e um
+ * destes tres, e os tres ficam obvios no desenho:
+ *   1. a palavra caiu dentro de um silencio (o rabino nao estava falando ali);
+ *   2. varias palavras foram espremidas num bloco de voz so (ele disse
+ *      coladas, e o corte entre elas foi chute);
+ *   3. a palavra esta perto de um comeco de voz, mas nao em cima dele.
+ *
+ * A pagina SO LE. Nao escreve em sync/*.json, ancoras.json nem cortes.json —
+ * ela monta um recado para o Erez copiar e mandar, e a ancora entra depois,
+ * por script, com prova. A regra 1 continua de pe: ancora e reparo de ouvido
+ * DELE, e o sinal so diz o numero exato.
+ *
+ * O desenho vem pronto de sinal/<alvo>.json (gerar-envelope.py). Decodificar o
+ * audio no navegador seria lento no iPad e gastaria dados a toa.
+ */
+const NUSSACH = { ashkenaz:'Ashkenaz', chabad:'Chabad', sefard:'Sefard', sefaradi:'Sefaradi' };
+const TIPO = { yatom:'Yatom', derabanan: 'Derabanan' };
+const ALVOS = Object.keys(NUSSACH).flatMap(n => Object.keys(TIPO).map(t => `${n}_${t}`));
+
+// Quanto o comeco de uma palavra pode estar longe do comeco de voz mais
+// proximo antes de virar suspeita. Mesmos numeros do sinal.py, de proposito:
+// se a pagina e a medida discordarem, uma das duas esta mentindo.
+const TOLERANCIA = 0.15;
+const SUSPEITO   = 0.30;
+
+const el = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const seg = t => `${t.toFixed(2)}s`;
+
+const au = el('au');
+const alvoSel = el('alvo');
+alvoSel.innerHTML = ALVOS.map(a => {
+  const [n, t] = a.split('_');
+  return `<option value="${a}">${NUSSACH[n]} · ${TIPO[t]}</option>`;
+}).join('');
+alvoSel.value = localStorage.getItem('sinc_alvo') || 'chabad_yatom';
+if (!ALVOS.includes(alvoSel.value)) alvoSel.value = 'chabad_yatom';
+
+let sync = null, desenho = null, mexidas = {}, sel = null;
+let soFalta = localStorage.getItem('sinc_sofalta') !== 'nao';
+let devagar = false;
+
+const chaveMex = () => 'sinc_mex_' + alvoSel.value;
+const lerMex = () => { try { return JSON.parse(localStorage.getItem(chaveMex()) || '{}'); }
+                       catch (e) { return {}; } };
+const gravarMex = () => { try { localStorage.setItem(chaveMex(), JSON.stringify(mexidas)); } catch (e) {} };
+
+// o comeco valendo agora: o que ele arrastou, ou o do arquivo
+const inicio = p => {
+  const m = mexidas[`${p.verso}|${p.i}`];
+  return m === undefined ? p.start : m;
+};
+
+// ---------- ler os dados ----------
+function palavras() {
+  return sync.versos.flatMap(v => (v.palavras || []).map(p => ({
+    verso: v.n, i: p.i, hebrew: p.hebrew,
+    tl: p.transliteration_pt || '', start: p.start, end: p.end,
+  })));
+}
+
+// ---------- o motivo ----------
+// Para cada palavra, a razao em portugues simples de por que ela esta suspeita.
+function diagnosticar() {
+  const ps = palavras();
+  const inicios = desenho.inicios_de_voz;
+  const blocos = desenho.blocos;
+
+  // quantas palavras caem em cada bloco de voz — e o caso "espremidas"
+  const noBloco = blocos.map(() => []);
+  for (const p of ps) {
+    const t = inicio(p);
+    const b = blocos.findIndex(([a, z]) => t >= a && t < z);
+    if (b >= 0) noBloco[b].push(p);
+  }
+
+  for (const p of ps) {
+    const t = inicio(p);
+    let d = Infinity, perto = null;
+    for (const x of inicios) { const dd = Math.abs(x - t); if (dd < d) { d = dd; perto = x; } }
+    p.distancia = d;
+    p.vizinho = perto;
+    p.dentroDeBloco = blocos.some(([a, z]) => t >= a && t < z);
+    const b = blocos.findIndex(([a, z]) => t >= a && t < z);
+    p.juntas = b >= 0 ? noBloco[b] : [];
+
+    // QUEM MANDA E A DISTANCIA, igual ao medir-desvio.py. Se esta pagina
+    // acusar mais coisa que a medida, ela esta mentindo — e foi o que
+    // aconteceu na primeira versao: eu perguntava "caiu num silencio?" ANTES
+    // de olhar a distancia, e uma palavra que comeca 0,1s antes do bloco (o
+    // que e normal, a voz sobe aos poucos) virava suspeita. Deu 48 suspeitas
+    // onde a medida via 6.
+    p.grau = d <= TOLERANCIA ? 0 : d > SUSPEITO ? 2 : 1;
+
+    // O MOTIVO so e escrito para quem ja e suspeito. Ele explica, nao acusa.
+    if (!p.grau) {
+      p.motivo = null;
+    } else if (!p.dentroDeBloco) {
+      p.motivo = 'caiu num <b>silêncio</b> — o rabino não está falando neste ponto. ' +
+        `A voz mais próxima começa aos ${seg(perto)}, ${seg(d)} ${t > perto ? 'antes' : 'depois'}.`;
+    } else if (p.juntas.length > 1) {
+      p.motivo = `<b>${p.juntas.length} palavras no mesmo trecho de voz</b> ` +
+        `(${p.juntas.map(x => x.tl || x.hebrew).join(', ')}). O rabino disse coladas, ` +
+        `e o corte entre elas foi calculado, não ouvido — está ${seg(d)} do começo de voz.`;
+    } else {
+      p.motivo = `começa ${seg(d)} <b>${t > perto ? 'depois' : 'antes'}</b> do começo de voz ` +
+        `mais próximo (${seg(perto)}).`;
+    }
+  }
+  return ps;
+}
+
+// ---------- desenhar ----------
+function pintar(cv, ps, v) {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const L = cv.clientWidth, A = cv.clientHeight;
+  cv.width = L * dpr; cv.height = A * dpr;
+  const c = cv.getContext('2d');
+  c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  c.clearRect(0, 0, L, A);
+
+  const t0 = cv._t0, t1 = cv._t1;
+  const x = t => (t - t0) / (t1 - t0) * L;
+  const passo = desenho.passo, linha = desenho.linha;
+
+  // 1) os trechos em que ele esta falando, ao fundo
+  c.fillStyle = getComputedStyle(document.body).getPropertyValue('--voz') || '#cfe0cf';
+  for (const [a, z] of desenho.blocos) {
+    if (z < t0 || a > t1) continue;
+    c.fillRect(x(a), 16, Math.max(1, x(z) - x(a)), A - 40);
+  }
+
+  // 2) a voz
+  c.strokeStyle = '#7a8a7a'; c.lineWidth = 1; c.beginPath();
+  const i0 = Math.max(0, Math.floor(t0 / passo)), i1 = Math.min(linha.length - 1, Math.ceil(t1 / passo));
+  for (let i = i0; i <= i1; i++) {
+    const px = x(i * passo), py = A - 24 - (linha[i] / 100) * (A - 44);
+    i === i0 ? c.moveTo(px, py) : c.lineTo(px, py);
+  }
+  c.stroke();
+
+  // 3) cada palavra: uma linha no seu comeco, com o nome em cima
+  c.font = '12px Georgia, serif';
+  for (const p of ps) {
+    const t = inicio(p);
+    if (t < t0 || t > t1) continue;
+    const px = x(t);
+    const cor = p.grau === 2 ? '#8a3a1a' : p.grau === 1 ? '#a8781f' : '#2f6b3a';
+    c.strokeStyle = (sel && sel.verso === p.verso && sel.i === p.i) ? '#8b6a3e' : cor;
+    c.lineWidth = (sel && sel.verso === p.verso && sel.i === p.i) ? 3 : 1.5;
+    c.beginPath(); c.moveTo(px, 14); c.lineTo(px, A - 22); c.stroke();
+    c.fillStyle = cor;
+    c.fillText((p.tl || p.hebrew).slice(0, 12), Math.min(px + 3, L - 70), 12);
+    if (mexidas[`${p.verso}|${p.i}`] !== undefined) {   // marca do que ele arrastou
+      c.fillStyle = '#8b6a3e'; c.beginPath(); c.arc(px, A - 18, 4, 0, 7); c.fill();
+    }
+  }
+
+  // 4) regua de segundos
+  c.fillStyle = '#9a9184'; c.font = '11px Georgia, serif';
+  for (let s = Math.ceil(t0); s <= t1; s++) {
+    c.fillRect(x(s), A - 14, 1, 5);
+    if (s % 2 === 0) c.fillText(s + 's', x(s) + 2, A - 3);
+  }
+
+  // 5) a agulha, quando esta tocando
+  if (!au.paused && au.currentTime >= t0 && au.currentTime <= t1) {
+    c.strokeStyle = '#1f6feb'; c.lineWidth = 2;
+    c.beginPath(); c.moveTo(x(au.currentTime), 10); c.lineTo(x(au.currentTime), A - 20); c.stroke();
+  }
+}
+
+function repintarTudo() {
+  for (const cv of document.querySelectorAll('canvas')) pintar(cv, cv._ps, cv._v);
+}
+
+// ---------- montar a tela ----------
+function desenhar_tela() {
+  const ps = diagnosticar();
+  const ruins = ps.filter(p => p.grau > 0);
+  el('andamento').textContent =
+    `${ps.length} palavras · ${ruins.length} para olhar · ` +
+    `${Object.keys(mexidas).length} arrastadas por você`;
+  el('contagem').textContent = Object.keys(mexidas).length
+    ? `${Object.keys(mexidas).length} correção(ões) prontas` : 'nada arrastado ainda';
+
+  const versos = sync.versos
+    .map(v => ({ v, ps: ps.filter(p => p.verso === v.n) }))
+    .filter(x => x.ps.length && (!soFalta || x.ps.some(p => p.grau > 0)));
+
+  if (!versos.length) {
+    el('corpo').innerHTML = `<div class="nota">Nenhum verso suspeito neste Kadish.
+      Toque em <i>só o suspeito</i> para ver todos.</div>`;
+    return;
+  }
+
+  let h = `<div class="nota">
+    O fundo verde é onde o rabino <b>está falando</b>. Cada risco é o começo de
+    uma palavra: <span style="color:#2f6b3a">verde</span> em cima da voz,
+    <span style="color:#a8781f">amarelo</span> um pouco fora,
+    <span style="color:#8a3a1a">vermelho</span> fora.
+    <br><br>Toque numa palavra para ouvir só ela. <b>Arraste o risco</b> para o
+    lugar certo — a página diz o segundo. Nada é gravado aqui: no fim, o botão
+    monta um recado para você me mandar.
+    <div class="legenda"><i></i> o rabino falando</div></div>`;
+
+  for (const { v, ps: pv } of versos) {
+    const mau = pv.filter(p => p.grau > 0);
+    h += `<div class="verso" data-v="${v.n}">
+      <div class="cab"><span>verso ${v.n} · ${seg(v.start)} a ${seg(v.end)}</span>
+        <span>${mau.length ? mau.length + ' para olhar' : 'parece certo'}</span></div>
+      <div class="heb">${pv.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
+        data-v="${p.verso}" data-i="${p.i}">${esc(p.hebrew)}</span>`).join(' ')}</div>
+      <div class="tl">${pv.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
+        data-v="${p.verso}" data-i="${p.i}">${esc(p.tl)}</span>`).join(' ')}</div>
+      <canvas data-v="${v.n}"></canvas>
+      <div class="acoes">
+        <button data-tocar="${v.n}">▶ ouvir o verso</button>
+        <button data-devolver="${v.n}">desfazer o que arrastei</button>
+      </div>
+      <div class="diag" id="diag${v.n}"></div>
+    </div>`;
+  }
+  el('corpo').innerHTML = h;
+
+  for (const cv of document.querySelectorAll('canvas')) {
+    const n = Number(cv.dataset.v);
+    const v = sync.versos.find(x => x.n === n);
+    cv._ps = ps.filter(p => p.verso === n);
+    cv._v = v;
+    const folga = 0.6;
+    cv._t0 = Math.max(0, v.start - folga);
+    cv._t1 = Math.min(desenho.duracao, v.end + folga);
+    pintar(cv, cv._ps, v);
+    escreverDiag(n, cv._ps);
+  }
+}
+
+function escreverDiag(n, pv) {
+  const mau = pv.filter(p => p.grau > 0);
+  el('diag' + n).innerHTML = mau.length
+    ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> — ${p.motivo}
+        ${mexidas[`${p.verso}|${p.i}`] !== undefined
+          ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
+    : '<div style="color:var(--ok)">Todas as palavras caem em cima da voz.</div>';
+}
+
+// ---------- tocar ----------
+let pararEm = null;
+function tocar(t0, t1) {
+  pararEm = t1;
+  au.playbackRate = devagar ? 0.5 : 1;
+  au.currentTime = Math.max(0, t0);
+  au.play().catch(() => {});
+}
+au.addEventListener('timeupdate', () => {
+  if (pararEm !== null && au.currentTime >= pararEm) { au.pause(); pararEm = null; }
+});
+(function agulha() { if (!au.paused) repintarTudo(); requestAnimationFrame(agulha); })();
+
+// ---------- toques e arrasto ----------
+el('corpo').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b && b.dataset.tocar) {
+    const v = sync.versos.find(x => x.n === Number(b.dataset.tocar));
+    return tocar(v.start, v.end + 0.15);
+  }
+  if (b && b.dataset.devolver) {
+    const n = Number(b.dataset.devolver);
+    for (const k of Object.keys(mexidas)) if (k.startsWith(n + '|')) delete mexidas[k];
+    gravarMex(); return desenhar_tela();
+  }
+  const w = e.target.closest('.w');
+  if (w) {
+    sel = { verso: Number(w.dataset.v), i: Number(w.dataset.i) };
+    const p = diagnosticar().find(x => x.verso === sel.verso && x.i === sel.i);
+    document.querySelectorAll('.w.sel').forEach(x => x.classList.remove('sel'));
+    document.querySelectorAll(`.w[data-v="${sel.verso}"][data-i="${sel.i}"]`)
+      .forEach(x => x.classList.add('sel'));
+    repintarTudo();
+    tocar(inicio(p) - 0.05, p.end + 0.1);
+  }
+});
+
+// arrastar o risco de uma palavra
+let arrastando = null;
+function tempoNoX(cv, clientX) {
+  const r = cv.getBoundingClientRect();
+  const f = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+  return cv._t0 + f * (cv._t1 - cv._t0);
+}
+el('corpo').addEventListener('pointerdown', e => {
+  const cv = e.target.closest('canvas'); if (!cv) return;
+  const t = tempoNoX(cv, e.clientX);
+  let melhor = null, dist = Infinity;
+  for (const p of cv._ps) { const d = Math.abs(inicio(p) - t); if (d < dist) { dist = d; melhor = p; } }
+  const porPixel = (cv._t1 - cv._t0) / cv.clientWidth;
+  if (!melhor || dist > porPixel * 22) return;      // longe de qualquer risco: nao arrasta
+  arrastando = { cv, p: melhor };
+  sel = { verso: melhor.verso, i: melhor.i };
+  cv.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
+el('corpo').addEventListener('pointermove', e => {
+  if (!arrastando) return;
+  const { cv, p } = arrastando;
+  let t = tempoNoX(cv, e.clientX);
+  // encosta no comeco de voz mais proximo, se estiver bem perto — o sinal e
+  // que sabe o numero exato; o dedo dele so aponta
+  for (const x of desenho.inicios_de_voz) if (Math.abs(x - t) < 0.06) t = x;
+  mexidas[`${p.verso}|${p.i}`] = Math.round(t * 1000) / 1000;
+  repintarTudo();
+  e.preventDefault();
+});
+el('corpo').addEventListener('pointerup', () => {
+  if (!arrastando) return;
+  const n = arrastando.p.verso;
+  arrastando = null; gravarMex();
+  const ps = diagnosticar();
+  for (const cv of document.querySelectorAll('canvas')) cv._ps = ps.filter(p => p.verso === Number(cv.dataset.v));
+  repintarTudo();
+  escreverDiag(n, ps.filter(p => p.verso === n));
+  el('contagem').textContent = `${Object.keys(mexidas).length} correção(ões) prontas`;
+});
+
+// ---------- botoes ----------
+alvoSel.addEventListener('change', () => { localStorage.setItem('sinc_alvo', alvoSel.value); carregar(); });
+el('soFalta').addEventListener('click', () => {
+  soFalta = !soFalta;
+  localStorage.setItem('sinc_sofalta', soFalta ? 'sim' : 'nao');
+  el('soFalta').textContent = `só o suspeito: ${soFalta ? 'sim' : 'não'}`;
+  desenhar_tela(); scrollTo(0, 0);
+});
+el('devagar').addEventListener('click', () => {
+  devagar = !devagar;
+  el('devagar').textContent = `meia velocidade: ${devagar ? 'sim' : 'não'}`;
+  au.playbackRate = devagar ? 0.5 : 1;
+});
+addEventListener('resize', repintarTudo);
+
+el('gerar').addEventListener('click', () => {
+  const ps = diagnosticar();
+  const feitas = ps.filter(p => mexidas[`${p.verso}|${p.i}`] !== undefined);
+  const [n, t] = alvoSel.value.split('_');
+  const linhas = feitas.map(p =>
+    `verso ${p.verso}, palavra ${p.i} (${p.tl || p.hebrew})\n` +
+    `   estava: ${seg(p.start)}\n   ponha em: ${seg(inicio(p))}`);
+  const recado =
+    `Sincronia — ${NUSSACH[n]} · ${TIPO[t]} (${alvoSel.value})\n` +
+    `${feitas.length} correção(ões) que eu ouvi e arrastei.\n\n` +
+    (linhas.length ? linhas.join('\n\n') + '\n' : 'Nada a mudar.\n');
+  el('corpo').innerHTML =
+    `<div class="nota">Copie tudo abaixo e mande para o Claude. Depois toque em
+      <i>Voltar</i> — nada se perdeu.</div>
+     <textarea class="saida" id="saida" readonly></textarea>
+     <div class="acoes"><button id="copiar">Copiar</button>
+       <button id="continuar">Voltar</button></div>`;
+  el('saida').value = recado;
+  el('copiar').onclick = () => {
+    const x = el('saida'); x.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    if (navigator.clipboard) navigator.clipboard.writeText(x.value).catch(() => {});
+    el('copiar').textContent = 'Copiado ✓';
+  };
+  el('continuar').onclick = () => { desenhar_tela(); scrollTo(0, 0); };
+  scrollTo(0, 0);
+});
+
+// ---------- carregar ----------
+function formato() {
+  const a = document.createElement('audio');
+  return a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+}
+async function carregar() {
+  el('corpo').innerHTML = '<p style="color:var(--fraco)">carregando…</p>';
+  const alvo = alvoSel.value, [n, t] = alvo.split('_');
+  try {
+    const [s, d] = await Promise.all([
+      fetch(`./sync/${alvo}_sync.json`, { cache: 'no-cache' }).then(r => r.json()),
+      fetch(`./sinal/${alvo}.json`, { cache: 'no-cache' }).then(r => r.json()),
+    ]);
+    sync = s; desenho = d; mexidas = lerMex(); sel = null;
+    au.src = `./tefila-audio/${n}/${t}.${formato()}`;
+    el('soFalta').textContent = `só o suspeito: ${soFalta ? 'sim' : 'não'}`;
+    desenhar_tela();
+  } catch (e) {
+    el('corpo').innerHTML = `<div class="nota">Não consegui abrir: ${esc(e.message)}.
+      Se a mensagem fala de <i>sinal/</i>, é porque o desenho da voz ainda não foi
+      gerado — rode <i>python3 gerar-envelope.py</i>.</div>`;
+  }
+}
+carregar();
+if (localStorage.getItem('tefila_theme') === 'claro') document.body.style.background = '#fff';
+</script>
+</body></html>

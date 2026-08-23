@@ -17,9 +17,13 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
 - node testar-portugues.mjs → o português que o Erez decidiu, nos 8, na tela e
   no arquivo. Não tem lista escrita à mão: lê os recados dele em revisoes/pt-*.txt.
+- node testar-sincronia.mjs → a página que mostra a voz (sincronia.html). A
+  checagem que importa ali: a conta da página tem que dar o MESMO número de
+  suspeitas que a medida do sinal. Se ela acusar demais, o Erez arrasta palavra
+  que estava certa e o estrago vai para ancoras.json.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As nove rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As dez rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.
@@ -52,11 +56,24 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 
 ## O fluxo de correção de sincronia (o que funciona)
 
-1. O Erez ouve no conferidor.html e reporta em linguagem natural, idealmente com
-   o segundo: "tushbechata começa aos 51s".
-2. Medir os blocos de voz do trecho (ffmpeg + envelope de energia; ver
-   alinhar-global.py, função blocos_de_voz). O ouvido dele aponta, o sinal decide
-   o número exato.
+Desde 23/08 o passo 1 mudou. Ele disse: "queria um sistema mais fácil, pois
+difícil saber o motivo das diferenças de sincronia". Agora existe o
+**sincronia.html**, que DESENHA a voz do rabino com as palavras em cima. O
+motivo de quase toda diferença é um destes três, e os três ficam visíveis:
+a palavra caiu num silêncio; várias palavras foram espremidas num bloco de voz
+só (ele disse coladas, e o corte entre elas foi calculado); ou a palavra está
+perto de um começo de voz mas não em cima dele. Ele arrasta o risco para o
+lugar, e a página monta o recado — ela não escreve em lugar nenhum.
+
+O desenho vem pronto de sinal/*.json, escrito por gerar-envelope.py. Rodar de
+novo quando um áudio mudar. O limiar de voz ali TEM que ser o mesmo do
+sinal.py: na primeira versão não era, e a página acusou 48 suspeitas num Kadish
+onde a medida via 6 — ele ia arrastar palavra que estava certa.
+
+1. O Erez abre o sincronia.html, vê o motivo, ouve só aquela palavra e arrasta.
+   (Ou, como antes, ouve no conferidor.html e reporta o segundo em texto.)
+2. O arrasto encosta sozinho no começo de voz mais próximo quando está a menos
+   de 0,06s. O dedo dele aponta; o sinal decide o número exato.
 3. Registrar como âncora em ancoras.json ({verso, palavra, inicio, nota}).
 4. Rodar: python3 aplicar-ancoras.py --confirmar
    (alinhar-global.py é citado aqui desde o começo mas NUNCA foi commitado —
