@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `2b7125c`, de 24/08/2026 02:21.
+Gerado por `gerar-status.py` no commit `4f5b09c`, de 24/08/2026 02:41.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -16,7 +16,7 @@ sabe procurar não estão aí.
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
 | ChatGPT (glossário) | 23/08/2026 18:00 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 24/08/2026 01:35 | os 8 áudios contra os sync/*.json |
+| Whisper (áudio) | 24/08/2026 02:22 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
@@ -24,14 +24,14 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
 | Nussach | Palavras em cima da voz | Desvio que o sinal sugere | Mediana do Whisper | Palavras fora da voz | Versos na lista curta | Âncoras |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ashkenaz_yatom | 75/75 (100.0%) | -0.14s | -1.14s | 0 | 2 | 5 |
-| ashkenaz_derabanan | 118/118 (100.0%) | -0.14s | +0.64s | 0 | 2 | 0 |
+| ashkenaz_yatom | 75/75 (100.0%) | -0.14s | +0.84s | 0 | 2 | 5 |
+| ashkenaz_derabanan | 118/118 (100.0%) | -0.14s | -0.74s | 0 | 2 | 0 |
 | chabad_yatom | 79/80 (98.8%) | -0.08s | -1.44s | 1 | 0 | 21 |
-| chabad_derabanan | 121/121 (100.0%) | -0.14s | +0.99s | 0 | 0 | 0 |
-| sefard_yatom | 81/81 (100.0%) | -0.14s | -1.20s | 0 | 3 | 0 |
-| sefard_derabanan | 124/124 (100.0%) | -0.14s | +0.00s | 0 | 3 | 0 |
-| sefaradi_yatom | 91/91 (100.0%) | -0.14s | -0.96s | 0 | 2 | 0 |
-| sefaradi_derabanan | 125/125 (100.0%) | -0.14s | +0.92s | 0 | 0 | 0 |
+| chabad_derabanan | 121/121 (100.0%) | -0.14s | -1.17s | 0 | 0 | 0 |
+| sefard_yatom | 81/81 (100.0%) | -0.14s | +0.90s | 0 | 3 | 0 |
+| sefard_derabanan | 124/124 (100.0%) | -0.14s | -1.50s | 0 | 3 | 0 |
+| sefaradi_yatom | 91/91 (100.0%) | -0.14s | +1.08s | 0 | 2 | 0 |
+| sefaradi_derabanan | 125/125 (100.0%) | -0.14s | -1.02s | 0 | 0 | 0 |
 | **total** | | | | **1** | **12** | **29** |
 
 Como ler cada coluna:
