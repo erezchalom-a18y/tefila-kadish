@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `63aee7f`, de 24/08/2026 15:06.
+Gerado por `gerar-status.py` no commit `ed0c7d8`, de 24/08/2026 17:52.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -15,8 +15,8 @@ sabe procurar não estão aí.
 
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
-| ChatGPT (glossário) | 24/08/2026 14:12 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 24/08/2026 14:12 | os 8 áudios contra os sync/*.json |
+| ChatGPT (glossário) | 24/08/2026 15:08 | as 42 entradas × 8 línguas, às cegas |
+| Whisper (áudio) | 24/08/2026 15:07 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
