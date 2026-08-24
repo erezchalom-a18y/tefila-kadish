@@ -56,15 +56,25 @@ confere('cada desenho cobre o audio inteiro e e leve', ruins.length === 0, ruins
 
 // ---------- a conta, feita por fora ----------
 // Mesma regra do medir-desvio.py: o que vale e a distancia da palavra ate o
-// comeco de voz mais proximo. Nada de silencio, nada de bloco — isso e so
-// explicacao, depois.
+// comeco de voz mais proximo. Nada de silencio — isso e so explicacao, depois.
+//
+// A excecao de 24/08: palavra que comeca com a VOZ JA CORRENDO nao conta. O
+// rabino diz "Yehe sheme" num folego so; o sinal ve um bloco; a segunda comeca
+// no meio dele, e esta certa ali. Antes o alinhador empurrava toda palavra para
+// um comeco de bloco — e era esse empurrao que jogava o Kadish inteiro uma
+// palavra para a frente. Sem a excecao, esta conta acusaria 55 palavras num
+// Kadish que acabou de ficar certo. A mesma excecao esta no sincronia.html
+// (coladaNaDeTras) e no checar-sincronia.mjs.
+const SOBRA = 0.10;   // no fio final do bloco a voz ja e da palavra de tras
 function suspeitas(alvo) {
   const s = sinais[alvo];
   let n = 0;
   for (const v of sync[alvo].versos) for (const p of (v.palavras || [])) {
     let d = Infinity;
     for (const x of s.inicios_de_voz) { const dd = Math.abs(x - p.start); if (dd < d) d = dd; }
-    if (d > TOLERANCIA) n++;
+    if (d <= TOLERANCIA) continue;
+    if (s.blocos.some(([a, z]) => p.start >= a && p.start <= z - SOBRA)) continue;
+    n++;
   }
   return n;
 }
@@ -213,18 +223,33 @@ confere('e nao acusa a palavra que cobre so a propria voz',
   engolir.certa === false, JSON.stringify(engolir));
 
 // A pista que o Erez deu tres vezes: "so da para ouvir o 'ra' do raba".
-// A palavra acaba no MEIO de um bloco de voz — esta partida.
+// O VERSO acaba no MEIO de um bloco de voz — a ultima palavra dele sai cortada.
+//
+// Desde 24/08 isto se mede no fim do VERSO, nao no fim de cada palavra: e o
+// verso que ele toca no app, e as queixas dele sempre foram de verso. Medindo
+// palavra a palavra, todo par que o rabino diz colado ("Yehe sheme", um bloco
+// de voz so) aparecia como partido, porque o fim da primeira cai dentro da voz
+// por construcao. Por isso o teste agora usa um verso de verdade e confere as
+// duas pontas: acusa quando e a ULTIMA palavra do verso, e nao acusa quando e
+// uma do meio.
 const cortar = await pag.evaluate(() => {
   const b = desenho.blocos.find(([a, z]) => z - a > 0.4);
-  const meio = { verso: -1, i: 0, start: b[0], end: (b[0] + b[1]) / 2 };  // acaba no meio
-  const inteira = { verso: -1, i: 1, start: b[0], end: b[1] + 0.05 };     // pega o bloco todo
-  return { meio: !!cortada(meio), inteira: !!cortada(inteira),
-           semVoz: muda({ verso: -1, i: 2, start: b[1] + 0.02, end: b[1] + 0.06 }) };
+  const v = sync.versos.find(x => x.palavras.length > 2);
+  const ultima = v.palavras[v.palavras.length - 1].i;
+  const doMeio = v.palavras[1].i;
+  const fimNoMeio = { verso: v.n, i: ultima, start: b[0], end: (b[0] + b[1]) / 2 };
+  const inteira   = { verso: v.n, i: ultima, start: b[0], end: b[1] + 0.05 };
+  const colada    = { verso: v.n, i: doMeio, start: b[0], end: (b[0] + b[1]) / 2 };
+  return { meio: !!cortada(fimNoMeio), inteira: !!cortada(inteira),
+           colada: !!cortada(colada),
+           semVoz: muda({ verso: v.n, i: ultima, start: b[1] + 0.02, end: b[1] + 0.06 }) };
 });
-confere('acusa a palavra que acaba no meio da voz (o "ra" do raba)',
+confere('acusa o verso que acaba no meio da voz (o "ra" do raba)',
   cortar.meio === true, JSON.stringify(cortar));
-confere('e nao acusa a que pega o bloco inteiro',
+confere('e nao acusa o verso que pega o bloco inteiro',
   cortar.inteira === false, JSON.stringify(cortar));
+confere('e nao acusa palavra do MEIO do verso que acaba dentro da voz (colada)',
+  cortar.colada === false, JSON.stringify(cortar));
 confere('acusa a palavra sem voz nenhuma dentro',
   cortar.semVoz === true, JSON.stringify(cortar));
 

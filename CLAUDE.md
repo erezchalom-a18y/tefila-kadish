@@ -18,8 +18,13 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-portugues.mjs → o português que o Erez decidiu, nos 8, na tela e
   no arquivo. Não tem lista escrita à mão: lê os recados dele em revisoes/pt-*.txt.
 - node checar-sincronia.mjs → a sincronia dos 8 num comando só, sem navegador:
-  fora da voz · partida · muda · engolindo · corrida, e quanto concorda com o
-  que o Whisper ouviu. É o "testar tudo" que o Erez pediu.
+  verso errado · fora da voz · colada · partida · muda · engolindo · corrida, e
+  quanto concorda com o que o Whisper ouviu. É o "testar tudo" que o Erez pediu.
+  A coluna que MAIS importa é a primeira, e ela é de 24/08: **verso errado** =
+  a palavra é ouvida num verso e mostrada noutro. É a queixa dele, na letra
+  dele: "yishtabah continua falado na linha 8 e aparecendi na linha 9". As
+  outras seis só sabem ONDE há voz; essa é a única que sabe QUAL palavra soa.
+  Tem que dar ZERO nos 8. Em 24/08 dava 83.
 - node testar-sincronia.mjs → a página que mostra a voz (sincronia.html). A
   checagem que importa ali: a conta da página tem que dar o MESMO número de
   suspeitas que a medida do sinal. Se ela acusar demais, o Erez arrasta palavra
@@ -113,6 +118,55 @@ quase palavra por palavra) e distribui as palavras por programação dinâmica c
 peso = sílabas (contadas pelo nikud). Testa duas granulações de bloco e fica com
 a de ritmo mais plausível. Âncoras são restrições rígidas. Fronteiras de verso
 derivam das palavras.
+
+## O erro que durou dias, e o conserto (24/08)
+
+O Erez reclamou seis vezes de palavra no verso errado — tushbechata, raba,
+chir'utêh, meshichêh, veyitpaar, veyishtabach, yitbarach — e TODAS as contas
+diziam 100%. Ele estava certo as seis vezes.
+
+**Ritmo não distingue o alinhamento certo do deslocado uma palavra.** Um arquivo
+inteiro escorregado passa em tudo: cada palavra continua caindo num começo de
+voz, continua tendo voz dentro, continua com duração plausível. Nota máxima num
+arquivo errado do começo ao fim.
+
+O que faltava era uma testemunha do CONTEÚDO: quem diz QUAL palavra soa em cada
+segundo. Isso é a transcrição crua do Whisper, agora commitada em whisper/*.json
+pelo workflow da revisão auditiva. Ela não é medida — o número exato continua
+vindo do sinal —, mas é a única coisa que sabe o nome da palavra.
+
+O mecanismo do erro tinha um nome: **palavra colada**. O rabino diz "Yehê shemê"
+num fôlego só e o sinal vê UM bloco. Obrigando cada palavra a começar num começo
+de bloco, o shemê era empurrado para o bloco seguinte e tudo depois dele
+escorregava uma palavra. Agora: quando há bloco próprio, o sinal dá o número;
+quando não há, vale o instante ouvido. Cada um diz o que sabe.
+
+Duas armadilhas apareceram no conserto, e as duas estão escritas no código:
+
+1. **Palpite não empurra testemunha.** O Whisper partiu "almayá" em duas e não
+   a reconheceu. Órfã, ela tomou o começo de voz do "Yitbarêch" — que ele TINHA
+   ouvido — e o empurrou 0,6s para a frente, ficando ela mesma com 0,10s de
+   duração. Órfã agora só ocupa o buraco de tempo entre duas ouvidas. E nenhuma
+   palavra pode acabar com menos de 0,20s: se acabar, é atropelo e não grava.
+2. **As contas de ritmo estavam perguntando a coisa errada.** Enquanto o
+   alinhador empurrava tudo para começos de bloco, elas davam zero — e era esse
+   empurrão o defeito. Corrigido ele, "fora da voz" acusou 71 num Kadish que
+   acabara de ficar certo. Não se afrouxou nada: a pergunta mudou. Começar
+   DENTRO da voz, colada na de trás, é o certo; começar no SILÊNCIO é que é
+   defeito. "partida" passou a olhar o fim do VERSO (é o verso que ele toca no
+   app, e as queixas dele sempre foram de verso). "muda" passou a perguntar se
+   há algum pedaço de voz dentro da palavra, em vez de se o MEIO de um bloco cai
+   dentro dela. As três regras estão escritas igual em três lugares —
+   checar-sincronia.mjs, sincronia.html e testar-sincronia.mjs. Se saírem de
+   sincronia, a página volta a mentir para ele.
+
+O resultado: concordância com o que o Whisper ouviu passou de 38–92% para
+100% (ou 1 palavra a menos) nos 8, e "verso errado" foi de 83 para 0.
+
+**O chabad_yatom também foi realinhado**, mesmo ele tendo dito que estava certo.
+As 21 âncoras dele ficaram no lugar exato — o script prova isso antes de gravar —
+e as 2 palavras que discordavam do ouvido entraram na linha. Se ele quiser
+desfazer, é `git revert` do commit e nada mais se perde.
 
 ## Revisão cega do glossário por ChatGPT
 
@@ -214,6 +268,22 @@ Para as que imprimem, também playwright + Chromium.
 - gerar-escolha-rabino.mjs — ESCOLHA-RABINO.pdf/.html e escolha-rabino-itens.json.
 - aplicar-ancoras.py — põe em sync/*.json as âncoras de ancoras.json e prova que
   nada mais mudou. Substitui o alinhar-global.py, que nunca foi commitado.
+- realinhar-por-conteudo.mjs — o realinhador que casa NOSSA palavra com A
+  PALAVRA OUVIDA (whisper/*.json). É o único que sabe o nome da palavra. Prova,
+  antes de gravar: texto intacto byte a byte, tempos subindo, nenhuma palavra
+  espremida, âncoras valendo, bordas da fala certas, e concordância com o
+  ouvido que não piora. Ensaio por padrão; --confirmar grava.
+    node realinhar-por-conteudo.mjs chabad_derabanan            → ensaio
+    node realinhar-por-conteudo.mjs chabad_derabanan --confirmar → grava
+- realinhar.mjs — o antecessor, por ritmo. Fica como registro: ele zerou as
+  contas e continuou errado. Leia o cabeçalho antes de confiar.
+- casar-ouvidas.mjs — módulo. Casa a nossa lista de palavras com a lista ouvida
+  (Needleman-Wunsch por semelhança do hebraico). O realinhador e o
+  checar-sincronia.mjs usam este mesmo, de propósito: senão medem coisas
+  diferentes e uma diz que a outra está errada.
+- extrair-whisper.mjs — tira do RELATORIO-AUDIO-WHISPER.md os tempos citados.
+  Só serve de reserva: a transcrição crua em whisper/*.json tem todas as
+  palavras, e é ela que vale.
 - aplicar-transliteracoes.mjs — põe a transliteração por língua vinda de
   fontes/transliteracao-por-lingua.json. Casa palavra a palavra (o documento
   divide os versos diferente de nós) e só grava se nenhum tempo, hebraico ou
@@ -350,6 +420,14 @@ uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
   de 20/08, o sinal e o Whisper concordam. O OUVIR-PRIMEIRO.md (v1, 36 suspeitos
   em 28 versos) fica como registro do que foi medido.
 - Levar o ESCOLHA-RABINO.pdf ao rabino (170 itens, 60 páginas).
+- **Responder a revisoes/AUDITORIA-PT-2026-08-24.md** (10 itens). Em 24/08 ele
+  disse: "reparei que algumas das frases dos 8 kadishim em portugues estao com
+  traducao incorreta". Nos 42 versos distintos, o mesmo hebraico tem sempre o
+  mesmo português — o defeito é outro: versos que são o MESMO texto com uma
+  letra a mais ou a menos viraram dois itens na página de revisão, ele corrigiu
+  um e o outro ficou como estava. O caso que muda sentido é o meshichêh
+  ("apresse a vinda de" no chabad, "aproxime o" nos outros 4). Nada foi
+  alterado: só ele decide, e a lista espera o sim ou não dele.
 
 ## Nunca
 

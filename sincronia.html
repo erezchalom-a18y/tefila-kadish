@@ -123,7 +123,7 @@ const SUSPEITO   = 0.30;
 //
 // A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
 // nao forem iguais, e cache, e nao defeito de sincronia.
-const DADOS = '24/08-f';
+const DADOS = '24/08-g';
 
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -264,24 +264,65 @@ function palavras() {
 // Nenhuma das tres entra na conta de "para olhar", que continua sendo a mesma
 // da medida — a pagina nunca pode acusar mais que o sinal. Elas aparecem numa
 // conta propria.
+//
+// O CONSERTO DE 24/08 — as tres perguntavam a coisa errada
+//
+// Enquanto o alinhador empurrava toda palavra para um COMECO de bloco, as tres
+// funcionavam. So que era esse empurrao o defeito: o rabino diz "Yehe sheme"
+// num folego so, o sinal ve UM bloco, e forcar as duas a comecar num comeco de
+// bloco escorregava o Kadish inteiro uma palavra — era por isso que ele ouvia
+// o yishtabach na linha 8 e via na 9.
+//
+// Corrigido o alinhador, palavra colada passou a comecar no MEIO do bloco (que
+// e onde ela soa mesmo), e as tres perguntas viraram armadilha:
+//
+//   CORTADA olhava o fim de CADA PALAVRA. Com duas palavras num bloco so, o fim
+//   da primeira cai dentro da voz por construcao — ela acusava todo par colado.
+//   Mas o que o Erez toca no app e o VERSO, e a queixa dele sempre foi de
+//   verso: "o raba ainda para no meio", "o chirute para no chir'u". Agora ela
+//   olha o fim do VERSO, que e onde o corte se ouve.
+//
+//   MUDA perguntava se o MEIO de algum bloco caia dentro da palavra. Palavra
+//   curta dentro de bloco grande nao contem o meio dele — e era dada como muda
+//   tendo voz do comeco ao fim. Agora ela pergunta: ha algum pedaco de voz
+//   dentro dela?
+//
+//   ENGOLINDO contava como voz o fio de dois centesimos que sobra do bloco da
+//   vizinha colada, e transformava a articulacao silaba-a-silaba do rabino em
+//   "silencio". So conta pedaco de voz de verdade (VOZ_MINIMA).
+//
+// As mesmas tres contas estao no checar-sincronia.mjs, escritas igual. Se
+// sairem de sincronia, a pagina volta a mentir para ele.
 const SILENCIO_GRANDE = 0.35;
 const FOLGA_CORTE = 0.08;      // 2 quadros: nao acusar por um triz
+const VOZ_MINIMA = 0.10;       // menos que isto e fio da vizinha, nao voz dela
+const SOBRA = 0.10;            // no fio final do bloco a voz ja e da de tras
 
-function blocosDentro(p) {
-  return desenho.blocos.filter(([a, z]) => {
-    const meio = (a + z) / 2;
-    return meio >= inicio(p) && meio < fim(p);
-  });
+// os pedacos de voz que caem DENTRO da palavra, recortados nela
+function vozDentro(p) {
+  const a0 = inicio(p), z0 = fim(p);
+  return desenho.blocos
+    .filter(([a, z]) => z > a0 && a < z0)
+    .map(([a, z]) => [Math.max(a, a0), Math.min(z, z0)])
+    .filter(([a, z]) => z - a > 0.01);
 }
+// a palavra comeca com a voz ja correndo? entao esta colada na de tras
+function coladaNaDeTras(p) {
+  const t = inicio(p);
+  return desenho.blocos.some(([a, z]) => t >= a && t <= z - SOBRA);
+}
+// cortada: o fim do VERSO no meio da voz — e o verso que ele toca
 function cortada(p) {
+  const v = sync.versos.find(x => x.n === p.verso);
+  if (!v || v.palavras[v.palavras.length - 1].i !== p.i) return null;
   const f = fim(p);
   return desenho.blocos.find(([a, z]) => f > a + FOLGA_CORTE && f < z - FOLGA_CORTE) || null;
 }
-function muda(p) { return blocosDentro(p).length === 0; }
+function muda(p) { return vozDentro(p).length === 0; }
 function engolindo(p) {
-  const dentro = blocosDentro(p);
-  for (let k = 1; k < dentro.length; k++) {
-    if (dentro[k][0] - dentro[k - 1][1] >= SILENCIO_GRANDE) return dentro[k];
+  const reais = vozDentro(p).filter(([a, z]) => z - a >= VOZ_MINIMA);
+  for (let k = 1; k < reais.length; k++) {
+    if (reais[k][0] - reais[k - 1][1] >= SILENCIO_GRANDE) return reais[k];
   }
   return null;
 }
@@ -319,7 +360,10 @@ function diagnosticar() {
     // de olhar a distancia, e uma palavra que comeca 0,1s antes do bloco (o
     // que e normal, a voz sobe aos poucos) virava suspeita. Deu 48 suspeitas
     // onde a medida via 6.
-    p.grau = d <= TOLERANCIA ? 0 : d > SUSPEITO ? 2 : 1;
+    // Comecar com a voz JA CORRENDO nao e defeito: e o rabino dizendo duas
+    // palavras num folego so. Defeito e comecar no SILENCIO. (24/08)
+    p.colada = coladaNaDeTras(p);
+    p.grau = (d <= TOLERANCIA || p.colada) ? 0 : d > SUSPEITO ? 2 : 1;
 
     // O MOTIVO so e escrito para quem ja e suspeito. Ele explica, nao acusa.
     if (!p.grau) {
@@ -523,9 +567,9 @@ function escreverDiag(n, pv) {
     const nome = `<b>${esc(p.tl || p.hebrew)}</b>${marca ? '' : ''}`;
     const c = cortada(p);
     if (c) return `<div style="color:var(--erro)">${nome} <b>está partida ao meio</b>: ` +
-      `ela acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
-      `Você vai ouvir só um pedaço dela — o resto vai para a palavra seguinte. ` +
-      `O fim dela devia ser ${seg(c[1])}.${marca}</div>`;
+      `o verso acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
+      `Este verso acaba no meio da voz: você vai ouvir só um pedaço dela, e o ` +
+      `resto cai na linha de baixo. O fim do verso devia ser ${seg(c[1])}.${marca}</div>`;
     if (muda(p)) return `<div style="color:var(--erro)">${nome} <b>não tem voz nenhuma</b>: ` +
       `de ${seg(inicio(p))} a ${seg(fim(p))} o rabino não está falando.${marca}</div>`;
     const b = engolindo(p);
