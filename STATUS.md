@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `c911c00`, de 24/08/2026 19:44.
+Gerado por `gerar-status.py` no commit `876e1da`, de 24/08/2026 20:42.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -24,15 +24,15 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
 | Nussach | Palavras em cima da voz | Desvio que o sinal sugere | Mediana do Whisper | Palavras fora da voz | Versos na lista curta | Âncoras |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ashkenaz_yatom | 52/75 (69.3%) | -0.14s | -0.72s | 21 | 2 | 5 |
-| ashkenaz_derabanan | 58/118 (49.2%) | +0.48s | — | 57 | 2 | 0 |
-| chabad_yatom | 59/80 (73.8%) | -0.14s | -1.04s | 19 | 0 | 21 |
-| chabad_derabanan | 94/121 (77.7%) | -0.14s | — | 22 | 0 | 0 |
-| sefard_yatom | 55/81 (67.9%) | -0.14s | — | 25 | 3 | 0 |
-| sefard_derabanan | 96/124 (77.4%) | -0.14s | — | 23 | 3 | 0 |
-| sefaradi_yatom | 53/91 (58.2%) | -0.14s | — | 36 | 2 | 0 |
-| sefaradi_derabanan | 87/125 (69.6%) | -0.14s | — | 33 | 0 | 0 |
-| **total** | | | | **236** | **12** | **29** |
+| ashkenaz_yatom | 59/75 (78.7%) | -0.14s | -0.72s | 12 | 2 | 5 |
+| ashkenaz_derabanan | 90/118 (76.3%) | -0.14s | — | 26 | 2 | 0 |
+| chabad_yatom | 70/80 (87.5%) | -0.04s | -1.04s | 10 | 0 | 21 |
+| chabad_derabanan | 110/121 (90.9%) | -0.14s | — | 9 | 0 | 0 |
+| sefard_yatom | 65/81 (80.2%) | -0.14s | — | 15 | 3 | 0 |
+| sefard_derabanan | 108/124 (87.1%) | -0.14s | — | 13 | 3 | 0 |
+| sefaradi_yatom | 77/91 (84.6%) | -0.14s | — | 14 | 2 | 0 |
+| sefaradi_derabanan | 109/125 (87.2%) | -0.14s | — | 12 | 0 | 0 |
+| **total** | | | | **111** | **12** | **29** |
 
 Como ler cada coluna:
 

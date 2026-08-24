@@ -1,74 +1,74 @@
 {
   "ashkenaz_yatom": {
     "palavras": 75,
-    "em_cima_da_voz": 52,
-    "pct": 69.3,
-    "desvio_global": -0.14,
-    "ganho_do_desvio": 1,
-    "mediana_distancia": 0.0,
-    "palavras_fora": 21
-  },
-  "ashkenaz_derabanan": {
-    "palavras": 118,
-    "em_cima_da_voz": 58,
-    "pct": 49.2,
-    "desvio_global": 0.48,
-    "ganho_do_desvio": 6,
-    "mediana_distancia": 0.22,
-    "palavras_fora": 57
-  },
-  "chabad_yatom": {
-    "palavras": 80,
     "em_cima_da_voz": 59,
-    "pct": 73.8,
+    "pct": 78.7,
     "desvio_global": -0.14,
     "ganho_do_desvio": 0,
     "mediana_distancia": 0.0,
-    "palavras_fora": 19
+    "palavras_fora": 12
+  },
+  "ashkenaz_derabanan": {
+    "palavras": 118,
+    "em_cima_da_voz": 90,
+    "pct": 76.3,
+    "desvio_global": -0.14,
+    "ganho_do_desvio": 1,
+    "mediana_distancia": 0.0,
+    "palavras_fora": 26
+  },
+  "chabad_yatom": {
+    "palavras": 80,
+    "em_cima_da_voz": 70,
+    "pct": 87.5,
+    "desvio_global": -0.04,
+    "ganho_do_desvio": 0,
+    "mediana_distancia": 0.0,
+    "palavras_fora": 10
   },
   "chabad_derabanan": {
     "palavras": 121,
-    "em_cima_da_voz": 94,
-    "pct": 77.7,
+    "em_cima_da_voz": 110,
+    "pct": 90.9,
     "desvio_global": -0.14,
     "ganho_do_desvio": 2,
     "mediana_distancia": 0.0,
-    "palavras_fora": 22
+    "palavras_fora": 9
   },
   "sefard_yatom": {
     "palavras": 81,
-    "em_cima_da_voz": 55,
-    "pct": 67.9,
+    "em_cima_da_voz": 65,
+    "pct": 80.2,
     "desvio_global": -0.14,
     "ganho_do_desvio": 1,
     "mediana_distancia": 0.0,
-    "palavras_fora": 25
+    "palavras_fora": 15
   },
   "sefard_derabanan": {
     "palavras": 124,
-    "em_cima_da_voz": 96,
-    "pct": 77.4,
+    "em_cima_da_voz": 108,
+    "pct": 87.1,
     "desvio_global": -0.14,
-    "ganho_do_desvio": 3,
+    "ganho_do_desvio": 2,
     "mediana_distancia": 0.0,
-    "palavras_fora": 23
+    "palavras_fora": 13
   },
   "sefaradi_yatom": {
     "palavras": 91,
-    "em_cima_da_voz": 53,
-    "pct": 58.2,
+    "em_cima_da_voz": 77,
+    "pct": 84.6,
     "desvio_global": -0.14,
-    "ganho_do_desvio": 1,
+    "ganho_do_desvio": 0,
     "mediana_distancia": 0.0,
-    "palavras_fora": 36
+    "palavras_fora": 14
   },
   "sefaradi_derabanan": {
     "palavras": 125,
-    "em_cima_da_voz": 87,
-    "pct": 69.6,
+    "em_cima_da_voz": 109,
+    "pct": 87.2,
     "desvio_global": -0.14,
     "ganho_do_desvio": 3,
     "mediana_distancia": 0.0,
-    "palavras_fora": 33
+    "palavras_fora": 12
   }
 }
