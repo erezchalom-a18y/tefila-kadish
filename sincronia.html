@@ -123,7 +123,7 @@ const SUSPEITO   = 0.30;
 //
 // A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
 // nao forem iguais, e cache, e nao defeito de sincronia.
-const DADOS = '24/08-b';
+const DADOS = '24/08-c';
 
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -407,15 +407,24 @@ function repintarTudo() {
 }
 
 // ---------- montar a tela ----------
-function desenhar_tela() {
-  const ps = diagnosticar();
+// As contas do cabecalho e do rodape saem do MESMO lugar e sao escritas
+// juntas. Antes o arrasto so mexia no rodape, e o cabecalho ficava para tras:
+// o Erez viu "5 correcoes prontas" embaixo e "0 arrastadas por voce" em cima,
+// no mesmo instante, e leu o defeito do arquivo onde era arrasto dele.
+function atualizarContas(ps) {
   const ruins = ps.filter(p => p.grau > 0);
+  const arrastadas = ps.filter(mexida).length;
   el('andamento').textContent =
     `${ps.length} palavras · ${ruins.length} para olhar · ` +
     `${ps.filter(partida).length} partidas ao meio · ` +
-    `${ps.filter(mexida).length} arrastadas por você · dados ${DADOS}`;
-  el('contagem').textContent = ps.filter(mexida).length
-    ? `${ps.filter(mexida).length} correção(ões) prontas` : 'nada arrastado ainda';
+    `${arrastadas} arrastadas por você · dados ${DADOS}`;
+  el('contagem').textContent = arrastadas
+    ? `${arrastadas} correção(ões) prontas` : 'nada arrastado ainda';
+}
+
+function desenhar_tela() {
+  const ps = diagnosticar();
+  atualizarContas(ps);
 
   // "So o suspeito" esconde o que esta certo E que ele nao mexeu. Verso em que
   // ele mexeu FICA, mesmo tendo ficado bom — senao empurrar o verso o fazia
@@ -584,7 +593,7 @@ el('corpo').addEventListener('pointerup', () => {
   for (const cv of document.querySelectorAll('canvas')) cv._ps = ps.filter(p => p.verso === Number(cv.dataset.v));
   repintarTudo();
   escreverDiag(n, ps.filter(p => p.verso === n));
-  el('contagem').textContent = `${ps.filter(mexida).length} correção(ões) prontas`;
+  atualizarContas(ps);
 });
 
 // ---------- botoes ----------

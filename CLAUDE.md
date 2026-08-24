@@ -17,13 +17,16 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
 - node testar-portugues.mjs → o português que o Erez decidiu, nos 8, na tela e
   no arquivo. Não tem lista escrita à mão: lê os recados dele em revisoes/pt-*.txt.
+- node checar-sincronia.mjs → a sincronia dos 8 num comando só, sem navegador:
+  fora da voz · partida · muda · engolindo · corrida, e quanto concorda com o
+  que o Whisper ouviu. É o "testar tudo" que o Erez pediu.
 - node testar-sincronia.mjs → a página que mostra a voz (sincronia.html). A
   checagem que importa ali: a conta da página tem que dar o MESMO número de
   suspeitas que a medida do sinal. Se ela acusar demais, o Erez arrasta palavra
   que estava certa e o estrago vai para ancoras.json.
 - Nunca dar por concluído sem os dois verdes. Verde ≠ pronto: é "os defeitos
   conhecidos não estão aí".
-- As dez rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
+- As onze rodam sozinhas no GitHub Actions (.github/workflows/checagens.yml) a
   cada push na main e em todo pull request. Qualquer vermelho reprova o
   workflow. Isso não substitui rodar antes de commitar — só impede que um
   vermelho passe despercebido.

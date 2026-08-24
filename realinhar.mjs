@@ -74,7 +74,12 @@ try {
   for (const e of w) ouvido.set(`${e.verso}|${e.hebrew}`, e.ouvido);
 } catch (err) { /* sem transcricao, o script segue so com o sinal */ }
 
-const INI = sinal.blocos.map(b => b[0]);          // comeco de cada bloco de voz
+// So valem os blocos DENTRO da fala. O corte do audio foi conferido de ouvido
+// pelo Erez e esta no cortes.json; o arquivo declara fala_inicio e fala_fim.
+// No sefaradi_yatom ha um bloco aos 0.16s — uma respiracao antes de comecar —
+// e o realinhador pos a primeira palavra ali. O checar.mjs reprovou, com razao.
+const FALA_INI = sync.fala_inicio ?? 0;
+const INI = sinal.blocos.map(b => b[0]).filter(t => t >= FALA_INI - 0.15);
 // O fim da fala e o que o PROPRIO arquivo declara (fala_fim), nao o fim do
 // ultimo bloco de voz. O checar.mjs cobra isso, e com razao: o corte do audio
 // foi conferido de ouvido pelo Erez e esta no cortes.json. Usar o ultimo bloco
@@ -125,7 +130,11 @@ const duracaoJusta = i => (peso[i] / pesoTotal) * (T1 - T0);
 //   - palavra com silencio grande e depois mais voz esta engolindo a seguinte.
 // Um pedaco de silencio no meio da palavra pode ser legitimo — o rabino
 // respira —, entao a pena e alta mas nao infinita.
-const PENA_MUDA = 6, PENA_ENGOLE = 4;
+const PENA_MUDA = 6, PENA_ENGOLE = 4, PENA_CORRIDA = 5;
+// Abaixo disto a palavra nao cabe no tempo que recebeu. Apareceu o meshichêh
+// com 0,10s e o carív com 0,22s para duas silabas — a conta ficava boa em tudo
+// o mais e a palavra passava correndo na tela.
+const POR_SILABA_MIN = 0.16;
 const PESO_WHISPER = 3, FOLGA_WHISPER = 0.35;
 const SILENCIO_CUSTO = 0.35;
 const estrutural = [];
@@ -174,7 +183,9 @@ for (let i = 1; i < N; i++) {
     for (let k = i - 1; k < j; k++) {
       if (custo[i - 1][k] === INF) continue;
       const dur = INI[j] - INI[k];
-      const c = custo[i - 1][k] + Math.abs(dur - duracaoJusta(i - 1)) + estrutural[k][j] + custoWhisper(i, j);
+      const corrida = (dur / peso[i - 1]) < POR_SILABA_MIN ? PENA_CORRIDA : 0;
+      const c = custo[i - 1][k] + Math.abs(dur - duracaoJusta(i - 1)) + estrutural[k][j]
+              + custoWhisper(i, j) + corrida;
       if (c < melhor) { melhor = c; arg = k; }
     }
     custo[i][j] = melhor; de[i][j] = arg;
@@ -292,6 +303,12 @@ for (const a of ancoras) {
 }
 if (dD.total > dA.total)
   falhas.push(`o realinhamento PIORA (${dA.total} -> ${dD.total} defeitos). Nao gravo.`);
+// as mesmas duas bordas que o checar.mjs cobra
+if (sync.fala_inicio != null && Math.abs(sync.versos[0].start - sync.fala_inicio) > 0.15)
+  falhas.push(`o primeiro verso comeca em ${sync.versos[0].start}, e a fala comeca em ${sync.fala_inicio}`);
+const fimDeclarado = sync.fala_fim ?? sync.audio_duration;
+if (fimDeclarado != null && Math.abs(sync.versos.at(-1).end - fimDeclarado) > 0.15)
+  falhas.push(`o ultimo verso acaba em ${sync.versos.at(-1).end}, e a fala acaba em ${fimDeclarado}`);
 
 if (falhas.length) {
   console.log(`\nPROVAS FALHARAM (${falhas.length}) — nao gravo nada:`);
@@ -310,8 +327,13 @@ console.log('  provas: texto intacto, tempos sobem, todas as ancoras valendo, e 
 //
 // A regra: onde ha 5 ancoras ou mais, o Kadish ja passou pelo ouvido dele, e
 // so entra realinhamento se ele mandar (--mesmo-com-ancoras).
-if (fixo.size >= 5 && !process.argv.includes('--mesmo-com-ancoras')) {
-  console.log(`\nPAREI: este Kadish tem ${fixo.size} ancoras — o Erez ja o conferiu de ouvido.`);
+// Conta as ancoras DELE (ancoras.length), nao as que casaram com um comeco de
+// bloco (fixo.size). O ashkenaz_yatom tem 5 ancoras dele e escapou da trava
+// porque duas nao caem exatamente num comeco de bloco — e o que decide se o
+// Kadish ja passou pelo ouvido dele e quantas ele fez, nao quantas o meu
+// casamento conseguiu aproveitar.
+if (ancoras.length >= 5 && !process.argv.includes('--mesmo-com-ancoras')) {
+  console.log(`\nPAREI: este Kadish tem ${ancoras.length} ancoras — o Erez ja o conferiu de ouvido.`);
   console.log('  Realinhar aqui troca o ouvido dele por conta de programa, inclusive nas');
   console.log('  palavras que ele ouviu e achou certas (essas nao viram ancora).');
   console.log('  Se ele mandar mesmo assim: --mesmo-com-ancoras');

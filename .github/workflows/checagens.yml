@@ -69,5 +69,8 @@ jobs:
       - name: testar-portugues.mjs (o portugues decidido pelo Erez, nos 8)
         run: node testar-portugues.mjs http://127.0.0.1:8896/tefila-kadish
 
+      - name: checar-sincronia.mjs (a sincronia dos 8, sem navegador)
+        run: node checar-sincronia.mjs
+
       - name: testar-sincronia.mjs (a pagina que mostra a voz)
         run: node testar-sincronia.mjs http://127.0.0.1:8896/tefila-kadish
