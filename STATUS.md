@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `7e93e0f`, de 24/08/2026 00:47.
+Gerado por `gerar-status.py` no commit `609ec24`, de 24/08/2026 01:04.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -27,12 +27,12 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 | ashkenaz_yatom | 69/75 (92.0%) | -0.10s | -1.14s | 3 | 2 | 5 |
 | ashkenaz_derabanan | 108/118 (91.5%) | -0.04s | -1.59s | 6 | 2 | 0 |
 | chabad_yatom | 79/80 (98.8%) | -0.08s | -1.44s | 1 | 0 | 21 |
-| chabad_derabanan | 111/121 (91.7%) | -0.10s | +1.75s | 4 | 0 | 1 |
+| chabad_derabanan | 121/121 (100.0%) | -0.14s | +1.75s | 0 | 0 | 0 |
 | sefard_yatom | 69/81 (85.2%) | -0.06s | +0.75s | 7 | 3 | 0 |
 | sefard_derabanan | 112/124 (90.3%) | -0.10s | +0.62s | 5 | 3 | 0 |
 | sefaradi_yatom | 83/91 (91.2%) | -0.12s | -0.66s | 6 | 2 | 0 |
 | sefaradi_derabanan | 116/125 (92.8%) | -0.12s | -0.66s | 4 | 0 | 0 |
-| **total** | | | | **36** | **12** | **29** |
+| **total** | | | | **32** | **12** | **29** |
 
 Como ler cada coluna:
 
