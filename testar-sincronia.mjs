@@ -82,6 +82,30 @@ await pag.goto(`${BASE}/sincronia.html`);
 await pag.waitForTimeout(2500);
 confere('a pagina abre e desenha', await pag.locator('canvas').count() > 0);
 
+// O pedido dos dados leva a marca no endereco. Sem isso o GitHub Pages devolve
+// o JSON de ontem e o Erez fica vendo defeito que ja foi consertado — foi o que
+// aconteceu com o raba: pagina nova, dados velhos.
+const pedidos = [];
+pag.on('request', r => { if (/\/(sync|sinal)\//.test(r.url())) pedidos.push(r.url()); });
+await pag.selectOption('#alvo', 'sefard_yatom');
+await pag.waitForTimeout(1400);
+confere('o pedido dos dados leva a marca, para furar o cache do GitHub',
+  pedidos.length > 0 && pedidos.every(u => /[?&]d=/.test(u)),
+  pedidos.slice(0, 2).join('\n        ') || '(nenhum pedido)');
+confere('e a marca aparece na tela, para dar para comparar',
+  /dados \S+/.test(await pag.textContent('#andamento')), await pag.textContent('#andamento'));
+
+// Marca nova apaga o que ele arrastou: aquilo foi decidido sobre outros numeros.
+await pag.evaluate(() => {
+  localStorage.setItem('sinc_dados', 'marca-de-ontem');
+  localStorage.setItem('sinc_mex_sefard_yatom', JSON.stringify({ '1|0': 99.9 }));
+});
+await pag.reload();
+await pag.waitForTimeout(2200);
+confere('marca nova joga fora o que foi arrastado sobre dados velhos',
+  (await pag.evaluate(() => localStorage.getItem('sinc_mex_sefard_yatom'))) === null,
+  await pag.evaluate(() => localStorage.getItem('sinc_mex_sefard_yatom')));
+
 for (const a of ALVOS) {
   await pag.selectOption('#alvo', a);
   await pag.waitForTimeout(1400);

@@ -66,7 +66,15 @@ perto de um começo de voz mas não em cima dele. Ele arrasta o risco para o
 lugar, e a página monta o recado — ela não escreve em lugar nenhum.
 
 O desenho vem pronto de sinal/*.json, escrito por gerar-envelope.py. Rodar de
-novo quando um áudio mudar. O limiar de voz ali TEM que ser o mesmo do
+novo quando um áudio mudar.
+
+**Ao mexer em sync/ ou em sinal/, mudar a constante DADOS no sincronia.html.**
+Ela vai no endereço pedido (?d=...) e aparece na tela. Sem isso o GitHub Pages
+devolve o JSON de ontem e o Erez continua vendo defeito já consertado — o
+Ctrl+Shift+R do navegador não fura aquele cache. Aconteceu com o raba do
+chabad_derabanan: página nova, dados velhos, e ele reclamando com razão. Marca
+nova também joga fora o que ele tinha arrastado, que foi decidido sobre outros
+números. O limiar de voz ali TEM que ser o mesmo do
 sinal.py: na primeira versão não era, e a página acusou 48 suspeitas num Kadish
 onde a medida via 6 — ele ia arrastar palavra que estava certa.
 

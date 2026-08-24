@@ -112,6 +112,19 @@ const ALVOS = Object.keys(NUSSACH).flatMap(n => Object.keys(TIPO).map(t => `${n}
 const TOLERANCIA = 0.15;
 const SUSPEITO   = 0.30;
 
+// MARCA DOS DADOS. Muda toda vez que eu mexo em sync/ ou em sinal/.
+//
+// Por que existe: o Erez recarregou a pagina e continuou vendo o raba partido.
+// A pagina era a nova — a conta batia com o arquivo novo — mas o JSON era o
+// velho: o GitHub Pages guarda os arquivos num cache que o Ctrl+Shift+R do
+// navegador nao fura. O endereco pedido passa a levar ?d=<marca>, entao um
+// dado novo e um ENDERECO novo, e nem o navegador nem o cache do GitHub tem
+// como devolver o de ontem.
+//
+// A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
+// nao forem iguais, e cache, e nao defeito de sincronia.
+const DADOS = '24/08-a';
+
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const seg = t => `${t.toFixed(2)}s`;
@@ -400,7 +413,7 @@ function desenhar_tela() {
   el('andamento').textContent =
     `${ps.length} palavras · ${ruins.length} para olhar · ` +
     `${ps.filter(partida).length} partidas ao meio · ` +
-    `${ps.filter(mexida).length} arrastadas por você`;
+    `${ps.filter(mexida).length} arrastadas por você · dados ${DADOS}`;
   el('contagem').textContent = ps.filter(mexida).length
     ? `${ps.filter(mexida).length} correção(ões) prontas` : 'nada arrastado ainda';
 
@@ -627,10 +640,17 @@ async function carregar() {
   const alvo = alvoSel.value, [n, t] = alvo.split('_');
   try {
     const [s, d] = await Promise.all([
-      fetch(`./sync/${alvo}_sync.json`, { cache: 'no-cache' }).then(r => r.json()),
-      fetch(`./sinal/${alvo}.json`, { cache: 'no-cache' }).then(r => r.json()),
+      fetch(`./sync/${alvo}_sync.json?d=${DADOS}`, { cache: 'no-cache' }).then(r => r.json()),
+      fetch(`./sinal/${alvo}.json?d=${DADOS}`, { cache: 'no-cache' }).then(r => r.json()),
     ]);
-    sync = s; desenho = d; mexidas = lerMex(); sel = null;
+    sync = s; desenho = d; sel = null;
+    // Dado novo faz o que ele arrastou perder o sentido: aquilo foi decidido
+    // em cima de outros numeros. Apaga tudo, uma vez, quando a marca muda.
+    if (localStorage.getItem('sinc_dados') !== DADOS) {
+      for (const k of Object.keys(localStorage)) if (k.startsWith('sinc_mex_')) localStorage.removeItem(k);
+      localStorage.setItem('sinc_dados', DADOS);
+    }
+    mexidas = lerMex();
     limparVelharia();
     au.src = `./tefila-audio/${n}/${t}.${formato()}`;
     el('soFalta').textContent = `só o suspeito: ${soFalta ? 'sim' : 'não'}`;
