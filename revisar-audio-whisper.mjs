@@ -343,10 +343,32 @@ async function principal() {
     const ouvidas = ENSAIO ? transcricaoDeEnsaio(nossas) : await transcrever(n.audio);
     const r = comparar(n.id, sync, ouvidas);
     console.log(`${nossas.length} palavras nossas, ${ouvidas.length} ouvidas, ${r.achados.length} apontamentos`);
-    resultados.push(r);
+    resultados.push({ ...r, ouvidas });
   }
 
   const suspeitos = suspeitosDoOuvirPrimeiro();
+  // GUARDAR A TRANSCRICAO CRUA. O relatorio so lista as palavras em que o
+  // Whisper discordou de nos por mais de 0,6s — e com isso da para EMPURRAR o
+  // alinhamento, mas nao para faze-lo do zero. Com a transcricao inteira, cada
+  // palavra tem o segundo em que ela soa, e o alinhamento passa a ser decidido
+  // por CONTEUDO. Foi o que faltou nas rodadas de 23 e 24/08, em que o Erez
+  // ouvia palavra no verso errado e as minhas contas diziam 100%.
+  //
+  // Isto NAO altera sync/ nem as ancoras: e so a transcricao guardada.
+  if (!ENSAIO) {
+    fs.mkdirSync('whisper', { recursive: true });
+    for (const r of resultados) {
+      if (!r.ouvidas) continue;
+      fs.writeFileSync(`whisper/${r.nussach}.json`, JSON.stringify({
+        _leia: 'Transcricao crua do Whisper, palavra a palavra com o segundo em que soa. ' +
+          'NAO e medida e NAO decide nada: o Whisper erra em aramaico liturgico. Serve para o ' +
+          'realinhar.mjs saber QUAL palavra soa em cada trecho — que e o que o sinal nao sabe.',
+        modelo: MODELO,
+        palavras: r.ouvidas.map(w => ({ hebrew: w.hebrew, start: +w.start.toFixed(3), end: +w.end.toFixed(3) })),
+      }, null, 1) + '\n');
+    }
+  }
+
   fs.writeFileSync(ARQ_RELATORIO, relatorio(resultados, suspeitos));
 
   const total = resultados.reduce((a, r) => a + r.achados.length, 0);

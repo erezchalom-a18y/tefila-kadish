@@ -123,7 +123,7 @@ const SUSPEITO   = 0.30;
 //
 // A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
 // nao forem iguais, e cache, e nao defeito de sincronia.
-const DADOS = '24/08-e';
+const DADOS = '24/08-f';
 
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -498,9 +498,15 @@ function desenhar_tela() {
     // 1,5s de folga, nao 0,6. Com 0,6 o bloco de voz do tushbechata (52.30)
     // caia fora da janela do verso 13, que comecava aos 53.22 — e o Erez
     // arrastou para o unico bloco que dava para ver.
+    // A janela tem que caber TODAS as palavras do verso, inclusive as que ele
+    // arrastou para longe. Sem isso o risco da palavra saia do desenho e ele
+    // via a palavra escrita SEM MARCADOR — foi o que ele relatou do Yitbarêch:
+    // "aparecendo na linha 9 mas sem a seta de marcacao".
     const folga = 1.5;
-    cv._t0 = Math.max(0, v.start - folga);
-    cv._t1 = Math.min(desenho.duracao, v.end + folga);
+    const inicios = cv._ps.map(inicio);
+    const fins = cv._ps.map(fim);
+    cv._t0 = Math.max(0, Math.min(v.start, ...inicios) - folga);
+    cv._t1 = Math.min(desenho.duracao, Math.max(v.end, ...fins) + folga);
     pintar(cv, cv._ps, v);
     escreverDiag(n, cv._ps);
   }

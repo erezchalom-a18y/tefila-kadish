@@ -9,6 +9,10 @@ on:
     paths:
       - sync/**
       - tefila-audio/**
+      # o proprio script conta: quando ele muda o que guarda (por exemplo,
+      # passou a salvar a transcricao crua em whisper/), a rodada tem que
+      # acontecer para o arquivo novo aparecer
+      - revisar-audio-whisper.mjs
   workflow_dispatch:
 
 concurrency:
