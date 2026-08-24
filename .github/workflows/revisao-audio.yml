@@ -53,17 +53,21 @@ jobs:
           fi
           echo "ok: nenhum dado nosso foi tocado"
 
-      - name: Commitar o relatorio
+      - name: Commitar o relatorio e a transcricao
         run: |
+          # A transcricao crua (whisper/*.json) vem junto desde 24/08. Ela e o
+          # que diz QUAL palavra soa em cada segundo — a unica testemunha do
+          # conteudo. Sem ela o realinhador so sabe ONDE ha voz, e um
+          # alinhamento deslocado uma palavra passa em todas as contas.
           # git diff NAO enxerga arquivo novo (nao rastreado); status --porcelain enxerga.
-          if [ -z "$(git status --porcelain -- RELATORIO-AUDIO-WHISPER.md)" ]; then
-            echo "relatorio sem mudanca; nada a commitar"
+          if [ -z "$(git status --porcelain -- RELATORIO-AUDIO-WHISPER.md whisper/)" ]; then
+            echo "relatorio e transcricao sem mudanca; nada a commitar"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add RELATORIO-AUDIO-WHISPER.md
-          git commit -m "Relatorio da revisao auditiva por Whisper (automatico)"
+          git add RELATORIO-AUDIO-WHISPER.md whisper/
+          git commit -m "Relatorio e transcricao da revisao auditiva por Whisper (automatico)"
           # As duas revisoes podem terminar juntas e empurrar para a main ao mesmo
           # tempo; sem rebase, a segunda leva rejeicao de nao-fast-forward.
           for tentativa in 1 2 3; do
