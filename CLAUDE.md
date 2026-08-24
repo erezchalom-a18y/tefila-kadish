@@ -66,7 +66,9 @@ perto de um começo de voz mas não em cima dele. Ele arrasta o risco para o
 lugar, e a página monta o recado — ela não escreve em lugar nenhum.
 
 O desenho vem pronto de sinal/*.json, escrito por gerar-envelope.py. Rodar de
-novo quando um áudio mudar.
+novo quando um áudio mudar. O limiar de voz ali TEM que ser o mesmo do sinal.py:
+na primeira versão não era, e a página acusou 48 suspeitas num Kadish onde a
+medida via 6 — ele ia arrastar palavra que estava certa.
 
 **Ao mexer em sync/ ou em sinal/, mudar a constante DADOS no sincronia.html.**
 Ela vai no endereço pedido (?d=...) e aparece na tela. Sem isso o GitHub Pages
@@ -74,9 +76,17 @@ devolve o JSON de ontem e o Erez continua vendo defeito já consertado — o
 Ctrl+Shift+R do navegador não fura aquele cache. Aconteceu com o raba do
 chabad_derabanan: página nova, dados velhos, e ele reclamando com razão. Marca
 nova também joga fora o que ele tinha arrastado, que foi decidido sobre outros
-números. O limiar de voz ali TEM que ser o mesmo do
-sinal.py: na primeira versão não era, e a página acusou 48 suspeitas num Kadish
-onde a medida via 6 — ele ia arrastar palavra que estava certa.
+números.
+
+Além dos três motivos acima, a página acusa três coisas que a MEDIDA não vê —
+porque o medir-desvio.py olha o COMEÇO de cada palavra, e nestas o errado é o
+fim: palavra **partida ao meio** (acaba no meio de um bloco de voz; ele ouve só
+um pedaço), palavra **muda** (não há voz nenhuma dentro dela) e palavra
+**engolindo** (dentro dela há silêncio grande e depois mais voz). O Erez achou
+as três de ouvido antes de existir detector: "só dá para ouvir o último A do
+tushbechata", "só dá para ouvir o 'ra' do raba", "o chirute para no chir'u".
+Elas têm conta própria e NÃO entram em "para olhar", que continua sendo a mesma
+da medida — a página nunca pode acusar mais que o sinal.
 
 1. O Erez abre o sincronia.html, vê o motivo, ouve só aquela palavra e arrasta.
    (Ou, como antes, ouve no conferidor.html e reporta o segundo em texto.)
