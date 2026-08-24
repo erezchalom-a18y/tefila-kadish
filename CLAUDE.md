@@ -175,6 +175,30 @@ As 21 âncoras dele ficaram no lugar exato — o script prova isso antes de grav
 e as 2 palavras que discordavam do ouvido entraram na linha. Se ele quiser
 desfazer, é `git revert` do commit e nada mais se perde.
 
+## A fita contínua (24/08) — como o destaque anda no app
+
+O áudio sempre foi UM arquivo, tocado do começo ao fim. O que era por verso era
+a BUSCA do destaque, no engine.html, e ela tinha duas etapas: primeiro "que
+verso o relógio está pisando?", depois "que palavra dentro dele?".
+
+Isso fazia da fronteira do verso uma autoridade separada, que podia discordar
+das palavras. Discordando 0,2s, o destaque passava esse tempo aceso na palavra
+do verso vizinho — a queixa do Erez em pessoa. E quando a segunda etapa não
+achava palavra nenhuma, ela desistia e o destaque CONGELAVA até o verso seguinte.
+
+Ele pediu: "que a sincronia seja contínua". Agora há UMA fita com todas as
+palavras em fila e uma busca só — qual palavra soa neste segundo. **O verso
+deixou de mandar e passou a ser consequência: é o verso daquela palavra.**
+Palavra e linha não podem mais discordar, porque não há mais duas contas.
+
+Isso vale porque as palavras se encostam do começo ao fim (o fim de cada uma é
+o começo da seguinte — o realinhador garante, e há prova disso rodando junto
+com as checagens). Se algum dia deixarem de se encostar, a fita continua
+funcionando: num buraco ela mantém acesa a última palavra, em vez de congelar.
+
+O Modo Treino e a repetição continuam por verso — o que muda é de onde vem o
+número do verso.
+
 ## Revisão cega do glossário por ChatGPT
 
 revisar-glossario-gpt.mjs + .github/workflows/revisao-glossario.yml. É uma

@@ -5320,6 +5320,51 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     const APELIDO = { ashkenazi: 'ashkenaz' };
     let nussach = 'chabad', tipo = 'yatom', dados = null, mapa = null, ouvindo = false;
 
+    // ---------- A FITA CONTINUA (24/08) ----------
+    // O audio sempre foi UM arquivo so, tocado do comeco ao fim. O que era por
+    // verso era a BUSCA do destaque, e em duas etapas:
+    //
+    //     1) que verso o relogio esta pisando?  (v.start <= t < v.end)
+    //     2) que palavra DENTRO desse verso?
+    //
+    // Com isso a fronteira do verso virava uma autoridade separada, que podia
+    // discordar das palavras. Discordando 0,2s, o destaque passava esse tempo
+    // na palavra do verso vizinho — e era exatamente isso que o Erez ouvia:
+    // "yishtabah continua falado na linha 8 e aparecendi na linha 9". Pior: se
+    // a etapa 2 nao achasse palavra nenhuma, ela desistia (return) e o destaque
+    // CONGELAVA ate o verso seguinte.
+    //
+    // Ele pediu para a sincronia ser continua, e tem razao. Agora ha UMA fita
+    // com todas as palavras do Kadish em fila, e a busca e uma so: qual palavra
+    // soa neste segundo. O verso deixa de mandar e passa a ser consequencia —
+    // e o verso daquela palavra. Assim a palavra e a linha NUNCA podem
+    // discordar: nao ha mais duas contas para discordarem.
+    //
+    // As palavras se encostam uma na outra do comeco ao fim do arquivo (o
+    // realinhador garante isso: o fim de cada uma e o comeco da seguinte),
+    // entao todo instante da fala pertence a exatamente uma palavra.
+    let fita = [];
+    function montarFita() {
+      fita = [];
+      if (!dados || !dados.versos) return;
+      dados.versos.forEach((v, k) => (v.palavras || []).forEach((p, wi) =>
+        fita.push({ k, wi, start: p.start, end: p.end })));
+      fita.sort((a, b) => a.start - b.start);
+    }
+    // qual palavra soa agora. Antes da primeira, nenhuma; depois da ultima,
+    // continua a ultima acesa (o rabino ja calou, mas o Amen fica na tela).
+    let dedo = 0;
+    function palavraEm(t) {
+      if (!fita.length || t < fita[0].start) return null;
+      if (t >= fita[fita.length - 1].end) return fita[fita.length - 1];
+      // o relogio quase sempre anda para a frente: comeca a procurar de onde
+      // parou, e so varre tudo quando ele pulou (arrastar, repetir).
+      if (!(dedo >= 0 && dedo < fita.length && t >= fita[dedo].start)) dedo = 0;
+      while (dedo + 1 < fita.length && t >= fita[dedo + 1].start) dedo++;
+      while (dedo > 0 && t < fita[dedo].start) dedo--;
+      return fita[dedo];
+    }
+
     const param = k => new URLSearchParams(location.search).get(k);
     const temState = () => typeof state !== 'undefined' && state;
     const audioEl = () => document.getElementById('audioPlayer');
@@ -5523,9 +5568,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     function acender() {
       if (!dados || !mapa || typeof highlightWord !== 'function') return;
       const t = audioEl().currentTime;
-      const vs = dados.versos;
-      const k = vs.findIndex(v => t >= v.start && t < v.end);
-      if (k === -1) return;
+      // UMA busca so, na fita continua. O verso vem da palavra — nunca o
+      // contrario. Ver "A FITA CONTINUA", la em cima.
+      const agora = palavraEm(t);
+      if (!agora) return;
+      const k = agora.k;
       // Enquanto a volta da repeticao nao chegou, nem acende nem conta verso:
       // acender aqui e o que fazia piscar a palavra do verso seguinte.
       if (rebobinadoAte !== null && t > rebobinadoAte + 0.5 && Date.now() < prazoDaVolta) return;
@@ -5562,8 +5609,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         versoAnterior = k;
       }
 
-      const wi = (vs[k].palavras || []).findIndex(p => t >= p.start && t < p.end);
-      if (wi < 0) return;
+      const wi = agora.wi;
       // roda 60 vezes por segundo: so mexe na tela quando a palavra muda
       if (k === acesoVerso && wi === acesoPalavra) return;
       acesoVerso = k; acesoPalavra = wi;
@@ -5597,6 +5643,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       } catch (e) { dados = null; console.error('sincronia nao carregou:', e); return; }
 
       mapa = trocarTexto(dados);
+      montarFita();                          // a fita continua de palavras
+      dedo = 0;
       acesoVerso = -1; acesoPalavra = -1;   // texto novo: o cache de destaque cai
       // O destaque era movido pelo evento 'timeupdate', que o navegador dispara
       // umas 4 vezes por segundo. Isso deixa o realce ate um quarto de segundo
