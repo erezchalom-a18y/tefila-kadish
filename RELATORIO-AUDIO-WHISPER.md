@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-24 03:47 UTC por `whisper-1`, sobre o commit `23ce65b`.
+Gerado em 2026-08-24 14:12 UTC por `whisper-1`, sobre o commit `1e280a7`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -23,29 +23,29 @@ Trate cada linha como *vale a pena ouvir este trecho*, nunca como *está errado*
 
 | Nussach | Palavras nossas | Palavras ouvidas | Apontamentos |
 | --- | ---: | ---: | ---: |
-| ashkenaz_yatom | 75 | 80 | 20 |
+| ashkenaz_yatom | 75 | 80 | 22 |
 | ashkenaz_derabanan | 118 | 124 | 30 |
 | chabad_yatom | 80 | 80 | 15 |
 | chabad_derabanan | 121 | 124 | 15 |
 | sefard_yatom | 81 | 86 | 25 |
-| sefard_derabanan | 124 | 126 | 9 |
+| sefard_derabanan | 124 | 126 | 8 |
 | sefaradi_yatom | 91 | 92 | 15 |
 | sefaradi_derabanan | 125 | 124 | 19 |
-| **total** | | | **148** |
+| **total** | | | **149** |
 
 Por eixo:
 
-- começa em hora diferente: **3**
-- está no texto, não foi ouvida: **62**
-- foi ouvida, não está no texto: **83**
+- começa em hora diferente: **2**
+- está no texto, não foi ouvida: **63**
+- foi ouvida, não está no texto: **84**
 
 ## Cruzamento com OUVIR-PRIMEIRO.md
 
 A auditoria de sinal de 20/08 listou 36 suspeitos, espalhados por
 28 versos diferentes.
 
-Dos 148 apontamentos do Whisper, **35** caem em versos que já
-estavam naquela lista — cobrindo **12** dos 28 versos suspeitos.
+Dos 149 apontamentos do Whisper, **36** caem em versos que já
+estavam naquela lista — cobrindo **13** dos 28 versos suspeitos.
 
 Onde os dois métodos concordam, a chance de haver defeito real é bem maior:
 comece a ouvir por aqui.
@@ -53,6 +53,7 @@ comece a ouvir por aqui.
 - ashkenaz_derabanan §11
 - ashkenaz_derabanan §16
 - ashkenaz_derabanan §20
+- ashkenaz_yatom §14
 - ashkenaz_yatom §2
 - ashkenaz_yatom §5
 - chabad_derabanan §21
@@ -91,7 +92,7 @@ comece a ouvir por aqui.
 
 - `על` — o Whisper ouviu em 29.219999313354492s, não existe no nosso texto
 - `עָלְמַיָּא` *(almayá)* — no texto em 29.44s, o Whisper não ouviu
-- `מיה` — o Whisper ouviu em 29.65999984741211s, não existe no nosso texto
+- `מיה` — o Whisper ouviu em 29.68000030517578s, não existe no nosso texto
 
 **§10**
 
@@ -101,12 +102,17 @@ comece a ouvir por aqui.
 **§11**
 
 - `לְעֵלָּא` *(leela)* — no texto em 45.06s, o Whisper não ouviu
-- `לאלה` — o Whisper ouviu em 45.18000030517578s, não existe no nosso texto
+- `לאלה` — o Whisper ouviu em 46.31999969482422s, não existe no nosso texto
 
 **§12**
 
-- `תֻּשְׁבְּחָתָא` *(tushbechata)* — nós: 50.56s · ouvido: 51.41999816894531s · diferença +0.86s
+- `תֻּשְׁבְּחָתָא` *(tushbechata)* — no texto em 50.56s, o Whisper não ouviu
+- `תושבכתה` — o Whisper ouviu em 51.41999816894531s, não existe no nosso texto
 - `דה` — o Whisper ouviu em 55.29999923706055s, não existe no nosso texto
+
+**§14** — **já está no OUVIR-PRIMEIRO**
+
+- `וְאִמְרוּ` *(veimrú)* — nós: 82s · ouvido: 81.27999877929688s · diferença -0.72s
 
 ### ashkenaz_derabanan
 
@@ -288,10 +294,6 @@ comece a ouvir por aqui.
 
 - `ורה` — o Whisper ouviu em 5.900000095367432s, não existe no nosso texto
 - `בְרָא` *(verá)* — no texto em 5.94s, o Whisper não ouviu
-
-**§8**
-
-- `יְהֵא` *(Yehê)* — nós: 27.76s · ouvido: 26.5s · diferença -1.26s
 
 **§15**
 
