@@ -1363,7 +1363,7 @@
     {
       "n": 12,
       "start": 56.4,
-      "end": 62.98,
+      "end": 64.98,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
       "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú amên",
       "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
@@ -1474,7 +1474,7 @@
           "hebrew": "וְאִמְרוּ",
           "transliteration_pt": "veimrú",
           "start": 61.84,
-          "end": 62.02,
+          "end": 62.98,
           "glosa_pt": "e digam",
           "glosas": {
             "pt": "e digam",
@@ -1498,8 +1498,8 @@
           "i": 5,
           "hebrew": "אָמֵן",
           "transliteration_pt": "amên",
-          "start": 62.02,
-          "end": 62.98,
+          "start": 62.98,
+          "end": 64.98,
           "glosa_pt": "amên",
           "glosas": {
             "pt": "amên",
@@ -1533,7 +1533,7 @@
     },
     {
       "n": 13,
-      "start": 62.98,
+      "start": 64.98,
       "end": 69.16,
       "hebrew": "עַל יִשְׂרָאֵל וְעַל רַבָּנָן",
       "transliteration_pt": "Al Israel veal rabanan",
@@ -1544,8 +1544,8 @@
           "i": 0,
           "hebrew": "עַל",
           "transliteration_pt": "Al",
-          "start": 62.98,
-          "end": 64.98,
+          "start": 64.98,
+          "end": 65.56,
           "glosa_pt": "sobre",
           "glosas": {
             "pt": "sobre",
@@ -1569,8 +1569,8 @@
           "i": 1,
           "hebrew": "יִשְׂרָאֵל",
           "transliteration_pt": "Israel",
-          "start": 64.98,
-          "end": 66.14,
+          "start": 65.56,
+          "end": 67.12,
           "glosa_pt": "de Israel",
           "glosas": {
             "pt": "de Israel",
@@ -1594,8 +1594,8 @@
           "i": 2,
           "hebrew": "וְעַל",
           "transliteration_pt": "veal",
-          "start": 66.14,
-          "end": 67.12,
+          "start": 67.12,
+          "end": 67.84,
           "glosa_pt": "e para",
           "glosas": {
             "pt": "e para",
@@ -1619,7 +1619,7 @@
           "i": 3,
           "hebrew": "רַבָּנָן",
           "transliteration_pt": "rabanan",
-          "start": 67.12,
+          "start": 67.84,
           "end": 69.16,
           "glosa_pt": "os nossos sábios",
           "glosas": {
@@ -3341,7 +3341,7 @@
           "hebrew": "יִשְׂרָאֵל",
           "transliteration_pt": "Israel",
           "start": 135.56,
-          "end": 136.84,
+          "end": 137.08,
           "glosa_pt": "de Israel",
           "glosas": {
             "pt": "de Israel",
@@ -3365,8 +3365,8 @@
           "i": 8,
           "hebrew": "וְאִמְרוּ",
           "transliteration_pt": "veimrú",
-          "start": 136.84,
-          "end": 137.08,
+          "start": 137.08,
+          "end": 138.24,
           "glosa_pt": "e digam",
           "glosas": {
             "pt": "e digam",
@@ -3390,7 +3390,7 @@
           "i": 9,
           "hebrew": "אָמֵן",
           "transliteration_pt": "amên",
-          "start": 137.08,
+          "start": 138.24,
           "end": 138.78,
           "glosa_pt": "amên",
           "glosas": {

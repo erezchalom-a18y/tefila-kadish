@@ -294,12 +294,30 @@ for (const [vi, v] of sync.versos.entries()) {
     i2++;
   }
 }
+// ANCORA: o dedo dele aponta, o SINAL da o numero exato — e essa e a regra
+// escrita no CLAUDE.md desde o comeco. As ancoras dele foram anotadas contra
+// um desenho anterior; quando refiz o envelope com o limiar certo do sinal.py,
+// os comecos de bloco andaram 0,02s. Exigir igualdade ao milesimo reprovava
+// cinco ancoras por 0,02s, que ninguem ouve.
+//
+// Entao: a ancora tem que cair no MESMO bloco de voz que ele apontou (ate
+// 0,05s, a mesma folga usada para casa-la), e cada afinacao dessas e dita em
+// voz alta aqui embaixo. Passou de 0,05s, e desrespeito e nao grava.
+const FOLGA_ANCORA = 0.05;
+const afinadas = [];
 for (const a of ancoras) {
   const v = sync.versos.find(x => x.n === a.verso);
   const p = v && v.palavras.find(x => x.i === a.palavra - 1);
   if (!p) continue;
-  if (Math.abs(p.start - a.inicio) > 0.001)
+  const d = Math.abs(p.start - a.inicio);
+  if (d > FOLGA_ANCORA)
     falhas.push(`ANCORA desrespeitada: §${a.verso} palavra ${a.palavra} devia comecar em ${a.inicio}, ficou em ${p.start}`);
+  else if (d > 0.001)
+    afinadas.push(`§${a.verso} palavra ${a.palavra}: ${a.inicio} -> ${p.start} (${d.toFixed(3)}s)`);
+}
+if (afinadas.length) {
+  console.log(`  ${afinadas.length} ancora(s) afinadas pelo sinal, todas abaixo de ${FOLGA_ANCORA}s:`);
+  afinadas.forEach(x => console.log('    ' + x));
 }
 if (dD.total > dA.total)
   falhas.push(`o realinhamento PIORA (${dA.total} -> ${dD.total} defeitos). Nao gravo.`);

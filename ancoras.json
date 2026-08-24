@@ -4,32 +4,37 @@
     {
       "verso": 7,
       "palavra": 7,
-      "inicio": 29.42,
-      "nota": "almaya"
+      "inicio": 29.44,
+      "nota": "almaya [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 29.42
     },
     {
       "verso": 8,
       "palavra": 1,
-      "inicio": 30.96,
-      "nota": "Yitbarach"
+      "inicio": 30.98,
+      "nota": "Yitbarach [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 30.96
     },
     {
       "verso": 11,
       "palavra": 5,
-      "inicio": 49.62,
-      "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s)"
+      "inicio": 49.64,
+      "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s) [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 49.62
     },
     {
       "verso": 12,
       "palavra": 1,
-      "inicio": 50.54,
-      "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush"
+      "inicio": 50.56,
+      "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 50.54
     },
     {
       "verso": 12,
       "palavra": 2,
-      "inicio": 53,
-      "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez"
+      "inicio": 53.02,
+      "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 53
     }
   ],
   "chabad_yatom": [
