@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-24 14:12 UTC por `whisper-1`, sobre o commit `1e280a7`.
+Gerado em 2026-08-24 15:07 UTC por `whisper-1`, sobre o commit `63aee7f`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
