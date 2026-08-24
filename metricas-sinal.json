@@ -1,12 +1,12 @@
 {
   "ashkenaz_yatom": {
     "palavras": 75,
-    "em_cima_da_voz": 69,
-    "pct": 92.0,
-    "desvio_global": -0.1,
-    "ganho_do_desvio": 2,
-    "mediana_distancia": 0.02,
-    "palavras_fora": 3
+    "em_cima_da_voz": 75,
+    "pct": 100.0,
+    "desvio_global": -0.14,
+    "ganho_do_desvio": 0,
+    "mediana_distancia": 0.0,
+    "palavras_fora": 0
   },
   "ashkenaz_derabanan": {
     "palavras": 118,
@@ -46,12 +46,12 @@
   },
   "sefard_derabanan": {
     "palavras": 124,
-    "em_cima_da_voz": 112,
-    "pct": 90.3,
-    "desvio_global": -0.1,
-    "ganho_do_desvio": 3,
-    "mediana_distancia": 0.02,
-    "palavras_fora": 5
+    "em_cima_da_voz": 124,
+    "pct": 100.0,
+    "desvio_global": -0.14,
+    "ganho_do_desvio": 0,
+    "mediana_distancia": 0.0,
+    "palavras_fora": 0
   },
   "sefaradi_yatom": {
     "palavras": 91,
