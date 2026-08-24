@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `e0cf4db`, de 24/08/2026 03:03.
+Gerado por `gerar-status.py` no commit `c509bff`, de 24/08/2026 03:06.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -16,7 +16,7 @@ sabe procurar não estão aí.
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
 | ChatGPT (glossário) | 23/08/2026 18:00 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 24/08/2026 02:22 | os 8 áudios contra os sync/*.json |
+| Whisper (áudio) | 24/08/2026 03:05 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
@@ -29,7 +29,7 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 | chabad_yatom | 79/80 (98.8%) | -0.08s | -1.44s | 1 | 0 | 21 |
 | chabad_derabanan | 121/121 (100.0%) | -0.14s | -1.17s | 0 | 0 | 0 |
 | sefard_yatom | 81/81 (100.0%) | -0.14s | +0.90s | 0 | 3 | 0 |
-| sefard_derabanan | 124/124 (100.0%) | -0.14s | -1.50s | 0 | 3 | 0 |
+| sefard_derabanan | 124/124 (100.0%) | -0.14s | -1.48s | 0 | 3 | 0 |
 | sefaradi_yatom | 91/91 (100.0%) | -0.14s | +1.08s | 0 | 2 | 0 |
 | sefaradi_derabanan | 125/125 (100.0%) | -0.14s | -1.02s | 0 | 0 | 0 |
 | **total** | | | | **1** | **12** | **29** |
