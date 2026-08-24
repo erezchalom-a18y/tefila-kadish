@@ -28,12 +28,12 @@
   },
   "chabad_derabanan": {
     "palavras": 121,
-    "em_cima_da_voz": 111,
-    "pct": 91.7,
-    "desvio_global": -0.1,
-    "ganho_do_desvio": 4,
-    "mediana_distancia": 0.02,
-    "palavras_fora": 4
+    "em_cima_da_voz": 121,
+    "pct": 100.0,
+    "desvio_global": -0.14,
+    "ganho_do_desvio": 0,
+    "mediana_distancia": 0.0,
+    "palavras_fora": 0
   },
   "sefard_yatom": {
     "palavras": 81,
