@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-24 01:05 UTC por `whisper-1`, sobre o commit `609ec24`.
+Gerado em 2026-08-24 01:35 UTC por `whisper-1`, sobre o commit `cf8fff6`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -24,18 +24,18 @@ Trate cada linha como *vale a pena ouvir este trecho*, nunca como *está errado*
 | Nussach | Palavras nossas | Palavras ouvidas | Apontamentos |
 | --- | ---: | ---: | ---: |
 | ashkenaz_yatom | 75 | 80 | 36 |
-| ashkenaz_derabanan | 118 | 124 | 89 |
+| ashkenaz_derabanan | 118 | 124 | 35 |
 | chabad_yatom | 80 | 80 | 16 |
 | chabad_derabanan | 121 | 124 | 35 |
-| sefard_yatom | 81 | 86 | 49 |
+| sefard_yatom | 81 | 86 | 43 |
 | sefard_derabanan | 124 | 126 | 38 |
-| sefaradi_yatom | 91 | 92 | 58 |
-| sefaradi_derabanan | 125 | 124 | 56 |
-| **total** | | | **377** |
+| sefaradi_yatom | 91 | 92 | 27 |
+| sefaradi_derabanan | 125 | 124 | 42 |
+| **total** | | | **272** |
 
 Por eixo:
 
-- começa em hora diferente: **232**
+- começa em hora diferente: **127**
 - está no texto, não foi ouvida: **62**
 - foi ouvida, não está no texto: **83**
 
@@ -44,8 +44,8 @@ Por eixo:
 A auditoria de sinal de 20/08 listou 36 suspeitos, espalhados por
 28 versos diferentes.
 
-Dos 377 apontamentos do Whisper, **98** caem em versos que já
-estavam naquela lista — cobrindo **24** dos 28 versos suspeitos.
+Dos 272 apontamentos do Whisper, **64** caem em versos que já
+estavam naquela lista — cobrindo **20** dos 28 versos suspeitos.
 
 Onde os dois métodos concordam, a chance de haver defeito real é bem maior:
 comece a ouvir por aqui.
@@ -53,7 +53,6 @@ comece a ouvir por aqui.
 - ashkenaz_derabanan §11
 - ashkenaz_derabanan §16
 - ashkenaz_derabanan §20
-- ashkenaz_derabanan §5
 - ashkenaz_yatom §13
 - ashkenaz_yatom §14
 - ashkenaz_yatom §2
@@ -63,8 +62,6 @@ comece a ouvir por aqui.
 - sefaradi_derabanan §12
 - sefaradi_derabanan §18
 - sefaradi_derabanan §19
-- sefaradi_yatom §12
-- sefaradi_yatom §8
 - sefard_derabanan §1
 - sefard_derabanan §16
 - sefard_derabanan §17
@@ -73,7 +70,6 @@ comece a ouvir por aqui.
 - sefard_derabanan §24
 - sefard_yatom §12
 - sefard_yatom §14
-- sefard_yatom §6
 
 ## Apontamentos, nussach por nussach
 
@@ -150,31 +146,13 @@ comece a ouvir por aqui.
 **§2**
 
 - `ורה` — o Whisper ouviu em 6.760000228881836s, não existe no nosso texto
-- `דִי` *(di)* — nós: 6.8s · ouvido: 5.940000057220459s · diferença -0.86s
-- `בְרָא` *(verá)* — no texto em 7.07s, o Whisper não ouviu
-
-**§3**
-
-- `וְיַמְלִיךְ` *(veyamlich)* — nós: 10.62s · ouvido: 8.979999542236328s · diferença -1.64s
-- `מַלְכוּתֵהּ` *(malchutêh)* — nós: 12.16s · ouvido: 10.380000114440918s · diferença -1.78s
-
-**§4**
-
-- `בְּחַיֵּיכוֹן` *(bechayechon)* — nós: 13.86s · ouvido: 12.239999771118164s · diferença -1.62s
-- `וּבְיוֹמֵיכוֹן` *(uveyomechon)* — nós: 15.5s · ouvido: 13.640000343322754s · diferença -1.86s
-
-**§5** — **já está no OUVIR-PRIMEIRO**
-
-- `וּבְחַיֵּי` *(uvechayê)* — nós: 16.6s · ouvido: 15.34000015258789s · diferença -1.26s
+- `בְרָא` *(verá)* — no texto em 6.82s, o Whisper não ouviu
 
 **§7**
 
-- `יְהֵא` *(Yehê)* — nós: 25.42s · ouvido: 26.1200008392334s · diferença +0.7s
-- `שְׁמֵהּ` *(shemê)* — nós: 26.18s · ouvido: 27.31999969482422s · diferença +1.14s
-- `רַבָּא` *(raba)* — nós: 27.26s · ouvido: 27.899999618530273s · diferença +0.64s
-- `מְבָרַךְ` *(mevarách)* — nós: 28.28s · ouvido: 28.940000534057617s · diferença +0.66s
+- `מְבָרַךְ` *(mevarách)* — nós: 29.7s · ouvido: 28.940000534057617s · diferença -0.76s
 - `על` — o Whisper ouviu em 33.040000915527344s, não existe no nosso texto
-- `עָלְמַיָּא` *(almayá)* — no texto em 33.38s, o Whisper não ouviu
+- `עָלְמַיָּא` *(almayá)* — no texto em 33.4s, o Whisper não ouviu
 - `מיה` — o Whisper ouviu em 33.619998931884766s, não existe no nosso texto
 
 **§10**
@@ -183,115 +161,61 @@ comece a ouvir por aqui.
 
 **§11** — **já está no OUVIR-PRIMEIRO**
 
-- `לְעֵלָּא` *(leela)* — no texto em 50.78s, o Whisper não ouviu
+- `לְעֵלָּא` *(leela)* — no texto em 50.82s, o Whisper não ouviu
 - `לאלה` — o Whisper ouviu em 50.84000015258789s, não existe no nosso texto
 
 **§12**
 
-- `תֻּשְׁבְּחָתָא` *(tushbechata)* — no texto em 56.38s, o Whisper não ouviu
+- `תֻּשְׁבְּחָתָא` *(tushbechata)* — no texto em 56.4s, o Whisper não ouviu
 - `תושבכתה` — o Whisper ouviu em 56.47999954223633s, não existe no nosso texto
+- `אָמֵן` *(amên)* — nós: 62.02s · ouvido: 62.65999984741211s · diferença +0.64s
 
 **§13**
 
-- `עַל` *(Al)* — nós: 64.96s · ouvido: 63.939998626708984s · diferença -1.02s
-- `וְעַל` *(veal)* — nós: 67.08s · ouvido: 66.37999725341797s · diferença -0.7s
+- `עַל` *(Al)* — nós: 62.98s · ouvido: 63.959999084472656s · diferença +0.98s
 
 **§14**
 
 - `הון` — o Whisper ouviu em 70.5999984741211s, não existe no nosso texto
-- `וְעַל` *(veal)* — nós: 72.46s · ouvido: 70.9800033569336s · diferença -1.48s
-- `כָּל` *(kol)* — nós: 73.16s · ouvido: 72.05999755859375s · diferença -1.1s
-- `תַּלְמִידֵי` *(talmidei)* — nós: 74.32s · ouvido: 73.16000366210938s · diferença -1.16s
 - `הון` — o Whisper ouviu em 75.26000213623047s, não existe no nosso texto
-- `תַלְמִידֵיהוֹן` *(talmidehon)* — nós: 75.84s · ouvido: 74.16000366210938s · diferença -1.68s
 
 **§15**
 
-- `וְעַל` *(veal)* — nós: 76.84s · ouvido: 75.36000061035156s · diferença -1.48s
-- `כָּל` *(kol)* — nós: 77.38s · ouvido: 76.37999725341797s · diferença -1s
 - `באור` — o Whisper ouviu em 79.0199966430664s, não existe no nosso texto
-- `בְּאוֹרַיְתָא` *(beoraytá)* — no texto em 79.34s, o Whisper não ouviu
+- `בְּאוֹרַיְתָא` *(beoraytá)* — no texto em 79.36s, o Whisper não ouviu
 - `איתה` — o Whisper ouviu em 79.77999877929688s, não existe no nosso texto
 
 **§16** — **já está no OUVIR-PRIMEIRO**
 
 - `ועטרה` — o Whisper ouviu em 81.4000015258789s, não existe no nosso texto
+- `בְאַתְרָא` *(veatrá)* — no texto em 81.72s, o Whisper não ouviu
 - `עדן` — o Whisper ouviu em 82.5199966430664s, não existe no nosso texto
-- `בְאַתְרָא` *(veatrá)* — no texto em 82.94s, o Whisper não ouviu
-- `הָדֵין` *(haden)* — no texto em 83.92s, o Whisper não ouviu
-- `וְדִי` *(vedi)* — nós: 84.92s · ouvido: 83.87999725341797s · diferença -1.04s
-- `בְכָל` *(vechol)* — nós: 85.27s · ouvido: 84.4800033569336s · diferença -0.79s
+- `הָדֵין` *(haden)* — no texto em 82.96s, o Whisper não ouviu
+- `אֲתַר` *(atar)* — no texto em 85.28s, o Whisper não ouviu
 - `עטר` — o Whisper ouviu em 85.72000122070312s, não existe no nosso texto
-- `אֲתַר` *(atar)* — no texto em 85.78s, o Whisper não ouviu
 - `ועטר` — o Whisper ouviu em 86.37999725341797s, não existe no nosso texto
-- `וַאֲתַר` *(vaatár)* — no texto em 86.68s, o Whisper não ouviu
+- `וַאֲתַר` *(vaatár)* — no texto em 86.72s, o Whisper não ouviu
 
 **§17**
 
-- `יְהֵא` *(yehê)* — nós: 89.9s · ouvido: 87.62000274658203s · diferença -2.28s
-- `לְהוֹן` *(lehon)* — nós: 90.25s · ouvido: 88.86000061035156s · diferença -1.39s
-- `וּלְכוֹן` *(ulechon)* — nós: 91s · ouvido: 89.44000244140625s · diferença -1.56s
-- `שְׁלָמָא` *(shelamá)* — nós: 91.98s · ouvido: 90.55999755859375s · diferença -1.42s
+- `יְהֵא` *(yehê)* — nós: 88.24s · ouvido: 87.62000274658203s · diferença -0.62s
 - `חינה` — o Whisper ouviu em 92.5199966430664s, não existe no nosso texto
-- `רַבָּא` *(raba)* — nós: 92.98s · ouvido: 91.72000122070312s · diferença -1.26s
 
 **§18**
 
-- `חִנָּא` *(chiná)* — no texto em 94.02s, o Whisper não ouviu
-- `וְחִסְדָּא` *(vechisdá)* — nós: 95.18s · ouvido: 93.5199966430664s · diferença -1.66s
-- `וְרַחֲמִין` *(verachamin)* — nós: 96.68s · ouvido: 95.22000122070312s · diferença -1.46s
-
-**§19**
-
-- `וְחַיִּין` *(vechayin)* — nós: 98s · ouvido: 96.23999786376953s · diferença -1.76s
-- `אֲרִיכִין` *(arichin)* — nós: 99.2s · ouvido: 97.94000244140625s · diferença -1.26s
-- `וּמְזוֹנָא` *(umezona)* — nós: 102s · ouvido: 98.80000305175781s · diferença -3.2s
-- `רְוִיחָא` *(revicha)* — nós: 103.44s · ouvido: 100.19999694824219s · diferença -3.24s
+- `חִנָּא` *(chiná)* — no texto em 93.02s, o Whisper não ouviu
 
 **§20** — **já está no OUVIR-PRIMEIRO**
 
-- `וּפוּרְקָנָא` *(ufurkaná)* — nós: 104.06s · ouvido: 101.5999984741211s · diferença -2.46s
-- `מִן` *(min)* — nós: 105.24s · ouvido: 102.9800033569336s · diferença -2.26s
-- `קֳדָם` *(kodam)* — nós: 105.49s · ouvido: 103.9000015258789s · diferença -1.59s
 - `דווי` — o Whisper ouviu em 106s, não existe no nosso texto
-- `אֲבוּהוֹן` *(avuhon)* — nós: 106.36s · ouvido: 104.68000030517578s · diferença -1.68s
+- `דְּבִשְׁמַיָּא` *(di-vishmayá)* — no texto em 106.4s, o Whisper não ouviu
 - `שמיה` — o Whisper ouviu em 106.83999633789062s, não existe no nosso texto
-- `דְּבִשְׁמַיָּא` *(di-vishmayá)* — no texto em 107.9s, o Whisper não ouviu
+- `וְאַרְעָא` *(vear-á)* — no texto em 107.94s, o Whisper não ouviu
 - `ועראה` — o Whisper ouviu em 108.04000091552734s, não existe no nosso texto
-- `וְאַרְעָא` *(vear-á)* — no texto em 109.34s, o Whisper não ouviu
-- `וְאִמְרוּ` *(veimrú)* — nós: 110.5s · ouvido: 109.44000244140625s · diferença -1.06s
-- `אָמֵן` *(amên)* — nós: 112.18s · ouvido: 110.33999633789062s · diferença -1.84s
-
-**§21**
-
-- `יְהֵא` *(Yehê)* — nós: 113.88s · ouvido: 111.66000366210938s · diferença -2.22s
-- `שְׁלָמָא` *(shelamá)* — nós: 114.82s · ouvido: 113.05999755859375s · diferença -1.76s
-- `רַבָּא` *(raba)* — nós: 116.4s · ouvido: 113.68000030517578s · diferença -2.72s
-- `מִן` *(min)* — nós: 117.05s · ouvido: 114.37999725341797s · diferença -2.67s
-- `שְׁמַיָּא` *(shemayá)* — nós: 117.66s · ouvido: 115.26000213623047s · diferença -2.4s
-- `וְחַיִּים` *(vechayim)* — nós: 118.72s · ouvido: 116.04000091552734s · diferença -2.68s
-- `עָלֵינוּ` *(aleinu)* — nós: 119.88s · ouvido: 117.31999969482422s · diferença -2.56s
-- `וְעַל` *(veal)* — nós: 120.62s · ouvido: 118.44000244140625s · diferença -2.18s
-- `כָּל` *(kol)* — nós: 120.98s · ouvido: 119.37999725341797s · diferença -1.6s
-- `יִשְׂרָאֵל` *(Israel)* — nós: 121.88s · ouvido: 120.72000122070312s · diferença -1.16s
-- `וְאִמְרוּ` *(veimrú)* — nós: 123.3s · ouvido: 121.62000274658203s · diferença -1.68s
-- `אָמֵן` *(amên)* — nós: 124.5s · ouvido: 123.0199966430664s · diferença -1.48s
-
-**§22**
-
-- `עֹשֶׂה` *(Ossê)* — nós: 125.58s · ouvido: 124.26000213623047s · diferença -1.32s
-- `שָׁלוֹם` *(shalom)* — nós: 126.66s · ouvido: 125.66000366210938s · diferença -1s
-- `בִּמְרוֹמָיו` *(bimromav)* — nós: 128.78s · ouvido: 126.19999694824219s · diferença -2.58s
 
 **§23**
 
-- `הוּא` *(hu)* — nós: 129.92s · ouvido: 127.45999908447266s · diferença -2.46s
-- `יַעֲשֶׂה` *(yaassê)* — nós: 130.16s · ouvido: 128.5s · diferença -1.66s
-- `בְרַחֲמָיו` *(verachamav)* — nós: 131.5s · ouvido: 129.60000610351562s · diferença -1.9s
-- `שָׁלוֹם` *(shalom)* — nós: 132.48s · ouvido: 131.0399932861328s · diferença -1.44s
-- `עָלֵינוּ` *(aleinu)* — nós: 133.6s · ouvido: 132.1999969482422s · diferença -1.4s
-- `וְעַל` *(veal)* — nós: 134.88s · ouvido: 133.1999969482422s · diferença -1.68s
-- `כָּל` *(kol)* — nós: 135.52s · ouvido: 134.44000244140625s · diferença -1.08s
+- `אָמֵן` *(amên)* — nós: 137.08s · ouvido: 137.86000061035156s · diferença +0.78s
 
 ### chabad_yatom
 
@@ -410,84 +334,78 @@ comece a ouvir por aqui.
 **§2**
 
 - `דברי` — o Whisper ouviu em 6.400000095367432s, não existe no nosso texto
-- `דִּי` *(di)* — no texto em 6.52s, o Whisper não ouviu
-- `בְרָא` *(verá)* — no texto em 6.92s, o Whisper não ouviu
-- `כִרְעוּתֵהּ` *(chir'utêh)* — no texto em 7.2s, o Whisper não ouviu
+- `דִּי` *(di)* — no texto em 6.56s, o Whisper não ouviu
+- `בְרָא` *(verá)* — no texto em 7.26s, o Whisper não ouviu
 - `חירותי` — o Whisper ouviu em 7.300000190734863s, não existe no nosso texto
-
-**§3**
-
-- `וְיַמְלִיךְ` *(veyamlich)* — nós: 9.84s · ouvido: 8.920000076293945s · diferença -0.92s
-- `מַלְכוּתֵהּ` *(malchutêh)* — nós: 11.34s · ouvido: 9.65999984741211s · diferença -1.68s
-
-**§4**
-
-- `וְיַצְמַח` *(veyatsmách)* — nós: 12.58s · ouvido: 11.479999542236328s · diferença -1.1s
-- `פֻּרְקָנֵהּ` *(purkanêh)* — nós: 14.02s · ouvido: 12.279999732971191s · diferença -1.74s
-- `וִיקָרֵב` *(vikarev)* — nós: 15.14s · ouvido: 14.180000305175781s · diferença -0.96s
-- `מְשִׁיחֵהּ` *(meshichêh)* — nós: 16.94s · ouvido: 14.84000015258789s · diferença -2.1s
-- `בחיי` — o Whisper ouviu em 17.239999771118164s, não existe no nosso texto
-- `חון` — o Whisper ouviu em 17.739999771118164s, não existe no nosso texto
-- `וביום` — o Whisper ouviu em 18.079999923706055s, não existe no nosso texto
+- `כִרְעוּתֵהּ` *(chir'utêh)* — no texto em 7.78s, o Whisper não ouviu
 
 **§5**
 
-- `בְּחַיֵּיכוֹן` *(bechayechon)* — no texto em 18.64s, o Whisper não ouviu
+- `בְּחַיֵּיכוֹן` *(bechayechon)* — no texto em 17.06s, o Whisper não ouviu
+- `בחיי` — o Whisper ouviu em 17.239999771118164s, não existe no nosso texto
+- `חון` — o Whisper ouviu em 17.739999771118164s, não existe no nosso texto
+- `וביום` — o Whisper ouviu em 18.079999923706055s, não existe no nosso texto
+- `וּבְיוֹמֵיכוֹן` *(uveyomechon)* — no texto em 18.66s, o Whisper não ouviu
 - `חון` — o Whisper ouviu em 19.139999389648438s, não existe no nosso texto
-- `וּבְיוֹמֵיכוֹן` *(uveyomechon)* — no texto em 20.26s, o Whisper não ouviu
-
-**§6** — **já está no OUVIR-PRIMEIRO**
-
-- `וּבְחַיֵּי` *(uvechayê)* — nós: 21.24s · ouvido: 20.399999618530273s · diferença -0.84s
-- `דְכָל` *(dechol)* — nós: 21.77s · ouvido: 21.059999465942383s · diferença -0.71s
 
 **§8**
 
-- `יְהֵא` *(Yehê)* — nós: 30.36s · ouvido: 29.260000228881836s · diferença -1.1s
-- `עָלְמַיָּא` *(almayá)* — no texto em 35.31s, o Whisper não ouviu
+- `יְהֵא` *(Yehê)* — nós: 30.38s · ouvido: 29.260000228881836s · diferença -1.12s
+- `שְׁמֵהּ` *(shemê)* — nós: 32.08s · ouvido: 31.020000457763672s · diferença -1.06s
+- `רַבָּא` *(raba)* — nós: 32.74s · ouvido: 31.559999465942383s · diferença -1.18s
+- `מְבָרַךְ` *(mevarách)* — nós: 34.04s · ouvido: 32.599998474121094s · diferença -1.44s
+- `לְעָלַם` *(lealám)* — nós: 34.88s · ouvido: 34.099998474121094s · diferença -0.78s
 - `על` — o Whisper ouviu em 35.560001373291016s, não existe no nosso texto
+- `וּלְעָלְמֵי` *(ul'almei)* — nós: 35.64s · ouvido: 34.68000030517578s · diferença -0.96s
 - `מיה` — o Whisper ouviu em 35.86000061035156s, não existe no nosso texto
+- `עָלְמַיָּא` *(almayá)* — no texto em 36.9s, o Whisper não ouviu
+
+**§9**
+
+- `יִתְבָּרַךְ` *(Yitbarêch)* — nós: 38.14s · ouvido: 37.119998931884766s · diferença -1.02s
+- `וְיִשְׁתַּבַּח` *(veyishtabach)* — nós: 39.62s · ouvido: 37.81999969482422s · diferença -1.8s
+- `וְיִתְפָּאַר` *(veyitpaar)* — nós: 41s · ouvido: 39.779998779296875s · diferença -1.22s
+
+**§10**
+
+- `וְיִתְרוֹמַם` *(veyitromam)* — nós: 42.54s · ouvido: 40.65999984741211s · diferença -1.88s
+- `וְיִתְנַשֵּׂא` *(veyitnasse)* — nós: 44.06s · ouvido: 42.63999938964844s · diferença -1.42s
+- `וְיִתְהַדָּר` *(veyithadar)* — nós: 45.42s · ouvido: 44.13999938964844s · diferença -1.28s
 
 **§11**
 
-- `דְּקֻדְשָׁא` *(decudshá)* — no texto em 49.02s, o Whisper não ouviu
+- `וְיִתְעַלֶּה` *(veyitaleh)* — nós: 46.84s · ouvido: 45.040000915527344s · diferença -1.8s
+- `וְיִתְהַלָּל` *(veyithalal)* — nós: 48s · ouvido: 46.36000061035156s · diferença -1.64s
+- `שְׁמֵהּ` *(shemê)* — nós: 49.04s · ouvido: 47.70000076293945s · diferença -1.34s
 - `דקוצ` — o Whisper ouviu em 49.060001373291016s, não existe no nosso texto
+- `דְּקֻדְשָׁא` *(decudshá)* — no texto em 49.26s, o Whisper não ouviu
 - `ה` — o Whisper ouviu em 49.5s, não existe no nosso texto
 
 **§12** — **já está no OUVIR-PRIMEIRO**
 
-- `לְעֵלָּא` *(leela)* — no texto em 52.38s, o Whisper não ouviu
+- `לְעֵלָּא` *(leela)* — no texto em 52.4s, o Whisper não ouviu
 - `לאלה` — o Whisper ouviu em 52.91999816894531s, não existe no nosso texto
-- `מִן` *(min)* — nós: 52.98s · ouvido: 53.619998931884766s · diferença +0.64s
-- `וְשִׁירָתָא` *(veshiratá)* — nós: 54.9s · ouvido: 55.97999954223633s · diferença +1.08s
 
 **§13**
 
-- `תֻּשְׁבְּחָתָא` *(tushbechata)* — no texto em 56.02s, o Whisper não ouviu
-- `וְנֶחֱמָתָא` *(venechamata)* — no texto em 57.68s, o Whisper não ouviu
+- `תֻּשְׁבְּחָתָא` *(tushbechata)* — no texto em 57.7s, o Whisper não ouviu
 - `תושב` — o Whisper ouviu em 57.70000076293945s, não existe no nosso texto
 - `חתה` — o Whisper ouviu em 58.220001220703125s, não existe no nosso texto
-- `דַּאֲמִירָן` *(dáamiran)* — nós: 59.32s · ouvido: 61.20000076293945s · diferença +1.88s
+- `וְנֶחֱמָתָא` *(venechamata)* — no texto em 59.34s, o Whisper não ouviu
 - `בני` — o Whisper ouviu em 59.459999084472656s, não existe no nosso texto
 - `חמתה` — o Whisper ouviu em 59.7400016784668s, não existe no nosso texto
-- `בְּעָלְמָא` *(bealma)* — nós: 61s · ouvido: 61.86000061035156s · diferença +0.86s
-- `וְאִמְרוּ` *(veimrú)* — nós: 61.92s · ouvido: 63.2400016784668s · diferença +1.32s
-- `אָמֵן` *(amên)* — nós: 63.1s · ouvido: 63.97999954223633s · diferença +0.88s
 
 **§14** — **já está no OUVIR-PRIMEIRO**
 
-- `יְהֵא` *(Yehê)* — nós: 63.51s · ouvido: 64.5999984741211s · diferença +1.09s
-- `שְׁלָמָא` *(shelamá)* — nós: 64.2s · ouvido: 66.45999908447266s · diferença +2.26s
-- `רַבָּא` *(raba)* — nós: 65.64s · ouvido: 67.22000122070312s · diferença +1.58s
-- `מִן` *(min)* — nós: 66.52s · ouvido: 67.95999908447266s · diferença +1.44s
-- `שְׁמַיָּא` *(shemayá)* — nós: 66.79s · ouvido: 69.04000091552734s · diferença +2.25s
-- `וְחַיִּים` *(vechayim)* — nós: 68.46s · ouvido: 70.4000015258789s · diferença +1.94s
-- `טוֹבִים` *(tovim)* — nós: 69.22s · ouvido: 71.05999755859375s · diferença +1.84s
+- `יְהֵא` *(Yehê)* — nós: 65.66s · ouvido: 64.5999984741211s · diferença -1.06s
+
+**§15**
+
+- `בִּמְרוֹמָיו` *(bimromav)* — nós: 80.86s · ouvido: 80.23999786376953s · diferença -0.62s
 
 **§16**
 
-- `הוּא` *(hu)* — nós: 83s · ouvido: 82.30000305175781s · diferença -0.7s
-- `וְעַל` *(veal)* — nós: 88.14s · ouvido: 87.4800033569336s · diferença -0.66s
+- `וְעַל` *(veal)* — nós: 88.16s · ouvido: 87.4800033569336s · diferença -0.68s
 
 ### sefard_derabanan
 
@@ -576,106 +494,57 @@ comece a ouvir por aqui.
 
 ### sefaradi_yatom
 
-**§1**
-
-- `וְיִתְקַדַּשׁ` *(veyitkadash)* — nós: 1.94s · ouvido: 1.159999966621399s · diferença -0.78s
-
 **§2**
 
 - `דברי` — o Whisper ouviu em 6.119999885559082s, não existe no nosso texto
-- `דִּי` *(di)* — no texto em 7.06s, o Whisper não ouviu
-- `בְרָא` *(verá)* — no texto em 7.82s, o Whisper não ouviu
-- `כִרְעוּתֵהּ` *(chir'utêh)* — nós: 8.76s · ouvido: 7.039999961853027s · diferença -1.72s
-
-**§3**
-
-- `וְיַמְלִיךְ` *(veyamlich)* — nós: 9.68s · ouvido: 8.140000343322754s · diferença -1.54s
-- `מַלְכוּתֵהּ` *(malchutêh)* — nós: 11.2s · ouvido: 9.539999961853027s · diferença -1.66s
+- `דִּי` *(di)* — no texto em 6.3s, o Whisper não ouviu
+- `בְרָא` *(verá)* — no texto em 7.08s, o Whisper não ouviu
+- `כִרְעוּתֵהּ` *(chir'utêh)* — nós: 7.82s · ouvido: 7.039999961853027s · diferença -0.78s
 
 **§4**
 
-- `וְיַצְמַח` *(veyatsmách)* — nós: 12.56s · ouvido: 10.760000228881836s · diferença -1.8s
-- `פֻּרְקָנֵהּ` *(purkanêh)* — nós: 13.78s · ouvido: 12.15999984741211s · diferença -1.62s
-- `וִיקָרֵב` *(vikarev)* — nós: 14.9s · ouvido: 13.279999732971191s · diferença -1.62s
 - `בחיי` — o Whisper ouviu em 15.819999694824219s, não existe no nosso texto
-- `מְשִׁיחֵהּ` *(meshichêh)* — nós: 16.52s · ouvido: 14.619999885559082s · diferença -1.9s
-- `חון` — o Whisper ouviu em 17.219999313354492s, não existe no nosso texto
-- `וביום` — o Whisper ouviu em 17.579999923706055s, não existe no nosso texto
 
 **§5**
 
-- `בְּחַיֵּיכוֹן` *(bechayechon)* — no texto em 18s, o Whisper não ouviu
+- `בְּחַיֵּיכוֹן` *(bechayechon)* — no texto em 16.5s, o Whisper não ouviu
+- `חון` — o Whisper ouviu em 17.219999313354492s, não existe no nosso texto
+- `וביום` — o Whisper ouviu em 17.579999923706055s, não existe no nosso texto
+- `וּבְיוֹמֵיכוֹן` *(uveyomechon)* — no texto em 18s, o Whisper não ouviu
 - `חון` — o Whisper ouviu em 18.559999465942383s, não existe no nosso texto
-- `וּבְיוֹמֵיכוֹן` *(uveyomechon)* — no texto em 19.54s, o Whisper não ouviu
-
-**§6**
-
-- `וּבְחַיֵּי` *(uvechayê)* — nós: 20.68s · ouvido: 19.18000030517578s · diferença -1.5s
-- `דְכָל` *(dechol)* — nós: 21.56s · ouvido: 20.360000610351562s · diferença -1.2s
-- `בֵּית` *(beit)* — nós: 22.26s · ouvido: 21.600000381469727s · diferença -0.66s
-
-**§8** — **já está no OUVIR-PRIMEIRO**
-
-- `יְהֵא` *(Yehê)* — nós: 28.62s · ouvido: 30s · diferença +1.38s
-- `שְׁמֵהּ` *(shemê)* — nós: 30.32s · ouvido: 31.18000030517578s · diferença +0.86s
-- `מְבָרַךְ` *(mevarách)* — nós: 32.16s · ouvido: 32.79999923706055s · diferença +0.64s
-- `לְעָלַם` *(lealám)* — nós: 33.08s · ouvido: 34.31999969482422s · diferença +1.24s
-- `וּלְעָלְמֵי` *(ul'almei)* — nós: 34.46s · ouvido: 35.15999984741211s · diferença +0.7s
-- `עָלְמַיָּא` *(almayá)* — nós: 35.46s · ouvido: 36.279998779296875s · diferença +0.82s
-
-**§9**
-
-- `יִתְבָּרַךְ` *(Yitbarêch)* — nós: 36.6s · ouvido: 37.41999816894531s · diferença +0.82s
-- `וְיִשְׁתַּבַּח` *(veyishtabach)* — nós: 37.66s · ouvido: 38.84000015258789s · diferença +1.18s
-- `וְיִתְפָּאַר` *(veyitpaar)* — nós: 39.26s · ouvido: 40.2400016784668s · diferença +0.98s
-
-**§10**
-
-- `וְיִתְרוֹמַם` *(veyitromam)* — nós: 40.62s · ouvido: 41.880001068115234s · diferença +1.26s
-- `וְיִתְנַשֵּׂא` *(veyitnasse)* — nós: 41.1s · ouvido: 43.279998779296875s · diferença +2.18s
-- `וְיִתְהַדָּר` *(veyithadar)* — nós: 42.08s · ouvido: 44.880001068115234s · diferença +2.8s
 
 **§11**
 
-- `וְיִתְעַלֶּה` *(veyitaleh)* — nós: 43.5s · ouvido: 46.279998779296875s · diferença +2.78s
-- `וְיִתְהַלָּל` *(veyithalal)* — nós: 44.86s · ouvido: 47.68000030517578s · diferença +2.82s
-- `שְׁמֵהּ` *(shemê)* — nós: 46.44s · ouvido: 48.959999084472656s · diferença +2.52s
-- `דְּקֻדְשָׁא` *(decudshá)* — no texto em 47.84s, o Whisper não ouviu
-- `בְּרִיךְ` *(berich)* — nós: 49.38s · ouvido: 51.08000183105469s · diferença +1.7s
 - `דקוצה` — o Whisper ouviu em 49.97999954223633s, não existe no nosso texto
-- `הוּא` *(hu)* — nós: 50.28s · ouvido: 51.86000061035156s · diferença +1.58s
-
-**§12** — **já está no OUVIR-PRIMEIRO**
-
-- `לְעֵלָּא` *(leela)* — nós: 50.68s · ouvido: 52.79999923706055s · diferença +2.12s
-- `מִן` *(min)* — nós: 51.5s · ouvido: 54.20000076293945s · diferença +2.7s
-- `כָּל` *(kol)* — nós: 51.88s · ouvido: 54.540000915527344s · diferença +2.66s
-- `בִּרְכָתָא` *(birchatá)* — nós: 54.12s · ouvido: 54.939998626708984s · diferença +0.82s
+- `דְּקֻדְשָׁא` *(decudshá)* — no texto em 50.28s, o Whisper não ouviu
 
 **§13**
 
-- `תֻּשְׁבְּחָתָא` *(tushbechata)* — nós: 59.16s · ouvido: 57.779998779296875s · diferença -1.38s
-- `וְנֶחָמָתָא` *(venechamata)* — nós: 61.12s · ouvido: 58.779998779296875s · diferença -2.34s
-- `דַּאֲמִירָן` *(dáamiran)* — nós: 61.91s · ouvido: 61.040000915527344s · diferença -0.87s
-- `בְּעָלְמָא` *(bealma)* — nós: 63.14s · ouvido: 62.060001373291016s · diferença -1.08s
-- `וְאִמְרוּ` *(veimrú)* — nós: 63.92s · ouvido: 62.7400016784668s · diferença -1.18s
-- `אָמֵן` *(amên)* — nós: 65.24s · ouvido: 63.91999816894531s · diferença -1.32s
+- `דַּאֲמִירָן` *(dáamiran)* — nós: 60.36s · ouvido: 61.040000915527344s · diferença +0.68s
+- `בְּעָלְמָא` *(bealma)* — nós: 61.1s · ouvido: 62.060001373291016s · diferença +0.96s
 
 **§14**
 
-- `יְהֵא` *(Yehê)* — nós: 65.56s · ouvido: 64.54000091552734s · diferença -1.02s
+- `יְהֵא` *(Yehê)* — nós: 65.24s · ouvido: 64.54000091552734s · diferença -0.7s
+- `שְׁמַיָּא` *(shemayá)* — nós: 69.06s · ouvido: 67.9000015258789s · diferença -1.16s
+- `וסבא` — o Whisper ouviu em 69.66000366210938s, não existe no nosso texto
 
 **§15**
 
-- `וסבא` — o Whisper ouviu em 69.66000366210938s, não existe no nosso texto
-- `וְשָׂבָע` *(vessavá)* — no texto em 69.82s, o Whisper não ouviu
+- `חַיִּים` *(chayim)* — nós: 69.84s · ouvido: 68.54000091552734s · diferença -1.3s
+- `וְשָׂבָע` *(vessavá)* — no texto em 71.04s, o Whisper não ouviu
+- `וִישׁוּעָה` *(vishuá)* — nós: 72.2s · ouvido: 70.72000122070312s · diferença -1.48s
+- `וְנֶחָמָה` *(venechamá)* — nós: 73.58s · ouvido: 72.12000274658203s · diferença -1.46s
+- `וְשֵׁיזָבָא` *(veshezavá)* — nós: 75.06s · ouvido: 73.41999816894531s · diferença -1.64s
 
 **§16**
 
-- `וּרְפוּאָה` *(urfuá)* — nós: 76.26s · ouvido: 74.81999969482422s · diferença -1.44s
-- `וּגְאֻלָּה` *(ug'ulá)* — nós: 77.5s · ouvido: 76.22000122070312s · diferença -1.28s
-- `וּסְלִיחָה` *(usslichá)* — nós: 78.74s · ouvido: 77.33999633789062s · diferença -1.4s
-- `וְכַפָּרָה` *(vechapará)* — nós: 79.26s · ouvido: 78.5999984741211s · diferença -0.66s
+- `וּרְפוּאָה` *(urfuá)* — nós: 75.62s · ouvido: 74.81999969482422s · diferença -0.8s
+
+**§17**
+
+- `עַמּוֹ` *(amô)* — nós: 85.28s · ouvido: 84.31999969482422s · diferença -0.96s
+- `יִשְׂרָאֵל` *(Israel)* — nós: 85.9s · ouvido: 84.94000244140625s · diferença -0.96s
 
 **§19**
 
@@ -684,118 +553,89 @@ comece a ouvir por aqui.
 
 ### sefaradi_derabanan
 
-**§1**
-
-- `וְיִתְקַדַּשׁ` *(veyitkadash)* — nós: 1.8s · ouvido: 1.1399999856948853s · diferença -0.66s
-- `רַבָּא` *(raba)* — nós: 4.58s · ouvido: 3.2799999713897705s · diferença -1.3s
-
 **§2**
 
-- `בְּעָלְמָא` *(bealma)* — nós: 5.62s · ouvido: 4.980000019073486s · diferença -0.64s
 - `דברה` — o Whisper ouviu em 5.639999866485596s, não existe no nosso texto
-- `דִּי` *(di)* — no texto em 6.42s, o Whisper não ouviu
-- `בְרָא` *(verá)* — no texto em 6.96s, o Whisper não ouviu
-- `כִרְעוּתֵהּ` *(chir'utêh)* — nós: 7.74s · ouvido: 6.380000114440918s · diferença -1.36s
-
-**§3**
-
-- `וְיַמְלִיךְ` *(veyamlich)* — nós: 9.44s · ouvido: 7.760000228881836s · diferença -1.68s
-- `מַלְכוּתֵהּ` *(malchutêh)* — nós: 10.18s · ouvido: 8.539999961853027s · diferença -1.64s
-
-**§4**
-
-- `וְיַצְמַח` *(veyatsmách)* — nós: 11.44s · ouvido: 10.279999732971191s · diferença -1.16s
-- `פֻּרְקָנֵהּ` *(purkanêh)* — nós: 12.72s · ouvido: 11.079999923706055s · diferença -1.64s
-- `וִיקָרֵב` *(vikarev)* — nós: 13.52s · ouvido: 12.640000343322754s · diferença -0.88s
-- `מְשִׁיחֵהּ` *(meshichêh)* — nós: 14.84s · ouvido: 13.300000190734863s · diferença -1.54s
-
-**§5**
-
-- `בְּחַיֵּיכוֹן` *(bechayechon)* — nós: 16.24s · ouvido: 14.979999542236328s · diferença -1.26s
-- `וּבְיוֹמֵיכוֹן` *(uveyomechon)* — nós: 17.78s · ouvido: 15.880000114440918s · diferença -1.9s
-
-**§6**
-
-- `וּבְחַיֵּי` *(uvechayê)* — nós: 18.94s · ouvido: 17.860000610351562s · diferença -1.08s
+- `דִּי` *(di)* — no texto em 5.64s, o Whisper não ouviu
+- `בְרָא` *(verá)* — no texto em 6.32s, o Whisper não ouviu
 
 **§8**
 
-- `לְעָלַם` *(lealám)* — nós: 30.35s · ouvido: 31.81999969482422s · diferença +1.47s
-- `וּלְעָלְמֵי` *(ul'almei)* — nós: 31.7s · ouvido: 32.560001373291016s · diferença +0.86s
-- `עָלְמַיָּא` *(almayá)* — no texto em 32.78s, o Whisper não ouviu
-
-**§9**
-
-- `יִתְבָּרַךְ` *(Yitbarêch)* — nós: 33.94s · ouvido: 34.619998931884766s · diferença +0.68s
-- `וְיִשְׁתַּבַּח` *(veyishtabach)* — nós: 35.02s · ouvido: 36.7400016784668s · diferença +1.72s
-- `וְיִתְפָּאַר` *(veyitpaar)* — nós: 36.62s · ouvido: 38.13999938964844s · diferença +1.52s
-
-**§10**
-
-- `וְיִתְרוֹמַם` *(veyitromam)* — nós: 38.08s · ouvido: 39.7400016784668s · diferença +1.66s
-- `וְיִתְנַשֵּׂא` *(veyitnasse)* — nós: 38.56s · ouvido: 41.15999984741211s · diferença +2.6s
-- `וְיִתְהַדָּר` *(veyithadar)* — nós: 39.58s · ouvido: 42.560001373291016s · diferença +2.98s
+- `עָלְמַיָּא` *(almayá)* — no texto em 33.94s, o Whisper não ouviu
 
 **§11**
 
-- `וְיִתְעַלֶּה` *(veyitaleh)* — nós: 41s · ouvido: 44.20000076293945s · diferença +3.2s
-- `וְיִתְהַלָּל` *(veyithalal)* — nós: 42.44s · ouvido: 45.619998931884766s · diferença +3.18s
-- `שְׁמֵהּ` *(shemê)* — nós: 43.98s · ouvido: 46.34000015258789s · diferença +2.36s
-- `דְּקֻדְשָׁא` *(decudshá)* — no texto em 45.26s, o Whisper não ouviu
-- `בְּרִיךְ` *(berich)* — nós: 46.68s · ouvido: 48.5s · diferença +1.82s
-- `הוּא` *(hu)* — nós: 47.66s · ouvido: 49.29999923706055s · diferença +1.64s
+- `דְּקֻדְשָׁא` *(decudshá)* — no texto em 47.68s, o Whisper não ouviu
 - `בקבוצה` — o Whisper ouviu em 47.7599983215332s, não existe no nosso texto
 
 **§12** — **já está no OUVIR-PRIMEIRO**
 
-- `לְעֵלָּא` *(leela)* — nós: 48.62s · ouvido: 50.02000045776367s · diferença +1.4s
-- `מִן` *(min)* — no texto em 49.62s, o Whisper não ouviu
+- `לְעֵלָּא` *(leela)* — nós: 50.74s · ouvido: 50.02000045776367s · diferença -0.72s
 - `ממכל` — o Whisper ouviu em 51.439998626708984s, não existe no nosso texto
-- `כָּל` *(kol)* — no texto em 51.84s, o Whisper não ouviu
+- `מִן` *(min)* — no texto em 51.86s, o Whisper não ouviu
+- `כָּל` *(kol)* — no texto em 52.58s, o Whisper não ouviu
+
+**§13**
+
+- `בְּעָלְמָא` *(bealma)* — nós: 61s · ouvido: 59.900001525878906s · diferença -1.1s
+- `וְאִמְרוּ` *(veimrú)* — nós: 62.26s · ouvido: 61.08000183105469s · diferença -1.18s
+- `אָמֵן` *(amên)* — nós: 63.94s · ouvido: 61.880001068115234s · diferença -2.06s
+
+**§14**
+
+- `עַל` *(Al)* — nós: 64.48s · ouvido: 63.58000183105469s · diferença -0.9s
+- `יִשְׂרָאֵל` *(Israel)* — nós: 65.06s · ouvido: 64.36000061035156s · diferença -0.7s
 
 **§15**
 
 - `הון` — o Whisper ouviu em 69.13999938964844s, não existe no nosso texto
 - `הון` — o Whisper ouviu em 73.19999694824219s, não existe no nosso texto
 
-**§16**
-
-- `קַדִּשְׁתָּא` *(kadishtá)* — nós: 77.88s · ouvido: 76.63999938964844s · diferença -1.24s
-
-**§17**
-
-- `בְאַתְרָא` *(veatrá)* — nós: 79.4s · ouvido: 78.30000305175781s · diferença -1.1s
-- `הָדֵין` *(haden)* — nós: 80.68s · ouvido: 79.26000213623047s · diferença -1.42s
-- `וְדִי` *(vedi)* — nós: 81.38s · ouvido: 80.76000213623047s · diferença -0.62s
-
 **§18** — **já está no OUVIR-PRIMEIRO**
 
-- `וּלְהוֹן` *(ul'hon)* — nós: 85.06s · ouvido: 85.87999725341797s · diferença +0.82s
-- `וּלְכוֹן` *(ulechon)* — nós: 86.2s · ouvido: 86.95999908447266s · diferença +0.76s
-- `חִנָּא` *(chiná)* — no texto em 88.62s, o Whisper não ouviu
+- `חִנָּא` *(chiná)* — no texto em 88.64s, o Whisper não ouviu
 - `חינה` — o Whisper ouviu em 88.95999908447266s, não existe no nosso texto
 
 **§19** — **já está no OUVIR-PRIMEIRO**
 
-- `שְׁמַיָּא` *(shemayá)* — nós: 95.82s · ouvido: 94.63999938964844s · diferença -1.18s
+- `וְאַרְעָא` *(vear-á)* — no texto em 95.84s, o Whisper não ouviu
 - `ועראה` — o Whisper ouviu em 95.91999816894531s, não existe no nosso texto
-- `וְאַרְעָא` *(vear-á)* — no texto em 97.16s, o Whisper não ouviu
-- `וְאִמְרוּ` *(veimrú)* — nós: 98.34s · ouvido: 97.36000061035156s · diferença -0.98s
-- `אָמֵן` *(amên)* — nós: 99.8s · ouvido: 98.0199966430664s · diferença -1.78s
 
 **§21**
 
 - `וסבא` — o Whisper ouviu em 105.0199966430664s, não existe no nosso texto
 - `וְשָׂבָע` *(vessavá)* — no texto em 105.22s, o Whisper não ouviu
 
+**§22**
+
+- `וּגְאֻלָּה` *(ug'ulá)* — nós: 110.6s · ouvido: 111.5s · diferença +0.9s
+- `וּסְלִיחָה` *(usslichá)* — nós: 111.44s · ouvido: 112.68000030517578s · diferença +1.24s
+- `וְכַפָּרָה` *(vechapará)* — nós: 112.66s · ouvido: 113.95999908447266s · diferença +1.3s
+
+**§23**
+
+- `וְרֶוַח` *(verêvach)* — nós: 113.88s · ouvido: 115.69999694824219s · diferença +1.82s
+- `וְהַצָּלָה` *(vehatsalá)* — nós: 114.42s · ouvido: 116.83999633789062s · diferença +2.42s
+- `לָנוּ` *(lanu)* — nós: 115.62s · ouvido: 117.66000366210938s · diferença +2.04s
+- `וּלְכָל` *(ulechol)* — nós: 116.7s · ouvido: 118.5s · diferença +1.8s
+- `עַמּוֹ` *(amô)* — nós: 117.9s · ouvido: 119.5999984741211s · diferença +1.7s
+- `יִשְׂרָאֵל` *(Israel)* — nós: 118.86s · ouvido: 120.18000030517578s · diferença +1.32s
+- `וְאִמְרוּ` *(veimrú)* — nós: 120.28s · ouvido: 121.76000213623047s · diferença +1.48s
+- `אָמֵן` *(amên)* — nós: 121.76s · ouvido: 122.55999755859375s · diferença +0.8s
+
 **§24**
 
-- `עוֹשֶׂה` *(Ossê)* — nós: 124.64s · ouvido: 123.41999816894531s · diferença -1.22s
+- `שָׁלוֹם` *(shalom)* — nós: 124.64s · ouvido: 125.58000183105469s · diferença +0.94s
 
 **§25**
 
+- `הוּא` *(hu)* — nós: 126.62s · ouvido: 128.10000610351562s · diferença +1.48s
+- `בְּרַחֲמָיו` *(berachamav)* — no texto em 127.88s, o Whisper não ouviu
 - `ורחמב` — o Whisper ouviu em 128.24000549316406s, não existe no nosso texto
-- `בְּרַחֲמָיו` *(berachamav)* — no texto em 128.48s, o Whisper não ouviu
+- `יַעֲשֶׂה` *(yaassê)* — nós: 128.48s · ouvido: 129.39999389648438s · diferença +0.92s
+- `שָׁלוֹם` *(shalom)* — nós: 129.84s · ouvido: 130.52000427246094s · diferença +0.68s
+- `וְעַל` *(veal)* — nós: 131.64s · ouvido: 132.25999450683594s · diferença +0.62s
+- `כָּל` *(kol)* — nós: 132.78s · ouvido: 133.44000244140625s · diferença +0.66s
 
 ## O que fazer com isto
 
