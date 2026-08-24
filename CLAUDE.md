@@ -25,6 +25,13 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   dele: "yishtabah continua falado na linha 8 e aparecendi na linha 9". As
   outras seis só sabem ONDE há voz; essa é a única que sabe QUAL palavra soa.
   Tem que dar ZERO nos 8. Em 24/08 dava 83.
+  Um apontamento sobrevive de propósito, e é o Whisper errando: no
+  sefard_derabanan ele corta o "amên" do verso 7 aos 26,50 e começa o "Yehê"
+  ali. O sinal diz outra coisa — o bloco do amên vai de 26,16 a 26,54 e a voz
+  seguinte só abre aos 27,76, que é onde o Yehê está. É o mesmo caso do
+  chabad_yatom, onde o Erez ancorou de ouvido e provou o ponto. Não afrouxei a
+  conta para zerar isso: a coluna acusa, e quem julga é o ouvido dele. Se a
+  transcrição for refeita, este número pode ir e voltar entre 0 e 1.
 - node testar-sincronia.mjs → a página que mostra a voz (sincronia.html). A
   checagem que importa ali: a conta da página tem que dar o MESMO número de
   suspeitas que a medida do sinal. Se ela acusar demais, o Erez arrasta palavra
