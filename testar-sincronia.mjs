@@ -69,6 +69,17 @@ function suspeitas(alvo) {
   return n;
 }
 
+// A marca publicada (versao.json) TEM que ser a mesma que veio dentro da
+// pagina. Se sairem de sincronia, a pagina avisa "ha versao nova" para sempre,
+// ou — pior — deixa de avisar quando devia. Este e o guarda de que eu nao
+// esqueci de mexer nos dois.
+const marcaPublicada = JSON.parse(readFileSync('versao.json', 'utf8')).marca;
+const marcaDaPagina = (readFileSync('sincronia.html', 'utf8')
+  .match(/const DADOS = '([^']+)'/) || [])[1];
+confere('a marca do versao.json e a mesma do sincronia.html',
+  marcaPublicada === marcaDaPagina,
+  `versao.json: "${marcaPublicada}"  sincronia.html: "${marcaDaPagina}"`);
+
 // ---------- 3: a pagina ----------
 const CHROMIUM = process.env.CHROMIUM;
 const { chromium } = await import('playwright').then(m => m.default || m);
@@ -288,6 +299,24 @@ confere('e o Voltar traz os versos de volta', await pag.locator('canvas').count(
 const tocouArquivo = await pag.evaluate(() =>
   Object.keys(localStorage).filter(k => k.startsWith('sinc_')).length > 0);
 confere('a pagina so guarda no aparelho (nada vai para sync/ nem para as ancoras)', tocouArquivo);
+
+// Com a marca publicada diferente, a pagina TEM que avisar. E o que salva o
+// Erez de ficar olhando uma tela de ontem sem saber.
+await pag.route('**/versao.json*', r =>
+  r.fulfill({ contentType: 'application/json', body: '{"marca":"marca-mais-nova"}' }));
+await pag.reload();
+await pag.waitForTimeout(2400);
+confere('avisa quando ha versao mais nova publicada',
+  (await pag.locator('#atualizar').count()) === 1);
+await pag.locator('#atualizar').click();
+await pag.waitForTimeout(2400);
+confere('e o botao leva para um endereco que o cache nao tem',
+  /[?&]v=marca-mais-nova/.test(pag.url()), pag.url());
+await pag.unroute('**/versao.json*');
+await pag.goto(`${BASE}/sincronia.html`);
+await pag.waitForTimeout(2400);
+confere('com a marca igual, nao avisa nada',
+  (await pag.locator('#atualizar').count()) === 0);
 
 confere('nao rola de lado', !(await pag.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)));
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
