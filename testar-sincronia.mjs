@@ -300,9 +300,13 @@ confere('um cutucao de nada NAO vira correcao',
 // empurrar o verso inteiro: um gesto para dizer "este verso esta um bloco fora"
 await pag.evaluate(() => localStorage.clear());
 await pag.reload(); await pag.waitForTimeout(2200);
-const nPalavras = await pag.evaluate(() => document.querySelector('canvas')._ps.length);
+// Desde a fita continua (24/08) uma faixa do desenho e de TEMPO, nao de verso:
+// ela pode conter palavras de dois versos, ou meio verso. Entao o numero de
+// palavras do verso empurrado vem do proprio verso, nao do primeiro desenho.
 const versoEmpurrado = await pag.evaluate(() =>
   document.querySelectorAll('button[data-empurrar]')[1].dataset.empurrar);
+const nPalavras = await pag.evaluate(n =>
+  sync.versos.find(v => String(v.n) === n).palavras.length, versoEmpurrado);
 await pag.locator('button[data-empurrar]').nth(1).click();   // um bloco a frente
 await pag.waitForTimeout(700);
 const movidas = await pag.evaluate(() =>
@@ -322,13 +326,31 @@ confere('e o desfazer devolve o verso inteiro',
   (await pag.evaluate(() =>
     Object.keys(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')).length)) === 0);
 
-// refaz um arrasto de verdade, para as checagens seguintes terem o que ver
-await pag.mouse.move(xRisco, cx.y + cx.height / 2);
+// refaz um arrasto de verdade, para as checagens seguintes terem o que ver.
+// A caixa do desenho e medida DE NOVO: entre um passo e outro a pagina cresce e
+// encolhe (o aviso de arrasto, a lista do que olhar), e mirar na medida velha
+// punha o dedo fora do desenho. O teste passava sem arrastar nada, e so o
+// recado, la na frente, denunciava: "0 correcoes".
+// Voltar ao topo ANTES de medir: os botoes de verso agora ficam no fim da
+// pagina, e clicar num deles rola a tela. A caixa do primeiro desenho vinha
+// com y negativo — fora da janela — e o dedo caia no nada.
+await pag.evaluate(() => scrollTo(0, 0));
+await pag.waitForTimeout(300);
+const cx2 = await pag.locator('canvas').first().boundingBox();
+const fracao2 = await pag.evaluate(() => {
+  const c = document.querySelector('canvas');
+  const p = c._ps[0];
+  return (p.start - c._t0) / (c._t1 - c._t0);
+});
+const xRisco2 = cx2.x + cx2.width * fracao2;
+await pag.mouse.move(xRisco2, cx2.y + cx2.height / 2);
 await pag.mouse.down();
-await pag.mouse.move(xRisco + 30, cx.y + cx.height / 2, { steps: 6 });
+await pag.mouse.move(xRisco2 + 30, cx2.y + cx2.height / 2, { steps: 6 });
 await pag.mouse.up();
 await pag.waitForTimeout(500);
 const depoisTxt2 = await pag.textContent('#contagem');
+confere('o arrasto refeito realmente pegou',
+  depoisTxt2 !== 'nada arrastado ainda', `contagem: "${depoisTxt2}"`);
 
 // sobrevive a recarregar
 await pag.reload();

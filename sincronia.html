@@ -60,7 +60,7 @@
     <a class="voltar" href="./">‹ voltar</a>
     <h1>Sincronia</h1>
     <select id="alvo"></select>
-    <button id="soFalta" title="mostrar só os versos com suspeita">só o suspeito: sim</button>
+    <button id="soFalta" title="a lista de cima: só o suspeito, ou todas as palavras">só o suspeito: sim</button>
   </div>
   <div id="andamento" style="font-size:13px;color:var(--fraco);margin-top:5px"></div>
 </header>
@@ -123,7 +123,7 @@ const SUSPEITO   = 0.30;
 //
 // A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
 // nao forem iguais, e cache, e nao defeito de sincronia.
-const DADOS = '24/08-g';
+const DADOS = '24/08-h';
 
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -435,11 +435,28 @@ function pintar(cv, ps, v) {
     }
   }
 
+  // 3b) a fronteira de verso: um risco tracejado com o numero. Ela deixou de
+  //     ser a dona do desenho e virou o que e — uma marca em cima da fita.
+  c.setLineDash([4, 4]);
+  c.strokeStyle = '#b9ae9c'; c.lineWidth = 1;
+  c.font = 'bold 11px Georgia, serif';
+  for (const v of sync.versos) {
+    const pv = (v.palavras || []);
+    if (!pv.length) continue;
+    const t = inicio({ verso: v.n, i: pv[0].i, start: pv[0].start, end: pv[0].end });
+    if (t < t0 || t > t1) continue;
+    const px = x(t);
+    c.beginPath(); c.moveTo(px, 0); c.lineTo(px, A); c.stroke();
+    c.fillStyle = '#8a8072';
+    c.fillText('§' + v.n, Math.min(px + 3, L - 26), A - 26);
+  }
+  c.setLineDash([]);
+
   // 4) regua de segundos
   c.fillStyle = '#9a9184'; c.font = '11px Georgia, serif';
   for (let s = Math.ceil(t0); s <= t1; s++) {
     c.fillRect(x(s), A - 14, 1, 5);
-    if (s % 2 === 0) c.fillText(s + 's', x(s) + 2, A - 3);
+    if (s % 2 === 0) c.fillText(s + 's', x(s) + 2, A - 3);   // segundo do Kadish inteiro
   }
 
   // 5) a agulha, quando esta tocando
@@ -469,24 +486,40 @@ function atualizarContas(ps) {
     ? `${arrastadas} correção(ões) prontas` : 'nada arrastado ainda';
 }
 
+// ---------- montar a tela: A FITA CONTINUA (24/08) ----------
+//
+// Antes esta pagina desenhava UM quadro por verso, cada um com a sua janela de
+// tempo e a sua escala. Duas consequencias ruins, e o Erez bateu nas duas:
+//
+//   * uma palavra que SOA no verso de cima aparecia no quadro do verso de
+//     baixo, e ali nao havia como arrasta-la para tras: aquele instante nem
+//     existia naquela janela. Foi o "yitbarach e ouvido na linha 8 e mostrado
+//     na 9" — ele via o defeito e nao tinha como consertar;
+//   * cada quadro tinha a sua escala, entao dois versos seguidos nao se
+//     encaixavam, e a fronteira entre eles ficava invisivel.
+//
+// Ele disse: "quero que a sincronia seja feita nao por linha, mas de forma
+// continua, assim nao ocorrerao os erros relatados". Esta certo.
+//
+// Agora a tela e UMA fita do Kadish inteiro, cortada em faixas de FAIXA
+// segundos so para caber no papel — como uma partitura. A escala e a mesma do
+// comeco ao fim, nao ha buraco entre uma faixa e a seguinte, e a fronteira de
+// verso virou o que ela e: um risco tracejado com o numero em cima. Qualquer
+// palavra pode ser arrastada para qualquer lugar, inclusive para dentro do
+// verso vizinho.
+const FAIXA = 10;   // segundos por faixa
+
+function faixas() {
+  const t0 = Math.max(0, (sync.fala_inicio ?? 0) - 0.4);
+  const t1 = Math.min(desenho.duracao, (sync.fala_fim ?? desenho.duracao) + 0.4);
+  const out = [];
+  for (let t = t0; t < t1; t += FAIXA) out.push([t, Math.min(t + FAIXA, t1)]);
+  return out;
+}
+
 function desenhar_tela() {
   const ps = diagnosticar();
   atualizarContas(ps);
-
-  // "So o suspeito" esconde o que esta certo E que ele nao mexeu. Verso em que
-  // ele mexeu FICA, mesmo tendo ficado bom — senao empurrar o verso o fazia
-  // sumir no mesmo toque, sem ele ver o resultado nem poder desfazer. E o
-  // mesmo defeito que ja quebrou a pagina de revisao uma vez.
-  const versos = sync.versos
-    .map(v => ({ v, ps: ps.filter(p => p.verso === v.n) }))
-    .filter(x => x.ps.length &&
-      (!soFalta || x.ps.some(p => p.grau > 0) || x.ps.some(partida) || x.ps.some(mexida)));
-
-  if (!versos.length) {
-    el('corpo').innerHTML = `<div class="nota">Nenhum verso suspeito neste Kadish.
-      Toque em <i>só o suspeito</i> para ver todos.</div>`;
-    return;
-  }
 
   // AVISO GRANDE quando ha arrasto. Tres vezes o Erez leu como defeito do
   // ARQUIVO o que era arrasto DELE — a ultima com 9 arrastos na tela, dizendo
@@ -503,73 +536,97 @@ function desenhar_tela() {
       <button id="desfazerTudo" style="background:#fff;color:#2a1f15;border:0">Desfazer tudo o que arrastei</button>
     </div></div>` : '';
   h += `<div class="nota">
-    O fundo verde é onde o rabino <b>está falando</b>. Cada risco é o começo de
-    uma palavra: <span style="color:#2f6b3a">verde</span> em cima da voz,
+    Esta é a <b>fita inteira do Kadish</b>, do começo ao fim, na mesma escala.
+    Os riscos <b>tracejados</b> com número são onde cada verso começa.
+    O fundo verde é onde o rabino <b>está falando</b>. Cada risco fino é o começo
+    de uma palavra: <span style="color:#2f6b3a">verde</span> em cima da voz,
     <span style="color:#a8781f">amarelo</span> um pouco fora,
     <span style="color:#8a3a1a">vermelho</span> fora.
     <br><br>Toque numa palavra para ouvir só ela. <b>Arraste o risco</b> para o
-    lugar certo — a página diz o segundo. Nada é gravado aqui: no fim, o botão
-    monta um recado para você me mandar.
+    lugar certo — pode passar para dentro do verso vizinho, a fita é uma só.
+    Nada é gravado aqui: no fim, o botão monta um recado para você me mandar.
     <div class="legenda"><i></i> o rabino falando &nbsp;
       <i style="background:#f6d8cc"></i> voz partida ao meio — olhe aqui primeiro</div></div>`;
 
-  for (const { v, ps: pv } of versos) {
-    const mau = pv.filter(p => p.grau > 0);
-    h += `<div class="verso" data-v="${v.n}">
-      <div class="cab"><span>verso ${v.n} · ${seg(v.start)} a ${seg(v.end)}</span>
-        <span>${mau.length ? mau.length + ' para olhar' : 'parece certo'}</span></div>
-      <div class="heb">${pv.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
+  // A LISTA DO QUE OLHAR, no alto. Antes o jeito de nao se perder era esconder
+  // os versos certos ("so o suspeito"), e esconder e o oposto de continuo.
+  // Agora a fita fica sempre inteira e quem leva ate o defeito e esta lista.
+  const olhar = ps.filter(p => soFalta ? (p.grau > 0 || partida(p) || mexida(p)) : true);
+  h += `<div class="nota"><b>${ps.filter(p => p.grau > 0).length} para olhar</b>` +
+    (olhar.length ? ` — toque para ir até a palavra:<div class="acoes">` +
+      olhar.slice(0, 40).map(p => `<button data-ir="${p.verso}|${p.i}">` +
+        `${esc(p.tl || p.hebrew)} <small>§${p.verso} · ${seg(inicio(p))}</small></button>`).join('') +
+      `</div>` : ' — nada suspeito neste Kadish.') + `</div>`;
+
+  const fs = faixas();
+  fs.forEach(([t0, t1], i) => {
+    const dentro = ps.filter(p => inicio(p) >= t0 && inicio(p) < t1);
+    const vsAqui = [...new Set(dentro.map(p => p.verso))];
+    h += `<div class="verso" data-f="${i}">
+      <div class="cab"><span>${seg(t0)} a ${seg(t1)}</span>
+        <span>${vsAqui.length ? 'verso ' + vsAqui.join(', ') : '—'}</span></div>
+      <div class="heb">${dentro.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
         data-v="${p.verso}" data-i="${p.i}">${esc(p.hebrew)}</span>`).join(' ')}</div>
-      <div class="tl">${pv.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
+      <div class="tl">${dentro.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
         data-v="${p.verso}" data-i="${p.i}">${esc(p.tl)}</span>`).join(' ')}</div>
-      <canvas data-v="${v.n}"></canvas>
-      <div class="acoes">
-        <button data-tocar="${v.n}">▶ ouvir o verso</button>
-        <button data-empurrar="${v.n}" data-passos="-1">◀ o verso todo, um bloco atrás</button>
-        <button data-empurrar="${v.n}" data-passos="1">o verso todo, um bloco à frente ▶</button>
-        <button data-devolver="${v.n}">desfazer o que arrastei</button>
-      </div>
-      <div class="diag" id="diag${v.n}"></div>
+      <canvas data-f="${i}"></canvas>
+      <div class="acoes"><button data-tocarf="${i}">▶ ouvir estes ${Math.round(t1 - t0)}s</button></div>
+      <div class="diag" id="diagF${i}"></div>
+    </div>`;
+  });
+
+  // Os controles POR VERSO continuam existindo — o empurrao de verso inteiro e
+  // o gesto dele para "esta linha esta um bloco fora". So sairam de dentro do
+  // desenho, que agora nao e mais por verso, e viraram uma lista embaixo.
+  h += `<div class="verso"><div class="cab"><span>verso a verso</span>
+      <span>ouvir · empurrar a linha inteira · desfazer</span></div>`;
+  for (const v of sync.versos) {
+    const pv = ps.filter(p => p.verso === v.n);
+    const mau = pv.filter(p => p.grau > 0).length;
+    h += `<div class="acoes" style="align-items:center">
+      <b style="min-width:74px">verso ${v.n}</b>
+      <small style="min-width:96px;color:var(--fraco)">${mau ? mau + ' para olhar' : 'parece certo'}</small>
+      <button data-tocar="${v.n}">▶ ouvir</button>
+      <button data-empurrar="${v.n}" data-passos="-1">◀ um bloco atrás</button>
+      <button data-empurrar="${v.n}" data-passos="1">um bloco à frente ▶</button>
+      <button data-devolver="${v.n}">desfazer</button>
     </div>`;
   }
-  el('corpo').innerHTML = h;
+  h += `</div>`;
 
+  el('corpo').innerHTML = h;
+  montarCanvas(ps);
+}
+
+function montarCanvas(ps) {
+  const fs = faixas();
   for (const cv of document.querySelectorAll('canvas')) {
-    const n = Number(cv.dataset.v);
-    const v = sync.versos.find(x => x.n === n);
-    cv._ps = ps.filter(p => p.verso === n);
-    cv._v = v;
-    // 1,5s de folga, nao 0,6. Com 0,6 o bloco de voz do tushbechata (52.30)
-    // caia fora da janela do verso 13, que comecava aos 53.22 — e o Erez
-    // arrastou para o unico bloco que dava para ver.
-    // A janela tem que caber TODAS as palavras do verso, inclusive as que ele
-    // arrastou para longe. Sem isso o risco da palavra saia do desenho e ele
-    // via a palavra escrita SEM MARCADOR — foi o que ele relatou do Yitbarêch:
-    // "aparecendo na linha 9 mas sem a seta de marcacao".
-    const folga = 1.5;
-    const inicios = cv._ps.map(inicio);
-    const fins = cv._ps.map(fim);
-    cv._t0 = Math.max(0, Math.min(v.start, ...inicios) - folga);
-    cv._t1 = Math.min(desenho.duracao, Math.max(v.end, ...fins) + folga);
-    pintar(cv, cv._ps, v);
-    escreverDiag(n, cv._ps);
+    const i = Number(cv.dataset.f);
+    const [t0, t1] = fs[i];
+    cv._t0 = t0; cv._t1 = t1;
+    // A faixa e do TEMPO, nao do verso: entram todas as palavras que comecam
+    // aqui, venham do verso que vierem. E o que torna a fita continua.
+    cv._ps = ps.filter(p => inicio(p) >= t0 && inicio(p) < t1);
+    pintar(cv, cv._ps, null);
+    escreverDiag(i, cv._ps);
   }
 }
 
-function escreverDiag(n, pv) {
+function escreverDiag(i, pv) {
+  const alvo = el('diagF' + i);
+  if (!alvo) return;
   const mau = pv.filter(p => p.grau > 0);
-  const v = sync.versos.find(x => x.n === n);
   const avisoOrfa = pv.map(p => {
     // se a palavra foi arrastada por ele, o aviso e sobre o ARRASTO dele
     const marca = mexida(p)
       ? ` <span style="color:var(--brass)">(você a pôs aqui; no arquivo ela começa aos ${seg(p.start)})</span>`
       : '';
-    const nome = `<b>${esc(p.tl || p.hebrew)}</b>${marca ? '' : ''}`;
+    const nome = `<b>${esc(p.tl || p.hebrew)}</b>`;
     const c = cortada(p);
     if (c) return `<div style="color:var(--erro)">${nome} <b>está partida ao meio</b>: ` +
-      `o verso acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
-      `Este verso acaba no meio da voz: você vai ouvir só um pedaço dela, e o ` +
-      `resto cai na linha de baixo. O fim do verso devia ser ${seg(c[1])}.${marca}</div>`;
+      `o verso ${p.verso} acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
+      `Você vai ouvir só um pedaço dela, e o resto cai na linha de baixo. ` +
+      `O fim do verso devia ser ${seg(c[1])}.${marca}</div>`;
     if (muda(p)) return `<div style="color:var(--erro)">${nome} <b>não tem voz nenhuma</b>: ` +
       `de ${seg(inicio(p))} a ${seg(fim(p))} o rabino não está falando.${marca}</div>`;
     const b = engolindo(p);
@@ -579,10 +636,10 @@ function escreverDiag(n, pv) {
       `começar aos ${seg(b[0])}.${marca}</div>`;
     return '';
   }).join('');
-  el('diag' + n).innerHTML = avisoOrfa + (mau.length
-    ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> — ${p.motivo}
+  alvo.innerHTML = avisoOrfa + (mau.length
+    ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> <small>(§${p.verso})</small> — ${p.motivo}
         ${mexida(p) ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
-    : (avisoOrfa ? '' : '<div style="color:var(--ok)">Todas as palavras caem em cima da voz.</div>'));
+    : (avisoOrfa ? '' : ''));
 }
 
 // ---------- tocar ----------
@@ -618,6 +675,22 @@ el('corpo').addEventListener('click', e => {
     const n = Number(b.dataset.devolver);
     for (const k of Object.keys(mexidas)) if (k.startsWith(n + '|')) delete mexidas[k];
     gravarMex(); return desenhar_tela();
+  }
+  if (b && b.dataset.tocarf !== undefined) {
+    const [t0, t1] = faixas()[Number(b.dataset.tocarf)];
+    return tocar(t0, t1);
+  }
+  if (b && b.dataset.ir) {
+    const [v, i] = b.dataset.ir.split('|').map(Number);
+    sel = { verso: v, i };
+    document.querySelectorAll('.w.sel').forEach(x => x.classList.remove('sel'));
+    const alvos = document.querySelectorAll(`.w[data-v="${v}"][data-i="${i}"]`);
+    alvos.forEach(x => x.classList.add('sel'));
+    if (alvos[0]) alvos[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const p = diagnosticar().find(x => x.verso === v && x.i === i);
+    repintarTudo();
+    if (p) tocar(inicio(p) - 0.05, fim(p) + 0.1);
+    return;
   }
   const w = e.target.closest('.w');
   if (w) {
@@ -663,12 +736,12 @@ el('corpo').addEventListener('pointermove', e => {
 });
 el('corpo').addEventListener('pointerup', () => {
   if (!arrastando) return;
-  const n = arrastando.p.verso;
   arrastando = null; gravarMex();
+  // A palavra pode ter ATRAVESSADO para outra faixa — e esse era justamente o
+  // movimento que a tela por verso nao deixava fazer. Entao refaz as faixas
+  // todas, em vez de so a de onde ela saiu.
   const ps = diagnosticar();
-  for (const cv of document.querySelectorAll('canvas')) cv._ps = ps.filter(p => p.verso === Number(cv.dataset.v));
-  repintarTudo();
-  escreverDiag(n, ps.filter(p => p.verso === n));
+  montarCanvas(ps);
   atualizarContas(ps);
 });
 

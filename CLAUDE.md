@@ -103,6 +103,21 @@ tushbechata", "só dá para ouvir o 'ra' do raba", "o chirute para no chir'u".
 Elas têm conta própria e NÃO entram em "para olhar", que continua sendo a mesma
 da medida — a página nunca pode acusar mais que o sinal.
 
+**A fita contínua também na página (24/08).** Ela desenhava UM quadro por verso,
+cada um com a sua janela e a sua escala. Duas consequências, e ele bateu nas
+duas: uma palavra que SOA no verso de cima aparecia no quadro do verso de baixo,
+e ali não havia como arrastá-la para trás — aquele instante nem existia naquela
+janela; e dois versos seguidos não se encaixavam, então a fronteira entre eles
+era invisível. Ele disse: "quero que a sincronia seja feita não por linha, mas
+de forma contínua, assim não ocorrerão os erros relatados". Agora a tela é UMA
+fita do Kadish inteiro, cortada em faixas de 10s só para caber no papel, na
+mesma escala do começo ao fim. A fronteira de verso virou o que ela é: um risco
+tracejado com o número. Qualquer palavra pode ir para qualquer lugar, inclusive
+para dentro do verso vizinho. O "só o suspeito" deixou de esconder faixas
+(esconder é o oposto de contínuo) e passou a mandar na LISTA do alto, que leva
+até cada palavra. Os controles por verso (ouvir · empurrar · desfazer) saíram
+de dentro do desenho e viraram uma lista no fim.
+
 1. O Erez abre o sincronia.html, vê o motivo, ouve só aquela palavra e arrasta.
    (Ou, como antes, ouve no conferidor.html e reporta o segundo em texto.)
 2. O arrasto encosta sozinho no começo de voz mais próximo quando está a menos
