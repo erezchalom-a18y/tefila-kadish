@@ -123,7 +123,7 @@ const SUSPEITO   = 0.30;
 //
 // A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
 // nao forem iguais, e cache, e nao defeito de sincronia.
-const DADOS = '24/08-d';
+const DADOS = '24/08-e';
 
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -377,9 +377,12 @@ function pintar(cv, ps, v) {
     const t = inicio(p);
     if (t < t0 || t > t1) continue;
     const px = x(t);
-    const cor = p.grau === 2 ? '#8a3a1a' : p.grau === 1 ? '#a8781f' : '#2f6b3a';
-    c.strokeStyle = (sel && sel.verso === p.verso && sel.i === p.i) ? '#8b6a3e' : cor;
-    c.lineWidth = (sel && sel.verso === p.verso && sel.i === p.i) ? 3 : 1.5;
+    // o que ELE arrastou sai sempre em cor propria e grosso: nunca pode passar
+    // por leitura do arquivo
+    const cor = mexida(p) ? '#8b6a3e'
+              : p.grau === 2 ? '#8a3a1a' : p.grau === 1 ? '#a8781f' : '#2f6b3a';
+    c.strokeStyle = cor;
+    c.lineWidth = mexida(p) ? 3.5 : (sel && sel.verso === p.verso && sel.i === p.i) ? 3 : 1.5;
     c.beginPath(); c.moveTo(px, 14); c.lineTo(px, A - 22); c.stroke();
     c.fillStyle = cor;
     c.fillText((p.tl || p.hebrew).slice(0, 12), Math.min(px + 3, L - 70), 12);
@@ -441,7 +444,21 @@ function desenhar_tela() {
     return;
   }
 
-  let h = `<div class="nota">
+  // AVISO GRANDE quando ha arrasto. Tres vezes o Erez leu como defeito do
+  // ARQUIVO o que era arrasto DELE — a ultima com 9 arrastos na tela, dizendo
+  // "veytpaer e falado no verso 8", quando o arquivo punha o veyitpaar no
+  // lugar certo e quem o tinha movido era ele. Nao da para pedir que ele
+  // lembre; a pagina tem que dizer.
+  const nArrastadas = ps.filter(mexida).length;
+  let h = nArrastadas ? `<div class="nota" style="background:#8b6a3e;color:#fff;border-color:#8b6a3e">
+    <b>Você arrastou ${nArrastadas} palavra(s).</b> O que está desenhado abaixo é o
+    <b>seu arrasto</b>, não o que está no arquivo — inclusive os avisos de erro.
+    As suas ficam com o risco grosso e marcadas com ●.
+    <div class="acoes" style="margin-top:10px">
+      <button id="verArquivo" style="background:#fff;color:#2a1f15;border:0">Ver o arquivo, sem os meus arrastos</button>
+      <button id="desfazerTudo" style="background:#fff;color:#2a1f15;border:0">Desfazer tudo o que arrastei</button>
+    </div></div>` : '';
+  h += `<div class="nota">
     O fundo verde é onde o rabino <b>está falando</b>. Cada risco é o começo de
     uma palavra: <span style="color:#2f6b3a">verde</span> em cima da voz,
     <span style="color:#a8781f">amarelo</span> um pouco fora,
@@ -493,19 +510,23 @@ function escreverDiag(n, pv) {
   const mau = pv.filter(p => p.grau > 0);
   const v = sync.versos.find(x => x.n === n);
   const avisoOrfa = pv.map(p => {
-    const nome = `<b>${esc(p.tl || p.hebrew)}</b>`;
+    // se a palavra foi arrastada por ele, o aviso e sobre o ARRASTO dele
+    const marca = mexida(p)
+      ? ` <span style="color:var(--brass)">(você a pôs aqui; no arquivo ela começa aos ${seg(p.start)})</span>`
+      : '';
+    const nome = `<b>${esc(p.tl || p.hebrew)}</b>${marca ? '' : ''}`;
     const c = cortada(p);
     if (c) return `<div style="color:var(--erro)">${nome} <b>está partida ao meio</b>: ` +
       `ela acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
       `Você vai ouvir só um pedaço dela — o resto vai para a palavra seguinte. ` +
-      `O fim dela devia ser ${seg(c[1])}.</div>`;
+      `O fim dela devia ser ${seg(c[1])}.${marca}</div>`;
     if (muda(p)) return `<div style="color:var(--erro)">${nome} <b>não tem voz nenhuma</b>: ` +
-      `de ${seg(inicio(p))} a ${seg(fim(p))} o rabino não está falando.</div>`;
+      `de ${seg(inicio(p))} a ${seg(fim(p))} o rabino não está falando.${marca}</div>`;
     const b = engolindo(p);
     if (b) return `<div style="color:var(--erro)">${nome} <b>engole outra voz</b>: depois ` +
       `dela vem silêncio e, aos ${seg(b[0])}, o rabino fala de novo até ${seg(b[1])} — ` +
       `ainda dentro desta palavra. Quase sempre isso é a palavra seguinte, que devia ` +
-      `começar aos ${seg(b[0])}.</div>`;
+      `começar aos ${seg(b[0])}.${marca}</div>`;
     return '';
   }).join('');
   el('diag' + n).innerHTML = avisoOrfa + (mau.length
@@ -537,6 +558,11 @@ el('corpo').addEventListener('click', e => {
   if (b && b.dataset.empurrar) {
     empurrarVerso(Number(b.dataset.empurrar), Number(b.dataset.passos));
     return desenhar_tela();
+  }
+  if (b && b.id === 'desfazerTudo') { mexidas = {}; gravarMex(); return desenhar_tela(); }
+  if (b && b.id === 'verArquivo') {
+    const guardado = mexidas; mexidas = {}; desenhar_tela(); mexidas = guardado;
+    return;   // volta a aparecer no proximo toque; o que ele arrastou nao se perdeu
   }
   if (b && b.dataset.devolver) {
     const n = Number(b.dataset.devolver);

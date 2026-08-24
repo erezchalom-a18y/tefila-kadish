@@ -157,6 +157,37 @@ confere('a velharia e apagada do aparelho, nao so escondida',
   (await pag.evaluate(() =>
     Object.keys(JSON.parse(localStorage.getItem('sinc_mex_chabad_yatom') || '{}')).length)) === 0);
 
+// O ARRASTO DELE NAO PODE PASSAR POR LEITURA DO ARQUIVO.
+// Tres vezes o Erez leu como defeito do arquivo o que era arrasto dele — a
+// ultima com 9 arrastos na tela, dizendo "veytpaer e falado no verso 8", e o
+// arquivo estava certo. A pagina tem que gritar isso.
+await pag.selectOption('#alvo', 'chabad_derabanan');
+await pag.waitForTimeout(1400);
+await pag.evaluate(() => {
+  const p = palavras()[0];
+  const m = {}; m[`${p.verso}|${p.i}`] = p.start + 3;
+  localStorage.setItem('sinc_mex_chabad_derabanan', JSON.stringify(m));
+});
+await pag.reload(); await pag.waitForTimeout(2200);
+confere('com arrasto na tela, a pagina avisa em letra grande',
+  (await pag.locator('#desfazerTudo').count()) === 1 &&
+  /Você arrastou 1 palavra/.test(await pag.locator('#corpo').innerText()));
+confere('e oferece ver o arquivo sem os arrastos',
+  (await pag.locator('#verArquivo').count()) === 1);
+await pag.locator('#verArquivo').click();
+await pag.waitForTimeout(700);
+confere('"ver o arquivo" tira o aviso e mostra o arquivo',
+  (await pag.locator('#desfazerTudo').count()) === 0);
+await pag.reload(); await pag.waitForTimeout(2200);
+confere('e o que ele arrastou nao se perdeu ao ver o arquivo',
+  (await pag.locator('#desfazerTudo').count()) === 1);
+await pag.locator('#desfazerTudo').click();
+await pag.waitForTimeout(700);
+confere('"desfazer tudo" limpa mesmo',
+  (await pag.locator('#desfazerTudo').count()) === 0 &&
+  Object.keys(JSON.parse(await pag.evaluate(() =>
+    localStorage.getItem('sinc_mex_chabad_derabanan') || '{}'))).length === 0);
+
 // A pista que achou o tushbechata: palavra que engole a seguinte.
 // O veshirata ia de 50.52 a 53.22 e tinha, la dentro, 0,84s de silencio e
 // depois o bloco 52.30-53.14 — que era o tushbechata inteiro. O Erez ouviu
