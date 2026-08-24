@@ -1,4 +1,4 @@
 {
   "_leia": "A marca da versao que esta publicada. As paginas leem este arquivo SEM cache e comparam com a marca que veio dentro delas; se for diferente, avisam que ha versao nova e recarregam num endereco novo. Existe porque o GitHub Pages guarda os arquivos, e o Ctrl+Shift+R do navegador nao fura isso: o Erez passou tres rodadas vendo defeito ja consertado. Mudar isto SEMPRE junto com o DADOS do sincronia.html.",
-  "marca": "24/08-h"
+  "marca": "24/08-i"
 }

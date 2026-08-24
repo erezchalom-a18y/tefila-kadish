@@ -103,6 +103,35 @@ tushbechata", "só dá para ouvir o 'ra' do raba", "o chirute para no chir'u".
 Elas têm conta própria e NÃO entram em "para olhar", que continua sendo a mesma
 da medida — a página nunca pode acusar mais que o sinal.
 
+**Uma linha só, e o fio final do bloco (24/08, à noite).** A primeira tentativa
+cortou a fita em faixas de 10s "só para caber no papel" — e ainda cortava: uma
+palavra na emenda aparecia pela metade. Ele viu em minutos: *"algumas palavras
+cortam no meio como purkane, só vejo o áudio de pur..."*. Agora é UM desenho do
+começo ao fim, que rola de lado por dentro (a página não rola). Há checagem
+disso no testar-sincronia.mjs, para não voltar atrás.
+
+O mesmo recado apontou um defeito de dados, e grave: **encostar a palavra para
+TRÁS punha o marcador no fio final da voz da vizinha.** O purkanêh do
+chabad_yatom foi ouvido aos 11,20 (no silêncio); a voz dele abre aos 11,54, a
+0,34s — um triz além do alcance de 0,30 que eu tinha posto. Sem alcance para a
+frente, ele recuou para 11,08, os últimos 0,02s do bloco do veyatsmách. Tocar a
+palavra dava o rabo do veyatsmách, silêncio, e só então o purkanêh. Eram 234
+palavras assim nos 8. A voz de uma palavra vem SEMPRE depois do marcador que
+caiu no silêncio — o rabino ainda não a disse. Então o alcance para a frente
+passou a 0,45s e o de trás a 0,12s.
+
+E a regra do "está na voz" deixou de ser um número fixo: no fio final do bloco a
+voz já é da palavra de trás morrendo, mas muitos blocos deste rabino são mais
+curtos que 0,10s (ele articula sílaba a sílaba), e um corte fixo condenaria o
+bloco inteiro. Vale o menor entre 0,10s e METADE do bloco. A regra está escrita
+igual em três lugares — checar-sincronia.mjs, sincronia.html (coladaNaDeTras) e
+o realinhador.
+
+O "verso errado" também ganhou limiar por palavra: o maior entre 0,35s e a
+DURAÇÃO da palavra. Roçar a fronteira do verso não é trocar de linha; trocar de
+palavra é o marcador andar mais do que a própria palavra dura. Não afrouxou: o
+arquivo quebrado de 24/08 de manhã continua acusando 43, e o de agora dá zero.
+
 **A fita contínua também na página (24/08).** Ela desenhava UM quadro por verso,
 cada um com a sua janela e a sua escala. Duas consequências, e ele bateu nas
 duas: uma palavra que SOA no verso de cima aparecia no quadro do verso de baixo,

@@ -221,7 +221,19 @@ const novo = tempo.map(t => +Number(t).toFixed(3));
 // proximo bloco ja e da palavra seguinte, para tras, para dentro do bloco
 // anterior, onde ela esta colada na vizinha. No maximo ENCOSTAR segundos, e
 // nunca por cima de uma ancora do Erez nem da vizinha.
-const ENCOSTAR = 0.30;
+// A voz da palavra vem SEMPRE depois do marcador que caiu no silencio — o
+// rabino ainda nao a disse. Por isso o alcance para a FRENTE e generoso e o
+// alcance para TRAS e curto: encostar para tras poe a palavra no fim da voz da
+// vizinha, e ele ouve a vizinha, nao ela.
+//
+// O Erez achou isto de ouvido: "algumas palavras cortam no meio como purkane,
+// so vejo o audio de pur...". No chabad_yatom o purkane foi ouvido aos 11.20,
+// no silencio; a voz dele abre aos 11.54, a 0.34s — um triz alem do alcance de
+// 0.30 que eu tinha posto. Sem alcance para a frente, ele recuou para 11.08, o
+// fio final do bloco do "veyatsmach" (10.68~11.10). Tocar a palavra dava o
+// rabo do veyatsmach, silencio, e so entao o purkane.
+const ENCOSTAR = 0.45;        // para a frente: ate aqui, a voz dela
+const ENCOSTAR_TRAS = 0.12;   // para tras: so um fio, e so quando nao ha frente
 // no fio final de um bloco a voz ja e da palavra de tras morrendo. Estar ali
 // nao e estar na voz: o 'sheme' do ashkenaz_derabanan foi parar em 2.64, a
 // 0.02s do fim do bloco do 'veyitkadash', quando a voz dele comeca em 3.08.
@@ -231,15 +243,16 @@ let encostadas = 0;
 for (let i = 0; i < N; i++) {
   if (ancorado[i]) continue;
   const t = novo[i];
-  if (sinal.blocos.some(([a, z]) => t >= a && t <= z - SOBRA)) continue;   // ja esta na voz
+  // ja esta na voz? (o fio final do bloco nao conta — ali a voz e da de tras)
+  if (sinal.blocos.some(([a, z]) => t >= a && z - t > Math.min(SOBRA, (z - a) / 2))) continue;
   const antesDe = i + 1 < N ? novo[i + 1] : FIM;
   const depoisDe = i > 0 ? novo[i - 1] : FALA_INI - 0.001;
   const seguinte = sinal.blocos.find(([a]) => a > t);
-  const anterior = [...sinal.blocos].reverse().find(([a, z]) => z < t || (t >= a && t > z - SOBRA));
+  const anterior = [...sinal.blocos].reverse().find(([a, z]) => z < t || (t >= a && z - t <= Math.min(SOBRA, (z - a) / 2)));
   let alvo = null;
   if (seguinte && seguinte[0] - t <= ENCOSTAR + EPS && seguinte[0] < antesDe && seguinte[0] > depoisDe)
     alvo = seguinte[0];
-  else if (anterior && t - anterior[1] <= ENCOSTAR + EPS) {
+  else if (anterior && t - anterior[1] <= ENCOSTAR_TRAS + EPS) {
     const c = +(anterior[1] - 0.02).toFixed(3);
     if (c < antesDe && c > depoisDe) alvo = c;
   }

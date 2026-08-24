@@ -36,6 +36,11 @@
   .tl .w{padding:1px 3px;border-radius:5px;cursor:pointer}
   .tl .w.mal{background:#f6ddd0;color:var(--erro)}
   .tl .w.sel{background:var(--brass);color:#fff}
+  .rolo{overflow-x:auto;overflow-y:hidden;position:relative;border-radius:9px;
+        background:#fff;border:1px solid var(--linha);-webkit-overflow-scrolling:touch}
+  .rolo canvas{width:auto;height:200px;display:block;border:0;border-radius:0}
+  .agulha{position:absolute;top:0;bottom:0;width:2px;background:#1f6feb;pointer-events:none;display:none}
+  .zoom{display:flex;gap:8px;align-items:center;margin:8px 0}
   canvas{width:100%;height:132px;display:block;border-radius:9px;background:#fff;
          border:1px solid var(--linha);touch-action:none}
   .diag{margin-top:9px;font-size:15px}
@@ -123,7 +128,7 @@ const SUSPEITO   = 0.30;
 //
 // A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
 // nao forem iguais, e cache, e nao defeito de sincronia.
-const DADOS = '24/08-h';
+const DADOS = '24/08-i';
 
 const el = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -296,7 +301,11 @@ function palavras() {
 const SILENCIO_GRANDE = 0.35;
 const FOLGA_CORTE = 0.08;      // 2 quadros: nao acusar por um triz
 const VOZ_MINIMA = 0.10;       // menos que isto e fio da vizinha, nao voz dela
-const SOBRA = 0.10;            // no fio final do bloco a voz ja e da de tras
+// No fio final do bloco a voz ja e da palavra de tras morrendo. O corte nao e
+// fixo: muitos blocos deste rabino sao mais curtos que 0,10s, e um numero fixo
+// condenaria o bloco inteiro. Vale o menor entre SOBRA e metade do bloco.
+// Mesma regra do checar-sincronia.mjs e do realinhador.
+const SOBRA = 0.10;
 
 // os pedacos de voz que caem DENTRO da palavra, recortados nela
 function vozDentro(p) {
@@ -309,7 +318,7 @@ function vozDentro(p) {
 // a palavra comeca com a voz ja correndo? entao esta colada na de tras
 function coladaNaDeTras(p) {
   const t = inicio(p);
-  return desenho.blocos.some(([a, z]) => t >= a && t <= z - SOBRA);
+  return desenho.blocos.some(([a, z]) => t >= a && z - t > Math.min(SOBRA, (z - a) / 2));
 }
 // cortada: o fim do VERSO no meio da voz — e o verso que ele toca
 function cortada(p) {
@@ -385,8 +394,9 @@ function diagnosticar() {
 
 // ---------- desenhar ----------
 function pintar(cv, ps, v) {
-  const dpr = Math.min(devicePixelRatio || 1, 2);
   const L = cv.clientWidth, A = cv.clientHeight;
+  // a fita e larga; o navegador nao aguenta qualquer tamanho de canvas
+  const dpr = Math.max(0.5, Math.min(devicePixelRatio || 1, 2, 16000 / Math.max(1, L)));
   cv.width = L * dpr; cv.height = A * dpr;
   const c = cv.getContext('2d');
   c.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -417,19 +427,23 @@ function pintar(cv, ps, v) {
 
   // 3) cada palavra: uma linha no seu comeco, com o nome em cima
   c.font = '12px Georgia, serif';
+  let alt = 0;
   for (const p of ps) {
     const t = inicio(p);
     if (t < t0 || t > t1) continue;
     const px = x(t);
+    // o nome vai alternando entre duas alturas: numa fita apertada eles se
+    // escreveriam por cima uns dos outros e nao daria para ler nenhum
+    alt = 1 - alt;
     // o que ELE arrastou sai sempre em cor propria e grosso: nunca pode passar
     // por leitura do arquivo
     const cor = mexida(p) ? '#8b6a3e'
               : p.grau === 2 ? '#8a3a1a' : p.grau === 1 ? '#a8781f' : '#2f6b3a';
     c.strokeStyle = cor;
     c.lineWidth = mexida(p) ? 3.5 : (sel && sel.verso === p.verso && sel.i === p.i) ? 3 : 1.5;
-    c.beginPath(); c.moveTo(px, 14); c.lineTo(px, A - 22); c.stroke();
+    c.beginPath(); c.moveTo(px, alt ? 14 : 28); c.lineTo(px, A - 22); c.stroke();
     c.fillStyle = cor;
-    c.fillText((p.tl || p.hebrew).slice(0, 12), Math.min(px + 3, L - 70), 12);
+    c.fillText((p.tl || p.hebrew).slice(0, 13), px + 3, alt ? 12 : 26);
     if (mexida(p)) {                                  // marca do que ele arrastou
       c.fillStyle = '#8b6a3e'; c.beginPath(); c.arc(px, A - 18, 4, 0, 7); c.fill();
     }
@@ -459,15 +473,13 @@ function pintar(cv, ps, v) {
     if (s % 2 === 0) c.fillText(s + 's', x(s) + 2, A - 3);   // segundo do Kadish inteiro
   }
 
-  // 5) a agulha, quando esta tocando
-  if (!au.paused && au.currentTime >= t0 && au.currentTime <= t1) {
-    c.strokeStyle = '#1f6feb'; c.lineWidth = 2;
-    c.beginPath(); c.moveTo(x(au.currentTime), 10); c.lineTo(x(au.currentTime), A - 20); c.stroke();
-  }
+  // A agulha NAO e desenhada aqui: redesenhar uma fita de 20 mil pixels 60
+  // vezes por segundo trava o iPad. Ela e um risco de CSS por cima, movido
+  // pela xDaAgulha().
 }
 
 function repintarTudo() {
-  for (const cv of document.querySelectorAll('canvas')) pintar(cv, cv._ps, cv._v);
+  for (const cv of document.querySelectorAll('canvas')) pintar(cv, cv._ps, null);
 }
 
 // ---------- montar a tela ----------
@@ -507,14 +519,18 @@ function atualizarContas(ps) {
 // verso virou o que ela e: um risco tracejado com o numero em cima. Qualquer
 // palavra pode ser arrastada para qualquer lugar, inclusive para dentro do
 // verso vizinho.
-const FAIXA = 10;   // segundos por faixa
+// UMA LINHA SO. Cortar em faixas de 10s ainda cortava: uma palavra que caisse
+// na emenda aparecia pela metade, e ele viu logo — "algumas palavras cortam no
+// meio como purkane, so vejo o audio de pur...". Agora o Kadish inteiro e um
+// desenho unico que rola de lado. Nao ha emenda nenhuma para cortar nada.
+let PXS = Number(localStorage.getItem('sinc_pxs') || 70);   // pixels por segundo
+const PXS_OPCOES = [35, 50, 70, 100, 140];
+const LARGURA_MAX = 20000;   // acima disto o navegador nao aguenta o canvas
 
-function faixas() {
-  const t0 = Math.max(0, (sync.fala_inicio ?? 0) - 0.4);
-  const t1 = Math.min(desenho.duracao, (sync.fala_fim ?? desenho.duracao) + 0.4);
-  const out = [];
-  for (let t = t0; t < t1; t += FAIXA) out.push([t, Math.min(t + FAIXA, t1)]);
-  return out;
+function janela() {
+  const t0 = Math.max(0, (sync.fala_inicio ?? 0) - 0.5);
+  const t1 = Math.min(desenho.duracao, (sync.fala_fim ?? desenho.duracao) + 0.5);
+  return [t0, t1];
 }
 
 function desenhar_tela() {
@@ -524,8 +540,7 @@ function desenhar_tela() {
   // AVISO GRANDE quando ha arrasto. Tres vezes o Erez leu como defeito do
   // ARQUIVO o que era arrasto DELE — a ultima com 9 arrastos na tela, dizendo
   // "veytpaer e falado no verso 8", quando o arquivo punha o veyitpaar no
-  // lugar certo e quem o tinha movido era ele. Nao da para pedir que ele
-  // lembre; a pagina tem que dizer.
+  // lugar certo e quem o tinha movido era ele.
   const nArrastadas = ps.filter(mexida).length;
   let h = nArrastadas ? `<div class="nota" style="background:#8b6a3e;color:#fff;border-color:#8b6a3e">
     <b>Você arrastou ${nArrastadas} palavra(s).</b> O que está desenhado abaixo é o
@@ -536,10 +551,11 @@ function desenhar_tela() {
       <button id="desfazerTudo" style="background:#fff;color:#2a1f15;border:0">Desfazer tudo o que arrastei</button>
     </div></div>` : '';
   h += `<div class="nota">
-    Esta é a <b>fita inteira do Kadish</b>, do começo ao fim, na mesma escala.
-    Os riscos <b>tracejados</b> com número são onde cada verso começa.
-    O fundo verde é onde o rabino <b>está falando</b>. Cada risco fino é o começo
-    de uma palavra: <span style="color:#2f6b3a">verde</span> em cima da voz,
+    Esta é a <b>fita inteira do Kadish, numa linha só</b>. Arraste de lado para
+    andar no tempo. Os riscos <b>tracejados</b> com número são onde cada verso
+    começa; o fundo verde é onde o rabino <b>está falando</b>.
+    Cada risco fino é o começo de uma palavra:
+    <span style="color:#2f6b3a">verde</span> em cima da voz,
     <span style="color:#a8781f">amarelo</span> um pouco fora,
     <span style="color:#8a3a1a">vermelho</span> fora.
     <br><br>Toque numa palavra para ouvir só ela. <b>Arraste o risco</b> para o
@@ -548,36 +564,27 @@ function desenhar_tela() {
     <div class="legenda"><i></i> o rabino falando &nbsp;
       <i style="background:#f6d8cc"></i> voz partida ao meio — olhe aqui primeiro</div></div>`;
 
-  // A LISTA DO QUE OLHAR, no alto. Antes o jeito de nao se perder era esconder
-  // os versos certos ("so o suspeito"), e esconder e o oposto de continuo.
-  // Agora a fita fica sempre inteira e quem leva ate o defeito e esta lista.
-  const olhar = ps.filter(p => soFalta ? (p.grau > 0 || partida(p) || mexida(p)) : true);
-  h += `<div class="nota"><b>${ps.filter(p => p.grau > 0).length} para olhar</b>` +
+  // A LISTA DO QUE OLHAR leva ate cada palavra. Antes o jeito de nao se perder
+  // era esconder os versos certos, e esconder e o oposto de continuo.
+  const maus = ps.filter(p => p.grau > 0);
+  const olhar = soFalta ? ps.filter(p => p.grau > 0 || partida(p) || mexida(p)) : ps;
+  h += `<div class="nota"><b>${maus.length} para olhar</b>` +
     (olhar.length ? ` — toque para ir até a palavra:<div class="acoes">` +
-      olhar.slice(0, 40).map(p => `<button data-ir="${p.verso}|${p.i}">` +
+      olhar.slice(0, 60).map(p => `<button data-ir="${p.verso}|${p.i}">` +
         `${esc(p.tl || p.hebrew)} <small>§${p.verso} · ${seg(inicio(p))}</small></button>`).join('') +
       `</div>` : ' — nada suspeito neste Kadish.') + `</div>`;
 
-  const fs = faixas();
-  fs.forEach(([t0, t1], i) => {
-    const dentro = ps.filter(p => inicio(p) >= t0 && inicio(p) < t1);
-    const vsAqui = [...new Set(dentro.map(p => p.verso))];
-    h += `<div class="verso" data-f="${i}">
-      <div class="cab"><span>${seg(t0)} a ${seg(t1)}</span>
-        <span>${vsAqui.length ? 'verso ' + vsAqui.join(', ') : '—'}</span></div>
-      <div class="heb">${dentro.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
-        data-v="${p.verso}" data-i="${p.i}">${esc(p.hebrew)}</span>`).join(' ')}</div>
-      <div class="tl">${dentro.map(p => `<span class="w ${p.grau ? 'mal' : ''}"
-        data-v="${p.verso}" data-i="${p.i}">${esc(p.tl)}</span>`).join(' ')}</div>
-      <canvas data-f="${i}"></canvas>
-      <div class="acoes"><button data-tocarf="${i}">▶ ouvir estes ${Math.round(t1 - t0)}s</button></div>
-      <div class="diag" id="diagF${i}"></div>
-    </div>`;
-  });
+  h += `<div class="zoom">
+      <button data-zoom="-1">− afastar</button>
+      <button data-zoom="1">+ aproximar</button>
+      <small style="color:var(--fraco)">${PXS} pixels por segundo</small>
+    </div>
+    <div class="rolo" id="rolo"><canvas data-f="0"></canvas><div class="agulha" id="agulha"></div></div>
+    <div class="acoes"><button data-tocartudo="1">▶ ouvir o Kadish inteiro</button></div>
+    <div class="diag" id="diagF0"></div>`;
 
-  // Os controles POR VERSO continuam existindo — o empurrao de verso inteiro e
-  // o gesto dele para "esta linha esta um bloco fora". So sairam de dentro do
-  // desenho, que agora nao e mais por verso, e viraram uma lista embaixo.
+  // Os controles POR VERSO continuam: o empurrao da linha inteira e o gesto
+  // dele para "este verso esta um bloco fora".
   h += `<div class="verso"><div class="cab"><span>verso a verso</span>
       <span>ouvir · empurrar a linha inteira · desfazer</span></div>`;
   for (const v of sync.versos) {
@@ -594,22 +601,43 @@ function desenhar_tela() {
   }
   h += `</div>`;
 
+  const rolagem = el('rolo') ? el('rolo').scrollLeft : 0;
   el('corpo').innerHTML = h;
   montarCanvas(ps);
+  if (el('rolo')) el('rolo').scrollLeft = rolagem;   // nao perder o lugar
 }
 
 function montarCanvas(ps) {
-  const fs = faixas();
-  for (const cv of document.querySelectorAll('canvas')) {
-    const i = Number(cv.dataset.f);
-    const [t0, t1] = fs[i];
-    cv._t0 = t0; cv._t1 = t1;
-    // A faixa e do TEMPO, nao do verso: entram todas as palavras que comecam
-    // aqui, venham do verso que vierem. E o que torna a fita continua.
-    cv._ps = ps.filter(p => inicio(p) >= t0 && inicio(p) < t1);
-    pintar(cv, cv._ps, null);
-    escreverDiag(i, cv._ps);
-  }
+  const cv = document.querySelector('.rolo canvas');
+  if (!cv) return;
+  const [t0, t1] = janela();
+  cv._t0 = t0; cv._t1 = t1; cv._ps = ps;
+  cv.style.width = Math.min(LARGURA_MAX, (t1 - t0) * PXS) + 'px';
+  pintar(cv, ps, null);
+  escreverDiag(0, ps);
+}
+
+/** rola a fita ate deixar o instante t no meio da tela */
+function irAte(t) {
+  const cv = document.querySelector('.rolo canvas'), r = el('rolo');
+  if (!cv || !r) return;
+  const px = (t - cv._t0) / (cv._t1 - cv._t0) * cv.clientWidth;
+  r.scrollTo({ left: Math.max(0, px - r.clientWidth / 2), behavior: 'smooth' });
+}
+
+function xDaAgulha() {
+  const cv = document.querySelector('.rolo canvas');
+  const ag = el('agulha');
+  if (!cv || !ag) return;
+  const [t0, t1] = [cv._t0, cv._t1];
+  if (au.paused || au.currentTime < t0 || au.currentTime > t1) { ag.style.display = 'none'; return; }
+  const px = (au.currentTime - t0) / (t1 - t0) * cv.clientWidth;
+  ag.style.display = 'block';
+  ag.style.left = px + 'px';
+  // a fita anda sozinha atras da agulha, para ele nao ter que empurrar
+  const r = el('rolo');
+  if (px < r.scrollLeft + 60 || px > r.scrollLeft + r.clientWidth - 60)
+    r.scrollLeft = Math.max(0, px - r.clientWidth / 2);
 }
 
 function escreverDiag(i, pv) {
@@ -653,7 +681,7 @@ function tocar(t0, t1) {
 au.addEventListener('timeupdate', () => {
   if (pararEm !== null && au.currentTime >= pararEm) { au.pause(); pararEm = null; }
 });
-(function agulha() { if (!au.paused) repintarTudo(); requestAnimationFrame(agulha); })();
+(function agulha() { xDaAgulha(); requestAnimationFrame(agulha); })();
 
 // ---------- toques e arrasto ----------
 el('corpo').addEventListener('click', e => {
@@ -676,20 +704,23 @@ el('corpo').addEventListener('click', e => {
     for (const k of Object.keys(mexidas)) if (k.startsWith(n + '|')) delete mexidas[k];
     gravarMex(); return desenhar_tela();
   }
-  if (b && b.dataset.tocarf !== undefined) {
-    const [t0, t1] = faixas()[Number(b.dataset.tocarf)];
-    return tocar(t0, t1);
+  if (b && b.dataset.tocartudo) { const [t0, t1] = janela(); return tocar(t0, t1); }
+  if (b && b.dataset.zoom) {
+    const i = PXS_OPCOES.indexOf(PXS);
+    const j = Math.max(0, Math.min(PXS_OPCOES.length - 1, (i < 0 ? 2 : i) + Number(b.dataset.zoom)));
+    PXS = PXS_OPCOES[j]; localStorage.setItem('sinc_pxs', String(PXS));
+    return desenhar_tela();
   }
   if (b && b.dataset.ir) {
     const [v, i] = b.dataset.ir.split('|').map(Number);
     sel = { verso: v, i };
     document.querySelectorAll('.w.sel').forEach(x => x.classList.remove('sel'));
-    const alvos = document.querySelectorAll(`.w[data-v="${v}"][data-i="${i}"]`);
-    alvos.forEach(x => x.classList.add('sel'));
-    if (alvos[0]) alvos[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
     const p = diagnosticar().find(x => x.verso === v && x.i === i);
     repintarTudo();
-    if (p) tocar(inicio(p) - 0.05, fim(p) + 0.1);
+    if (p) {
+      irAte(inicio(p));
+      tocar(inicio(p) - 0.05, fim(p) + 0.1);
+    }
     return;
   }
   const w = e.target.closest('.w');
@@ -731,11 +762,22 @@ el('corpo').addEventListener('pointermove', e => {
   // que sabe o numero exato; o dedo dele so aponta
   for (const x of desenho.inicios_de_voz) if (Math.abs(x - t) < 0.06) t = x;
   pôr(p, t);
+  arrastando.mexeu = true;
   repintarTudo();
   e.preventDefault();
 });
 el('corpo').addEventListener('pointerup', () => {
   if (!arrastando) return;
+  // Toque sem arrastar = "quero ouvir esta". Sem isto nao havia como ouvir uma
+  // palavra: o texto solto por fora do desenho saiu quando a fita virou uma
+  // linha so.
+  if (!arrastando.mexeu) {
+    const p = arrastando.p;
+    arrastando = null;
+    const at = diagnosticar().find(x => x.verso === p.verso && x.i === p.i);
+    if (at) { repintarTudo(); tocar(inicio(at) - 0.05, fim(at) + 0.1); }
+    return;
+  }
   arrastando = null; gravarMex();
   // A palavra pode ter ATRAVESSADO para outra faixa — e esse era justamente o
   // movimento que a tela por verso nao deixava fazer. Entao refaz as faixas

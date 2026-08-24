@@ -82,6 +82,20 @@ const SILENCIO = 0.35;
 // ate 1.64 virava "silencio", quando o rabino so estava dizendo a palavra
 // silaba por silaba, do jeito dele.
 const VOZ_MINIMA = 0.10;
+// No FIO FINAL de um bloco a voz ja e da palavra de tras morrendo: estar ali
+// nao e estar colada nela, e ser confundida com ela. O purkane do chabad_yatom
+// comeca 0.02s antes de o bloco do veyatsmach acabar; tocar a palavra dava o
+// rabo do veyatsmach e so depois o purkane, e o Erez ouviu: "so vejo o audio
+// de pur...".
+//
+// O corte nao pode ser um numero fixo: muitos blocos deste rabino sao mais
+// curtos que 0,10s (ele articula silaba a silaba), e um corte fixo condenaria
+// o bloco inteiro. Entao vale o menor entre SOBRA e METADE do bloco.
+// Esta regra TEM que ser a mesma no sincronia.html (coladaNaDeTras) e no
+// realinhador. Se sairem de sincronia, a pagina mente para ele.
+const SOBRA = 0.10;
+const naVoz = (blocos, t) => blocos.some(([a, z]) =>
+  t >= a && z - t > Math.min(SOBRA, (z - a) / 2));
 const POR_SILABA_MIN = 0.16;  // abaixo disto a palavra nao cabe no tempo que tem
 const PERTO_WHISPER = 0.5;
 // O Whisper marca em quadros mais grossos que o envelope: um verso que comeca
@@ -91,6 +105,15 @@ const PERTO_WHISPER = 0.5;
 // verso 7 e comeca o "Yehe" 1,04s cedo; a ancora dele, de 23/08, esta certa e o
 // desenho da voz confirma: o amen e o bloco 26.24~26.66, o Yehe e o 27.66.
 const VERSO_ERRADO = 0.35;
+// E nao basta o limiar fixo. Depois de 24/08 as palavras encostam no COMECO DE
+// VOZ (o sinal, que e a medida); o Whisper marca no quadro dele, que pode cair
+// no silencio antes. Um marcador 0,4s depois do instante ouvido, com a
+// fronteira de verso no meio, e roçar a fronteira — nao e a palavra estar na
+// linha errada. Trocar de palavra e outra coisa: o marcador anda MAIS do que a
+// propria palavra dura. Entao o limiar de cada palavra e o maior entre o fixo e
+// a duracao dela. Isto nao afrouxa a conta — ela continua pegando o defeito que
+// existia em 24/08 de manha (o yitbarach do sefaradi estava 2,00s fora, com a
+// palavra durando 1,44s), e para de acusar o que o sinal diz estar certo.
 
 const VOGAIS = /[ֱ-ׇֻ]/g;
 const silabas = h => Math.max(1, (String(h).match(VOGAIS) || []).length);
@@ -126,7 +149,7 @@ function olhar(alvo) {
       // rabino esta falando? Se o instante cai DENTRO de um bloco de voz, esta
       // — ela so nao inaugurou o bloco porque veio colada na de tras. Se cai no
       // silencio, ai sim ha o que olhar.
-      const b = s.blocos.find(([a, z]) => p.start >= a && p.start <= z);
+      const b = naVoz(s.blocos, p.start) && s.blocos.find(([a, z]) => p.start >= a && p.start <= z);
       if (b) { coladas++; achados.push({ v: v.n, nome, tipo: 'colada',
         detalhe: `comeca com a voz ja correndo (o bloco abriu em ${b[0].toFixed(2)})` }); }
       else { fora++; achados.push({ v: v.n, nome, tipo: 'fora da voz',
@@ -192,7 +215,8 @@ function olhar(alvo) {
     todas.forEach((p, i) => {
       if (alvos[i] === null) return;
       if (ancoras.includes(`${p.verso}|${p.i + 1}`)) return;
-      if (Math.abs(p.start - alvos[i]) < VERSO_ERRADO) return;
+      const limiar = Math.max(VERSO_ERRADO, p.end - p.start);
+      if (Math.abs(p.start - alvos[i]) < limiar) return;
       const v = d.versos.find(v => alvos[i] >= v.start && alvos[i] < v.end);
       if (v && v.n !== p.verso) {
         errado++;

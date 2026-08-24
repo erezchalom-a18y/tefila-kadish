@@ -103,6 +103,30 @@ await pag.goto(`${BASE}/sincronia.html`);
 await pag.waitForTimeout(2500);
 confere('a pagina abre e desenha', await pag.locator('canvas').count() > 0);
 
+// UMA LINHA SO, cobrindo o Kadish inteiro. Esta pagina ja foi um quadro por
+// verso (uma palavra que soava no verso de cima aparecia no quadro do de baixo,
+// e nao havia como arrasta-la para tras) e depois faixas de 10s (uma palavra na
+// emenda aparecia pela metade — o Erez viu logo: "algumas palavras cortam no
+// meio como purkane, so vejo o audio de pur..."). A fita continua so e continua
+// se for UM desenho do comeco ao fim. Esta checagem existe para nao voltar.
+const fita = await pag.evaluate(() => {
+  const cs = document.querySelectorAll('canvas');
+  const c = cs[0];
+  return { quantos: cs.length, t0: c._t0, t1: c._t1, palavras: c._ps.length,
+           duracao: desenho.duracao, ini: sync.fala_inicio, fim: sync.fala_fim,
+           todas: sync.versos.reduce((n, v) => n + v.palavras.length, 0),
+           rolaDeLado: document.getElementById('rolo').scrollWidth >
+                       document.getElementById('rolo').clientWidth };
+});
+confere('e o desenho e UM so, nao um por verso nem faixas', fita.quantos === 1,
+  `${fita.quantos} desenhos`);
+confere('e ele cobre o Kadish inteiro, do comeco ao fim da fala',
+  fita.t0 <= fita.ini + 0.01 && fita.t1 >= fita.fim - 0.01,
+  `desenho ${fita.t0}–${fita.t1}, fala ${fita.ini}–${fita.fim}`);
+confere('e TODAS as palavras estao nele — nenhuma fica de fora de uma emenda',
+  fita.palavras === fita.todas, `${fita.palavras} de ${fita.todas}`);
+confere('e a fita rola de lado por dentro (a pagina, nao)', fita.rolaDeLado === true);
+
 // O pedido dos dados leva a marca no endereco. Sem isso o GitHub Pages devolve
 // o JSON de ontem e o Erez fica vendo defeito que ja foi consertado — foi o que
 // aconteceu com o raba: pagina nova, dados velhos.
