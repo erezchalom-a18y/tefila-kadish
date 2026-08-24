@@ -191,5 +191,13 @@
       },
       "porque": "Ele arrastou para 53.22 e depois ouviu: 'quando rodo o audio na linha 13 so da para ouvir o ultimo A do tushbechata'. O sinal explica: o bloco de voz 52.30-53.14 (0,84s) e a palavra inteira, e 53.22-53.40 (0,18s) e so a cauda dela. Ele arrastou para o bloco que DAVA PARA VER — o certo estava fora da janela que a pagina desenhava (folga de 0,6s antes do verso). A pagina foi consertada junto: agora mostra 1,5s de folga e acusa bloco de voz que nenhuma palavra cobre."
     }
+  ],
+  "chabad_derabanan": [
+    {
+      "verso": 2,
+      "palavra": 1,
+      "inicio": 3.36,
+      "nota": "bealma — o Erez ouviu que o raba do verso 1 estava partido: 'so da para ouvir o ra do raba e no verso 2 comeca com raba'. Ele confirmou que o raba e UM bloco de voz so (2.70-3.28), entao o verso 1 acaba aos 3.36 e o bealma comeca ali. Erez 23/08."
+    }
   ]
 }
