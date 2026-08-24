@@ -61,8 +61,25 @@ const sync = JSON.parse(readFileSync(`sync/${ALVO}_sync.json`, 'utf8'));
 const antes = JSON.parse(JSON.stringify(sync));
 const ancoras = (JSON.parse(readFileSync('ancoras.json', 'utf8'))[ALVO] || []);
 
+// A TESTEMUNHA DO CONTEUDO.
+// O sinal sabe ONDE ha voz; nao sabe QUAL palavra e. Por isso a primeira versao
+// deste script zerou a conta e continuou errada — um alinhamento deslocado um
+// bloco tem toda palavra em cima de voz, igualzinho. O Whisper diz qual palavra
+// soa em cada segundo; ele erra em aramaico liturgico, entao aqui nao manda:
+// so puxa. A pena so comeca depois de 0,35s de diferenca, e o sinal continua
+// dando o numero exato (a palavra sempre entra num comeco de bloco).
+let ouvido = new Map();   // indice da palavra -> segundo em que o Whisper ouviu
+try {
+  const w = JSON.parse(readFileSync('fontes/whisper-tempos.json', 'utf8')).tempos[ALVO] || [];
+  for (const e of w) ouvido.set(`${e.verso}|${e.hebrew}`, e.ouvido);
+} catch (err) { /* sem transcricao, o script segue so com o sinal */ }
+
 const INI = sinal.blocos.map(b => b[0]);          // comeco de cada bloco de voz
-const FIM_AUDIO = Math.max(...sinal.blocos.map(b => b[1]));
+// O fim da fala e o que o PROPRIO arquivo declara (fala_fim), nao o fim do
+// ultimo bloco de voz. O checar.mjs cobra isso, e com razao: o corte do audio
+// foi conferido de ouvido pelo Erez e esta no cortes.json. Usar o ultimo bloco
+// deixava o ultimo verso 0,15s curto e reprovava a checagem.
+const FIM_AUDIO = sync.fala_fim ?? sync.audio_duration ?? Math.max(...sinal.blocos.map(b => b[1]));
 const palavras = sync.versos.flatMap(v => v.palavras.map(p => ({ ...p, verso: v.n })));
 const N = palavras.length, M = INI.length;
 
@@ -109,6 +126,7 @@ const duracaoJusta = i => (peso[i] / pesoTotal) * (T1 - T0);
 // Um pedaco de silencio no meio da palavra pode ser legitimo — o rabino
 // respira —, entao a pena e alta mas nao infinita.
 const PENA_MUDA = 6, PENA_ENGOLE = 4;
+const PESO_WHISPER = 3, FOLGA_WHISPER = 0.35;
 const SILENCIO_CUSTO = 0.35;
 const estrutural = [];
 for (let k = 0; k < M; k++) {
@@ -129,6 +147,14 @@ const INF = Infinity;
 const custo = Array.from({ length: N }, () => new Float64Array(M).fill(INF));
 const de = Array.from({ length: N }, () => new Int32Array(M).fill(-1));
 
+// O que o Whisper diz sobre a palavra i comecar no bloco j
+const ouvidoDe = i => ouvido.get(`${palavras[i].verso}|${palavras[i].hebrew}`);
+const custoWhisper = (i, j) => {
+  const w = ouvidoDe(i);
+  if (w === undefined) return 0;
+  return PESO_WHISPER * Math.max(0, Math.abs(INI[j] - w) - FOLGA_WHISPER);
+};
+
 const podeAqui = (i, j) => {
   const f = fixo.get(i);
   if (f !== undefined) return j === f;
@@ -139,7 +165,7 @@ const podeAqui = (i, j) => {
   return true;
 };
 
-for (let j = 0; j < M; j++) if (podeAqui(0, j)) custo[0][j] = Math.abs(INI[j] - T0);
+for (let j = 0; j < M; j++) if (podeAqui(0, j)) custo[0][j] = Math.abs(INI[j] - T0) + custoWhisper(0, j);
 
 for (let i = 1; i < N; i++) {
   for (let j = i; j < M; j++) {
@@ -148,7 +174,7 @@ for (let i = 1; i < N; i++) {
     for (let k = i - 1; k < j; k++) {
       if (custo[i - 1][k] === INF) continue;
       const dur = INI[j] - INI[k];
-      const c = custo[i - 1][k] + Math.abs(dur - duracaoJusta(i - 1)) + estrutural[k][j];
+      const c = custo[i - 1][k] + Math.abs(dur - duracaoJusta(i - 1)) + estrutural[k][j] + custoWhisper(i, j);
       if (c < melhor) { melhor = c; arg = k; }
     }
     custo[i][j] = melhor; de[i][j] = arg;
@@ -196,6 +222,41 @@ console.log(`  depois: ${mostra(dD)}`);
 
 const mexidas = depoisStarts.filter((t, i) => Math.abs(t - antesStarts[i]) > 0.02).length;
 console.log(`  ${mexidas} de ${N} palavras mudam de lugar`);
+
+// Concordancia com o Whisper: e a unica medida aqui que fala de CONTEUDO.
+if (ouvido.size) {
+  const perto = (starts) => {
+    let n = 0, soma = 0, quantos = 0;
+    for (let i = 0; i < N; i++) {
+      const w = ouvidoDe(i); if (w === undefined) continue;
+      quantos++; soma += Math.abs(starts[i] - w);
+      if (Math.abs(starts[i] - w) <= 0.5) n++;
+    }
+    return { n, quantos, media: (soma / quantos).toFixed(2) };
+  };
+  const a = perto(antesStarts), b = perto(depoisStarts);
+  console.log(`  concorda com o que o Whisper ouviu: ${a.n}/${a.quantos} -> ${b.n}/${b.quantos}` +
+              `  (erro medio ${a.media}s -> ${b.media}s)`);
+}
+
+// ---------- olhar de perto, antes de acreditar ----------
+// Numero bom nao e prova. A primeira versao zerou a conta e estava errada; o
+// que a pegou foi olhar palavra por palavra no comeco do Kadish.
+if (process.argv.includes('--ver')) {
+  const quantos = Number((process.argv[process.argv.indexOf('--ver') + 1] || '10'));
+  console.log('\n  palavra          era        fica       blocos que pega       Whisper');
+  for (let i = 0; i < Math.min(quantos, N); i++) {
+    const a = depoisStarts[i], z = i + 1 < N ? depoisStarts[i + 1] : FIM_AUDIO;
+    const dentro = sinal.blocos
+      .map((b, k) => [b, k]).filter(([b]) => { const mid = (b[0] + b[1]) / 2; return mid >= a && mid < z; })
+      .map(([, k]) => 'b' + (k + 1));
+    const w = ouvidoDe(i);
+    console.log('  ' + (palavras[i].transliteration_pt || palavras[i].hebrew).padEnd(15) +
+      antesStarts[i].toFixed(2).padStart(6) + '  ' + a.toFixed(2).padStart(8) + '     ' +
+      (dentro.join(',') || 'NADA').padEnd(20) + (w === undefined ? '—' : w.toFixed(2)));
+  }
+  console.log('');
+}
 
 // ---------- escrever no objeto e provar ----------
 let k = 0;

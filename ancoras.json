@@ -190,14 +190,18 @@
         "inicio": 52.3
       },
       "porque": "Ele arrastou para 53.22 e depois ouviu: 'quando rodo o audio na linha 13 so da para ouvir o ultimo A do tushbechata'. O sinal explica: o bloco de voz 52.30-53.14 (0,84s) e a palavra inteira, e 53.22-53.40 (0,18s) e so a cauda dela. Ele arrastou para o bloco que DAVA PARA VER — o certo estava fora da janela que a pagina desenhava (folga de 0,6s antes do verso). A pagina foi consertada junto: agora mostra 1,5s de folga e acusa bloco de voz que nenhuma palavra cobre."
+    },
+    {
+      "nussach": "chabad_derabanan",
+      "era": {
+        "verso": 2,
+        "palavra": 1,
+        "inicio": 3.36,
+        "nota": "bealma — o Erez ouviu que o raba do verso 1 estava partido: 'so da para ouvir o ra do raba e no verso 2 comeca com raba'. Ele confirmou que o raba e UM bloco de voz so (2.70-3.28), entao o verso 1 acaba aos 3.36 e o bealma comeca ali. Erez 23/08."
+      },
+      "substituida_por": null,
+      "porque": "Eu criei esta ancora em 23/08 lendo errado a resposta do Erez. Ele disse que o raba e UM bloco de voz so, e eu entendi que era o bloco onde o raba ja estava (2.70-3.28) — entao so estiquei o fim ate 3.36 e preguei o bealma ali. O Whisper mostra que aquele bloco e o SHEME: ele ouve o bealma aos 4.50s, e nao aos 3.36. A ancora ficou pregando a palavra no lugar errado, e como ancora e restricao rigida, ela travava o realinhamento do Kadish inteiro. Sai porque nao e reparo de ouvido dele: e engano meu vestido de ancora. O que ele ouviu continua valendo e esta atendido pelo realinhamento — o raba passa a ser o bloco 3.36-3.76, que era o que ele descrevia quando disse 'no verso 2 comeca com raba'."
     }
   ],
-  "chabad_derabanan": [
-    {
-      "verso": 2,
-      "palavra": 1,
-      "inicio": 3.36,
-      "nota": "bealma — o Erez ouviu que o raba do verso 1 estava partido: 'so da para ouvir o ra do raba e no verso 2 comeca com raba'. Ele confirmou que o raba e UM bloco de voz so (2.70-3.28), entao o verso 1 acaba aos 3.36 e o bealma comeca ali. Erez 23/08."
-    }
-  ]
+  "chabad_derabanan": []
 }
