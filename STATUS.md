@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `609ec24`, de 24/08/2026 01:04.
+Gerado por `gerar-status.py` no commit `cf8fff6`, de 24/08/2026 01:34.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -16,7 +16,7 @@ sabe procurar não estão aí.
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
 | ChatGPT (glossário) | 23/08/2026 18:00 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 24/08/2026 00:18 | os 8 áudios contra os sync/*.json |
+| Whisper (áudio) | 24/08/2026 01:05 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
@@ -25,14 +25,14 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 | Nussach | Palavras em cima da voz | Desvio que o sinal sugere | Mediana do Whisper | Palavras fora da voz | Versos na lista curta | Âncoras |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | ashkenaz_yatom | 69/75 (92.0%) | -0.10s | -1.14s | 3 | 2 | 5 |
-| ashkenaz_derabanan | 108/118 (91.5%) | -0.04s | -1.59s | 6 | 2 | 0 |
+| ashkenaz_derabanan | 118/118 (100.0%) | -0.14s | -1.59s | 0 | 2 | 0 |
 | chabad_yatom | 79/80 (98.8%) | -0.08s | -1.44s | 1 | 0 | 21 |
-| chabad_derabanan | 121/121 (100.0%) | -0.14s | +1.75s | 0 | 0 | 0 |
-| sefard_yatom | 69/81 (85.2%) | -0.06s | +0.75s | 7 | 3 | 0 |
-| sefard_derabanan | 112/124 (90.3%) | -0.10s | +0.62s | 5 | 3 | 0 |
-| sefaradi_yatom | 83/91 (91.2%) | -0.12s | -0.66s | 6 | 2 | 0 |
-| sefaradi_derabanan | 116/125 (92.8%) | -0.12s | -0.66s | 4 | 0 | 0 |
-| **total** | | | | **32** | **12** | **29** |
+| chabad_derabanan | 121/121 (100.0%) | -0.14s | +0.99s | 0 | 0 | 0 |
+| sefard_yatom | 81/81 (100.0%) | -0.14s | +0.75s | 0 | 3 | 0 |
+| sefard_derabanan | 112/124 (90.3%) | -0.10s | +0.00s | 5 | 3 | 0 |
+| sefaradi_yatom | 91/91 (100.0%) | -0.14s | -0.66s | 0 | 2 | 0 |
+| sefaradi_derabanan | 125/125 (100.0%) | -0.14s | -0.66s | 0 | 0 | 0 |
+| **total** | | | | **9** | **12** | **29** |
 
 Como ler cada coluna:
 
