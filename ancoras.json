@@ -161,7 +161,7 @@
     {
       "verso": 16,
       "palavra": 7,
-      "inicio": 81.0,
+      "inicio": 81,
       "nota": "Israel (sincronia.html, Erez 23/08)"
     }
   ],
@@ -208,5 +208,115 @@
       "porque": "Eu criei esta ancora em 23/08 lendo errado a resposta do Erez. Ele disse que o raba e UM bloco de voz so, e eu entendi que era o bloco onde o raba ja estava (2.70-3.28) — entao so estiquei o fim ate 3.36 e preguei o bealma ali. O Whisper mostra que aquele bloco e o SHEME: ele ouve o bealma aos 4.50s, e nao aos 3.36. A ancora ficou pregando a palavra no lugar errado, e como ancora e restricao rigida, ela travava o realinhamento do Kadish inteiro. Sai porque nao e reparo de ouvido dele: e engano meu vestido de ancora. O que ele ouviu continua valendo e esta atendido pelo realinhamento — o raba passa a ser o bloco 3.36-3.76, que era o que ele descrevia quando disse 'no verso 2 comeca com raba'."
     }
   ],
-  "chabad_derabanan": []
+  "chabad_derabanan": [
+    {
+      "verso": 2,
+      "palavra": 3,
+      "inicio": 5.56,
+      "nota": "verá — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 2,
+      "palavra": 4,
+      "inicio": 5.86,
+      "nota": "chir'utêh — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 4,
+      "palavra": 2,
+      "inicio": 10.38,
+      "nota": "purkanêh — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 5,
+      "palavra": 1,
+      "inicio": 13.66,
+      "nota": "bechayechon — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 7,
+      "palavra": 3,
+      "inicio": 21.86,
+      "nota": "carív — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 9,
+      "palavra": 1,
+      "inicio": 31.14,
+      "nota": "Yitbarêch — recado do Erez de 24/08 (sincronia.html, a fita continua). Ele pôs em 31,06, que cai no silêncio; o começo de voz é 31,14, a 0,08s — um triz além do encosto automático de 0,06 da página. Vale a regra de sempre: o dedo dele aponta, o sinal dá o número. Com isto o \"Yit-\" (bloco 31,14~31,32) deixa de ficar no verso 8.",
+      "inicio_que_ele_deu": 31.06
+    },
+    {
+      "verso": 10,
+      "palavra": 2,
+      "inicio": 35.72,
+      "nota": "veyitnasse — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 44.5,
+      "nota": "leela — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 55.7,
+      "nota": "Al — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 59.2,
+      "nota": "veal — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 16,
+      "palavra": 1,
+      "inicio": 65.4,
+      "nota": "veal — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 16,
+      "palavra": 2,
+      "inicio": 66.6,
+      "nota": "kol — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 17,
+      "palavra": 1,
+      "inicio": 70.72,
+      "nota": "di — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 18,
+      "palavra": 1,
+      "inicio": 77.92,
+      "nota": "yehê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 20,
+      "palavra": 1,
+      "inicio": 86.1,
+      "nota": "vechayin — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 22,
+      "palavra": 1,
+      "inicio": 98.98,
+      "nota": "Yehê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 23,
+      "palavra": 1,
+      "inicio": 110.54,
+      "nota": "Ossê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 24,
+      "palavra": 9,
+      "inicio": 121.04,
+      "nota": "amên — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    }
+  ]
 }
