@@ -1,6 +1,6 @@
 # Relatório da revisão cega da transliteração
 
-Gerado em 2026-08-25 03:14 UTC por ChatGPT (`gpt-4o-mini`), sobre o commit `0ba0f1a`.
+Gerado em 2026-08-25 18:02 UTC por ChatGPT (`gpt-4o-mini`), sobre o commit `ed14dfb`.
 
 > **Isto é uma opinião automática, não uma decisão.** O ChatGPT não alterou
 > nenhum arquivo e não tem autoridade sobre o texto. Toda mudança é decisão
@@ -23,12 +23,12 @@ confere foi descartada automaticamente.
 
 | Língua | Entradas com apontamento | Entradas ok |
 | --- | ---: | ---: |
-| transliteração | 40 | 2 |
-| **total** | **40** | **2** |
+| transliteração | 42 | 0 |
+| **total** | **42** | **0** |
 
 ## Apontamentos, língua por língua
 
-### transliteração — 40 entrada(s)
+### transliteração — 42 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
@@ -38,8 +38,8 @@ Transliteração: **Yitgadal veyitkadash shemê raba**
 
 - **transliteracao** · *nikud*
   - trecho citado: `shemê`
-  - problema: O nikud de 'שְׁמֵהּ' é 'shemê' que indica a vogal 'ê', mas a ausência do 'h' final não representa o som correto da letra hebraica. O correto seria 'shemêh'.
-  - sugestão do revisor: "Yitgadal veyitkadash shemêh raba"
+  - problema: O nikud 'shema' é lido como 'shemê', mas a vogal correta seria 'shem' conforme a transliteração.
+  - sugestão do revisor: "Yitgadal veyitkadash shem rabá"
 
 #### בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ
 
@@ -49,8 +49,8 @@ Transliteração: **bealma di verá chir'utêh**
 
 - **transliteracao** · *som*
   - trecho citado: `chir'utêh`
-  - problema: O som 'ch' não representa corretamente a letra hebraica ח que é pronunciada como 'h' aspirado.
-  - sugestão do revisor: "be'alma di verá h'irutêh"
+  - problema: O uso de 'ch' aqui pode induzir à pronúncia incorreta, já que o som correto em hebraico é de 'h' aspirado e não 'ch' como em português.
+  - sugestão do revisor: "be'alma di verá hir'utêh"
 
 #### וְיַמְלִיךְ מַלְכוּתֵהּ
 
@@ -60,8 +60,8 @@ Transliteração: **veyamlich malchutêh**
 
 - **transliteracao** · *nikud*
   - trecho citado: `malchutêh`
-  - problema: Não está refletindo corretamente o formato do nikud do hebraico, pois o 'ê' deveria ser 'ê' em vez de 'e'.
-  - sugestão do revisor: "veyamlich malchutê"
+  - problema: A vogal 'ê' não corresponde corretamente ao nikud 'וְיַמְלִיךְ' que terá o som de um 'e' médio ou breve, sendo necessário que a transparência da vogal represente esse som na transliteração.
+  - sugestão do revisor: "veyamlich malchutéh"
 
 #### וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
 
@@ -69,10 +69,10 @@ Transliteração: **veyamlich malchutêh**
 
 Transliteração: **veyatsmách purkanêh vikarev meshichêh**
 
-- **transliteracao** · *nikud*
-  - trecho citado: `purkanêh`
-  - problema: A vogal 'a' do nikud de 'פּוּרְקָנֵהּ' não está representada corretamente na transliteração.
-  - sugestão do revisor: "veyatsmách purkanáh vikarev meshichêh"
+- **transliteracao** · *som*
+  - trecho citado: `meshichêh`
+  - problema: A letra 'ח' (chet) está representada como 'ch', mas o som correto seria mais próximo de 'kh', que é um som gutural.
+  - sugestão do revisor: "veyatsmách purkanêh vikarev meshikhêh"
 
 #### בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן
 
@@ -82,8 +82,8 @@ Transliteração: **bechayechon uveyomechon**
 
 - **transliteracao** · *som*
   - trecho citado: `bechayechon`
-  - problema: O 'ch' faz o leitor pronunciar um som que não é o do hebraico, pois o som é de 'h' aspirado (ח), não 'ch'.
-  - sugestão do revisor: "b'hayechon u'v'yomechon"
+  - problema: O "ch" deve representar o som de "h" aspirado e não o som de "ch" como em português.
+  - sugestão do revisor: "behayeichon uveyomeichon"
 
 #### וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל
 
@@ -92,9 +92,9 @@ Transliteração: **bechayechon uveyomechon**
 Transliteração: **uvechayê dechol beit Israel**
 
 - **transliteracao** · *som*
-  - trecho citado: `dechol`
-  - problema: A letra hebraica 'ח' (alet 'chet') se pronuncia como um 'r' aspirado e não como um 'd' comum em português.
-  - sugestão do revisor: "uvechayê r'chol beit Israel"
+  - trecho citado: `uvechayê`
+  - problema: A letra 'ê' sugere uma pronúncia que não corresponde ao 'e' no hebraico, que deve ser pronunciado como uma vogal curta.
+  - sugestão do revisor: "uvechayê dechol beit Yisrael"
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
@@ -104,7 +104,7 @@ Transliteração: **baagalá uvizmán carív veimrú Amen**
 
 - **transliteracao** · *som*
   - trecho citado: `carív`
-  - problema: O som correto é 'k' e não 'c', que pode ser confundido com o som de 's'.
+  - problema: A letra 'ק' (kuf) é transliterada como 'c', que pode gerar uma pronúncia incorreta, já que o som correto é mais próximo de 'k'.
   - sugestão do revisor: "baagalá uvizmán karív veimrú Amen"
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
@@ -113,10 +113,10 @@ Transliteração: **baagalá uvizmán carív veimrú Amen**
 
 Transliteração: **Yehê shemê raba mevarách lealám ul'almei almayá**
 
-- **transliteracao** · *som*
-  - trecho citado: `mevarách`
-  - problema: O 'ch' aqui deve ser pronunciado como 'k', pois é um som de 'kaf' (כ) e não 'chet' (ח).
-  - sugestão do revisor: "Yehê shemê raba mevarak lealám ul'almei almayá"
+- **transliteracao** · *nikud*
+  - trecho citado: `lealám`
+  - problema: O kamatz (ָ) de 'עָלַם' está sendo lido como 'e' ao invés de 'á'.
+  - sugestão do revisor: "Yehê shemê raba mevarách leolám ul'almei almayá"
 
 #### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
 
@@ -125,9 +125,19 @@ Transliteração: **Yehê shemê raba mevarách lealám ul'almei almayá**
 Transliteração: **Yitbarêch veyishtabach veyitpaar**
 
 - **transliteracao** · *som*
-  - trecho citado: `Yitbarêch`
-  - problema: O som da letra ח (Chet) é mais próximo de um 'r' aspirado que de um 'ê' final. Em português, 'ê' pode levar a uma pronúncia incorreta.
-  - sugestão do revisor: "Yitbarekh veyishtabach veyitpaar"
+  - trecho citado: `v`
+  - problema: O som 'v' não representa corretamente o som da letra hebraica 'ו' (vav) quando está no início de uma palavra com o significado de 'e', que deve ser representado pelo som 'u'.
+
+#### וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
+
+*veyitromam veyitnasse veyithadar*
+
+Transliteração: **veyitromam veyitnasse veyithadar**
+
+- **transliteracao** · *som*
+  - trecho citado: `veyitnasse`
+  - problema: O som da letra 'ש' (shin) não está sendo representado corretamente, pois deve ser 's' e não 'ss'.
+  - sugestão do revisor: "veyitromam veyitnashé veyithadar"
 
 #### וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא
 
@@ -135,9 +145,9 @@ Transliteração: **Yitbarêch veyishtabach veyitpaar**
 
 Transliteração: **veyitaleh veyithalal shemê decudshá berich hu**
 
-- **transliteracao** · *incoerencia*
-  - trecho citado: `decu`
-  - problema: A letra 'ק' (kuf) foi transliterada de forma inconsistente: 'decudshá' mistura a forma de 'k' e 'q'.
+- **transliteracao** · *som*
+  - trecho citado: `decudshá`
+  - problema: O uso de 'sh' sugere um som de 'sh' que não é presente no som da letra 'ש' com 'dagesh', que é mais próximo de um som de 's' em português.
   - sugestão do revisor: "veyitaleh veyithalal shemê d'kudshá berich hu"
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
@@ -148,19 +158,19 @@ Transliteração: **leela min kol birchatá veshiratá**
 
 - **transliteracao** · *nikud*
   - trecho citado: `birchatá`
-  - problema: A vogal 'a' no final da palavra deveria ser representada como 'á' em português, pois apresenta um som distinto.
-  - sugestão do revisor: leela min kol birchátá veshiratá
+  - problema: A vogal escrita no hebraico com 'segol' (בִּרְכָתָא) não é corretamente representada como 'a', que deveria ser 'á'.
+  - sugestão do revisor: "leela min kol birchá veshiratá"
 
 #### תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן
 
-*tushbechata venechemata dáamiran bealma veimrú Amen*
+*tushbechata venechamata dáamiran bealma veimrú Amen*
 
-Transliteração: **tushbechata venechemata dáamiran bealma veimrú Amen**
+Transliteração: **tushbechata venechamata dáamiran bealma veimrú Amen**
 
 - **transliteracao** · *som*
   - trecho citado: `dáamiran`
-  - problema: A letra 'd' deve representar o som de 'ד' (dalet), mas neste caso deve ser 'd' e não 'dá'. O som da vogal também deve ser considerado.
-  - sugestão do revisor: tushbechata venechemata daamirán bealma veimrú Amen
+  - problema: A letra 'd' deve ser transliterada como 'da'. O correto é 'da amiran'.
+  - sugestão do revisor: "tushbechata venechamata da amiran bealma veimrú Amen"
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
@@ -170,8 +180,8 @@ Transliteração: **Yehê shelamá raba min shemayá vechayim tovim aleinu veal 
 
 - **transliteracao** · *som*
   - trecho citado: `vechayim`
-  - problema: O grupo 'ch' faz o leitor pronunciar um som que não corresponde ao 'ח' que tem som de 'r' emitido com a garganta.
-  - sugestão do revisor: "Yehê shelamá raba min shemayá vechaim tovim aleinu veal kol Israel veimrú Amen"
+  - problema: A letra 'v' deve soar como um 'u' no contexto hebraico, e o som deve ser transcrito como 'u' em vez de 've'.
+  - sugestão do revisor: "Yehê shelamá raba min shemayá u'chayim tovim aleinu veal kol Israel veimrú Amen"
 
 #### עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
 
@@ -179,10 +189,10 @@ Transliteração: **Yehê shelamá raba min shemayá vechayim tovim aleinu veal 
 
 Transliteração: **Ossê shalom bimromav**
 
-- **transliteracao** · *som*
+- **transliteracao** · *nikud*
   - trecho citado: `Ossê`
-  - problema: A letra 'ע' (Ayin) não é pronunciada como 'O' em português, e o som 'ê' deve ser ajustado para refletir a qualidade da letra. Deveria ser lido como 'Osê'.
-  - sugestão do revisor: "Osê shalom bimromav"
+  - problema: O nikud 'segol' (e, na forma de 'ê') não está sendo corretamente representado na transliteracao, que usa um acento circunflexo.
+  - sugestão do revisor: "Oseh shalom bimromav"
 
 #### הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
@@ -192,8 +202,19 @@ Transliteração: **hu yaassê shalom aleinu veal kol Israel veimrú Amen**
 
 - **transliteracao** · *som*
   - trecho citado: `yaassê`
-  - problema: A letra 'ש' (shin) deve ser transliterada como 'sh' e não 's' para representar o som correto.
-  - sugestão do revisor: "hu ya'aseh shalom aleinu veal kol Israel veimrú Amen"
+  - problema: A letra 'ס' (samech) está sendo lida como um 's' e deveria ser lida como 's' normal, mas o uso da duplicação 'ss' pode gerar confusão na pronúncia correta do som.
+  - sugestão do revisor: "hu ya'ase shalom aleinu ve'al kol Yisrael ve'imru Amen"
+
+#### עַל יִשְׂרָאֵל וְעַל רַבָּנָן
+
+*Al Israel veal rabanan*
+
+Transliteração: **Al Israel veal rabanan**
+
+- **transliteracao** · *som*
+  - trecho citado: `veal`
+  - problema: A letra ו (vav) no hebraico deve ser transliterada como 've' e não 'gal' pois a pronúncia correta é com o som de 've' e não 'gal'.
+  - sugestão do revisor: "Al Israel ve'al rabanan"
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
@@ -201,10 +222,10 @@ Transliteração: **hu yaassê shalom aleinu veal kol Israel veimrú Amen**
 
 Transliteração: **veal talmidehon veal kol talmidei talmidehon**
 
-- **transliteracao** · *som*
+- **transliteracao** · *incoerencia*
   - trecho citado: `talmidehon`
-  - problema: O som da letra 'ח' (ch) não está representado; 't' é inadequado para o som aspirado.
-  - sugestão do revisor: veal talmideyhon veal kol talmidei talmidehon
+  - problema: A mesma palavra aparece duas vezes no verso como 'talmidehon' e a transliteração é a mesma, mas a palavra 'talmidei' é transliterada de forma diferente.
+  - sugestão do revisor: "veal talmidehon veal kol talmidei talmidehon"
 
 #### וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא
 
@@ -214,8 +235,8 @@ Transliteração: **veal kol man daaskin beoraytá**
 
 - **transliteracao** · *nikud*
   - trecho citado: `beoraytá`
-  - problema: A vogal 'a' não está correta, pois o nikud indica 'o' com o kamatz na palavra 'בְּאוֹרַיְתָא'.
-  - sugestão do revisor: "veal kol man daaskin be'oraytá"
+  - problema: A vogal 'a' do nikud na raiz 'אור' está sendo ignorada, o correto seria representar o 'o' em 'be'oraytá'.
+  - sugestão do revisor: veal kol man daaskin be'oraytá
 
 #### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
 
@@ -225,7 +246,7 @@ Transliteração: **daaskin beoraytá kadishtá**
 
 - **transliteracao** · *nikud*
   - trecho citado: `beoraytá`
-  - problema: O nikud 'וֹ' (o de 'be-or') não está refletido corretamente, pois deveria ser 'be'oraytá'.
+  - problema: A vogal 'ai' não corresponde corretamente ao 'א' com 'holam' que é uma vogal longa, deveria ser 'be'oraytá'.
   - sugestão do revisor: "daaskin be'oraytá kadishtá"
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
@@ -236,8 +257,8 @@ Transliteração: **di veatrá haden vedi vechol atar vaatár**
 
 - **transliteracao** · *som*
   - trecho citado: `vechol`
-  - problema: O som correto de 'כ' (kaf) é representado como 'kh' ou 'k', mas aqui foi usado 'ch', que não é adequado.
-  - sugestão do revisor: "di veatrá haden vedi vekhol atar vaatár"
+  - problema: O som 'ch' não é adequado, pois em hebraico a letra 'כ' (kaf) com nikud 'holam' tem som de 'r' ou 'h' aspirado, e não 'ch'.
+  - sugestão do revisor: "di veatrá haden vedi vechol atar vaatár"
 
 #### יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
 
@@ -247,8 +268,8 @@ Transliteração: **yehê lehon ulechon shelamá raba**
 
 - **transliteracao** · *som*
   - trecho citado: `ulechon`
-  - problema: O grupo 'le' deveria ser pronunciado como 'lah', não 'le'.
-  - sugestão do revisor: "yehê lehon u'lachon shelamá raba"
+  - problema: O som 'ch' não representa corretamente o 'ח' (het) que é o som aspirado e deve ser transliterado como 'kh'.
+  - sugestão do revisor: "yehê lehon u'lekhon shelamá raba"
 
 #### יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי
 
@@ -258,7 +279,7 @@ Transliteração: **yehê lána ul'hon ulechon chiná vechisdá verachamei**
 
 - **transliteracao** · *som*
   - trecho citado: `chiná`
-  - problema: o 'ch' aqui deve representá-lo com um som de 'h' aspirado, e não como 'ch' francês ou espanhol.
+  - problema: O 'ch' deve ser lido como 'h' aspirado, pois corresponde à letra ħet no hebraico.
   - sugestão do revisor: "yehê lána ul'hon ulechon hiná vechisdá verachamei"
 
 #### חִנָּא וְחִסְדָּא וְרַחֲמִין
@@ -269,8 +290,8 @@ Transliteração: **chiná vechisdá verachamin**
 
 - **transliteracao** · *som*
   - trecho citado: `chiná`
-  - problema: A letra ך (final) no hebraico corresponde a um som que não inclui o 'i' após o 'ch'.
-  - sugestão do revisor: "Hina vechisdá verachamin"
+  - problema: O som do 'ch' não é o mesmo que o som de 'ח' que deve ser lido como um 'h' aspirado.
+  - sugestão do revisor: "hiná vechisdá verachamin"
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
 
@@ -280,8 +301,8 @@ Transliteração: **vechayin arichin umezona revicha**
 
 - **transliteracao** · *som*
   - trecho citado: `vechayin`
-  - problema: A letra 'ch' pode fazer o leitor pronunciar um som que não é o do hebraico, onde o som é mais parecido com 'h' aspirado.
-  - sugestão do revisor: "vehachayin arichin umezona revicha"
+  - problema: O som de 'ch' é incorreto, pois deve ser 'h' aspirado correspondente ao hebraico.
+  - sugestão do revisor: "vehayin arichin umezona revicha"
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
 
@@ -291,8 +312,8 @@ Transliteração: **vechayin arichin umezonei revichei**
 
 - **transliteracao** · *som*
   - trecho citado: `vechayin`
-  - problema: A letra "ch" faz com que o leitor pronuncie um som que não é o de 'ḥ' (cheto), que é o que está presente na letra hebraica correspondente (וְחַיִּין).
-  - sugestão do revisor: "veḵayin arichin umezonei revichei"
+  - problema: O som da letra 'ח' (het) é representado incorretamente como 'ch', que sugere um som de 'tch' em português, enquanto deveria ser mais próximo de um som aspirado, que não tem equivalente exato em português.
+  - sugestão do revisor: "vehayin arichin umezonei revichei"
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן
 
@@ -301,9 +322,9 @@ Transliteração: **vechayin arichin umezonei revichei**
 Transliteração: **ufurkaná min kodam avuhon di-vishmayá veimrú Amen**
 
 - **transliteracao** · *som*
-  - trecho citado: `di-vishmayá`
-  - problema: O som 'di' poderia ser mal interpretado como um 'd' comum, enquanto o correto é um som mais próximo de 'd' aspirado ('dí').
-  - sugestão do revisor: "ufurkaná min kodam avuhon d'vishmayá veimrú Amen"
+  - trecho citado: `avuhon`
+  - problema: O som 'v' não corresponde ao som da letra hebraica ו ('vav'). Deveria ser transliterado como 'avuhon'.
+  - sugestão do revisor: "ufurkaná min kodam avuhon di-vishmayá veimrú Amen"
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
@@ -311,10 +332,10 @@ Transliteração: **ufurkaná min kodam avuhon di-vishmayá veimrú Amen**
 
 Transliteração: **ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen**
 
-- **transliteracao** · *nikud*
-  - trecho citado: `di-vishmayá`
-  - problema: A letra 'י' com o nikud 'חֹ' não está sendo refletida corretamente na transliteração, pois o 'i' deveria ser escrito como 'vishmáyá'.
-  - sugestão do revisor: ufurkaná min kodam avuhon d'vishmáyá vear-á veimrú Amen
+- **transliteracao** · *som*
+  - trecho citado: `vear-á`
+  - problema: O som 'v' não está representando corretamente a letra 'ו' que deve ser transliterada como 'u' após a preposição, significando 'e'.
+  - sugestão do revisor: "ufurkaná min kodam avuhon di-vishmayá u-ar-á veimrú Amen"
 
 #### וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
@@ -322,10 +343,10 @@ Transliteração: **ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen
 
 Transliteração: **ufurkaná min kodam avuhon di vishmayá vear-á veimrú Amen**
 
-- **transliteracao** · *nikud*
-  - trecho citado: `vishmayá`
-  - problema: A vogal escrita 'ַ' (patach) não é representada corretamente, o som deveria ser 'i' ao invés de 'i' com 'á'.
-  - sugestão do revisor: "ufurkaná min kodam avuhon di bishmayá vear-á veimrú Amen"
+- **transliteracao** · *som*
+  - trecho citado: `veimrú`
+  - problema: A letra 'v' deveria ser lida como 'u' na transliteração do hebraico onde é 'וּ'.
+  - sugestão do revisor: "ufurkaná min kodam avuhon di vishmayá ve-ar'á veimrú Amen"
 
 #### מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
@@ -335,8 +356,8 @@ Transliteração: **min kodam marê shemayá vear-á veimrú Amen**
 
 - **transliteracao** · *nikud*
   - trecho citado: `marê`
-  - problema: O kamatz deve ser ouvido como 'a', portanto deveria ser 'mará'.
-  - sugestão do revisor: "min kodam mará shemayá vear-á veimrú Amen"
+  - problema: A pronúncia correta do vocábulo מָרֵא deve levar em conta o som do kamatz, que é lido como 'a', ao invés de 'ê'.
+  - sugestão do revisor: min kodam marê shemayá veará veimrú Amen
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
@@ -346,8 +367,8 @@ Transliteração: **Yehê shelamá raba min shemayá**
 
 - **transliteracao** · *som*
   - trecho citado: `shelamá`
-  - problema: O som 'sh' está correto, mas 'á' não corresponde ao 'a' de 'שְׁלָמָא', que é um 'a' mais aberto.
-  - sugestão do revisor: "Yehê shelamá raba min shemayá"
+  - problema: O som de 'sh' está correto, mas a acentuação correta seria para 'shelamá', o que pode levar a uma confusão em sua pronúncia.
+  - sugestão do revisor: "Yehê shalamá raba min shemayá"
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
@@ -357,7 +378,7 @@ Transliteração: **Yehê shelamá raba min shemayá vechayim aleinu veal kol Is
 
 - **transliteracao** · *som*
   - trecho citado: `vechayim`
-  - problema: O som 'ch' utilizado aqui pode fazer o leitor pronunciar como um 'ch' guttural no lugar do 'ḥ' aspirado.
+  - problema: A letra 'ch' deve representar o som de 'ḥ' (chet) em vez do som de 'ch' que é um 'k' ou 'sh' em português.
   - sugestão do revisor: "Yehê shelamá raba min shemayá veḥayim aleinu veal kol Israel veimrú Amen"
 
 #### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
@@ -368,8 +389,12 @@ Transliteração: **chayim vessavá vishuá venechamá veshezavá**
 
 - **transliteracao** · *som*
   - trecho citado: `vessavá`
-  - problema: O 'v' antes de 'essavá' não representa adequadamente a letra 'וְ' que tem um som de 'u' ou 'o', e não deve ser seguido de 'e'.
-  - sugestão do revisor: "chayim v'savá vishuá venechamá veshezavá"
+  - problema: O som 's' não corresponde ao som de 'tsadi' que aparece na palavra 'שָׁבָע'.
+  - sugestão do revisor: "chayim ve'shavá vishuá venechamá veshezavá"
+- **transliteracao** · *nikud*
+  - trecho citado: `vessavá`
+  - problema: A vogal 'a' no segundo 'vessavá' deve ser representada como 'á' para corresponder ao nikud.
+  - sugestão do revisor: "chayim ve'shavá vishuá venechamá veshezavá"
 
 #### וּרְפוּאָה וּגְאֻלָּה וּסְלִיחָה וְכַפָּרָה
 
@@ -378,9 +403,9 @@ Transliteração: **chayim vessavá vishuá venechamá veshezavá**
 Transliteração: **urfuá ug'ulá usslichá vechapará**
 
 - **transliteracao** · *som*
-  - trecho citado: `usslichá`
-  - problema: O som 'ss' não corresponde ao som do 's' da letra 'ס' (Samach), que é um 's' simples.
-  - sugestão do revisor: "urfuá ug'ulá uslicá vechapará"
+  - trecho citado: `g'ulá`
+  - problema: O apóstrofo indica um som gutural que não é representado corretamente; o ideal seria usar 'g' sem apóstrofo, pois o som não é do hebraico.
+  - sugestão do revisor: "urfuá u'gulá usslichá vechapará"
 
 #### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
@@ -390,8 +415,8 @@ Transliteração: **verêvach vehatsalá lanu ulechol amô Israel veimrú Amen**
 
 - **transliteracao** · *som*
   - trecho citado: `amô`
-  - problema: A letra 'ע' (ayin) não é transliterada corretamente; deveria ser 'am' em vez de 'amô', pois não há o som do 'ô' em 'ע' na palavra original.
-  - sugestão do revisor: verêvach vehatsalá lanu ulechol am Israel veimrú Amen
+  - problema: o 'ô' indica uma pronúncia diferente do correto, que seria 'amô' e não 'amô'; a letra 'ע' deve ser transliterada como 'am' com um som mudo, por isso deveria ser 'am' sem o acento circunflexo.
+  - sugestão do revisor: "verêvach vehatsalá lanu ulechol am Israel veimrú Amen"
 
 #### עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
 
@@ -401,7 +426,7 @@ Transliteração: **Ossê shalom bimromav**
 
 - **transliteracao** · *som*
   - trecho citado: `Ossê`
-  - problema: A letra ע (Ayin) não é adequadamente representada, pois seu som deveria incluir um elemento gutural que não é capturado por 'Ossê'.
+  - problema: A letra 'ע' deve ser transliterada como 'o', pois é uma letra que se pronuncia com um som de vogal no começo da palavra, assim como a letra 'ו' influencia o som.
   - sugestão do revisor: "Oseh shalom bimromav"
 
 #### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
@@ -410,10 +435,10 @@ Transliteração: **Ossê shalom bimromav**
 
 Transliteração: **hu berachamav yaassê shalom aleinu veal kol Israel veimrú Amen**
 
-- **transliteracao** · *nikud*
+- **transliteracao** · *som*
   - trecho citado: `yaassê`
-  - problema: O kamatz na palavra deve ser lido como 'a' e não como 'e', portanto deve ser 'ya'
-  - sugestão do revisor: "hu berachamav ya'ase shalom aleinu veal kol Israel veimru Amen"
+  - problema: A letra 's' está sendo utilizada onde o som correto é 'sê', representando a letra sin, que é pronunciada como 's' em português.
+  - sugestão do revisor: "hu berachamav ya'ase shalom aleinu veal kol Israel veimrú Amen"
 
 #### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
@@ -423,7 +448,7 @@ Transliteração: **hu berachamav yaassê shalom aleinu veal kol amô Israel vei
 
 - **transliteracao** · *som*
   - trecho citado: `yaassê`
-  - problema: O som da letra 'ש' (shin) está sendo representado como 's', mas deve ser lido como 'sh'.
+  - problema: O 'ss' pode levar a confusão, pois o som correto é de 's' seguido de 'ê', não como 'ss' em português.
   - sugestão do revisor: "hu berachamav ya'ase shalom aleinu ve'al kol amô Israel ve'imrú Amen"
 
 #### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
@@ -434,8 +459,8 @@ Transliteração: **hu yaassê verachamav shalom aleinu veal kol Israel veimrú 
 
 - **transliteracao** · *som*
   - trecho citado: `yaassê`
-  - problema: A letra 'ss' representa um som diferente do 's' e não corresponde ao som do hebraico, que deve ser representado como 'ya' + 'aseh'.
-  - sugestão do revisor: "hu ya'aseh verachamav shalom aleinu veal kol Israel veimrú Amen"
+  - problema: O uso de 'ss' neste contexto pode levar a pronúncia incorreta do som da letra 'ש' (shin) que é 'sh'.
+  - sugestão do revisor: "hu ya'aseh ve'rachamav shalom aleinu ve'al kol Yisrael ve'imru Amen"
 
 #### עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
@@ -445,7 +470,7 @@ Transliteração: **Ossê shalom bimromav hu yaassê shalom aleinu veal kol Isra
 
 - **transliteracao** · *som*
   - trecho citado: `yaassê`
-  - problema: O som correto da letra 'ע' no início da palavra é mais próximo do som de 'ê', e não de 'a'.
+  - problema: A letra 'ss' faz o leitor pronunciar um som que não é o do hebraico; deve ser 's' como em 'salão'.
   - sugestão do revisor: "Ossê shalom bimromav hu ya'aseh shalom aleinu veal kol Israel veimrú Amen"
 
 #### וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
@@ -455,17 +480,9 @@ Transliteração: **Ossê shalom bimromav hu yaassê shalom aleinu veal kol Isra
 Transliteração: **veyatsmách purkanêh vikarev meshichêh**
 
 - **transliteracao** · *som*
-  - trecho citado: `purkanêh`
-  - problema: A letra 'k' não representa o som de 'k' na palavra פֻּרְקָנֵהּ; deve ser lido como 'q'.
-  - sugestão do revisor: "veyatsmách purqanêh vikarev meshichêh"
-- **transliteracao** · *nikud*
   - trecho citado: `vikarev`
-  - problema: A vogal 'a' não está representada corretamente em 'vikarev'; o correto é 'vikarev'.
-  - sugestão do revisor: "veyatsmách purqanêh vikarev meshichêh"
-- **transliteracao** · *incoerencia*
-  - trecho citado: `meshichêh`
-  - problema: A letra 'ch' na transliteracao de 'meshichêh' representa o som de 'h' e não deve ser usada; o correto é 'h'.
-  - sugestão do revisor: "veyatsmách purqanêh vikarev meshichêh"
+  - problema: A letra 'v' deve ser pronunciada como 'o', pois o hebraico apresenta a letra 'ו' (vav) com a nəqūdāh de 'holam' (וֹ).
+  - sugestão do revisor: "veyatsmách purkanêh oikarev meshichêh"
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
@@ -475,18 +492,8 @@ Transliteração: **leela min kol birchatá shirata**
 
 - **transliteracao** · *nikud*
   - trecho citado: `birchatá`
-  - problema: O acento agudo no 'á' não representa corretamente o kamatz do hebraico, que deve ser lido como 'a'.
-  - sugestão do revisor: "leela min kol birkhatá shiratá"
-
-## Descartados pelo guarda de citação
-
-Estas queixas foram jogadas fora porque o trecho citado não existe no
-texto revisado — sinal de que o revisor inventou a citação. Ficam
-registradas só para você saber que existiram.
-
-- transliteração · וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר — citou `veytromam`
-- transliteração · וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר — citou `veytromam`
-- transliteração · וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא — citou `seyemê`
+  - problema: O acento no final deve ser lido como um 'a' com som aberto, mas a transliteração usa 'á' que pode ser entendido como som fechado.
+  - sugestão do revisor: leela min kol bircha tah shirata
 
 ## O que fazer com isto
 
