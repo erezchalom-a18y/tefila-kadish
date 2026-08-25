@@ -53,6 +53,13 @@ const gAntes = JSON.stringify(glossario);
 const conta = {};
 const nota = (k) => { conta[k] = (conta[k] || 0) + 1; };
 
+// TODA decisao tem que achar onde valer. Uma chave que nao casa com verso
+// nenhum e um erro de digitacao que passa em SILENCIO — foi o que aconteceu
+// com o verso 9 em 25/08: escrevi ויתרוממ com mem comum onde o arquivo tem
+// ויתרומם com mem FINAL, e a decisao simplesmente nao aconteceu. Tudo deu
+// verde e a glosa continuou errada na tela dele.
+const achou = new Set();
+
 for (const d of decisoes) {
   if (d.tipo === 'verso_por_nussach') {
     for (const f of arquivos) {
@@ -60,6 +67,7 @@ for (const d of decisoes) {
       if (!d.nussachim.includes(nussach)) continue;
       for (const v of agora[f].versos) {
         if (norm(v.hebrew) !== d.chave) continue;
+        achou.add(d.id);
         // ha decisao que muda so a transliteracao (o venechemata do ashkenaz e
         // do chabad); nesse caso o hebraico nao vem no arquivo e nao se toca.
         if (d.hebrew) v.hebrew = d.hebrew;
@@ -88,6 +96,7 @@ for (const d of decisoes) {
   if (d.tipo === 'traducao_do_verso') {
     for (const f of arquivos) for (const v of agora[f].versos) {
       if (norm(v.hebrew) !== d.chave) continue;
+      achou.add(d.id);
       v.translation_pt = d.translation_pt; nota('§ traducao do verso');
     }
     const e = glossario.entradas[d.chave];
@@ -99,6 +108,7 @@ for (const d of decisoes) {
       let mexeu = false;
       for (const w of v.palavras) {
         if (norm(w.hebrew) !== d.hebrew_sem_nikud) continue;
+        achou.add(d.id);
         if (w.transliteration_pt !== d.de) continue;
         w.transliteration_pt = d.para; mexeu = true; nota('palavra: transliteracao');
       }
@@ -113,6 +123,7 @@ for (const d of decisoes) {
   if (d.tipo === 'glosas_do_verso') {
     for (const f of arquivos) for (const v of agora[f].versos) {
       if (norm(v.hebrew) !== d.chave) continue;
+      achou.add(d.id);
       if (v.palavras.length !== d.glosas.length) {
         console.error(`  !! ${f} §${v.n}: ${v.palavras.length} palavras e ${d.glosas.length} glosas`);
         process.exit(1);
@@ -124,7 +135,7 @@ for (const d of decisoes) {
     }
   }
 
-  if (d.tipo === 'grafia_no_portugues') {
+  if (d.tipo === 'grafia_no_portugues') { achou.add(d.id);
     const re = new RegExp(d.de, 'g');
     const troca = s => (typeof s === 'string' ? s.replace(re, d.para) : s);
     for (const f of arquivos) for (const v of agora[f].versos) {
@@ -150,6 +161,8 @@ for (const d of decisoes) {
 
 // ---------- provas ----------
 const falhas = [];
+for (const d of decisoes)
+  if (!achou.has(d.id)) falhas.push(`a decisao "${d.id}" nao achou onde valer — a chave nao casa com verso nenhum`);
 for (const f of arquivos) {
   const a = antes[f], b = agora[f];
   if (a.versos.length !== b.versos.length) { falhas.push(`${f}: mudou o numero de versos`); continue; }

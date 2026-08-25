@@ -173,6 +173,16 @@ confere(`as ${escapadas.length} decisao(oes) escapada(s) valem so onde ele mando
 confere('nenhum texto antigo sobrou nos sync/*.json', sobrou.length === 0, sobrou.slice(0, 6).join('\n        '));
 confere('o texto decidido pelo Erez esta la', faltou.length === 0, faltou.slice(0, 6).join('\n        '));
 
+// Uma decisao ESCAPADA tambem e "onde valer": ela cobre aquelas palavras
+// naquele verso, e por isso elas ficam fora da varredura das setas. Sem isto,
+// toda palavra coberta por uma decisao escapada era contada como seta orfa.
+for (const { d } of escapadas) {
+  if (d.tipo !== 'glosas_do_verso') continue;
+  for (const f of ARQUIVOS) for (const v of sync[f].versos) {
+    if (semNikud(v.hebrew) !== d.chave) continue;
+    for (const p of v.palavras) vistos.add(`glosa|${semNikud(p.hebrew)}`);
+  }
+}
 const orfaos = [...finais.keys()].filter(k => !vistos.has(k));
 confere('toda decisao dele tem onde valer', orfaos.length === 0, orfaos.join(', '));
 

@@ -9,8 +9,8 @@
       "glosas_pt": [
         "Exaltado",
         "e santificado",
-        "Seu Nome",
-        "grande"
+        "seja o Seu grande",
+        "Nome"
       ],
       "translations": {
         "en": "Exalted and sanctified be His great Name",
@@ -137,7 +137,7 @@
       "translation_pt": "e que nele estabeleça o Seu reinado",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e que nele estabeleça",
+        "e que nele estabeleça o",
         "Seu reinado"
       ],
       "translations": {
@@ -186,10 +186,10 @@
       "translation_pt": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "e faça brotar",
+        "e que faça brotar",
         "Sua redenção",
         "e apresse",
-        "a vinda de Seu Mashiach"
+        "a vinda de seu Mashiach"
       ],
       "translations": {
         "en": "and may His redemption sprout and His Mashiach draw near",
@@ -438,13 +438,13 @@
       "translation_pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "Que seja",
-        "Seu Nome",
-        "grande",
-        "abençoado",
+        "Que",
+        "Seu grande",
+        "Nome",
+        "seja abençoado",
         "para sempre",
         "e para toda",
-        "a eternidade"
+        "eternidade"
       ],
       "translations": {
         "en": "May His great Name be blessed forever and for all eternity",
@@ -594,9 +594,9 @@
       "translation_pt": "elevado, enaltecido e honrado",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "exaltado",
+        "elevado",
         "enaltecido",
-        "honrado"
+        "e honrado"
       ],
       "translations": {
         "en": "exalted, uplifted and honored be He",
@@ -651,12 +651,12 @@
       "translation_pt": "exaltado e louvado seja o Nome do Santo, bendito seja Ele",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "elevado",
-        "e elogiado",
-        "Seu Nome",
+        "exaltado",
+        "e louvado",
+        "seja o Nome",
         "do Santo",
         "bendito",
-        "Ele é"
+        "seja Ele"
       ],
       "translations": {
         "en": "elevated and lauded be the Name of the Holy One, blessed be He",
@@ -894,16 +894,16 @@
       "translation_pt": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
       "origem": "tehilat_hashem",
       "glosas_pt": [
-        "Que seja",
+        "Que haja",
         "paz",
-        "grande",
-        "de",
-        "vinda dos céus",
-        "e vida",
+        "em abundância",
+        "vinda",
+        "dos céus",
+        "e uma vida",
         "boa",
         "para nós",
         "e para",
-        "todas",
+        "todo o povo",
         "de Israel",
         "e digam",
         "Amen"
@@ -1193,9 +1193,9 @@
       "translation_pt": "Sobre Israel e sobre os nossos sábios",
       "origem": "claude",
       "glosas_pt": [
-        "sobre",
-        "de Israel",
-        "e para",
+        "Sobre",
+        "Israel",
+        "e sobre",
         "os nossos sábios"
       ],
       "translations": {
@@ -1258,11 +1258,11 @@
       "translation_pt": "e sobre seus discípulos e sobre todos os discípulos de seus discípulos",
       "origem": "claude",
       "glosas_pt": [
-        "e para",
+        "e sobre",
         "seus discípulos",
-        "e para",
-        "todas",
-        "os discípulos",
+        "e sobre",
+        "todos os",
+        "discípulos de",
         "seus discípulos"
       ],
       "translations": {
@@ -1339,10 +1339,10 @@
       "translation_pt": "e sobre todos os que se dedicam ao estudo da Torá",
       "origem": "claude",
       "glosas_pt": [
-        "e para",
-        "todas",
-        "aquele",
-        "que se dedicam",
+        "e sobre",
+        "todos",
+        "os que",
+        "se dedicam",
         "ao estudo da Torá"
       ],
       "translations": {
@@ -1469,13 +1469,13 @@
       "translation_pt": "neste lugar e em todo e qualquer lugar",
       "origem": "claude",
       "glosas_pt": [
-        "que",
-        "neste lugar",
-        "aqui",
-        "e em",
-        "em todo",
+        "neste",
         "lugar",
-        "e lugar"
+        "e",
+        "em",
+        "todo",
+        "e qualquer",
+        "lugar"
       ],
       "translations": {
         "en": "in this place and in every place",
@@ -1558,11 +1558,11 @@
       "translation_pt": "que haja para eles e para vocês paz em abundância",
       "origem": "claude",
       "glosas_pt": [
-        "Que seja",
+        "que haja",
         "para eles",
         "e para vocês",
         "paz",
-        "grande"
+        "em abundância"
       ],
       "translations": {
         "en": "may there be for them and for you abundant peace",
@@ -1631,9 +1631,9 @@
       "translation_pt": "que haja para nós, para eles e para vocês graça, bondade e compaixão",
       "origem": "claude",
       "glosas_pt": [
-        "Que seja",
+        "que haja",
         "para nós",
-        "e para eles",
+        "para eles",
         "e para vocês",
         "graça",
         "bondade",
@@ -1777,7 +1777,7 @@
       "translation_pt": "vida longa e sustento em abundância",
       "origem": "claude",
       "glosas_pt": [
-        "e vida",
+        "vida",
         "longa",
         "e sustento",
         "em abundância"
@@ -1842,7 +1842,7 @@
       "translation_pt": "vida longa e sustento em abundância",
       "origem": "claude",
       "glosas_pt": [
-        "e vida",
+        "vida",
         "longa",
         "e sustento",
         "em abundância"
@@ -1908,8 +1908,8 @@
       "origem": "claude",
       "glosas_pt": [
         "e redenção",
-        "de",
-        "diante de",
+        "vinda",
+        "do",
         "seu Pai",
         "que está nos céus",
         "e digam",
@@ -1997,8 +1997,8 @@
       "origem": "claude",
       "glosas_pt": [
         "e redenção",
-        "de",
-        "diante de",
+        "vinda",
+        "do",
         "seu Pai",
         "que está nos céus",
         "e na terra",
@@ -2094,10 +2094,10 @@
       "origem": "claude",
       "glosas_pt": [
         "e redenção",
-        "de",
-        "diante de",
+        "vinda",
+        "do",
         "seu Pai",
-        "que",
+        "que está",
         "nos céus",
         "e na terra",
         "e digam",
@@ -2199,10 +2199,10 @@
       "origem": "claude",
       "glosas_pt": [
         "de",
-        "diante de",
-        "o Senhor de",
-        "vinda dos céus",
-        "e na terra",
+        "diante do",
+        "Senhor",
+        "dos céus",
+        "e da terra",
         "e digam",
         "Amen"
       ],
@@ -2287,11 +2287,11 @@
       "translation_pt": "Que haja paz em abundância vinda dos céus",
       "origem": "claude",
       "glosas_pt": [
-        "Que seja",
+        "Que haja",
         "paz",
-        "grande",
-        "de",
-        "vinda dos céus"
+        "em abundância",
+        "vinda",
+        "dos céus"
       ],
       "translations": {
         "en": "May abundant peace come from heaven",
@@ -2360,15 +2360,15 @@
       "translation_pt": "Que haja paz em abundância vinda dos céus, e vida para nós e para todo o povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Que seja",
+        "Que haja",
         "paz",
-        "grande",
-        "de",
-        "vinda dos céus",
+        "em abundância",
+        "vinda",
+        "dos céus",
         "e vida",
         "para nós",
         "e para",
-        "todas",
+        "todo o povo",
         "de Israel",
         "e digam",
         "Amen"
@@ -2631,8 +2631,8 @@
         "e salvação",
         "para nós",
         "e para todo",
-        "Seu povo",
-        "de Israel",
+        "o Seu povo",
+        "Israel",
         "e digam",
         "Amen"
       ],
@@ -2781,13 +2781,13 @@
       "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Ele é",
+        "que Ele",
         "em Sua misericórdia",
-        "fará",
+        "faça",
         "paz",
-        "para nós",
-        "e para",
-        "todas",
+        "sobre nós",
+        "e sobre",
+        "todo o povo",
         "de Israel",
         "e digam",
         "Amen"
@@ -2894,15 +2894,15 @@
       "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Ele é",
+        "que Ele",
         "em Sua misericórdia",
-        "fará",
+        "faça",
         "paz",
-        "para nós",
-        "e para",
-        "todas",
-        "Seu povo",
-        "de Israel",
+        "sobre nós",
+        "e sobre",
+        "todo",
+        "o Seu povo",
+        "Israel",
         "e digam",
         "Amen"
       ],
@@ -3015,13 +3015,13 @@
       "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
       "origem": "claude",
       "glosas_pt": [
-        "Ele é",
-        "fará",
+        "que Ele",
+        "faça",
         "em Sua misericórdia",
         "paz",
-        "para nós",
-        "e para",
-        "todas",
+        "sobre nós",
+        "e sobre",
+        "todo o povo",
         "de Israel",
         "e digam",
         "Amen"
@@ -3131,12 +3131,12 @@
         "Aquele que faz",
         "paz",
         "em Suas alturas celestiais",
-        "Ele é",
-        "fará",
-        "paz",
+        "que Ele",
+        "faça",
+        "a paz",
         "para nós",
         "e para",
-        "todas",
+        "todo seu povo",
         "de Israel",
         "e digam",
         "Amen"
@@ -3257,10 +3257,10 @@
       "translation_pt": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
       "origem": "claude",
       "glosas_pt": [
-        "e faça brotar",
+        "e que faça brotar",
         "Sua redenção",
         "e apresse",
-        "a vinda de Seu Mashiach"
+        "a vinda de seu Mashiach"
       ],
       "translations": {
         "en": "and may His redemption sprout and His Mashiach draw near",
