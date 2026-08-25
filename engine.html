@@ -968,6 +968,12 @@
   }
 
   /* ============ TOAST ============ */
+  .popup-comecar {
+    display: block; width: 100%; margin-top: 10px; padding: 9px 12px;
+    background: var(--brass, #8b6a3e); color: #fff; border: 0; border-radius: 9px;
+    font: inherit; font-size: 15px; cursor: pointer;
+  }
+  .popup-comecar:active { opacity: .8; }
   .toast {
     position: fixed;
     bottom: 140px; left: 50%;
@@ -1946,6 +1952,7 @@
   <div class="popup-heb" id="popupHeb"></div>
   <div class="popup-translit" id="popupTranslit"></div>
   <div class="popup-pt" id="popupPt"></div>
+  <button class="popup-comecar" id="popupComecar" data-i18n="comecar_aqui">▶ Começar aqui</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -4247,6 +4254,7 @@ const I18N = {
     toast_audio_failed: "O áudio não tocou",
     ph_relation: "Pai, mãe, avô...",
     modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
+    comecar_aqui: '▶ Começar aqui',
     treino_active: '⊙ Modo Treino · pausa após cada verso',
     settings_title: 'Configurações',
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Escuro', theme_contrast: 'Contraste',
@@ -4287,6 +4295,7 @@ const I18N = {
     toast_audio_failed: "The audio did not play",
     ph_relation: "Father, mother, grandfather...",
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
+    comecar_aqui: '▶ Start here',
     treino_active: '⊙ Practice Mode · pauses after each verse',
     settings_title: 'Settings',
     theme_label: 'Theme', theme_light: 'Light', theme_dark: 'Dark', theme_contrast: 'Contrast',
@@ -4327,6 +4336,7 @@ const I18N = {
     toast_audio_failed: "El audio no sonó",
     ph_relation: "Padre, madre, abuelo...",
     modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
+    comecar_aqui: '▶ Empezar aquí',
     treino_active: '⊙ Modo Práctica · pausa después de cada verso',
     settings_title: 'Ajustes',
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Oscuro', theme_contrast: 'Contraste',
@@ -4367,6 +4377,7 @@ const I18N = {
     toast_audio_failed: "L’audio n’a pas démarré",
     ph_relation: "Père, mère, grand-père...",
     modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
+    comecar_aqui: '▶ Commencer ici',
     treino_active: '⊙ Mode Pratique · pause après chaque verset',
     settings_title: 'Paramètres',
     theme_label: 'Thème', theme_light: 'Clair', theme_dark: 'Sombre', theme_contrast: 'Contraste',
@@ -4407,6 +4418,7 @@ const I18N = {
     toast_audio_failed: "L’audio non è partito",
     ph_relation: "Padre, madre, nonno...",
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
+    comecar_aqui: '▶ Inizia qui',
     treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
     settings_title: 'Impostazioni',
     theme_label: 'Tema', theme_light: 'Chiaro', theme_dark: 'Scuro', theme_contrast: 'Contrasto',
@@ -4447,6 +4459,7 @@ const I18N = {
     toast_audio_failed: "Der Ton wurde nicht abgespielt",
     ph_relation: "Vater, Mutter, Großvater...",
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
+    comecar_aqui: '▶ Hier beginnen',
     treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
     settings_title: 'Einstellungen',
     theme_label: 'Design', theme_light: 'Hell', theme_dark: 'Dunkel', theme_contrast: 'Kontrast',
@@ -4487,6 +4500,7 @@ const I18N = {
     toast_audio_failed: "Звук не воспроизвёлся",
     ph_relation: "Отец, мать, дед...",
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
+    comecar_aqui: '▶ Начать отсюда',
     treino_active: '⊙ Режим Практики · пауза после каждого стиха',
     settings_title: 'Настройки',
     theme_label: 'Тема', theme_light: 'Светлая', theme_dark: 'Тёмная', theme_contrast: 'Контраст',
@@ -4527,6 +4541,7 @@ const I18N = {
     toast_audio_failed: "השמע לא התנגן",
     ph_relation: "אבא, אמא, סבא...",
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
+    comecar_aqui: '▶ להתחיל כאן',
     treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
     settings_title: 'הגדרות',
     theme_label: 'ערכת נושא', theme_light: 'בהיר', theme_dark: 'כהה', theme_contrast: 'ניגודיות',
@@ -5185,6 +5200,29 @@ const popupHeb = document.getElementById('popupHeb');
 const popupTr = document.getElementById('popupTranslit');
 const popupPt = document.getElementById('popupPt');
 
+// ---------- COMECAR AQUI (25/08) ----------
+// O pedido dele: "tanto no modo reza ou no modo treino, deveria permitir
+// comecar de qualquer palavra, hoje so comeca na primeira".
+//
+// Por que um BOTAO no balao, e nao um toque na palavra: tocar na palavra ja
+// abre o balao com o significado dela, e isso ele usa. Trocar esse toque por
+// "toca daqui" tiraria uma coisa para dar outra. O botao aparece junto com o
+// significado, diz o que faz, e funciona igual nos dois modos.
+const popupComecar = document.getElementById('popupComecar');
+if (popupComecar) popupComecar.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const vi = popup._currentVi, wi = popup._currentWi;
+  closePopup();
+  if (window.SYNC && window.SYNC.ativo() && window.SYNC.comecarEm) {
+    const t = window.SYNC.comecarEm(vi, wi);
+    if (t !== null && t !== undefined) return;
+  }
+  // Sem a sincronia real medida do audio nao ha onde a palavra comeca; entao
+  // o melhor honesto e comecar no VERSO dela, que e o que sempre existiu.
+  if (typeof playVerse === 'function') playVerse(vi);
+  else if (typeof play === 'function') play();
+});
+
 function showPopup(e, vi, wi) {
   const v = verses[vi];
   // Toggle: if popup is showing for the same word, close it
@@ -5686,6 +5724,42 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     return {
       montar,
       ativo: () => !!(dados && mapa),
+
+      // ---------- COMECAR EM QUALQUER PALAVRA (25/08) ----------
+      // Ele pediu: "tanto no modo reza ou no modo treino, deveria permitir
+      // comecar de qualquer palavra, hoje so comeca na primeira".
+      //
+      // O audio e um so, entao mover o relogio ja bastaria para a voz. O que
+      // NAO bastava era o resto: o Modo Treino conta verso pelo que veio antes
+      // (versoAnterior), e cair no meio do Kadish sem re-armar esse contador
+      // fazia o proximo verso ser lido como "acabou um verso" — pausava na
+      // hora errada. A repeticao tinha o mesmo problema: o contador dela era do
+      // verso de onde ele saiu.
+      //
+      // Entao aqui: poe o relogio na palavra, RE-ARMA o contador de verso no
+      // verso dela, zera a repeticao e o "parado no fim do verso", e toca.
+      // Devolve o segundo em que comecou, ou null se nao souber a palavra.
+      comecarEm: (vi, wi) => {
+        if (!dados || !dados.versos[vi]) return null;
+        const v = dados.versos[vi];
+        const p = (v.palavras || [])[wi];
+        if (!p) return null;
+        const a = audioEl();
+        if (!a) return null;
+        rebobinadoAte = null;
+        prazoDaVolta = 0;
+        paradoNoFimDoVerso = false;
+        versoAnterior = vi;              // ele esta NESTE verso; nada acabou
+        acesoVerso = -1; acesoPalavra = -1;
+        if (typeof state !== 'undefined') { state.repeatVerso = vi; state.repeatRestante = undefined; }
+        // +0.02s: procurar num MP3 nao cai no milissegundo exato, e cair um fio
+        // ANTES da palavra pode acender a de tras por um instante.
+        a.currentTime = Math.min(Math.max(p.start + 0.02, 0), (a.duration || 1e9) - 0.05);
+        dedo = 0;
+        acender();
+        if (typeof play === 'function') play(); else a.play().catch(() => {});
+        return p.start;
+      },
       atual: () => {
         const n = dados ? dados.versos.reduce((a, v) => a + (v.palavras || []).length, 0) : 0;
         return { nussach, tipo, carregado: !!dados, textoDoSync: !!mapa,

@@ -81,8 +81,39 @@ confere('nenhuma palavra ficou com duas grafias decididas', duplos.length === 0,
 const ARQUIVOS = readdirSync('sync').filter(f => f.endsWith('_sync.json')).sort();
 const sync = Object.fromEntries(ARQUIVOS.map(f => [f, JSON.parse(readFileSync(`sync/${f}`, 'utf8'))]));
 
+// ---------- as decisoes ESCAPADAS (25/08) ----------
+// Nem toda decisao dele vale nos 8. O hebraico do "Yitbarech ... veyitpaer" com
+// tsere e so do ashkenaz e do chabad; as glosas de um verso valem so nele (o
+// "kol" com a glosa "todas" esta em 29 lugares, e virar "todo o povo" em
+// "leela min kol birchata" daria "acima de todo o povo das bencaos").
+//
+// O recado nao sabe dizer isso: ele casa por conteudo e por isso pega os 8.
+// Entao essas decisoes moram em revisoes/decisoes-*.json, e aqui elas fazem
+// duas coisas: sao COBRADAS no escopo delas, e o lugar onde valem fica de fora
+// da varredura das setas — senao a seta antiga acusaria a decisao nova.
+const decisoes = readdirSync('revisoes').filter(f => /^decisoes-.*\.json$/.test(f)).sort()
+  .flatMap(f => JSON.parse(readFileSync(`revisoes/${f}`, 'utf8')).decisoes || []);
+const fora = new Set();        // "arquivo|verso|indice|tipo" que a seta nao julga
+const escapadas = [];          // o que cobrar, e onde
+for (const d of decisoes) {
+  if (d.tipo === 'verso_por_nussach')
+    escapadas.push({ d, vale: f => d.nussachim.includes(f.split('_')[0]) });
+  if (d.tipo === 'glosas_do_verso')
+    escapadas.push({ d, vale: () => true });
+}
+
 const sobrou = [], faltou = [];
 const vistos = new Set();
+// marca o que as decisoes escapadas cobrem, para a seta nao julgar aquilo
+for (const { d, vale } of escapadas) for (const f of ARQUIVOS) {
+  if (!vale(f)) continue;
+  for (const v of sync[f].versos) {
+    if (semNikud(v.hebrew) !== d.chave) continue;
+    if (d.tipo === 'verso_por_nussach') for (const p of (d.palavras || [])) fora.add(`${f}|${v.n}|${p.i}|tl`);
+    if (d.tipo === 'glosas_do_verso') v.palavras.forEach((_, i) => fora.add(`${f}|${v.n}|${i}|glosa`));
+  }
+}
+
 for (const f of ARQUIVOS) for (const v of sync[f].versos) {
   const kv = `trad|${semNikud(v.hebrew)}`;
   if (finais.has(kv)) {
@@ -91,8 +122,9 @@ for (const f of ARQUIVOS) for (const v of sync[f].versos) {
     if (!finais.get(kv).includes(v.translation_pt))
       faltou.push(`${f} §${v.n} verso: e "${v.translation_pt}", devia ser "${finais.get(kv).join(' / ')}"`);
   }
-  for (const p of v.palavras) {
+  v.palavras.forEach((p, iw) => {
     for (const [tipo, campo] of [['glosa', 'glosa_pt'], ['tl', 'transliteration_pt']]) {
+      if (fora.has(`${f}|${v.n}|${iw}|${tipo}`)) continue;   // decisao escapada manda aqui
       const k = `${tipo}|${semNikud(p.hebrew)}`;
       if (!finais.has(k)) continue;
       vistos.add(k);
@@ -101,8 +133,39 @@ for (const f of ARQUIVOS) for (const v of sync[f].versos) {
       if (!finais.get(k).some(x => x.toLowerCase() === p[campo].toLowerCase()))
         faltou.push(`${f} §${v.n} ${p.hebrew}: e "${p[campo]}", devia ser "${finais.get(k).join(' / ')}"`);
     }
+  });
+}
+
+// e as escapadas sao cobradas onde valem
+const escapouErrado = [];
+for (const { d, vale } of escapadas) for (const f of ARQUIVOS) {
+  if (!vale(f)) continue;
+  for (const v of sync[f].versos) {
+    if (semNikud(v.hebrew) !== d.chave) continue;
+    if (d.tipo === 'verso_por_nussach') {
+      if (v.hebrew !== d.hebrew) escapouErrado.push(`${f} §${v.n}: o hebraico nao e o que ele decidiu`);
+      if (v.transliteration_pt !== d.transliteration_pt)
+        escapouErrado.push(`${f} §${v.n}: e "${v.transliteration_pt}", devia ser "${d.transliteration_pt}"`);
+    }
+    if (d.tipo === 'glosas_do_verso')
+      v.palavras.forEach((p, i) => { if (p.glosa_pt !== d.glosas[i])
+        escapouErrado.push(`${f} §${v.n} palavra ${i + 1}: e "${p.glosa_pt}", devia ser "${d.glosas[i]}"`); });
   }
 }
+// e o que NAO esta no escopo nao pode ter sido contaminado
+for (const { d, vale } of escapadas) {
+  if (d.tipo !== 'verso_por_nussach') continue;
+  for (const f of ARQUIVOS) {
+    if (vale(f)) continue;
+    for (const v of sync[f].versos) {
+      if (semNikud(v.hebrew) !== d.chave) continue;
+      if (v.hebrew === d.hebrew)
+        escapouErrado.push(`${f} §${v.n}: pegou o hebraico do ashkenaz/chabad, e nao devia`);
+    }
+  }
+}
+confere(`as ${escapadas.length} decisao(oes) escapada(s) valem so onde ele mandou`,
+  escapouErrado.length === 0, escapouErrado.slice(0, 6).join('\n        '));
 confere('nenhum texto antigo sobrou nos sync/*.json', sobrou.length === 0, sobrou.slice(0, 6).join('\n        '));
 confere('o texto decidido pelo Erez esta la', faltou.length === 0, faltou.slice(0, 6).join('\n        '));
 
@@ -117,7 +180,11 @@ for (const [chave, e] of Object.entries(gloss.entradas)) {
   for (const f of ARQUIVOS) { v = sync[f].versos.find(x => semNikud(x.hebrew) === chave); if (v) break; }
   if (!v) continue;
   if (e.translation_pt !== v.translation_pt) discorda.push(`${chave.slice(0, 18)}: traducao`);
-  if (e.transliteration_pt !== v.transliteration_pt) discorda.push(`${chave.slice(0, 18)}: transliteracao`);
+  // com excecao por nussach, o glossario guarda a base e a variante; compara
+  // com aquela que vale para o arquivo onde o verso foi achado
+  const variantes = [e.transliteration_pt].concat(
+    Object.values(e.por_nussach || {}).map(x => x.transliteration_pt));
+  if (!variantes.includes(v.transliteration_pt)) discorda.push(`${chave.slice(0, 18)}: transliteracao`);
 }
 confere('o glossario concorda com os sync (senao seria desfeito na proxima rodada)',
   discorda.length === 0, discorda.slice(0, 6).join('\n        '));

@@ -514,7 +514,7 @@
       "start": 20.28,
       "end": 26.2,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "baagalá uvizmán carív veimrú amên",
+      "transliteration_pt": "baagalá uvizmán carív veimrú Amen",
       "translation_pt": "rapidamente e em breve — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -621,12 +621,12 @@
         {
           "i": 4,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 24.74,
           "end": 26.2,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -855,14 +855,14 @@
       "n": 8,
       "start": 34.88,
       "end": 39.06,
-      "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarêch veyishtabach veyitpaar",
-      "translation_pt": "Seja abençoado, louvado e glorificado",
+      "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
+      "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr",
+      "translation_pt": "abençoado louvado glorificado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
-          "hebrew": "יִתְבָּרַךְ",
+          "hebrew": "יִתְבָּרֵךְ",
           "transliteration_pt": "Yitbarêch",
           "start": 34.88,
           "end": 36.04,
@@ -912,8 +912,8 @@
         },
         {
           "i": 2,
-          "hebrew": "וְיִתְפָּאַר",
-          "transliteration_pt": "veyitpaar",
+          "hebrew": "וְיִתְפָּאֵר",
+          "transliteration_pt": "veyitpaêr",
           "start": 37.54,
           "end": 39.06,
           "glosa_pt": "glorificado",
@@ -1365,7 +1365,7 @@
       "start": 56.4,
       "end": 64.98,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú amên",
+      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
       "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -1397,7 +1397,7 @@
         {
           "i": 1,
           "hebrew": "וְנֶחָמָתָא",
-          "transliteration_pt": "venechamata",
+          "transliteration_pt": "venechemata",
           "start": 57.82,
           "end": 59.64,
           "glosa_pt": "e consolos",
@@ -1497,12 +1497,12 @@
         {
           "i": 5,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 62.98,
           "end": 64.98,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -2533,7 +2533,7 @@
       "start": 102.02,
       "end": 112.2,
       "hebrew": "וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "ufurkaná min kodam avuhon di-vishmayá vear-á veimrú amên",
+      "transliteration_pt": "ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen",
       "translation_pt": "e redenção vinda do seu Pai que está nos céus e na terra — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
@@ -2708,12 +2708,12 @@
         {
           "i": 7,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 110.52,
           "end": 112.2,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -2747,7 +2747,7 @@
       "start": 112.2,
       "end": 124.54,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú amên",
+      "transliteration_pt": "Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen",
       "translation_pt": "Que haja paz em abundância vinda dos céus, e vida para nós e para todo o povo de Israel — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
@@ -3029,12 +3029,12 @@
         {
           "i": 11,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 123.32,
           "end": 124.54,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -3164,7 +3164,7 @@
       "start": 128.04,
       "end": 138.78,
       "hebrew": "הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu yaassê verachamav shalom aleinu veal kol Israel veimrú amên",
+      "transliteration_pt": "hu yaassê verachamav shalom aleinu veal kol Israel veimrú Amen",
       "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
@@ -3389,12 +3389,12 @@
         {
           "i": 9,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 138.24,
           "end": 138.78,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",

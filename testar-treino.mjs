@@ -172,6 +172,75 @@ const naPausa = await pag.evaluate(async () => {
 confere('parado no fim do verso, o destaque fica na ultima palavra do verso que acabou',
   naPausa === '0/3', `ficou em ${naPausa} (esperado 0/3, a ultima palavra do §1)`);
 
+// ---------- COMECAR EM QUALQUER PALAVRA (25/08) ----------
+// O pedido dele: "tanto no modo reza ou no modo treino, deveria permitir
+// comecar de qualquer palavra, hoje so comeca na primeira". O que quebra
+// facil aqui nao e o audio (o relogio anda), e o CONTADOR DE VERSO do Modo
+// Treino: caindo no meio do Kadish sem re-armar, o verso seguinte era lido
+// como "acabou um verso" e a pausa vinha na hora errada.
+for (const treino of [false, true]) {
+  await pag.reload();
+  await pag.waitForTimeout(2500);
+  await pag.evaluate(t => { state.modoTreino = t; state.repeatN = 1; }, treino);
+  const nome = treino ? 'Modo Treino' : 'Modo Reza';
+
+  // o balao da palavra tem o botao, e ele existe na lingua da tela
+  const alvo = await pag.evaluate(() => {
+    const w = document.querySelector('.word[data-vi="2"][data-wi="1"]') ||
+              document.querySelector('.word[data-vi="1"][data-wi="1"]');
+    if (!w) return null;
+    w.click();
+    const b = document.getElementById('popupComecar');
+    return { temBotao: !!b, texto: b ? b.textContent.trim() : '',
+             vi: Number(w.dataset.vi), wi: Number(w.dataset.wi) };
+  });
+  confere(`${nome}: tocar numa palavra oferece "comecar aqui"`,
+    !!(alvo && alvo.temBotao && alvo.texto), JSON.stringify(alvo));
+
+  const r = await pag.evaluate(async () => {
+    const a = document.getElementById('audioPlayer');
+    const vi = popup._currentVi, wi = popup._currentWi;
+    document.getElementById('popupComecar').click();
+    await new Promise(r => setTimeout(r, 900));
+    return { vi, wi, agora: a.currentTime, tocando: !a.paused,
+             aceso: (document.querySelector('.word.active') || {}).dataset,
+             espiada: SYNC.espiar() };
+  });
+  confere(`${nome}: o audio pula para a palavra e toca`,
+    r.tocando && r.agora > 1, `currentTime ${r.agora}, tocando ${r.tocando}`);
+  confere(`${nome}: o destaque vai junto, e no verso da palavra`,
+    r.aceso && Number(r.aceso.vi) === alvo.vi,
+    `aceso em ${r.aceso ? r.aceso.vi + '/' + r.aceso.wi : '-'}, pedido ${alvo.vi}/${alvo.wi}`);
+  confere(`${nome}: o contador de verso re-arma no verso onde ele entrou`,
+    r.espiada.versoAnterior === alvo.vi,
+    `versoAnterior ${r.espiada.versoAnterior}, esperado ${alvo.vi}`);
+}
+
+// e no Modo Treino a pausa seguinte tem que ser a do FIM daquele verso, nao
+// uma pausa imediata por o contador achar que um verso acabou
+await pag.reload();
+await pag.waitForTimeout(2500);
+await pag.evaluate(() => { state.modoTreino = true; state.repeatN = 1; });
+const pausou = await pag.evaluate(async () => {
+  const w = document.querySelector('.word[data-vi="2"][data-wi="1"]');
+  w.click();
+  document.getElementById('popupComecar').click();
+  const a = document.getElementById('audioPlayer');
+  const t0 = performance.now();
+  const entrou = a.currentTime;
+  while (performance.now() - t0 < 25000) {
+    await new Promise(r => requestAnimationFrame(r));
+    if (a.paused && a.currentTime > entrou + 0.3) {
+      const el = document.querySelector('.word.active');
+      return { vi: el ? Number(el.dataset.vi) : null, andou: a.currentTime - entrou };
+    }
+  }
+  return null;
+});
+confere('Modo Treino: comecando no meio, a pausa vem no fim daquele verso',
+  pausou && pausou.vi === 2 && pausou.andou > 0.3,
+  JSON.stringify(pausou));
+
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 
 await navegador.close();

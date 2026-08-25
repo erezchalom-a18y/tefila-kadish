@@ -11,7 +11,15 @@ for (const f of readdirSync('sync').filter(x => x.endsWith('.json')).sort()) {
     const e = entradas[norm(v.hebrew)];
     if (!e) { falta++; semTexto.push(`${f.replace('_sync.json','')} §${v.n}: ${v.hebrew}`); return v; }
     if (e.origem === 'tehilat_hashem') doSiddur++; else redigido++;
-    return { ...v, transliteration_pt: e.transliteration_pt, translation_pt: e.translation_pt, origem_texto: e.origem };
+    // EXCECAO POR NUSSACH (25/08). A chave do glossario ignora o nikud, entao
+    // dois nussachim com o mesmo texto e nikud diferente caem na mesma entrada.
+    // O Erez decidiu que o "Yitbarech ... veyitpaer" leva tsere no ashkenaz e
+    // no chabad, e patach no sefard e no sefaradi. Sem isto, esta rodada
+    // desfaria a transliteracao dele na rodada seguinte, sem aviso.
+    const so = e.por_nussach && e.por_nussach[j.nusach];
+    return { ...v,
+      transliteration_pt: (so && so.transliteration_pt) || e.transliteration_pt,
+      translation_pt: e.translation_pt, origem_texto: e.origem };
   });
   // tira a nota anterior antes de escrever a nova, senao cada rodada duplica a linha
   j.texto_status = (j.texto_status || '')

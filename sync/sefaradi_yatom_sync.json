@@ -635,7 +635,7 @@
       "start": 23.74,
       "end": 30.34,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "baagalá uvizmán carív veimrú amên",
+      "transliteration_pt": "baagalá uvizmán carív veimrú Amen",
       "translation_pt": "rapidamente e em breve — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -742,12 +742,12 @@
         {
           "i": 4,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 28.32,
           "end": 30.34,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -978,7 +978,7 @@
       "end": 42.08,
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
       "transliteration_pt": "Yitbarêch veyishtabach veyitpaar",
-      "translation_pt": "Seja abençoado, louvado e glorificado",
+      "translation_pt": "abençoado louvado glorificado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
@@ -1486,7 +1486,7 @@
       "start": 57.74,
       "end": 65.24,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú amên",
+      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
       "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -1518,7 +1518,7 @@
         {
           "i": 1,
           "hebrew": "וְנֶחָמָתָא",
-          "transliteration_pt": "venechamata",
+          "transliteration_pt": "venechemata",
           "start": 59.18,
           "end": 61.1,
           "glosa_pt": "e consolos",
@@ -1618,12 +1618,12 @@
         {
           "i": 5,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 63.94,
           "end": 65.24,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -2014,7 +2014,7 @@
       "start": 80.36,
       "end": 88.94,
       "hebrew": "וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "verêvach vehatsalá lanu ulechol amô Israel veimrú amên",
+      "transliteration_pt": "verêvach vehatsalá lanu ulechol amô Israel veimrú Amen",
       "translation_pt": "alívio e salvação, para nós e para todo o Seu povo Israel — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
@@ -2161,12 +2161,12 @@
         {
           "i": 7,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 87.76,
           "end": 88.94,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -2296,7 +2296,7 @@
       "start": 91.98,
       "end": 102.81,
       "hebrew": "הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu berachamav yaassê shalom aleinu veal kol amô Israel veimrú amên",
+      "transliteration_pt": "hu berachamav yaassê shalom aleinu veal kol amô Israel veimrú Amen",
       "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
@@ -2539,12 +2539,12 @@
         {
           "i": 10,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amên",
+          "transliteration_pt": "Amen",
           "start": 102.18,
           "end": 102.81,
-          "glosa_pt": "amên",
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amên",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",

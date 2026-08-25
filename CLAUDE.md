@@ -545,6 +545,51 @@ Duas coisas para quem ler isto amanhã e achar que piorou:
    razão: há um bloco de voz em 0,16~0,40. O corte do áudio (cortes.json) não
    foi tocado.
 
+## Decisões escapadas do Erez (25/08)
+
+Nem toda decisão dele vale nos 8. Duas apareceram em 25/08 e não cabem no
+formato dos recados (que casam por conteúdo e por isso pegam os 8):
+
+- **O hebraico do "Yitbarêch veyishtabach veyitpaêr" com tsere** — só no
+  ashkenaz e no chabad. Os nussachim divergem de verdade nessa palavra, e os
+  sidurim também. Sefard e sefaradi ficam com o patach (veyitpaar).
+- **As glosas de UM verso**, sem mexer nas mesmas palavras nos outros. O "kol"
+  com a glosa "todas" está em 29 lugares; virar "todo o povo" em "leela min kol
+  birchatá" daria "acima de todo o povo das bênçãos".
+
+Para isso existe **aplicar-decisoes.mjs**, que lê revisoes/decisoes-<data>.json
+(escrito à mão, a partir do que ele mandou) e aplica cada uma no escopo pedido.
+Prova antes de gravar: nenhum tempo mudou, **nenhuma LETRA do hebraico mudou**
+(só o nikud — mudar letra é outro texto, e isso é do rabino), as outras 7
+línguas intactas, as âncoras valendo, e cada verso é a soma das suas palavras.
+
+**A armadilha do glossário, e o conserto.** A chave do glossario.json ignora o
+nikud, então dois nussachim com o mesmo texto e nikud diferente caem na MESMA
+entrada. Sem conserto, a rodada seguinte do aplicar-glossario.mjs desfaria a
+transliteração dele, sem aviso — é o mesmo caso que já obrigou o
+aplicar-revisao.mjs a escrever nos dois lugares. Agora a entrada aceita um
+`por_nussach`, e o aplicar-glossario.mjs o respeita. Há prova disso: rodá-lo
+depois não desfaz nada.
+
+## Começar em qualquer palavra (25/08)
+
+Ele pediu: *"tanto no modo reza ou no modo treino, deveria permitir começar de
+qualquer palavra, hoje só começa na primeira"*.
+
+Tocar numa palavra já abria o balão com o significado dela, e isso ele usa —
+trocar esse toque por "toca daqui" tiraria uma coisa para dar outra. Então o
+balão ganhou um botão: **▶ Começar aqui** (nas 8 línguas, na tabela I18N).
+
+O que não bastava era mover o relógio. O Modo Treino conta verso pelo que veio
+antes (`versoAnterior`), e cair no meio do Kadish sem re-armar esse contador
+fazia o verso seguinte ser lido como "acabou um verso" — a pausa vinha na hora
+errada. A repetição tinha o mesmo problema: o contador era do verso de onde ele
+saiu. `SYNC.comecarEm(vi, wi)` põe o relógio na palavra, re-arma o contador no
+verso dela, zera a repetição e o "parado no fim do verso", e toca.
+
+O testar-treino.mjs cobra as duas coisas nos dois modos, e mais uma: começando
+no meio, a pausa do Modo Treino tem que vir no fim DAQUELE verso.
+
 ## Nunca
 
 - git push --force

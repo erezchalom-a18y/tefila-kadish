@@ -1,0 +1,73 @@
+{
+  "_leia": "Decisoes do Erez de 25/08, tomadas por escrito e confirmadas por pergunta direta. Entram por aplicar-decisoes.mjs. Ficam aqui porque sao ESCOPADAS (valem so em alguns nussachim, ou so em alguns versos) e por isso nao cabem no formato dos recados de revisoes/pt-*.txt, que valem para os 8.",
+  "decisoes": [
+    {
+      "id": 1,
+      "o_que": "O verso 'Yitbarech veyishtabach veyitpaar' passa a ter o hebraico do ashkenaz e do chabad, com tsere: Yitbarech (יִתְבָּרֵךְ) e veyitpaer (וְיִתְפָּאֵר). O sefard e o sefaradi ficam com o patach que ja tinham.",
+      "ele_disse": "1) יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר / Yitbarêch veyishtabach veyitpaEr (mudar o hebraico tambem) / abençoado louvado glorificado. Perguntei se o hebraico do veyitpaar mudava junto; ele escolheu 'Mudar os dois'. Perguntei em quais Kadishim; ele escolheu 'nos dois ashkenaz e nos dois chabad'.",
+      "tipo": "verso_por_nussach",
+      "chave": "יתברךוישתבחויתפאר",
+      "nussachim": [
+        "ashkenaz",
+        "chabad"
+      ],
+      "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
+      "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr",
+      "palavras": [
+        {
+          "i": 0,
+          "hebrew": "יִתְבָּרֵךְ"
+        },
+        {
+          "i": 2,
+          "hebrew": "וְיִתְפָּאֵר",
+          "transliteration_pt": "veyitpaêr"
+        }
+      ]
+    },
+    {
+      "id": "1b",
+      "o_que": "A traducao desse verso vale para os 8: e portugues, nao nussach. Deixar duas traducoes diferentes para o mesmo sentido foi o defeito que ele apontou em 24/08.",
+      "ele_disse": "abençoado louvado glorificado",
+      "tipo": "traducao_do_verso",
+      "chave": "יתברךוישתבחויתפאר",
+      "translation_pt": "abençoado louvado glorificado"
+    },
+    {
+      "id": 2,
+      "o_que": "venechamata -> venechemata, na transliteracao do verso e na da palavra, nos 8.",
+      "ele_disse": "2- tushbechata venechemata dáamiran bealma veimrú amên",
+      "tipo": "transliteracao_de_palavra",
+      "hebrew_sem_nikud": "ונחמתא",
+      "de": "venechamata",
+      "para": "venechemata"
+    },
+    {
+      "id": 3,
+      "o_que": "As palavrinhas do verso 'hu yaasse shalom aleinu veal kol Israel veimru amen' passam a ler, em fila: 'Ele fará a paz para nós e todo o povo de Israel e digam Amen'. So neste verso — o 'kol' com a glosa 'todas' aparece em 29 lugares e nos outros 'todo o povo' estaria errado (leela min kol birchata = 'de todas as bencaos').",
+      "ele_disse": "3) Ele é fará paz para nós e para todas de Israel e digam amên - correção - (ele fará a paz para nós e todo o povo de Israel e digam Amen)",
+      "tipo": "glosas_do_verso",
+      "chave": "הואיעשהשלוםעלינוועלכלישראלואמרואמן",
+      "glosas": [
+        "Ele",
+        "fará",
+        "a paz",
+        "para nós",
+        "e",
+        "todo o povo",
+        "de Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": 4,
+      "o_que": "Toda grafia de amen no portugues vira 'Amen' — traducao do verso, transliteracao do verso, glosa da palavra e transliteracao da palavra. As outras 7 linguas nao sao tocadas.",
+      "ele_disse": "4- corrigir todos os amên, amén, amen para Amen. Perguntei se a linha da transliteracao entrava; ele escolheu 'Tudo, inclusive a transliteracao'.",
+      "tipo": "grafia_no_portugues",
+      "de": "\\b[Aa]m[eéê]n\\b",
+      "para": "Amen",
+      "_cuidado": "A regra tem que ter fronteira de palavra. Sem \\b ela casa o \"amen\" de dentro de \"rapidamente\" e escreve \"rapidAmente\". Aconteceu em 25/08."
+    }
+  ]
+}
