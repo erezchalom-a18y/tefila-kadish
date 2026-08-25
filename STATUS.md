@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `2ea3251`, de 25/08/2026 00:09.
+Gerado por `gerar-status.py` no commit `fd7ed21`, de 25/08/2026 02:00.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -16,7 +16,7 @@ sabe procurar não estão aí.
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
 | ChatGPT (glossário) | 24/08/2026 15:08 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 24/08/2026 20:43 | os 8 áudios contra os sync/*.json |
+| Whisper (áudio) | 25/08/2026 00:10 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
@@ -24,15 +24,15 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
 | Nussach | Palavras em cima da voz | Desvio que o sinal sugere | Mediana do Whisper | Palavras fora da voz | Versos na lista curta | Âncoras |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ashkenaz_yatom | 59/75 (78.7%) | -0.14s | — | 12 | 2 | 5 |
-| ashkenaz_derabanan | 90/118 (76.3%) | -0.14s | — | 26 | 2 | 0 |
-| chabad_yatom | 70/80 (87.5%) | -0.04s | -1.04s | 10 | 0 | 21 |
-| chabad_derabanan | 119/121 (98.3%) | -0.14s | — | 2 | 0 | 18 |
-| sefard_yatom | 65/81 (80.2%) | -0.14s | — | 15 | 3 | 0 |
-| sefard_derabanan | 108/124 (87.1%) | -0.14s | -1.26s | 13 | 3 | 0 |
-| sefaradi_yatom | 77/91 (84.6%) | -0.14s | — | 14 | 2 | 0 |
-| sefaradi_derabanan | 109/125 (87.2%) | -0.14s | — | 12 | 0 | 0 |
-| **total** | | | | **104** | **12** | **47** |
+| ashkenaz_yatom | 74/75 (98.7%) | -0.14s | — | 1 | 2 | 22 |
+| ashkenaz_derabanan | 118/118 (100.0%) | -0.14s | — | 0 | 2 | 36 |
+| chabad_yatom | 80/80 (100.0%) | -0.14s | -1.04s | 0 | 0 | 36 |
+| chabad_derabanan | 119/121 (98.3%) | -0.14s | -1.03s | 2 | 0 | 18 |
+| sefard_yatom | 79/81 (97.5%) | -0.14s | — | 2 | 3 | 18 |
+| sefard_derabanan | 123/124 (99.2%) | -0.14s | — | 0 | 3 | 24 |
+| sefaradi_yatom | 87/91 (95.6%) | -0.14s | — | 4 | 2 | 12 |
+| sefaradi_derabanan | 121/125 (96.8%) | +0.10s | — | 2 | 0 | 16 |
+| **total** | | | | **11** | **12** | **186** |
 
 Como ler cada coluna:
 
