@@ -1,0 +1,66 @@
+Sincronia — Sefaradi · Derabanan (sefaradi_derabanan)
+16 correção(ões) que eu ouvi e arrastei.
+
+verso 2, palavra 1 (bealma)
+   estava: 4.98s
+   ponha em: 4.58s
+
+verso 8, palavra 1 (Yehê)
+   estava: 27.34s
+   ponha em: 27.88s
+
+verso 11, palavra 1 (veyitaleh)
+   estava: 44.26s
+   ponha em: 43.91s
+
+verso 11, palavra 2 (veyithalal)
+   estava: 45.66s
+   ponha em: 45.26s
+
+verso 12, palavra 1 (leela)
+   estava: 49.90s
+   ponha em: 50.74s
+
+verso 12, palavra 3 (kol)
+   estava: 52.09s
+   ponha em: 52.58s
+
+verso 17, palavra 1 (di)
+   estava: 78.30s
+   ponha em: 77.90s
+
+verso 17, palavra 2 (veatrá)
+   estava: 78.85s
+   ponha em: 78.37s
+
+verso 18, palavra 5 (chiná)
+   estava: 87.88s
+   ponha em: 88.64s
+
+verso 18, palavra 6 (vechisdá)
+   estava: 89.24s
+   ponha em: 89.74s
+
+verso 19, palavra 5 (vear-á)
+   estava: 96.27s
+   ponha em: 95.84s
+
+verso 23, palavra 8 (amên)
+   estava: 122.46s
+   ponha em: 123.04s
+
+verso 24, palavra 1 (Ossê)
+   estava: 123.42s
+   ponha em: 124.64s
+
+verso 24, palavra 3 (bimromav)
+   estava: 126.10s
+   ponha em: 126.62s
+
+verso 25, palavra 1 (hu)
+   estava: 128.10s
+   ponha em: 127.88s
+
+verso 25, palavra 6 (veal)
+   estava: 132.26s
+   ponha em: 132.78s

@@ -1,0 +1,62 @@
+Sincronia — Chabad · Yatom (chabad_yatom)
+15 correção(ões) que eu ouvi e arrastei.
+
+verso 1, palavra 2 (veyitkadash)
+   estava: 1.10s
+   ponha em: 1.62s
+
+verso 2, palavra 2 (di)
+   estava: 5.86s
+   ponha em: 5.79s
+
+verso 2, palavra 3 (verá)
+   estava: 6.60s
+   ponha em: 6.01s
+
+verso 2, palavra 4 (chir'utêh)
+   estava: 6.81s
+   ponha em: 6.70s
+
+verso 4, palavra 3 (vikarev)
+   estava: 12.80s
+   ponha em: 12.60s
+
+verso 5, palavra 2 (uveyomechon)
+   estava: 16.00s
+   ponha em: 16.54s
+
+verso 10, palavra 1 (veyitromam)
+   estava: 37.92s
+   ponha em: 38.34s
+
+verso 11, palavra 3 (shemê)
+   estava: 43.72s
+   ponha em: 44.22s
+
+verso 12, palavra 5 (veshiratá)
+   estava: 49.92s
+   ponha em: 50.54s
+
+verso 14, palavra 4 (min)
+   estava: 61.80s
+   ponha em: 62.48s
+
+verso 14, palavra 6 (vechayim)
+   estava: 63.60s
+   ponha em: 64.20s
+
+verso 15, palavra 1 (Ossê)
+   estava: 71.36s
+   ponha em: 73.16s
+
+verso 15, palavra 3 (bimromav)
+   estava: 74.50s
+   ponha em: 74.94s
+
+verso 16, palavra 1 (hu)
+   estava: 76.36s
+   ponha em: 76.04s
+
+verso 16, palavra 5 (veal)
+   estava: 79.14s
+   ponha em: 79.68s

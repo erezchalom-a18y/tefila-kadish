@@ -151,7 +151,19 @@ de dentro do desenho e viraram uma lista no fim.
    (Ou, como antes, ouve no conferidor.html e reporta o segundo em texto.)
 2. O arrasto encosta sozinho no começo de voz mais próximo quando está a menos
    de 0,06s. O dedo dele aponta; o sinal decide o número exato.
-3. Registrar como âncora em ancoras.json ({verso, palavra, inicio, nota}).
+3. Registrar como âncora: **node aplicar-recado.mjs recados/<arquivo>.txt**
+   (ensaio; --confirmar grava). Ele lê o recado que a página monta e faz, toda
+   vez, a mesma conferência: o "estava" de cada linha tem que bater com o
+   arquivo de agora — se não bater, ele estava vendo dados velhos e o recado
+   inteiro é recusado; o nome da palavra tem que bater; e onde ele pôs é
+   classificado (em cima da voz · dentro de um bloco, que é palavra colada ·
+   no silêncio). No silêncio vale a regra de sempre: encosta no começo de voz
+   até 0,12s e grava o número dele em inicio_que_ele_deu. Se já havia âncora
+   naquela palavra, a nova ganha — a palavra mais recente dele é a que vale —
+   e a velha vai para _substituidas com o motivo. Foi assim com o tushbechata
+   do ashkenaz_yatom: em 21/08 ele ancorou em 50,56; em 24/08, vendo a fita,
+   pôs em 51,46, e o sinal está do lado do novo (50,56~50,64 dura 0,08s, é a
+   respiração que ele mesmo desconfiava). O recado fica commitado em recados/.
 4. Rodar: python3 aplicar-ancoras.py --confirmar
    (alinhar-global.py é citado aqui desde o começo mas NUNCA foi commitado —
    vivia fora do repositório. aplicar-ancoras.py não é ele: em vez de
@@ -503,6 +515,35 @@ uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
   um e o outro ficou como estava. O caso que muda sentido é o meshichêh
   ("apresse a vinda de" no chabad, "aproxime o" nos outros 4). Nada foi
   alterado: só ele decide, e a lista espera o sim ou não dele.
+
+## A noite em que ele passou os 8 (24/08)
+
+Com a fita contínua na mão, o Erez ouviu os 8 Kadishim e mandou 8 recados —
+**159 correções de ouvido**. Estão em recados/, entraram por aplicar-recado.mjs
+e viraram âncoras. O resultado, medido pelo checar-sincronia.mjs:
+
+| | palavras | apontamentos |
+|---|---|---|
+| ashkenaz_yatom | 75 | 0 |
+| ashkenaz_derabanan | 118 | 0 |
+| chabad_yatom | 80 | 1 (o "di" com 0,15s — ele mesmo separou o par colado) |
+| chabad_derabanan | 121 | 0 |
+| sefard_yatom | 81 | 0 |
+| sefard_derabanan | 124 | 1 (o Whisper cortando o amên; ver acima) |
+| sefaradi_yatom | 91 | 0 |
+| sefaradi_derabanan | 125 | 0 |
+
+Duas coisas para quem ler isto amanhã e achar que piorou:
+
+1. **A concordância com o Whisper CAIU** (de ~100% para 60–113 de cada total),
+   e isso é o esperado: em cada lugar onde ele arrastou, o ouvido dele passou a
+   discordar do Whisper. Vale o ouvido dele (regra 1). Não realinhar por
+   conteúdo em cima disto sem falar com ele — o realinhador respeita as
+   âncoras, mas mexeria em tudo o mais.
+2. **O fala_inicio do sefaradi_yatom mudou de 0,46 para 0,16.** Ele arrastou o
+   Yitgadal para antes do que o arquivo chamava de começo da fala, e tinha
+   razão: há um bloco de voz em 0,16~0,40. O corte do áudio (cortes.json) não
+   foi tocado.
 
 ## Nunca
 

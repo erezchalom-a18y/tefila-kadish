@@ -1,0 +1,98 @@
+Sincronia — Sefard · Derabanan (sefard_derabanan)
+24 correção(ões) que eu ouvi e arrastei.
+
+verso 4, palavra 3 (vikarev)
+   estava: 13.30s
+   ponha em: 13.10s
+
+verso 5, palavra 1 (bechayechon)
+   estava: 15.90s
+   ponha em: 15.58s
+
+verso 7, palavra 2 (uvizmán)
+   estava: 22.92s
+   ponha em: 23.36s
+
+verso 8, palavra 3 (raba)
+   estava: 28.90s
+   ponha em: 29.20s
+
+verso 9, palavra 1 (Yitbarêch)
+   estava: 34.48s
+   ponha em: 34.22s
+
+verso 12, palavra 2 (min)
+   estava: 48.84s
+   ponha em: 49.34s
+
+verso 15, palavra 1 (veal)
+   estava: 63.86s
+   ponha em: 63.66s
+
+verso 15, palavra 3 (veal)
+   estava: 66.10s
+   ponha em: 65.88s
+
+verso 16, palavra 1 (veal)
+   estava: 70.76s
+   ponha em: 70.28s
+
+verso 16, palavra 4 (daaskin)
+   estava: 72.12s
+   ponha em: 72.70s
+
+verso 17, palavra 1 (di)
+   estava: 75.26s
+   ponha em: 74.88s
+
+verso 18, palavra 1 (yehê)
+   estava: 81.50s
+   ponha em: 82.42s
+
+verso 19, palavra 2 (vechisdá)
+   estava: 87.46s
+   ponha em: 88.04s
+
+verso 20, palavra 1 (vechayin)
+   estava: 90.20s
+   ponha em: 90.66s
+
+verso 20, palavra 4 (revichei)
+   estava: 94.00s
+   ponha em: 94.44s
+
+verso 21, palavra 1 (ufurkaná)
+   estava: 95.94s
+   ponha em: 95.72s
+
+verso 21, palavra 5 (di)
+   estava: 100.48s
+   ponha em: 99.92s
+
+verso 21, palavra 7 (vear-á)
+   estava: 102.52s
+   ponha em: 102.02s
+
+verso 22, palavra 1 (Yehê)
+   estava: 105.04s
+   ponha em: 105.92s
+
+verso 23, palavra 1 (Ossê)
+   estava: 118.24s
+   ponha em: 117.96s
+
+verso 23, palavra 3 (bimromav)
+   estava: 119.34s
+   ponha em: 119.94s
+
+verso 24, palavra 4 (shalom)
+   estava: 123.60s
+   ponha em: 124.14s
+
+verso 24, palavra 9 (veimrú)
+   estava: 129.24s
+   ponha em: 129.06s
+
+verso 24, palavra 10 (amên)
+   estava: 129.72s
+   ponha em: 130.46s
