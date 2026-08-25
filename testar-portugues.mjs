@@ -143,8 +143,8 @@ for (const { d, vale } of escapadas) for (const f of ARQUIVOS) {
   for (const v of sync[f].versos) {
     if (semNikud(v.hebrew) !== d.chave) continue;
     if (d.tipo === 'verso_por_nussach') {
-      if (v.hebrew !== d.hebrew) escapouErrado.push(`${f} §${v.n}: o hebraico nao e o que ele decidiu`);
-      if (v.transliteration_pt !== d.transliteration_pt)
+      if (d.hebrew && v.hebrew !== d.hebrew) escapouErrado.push(`${f} §${v.n}: o hebraico nao e o que ele decidiu`);
+      if (d.transliteration_pt && v.transliteration_pt !== d.transliteration_pt)
         escapouErrado.push(`${f} §${v.n}: e "${v.transliteration_pt}", devia ser "${d.transliteration_pt}"`);
     }
     if (d.tipo === 'glosas_do_verso')
@@ -159,8 +159,12 @@ for (const { d, vale } of escapadas) {
     if (vale(f)) continue;
     for (const v of sync[f].versos) {
       if (semNikud(v.hebrew) !== d.chave) continue;
-      if (v.hebrew === d.hebrew)
+      // fora do escopo, nada pode ter pegado a variante — nem o hebraico nem a
+      // transliteracao. E o vazamento que nenhuma outra checagem enxerga.
+      if (d.hebrew && v.hebrew === d.hebrew)
         escapouErrado.push(`${f} §${v.n}: pegou o hebraico do ashkenaz/chabad, e nao devia`);
+      if (d.transliteration_pt && v.transliteration_pt === d.transliteration_pt)
+        escapouErrado.push(`${f} §${v.n}: pegou a transliteracao do ashkenaz/chabad, e nao devia`);
     }
   }
 }

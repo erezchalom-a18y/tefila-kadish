@@ -60,8 +60,10 @@ for (const d of decisoes) {
       if (!d.nussachim.includes(nussach)) continue;
       for (const v of agora[f].versos) {
         if (norm(v.hebrew) !== d.chave) continue;
-        v.hebrew = d.hebrew;
-        v.transliteration_pt = d.transliteration_pt;
+        // ha decisao que muda so a transliteracao (o venechemata do ashkenaz e
+        // do chabad); nesse caso o hebraico nao vem no arquivo e nao se toca.
+        if (d.hebrew) v.hebrew = d.hebrew;
+        if (d.transliteration_pt) v.transliteration_pt = d.transliteration_pt;
         for (const p of d.palavras) {
           const w = v.palavras[p.i];
           if (!w) continue;

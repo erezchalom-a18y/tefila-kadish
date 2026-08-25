@@ -35,12 +35,21 @@
     },
     {
       "id": 2,
-      "o_que": "venechamata -> venechemata, na transliteracao do verso e na da palavra, nos 8.",
-      "ele_disse": "2- tushbechata venechemata dáamiran bealma veimrú amên",
-      "tipo": "transliteracao_de_palavra",
-      "hebrew_sem_nikud": "ונחמתא",
-      "de": "venechamata",
-      "para": "venechemata"
+      "o_que": "venechamata -> venechemata, mas SO no ashkenaz e no chabad. O sefard e o sefaradi ficam com venechamata.",
+      "ele_disse": "2- tushbechata venechemata dáamiran bealma veimrú amên. E depois, estreitando: '2- venechamata para venechemeta é só nos ashekenaz e chabad'. Uso venechemata, a grafia da linha inteira que ele escreveu com cuidado; no bilhete de estreitar ele digitou venechemeta, que parece pressa. Se for o contrario, e uma palavra so para trocar.",
+      "tipo": "verso_por_nussach",
+      "chave": "תשבחתאונחמתאדאמירןבעלמאואמרואמן",
+      "nussachim": [
+        "ashkenaz",
+        "chabad"
+      ],
+      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
+      "palavras": [
+        {
+          "i": 1,
+          "transliteration_pt": "venechemata"
+        }
+      ]
     },
     {
       "id": 3,

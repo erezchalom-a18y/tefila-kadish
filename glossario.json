@@ -801,7 +801,7 @@
     },
     "תשבחתאונחמתאדאמירןבעלמאואמרואמן": {
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
+      "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú Amen",
       "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem": "tehilat_hashem",
       "glosas_pt": [
@@ -878,6 +878,14 @@
           "וְאִמְרוּ",
           "אָמֵן"
         ]
+      },
+      "por_nussach": {
+        "ashkenaz": {
+          "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen"
+        },
+        "chabad": {
+          "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen"
+        }
       }
     },
     "יהאשלמארבאמןשמיאוחייםטוביםעלינוועלכלישראלואמרואמן": {

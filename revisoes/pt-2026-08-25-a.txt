@@ -1,5 +1,5 @@
 Revisão de português — as decisões do Erez de 25/08 que valem nos 8
-5 para corrigir · 0 transliterações escritas por mim
+4 para corrigir · 0 transliterações escritas por mim
 (cada item vale para os 8 kadishim)
 
 Este arquivo NÃO saiu da página: fui eu que montei, no mesmo formato, com o que
@@ -10,10 +10,12 @@ ele mandou por escrito. O que ele escreveu:
        abençoado louvado glorificado
     2- tushbechata venechemata dáamiran bealma veimrú amên
        louvores e consolos que são proferidos no mundo e digam amên
+       (em 25/08 ele estreitou: "venechamata para venechemeta é só nos
+        ashkenaz e chabad" — então isto virou decisão escapada)
     4- corrigir todos os amên, amén, amen para Amen
 
-O que ele pediu no item 1 sobre o HEBRAICO, e o item 3 (as palavrinhas de um
-verso só), NÃO estão aqui: eles valem só em alguns nussachim / num verso só, e
+O item 2 (venechemata), o que ele pediu no item 1 sobre o HEBRAICO, e o item 3
+(as palavrinhas de um verso só) NÃO estão aqui: eles valem só em alguns nussachim / num verso só, e
 o formato do recado casa por conteúdo, o que pegaria os 8. Aqueles estão em
 revisoes/decisoes-2026-08-25.json e entram por aplicar-decisoes.mjs.
 
@@ -25,10 +27,6 @@ o som, não a escrita), e ele respondeu "Tudo, inclusive a transliteração".
 tradução do verso — יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר
    está: Seja abençoado, louvado e glorificado
    deveria ser: abençoado louvado glorificado
-
-transliteração — וְנֶחָמָתָא
-   está: venechamata
-   deveria ser: venechemata
 
 transliteração — אָמֵן
    está: amên

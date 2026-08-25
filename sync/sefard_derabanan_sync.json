@@ -1486,7 +1486,7 @@
       "start": 52.68,
       "end": 59.76,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחֱמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
+      "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú Amen",
       "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -1518,7 +1518,7 @@
         {
           "i": 1,
           "hebrew": "וְנֶחֱמָתָא",
-          "transliteration_pt": "venechemata",
+          "transliteration_pt": "venechamata",
           "start": 53.8,
           "end": 55.46,
           "glosa_pt": "e consolos",
