@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-25 18:00 UTC por `whisper-1`, sobre o commit `ed14dfb`.
+Gerado em 2026-08-25 23:45 UTC por `whisper-1`, sobre o commit `79d1c00`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -140,7 +140,7 @@ comece a ouvir por aqui.
 
 **§13**
 
-- `עַל` *(Al)* — nós: 64.98s · ouvido: 63.959999084472656s · diferença -1.02s
+- `עַל` *(Al)* — nós: 64.98s · ouvido: 63.939998626708984s · diferença -1.04s
 - `וְעַל` *(veal)* — nós: 67.12s · ouvido: 66.37999725341797s · diferença -0.74s
 
 **§14**
