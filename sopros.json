@@ -1,6 +1,6 @@
 {
  "gerado_por": "medir-sopros.py",
- "o_que_e": "fronteiras entre palavras onde o rabino NAO pausa — cortar ali soa quebrado, entao o Modo Treino por palavra mantem as duas juntas",
+ "o_que_e": "fronteiras entre palavras onde o rabino NAO pausa. DIAGNOSTICO: o app nao le este arquivo. Serve para procurar quando um corte soar quebrado — quem decide onde o treino para e o ouvido do Erez",
  "limiar_db": -35.0,
  "silencio_minimo_s": 0.08,
  "combinacoes": {

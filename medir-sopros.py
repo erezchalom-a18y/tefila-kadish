@@ -1,15 +1,22 @@
 """
 medir-sopros.py — onde o rabino REALMENTE para entre uma palavra e outra.
 
-O Modo Treino por palavra precisa saber onde pode cortar o audio. O sync/*.json
-nao serve para isso: nele o fim de uma palavra e o inicio da seguinte sao o
-mesmo numero, sempre — nao ha vao registrado. Quem sabe onde ha silencio de
-verdade e o sinal.
+E DIAGNOSTICO, NAO AUTORIDADE. O app nao le sopros.json.
 
-Este script mede as 8 gravacoes e escreve sopros.json com as fronteiras que
-NAO dao para cortar: aquelas em que o rabino emenda duas palavras num sopro so
-("min kodam", "kol Yisrael"). Sao poucas, e sao justamente as que o aramaico
-pronuncia junto — cortar ali soaria quebrado e ensinaria errado.
+Este script mede as 8 gravacoes e escreve sopros.json com as fronteiras entre
+palavras onde ha menos de 80 ms de silencio: aquelas em que o rabino emenda duas
+palavras num sopro so ("di vra", "min kodam", "kol Yisrael"). O sync/*.json nao
+sabe disso — nele o fim de uma palavra e o inicio da seguinte sao o mesmo numero,
+sempre, entao nao ha vao registrado. Quem sabe onde ha silencio e o sinal.
+
+Para que serve: PROCURAR. Se o Erez reclamar de um corte que soou quebrado no
+Modo Treino por palavra, esta lista e o primeiro lugar onde olhar.
+
+Para que NAO serve: decidir onde o Modo Treino para. O app chegou a emendar
+esses pares automaticamente, e isso foi retirado — descartava 102 fronteiras que
+ele tinha conferido uma a uma, e a regra 1 das invioláveis diz que medicao nao
+passa por cima do ouvido dele. Se alguma emenda tiver que valer, ela entra
+escolhida por ele, nunca calculada.
 
 SO LE audio e sync/*.json. Escreve unicamente sopros.json. Nao toca em
 sync/*.json, ancoras.json nem cortes.json.
@@ -112,8 +119,9 @@ def main():
     ensaio = '--ensaio' in sys.argv
     saida = {
         'gerado_por': 'medir-sopros.py',
-        'o_que_e': ('fronteiras entre palavras onde o rabino NAO pausa — cortar ali '
-                    'soa quebrado, entao o Modo Treino por palavra mantem as duas juntas'),
+        'o_que_e': ('fronteiras entre palavras onde o rabino NAO pausa. DIAGNOSTICO: '
+                    'o app nao le este arquivo. Serve para procurar quando um corte '
+                    'soar quebrado — quem decide onde o treino para e o ouvido do Erez'),
         'limiar_db': LIMIAR_DB,
         'silencio_minimo_s': SILENCIO_MINIMO,
         'combinacoes': {},
