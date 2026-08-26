@@ -1,6 +1,6 @@
 # Relatório da revisão auditiva (Whisper)
 
-Gerado em 2026-08-25 23:45 UTC por `whisper-1`, sobre o commit `79d1c00`.
+Gerado em 2026-08-26 00:05 UTC por `whisper-1`, sobre o commit `9ac05c1`.
 
 > **O Whisper não decide nada.** Ele não alterou nenhum `sync/*.json` e nunca
 > vai alterar. As âncoras do Erez são invioláveis: a máquina aponta, o ouvido
@@ -28,14 +28,14 @@ Trate cada linha como *vale a pena ouvir este trecho*, nunca como *está errado*
 | chabad_yatom | 80 | 80 | 17 |
 | chabad_derabanan | 121 | 124 | 19 |
 | sefard_yatom | 81 | 86 | 29 |
-| sefard_derabanan | 124 | 126 | 13 |
+| sefard_derabanan | 124 | 126 | 14 |
 | sefaradi_yatom | 91 | 92 | 16 |
 | sefaradi_derabanan | 125 | 124 | 21 |
-| **total** | | | **168** |
+| **total** | | | **169** |
 
 Por eixo:
 
-- começa em hora diferente: **23**
+- começa em hora diferente: **24**
 - está no texto, não foi ouvida: **62**
 - foi ouvida, não está no texto: **83**
 
@@ -44,7 +44,7 @@ Por eixo:
 A auditoria de sinal de 20/08 listou 36 suspeitos, espalhados por
 28 versos diferentes.
 
-Dos 168 apontamentos do Whisper, **39** caem em versos que já
+Dos 169 apontamentos do Whisper, **39** caem em versos que já
 estavam naquela lista — cobrindo **15** dos 28 versos suspeitos.
 
 Onde os dois métodos concordam, a chance de haver defeito real é bem maior:
@@ -140,7 +140,7 @@ comece a ouvir por aqui.
 
 **§13**
 
-- `עַל` *(Al)* — nós: 64.98s · ouvido: 63.939998626708984s · diferença -1.04s
+- `עַל` *(Al)* — nós: 64.98s · ouvido: 63.959999084472656s · diferença -1.02s
 - `וְעַל` *(veal)* — nós: 67.12s · ouvido: 66.37999725341797s · diferença -0.74s
 
 **§14**
@@ -331,6 +331,10 @@ comece a ouvir por aqui.
 
 - `ורה` — o Whisper ouviu em 5.900000095367432s, não existe no nosso texto
 - `בְרָא` *(verá)* — no texto em 5.94s, o Whisper não ouviu
+
+**§8**
+
+- `יְהֵא` *(Yehê)* — nós: 27.76s · ouvido: 26.5s · diferença -1.26s
 
 **§15**
 
