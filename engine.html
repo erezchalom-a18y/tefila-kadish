@@ -1610,10 +1610,11 @@
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="tradition_label">Tradição</div>
-      <div class="seg-control" data-setting="tradition">
+      <div class="seg-control" data-setting="tradition" style="flex-wrap:wrap;gap:4px;">
         <button class="active" data-value="chabad">Chabad</button>
+        <button data-value="ashkenaz">Ashkenaz</button>
         <button data-value="sefard">Sefard</button>
-        <button data-value="ashkenazi">Ashkenazi</button>
+        <button data-value="sefaradi">Sefaradi</button>
       </div>
     </div>
 
@@ -2937,7 +2938,17 @@ const state = {
   markingVerseId: null,
   markingWordIdx: 0,
   markingTimestamps: [],
+  // sincronia com o audio inteiro (tefila-audio/) — ver playFullPrayer
+  relogioSync: null,   // setInterval que anda com a barra e checa fim de verso
+  retomarEm: null,     // segundo em que o play deve retomar (pausa do Modo Treino)
+  versoSync: -1,       // verso corrente segundo o sync/*.json
 };
+
+// `const` no topo de um script classico NAO vira propriedade de window.
+// O modulo de sincronia la embaixo testa `window.state` antes de ligar o audio
+// do rabino e o JSON medido; sem esta linha aquele teste da sempre falso e o
+// app cai calado no leitor de voz do navegador. Ponte explicita:
+window.state = state;
 
 const audioPlayer = document.getElementById('audioPlayer');
 
@@ -3629,9 +3640,11 @@ function clearWordTimers() {
 }
 function playVerse(vi, onComplete) {
   const v = verses[vi];
-  // Skip DeRabanan-only verses when in Yatom mode
+  // Skip DeRabanan-only verses when in Yatom mode.
+  // Avisa que PULOU: no Modo Treino um verso pulado nao pode virar uma pausa,
+  // senao o Erez aperta ▶ oito vezes seguidas em silencio achando que travou.
   if (v.inDeRabanan && state.kadishType !== 'derabanan') {
-    onComplete();
+    onComplete(true);
     return;
   }
   // Auto-scroll: bring this verse into view at start
@@ -3743,9 +3756,23 @@ function play() {
   // Full Prayer Mode: if manifest has _full_yatom or _full_derabanan, play it as ONE audio
   const fullUrl = state.fullPrayerAudio && state.fullPrayerAudio[state.kadishType];
   if (fullUrl) {
-    // Reset to start so the full audio plays from beginning
-    state.currentVerse = 0;
-    state.elapsed = 0;
+    if (typeof state.retomarEm !== 'number') {
+      // Reset to start so the full audio plays from beginning
+      state.currentVerse = 0;
+      state.elapsed = 0;
+    }
+    // Se o JSON de sincronia ainda esta baixando (iPad em 4G, primeira abertura),
+    // ESPERAR. Comecar sem ele monta temporizadores de destaque por estimativa que
+    // depois brigam com o destaque medido — sao duas palavras acesas ao mesmo tempo,
+    // uma delas errada.
+    if (window.SYNC && !window.SYNC.ativo() && window.SYNC.pronto) {
+      showToast('Carregando a sincronia…');
+      const desistir = new Promise(r => setTimeout(r, 5000));
+      Promise.race([window.SYNC.pronto(), desistir]).then(() => {
+        if (state.isPlaying) playFullPrayer(fullUrl);
+      });
+      return;
+    }
     playFullPrayer(fullUrl);
     return;
   }
@@ -3761,7 +3788,12 @@ function play() {
     if (state.repeatN > 0 && state.repeatRemaining === 0) {
       state.repeatRemaining = state.repeatN;
     }
-    playVerse(vi, () => {
+    playVerse(vi, (pulado) => {
+      if (pulado) {                       // nada foi dito: segue direto para o proximo
+        state.repeatRemaining = 0;
+        playFromVerse(vi + 1);
+        return;
+      }
       // Verse finished — should we repeat?
       if (state.repeatN > 0 && state.repeatRemaining > 1) {
         state.repeatRemaining--;
@@ -3799,6 +3831,7 @@ function pause() {
   playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
   clearTimeout(state.timer);
   clearWordTimers();
+  pararRelogioSync();
   audioPlayer.pause();
   try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
   dimOtherVerses(-1);
@@ -3806,16 +3839,24 @@ function pause() {
 
 // Full prayer mode: plays ONE audio file containing the whole Kadish.
 // Word/verse highlights advance based on cumulative estimated durations.
+function pararRelogioSync() {
+  if (state.relogioSync) { clearInterval(state.relogioSync); state.relogioSync = null; }
+}
+
 function playFullPrayer(url) {
   clearWordTimers();
-  showToast('▶ Tocando gravação: ' + url.split('/').pop());
-  audioPlayer.src = url;
+  pararRelogioSync();
+  const retomando = typeof state.retomarEm === 'number';
+  if (!retomando) showToast('▶ Tocando gravação: ' + url.split('/').pop());
+  // trocar o src recarrega o arquivo e perde a posicao — so trocar se for outro
+  const alvo = new URL(url, location.href).href;
+  if (audioPlayer.src !== alvo) audioPlayer.src = url;
   audioPlayer.playbackRate = state.speed;
-  audioPlayer.currentTime = 0;
   // Add load error handler in addition to play error
   audioPlayer.onerror = () => {
     showToast('Erro carregando: ' + url.split('/').pop() + ' (verifique se o arquivo está em /audio/)');
     state.isPlaying = false;
+    pararRelogioSync();
     playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
   };
 
@@ -3823,18 +3864,100 @@ function playFullPrayer(url) {
   // sync/*.json, que e medido do audio. Os temporizadores estimados abaixo
   // brigariam com ele, entao nem sao montados.
   if (window.SYNC && window.SYNC.ativo()) {
-    const pr = audioPlayer.play();
-    if (pr && pr.catch) pr.catch(err => {
-      showToast('Áudio não tocou: ' + err.message);
-      state.isPlaying = false;
-      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-    });
+    const versos = window.SYNC.versos() || [];
+    const inicio = retomando ? state.retomarEm : 0;
+    state.retomarEm = null;
+    state.versoSync = -1;
+    if (state.repeatN > 0 && state.repeatRemaining === 0) state.repeatRemaining = state.repeatN;
+
+    const arrancar = () => {
+      // o ouvinte de 'loadedmetadata' pode chegar atrasado, depois de o usuario
+      // ter pausado ou trocado de nussach: sem esta guarda o audio voltaria a
+      // tocar sozinho, do lugar errado
+      if (!state.isPlaying) return;
+      try { audioPlayer.currentTime = inicio; } catch (e) {}
+      const pr = audioPlayer.play();
+      if (pr && pr.catch) pr.catch(err => {
+        showToast('Áudio não tocou: ' + err.message);
+        state.isPlaying = false;
+        pararRelogioSync();
+        playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      });
+    };
+    if (audioPlayer.readyState >= 1) arrancar();
+    else audioPlayer.addEventListener('loadedmetadata', arrancar, { once: true });
+
+    // indice do verso que comeca em ou antes de t (o "verso corrente ou o que acabou")
+    const versoEm = (t) => {
+      let k = -1;
+      for (let i = 0; i < versos.length; i++) { if (versos[i].start <= t + 0.001) k = i; else break; }
+      return k;
+    };
+    const pausarNoVerso = (k) => {
+      state.retomarEm = versos[k + 1].start;
+      pause();
+      nowReading.textContent = `Pausado · toque ▶ para o próximo verso (${k + 2}/${versos.length})`;
+    };
+
+    // Relogio proprio: a barra de progresso, a repeticao e a pausa do Modo Treino
+    // dependem das fronteiras de verso MEDIDAS do audio (sync/*.json), nao de estimativa.
+    state.relogioSync = setInterval(() => {
+      if (!state.isPlaying) return;
+      const t = audioPlayer.currentTime;
+      const dur = audioPlayer.duration || (versos.length ? versos[versos.length - 1].end : 0);
+      if (dur) progressFill.style.width = Math.min(100, (t / dur) * 100) + '%';
+      timeDisplay.textContent = formatTime(t * 1000);
+      state.elapsed = t * 1000;
+      if (!versos.length) return;
+
+      const k = versoEm(t);
+      if (k < 0) return;
+      const anterior = state.versoSync;
+      if (k === anterior) return;
+
+      // Os versos do sync/*.json se ENCOSTAM: o fim de um e o inicio do outro
+      // (4.88 -> 4.88). Nao ha vao para observar. O fim de um verso so se
+      // reconhece pela TROCA de verso — e por isso que se testa aqui.
+      if (anterior >= 0 && k > anterior) {
+        if (state.repeatN > 0 && state.repeatRemaining > 1) {
+          state.repeatRemaining--;
+          showToast(`Repetição ${state.repeatN - state.repeatRemaining + 1} de ${state.repeatN}`);
+          try { audioPlayer.currentTime = versos[anterior].start; } catch (e) {}
+          state.versoSync = anterior;
+          return;
+        }
+        state.repeatRemaining = state.repeatN > 0 ? state.repeatN : 0;
+        if (state.modoTreino && anterior < versos.length - 1) { pausarNoVerso(anterior); return; }
+      }
+
+      state.versoSync = k;
+      // o painel da sincronia fica no fim da pagina, depois de todos os versos:
+      // sem isto o Erez nunca ve o texto que esta sendo dito
+      const painel = document.getElementById('verso-sync-display');
+      if (painel && painel.classList.contains('active')) {
+        painel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 60);
+
     audioPlayer.onended = () => {
       state.isPlaying = false;
+      pararRelogioSync();
+      state.retomarEm = null;
+      state.repeatRemaining = 0;
+      progressFill.style.width = '100%';
       playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
       nowReading.textContent = 'Concluído · Amen';
+      if (window.SYNC && window.SYNC.apagarDestaque) window.SYNC.apagarDestaque();
     };
     return;
+  }
+  audioPlayer.currentTime = 0;
+
+  // Daqui para baixo e o caminho de RESERVA: sem o sync/*.json medido, o destaque
+  // sai de estimativa de duracao. A pausa por verso do Modo Treino depende das
+  // fronteiras medidas, entao aqui ela nao existe — e melhor avisar do que fingir.
+  if (state.modoTreino) {
+    showToast('Sem a sincronia medida o Modo Treino não consegue pausar por verso · a reza vai tocar direto');
   }
 
   // Filter to active verses for current kadishType
@@ -3896,9 +4019,14 @@ function stop() {
   pause();
   state.currentVerse = 0;
   state.elapsed = 0;
+  state.retomarEm = null;
+  state.repeatRemaining = 0;
+  state.versoSync = -1;
+  try { audioPlayer.currentTime = 0; } catch (e) {}
   progressFill.style.width = '0%';
   timeDisplay.textContent = '0:00';
   clearActiveWords();
+  if (window.SYNC && window.SYNC.apagarDestaque) window.SYNC.apagarDestaque();
   document.querySelectorAll('.picto').forEach(p => p.classList.remove('active'));
 }
 playBtn.addEventListener('click', () => { state.isPlaying ? pause() : play(); });
@@ -3912,10 +4040,9 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 // ============================================================
 document.getElementById('speedToggle').addEventListener('click', (e) => {
   if (e.target.tagName !== 'BUTTON') return;
-  document.querySelectorAll('#speedToggle button').forEach(b => b.classList.remove('active'));
-  e.target.classList.add('active');
-  state.speed = parseFloat(e.target.dataset.speed);
-  if (audioPlayer && !audioPlayer.paused) audioPlayer.playbackRate = state.speed;
+  aplicarVelocidade(parseFloat(e.target.dataset.speed));
+  // escolha na mao manda: sair do Modo Treino nao mexe mais nisso
+  if (state.treinoMexeu) state.treinoMexeu.speed = false;
 });
 document.getElementById('modeToggleRemoved')?.addEventListener('click', () => {}); // legacy noop
 document.getElementById('studioToggle')?.addEventListener('click', () => {
@@ -3987,15 +4114,8 @@ const repeatBtn = document.getElementById('repeatBtn');
 const repCount = document.getElementById('repCount');
 repeatBtn.addEventListener('click', () => {
   const idx = REPEAT_CYCLE.indexOf(state.repeatN);
-  state.repeatN = REPEAT_CYCLE[(idx + 1) % REPEAT_CYCLE.length];
-  if (state.repeatN === 0) {
-    repeatBtn.classList.remove('active');
-    repCount.style.display = 'none';
-  } else {
-    repeatBtn.classList.add('active');
-    repCount.style.display = 'inline-block';
-    repCount.textContent = state.repeatN + '×';
-  }
+  aplicarRepeticao(REPEAT_CYCLE[(idx + 1) % REPEAT_CYCLE.length]);
+  if (state.treinoMexeu) state.treinoMexeu.repeat = false;
   showToast(state.repeatN ? `Cada verso vai repetir ${state.repeatN}×` : 'Repetição desligada');
 });
 
@@ -4303,15 +4423,29 @@ function applyLanguage(lang) {
 }
 
 // ---------- Tradition ----------
-state.tradition = localStorage.getItem('tefila_tradition') || 'chabad';
+// Os nomes aqui sao os mesmos de tefila-audio/ e de sync/ — nussach que nao
+// existe nessas pastas nao tem audio nem sincronia para tocar.
+const NUSSACHIM_APP = ['ashkenaz', 'chabad', 'sefard', 'sefaradi'];
+const LABEL_NUSSACH = { chabad: 'Chabad', ashkenaz: 'Ashkenaz', sefard: 'Sefard', sefaradi: 'Sefaradi' };
+state.tradition = (function () {
+  const g = localStorage.getItem('tefila_tradition');
+  if (g === 'ashkenazi') return 'ashkenaz';           // grafia antiga, gravada antes
+  return NUSSACHIM_APP.includes(g) ? g : 'chabad';
+})();
 function applyTradition(t) {
+  if (!NUSSACHIM_APP.includes(t)) t = 'chabad';
+  const mudou = (t !== state.tradition);
   state.tradition = t;
   localStorage.setItem('tefila_tradition', t);
-  const labels = {chabad:'Chabad', sefard:'Sefard', ashkenazi:'Ashkenazi'};
-  document.getElementById('traditionBadge').textContent = labels[t] || t;
-  if (t !== 'chabad') {
-    showToast('Conteúdo ' + labels[t] + ' em validação rabínica · usando Chabad por ora');
+  document.getElementById('traditionBadge').textContent = LABEL_NUSSACH[t] || t;
+  // trocar a tradicao tem que trocar o audio E o texto medido junto, senao o
+  // app reza um nussach com a gravacao de outro
+  if (window.SYNC && mudou) {
+    const tocava = state.isPlaying;
+    if (tocava) stop();
+    window.SYNC.trocar(t, null);
   }
+  if (t !== 'chabad') showToast('Texto ' + LABEL_NUSSACH[t] + ' ainda por conferir com o rabino');
 }
 
 // ---------- Explanations toggle (tips + community-respond) ----------
@@ -4396,6 +4530,23 @@ function updateTreinoLabel() {
   const t = I18N[state.lang] || I18N.pt;
   btn.textContent = state.modoTreino ? t.modo_treino : t.modo_reza;
 }
+// O que o Modo Treino mexeu ao ser ligado, para poder devolver ao sair.
+state.treinoMexeu = { speed: false, repeat: false };
+function aplicarVelocidade(v) {
+  state.speed = v;
+  document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === String(v)));
+  // sem esta linha o botao acende mas o audio continua na velocidade antiga
+  if (audioPlayer) audioPlayer.playbackRate = v;
+}
+function aplicarRepeticao(n) {
+  state.repeatN = n;
+  state.repeatRemaining = 0;
+  const repeatBtn = document.getElementById('repeatBtn');
+  const repCount = document.getElementById('repCount');
+  repeatBtn.classList.toggle('active', n > 0);
+  repCount.style.display = n > 0 ? 'inline-block' : 'none';
+  if (n > 0) repCount.textContent = n + '×';
+}
 function toggleModoTreino() {
   state.modoTreino = !state.modoTreino;
   const btn = document.getElementById('treinoToggle');
@@ -4403,18 +4554,17 @@ function toggleModoTreino() {
   document.body.classList.toggle('modo-treino', state.modoTreino);
   if (state.modoTreino) {
     // Set defaults: speed .75, repeat 2x — DOES NOT touch explanations (user controls)
-    state.speed = 0.75;
-    document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '0.75'));
-    if (state.repeatN === 0) {
-      state.repeatN = 2;
-      const repeatBtn = document.getElementById('repeatBtn');
-      const repCount = document.getElementById('repCount');
-      repeatBtn.classList.add('active');
-      repCount.style.display = 'inline-block';
-      repCount.textContent = '2×';
-    }
+    state.treinoMexeu.speed = (state.speed !== 0.75);
+    if (state.treinoMexeu.speed) aplicarVelocidade(0.75);
+    state.treinoMexeu.repeat = (state.repeatN === 0);
+    if (state.treinoMexeu.repeat) aplicarRepeticao(2);
     showToast('Modo Treino · velocidade .75× · repetição 2× · pausa após cada verso');
   } else {
+    // devolve so o que o Modo Treino tinha mexido; se o Erez escolheu a mao, fica
+    if (state.treinoMexeu.speed) aplicarVelocidade(1);
+    if (state.treinoMexeu.repeat) aplicarRepeticao(0);
+    state.treinoMexeu = { speed: false, repeat: false };
+    state.retomarEm = null;
     showToast('Modo Reza · leitura limpa, sem pausas');
   }
   updateTreinoLabel();
@@ -4724,11 +4874,31 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     const param = k => new URLSearchParams(location.search).get(k);
     const audioEl = () => document.getElementById('audioPlayer');
 
+    // Na PRIMEIRA montagem os parametros ?n= e ?t= da URL mandam (e como o
+    // testar-app.mjs e os links diretos escolhem a combinacao). Depois que o
+    // usuario escolhe pelo app, quem manda e o state — senao o parametro da URL
+    // congelaria a escolha dele para sempre.
+    let primeira = true;
     function escolher() {
-      const n = param('n') || (window.state && state.tradition) || localStorage.getItem('tefila_tradition');
-      const t = param('t') || (window.state && state.kadishType) || localStorage.getItem('tefila_kadish_type');
+      const pn = primeira ? param('n') : null;
+      const pt = primeira ? param('t') : null;
+      const n = pn || (window.state && state.tradition) || localStorage.getItem('tefila_tradition');
+      const t = pt || (window.state && state.kadishType) || localStorage.getItem('tefila_kadish_type');
       nussach = NUSSACHIM.includes(n) ? n : 'chabad';
       tipo = TIPOS.includes(t) ? t : 'yatom';
+      // o resto do app tem que concordar com o que foi escolhido aqui
+      if (window.state) {
+        if (state.tradition !== nussach && typeof applyTradition === 'function' && pn) {
+          state.tradition = nussach;
+          localStorage.setItem('tefila_tradition', nussach);
+          const cracha = document.getElementById('traditionBadge');
+          if (cracha) cracha.textContent = (typeof LABEL_NUSSACH !== 'undefined' && LABEL_NUSSACH[nussach]) || nussach;
+          document.querySelectorAll('[data-setting="tradition"] button')
+            .forEach(b => b.classList.toggle('active', b.dataset.value === nussach));
+        }
+        if (state.kadishType !== tipo && pt && typeof applyKadishType === 'function') applyKadishType(tipo);
+      }
+      primeira = false;
     }
 
     function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.ogg`; }
@@ -4759,6 +4929,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       montar,
       ativo: () => !!(player && player.carregado),
       atual: () => ({ nussach, tipo, carregado: !!(player && player.carregado), erro: player && player.erro }),
+      // fronteiras de verso medidas do audio — usadas pelo Modo Treino e pela repeticao
+      versos: () => (player && player.syncData && player.syncData.versos) || null,
+      apagarDestaque: () => { if (player) player.apagarDestaque(); },
+      // resolve quando o JSON de sincronia acabou de carregar (ou falhou)
+      pronto: () => (player && player.pronta) ? player.pronta : Promise.resolve(),
       trocarLingua: lang => { if (player) player.setLang(lang); },
       trocar: (n, t) => {
         if (n) nussach = NUSSACHIM.includes(n) ? n : nussach;

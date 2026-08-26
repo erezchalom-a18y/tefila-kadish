@@ -125,6 +125,11 @@ Para as que imprimem, também playwright + Chromium.
   em laço. Rodado sozinho por .github/workflows/status.yml a cada push na main.
 - testar-app.mjs — abre o app num Chromium e confere as 8 combinações servindo
   DE SUBDIRETÓRIO, como o GitHub Pages faz. É ali que caminho relativo quebra.
+- testar-treino.mjs — o Modo Treino num Chromium: se toca a gravação do rabino
+  (e não a voz do navegador), se pausa no fim de cada verso pelo tempo MEDIDO,
+  se retoma no verso certo, se a repetição volta ao início do mesmo verso, se
+  trocar a tradição troca áudio e texto junto. Cada teste nasceu de um defeito
+  real; vermelho = o defeito voltou. Ver RELATORIO-MODO-TREINO.md.
 - gerar-pdf.mjs — os 8 folhetos imprimíveis, em folhetos/. Sempre com marca
   d'água RASCUNHO — AGUARDANDO REVISÃO RABÍNICA. Não tire enquanto o rabino não
   tiver revisado.

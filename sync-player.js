@@ -18,7 +18,9 @@ class SyncPlayer {
     this.versoAtual = -1;
     this.palavraAtual = -1;
     this.isPlaying = false;
-    this.init();
+    // promessa que resolve quando o JSON terminou de carregar (ou falhou);
+    // o app espera por ela antes de tocar, para nao montar dois destacadores
+    this.pronta = this.init();
   }
 
   async init() {
@@ -77,12 +79,25 @@ class SyncPlayer {
     return (p.glosas && p.glosas[this.lang]) || p.glosa_pt || '';
   }
 
+  /** Apaga qualquer palavra acesa, sem mexer no verso desenhado. */
+  apagarDestaque() {
+    this.palavraAtual = -1;
+    const display = document.getElementById('verso-sync-display');
+    if (display) display.querySelectorAll('.sync-w.agora').forEach(el => el.classList.remove('agora'));
+  }
+
   onTimeUpdate() {
     if (!this.syncData) return;
     const t = this.audio.currentTime;
     const versos = this.syncData.versos;
     const vi = versos.findIndex(v => t >= v.start && t < v.end);
-    if (vi === -1) return;
+    if (vi === -1) {
+      // Fora de qualquer verso: silencio antes do primeiro, respiracao entre dois,
+      // ou depois do ultimo. Antes daqui saia com `return` e a palavra do verso
+      // anterior ficava acesa parada — parecia que o app tinha travado.
+      if (this.palavraAtual !== -1) this.apagarDestaque();
+      return;
+    }
     const v = versos[vi];
     const pi = v.palavras ? v.palavras.findIndex(p => t >= p.start && t < p.end) : -1;
     if (vi !== this.versoAtual) {
