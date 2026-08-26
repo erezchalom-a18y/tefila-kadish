@@ -1143,15 +1143,6 @@
     pointer-events: none;
   }
   body.modo-treino .treino-banner { display: flex; }
-  .treino-gran { display: inline-flex; gap: 4px; margin-left: auto; flex-shrink: 0; }
-  .treino-gran button {
-    font: inherit; font-size: 0.85em; padding: 3px 10px; min-height: 30px;
-    border-radius: 999px; cursor: pointer;
-    border: 1px solid currentColor; background: transparent; color: inherit; opacity: .65;
-  }
-  .treino-gran button.active { opacity: 1; background: currentColor; }
-  .treino-gran button.active span, .treino-gran button.active { color: inherit; }
-  .treino-gran button.active { box-shadow: inset 0 0 0 99px rgba(255,255,255,.15); }
 
   /* Memorial strip — Em memória de */
   .memorial-strip {
@@ -1725,10 +1716,6 @@
   </button>
   <div class="treino-banner" id="treinoBanner">
     <span id="treinoTexto" data-i18n="treino_active">⊙ Modo Treino · pausa após cada verso</span>
-    <span class="treino-gran" id="treinoGran">
-      <button data-gran="verso" class="active" data-i18n="gran_verso">por verso</button>
-      <button data-gran="palavra" data-i18n="gran_palavra">por palavra</button>
-    </span>
   </div>
   <div class="studio-banner" data-i18n="studio_banner">
     Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)
@@ -5017,12 +5004,14 @@ document.getElementById('treinoToggle').addEventListener('click', toggleModoTrei
 // Por palavra, TODO ponto de parada e um numero que o Erez conferiu de ouvido:
 // as ancoras dele mandam nas palavras, e as fronteiras de verso ja saem delas.
 // Por verso, o app usa so um de cada cinco desses numeros.
-state.granularidadeTreino = localStorage.getItem('tefila_treino_gran') === 'palavra' ? 'palavra' : 'verso';
+// So POR VERSO por enquanto, a pedido do Erez (26/08). O caminho por palavra
+// continua inteiro e testado (testar-treino-palavra.mjs) — para trazer de volta,
+// basta devolver os dois botoes ao treino-banner. Para experimentar sem eles:
+// abrir o app com ?treino=palavra no endereco.
+state.granularidadeTreino =
+  new URLSearchParams(location.search).get('treino') === 'palavra' ? 'palavra' : 'verso';
 function aplicarGranularidade(g) {
   state.granularidadeTreino = (g === 'palavra') ? 'palavra' : 'verso';
-  localStorage.setItem('tefila_treino_gran', state.granularidadeTreino);
-  document.querySelectorAll('#treinoGran button').forEach(b =>
-    b.classList.toggle('active', b.dataset.gran === state.granularidadeTreino));
   const txt = document.getElementById('treinoTexto');
   if (txt) {
     const chave = state.granularidadeTreino === 'palavra' ? 'treino_active_palavra' : 'treino_active';
@@ -5033,12 +5022,6 @@ function aplicarGranularidade(g) {
   const n = (window.SYNC && SYNC.refazerPassos) ? SYNC.refazerPassos() : null;
   return n;
 }
-document.getElementById('treinoGran').addEventListener('click', (e) => {
-  const b = e.target.closest('button');
-  if (!b) return;
-  const n = aplicarGranularidade(b.dataset.gran);
-  if (n) showToast(TXT('toast_gran', { n }));
-});
 aplicarGranularidade(state.granularidadeTreino);
 
 // ---------- Tradicao e velocidade ----------
@@ -5473,18 +5456,35 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // ele reclamar de um. O app nao le esse arquivo.
     let passos = [];
     const porPalavra = () => temState() && state.granularidadeTreino === 'palavra';
+
+    /**
+     * Monta os passos A PARTIR DA FITA — nunca de v.start / v.end.
+     *
+     * Isto e a mesma licao de "A FITA CONTINUA", aplicada ao treino: o verso nao
+     * tem numero proprio, ele e a soma das suas palavras. Enquanto a fronteira do
+     * verso era um numero separado, ela podia discordar das palavras — e discordar
+     * 0,2s ja bastava para a pausa vir no lugar errado. Agora nao ha como
+     * discordar, porque nao ha duas contas: ha uma fita, e o verso e um pedaco
+     * dela.
+     *
+     * Na pratica os numeros sao os mesmos de hoje (conferido: 0 ms de diferenca
+     * nos 8 arquivos). O que muda e de ONDE eles vem — e as correcoes de ouvido
+     * do Erez estao nas palavras.
+     */
     function montarPassos() {
       passos = [];
-      if (!dados || !dados.versos) return;
-      if (!porPalavra()) {
-        dados.versos.forEach((v, k) => {
-          if (v.palavras && v.palavras.length) passos.push({ k, start: v.start, end: v.end });
-        });
+      if (!fita.length) return;
+      if (porPalavra()) {
+        fita.forEach(w => passos.push({ k: w.k, start: w.start, end: w.end }));
         return;
       }
-      dados.versos.forEach((v, k) => {
-        (v.palavras || []).forEach(p => passos.push({ k, start: p.start, end: p.end }));
-      });
+      // por verso: junta as palavras seguidas que pertencem ao mesmo verso
+      let atual = null;
+      for (const w of fita) {
+        if (!atual || w.k !== atual.k) { if (atual) passos.push(atual); atual = { k: w.k, start: w.start, end: w.end }; }
+        else atual.end = w.end;
+      }
+      if (atual) passos.push(atual);
     }
     /** Indice do passo que contem t (ou o ultimo que ja comecou). */
     function passoEm(t) {

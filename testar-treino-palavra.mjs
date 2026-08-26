@@ -46,7 +46,9 @@ async function abrir(n = 'ashkenaz', t = 'derabanan') {
   pag.on('response', r => {
     if (r.status() >= 400 && !/favicon\.ico|fonts\./.test(r.url())) erros.push(`HTTP ${r.status()} ${r.url()}`);
   });
-  await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}&audio=mp3`);
+  // ?treino=palavra: desde 26/08 o botao na tela saiu (o Erez pediu so por verso
+  // por enquanto) e este e o caminho para exercitar o modo por palavra.
+  await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}&audio=mp3&treino=palavra`);
   await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo && window.SYNC.ativo(), null, { timeout: 15000 });
   await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
   return { pag, erros };
@@ -237,30 +239,27 @@ console.log('\n5. O destaque continua na palavra certa, no verso certo');
   await pag.close();
 }
 
-// ---------- 6. o seletor existe nas 8 linguas ----------
-console.log('\n6. O seletor por verso / por palavra nas 8 linguas');
+// ---------- 6. a faixa do Modo Treino fala as 8 linguas ----------
+// O botao "por verso | por palavra" saiu da tela em 26/08 (o Erez pediu so por
+// verso por enquanto). O que sobrou na faixa e o aviso, e ele tem que existir
+// nas 8 — a regra 6 do CLAUDE.md vale para todo texto de tela.
+console.log('\n6. A faixa do Modo Treino nas 8 linguas');
 {
   const { pag } = await abrir('chabad', 'yatom');
   const r = await pag.evaluate(() => {
     const out = {};
     for (const L of ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he']) {
       applyLanguage(L);
-      aplicarGranularidade('palavra');
-      const bs = [...document.querySelectorAll('#treinoGran button')].map(b => b.textContent.trim());
-      out[L] = { botoes: bs, banner: document.getElementById('treinoTexto').textContent.trim() };
+      out[L] = document.getElementById('treinoTexto').textContent.trim();
     }
     return out;
   });
-  const emPortugues = [];
-  for (const [L, v] of Object.entries(r)) {
-    const vazio = v.botoes.some(b => !b) || !v.banner;
-    if (vazio) { confere(`${L}: tem texto`, false, JSON.stringify(v)); continue; }
-    if (L !== 'pt' && (v.botoes[0] === r.pt.botoes[0] && v.botoes[1] === r.pt.botoes[1])) emPortugues.push(L);
-    confere(`${L}: "${v.botoes.join(' | ')}"`, true);
-  }
-  confere('nenhuma lingua ficou em portugues', emPortugues.length === 0, emPortugues.join(', '));
+  for (const [L, txt] of Object.entries(r)) confere(`${L}: "${txt}"`, !!txt);
+  const iguaisAoPt = Object.entries(r).filter(([L, t]) => L !== 'pt' && t === r.pt).map(([L]) => L);
+  confere('nenhuma lingua ficou em portugues', iguaisAoPt.length === 0, iguaisAoPt.join(', '));
   await pag.close();
 }
+
 
 await navegador.close();
 console.log(`\n${falhas === 0 ? 'VERDE: o Modo Treino por palavra faz o que a tela promete' : 'VERMELHO: ' + falhas + ' falha(s)'}`);

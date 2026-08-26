@@ -338,11 +338,19 @@ Para as que imprimem, também playwright + Chromium.
 - testar-treino.mjs — o Modo Treino pausa no fim de cada verso, o ▶ retoma de
   onde parou, e a repetição toca o verso o número de vezes pedido. Já quebrou
   duas vezes; existe para não quebrar uma terceira.
-- testar-treino-palavra.mjs → o Modo Treino PALAVRA A PALAVRA. Existe porque as
-  correcoes de ouvido do Erez estao nas PALAVRAS: as fronteiras de verso saem
-  delas (conferido: 0 ms de diferenca nos 8), entao por verso o app usa so um de
-  cada cinco numeros que ele conferiu. Por palavra usa todos. Precisa do
-  servidor-teste.mjs, como o testar-treino.mjs.
+- testar-treino-palavra.mjs → o Modo Treino PALAVRA A PALAVRA. Desde 26/08 esse
+  modo NAO tem botao na tela — o Erez pediu "so por verso por enquanto" — e o
+  teste chega nele por **?treino=palavra** no endereco. O caminho fica inteiro e
+  testado para poder voltar num toque. Precisa do servidor-teste.mjs.
+
+  **Os passos do treino saem da FITA, nunca de v.start/v.end.** E a mesma licao
+  de "A FITA CONTINUA" aplicada ao treino: o verso nao tem numero proprio, ele e
+  a soma das suas palavras. Enquanto a fronteira do verso era um numero separado,
+  ela podia discordar das palavras, e discordar 0,2s ja bastava para a pausa vir
+  no lugar errado. Agora nao ha duas contas: ha uma fita, e o verso e um pedaco
+  dela. Os numeros sao os mesmos de antes — ha prova disso rodando, 0 ms de
+  diferenca nos 8 —, o que mudou e de ONDE eles vem, e as correcoes de ouvido do
+  Erez estao nas palavras.
 - medir-sopros.py → escreve sopros.json: as fronteiras entre palavras onde ha
   menos de 80 ms de silencio no audio (12% delas) — as que o aramaico diz num
   sopro so, "di vra", "min kodam", "kol Yisrael".
