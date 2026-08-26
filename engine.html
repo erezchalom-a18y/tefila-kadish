@@ -5458,15 +5458,20 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     }
     // ---------- OS PASSOS DO MODO TREINO ----------
     // O treino para no fim de cada PASSO. Por verso, um passo e um verso — como
-    // sempre foi. Por palavra, um passo e uma palavra, e ai TODO ponto de parada
-    // e um numero que o Erez conferiu de ouvido (as ancoras dele mandam nas
-    // palavras, e as fronteiras de verso ja saem delas).
+    // sempre foi. Por palavra, um passo e UMA PALAVRA, sem excecao.
     //
-    // Excecao medida, nao chutada: onde o rabino emenda duas palavras num sopro
-    // so ("di vra", "min kodam"), o passo leva as duas juntas. Cortar ali daria
-    // meia palavra no ouvido. A lista vem de sopros.json, escrita por
-    // medir-sopros.py a partir do sinal do proprio audio.
-    let passos = [], sopros = null;
+    // Houve uma tentativa de emendar automaticamente as palavras que o rabino
+    // diz num sopro so ("di vra", "min kodam"), medindo o silencio no audio.
+    // Ela foi retirada, e a razao esta na regra 1 das invioláveis: as fronteiras
+    // de palavra sao reparos DE OUVIDO do Erez, e medicao nao passa por cima do
+    // ouvido dele. Emendar significava descartar 102 pontos de parada que ele
+    // tinha conferido um a um. Se algum corte soar quebrado, quem diz e ele, e a
+    // excecao entra escolhida — nunca calculada.
+    //
+    // sopros.json continua no repositorio, mas so como DIAGNOSTICO: e a lista
+    // dos cortes onde ha menos de 80 ms de silencio, util para procurar quando
+    // ele reclamar de um. O app nao le esse arquivo.
+    let passos = [];
     const porPalavra = () => temState() && state.granularidadeTreino === 'palavra';
     function montarPassos() {
       passos = [];
@@ -5477,17 +5482,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         });
         return;
       }
-      const emendadas = new Set();
-      const c = sopros && sopros.combinacoes && sopros.combinacoes[`${nussach}_${tipo}`];
-      (c ? c.colados : []).forEach(x => emendadas.add(`${x.v}:${x.p}`));
       dados.versos.forEach((v, k) => {
-        const ps = v.palavras || [];
-        let ini = null;
-        ps.forEach((p, wi) => {
-          if (ini === null) ini = p.start;
-          const emendaComAProxima = wi < ps.length - 1 && emendadas.has(`${v.n}:${wi + 1}`);
-          if (!emendaComAProxima) { passos.push({ k, start: ini, end: p.end }); ini = null; }
-        });
+        (v.palavras || []).forEach(p => passos.push({ k, start: p.start, end: p.end }));
       });
     }
     /** Indice do passo que contem t (ou o ultimo que ja comecou). */
@@ -5792,16 +5788,6 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         if (!r.ok) throw new Error('HTTP ' + r.status);
         dados = await r.json();
       } catch (e) { dados = null; console.error('sincronia nao carregou:', e); return; }
-
-      // As emendas de sopro sao as mesmas para os 8; carrega uma vez so, e se
-      // faltar o arquivo o modo por palavra ainda funciona — so corta em toda
-      // fronteira, inclusive nas emendadas.
-      if (sopros === null) {
-        try {
-          const rs = await fetch('./sopros.json', { cache: 'no-cache' });
-          sopros = rs.ok ? await rs.json() : {};
-        } catch (e) { sopros = {}; }
-      }
 
       mapa = trocarTexto(dados);
       montarFita();                          // a fita continua de palavras

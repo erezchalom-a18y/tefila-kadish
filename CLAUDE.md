@@ -343,11 +343,18 @@ Para as que imprimem, também playwright + Chromium.
   delas (conferido: 0 ms de diferenca nos 8), entao por verso o app usa so um de
   cada cinco numeros que ele conferiu. Por palavra usa todos. Precisa do
   servidor-teste.mjs, como o testar-treino.mjs.
-- medir-sopros.py → escreve sopros.json: as fronteiras entre palavras onde o
-  rabino NAO pausa (12% delas). Sao as que o aramaico diz num sopro so — "di
-  vra", "min kodam", "kol Yisrael". O Modo Treino por palavra mantem essas duas
-  juntas num passo; cortar ali daria meia palavra no ouvido. Medido do sinal,
-  nunca escrito a mao. So le audio e sync/; escreve so sopros.json.
+- medir-sopros.py → escreve sopros.json: as fronteiras entre palavras onde ha
+  menos de 80 ms de silencio no audio (12% delas) — as que o aramaico diz num
+  sopro so, "di vra", "min kodam", "kol Yisrael".
+  **E DIAGNOSTICO, nao autoridade. O app nao le esse arquivo.** Chegou a ler:
+  o Modo Treino por palavra emendava esses pares num passo so. Foi retirado
+  porque descartava 102 fronteiras que o Erez tinha conferido uma a uma, e a
+  regra 1 das invioláveis diz que medicao nao passa por cima do ouvido dele —
+  ele disse, com razao: "todas essas coisas ja foram acertadas por mim".
+  Serve para PROCURAR: se ele reclamar de um corte que soou quebrado, e aqui
+  que se olha primeiro. Se um dia alguma emenda tiver que valer, ela entra
+  escolhida por ele, nunca calculada.
+  So le audio e sync/; escreve so sopros.json.
 - servidor-teste.mjs — servidor estático para os testes, COM suporte a Range.
   Tem que ser ele, não o `python3 -m http.server`: aquele não responde Range, e
   sem Range o navegador não consegue mover o áudio — todo seek cai no zero. O

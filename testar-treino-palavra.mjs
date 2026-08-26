@@ -7,9 +7,10 @@
  * ultima, com 0 ms de diferenca. Entao por verso o app usa so um de cada cinco
  * numeros que ele conferiu; por palavra, usa todos.
  *
- * A excecao medida: onde o rabino emenda duas palavras num sopro so, o passo
- * leva as duas juntas. Quem decide isso e sopros.json (medir-sopros.py), a
- * partir do silencio no proprio audio — nao e regra escrita a mao.
+ * SEM excecao: cada palavra e um passo. Houve uma tentativa de emendar
+ * automaticamente as que o rabino diz num sopro so, medindo o silencio; foi
+ * retirada porque descartava 102 fronteiras que ele tinha conferido a ouvido, e
+ * a regra 1 das invioláveis diz que medicao nao passa por cima do ouvido dele.
  *
  * ATENCAO ao servidor: so vale contra um que responda Range. Sem isso todo
  * seek cai no zero e o teste mede ficcao. Use servidor-teste.mjs; a primeira
@@ -98,24 +99,26 @@ for (const n of NUSSACHIM) for (const t of TIPOS) {
   await pag.close();
 }
 
-// ---------- 2. os passos emendados sao os que sopros.json manda ----------
-console.log('\n2. As emendas de sopro sao respeitadas — e so elas');
-{
-  const { pag } = await abrir('ashkenaz', 'derabanan');
+// ---------- 2. uma palavra = um passo, sem excecao ----------
+// Este teste existe para impedir que a emenda automatica volte. Ela descartava
+// 102 fronteiras conferidas de ouvido, e isso e proibido pela regra 1.
+console.log('\n2. Cada palavra e um passo — nenhuma fronteira dele e descartada');
+for (const n of NUSSACHIM) for (const t of TIPOS) {
+  const { pag } = await abrir(n, t);
   const r = await pag.evaluate(async () => {
     aplicarGranularidade('palavra');
     const passos = SYNC.passos();
     const at = SYNC.atual();
-    const sp = await (await fetch('./sopros.json')).json();
-    const c = sp.combinacoes[`${at.nussach}_${at.tipo}`];
     const d = await (await fetch(`./sync/${at.nussach}_${at.tipo}_sync.json`)).json();
-    let palavras = 0;
-    d.versos.forEach(v => palavras += (v.palavras || []).length);
-    return { palavras, emendas: c.colados.length, nPassos: passos.length };
+    const palavras = [];
+    d.versos.forEach(v => (v.palavras || []).forEach(p => palavras.push(p)));
+    const faltando = palavras.filter(p =>
+      !passos.some(x => Math.abs(x.start - p.start) < 0.001 && Math.abs(x.end - p.end) < 0.001));
+    return { nPalavras: palavras.length, nPassos: passos.length, faltando: faltando.map(p => p.hebrew) };
   });
-  confere('passos = palavras menos emendas',
-    r.nPassos === r.palavras - r.emendas,
-    `${r.palavras} palavras - ${r.emendas} emendas = ${r.palavras - r.emendas}, mas deu ${r.nPassos}`);
+  confere(`${n}/${t}: ${r.nPassos} passos para ${r.nPalavras} palavras`,
+    r.nPassos === r.nPalavras && r.faltando.length === 0,
+    r.faltando.length ? `ficaram de fora: ${r.faltando.slice(0, 5).join(', ')}` : '');
   await pag.close();
 }
 
