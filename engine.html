@@ -1143,6 +1143,10 @@
     pointer-events: none;
   }
   body.modo-treino .treino-banner { display: flex; }
+  .settings-versao {
+    font-size: 11px; opacity: .5; margin: -6px 0 14px;
+    font-variant-numeric: tabular-nums; user-select: all;
+  }
 
   /* Memorial strip — Em memória de */
   .memorial-strip {
@@ -1740,6 +1744,14 @@
   <div class="settings-panel">
     <button class="info-close" id="settingsClose" style="float:right;">×</button>
     <div class="settings-eyebrow" data-i18n="settings_title">Configurações</div>
+    <!-- VERSAO: e a resposta para "nada mudou". O iPad guarda a pagina com
+         forca (o app tem display:standalone, e quem o poe na tela de inicio
+         recebe uma copia que nao se atualiza sozinha), entao sem isto nem ele
+         nem eu sabemos qual codigo esta rodando no aparelho dele. Mesma licao
+         do DADOS no sincronia.html. TROCAR A CADA MUDANCA QUE ELE VAI TESTAR.
+         Sem a palavra "versao": o testar-linguas.mjs a acusaria como portugues
+         vazando nas outras 7, e com razao. Um "v" e uma data servem nas 8. -->
+    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 3</div>
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="theme_label">Tema</div>

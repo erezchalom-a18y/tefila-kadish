@@ -315,6 +315,22 @@ confere('"Comecar aqui" cai DENTRO da palavra pedida, nao no zero nem na seguint
   `parou em ${comecou.t}s; a palavra vai de ${comecou.inicio}s a ${comecou.fim}s ` +
   `e a seguinte comeca em ${comecou.proxima}s`);
 
+// ---------- a versao tem que estar visivel nos ajustes ----------
+// Existe porque o Erez disse "nada mudou" e nem ele nem eu tinhamos como saber
+// qual codigo o iPad dele estava rodando. Sem esta linha na tela, todo relato
+// dele fica ambiguo entre "o conserto nao funciona" e "o aparelho tem a copia
+// de ontem".
+const versao = await pag.evaluate(() => {
+  document.getElementById('settingsToggle').click();
+  const el = document.getElementById('settingsVersao');
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  return { txt: el.textContent.trim(), visivel: r.width > 0 && r.height > 0 };
+});
+confere('a versao aparece nos ajustes', !!versao && versao.visivel && /\d{4}-\d{2}-\d{2}/.test(versao.txt),
+  JSON.stringify(versao));
+if (versao) console.log(`        (mostrando: "${versao.txt}")`);
+
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 
 await navegador.close();
