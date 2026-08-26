@@ -4044,10 +4044,17 @@ function playFullPrayer(url) {
   const mesmoAudio = audioPlayer.src === alvo;
   const acabou = audioPlayer.ended ||
                  (audioPlayer.duration && audioPlayer.currentTime >= audioPlayer.duration - 0.05);
-  const retomar = mesmoAudio && !acabou && audioPlayer.currentTime > 0;
+  // "Comecar aqui" pede a palavra e chama play() em seguida. A busca no audio
+  // NAO e instantanea (no Safari do iPad demora), entao aqui embaixo o
+  // currentTime ainda le o valor ANTIGO — e num app recem-aberto esse valor e 0,
+  // o que fazia este `if` zerar o pulo que acabara de ser pedido. Resultado: ele
+  // tocava numa palavra e a reza comecava do inicio. Por isso o pulo se anuncia.
+  const pediuPular = typeof state.irPara === 'number';
+  const retomar = pediuPular || (mesmoAudio && !acabou && audioPlayer.currentTime > 0);
   if (!mesmoAudio) audioPlayer.src = url;
   audioPlayer.playbackRate = state.speed;
   if (!retomar) audioPlayer.currentTime = 0;
+  if (pediuPular) { try { audioPlayer.currentTime = state.irPara; } catch (e) {} state.irPara = null; }
   // Add load error handler in addition to play error
   audioPlayer.onerror = () => {
     showToast('Erro carregando: ' + url.split('/').pop() + ' (verifique se o arquivo está em /audio/)');
@@ -5617,6 +5624,48 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // O prazo existe para o caso de o navegador ignorar o pedido — melhor
     // destravar do que congelar o destaque.
     let rebobinadoAte = null, prazoDaVolta = 0;
+
+    /**
+     * Reposiciona o audio e CONFERE onde ele pousou.
+     *
+     * Duas coisas que o `a.currentTime = x` sozinho nao faz, e que o Erez ouviu:
+     *
+     * 1. Enquanto a agulha anda, o rabino continua falando. Era o "pega no audio
+     *    um pequeno pedaco da segunda (be)" — o comeco da palavra seguinte
+     *    escapando antes de a volta acontecer. Por isso pausa antes e volta a
+     *    tocar depois.
+     * 2. A busca nem sempre pousa onde foi pedida. Num MP3 no Safari ela cai no
+     *    quadro mais proximo, e num arquivo ainda chegando pela rede pode nem
+     *    sair do lugar. Agora, se pousou a mais de 60 ms do pedido, pede de novo
+     *    — uma vez so, para nao entrar em laco.
+     */
+    function irPara(destino, aoChegar) {
+      const a = audioEl();
+      if (!a) return;
+      const estavaTocando = !a.paused;
+      let tentou = false, pronto = false;
+      const terminar = () => {
+        if (pronto) return;
+        pronto = true;
+        a.removeEventListener('seeked', chegou);
+        if (estavaTocando && a.paused) { const p = a.play(); if (p && p.catch) p.catch(() => {}); }
+        if (aoChegar) aoChegar(a.currentTime);
+      };
+      const chegou = () => {
+        if (pronto) return;
+        if (Math.abs(a.currentTime - destino) > 0.06 && !tentou) {
+          tentou = true;
+          try { a.currentTime = destino; } catch (e) {}
+          return;                       // continua ouvindo o mesmo 'seeked'
+        }
+        terminar();
+      };
+      a.addEventListener('seeked', chegou);
+      if (estavaTocando) a.pause();     // sem isto a voz vaza durante a busca
+      try { a.currentTime = destino; } catch (e) {}
+      // rede de seguranca: se 'seeked' nunca vier (acontece), nao deixa parado
+      setTimeout(terminar, 1500);
+    }
     // Ligado quando o Modo Treino pausa no fim de um verso. A pausa nao e
     // instantanea: sobrava um quadro em que o relogio ja estava no verso
     // seguinte e o destaque acendia a primeira palavra dele — a piscada que o
@@ -5647,7 +5696,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           // fio DE ANTES do verso fazia o contador de versos achar que o verso
           // anterior tinha acabado. Inaudivel, e resolve.
           const destino = Math.min(v.start + 0.03, v.end - 0.01);
-          a.currentTime = destino;
+          irPara(destino);
           rebobinadoAte = destino;
           prazoDaVolta = Date.now() + 2000;
           if (typeof showToast === 'function')
@@ -5868,7 +5917,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         if (typeof state !== 'undefined') { state.repeatVerso = uni; state.repeatRestante = undefined; }
         // +0.02s: procurar num MP3 nao cai no milissegundo exato, e cair um fio
         // ANTES da palavra pode acender a de tras por um instante.
-        a.currentTime = Math.min(Math.max(p.start + 0.02, 0), (a.duration || 1e9) - 0.05);
+        const destino = Math.min(Math.max(p.start + 0.02, 0), (a.duration || 1e9) - 0.05);
+        // anuncia o pulo: sem isto o play() logo abaixo zerava o audio quando a
+        // busca ainda nao tinha pousado (ver playFullPrayer)
+        if (typeof state !== 'undefined') state.irPara = destino;
+        irPara(destino);
         dedo = 0;
         acender();
         if (typeof play === 'function') play(); else a.play().catch(() => {});

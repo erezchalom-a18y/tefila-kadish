@@ -241,6 +241,80 @@ confere('Modo Treino: comecando no meio, a pausa vem no fim daquele verso',
   pausou && pausou.vi === 2 && pausou.andou > 0.3,
   JSON.stringify(pausou));
 
+// ---------- os dois defeitos de 26/08, com a busca LENTA de proposito ----------
+// O Erez, no chabad_derabanan: "na segunda [rodada] ja pega no audio um pequeno
+// pedaco da segunda (be) e vai para a segunda palavra da segunda frase"; e
+// "quando clico para comecar de uma palavra comeca na proxima".
+//
+// Os dois vinham da mesma coisa: a busca no audio nao e instantanea, e ninguem
+// conferia. Enquanto a agulha andava o rabino continuava falando (o "be" que
+// escapava), e o play() logo depois do "Comecar aqui" lia o currentTime ANTIGO
+// — num app recem-aberto isso e 0 — e zerava o pulo.
+//
+// Aqui o atraso e imitado de proposito: 400 ms, como no Safari do iPhone.
+await pag.goto(`${BASE}/engine.html?n=chabad&t=derabanan&audio=mp3`);
+await pag.waitForTimeout(2500);
+await pag.evaluate(() => {
+  const a = document.getElementById('audioPlayer');
+  const d = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'currentTime');
+  window.__pedidos = [];
+  Object.defineProperty(a, 'currentTime', {
+    get() { return d.get.call(a); },
+    set(v) { window.__pedidos.push(+v.toFixed(3)); setTimeout(() => d.set.call(a, v), 400); },
+    configurable: true,
+  });
+});
+
+// 1. a repeticao nao pode deixar a voz vazar para o verso seguinte
+const vazou = await pag.evaluate(async () => {
+  state.modoTreino = true; state.repeatN = 2;
+  const a = document.getElementById('audioPlayer');
+  const d = await (await fetch('./sync/chabad_derabanan_sync.json')).json();
+  const fimV1 = d.versos[0].end;                       // 4.38
+  document.getElementById('playBtn').click();
+  let maior = 0;
+  const t0 = performance.now();
+  while (performance.now() - t0 < 14000) {
+    await new Promise(r => requestAnimationFrame(r));
+    if (!a.paused && a.currentTime > maior) maior = a.currentTime;
+    if (a.currentTime < fimV1 - 1 && maior > fimV1) break;   // ja rebobinou
+  }
+  return { fimV1, maiorTocado: +maior.toFixed(2) };
+});
+confere('a repeticao nao deixa a voz passar do fim do verso',
+  vazou.maiorTocado <= vazou.fimV1 + 0.25,
+  `tocou ate ${vazou.maiorTocado}s, e o verso acaba em ${vazou.fimV1}s ` +
+  `(o excesso e o "pequeno pedaco da segunda" que ele ouviu)`);
+
+// 2. "Comecar aqui" num app recem-aberto nao pode cair no zero
+await pag.goto(`${BASE}/engine.html?n=chabad&t=derabanan&audio=mp3`);
+await pag.waitForTimeout(2500);
+await pag.evaluate(() => {
+  const a = document.getElementById('audioPlayer');
+  const d = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'currentTime');
+  Object.defineProperty(a, 'currentTime', {
+    get() { return d.get.call(a); },
+    set(v) { setTimeout(() => d.set.call(a, v), 400); },
+    configurable: true,
+  });
+});
+const comecou = await pag.evaluate(async () => {
+  const espera = ms => new Promise(r => setTimeout(r, ms));
+  const d = await (await fetch('./sync/chabad_derabanan_sync.json')).json();
+  const alvo = d.versos[1].palavras[0];                // bealma, 4.38 - 5.16
+  const w = document.querySelector('.word[data-vi="1"][data-wi="0"]');
+  w.click();
+  document.getElementById('popupComecar').click();
+  await espera(1200);
+  const a = document.getElementById('audioPlayer');
+  return { t: +a.currentTime.toFixed(2), inicio: alvo.start, fim: alvo.end,
+           proxima: d.versos[1].palavras[1].start };
+});
+confere('"Comecar aqui" cai DENTRO da palavra pedida, nao no zero nem na seguinte',
+  comecou.t >= comecou.inicio - 0.1 && comecou.t < comecou.proxima,
+  `parou em ${comecou.t}s; a palavra vai de ${comecou.inicio}s a ${comecou.fim}s ` +
+  `e a seguinte comeca em ${comecou.proxima}s`);
+
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 
 await navegador.close();
