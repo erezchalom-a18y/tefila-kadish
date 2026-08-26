@@ -1143,6 +1143,15 @@
     pointer-events: none;
   }
   body.modo-treino .treino-banner { display: flex; }
+  .treino-gran { display: inline-flex; gap: 4px; margin-left: auto; flex-shrink: 0; }
+  .treino-gran button {
+    font: inherit; font-size: 0.85em; padding: 3px 10px; min-height: 30px;
+    border-radius: 999px; cursor: pointer;
+    border: 1px solid currentColor; background: transparent; color: inherit; opacity: .65;
+  }
+  .treino-gran button.active { opacity: 1; background: currentColor; }
+  .treino-gran button.active span, .treino-gran button.active { color: inherit; }
+  .treino-gran button.active { box-shadow: inset 0 0 0 99px rgba(255,255,255,.15); }
 
   /* Memorial strip — Em memória de */
   .memorial-strip {
@@ -1714,7 +1723,13 @@
     <span class="ls-text" data-i18n-html="learn_title"><span data-i18n="learn_title">Por que dizemos o Kadish?</span><small data-i18n="learn_sub">O significado, a história e quem instituiu</small></span>
     <span class="ls-arrow">→</span>
   </button>
-  <div class="treino-banner" id="treinoBanner" data-i18n="treino_active">⊙ Modo Treino · pausa após cada verso</div>
+  <div class="treino-banner" id="treinoBanner">
+    <span id="treinoTexto" data-i18n="treino_active">⊙ Modo Treino · pausa após cada verso</span>
+    <span class="treino-gran" id="treinoGran">
+      <button data-gran="verso" class="active" data-i18n="gran_verso">por verso</button>
+      <button data-gran="palavra" data-i18n="gran_palavra">por palavra</button>
+    </span>
+  </div>
   <div class="studio-banner" data-i18n="studio_banner">
     Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)
   </div>
@@ -4256,6 +4271,9 @@ const I18N = {
     modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
     comecar_aqui: '▶ Começar aqui',
     treino_active: '⊙ Modo Treino · pausa após cada verso',
+    gran_verso: 'por verso', gran_palavra: 'por palavra',
+    toast_gran: '{n} paradas nesta reza',
+    treino_active_palavra: '⊙ Modo Treino · pausa após cada palavra',
     settings_title: 'Configurações',
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Escuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamanho da fonte', font_small: 'Pequena', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muito grande',
@@ -4297,6 +4315,9 @@ const I18N = {
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
     comecar_aqui: '▶ Start here',
     treino_active: '⊙ Practice Mode · pauses after each verse',
+    gran_verso: 'by verse', gran_palavra: 'by word',
+    toast_gran: '{n} stops in this prayer',
+    treino_active_palavra: '⊙ Practice Mode · pauses after each word',
     settings_title: 'Settings',
     theme_label: 'Theme', theme_light: 'Light', theme_dark: 'Dark', theme_contrast: 'Contrast',
     font_size_label: 'Font size', font_small: 'Small', font_normal: 'Normal', font_large: 'Large', font_xlarge: 'Extra large',
@@ -4338,6 +4359,9 @@ const I18N = {
     modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
     comecar_aqui: '▶ Empezar aquí',
     treino_active: '⊙ Modo Práctica · pausa después de cada verso',
+    gran_verso: 'por verso', gran_palavra: 'por palabra',
+    toast_gran: '{n} paradas en este rezo',
+    treino_active_palavra: '⊙ Modo Práctica · pausa después de cada palabra',
     settings_title: 'Ajustes',
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Oscuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamaño de fuente', font_small: 'Pequeña', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muy grande',
@@ -4379,6 +4403,9 @@ const I18N = {
     modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
     comecar_aqui: '▶ Commencer ici',
     treino_active: '⊙ Mode Pratique · pause après chaque verset',
+    gran_verso: 'par verset', gran_palavra: 'par mot',
+    toast_gran: '{n} arrêts dans cette prière',
+    treino_active_palavra: '⊙ Mode Pratique · pause après chaque mot',
     settings_title: 'Paramètres',
     theme_label: 'Thème', theme_light: 'Clair', theme_dark: 'Sombre', theme_contrast: 'Contraste',
     font_size_label: 'Taille de police', font_small: 'Petite', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Très grande',
@@ -4420,6 +4447,9 @@ const I18N = {
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
     comecar_aqui: '▶ Inizia qui',
     treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
+    gran_verso: 'per versetto', gran_palavra: 'per parola',
+    toast_gran: '{n} soste in questa preghiera',
+    treino_active_palavra: '⊙ Modalità Pratica · pausa dopo ogni parola',
     settings_title: 'Impostazioni',
     theme_label: 'Tema', theme_light: 'Chiaro', theme_dark: 'Scuro', theme_contrast: 'Contrasto',
     font_size_label: 'Dimensione del testo', font_small: 'Piccola', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Molto grande',
@@ -4461,6 +4491,9 @@ const I18N = {
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
     comecar_aqui: '▶ Hier beginnen',
     treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
+    gran_verso: 'pro Vers', gran_palavra: 'pro Wort',
+    toast_gran: '{n} Halte in diesem Gebet',
+    treino_active_palavra: '⊙ Übungsmodus · Pause nach jedem Wort',
     settings_title: 'Einstellungen',
     theme_label: 'Design', theme_light: 'Hell', theme_dark: 'Dunkel', theme_contrast: 'Kontrast',
     font_size_label: 'Schriftgröße', font_small: 'Klein', font_normal: 'Normal', font_large: 'Groß', font_xlarge: 'Sehr groß',
@@ -4502,6 +4535,9 @@ const I18N = {
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     comecar_aqui: '▶ Начать отсюда',
     treino_active: '⊙ Режим Практики · пауза после каждого стиха',
+    gran_verso: 'по стиху', gran_palavra: 'по слову',
+    toast_gran: '{n} остановок в этой молитве',
+    treino_active_palavra: '⊙ Режим Практики · пауза после каждого слова',
     settings_title: 'Настройки',
     theme_label: 'Тема', theme_light: 'Светлая', theme_dark: 'Тёмная', theme_contrast: 'Контраст',
     font_size_label: 'Размер шрифта', font_small: 'Малый', font_normal: 'Нормальный', font_large: 'Большой', font_xlarge: 'Очень большой',
@@ -4543,6 +4579,9 @@ const I18N = {
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
     comecar_aqui: '▶ להתחיל כאן',
     treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
+    gran_verso: 'לפי פסוק', gran_palavra: 'לפי מילה',
+    toast_gran: '{n} עצירות בתפילה זו',
+    treino_active_palavra: '⊙ מצב תרגול · השהיה אחרי כל מילה',
     settings_title: 'הגדרות',
     theme_label: 'ערכת נושא', theme_light: 'בהיר', theme_dark: 'כהה', theme_contrast: 'ניגודיות',
     font_size_label: 'גודל גופן', font_small: 'קטן', font_normal: 'רגיל', font_large: 'גדול', font_xlarge: 'גדול מאוד',
@@ -4974,6 +5013,34 @@ function toggleModoTreino() {
 }
 document.getElementById('treinoToggle').addEventListener('click', toggleModoTreino);
 
+// ---------- Treino por verso ou por palavra ----------
+// Por palavra, TODO ponto de parada e um numero que o Erez conferiu de ouvido:
+// as ancoras dele mandam nas palavras, e as fronteiras de verso ja saem delas.
+// Por verso, o app usa so um de cada cinco desses numeros.
+state.granularidadeTreino = localStorage.getItem('tefila_treino_gran') === 'palavra' ? 'palavra' : 'verso';
+function aplicarGranularidade(g) {
+  state.granularidadeTreino = (g === 'palavra') ? 'palavra' : 'verso';
+  localStorage.setItem('tefila_treino_gran', state.granularidadeTreino);
+  document.querySelectorAll('#treinoGran button').forEach(b =>
+    b.classList.toggle('active', b.dataset.gran === state.granularidadeTreino));
+  const txt = document.getElementById('treinoTexto');
+  if (txt) {
+    const chave = state.granularidadeTreino === 'palavra' ? 'treino_active_palavra' : 'treino_active';
+    txt.dataset.i18n = chave;
+    txt.textContent = TXT(chave);
+  }
+  // os passos mudam de tamanho: refazer, e re-armar o contador onde a voz esta
+  const n = (window.SYNC && SYNC.refazerPassos) ? SYNC.refazerPassos() : null;
+  return n;
+}
+document.getElementById('treinoGran').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const n = aplicarGranularidade(b.dataset.gran);
+  if (n) showToast(TXT('toast_gran', { n }));
+});
+aplicarGranularidade(state.granularidadeTreino);
+
 // ---------- Tradicao e velocidade ----------
 // A tradicao e o tipo sao as duas coisas que mudam de verdade no dia a dia.
 // Estavam enterradas no menu; agora giram no proprio topo, num toque.
@@ -5389,6 +5456,46 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         fita.push({ k, wi, start: p.start, end: p.end })));
       fita.sort((a, b) => a.start - b.start);
     }
+    // ---------- OS PASSOS DO MODO TREINO ----------
+    // O treino para no fim de cada PASSO. Por verso, um passo e um verso — como
+    // sempre foi. Por palavra, um passo e uma palavra, e ai TODO ponto de parada
+    // e um numero que o Erez conferiu de ouvido (as ancoras dele mandam nas
+    // palavras, e as fronteiras de verso ja saem delas).
+    //
+    // Excecao medida, nao chutada: onde o rabino emenda duas palavras num sopro
+    // so ("di vra", "min kodam"), o passo leva as duas juntas. Cortar ali daria
+    // meia palavra no ouvido. A lista vem de sopros.json, escrita por
+    // medir-sopros.py a partir do sinal do proprio audio.
+    let passos = [], sopros = null;
+    const porPalavra = () => temState() && state.granularidadeTreino === 'palavra';
+    function montarPassos() {
+      passos = [];
+      if (!dados || !dados.versos) return;
+      if (!porPalavra()) {
+        dados.versos.forEach((v, k) => {
+          if (v.palavras && v.palavras.length) passos.push({ k, start: v.start, end: v.end });
+        });
+        return;
+      }
+      const emendadas = new Set();
+      const c = sopros && sopros.combinacoes && sopros.combinacoes[`${nussach}_${tipo}`];
+      (c ? c.colados : []).forEach(x => emendadas.add(`${x.v}:${x.p}`));
+      dados.versos.forEach((v, k) => {
+        const ps = v.palavras || [];
+        let ini = null;
+        ps.forEach((p, wi) => {
+          if (ini === null) ini = p.start;
+          const emendaComAProxima = wi < ps.length - 1 && emendadas.has(`${v.n}:${wi + 1}`);
+          if (!emendaComAProxima) { passos.push({ k, start: ini, end: p.end }); ini = null; }
+        });
+      });
+    }
+    /** Indice do passo que contem t (ou o ultimo que ja comecou). */
+    function passoEm(t) {
+      for (let i = passos.length - 1; i >= 0; i--) if (t >= passos[i].start - 0.001) return i;
+      return -1;
+    }
+
     // qual palavra soa agora. Antes da primeira, nenhuma; depois da ultima,
     // continua a ultima acesa (o rabino ja calou, mas o Amen fica na tela).
     let dedo = 0;
@@ -5529,7 +5636,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
      */
     function fimDeVerso(k) {
       const a = audioEl();
-      const v = dados.versos[k];
+      // k indexa PASSOS: por verso um passo e um verso, por palavra e uma palavra.
+      const v = passos[k];
       if (!v) return;
       if (typeof state === 'undefined') return;
 
@@ -5610,7 +5718,12 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // contrario. Ver "A FITA CONTINUA", la em cima.
       const agora = palavraEm(t);
       if (!agora) return;
-      const k = agora.k;
+      // DUAS contas, de proposito: `kv` e o verso, e so ele acende o texto;
+      // `k` e o PASSO do treino, que por palavra e mais fino que o verso.
+      // Misturar as duas foi o que ja fez o destaque discordar da linha.
+      const kv = agora.k;
+      const k = porPalavra() ? passoEm(t) : agora.k;
+      if (k < 0) return;
       // Enquanto a volta da repeticao nao chegou, nem acende nem conta verso:
       // acender aqui e o que fazia piscar a palavra do verso seguinte.
       if (rebobinadoAte !== null && t > rebobinadoAte + 0.5 && Date.now() < prazoDaVolta) return;
@@ -5649,10 +5762,10 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
       const wi = agora.wi;
       // roda 60 vezes por segundo: so mexe na tela quando a palavra muda
-      if (k === acesoVerso && wi === acesoPalavra) return;
-      acesoVerso = k; acesoPalavra = wi;
-      // o texto da tela vem do mesmo JSON: verso k, palavra wi
-      highlightWord(k, wi);
+      if (kv === acesoVerso && wi === acesoPalavra) return;
+      acesoVerso = kv; acesoPalavra = wi;
+      // o texto da tela vem do mesmo JSON: verso kv, palavra wi
+      highlightWord(kv, wi);
       mirar(document.querySelector(`.word[data-vi="${k}"][data-wi="${wi}"]`));
     }
 
@@ -5680,8 +5793,19 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         dados = await r.json();
       } catch (e) { dados = null; console.error('sincronia nao carregou:', e); return; }
 
+      // As emendas de sopro sao as mesmas para os 8; carrega uma vez so, e se
+      // faltar o arquivo o modo por palavra ainda funciona — so corta em toda
+      // fronteira, inclusive nas emendadas.
+      if (sopros === null) {
+        try {
+          const rs = await fetch('./sopros.json', { cache: 'no-cache' });
+          sopros = rs.ok ? await rs.json() : {};
+        } catch (e) { sopros = {}; }
+      }
+
       mapa = trocarTexto(dados);
       montarFita();                          // a fita continua de palavras
+      montarPassos();                        // os passos do Modo Treino
       dedo = 0;
       acesoVerso = -1; acesoPalavra = -1;   // texto novo: o cache de destaque cai
       // O destaque era movido pelo evento 'timeupdate', que o navegador dispara
@@ -5749,9 +5873,13 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         rebobinadoAte = null;
         prazoDaVolta = 0;
         paradoNoFimDoVerso = false;
-        versoAnterior = vi;              // ele esta NESTE verso; nada acabou
+        // O contador do treino conta PASSOS, nao versos: por palavra os dois
+        // numeros sao diferentes, e re-armar com o do verso faria a pausa vir
+        // na hora errada logo depois de "Comecar aqui".
+        const uni = porPalavra() ? passoEm(p.start) : vi;
+        versoAnterior = uni;             // ele esta NESTE passo; nada acabou
         acesoVerso = -1; acesoPalavra = -1;
-        if (typeof state !== 'undefined') { state.repeatVerso = vi; state.repeatRestante = undefined; }
+        if (typeof state !== 'undefined') { state.repeatVerso = uni; state.repeatRestante = undefined; }
         // +0.02s: procurar num MP3 nao cai no milissegundo exato, e cair um fio
         // ANTES da palavra pode acender a de tras por um instante.
         a.currentTime = Math.min(Math.max(p.start + 0.02, 0), (a.duration || 1e9) - 0.05);
@@ -5770,8 +5898,20 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // Espiar de fora o que a sincronia esta pensando. So leitura; existe para
       // os testes conseguirem explicar uma falha em vez de so constatar.
       espiar: () => ({ versoAnterior, acesoVerso, acesoPalavra,
+                       passos: passos.length, porPalavra: porPalavra(),
                        repeatVerso: typeof state !== 'undefined' ? state.repeatVerso : null,
                        repeatRestante: typeof state !== 'undefined' ? state.repeatRestante : null }),
+      /** Refaz os passos do treino depois de trocar verso <-> palavra. */
+      refazerPassos: () => {
+        montarPassos();
+        // o contador tem que ser re-armado no passo onde a voz esta agora,
+        // senao a proxima troca de passo seria lida como "acabou um passo"
+        const a = audioEl();
+        versoAnterior = a ? (porPalavra() ? passoEm(a.currentTime) : (palavraEm(a.currentTime) || {}).k ?? -1) : -1;
+        if (typeof state !== 'undefined') { state.repeatVerso = versoAnterior; state.repeatRestante = undefined; }
+        return passos.length;
+      },
+      passos: () => passos.slice(),
       trocar: (n, t) => {
         if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) { nussach = x; escolhaExplicita = true; } }
         if (t && TIPOS.includes(t)) { tipo = t; escolhaExplicita = true; }

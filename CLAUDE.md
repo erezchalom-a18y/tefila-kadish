@@ -338,6 +338,16 @@ Para as que imprimem, também playwright + Chromium.
 - testar-treino.mjs — o Modo Treino pausa no fim de cada verso, o ▶ retoma de
   onde parou, e a repetição toca o verso o número de vezes pedido. Já quebrou
   duas vezes; existe para não quebrar uma terceira.
+- testar-treino-palavra.mjs → o Modo Treino PALAVRA A PALAVRA. Existe porque as
+  correcoes de ouvido do Erez estao nas PALAVRAS: as fronteiras de verso saem
+  delas (conferido: 0 ms de diferenca nos 8), entao por verso o app usa so um de
+  cada cinco numeros que ele conferiu. Por palavra usa todos. Precisa do
+  servidor-teste.mjs, como o testar-treino.mjs.
+- medir-sopros.py → escreve sopros.json: as fronteiras entre palavras onde o
+  rabino NAO pausa (12% delas). Sao as que o aramaico diz num sopro so — "di
+  vra", "min kodam", "kol Yisrael". O Modo Treino por palavra mantem essas duas
+  juntas num passo; cortar ali daria meia palavra no ouvido. Medido do sinal,
+  nunca escrito a mao. So le audio e sync/; escreve so sopros.json.
 - servidor-teste.mjs — servidor estático para os testes, COM suporte a Range.
   Tem que ser ele, não o `python3 -m http.server`: aquele não responde Range, e
   sem Range o navegador não consegue mover o áudio — todo seek cai no zero. O
