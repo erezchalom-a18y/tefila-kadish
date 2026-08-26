@@ -1,0 +1,770 @@
+{
+ "gerado_por": "medir-sopros.py",
+ "o_que_e": "fronteiras entre palavras onde o rabino NAO pausa — cortar ali soa quebrado, entao o Modo Treino por palavra mantem as duas juntas",
+ "limiar_db": -35.0,
+ "silencio_minimo_s": 0.08,
+ "combinacoes": {
+  "ashkenaz_derabanan": {
+   "palavras": 118,
+   "fronteiras_limpas": 88,
+   "colados": [
+    {
+     "v": 6,
+     "p": 3,
+     "antes": "קָרִיב",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 30
+    },
+    {
+     "v": 15,
+     "p": 3,
+     "antes": "מָאן",
+     "depois": "דְּעָסְקִין",
+     "silencio_ms": 20
+    },
+    {
+     "v": 17,
+     "p": 1,
+     "antes": "יְהֵא",
+     "depois": "לְהוֹן",
+     "silencio_ms": 20
+    },
+    {
+     "v": 18,
+     "p": 2,
+     "antes": "וְחִסְדָּא",
+     "depois": "וְרַחֲמִין",
+     "silencio_ms": 20
+    },
+    {
+     "v": 20,
+     "p": 5,
+     "antes": "דְּבִשְׁמַיָּא",
+     "depois": "וְאַרְעָא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 23,
+     "p": 4,
+     "antes": "שָׁלוֹם",
+     "depois": "עָלֵינוּ",
+     "silencio_ms": 30
+    },
+    {
+     "v": 23,
+     "p": 5,
+     "antes": "עָלֵינוּ",
+     "depois": "וְעַל",
+     "silencio_ms": 10
+    }
+   ]
+  },
+  "ashkenaz_yatom": {
+   "palavras": 75,
+   "fronteiras_limpas": 52,
+   "colados": [
+    {
+     "v": 6,
+     "p": 3,
+     "antes": "קָרִיב",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 7,
+     "p": 1,
+     "antes": "יְהֵא",
+     "depois": "שְׁמֵהּ",
+     "silencio_ms": 0
+    },
+    {
+     "v": 8,
+     "p": 1,
+     "antes": "יִתְבָּרֵךְ",
+     "depois": "וְיִשְׁתַּבַּח",
+     "silencio_ms": 20
+    },
+    {
+     "v": 10,
+     "p": 1,
+     "antes": "וְיִתְעַלֶּה",
+     "depois": "וְיִתְהַלָּל",
+     "silencio_ms": 20
+    },
+    {
+     "v": 10,
+     "p": 3,
+     "antes": "שְׁמֵהּ",
+     "depois": "דְּקֻדְשָׁא",
+     "silencio_ms": 30
+    },
+    {
+     "v": 12,
+     "p": 3,
+     "antes": "דַּאֲמִירָן",
+     "depois": "בְּעָלְמָא",
+     "silencio_ms": 30
+    },
+    {
+     "v": 12,
+     "p": 4,
+     "antes": "בְּעָלְמָא",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 13,
+     "p": 9,
+     "antes": "כָּל",
+     "depois": "יִשְׂרָאֵל",
+     "silencio_ms": 40
+    },
+    {
+     "v": 14,
+     "p": 6,
+     "antes": "שָׁלוֹם",
+     "depois": "עָלֵינוּ",
+     "silencio_ms": 30
+    }
+   ]
+  },
+  "chabad_derabanan": {
+   "palavras": 121,
+   "fronteiras_limpas": 82,
+   "colados": [
+    {
+     "v": 2,
+     "p": 2,
+     "antes": "דִּי",
+     "depois": "בְרָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 2,
+     "p": 3,
+     "antes": "בְרָא",
+     "depois": "כִרְעוּתֵהּ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 6,
+     "p": 1,
+     "antes": "וּבְחַיֵּי",
+     "depois": "דְכָל",
+     "silencio_ms": 40
+    },
+    {
+     "v": 7,
+     "p": 3,
+     "antes": "קָרִיב",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 8,
+     "p": 1,
+     "antes": "יְהֵא",
+     "depois": "שְׁמֵהּ",
+     "silencio_ms": 0
+    },
+    {
+     "v": 9,
+     "p": 1,
+     "antes": "יִתְבָּרֵךְ",
+     "depois": "וְיִשְׁתַּבַּח",
+     "silencio_ms": 40
+    },
+    {
+     "v": 10,
+     "p": 1,
+     "antes": "וְיִתְרוֹמָם",
+     "depois": "וְיִתְנַשֵּׂא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 12,
+     "p": 3,
+     "antes": "כָּל",
+     "depois": "בִּרְכָתָא",
+     "silencio_ms": 40
+    },
+    {
+     "v": 13,
+     "p": 1,
+     "antes": "תֻּשְׁבְּחָתָא",
+     "depois": "וְנֶחָמָתָא",
+     "silencio_ms": 40
+    },
+    {
+     "v": 15,
+     "p": 2,
+     "antes": "תַּלְמִידֵיהוֹן",
+     "depois": "וְעַל",
+     "silencio_ms": 30
+    },
+    {
+     "v": 16,
+     "p": 4,
+     "antes": "דְּעָסְקִין",
+     "depois": "בְּאוֹרַיְתָא",
+     "silencio_ms": 30
+    },
+    {
+     "v": 21,
+     "p": 5,
+     "antes": "דְּבִשְׁמַיָּא",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 22,
+     "p": 4,
+     "antes": "מִן",
+     "depois": "שְׁמַיָּא",
+     "silencio_ms": 40
+    },
+    {
+     "v": 22,
+     "p": 9,
+     "antes": "וְעַל",
+     "depois": "כָּל",
+     "silencio_ms": 10
+    },
+    {
+     "v": 24,
+     "p": 7,
+     "antes": "יִשְׂרָאֵל",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 10
+    }
+   ]
+  },
+  "chabad_yatom": {
+   "palavras": 80,
+   "fronteiras_limpas": 50,
+   "colados": [
+    {
+     "v": 2,
+     "p": 2,
+     "antes": "דִּי",
+     "depois": "בְרָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 4,
+     "p": 3,
+     "antes": "וִיקָרֵב",
+     "depois": "מְשִׁיחֵהּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 8,
+     "p": 2,
+     "antes": "שְׁמֵהּ",
+     "depois": "רַבָּא",
+     "silencio_ms": 20
+    },
+    {
+     "v": 9,
+     "p": 2,
+     "antes": "וְיִשְׁתַּבַּח",
+     "depois": "וְיִתְפָּאֵר",
+     "silencio_ms": 20
+    },
+    {
+     "v": 11,
+     "p": 1,
+     "antes": "וְיִתְעַלֶּה",
+     "depois": "וְיִתְהַלָּל",
+     "silencio_ms": 30
+    },
+    {
+     "v": 12,
+     "p": 2,
+     "antes": "מִן",
+     "depois": "כָּל",
+     "silencio_ms": 40
+    },
+    {
+     "v": 12,
+     "p": 4,
+     "antes": "בִּרְכָתָא",
+     "depois": "וְשִׁירָתָא",
+     "silencio_ms": 40
+    },
+    {
+     "v": 13,
+     "p": 2,
+     "antes": "וְנֶחָמָתָא",
+     "depois": "דַּאֲמִירָן",
+     "silencio_ms": 10
+    },
+    {
+     "v": 13,
+     "p": 4,
+     "antes": "בְּעָלְמָא",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 14,
+     "p": 4,
+     "antes": "מִן",
+     "depois": "שְׁמַיָּא",
+     "silencio_ms": 60
+    },
+    {
+     "v": 14,
+     "p": 7,
+     "antes": "טוֹבִים",
+     "depois": "עָלֵינוּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 14,
+     "p": 11,
+     "antes": "יִשְׂרָאֵל",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 16,
+     "p": 4,
+     "antes": "עָלֵינוּ",
+     "depois": "וְעַל",
+     "silencio_ms": 10
+    },
+    {
+     "v": 16,
+     "p": 6,
+     "antes": "כָּל",
+     "depois": "יִשְׂרָאֵל",
+     "silencio_ms": 40
+    }
+   ]
+  },
+  "sefaradi_derabanan": {
+   "palavras": 125,
+   "fronteiras_limpas": 82,
+   "colados": [
+    {
+     "v": 2,
+     "p": 2,
+     "antes": "דִּי",
+     "depois": "בְרָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 2,
+     "p": 3,
+     "antes": "בְרָא",
+     "depois": "כִרְעוּתֵהּ",
+     "silencio_ms": 20
+    },
+    {
+     "v": 6,
+     "p": 1,
+     "antes": "וּבְחַיֵּי",
+     "depois": "דְכָל",
+     "silencio_ms": 20
+    },
+    {
+     "v": 8,
+     "p": 2,
+     "antes": "שְׁמֵהּ",
+     "depois": "רַבָּא",
+     "silencio_ms": 30
+    },
+    {
+     "v": 10,
+     "p": 1,
+     "antes": "וְיִתְרוֹמַם",
+     "depois": "וְיִתְנַשֵּׂא",
+     "silencio_ms": 20
+    },
+    {
+     "v": 12,
+     "p": 1,
+     "antes": "לְעֵלָּא",
+     "depois": "מִן",
+     "silencio_ms": 20
+    },
+    {
+     "v": 13,
+     "p": 3,
+     "antes": "דַּאֲמִירָן",
+     "depois": "בְּעָלְמָא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 15,
+     "p": 3,
+     "antes": "וְעַל",
+     "depois": "כָּל",
+     "silencio_ms": 20
+    },
+    {
+     "v": 17,
+     "p": 1,
+     "antes": "דִּי",
+     "depois": "בְאַתְרָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 17,
+     "p": 4,
+     "antes": "וְדִי",
+     "depois": "בְכָל",
+     "silencio_ms": 70
+    },
+    {
+     "v": 18,
+     "p": 6,
+     "antes": "וְחִסְדָּא",
+     "depois": "וְרַחֲמֵי",
+     "silencio_ms": 30
+    },
+    {
+     "v": 21,
+     "p": 2,
+     "antes": "וְשָׂבָע",
+     "depois": "וִישׁוּעָה",
+     "silencio_ms": 20
+    },
+    {
+     "v": 23,
+     "p": 4,
+     "antes": "וּלְכָל",
+     "depois": "עַמּוֹ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 23,
+     "p": 5,
+     "antes": "עַמּוֹ",
+     "depois": "יִשְׂרָאֵל",
+     "silencio_ms": 60
+    },
+    {
+     "v": 25,
+     "p": 4,
+     "antes": "שָׁלוֹם",
+     "depois": "עָלֵינוּ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 25,
+     "p": 5,
+     "antes": "עָלֵינוּ",
+     "depois": "וְעַל",
+     "silencio_ms": 20
+    },
+    {
+     "v": 25,
+     "p": 7,
+     "antes": "כָּל",
+     "depois": "עַמּוֹ",
+     "silencio_ms": 0
+    },
+    {
+     "v": 25,
+     "p": 8,
+     "antes": "עַמּוֹ",
+     "depois": "יִשְׂרָאֵל",
+     "silencio_ms": 50
+    }
+   ]
+  },
+  "sefaradi_yatom": {
+   "palavras": 91,
+   "fronteiras_limpas": 59,
+   "colados": [
+    {
+     "v": 2,
+     "p": 1,
+     "antes": "בְּעָלְמָא",
+     "depois": "דִּי",
+     "silencio_ms": 10
+    },
+    {
+     "v": 2,
+     "p": 2,
+     "antes": "דִּי",
+     "depois": "בְרָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 2,
+     "p": 3,
+     "antes": "בְרָא",
+     "depois": "כִרְעוּתֵהּ",
+     "silencio_ms": 40
+    },
+    {
+     "v": 4,
+     "p": 2,
+     "antes": "פֻּרְקָנֵהּ",
+     "depois": "וִיקָרֵב",
+     "silencio_ms": 20
+    },
+    {
+     "v": 11,
+     "p": 3,
+     "antes": "שְׁמֵהּ",
+     "depois": "דְּקֻדְשָׁא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 11,
+     "p": 4,
+     "antes": "דְּקֻדְשָׁא",
+     "depois": "בְּרִיךְ",
+     "silencio_ms": 70
+    },
+    {
+     "v": 13,
+     "p": 3,
+     "antes": "דַּאֲמִירָן",
+     "depois": "בְּעָלְמָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 14,
+     "p": 2,
+     "antes": "שְׁלָמָא",
+     "depois": "רַבָּא",
+     "silencio_ms": 60
+    },
+    {
+     "v": 14,
+     "p": 4,
+     "antes": "מִן",
+     "depois": "שְׁמַיָּא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 15,
+     "p": 3,
+     "antes": "וִישׁוּעָה",
+     "depois": "וְנֶחָמָה",
+     "silencio_ms": 10
+    },
+    {
+     "v": 16,
+     "p": 3,
+     "antes": "וּסְלִיחָה",
+     "depois": "וְכַפָּרָה",
+     "silencio_ms": 10
+    },
+    {
+     "v": 17,
+     "p": 4,
+     "antes": "וּלְכָל",
+     "depois": "עַמּוֹ",
+     "silencio_ms": 0
+    },
+    {
+     "v": 19,
+     "p": 8,
+     "antes": "עַמּוֹ",
+     "depois": "יִשְׂרָאֵל",
+     "silencio_ms": 30
+    }
+   ]
+  },
+  "sefard_derabanan": {
+   "palavras": 124,
+   "fronteiras_limpas": 82,
+   "colados": [
+    {
+     "v": 2,
+     "p": 2,
+     "antes": "דִּי",
+     "depois": "בְרָא",
+     "silencio_ms": 70
+    },
+    {
+     "v": 4,
+     "p": 2,
+     "antes": "פֻּרְקָנֵהּ",
+     "depois": "וִיקָרֵב",
+     "silencio_ms": 10
+    },
+    {
+     "v": 7,
+     "p": 3,
+     "antes": "קָרִיב",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 30
+    },
+    {
+     "v": 8,
+     "p": 1,
+     "antes": "יְהֵא",
+     "depois": "שְׁמֵהּ",
+     "silencio_ms": 50
+    },
+    {
+     "v": 8,
+     "p": 6,
+     "antes": "וּלְעָלְמֵי",
+     "depois": "עָלְמַיָּא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 12,
+     "p": 2,
+     "antes": "מִן",
+     "depois": "כָּל",
+     "silencio_ms": 60
+    },
+    {
+     "v": 15,
+     "p": 2,
+     "antes": "תַּלְמִידֵיהוֹן",
+     "depois": "וְעַל",
+     "silencio_ms": 20
+    },
+    {
+     "v": 15,
+     "p": 3,
+     "antes": "וְעַל",
+     "depois": "כָּל",
+     "silencio_ms": 10
+    },
+    {
+     "v": 16,
+     "p": 4,
+     "antes": "דְּעָסְקִין",
+     "depois": "בְּאוֹרַיְתָא",
+     "silencio_ms": 50
+    },
+    {
+     "v": 17,
+     "p": 6,
+     "antes": "אֲתַר",
+     "depois": "וַאֲתַר",
+     "silencio_ms": 10
+    },
+    {
+     "v": 21,
+     "p": 4,
+     "antes": "אֲבוּהוֹן",
+     "depois": "דִּי",
+     "silencio_ms": 40
+    },
+    {
+     "v": 21,
+     "p": 5,
+     "antes": "דִּי",
+     "depois": "בִשְׁמַיָּא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 21,
+     "p": 7,
+     "antes": "וְאַרְעָא",
+     "depois": "וְאִמְרוּ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 22,
+     "p": 1,
+     "antes": "יְהֵא",
+     "depois": "שְׁלָמָא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 22,
+     "p": 2,
+     "antes": "שְׁלָמָא",
+     "depois": "רַבָּא",
+     "silencio_ms": 10
+    },
+    {
+     "v": 22,
+     "p": 8,
+     "antes": "עָלֵינוּ",
+     "depois": "וְעַל",
+     "silencio_ms": 40
+    },
+    {
+     "v": 24,
+     "p": 1,
+     "antes": "הוּא",
+     "depois": "בְּרַחֲמָיו",
+     "silencio_ms": 20
+    },
+    {
+     "v": 24,
+     "p": 4,
+     "antes": "שָׁלוֹם",
+     "depois": "עָלֵינוּ",
+     "silencio_ms": 10
+    }
+   ]
+  },
+  "sefard_yatom": {
+   "palavras": 81,
+   "fronteiras_limpas": 57,
+   "colados": [
+    {
+     "v": 2,
+     "p": 1,
+     "antes": "בְּעָלְמָא",
+     "depois": "דִּי",
+     "silencio_ms": 70
+    },
+    {
+     "v": 2,
+     "p": 2,
+     "antes": "דִּי",
+     "depois": "בְרָא",
+     "silencio_ms": 0
+    },
+    {
+     "v": 2,
+     "p": 3,
+     "antes": "בְרָא",
+     "depois": "כִרְעוּתֵהּ",
+     "silencio_ms": 10
+    },
+    {
+     "v": 4,
+     "p": 2,
+     "antes": "פֻּרְקָנֵהּ",
+     "depois": "וִיקָרֵב",
+     "silencio_ms": 10
+    },
+    {
+     "v": 6,
+     "p": 2,
+     "antes": "דְכָל",
+     "depois": "בֵּית",
+     "silencio_ms": 30
+    },
+    {
+     "v": 8,
+     "p": 1,
+     "antes": "יְהֵא",
+     "depois": "שְׁמֵהּ",
+     "silencio_ms": 0
+    },
+    {
+     "v": 14,
+     "p": 4,
+     "antes": "מִן",
+     "depois": "שְׁמַיָּא",
+     "silencio_ms": 70
+    },
+    {
+     "v": 14,
+     "p": 8,
+     "antes": "עָלֵינוּ",
+     "depois": "וְעַל",
+     "silencio_ms": 10
+    }
+   ]
+  }
+ }
+}
