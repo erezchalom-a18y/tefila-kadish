@@ -1,0 +1,406 @@
+{
+ "_leia": "Transcricao crua do Whisper, palavra a palavra com o segundo em que soa. NAO e medida e NAO decide nada: o Whisper erra em aramaico liturgico. Serve para o realinhar.mjs saber QUAL palavra soa em cada trecho — que e o que o sinal nao sabe.",
+ "modelo": "whisper-1",
+ "palavras": [
+  {
+   "hebrew": "יתגדל",
+   "start": 0,
+   "end": 1.12
+  },
+  {
+   "hebrew": "ויתקדש",
+   "start": 1.12,
+   "end": 2.68
+  },
+  {
+   "hebrew": "שמי",
+   "start": 2.68,
+   "end": 3.58
+  },
+  {
+   "hebrew": "רבא",
+   "start": 3.58,
+   "end": 4.32
+  },
+  {
+   "hebrew": "בעלמה",
+   "start": 5.04,
+   "end": 5.84
+  },
+  {
+   "hebrew": "דברי",
+   "start": 5.84,
+   "end": 6.72
+  },
+  {
+   "hebrew": "חירותי",
+   "start": 6.72,
+   "end": 7.4
+  },
+  {
+   "hebrew": "וימליך",
+   "start": 8.02,
+   "end": 8.72
+  },
+  {
+   "hebrew": "מלכותי",
+   "start": 8.72,
+   "end": 9.88
+  },
+  {
+   "hebrew": "ויצמח",
+   "start": 10.46,
+   "end": 11.2
+  },
+  {
+   "hebrew": "פורקני",
+   "start": 11.2,
+   "end": 12.14
+  },
+  {
+   "hebrew": "ויקרב",
+   "start": 12.72,
+   "end": 13.3
+  },
+  {
+   "hebrew": "משיכי",
+   "start": 13.3,
+   "end": 14.36
+  },
+  {
+   "hebrew": "בחייכון",
+   "start": 15.14,
+   "end": 16.02
+  },
+  {
+   "hebrew": "וביומכון",
+   "start": 16.02,
+   "end": 17.6
+  },
+  {
+   "hebrew": "ובחיי",
+   "start": 18.14,
+   "end": 19.24
+  },
+  {
+   "hebrew": "בכל",
+   "start": 19.24,
+   "end": 20.18
+  },
+  {
+   "hebrew": "בית",
+   "start": 20.18,
+   "end": 20.74
+  },
+  {
+   "hebrew": "ישראל",
+   "start": 20.74,
+   "end": 21.56
+  },
+  {
+   "hebrew": "בעגלה",
+   "start": 22.2,
+   "end": 23
+  },
+  {
+   "hebrew": "ובזמן",
+   "start": 23,
+   "end": 23.88
+  },
+  {
+   "hebrew": "קריב",
+   "start": 23.88,
+   "end": 24.76
+  },
+  {
+   "hebrew": "ואימרו",
+   "start": 25.3,
+   "end": 26.22
+  },
+  {
+   "hebrew": "אמן",
+   "start": 26.22,
+   "end": 26.62
+  },
+  {
+   "hebrew": "יהה",
+   "start": 26.62,
+   "end": 28.54
+  },
+  {
+   "hebrew": "שמי",
+   "start": 28.54,
+   "end": 29.02
+  },
+  {
+   "hebrew": "רבא",
+   "start": 29.02,
+   "end": 30.08
+  },
+  {
+   "hebrew": "מברך",
+   "start": 30.08,
+   "end": 30.88
+  },
+  {
+   "hebrew": "לעלם",
+   "start": 30.88,
+   "end": 32.04
+  },
+  {
+   "hebrew": "ולעלמי",
+   "start": 32.04,
+   "end": 33.2
+  },
+  {
+   "hebrew": "עלמיה",
+   "start": 33.2,
+   "end": 34.26
+  },
+  {
+   "hebrew": "יתברך",
+   "start": 34.64,
+   "end": 35.32
+  },
+  {
+   "hebrew": "וישטבח",
+   "start": 35.32,
+   "end": 36.7
+  },
+  {
+   "hebrew": "ויתפאר",
+   "start": 36.7,
+   "end": 37.88
+  },
+  {
+   "hebrew": "ויתרומם",
+   "start": 37.88,
+   "end": 39.14
+  },
+  {
+   "hebrew": "ויתנסה",
+   "start": 39.14,
+   "end": 40.44
+  },
+  {
+   "hebrew": "ויתהדר",
+   "start": 40.44,
+   "end": 41.5
+  },
+  {
+   "hebrew": "ויתעלה",
+   "start": 41.5,
+   "end": 42.62
+  },
+  {
+   "hebrew": "ויתהלל",
+   "start": 42.62,
+   "end": 43.72
+  },
+  {
+   "hebrew": "שמי",
+   "start": 43.72,
+   "end": 44.84
+  },
+  {
+   "hebrew": "דקוצה",
+   "start": 44.84,
+   "end": 45.78
+  },
+  {
+   "hebrew": "בריך",
+   "start": 45.78,
+   "end": 46.62
+  },
+  {
+   "hebrew": "הוא",
+   "start": 46.62,
+   "end": 46.98
+  },
+  {
+   "hebrew": "לאלה",
+   "start": 46.98,
+   "end": 48.2
+  },
+  {
+   "hebrew": "מן",
+   "start": 48.2,
+   "end": 48.78
+  },
+  {
+   "hebrew": "כל",
+   "start": 48.78,
+   "end": 49.1
+  },
+  {
+   "hebrew": "ברכתה",
+   "start": 49.1,
+   "end": 50.16
+  },
+  {
+   "hebrew": "ושירתה",
+   "start": 50.16,
+   "end": 51.64
+  },
+  {
+   "hebrew": "תושבכתה",
+   "start": 52.34,
+   "end": 53.7
+  },
+  {
+   "hebrew": "ונחמתה",
+   "start": 53.7,
+   "end": 55.48
+  },
+  {
+   "hebrew": "בעמירן",
+   "start": 55.82,
+   "end": 56.58
+  },
+  {
+   "hebrew": "בעלמה",
+   "start": 56.58,
+   "end": 57.22
+  },
+  {
+   "hebrew": "ואימרו",
+   "start": 57.7,
+   "end": 58.42
+  },
+  {
+   "hebrew": "אמן",
+   "start": 58.42,
+   "end": 59.08
+  },
+  {
+   "hebrew": "יהה",
+   "start": 59.94,
+   "end": 60.24
+  },
+  {
+   "hebrew": "של",
+   "start": 60.24,
+   "end": 60.94
+  },
+  {
+   "hebrew": "עמה",
+   "start": 60.94,
+   "end": 61.16
+  },
+  {
+   "hebrew": "רבא",
+   "start": 61.16,
+   "end": 61.86
+  },
+  {
+   "hebrew": "מן",
+   "start": 61.86,
+   "end": 63.04
+  },
+  {
+   "hebrew": "שמעיה",
+   "start": 63.04,
+   "end": 63.72
+  },
+  {
+   "hebrew": "וחיים",
+   "start": 63.72,
+   "end": 64.94
+  },
+  {
+   "hebrew": "טובים",
+   "start": 64.94,
+   "end": 65.86
+  },
+  {
+   "hebrew": "עלינו",
+   "start": 65.86,
+   "end": 66.72
+  },
+  {
+   "hebrew": "ועל",
+   "start": 66.72,
+   "end": 68
+  },
+  {
+   "hebrew": "כל",
+   "start": 68,
+   "end": 68.84
+  },
+  {
+   "hebrew": "ישראל",
+   "start": 68.84,
+   "end": 69.54
+  },
+  {
+   "hebrew": "ואימרו",
+   "start": 69.96,
+   "end": 70.66
+  },
+  {
+   "hebrew": "אמן",
+   "start": 70.66,
+   "end": 71.3
+  },
+  {
+   "hebrew": "עושה",
+   "start": 71.3,
+   "end": 73.96
+  },
+  {
+   "hebrew": "שלום",
+   "start": 73.96,
+   "end": 74.46
+  },
+  {
+   "hebrew": "במרומב",
+   "start": 74.46,
+   "end": 75.62
+  },
+  {
+   "hebrew": "הוא",
+   "start": 76.3,
+   "end": 76.42
+  },
+  {
+   "hebrew": "יעשה",
+   "start": 76.42,
+   "end": 77.5
+  },
+  {
+   "hebrew": "שלום",
+   "start": 77.5,
+   "end": 78.26
+  },
+  {
+   "hebrew": "עלינו",
+   "start": 78.26,
+   "end": 79.2
+  },
+  {
+   "hebrew": "ועל",
+   "start": 79.2,
+   "end": 80.26
+  },
+  {
+   "hebrew": "כל",
+   "start": 80.26,
+   "end": 81.08
+  },
+  {
+   "hebrew": "ישראל",
+   "start": 81.08,
+   "end": 81.82
+  },
+  {
+   "hebrew": "ואימרו",
+   "start": 82.36,
+   "end": 83.42
+  },
+  {
+   "hebrew": "אמן",
+   "start": 83.42,
+   "end": 83.84
+  }
+ ]
+}

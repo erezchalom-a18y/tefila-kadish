@@ -1,0 +1,876 @@
+{
+  "_leia": "Tempos que o Whisper OUVIU, extraidos do RELATORIO-AUDIO-WHISPER.md por extrair-whisper.mjs. So aparecem as palavras em que ele discordou de nos por mais de 0,6s — as outras o relatorio nao lista, e para essas o nosso tempo ja estava perto do dele. NAO e medida: e testemunha do CONTEUDO (que palavra soa em cada segundo), que e justamente o que o sinal nao sabe dizer. Refazer sempre que o relatorio mudar.",
+  "de_qual_relatorio": "(sem data no relatorio)",
+  "tempos": {
+    "ashkenaz_yatom": [
+      {
+        "verso": 3,
+        "hebrew": "וְיַמְלִיךְ",
+        "tl": "veyamlich",
+        "nosso": 9.48,
+        "ouvido": 8.34
+      },
+      {
+        "verso": 3,
+        "hebrew": "מַלְכוּתֵהּ",
+        "tl": "malchutêh",
+        "nosso": 11.18,
+        "ouvido": 9.2
+      },
+      {
+        "verso": 4,
+        "hebrew": "וּבְחַיֵּי",
+        "tl": "uvechayê",
+        "nosso": 15.36,
+        "ouvido": 14.58
+      },
+      {
+        "verso": 10,
+        "hebrew": "וְיִתְעַלֶּה",
+        "tl": "veyitaleh",
+        "nosso": 39.8,
+        "ouvido": 38.74
+      },
+      {
+        "verso": 10,
+        "hebrew": "וְיִתְהַלָּל",
+        "tl": "veyithalal",
+        "nosso": 41.1,
+        "ouvido": 40.34
+      },
+      {
+        "verso": 12,
+        "hebrew": "תֻּשְׁבְּחָתָא",
+        "tl": "tushbechata",
+        "nosso": 50.54,
+        "ouvido": 51.42
+      },
+      {
+        "verso": 12,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 61.5,
+        "ouvido": 59.6
+      },
+      {
+        "verso": 12,
+        "hebrew": "שְׁלָמָא",
+        "tl": "shelamá",
+        "nosso": 62.48,
+        "ouvido": 60.72
+      },
+      {
+        "verso": 12,
+        "hebrew": "רַבָּא",
+        "tl": "raba",
+        "nosso": 63.06,
+        "ouvido": 61.32
+      },
+      {
+        "verso": 12,
+        "hebrew": "מִן",
+        "tl": "min",
+        "nosso": 63.55,
+        "ouvido": 62
+      },
+      {
+        "verso": 12,
+        "hebrew": "שְׁמַיָּא",
+        "tl": "shemayá",
+        "nosso": 64.28,
+        "ouvido": 63.14
+      },
+      {
+        "verso": 12,
+        "hebrew": "וְחַיִּים",
+        "tl": "vechayim",
+        "nosso": 65.42,
+        "ouvido": 64.34
+      },
+      {
+        "verso": 12,
+        "hebrew": "עָלֵינוּ",
+        "tl": "aleinu",
+        "nosso": 66.64,
+        "ouvido": 65.26
+      },
+      {
+        "verso": 12,
+        "hebrew": "וְעַל",
+        "tl": "veal",
+        "nosso": 67.52,
+        "ouvido": 66.28
+      },
+      {
+        "verso": 12,
+        "hebrew": "כָּל",
+        "tl": "kol",
+        "nosso": 67.98,
+        "ouvido": 67.24
+      },
+      {
+        "verso": 12,
+        "hebrew": "הוּא",
+        "tl": "hu",
+        "nosso": 74.49,
+        "ouvido": 75.62
+      }
+    ],
+    "ashkenaz_derabanan": [
+      {
+        "verso": 7,
+        "hebrew": "מְבָרַךְ",
+        "tl": "mevarách",
+        "nosso": 29.7,
+        "ouvido": 28.94
+      },
+      {
+        "verso": 12,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 62.02,
+        "ouvido": 62.66
+      },
+      {
+        "verso": 13,
+        "hebrew": "עַל",
+        "tl": "Al",
+        "nosso": 62.98,
+        "ouvido": 63.96
+      },
+      {
+        "verso": 17,
+        "hebrew": "יְהֵא",
+        "tl": "yehê",
+        "nosso": 88.24,
+        "ouvido": 87.62
+      },
+      {
+        "verso": 23,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 137.08,
+        "ouvido": 137.86
+      }
+    ],
+    "chabad_yatom": [
+      {
+        "verso": 2,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 27.66,
+        "ouvido": 26.62
+      },
+      {
+        "verso": 15,
+        "hebrew": "עֹשֶׂה",
+        "tl": "Ossê",
+        "nosso": 73.14,
+        "ouvido": 71.3
+      }
+    ],
+    "chabad_derabanan": [
+      {
+        "verso": 4,
+        "hebrew": "וִיקָרֵב",
+        "tl": "vikarev",
+        "nosso": 10.38,
+        "ouvido": 11.56
+      },
+      {
+        "verso": 4,
+        "hebrew": "מְשִׁיחֵהּ",
+        "tl": "meshichêh",
+        "nosso": 11.5,
+        "ouvido": 12.14
+      },
+      {
+        "verso": 5,
+        "hebrew": "בְּחַיֵּיכוֹן",
+        "tl": "bechayechon",
+        "nosso": 12.4,
+        "ouvido": 13.82
+      },
+      {
+        "verso": 5,
+        "hebrew": "וּבְיוֹמֵיכוֹן",
+        "tl": "uveyomechon",
+        "nosso": 13.66,
+        "ouvido": 14.62
+      },
+      {
+        "verso": 6,
+        "hebrew": "וּבְחַיֵּי",
+        "tl": "uvechayê",
+        "nosso": 15.06,
+        "ouvido": 16.48
+      },
+      {
+        "verso": 6,
+        "hebrew": "דְכָל",
+        "tl": "dechol",
+        "nosso": 16.42,
+        "ouvido": 17.1
+      },
+      {
+        "verso": 6,
+        "hebrew": "בֵּית",
+        "tl": "beit",
+        "nosso": 16.66,
+        "ouvido": 17.98
+      },
+      {
+        "verso": 6,
+        "hebrew": "יִשְׂרָאֵל",
+        "tl": "Israel",
+        "nosso": 17.22,
+        "ouvido": 18.56
+      },
+      {
+        "verso": 7,
+        "hebrew": "בַּעֲגָלָא",
+        "tl": "baagalá",
+        "nosso": 18.6,
+        "ouvido": 19.92
+      },
+      {
+        "verso": 7,
+        "hebrew": "וּבִזְמַן",
+        "tl": "uvizmán",
+        "nosso": 19.78,
+        "ouvido": 20.86
+      },
+      {
+        "verso": 7,
+        "hebrew": "קָרִיב",
+        "tl": "carív",
+        "nosso": 20.9,
+        "ouvido": 21.56
+      },
+      {
+        "verso": 7,
+        "hebrew": "וְאִמְרוּ",
+        "tl": "veimrú",
+        "nosso": 21.86,
+        "ouvido": 22.78
+      },
+      {
+        "verso": 7,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 22.7,
+        "ouvido": 23.64
+      },
+      {
+        "verso": 8,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 23.66,
+        "ouvido": 25.02
+      },
+      {
+        "verso": 8,
+        "hebrew": "שְׁמֵהּ",
+        "tl": "shemê",
+        "nosso": 25.12,
+        "ouvido": 25.76
+      },
+      {
+        "verso": 14,
+        "hebrew": "עַל",
+        "tl": "Al",
+        "nosso": 55.7,
+        "ouvido": 55.02
+      },
+      {
+        "verso": 16,
+        "hebrew": "וְעַל",
+        "tl": "veal",
+        "nosso": 65.4,
+        "ouvido": 66.02
+      },
+      {
+        "verso": 19,
+        "hebrew": "וְאִמְרוּ",
+        "tl": "veimrú",
+        "nosso": 95.68,
+        "ouvido": 96.7
+      },
+      {
+        "verso": 19,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 96.56,
+        "ouvido": 97.64
+      },
+      {
+        "verso": 22,
+        "hebrew": "שְׁלָמָא",
+        "tl": "shelamá",
+        "nosso": 98.98,
+        "ouvido": 99.68
+      }
+    ],
+    "sefard_yatom": [
+      {
+        "verso": 8,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 30.38,
+        "ouvido": 29.26
+      },
+      {
+        "verso": 8,
+        "hebrew": "שְׁמֵהּ",
+        "tl": "shemê",
+        "nosso": 32.08,
+        "ouvido": 31.02
+      },
+      {
+        "verso": 8,
+        "hebrew": "רַבָּא",
+        "tl": "raba",
+        "nosso": 32.74,
+        "ouvido": 31.56
+      },
+      {
+        "verso": 8,
+        "hebrew": "מְבָרַךְ",
+        "tl": "mevarách",
+        "nosso": 34.04,
+        "ouvido": 32.6
+      },
+      {
+        "verso": 8,
+        "hebrew": "לְעָלַם",
+        "tl": "lealám",
+        "nosso": 34.88,
+        "ouvido": 34.1
+      },
+      {
+        "verso": 8,
+        "hebrew": "וּלְעָלְמֵי",
+        "tl": "ul'almei",
+        "nosso": 35.64,
+        "ouvido": 34.68
+      },
+      {
+        "verso": 9,
+        "hebrew": "יִתְבָּרַךְ",
+        "tl": "Yitbarêch",
+        "nosso": 38.14,
+        "ouvido": 37.12
+      },
+      {
+        "verso": 9,
+        "hebrew": "וְיִשְׁתַּבַּח",
+        "tl": "veyishtabach",
+        "nosso": 39.62,
+        "ouvido": 37.82
+      },
+      {
+        "verso": 9,
+        "hebrew": "וְיִתְפָּאַר",
+        "tl": "veyitpaar",
+        "nosso": 41,
+        "ouvido": 39.78
+      },
+      {
+        "verso": 10,
+        "hebrew": "וְיִתְרוֹמַם",
+        "tl": "veyitromam",
+        "nosso": 42.54,
+        "ouvido": 40.66
+      },
+      {
+        "verso": 10,
+        "hebrew": "וְיִתְנַשֵּׂא",
+        "tl": "veyitnasse",
+        "nosso": 44.06,
+        "ouvido": 42.64
+      },
+      {
+        "verso": 10,
+        "hebrew": "וְיִתְהַדָּר",
+        "tl": "veyithadar",
+        "nosso": 45.42,
+        "ouvido": 44.14
+      },
+      {
+        "verso": 11,
+        "hebrew": "וְיִתְעַלֶּה",
+        "tl": "veyitaleh",
+        "nosso": 46.84,
+        "ouvido": 45.04
+      },
+      {
+        "verso": 11,
+        "hebrew": "וְיִתְהַלָּל",
+        "tl": "veyithalal",
+        "nosso": 48,
+        "ouvido": 46.36
+      },
+      {
+        "verso": 11,
+        "hebrew": "שְׁמֵהּ",
+        "tl": "shemê",
+        "nosso": 49.04,
+        "ouvido": 47.7
+      },
+      {
+        "verso": 13,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 65.66,
+        "ouvido": 64.6
+      },
+      {
+        "verso": 15,
+        "hebrew": "בִּמְרוֹמָיו",
+        "tl": "bimromav",
+        "nosso": 80.86,
+        "ouvido": 80.24
+      },
+      {
+        "verso": 16,
+        "hebrew": "וְעַל",
+        "tl": "veal",
+        "nosso": 88.16,
+        "ouvido": 87.48
+      }
+    ],
+    "sefard_derabanan": [
+      {
+        "verso": 3,
+        "hebrew": "וְיַמְלִיךְ",
+        "tl": "veyamlich",
+        "nosso": 9.18,
+        "ouvido": 8.16
+      },
+      {
+        "verso": 3,
+        "hebrew": "מַלְכוּתֵהּ",
+        "tl": "malchutêh",
+        "nosso": 10.6,
+        "ouvido": 8.94
+      },
+      {
+        "verso": 4,
+        "hebrew": "וְיַצְמַח",
+        "tl": "veyatsmách",
+        "nosso": 11.96,
+        "ouvido": 10.72
+      },
+      {
+        "verso": 4,
+        "hebrew": "פֻּרְקָנֵהּ",
+        "tl": "purkanêh",
+        "nosso": 13.06,
+        "ouvido": 11.54
+      },
+      {
+        "verso": 4,
+        "hebrew": "וִיקָרֵב",
+        "tl": "vikarev",
+        "nosso": 14.08,
+        "ouvido": 13.24
+      },
+      {
+        "verso": 4,
+        "hebrew": "מְשִׁיחֵהּ",
+        "tl": "meshichêh",
+        "nosso": 15.56,
+        "ouvido": 13.8
+      },
+      {
+        "verso": 5,
+        "hebrew": "בְּחַיֵּיכוֹן",
+        "tl": "bechayechon",
+        "nosso": 17.08,
+        "ouvido": 15.78
+      },
+      {
+        "verso": 5,
+        "hebrew": "וּבְיוֹמֵיכוֹן",
+        "tl": "uveyomechon",
+        "nosso": 18.5,
+        "ouvido": 16.66
+      },
+      {
+        "verso": 6,
+        "hebrew": "וּבְחַיֵּי",
+        "tl": "uvechayê",
+        "nosso": 19.44,
+        "ouvido": 18.62
+      },
+      {
+        "verso": 8,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 27.74,
+        "ouvido": 26.5
+      },
+      {
+        "verso": 15,
+        "hebrew": "וְעַל",
+        "tl": "veal",
+        "nosso": 69.39,
+        "ouvido": 70.76
+      },
+      {
+        "verso": 15,
+        "hebrew": "כָּל",
+        "tl": "kol",
+        "nosso": 70.26,
+        "ouvido": 70.88
+      },
+      {
+        "verso": 15,
+        "hebrew": "מָאן",
+        "tl": "man",
+        "nosso": 70.69,
+        "ouvido": 71.76
+      },
+      {
+        "verso": 15,
+        "hebrew": "בְאַתְרָא",
+        "tl": "veatrá",
+        "nosso": 76.72,
+        "ouvido": 75.38
+      },
+      {
+        "verso": 15,
+        "hebrew": "הָדֵין",
+        "tl": "haden",
+        "nosso": 77.88,
+        "ouvido": 76.58
+      },
+      {
+        "verso": 18,
+        "hebrew": "יְהֵא",
+        "tl": "yehê",
+        "nosso": 82.4,
+        "ouvido": 81.62
+      },
+      {
+        "verso": 18,
+        "hebrew": "שְׁלָמָא",
+        "tl": "shelamá",
+        "nosso": 83.94,
+        "ouvido": 85.3
+      },
+      {
+        "verso": 18,
+        "hebrew": "רַבָּא",
+        "tl": "raba",
+        "nosso": 85.1,
+        "ouvido": 85.88
+      },
+      {
+        "verso": 19,
+        "hebrew": "וְרַחֲמִין",
+        "tl": "verachamin",
+        "nosso": 88.02,
+        "ouvido": 89.3
+      },
+      {
+        "verso": 21,
+        "hebrew": "דִּי",
+        "tl": "di",
+        "nosso": 99.9,
+        "ouvido": 100.62
+      },
+      {
+        "verso": 21,
+        "hebrew": "וְאִמְרוּ",
+        "tl": "veimrú",
+        "nosso": 102.57,
+        "ouvido": 103.84
+      },
+      {
+        "verso": 21,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 103.72,
+        "ouvido": 104.68
+      },
+      {
+        "verso": 21,
+        "hebrew": "שְׁלָמָא",
+        "tl": "shelamá",
+        "nosso": 105.9,
+        "ouvido": 106.56
+      },
+      {
+        "verso": 21,
+        "hebrew": "רַבָּא",
+        "tl": "raba",
+        "nosso": 106.66,
+        "ouvido": 107.3
+      },
+      {
+        "verso": 21,
+        "hebrew": "מִן",
+        "tl": "min",
+        "nosso": 107.62,
+        "ouvido": 108.6
+      },
+      {
+        "verso": 21,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 130.44,
+        "ouvido": 129.82
+      }
+    ],
+    "sefaradi_yatom": [
+      {
+        "verso": 2,
+        "hebrew": "כִרְעוּתֵהּ",
+        "tl": "chir'utêh",
+        "nosso": 7.82,
+        "ouvido": 7.04
+      },
+      {
+        "verso": 13,
+        "hebrew": "דַּאֲמִירָן",
+        "tl": "dáamiran",
+        "nosso": 60.36,
+        "ouvido": 61.04
+      },
+      {
+        "verso": 13,
+        "hebrew": "בְּעָלְמָא",
+        "tl": "bealma",
+        "nosso": 61.1,
+        "ouvido": 62.06
+      },
+      {
+        "verso": 14,
+        "hebrew": "יְהֵא",
+        "tl": "Yehê",
+        "nosso": 65.24,
+        "ouvido": 64.54
+      },
+      {
+        "verso": 14,
+        "hebrew": "שְׁמַיָּא",
+        "tl": "shemayá",
+        "nosso": 69.06,
+        "ouvido": 67.9
+      },
+      {
+        "verso": 15,
+        "hebrew": "חַיִּים",
+        "tl": "chayim",
+        "nosso": 69.84,
+        "ouvido": 68.54
+      },
+      {
+        "verso": 15,
+        "hebrew": "וִישׁוּעָה",
+        "tl": "vishuá",
+        "nosso": 72.2,
+        "ouvido": 70.72
+      },
+      {
+        "verso": 15,
+        "hebrew": "וְנֶחָמָה",
+        "tl": "venechamá",
+        "nosso": 73.58,
+        "ouvido": 72.12
+      },
+      {
+        "verso": 15,
+        "hebrew": "וְשֵׁיזָבָא",
+        "tl": "veshezavá",
+        "nosso": 75.06,
+        "ouvido": 73.42
+      },
+      {
+        "verso": 16,
+        "hebrew": "וּרְפוּאָה",
+        "tl": "urfuá",
+        "nosso": 75.62,
+        "ouvido": 74.82
+      },
+      {
+        "verso": 17,
+        "hebrew": "עַמּוֹ",
+        "tl": "amô",
+        "nosso": 85.28,
+        "ouvido": 84.32
+      },
+      {
+        "verso": 17,
+        "hebrew": "יִשְׂרָאֵל",
+        "tl": "Israel",
+        "nosso": 85.9,
+        "ouvido": 84.94
+      }
+    ],
+    "sefaradi_derabanan": [
+      {
+        "verso": 11,
+        "hebrew": "לְעֵלָּא",
+        "tl": "leela",
+        "nosso": 50.74,
+        "ouvido": 50.02
+      },
+      {
+        "verso": 13,
+        "hebrew": "בְּעָלְמָא",
+        "tl": "bealma",
+        "nosso": 61,
+        "ouvido": 59.9
+      },
+      {
+        "verso": 13,
+        "hebrew": "וְאִמְרוּ",
+        "tl": "veimrú",
+        "nosso": 62.26,
+        "ouvido": 61.08
+      },
+      {
+        "verso": 13,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 63.94,
+        "ouvido": 61.88
+      },
+      {
+        "verso": 14,
+        "hebrew": "עַל",
+        "tl": "Al",
+        "nosso": 64.48,
+        "ouvido": 63.58
+      },
+      {
+        "verso": 14,
+        "hebrew": "יִשְׂרָאֵל",
+        "tl": "Israel",
+        "nosso": 65.06,
+        "ouvido": 64.36
+      },
+      {
+        "verso": 22,
+        "hebrew": "וּגְאֻלָּה",
+        "tl": "ug'ulá",
+        "nosso": 110.6,
+        "ouvido": 111.5
+      },
+      {
+        "verso": 22,
+        "hebrew": "וּסְלִיחָה",
+        "tl": "usslichá",
+        "nosso": 111.44,
+        "ouvido": 112.68
+      },
+      {
+        "verso": 22,
+        "hebrew": "וְכַפָּרָה",
+        "tl": "vechapará",
+        "nosso": 112.66,
+        "ouvido": 113.96
+      },
+      {
+        "verso": 23,
+        "hebrew": "וְרֶוַח",
+        "tl": "verêvach",
+        "nosso": 113.88,
+        "ouvido": 115.7
+      },
+      {
+        "verso": 23,
+        "hebrew": "וְהַצָּלָה",
+        "tl": "vehatsalá",
+        "nosso": 114.42,
+        "ouvido": 116.84
+      },
+      {
+        "verso": 23,
+        "hebrew": "לָנוּ",
+        "tl": "lanu",
+        "nosso": 115.62,
+        "ouvido": 117.66
+      },
+      {
+        "verso": 23,
+        "hebrew": "וּלְכָל",
+        "tl": "ulechol",
+        "nosso": 116.7,
+        "ouvido": 118.5
+      },
+      {
+        "verso": 23,
+        "hebrew": "עַמּוֹ",
+        "tl": "amô",
+        "nosso": 117.9,
+        "ouvido": 119.6
+      },
+      {
+        "verso": 23,
+        "hebrew": "יִשְׂרָאֵל",
+        "tl": "Israel",
+        "nosso": 118.86,
+        "ouvido": 120.18
+      },
+      {
+        "verso": 23,
+        "hebrew": "וְאִמְרוּ",
+        "tl": "veimrú",
+        "nosso": 120.28,
+        "ouvido": 121.76
+      },
+      {
+        "verso": 23,
+        "hebrew": "אָמֵן",
+        "tl": "amên",
+        "nosso": 121.76,
+        "ouvido": 122.56
+      },
+      {
+        "verso": 24,
+        "hebrew": "שָׁלוֹם",
+        "tl": "shalom",
+        "nosso": 124.64,
+        "ouvido": 125.58
+      },
+      {
+        "verso": 25,
+        "hebrew": "הוּא",
+        "tl": "hu",
+        "nosso": 126.62,
+        "ouvido": 128.1
+      },
+      {
+        "verso": 25,
+        "hebrew": "יַעֲשֶׂה",
+        "tl": "yaassê",
+        "nosso": 128.48,
+        "ouvido": 129.4
+      },
+      {
+        "verso": 25,
+        "hebrew": "שָׁלוֹם",
+        "tl": "shalom",
+        "nosso": 129.84,
+        "ouvido": 130.52
+      },
+      {
+        "verso": 25,
+        "hebrew": "וְעַל",
+        "tl": "veal",
+        "nosso": 131.64,
+        "ouvido": 132.26
+      },
+      {
+        "verso": 25,
+        "hebrew": "כָּל",
+        "tl": "kol",
+        "nosso": 132.78,
+        "ouvido": 133.44
+      }
+    ]
+  }
+}

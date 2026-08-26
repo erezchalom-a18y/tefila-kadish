@@ -1,0 +1,50 @@
+Sincronia — Sefaradi · Yatom (sefaradi_yatom)
+12 correção(ões) que eu ouvi e arrastei.
+
+verso 1, palavra 1 (Yitgadal)
+   estava: 0.48s
+   ponha em: 0.03s
+
+verso 3, palavra 1 (veyamlich)
+   estava: 8.18s
+   ponha em: 8.74s
+
+verso 4, palavra 3 (vikarev)
+   estava: 13.32s
+   ponha em: 13.70s
+
+verso 5, palavra 1 (bechayechon)
+   estava: 16.02s
+   ponha em: 16.50s
+
+verso 7, palavra 1 (baagalá)
+   estava: 23.28s
+   ponha em: 23.74s
+
+verso 8, palavra 3 (raba)
+   estava: 31.74s
+   ponha em: 32.16s
+
+verso 14, palavra 1 (Yehê)
+   estava: 64.54s
+   ponha em: 65.24s
+
+verso 15, palavra 1 (chayim)
+   estava: 68.56s
+   ponha em: 69.06s
+
+verso 19, palavra 1 (hu)
+   estava: 91.48s
+   ponha em: 91.87s
+
+verso 19, palavra 2 (berachamav)
+   estava: 91.98s
+   ponha em: 92.80s
+
+verso 19, palavra 3 (yaassê)
+   estava: 93.74s
+   ponha em: 94.28s
+
+verso 19, palavra 6 (veal)
+   estava: 96.88s
+   ponha em: 97.36s

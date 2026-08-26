@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Conferidor — Kadish</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <style>
 :root{--bg:#0f1115;--card:#191d25;--line:#2a3039;--txt:#e8eaed;--dim:#98a0ab;
       --warn:#fbbf24;--bad:#f87171;--acc:#60a5fa;--hi:#fde047}
@@ -168,7 +170,9 @@ async function baixarJson(id, v){
 async function carregar(){
   const id = sel.value, [n,t] = id.split('_'), v = 'v=' + Date.now();
   diag('carregando…');
-  a.src = `${BASE}/tefila-audio/${n}/${t}.ogg?${v}`;
+  // Safari nao toca Ogg Vorbis; ali usa o .m4a
+  const ext = document.createElement('audio').canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+  a.src = `${BASE}/tefila-audio/${n}/${t}.${ext}?${v}`;
   a.load();
   try { dados = await baixarJson(id, v); }
   catch(e) { dados = null; lista.innerHTML = '';

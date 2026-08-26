@@ -1,0 +1,146 @@
+Sincronia — Ashkenaz · Derabanan (ashkenaz_derabanan)
+36 correção(ões) que eu ouvi e arrastei.
+
+verso 1, palavra 2 (veyitkadash)
+   estava: 1.06s
+   ponha em: 1.64s
+
+verso 2, palavra 1 (bealma)
+   estava: 4.48s
+   ponha em: 5.06s
+
+verso 6, palavra 1 (baagalá)
+   estava: 19.68s
+   ponha em: 20.28s
+
+verso 6, palavra 3 (carív)
+   estava: 22.26s
+   ponha em: 22.78s
+
+verso 7, palavra 4 (mevarách)
+   estava: 28.90s
+   ponha em: 29.70s
+
+verso 7, palavra 6 (ul'almei)
+   estava: 31.74s
+   ponha em: 32.22s
+
+verso 7, palavra 7 (almayá)
+   estava: 32.87s
+   ponha em: 33.40s
+
+verso 8, palavra 1 (Yitbarêch)
+   estava: 34.38s
+   ponha em: 34.88s
+
+verso 8, palavra 2 (veyishtabach)
+   estava: 35.60s
+   ponha em: 36.04s
+
+verso 8, palavra 3 (veyitpaar)
+   estava: 37.00s
+   ponha em: 37.54s
+
+verso 10, palavra 4 (decudshá)
+   estava: 47.86s
+   ponha em: 47.60s
+
+verso 11, palavra 1 (leela)
+   estava: 50.28s
+   ponha em: 50.82s
+
+verso 12, palavra 3 (dáamiran)
+   estava: 59.18s
+   ponha em: 59.64s
+
+verso 13, palavra 1 (Al)
+   estava: 63.96s
+   ponha em: 64.98s
+
+verso 13, palavra 3 (veal)
+   estava: 66.14s
+   ponha em: 67.12s
+
+verso 14, palavra 1 (veal)
+   estava: 68.64s
+   ponha em: 69.16s
+
+verso 15, palavra 1 (veal)
+   estava: 75.32s
+   ponha em: 75.86s
+
+verso 15, palavra 2 (kol)
+   estava: 76.34s
+   ponha em: 76.86s
+
+verso 15, palavra 5 (beoraytá)
+   estava: 78.74s
+   ponha em: 79.36s
+
+verso 16, palavra 5 (vechol)
+   estava: 84.40s
+   ponha em: 84.82s
+
+verso 16, palavra 6 (atar)
+   estava: 84.94s
+   ponha em: 85.80s
+
+verso 16, palavra 7 (vaatár)
+   estava: 86.02s
+   ponha em: 86.72s
+
+verso 17, palavra 1 (yehê)
+   estava: 87.62s
+   ponha em: 88.24s
+
+verso 17, palavra 3 (ulechon)
+   estava: 89.46s
+   ponha em: 89.92s
+
+verso 17, palavra 4 (shelamá)
+   estava: 90.56s
+   ponha em: 91.02s
+
+verso 18, palavra 2 (vechisdá)
+   estava: 93.48s
+   ponha em: 94.04s
+
+verso 19, palavra 1 (vechayin)
+   estava: 96.24s
+   ponha em: 96.72s
+
+verso 20, palavra 2 (min)
+   estava: 102.92s
+   ponha em: 103.46s
+
+verso 20, palavra 4 (avuhon)
+   estava: 104.66s
+   ponha em: 105.26s
+
+verso 20, palavra 6 (vear-á)
+   estava: 108.36s
+   ponha em: 107.94s
+
+verso 21, palavra 1 (Yehê)
+   estava: 111.66s
+   ponha em: 112.20s
+
+verso 21, palavra 4 (min)
+   estava: 114.28s
+   ponha em: 114.84s
+
+verso 21, palavra 9 (kol)
+   estava: 119.32s
+   ponha em: 119.90s
+
+verso 22, palavra 3 (bimromav)
+   estava: 126.24s
+   ponha em: 126.68s
+
+verso 23, palavra 1 (hu)
+   estava: 127.34s
+   ponha em: 128.04s
+
+verso 23, palavra 4 (shalom)
+   estava: 131.08s
+   ponha em: 131.54s

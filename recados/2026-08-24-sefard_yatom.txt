@@ -1,0 +1,74 @@
+Sincronia — Sefard · Yatom (sefard_yatom)
+18 correção(ões) que eu ouvi e arrastei.
+
+verso 1, palavra 3 (shemê)
+   estava: 2.82s
+   ponha em: 3.42s
+
+verso 2, palavra 1 (bealma)
+   estava: 6.06s
+   ponha em: 5.64s
+
+verso 2, palavra 3 (verá)
+   estava: 7.26s
+   ponha em: 6.89s
+
+verso 2, palavra 4 (chir'utêh)
+   estava: 7.78s
+   ponha em: 7.26s
+
+verso 5, palavra 1 (bechayechon)
+   estava: 16.58s
+   ponha em: 17.06s
+
+verso 6, palavra 1 (uvechayê)
+   estava: 20.50s
+   ponha em: 20.28s
+
+verso 7, palavra 2 (uvizmán)
+   estava: 25.16s
+   ponha em: 25.74s
+
+verso 8, palavra 1 (Yehê)
+   estava: 29.24s
+   ponha em: 30.38s
+
+verso 8, palavra 3 (raba)
+   estava: 31.58s
+   ponha em: 32.08s
+
+verso 11, palavra 2 (veyithalal)
+   estava: 46.34s
+   ponha em: 46.84s
+
+verso 12, palavra 1 (leela)
+   estava: 51.64s
+   ponha em: 52.40s
+
+verso 12, palavra 3 (kol)
+   estava: 53.94s
+   ponha em: 54.44s
+
+verso 14, palavra 1 (Yehê)
+   estava: 64.56s
+   ponha em: 65.66s
+
+verso 14, palavra 4 (min)
+   estava: 67.94s
+   ponha em: 68.48s
+
+verso 15, palavra 1 (Ossê)
+   estava: 78.76s
+   ponha em: 78.50s
+
+verso 15, palavra 3 (bimromav)
+   estava: 80.28s
+   ponha em: 80.86s
+
+verso 16, palavra 5 (aleinu)
+   estava: 86.46s
+   ponha em: 86.90s
+
+verso 16, palavra 6 (veal)
+   estava: 87.50s
+   ponha em: 88.16s

@@ -1,10 +1,1173 @@
 {
   "_leia": "Ancoras confirmadas de ouvido pelo Erez. Cada uma diz: a palavra N do verso V comeca no bloco de voz que inicia em T. O alinhador global e obrigado a respeitar.",
   "ashkenaz_yatom": [
-    { "verso": 7, "palavra": 7, "inicio": 29.42, "nota": "almaya" },
-    { "verso": 8, "palavra": 1, "inicio": 30.96, "nota": "Yitbarach" },
-    { "verso": 11, "palavra": 5, "inicio": 49.62, "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s)" },
-    { "verso": 12, "palavra": 1, "inicio": 50.54, "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush" },
-    { "verso": 12, "palavra": 2, "inicio": 53, "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez" }
+    {
+      "verso": 5,
+      "palavra": 2,
+      "inicio": 15.38,
+      "nota": "dechol — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 5,
+      "palavra": 3,
+      "inicio": 16.62,
+      "nota": "beit — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 6,
+      "palavra": 3,
+      "inicio": 20.78,
+      "nota": "carív — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 7,
+      "palavra": 5,
+      "inicio": 27.48,
+      "nota": "lealám — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 7,
+      "palavra": 7,
+      "inicio": 29.44,
+      "nota": "almaya [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 29.42
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 30.98,
+      "nota": "Yitbarach [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 30.96
+    },
+    {
+      "verso": 9,
+      "palavra": 1,
+      "inicio": 35.04,
+      "nota": "veyitromam — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 10,
+      "palavra": 1,
+      "inicio": 39.2,
+      "nota": "veyitaleh — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 10,
+      "palavra": 3,
+      "inicio": 42.28,
+      "nota": "shemê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 11,
+      "palavra": 1,
+      "inicio": 45.84,
+      "nota": "leela — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 11,
+      "palavra": 5,
+      "inicio": 49.64,
+      "nota": "vshirata 49.6-50.5, cronometrado pelo Erez (termina aos 50s) [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 49.62
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 51.46,
+      "nota": "tushbechata — recado do Erez de 24/08 (sincronia.html, a fita continua). DESDIZ a ancora dele de 21/08, que punha em 50,56. Vendo a voz desenhada ele mudou de ideia, e o sinal esta do lado do novo: 50,56~50,64 e um bloco de 0,08s (a respiracao que ele mesmo tinha desconfiado de ser), e a voz da palavra abre aos 51,46. O Whisper tambem ouve tushbechata aos 51,42. A ancora velha esta em _substituidas."
+    },
+    {
+      "verso": 12,
+      "palavra": 2,
+      "inicio": 53.02,
+      "nota": "vnechamata comeca aos 53s, cronometrado pelo Erez [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 53
+    },
+    {
+      "verso": 12,
+      "palavra": 3,
+      "inicio": 55.18,
+      "nota": "dáamiran — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 13,
+      "palavra": 4,
+      "inicio": 62.5,
+      "nota": "min — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 13,
+      "palavra": 6,
+      "inicio": 64.3,
+      "nota": "vechayim — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 13,
+      "palavra": 11,
+      "inicio": 69.42,
+      "nota": "veimrú — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 72.06,
+      "nota": "Ossê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 4,
+      "inicio": 75.4,
+      "nota": "hu — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 8,
+      "inicio": 78.94,
+      "nota": "veal — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 11,
+      "inicio": 81.8,
+      "nota": "veimrú — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 12,
+      "inicio": 83.2,
+      "nota": "amên — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    }
+  ],
+  "chabad_yatom": [
+    {
+      "verso": 1,
+      "palavra": 2,
+      "inicio": 1.62,
+      "nota": "veyitkadash — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 2,
+      "palavra": 2,
+      "inicio": 5.86,
+      "nota": "di — recado do Erez (recados/2026-08-24-chabad_yatom.txt). caiu no silencio; encostei na voz de 5.86 (0.07s adiante).",
+      "inicio_que_ele_deu": 5.79
+    },
+    {
+      "verso": 2,
+      "palavra": 3,
+      "inicio": 6.01,
+      "nota": "verá — recado do Erez (recados/2026-08-24-chabad_yatom.txt). dentro do bloco 5.86~6.46 (palavra colada)."
+    },
+    {
+      "verso": 2,
+      "palavra": 4,
+      "inicio": 6.7,
+      "nota": "chir'utêh — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 4,
+      "palavra": 3,
+      "inicio": 12.6,
+      "nota": "vikarev — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 5,
+      "palavra": 2,
+      "inicio": 16.54,
+      "nota": "uveyomechon — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 6,
+      "palavra": 3,
+      "inicio": 20.16,
+      "nota": "Erez 21/08: 'vai muito rapido para o dechol, depois acerta'. beit comecava aos 19.42 e deixava dechol com 0.24s. O sinal tem inicio de voz em 20.16; com isso dechol fica com 0.96s e yisrael continua onde ja estava."
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 27.66,
+      "nota": "Yehe — o amen do verso 7 tinha 0,02s; o audio dele estava aqui (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 2,
+      "inicio": 28.52,
+      "nota": "sheme (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 3,
+      "inicio": 29.38,
+      "nota": "raba (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 4,
+      "inicio": 30.24,
+      "nota": "mevarach (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 5,
+      "inicio": 31.4,
+      "nota": "lealam (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 6,
+      "inicio": 32.48,
+      "nota": "ul'almei (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 8,
+      "palavra": 7,
+      "inicio": 33.46,
+      "nota": "almaya (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 10,
+      "palavra": 1,
+      "inicio": 38.34,
+      "nota": "veyitromam — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 11,
+      "palavra": 3,
+      "inicio": 44.22,
+      "nota": "shemê — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 3,
+      "inicio": 48.76,
+      "nota": "kol (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 12,
+      "palavra": 4,
+      "inicio": 49.16,
+      "nota": "birchata (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 12,
+      "palavra": 5,
+      "inicio": 50.54,
+      "nota": "veshiratá — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 13,
+      "palavra": 1,
+      "inicio": 52.3,
+      "nota": "tushbechata — o Erez ouviu que so pegava o ultimo A; o sinal poe a palavra inteira em 52.30-53.14 (Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 2,
+      "inicio": 53.76,
+      "nota": "venechamata (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 3,
+      "inicio": 55.72,
+      "nota": "daamiran (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 4,
+      "inicio": 56.6,
+      "nota": "bealma (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 5,
+      "inicio": 57.6,
+      "nota": "veimru (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 13,
+      "palavra": 6,
+      "inicio": 58.72,
+      "nota": "amen (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 59.76,
+      "nota": "Yehe (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 14,
+      "palavra": 4,
+      "inicio": 62.48,
+      "nota": "min — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 14,
+      "palavra": 5,
+      "inicio": 62.96,
+      "nota": "shemaya (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 14,
+      "palavra": 6,
+      "inicio": 64.2,
+      "nota": "vechayim — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 14,
+      "palavra": 10,
+      "inicio": 68.04,
+      "nota": "kol (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 73.16,
+      "nota": "Ossê — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 3,
+      "inicio": 74.94,
+      "nota": "bimromav — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 1,
+      "inicio": 76.04,
+      "nota": "hu — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 5,
+      "inicio": 79.68,
+      "nota": "veal — recado do Erez (recados/2026-08-24-chabad_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 6,
+      "inicio": 80.58,
+      "nota": "kol (sincronia.html, Erez 23/08)"
+    },
+    {
+      "verso": 16,
+      "palavra": 7,
+      "inicio": 81,
+      "nota": "Israel (sincronia.html, Erez 23/08)"
+    }
+  ],
+  "_substituidas": [
+    {
+      "nussach": "chabad_yatom",
+      "era": {
+        "verso": 8,
+        "palavra": 1,
+        "inicio": 26.24,
+        "nota": "Erez 21/08: 'no yehe sheme raba o audio comeca antes do texto'. O verso comecava aos 26.49 e a voz comeca aos 26.24 no sinal — 0.25s de atraso no destaque."
+      },
+      "substituida_por": {
+        "verso": 8,
+        "palavra": 1,
+        "inicio": 27.66
+      },
+      "porque": "Em 21/08 o Erez disse 'no yehe sheme raba o audio comeca antes do texto' e eu pus o comeco do verso 8 aos 26.24, onde o sinal via voz. Em 23/08, vendo o desenho no sincronia.html, ele viu que aquele som e o AMEN do verso 7 — que estava espremido em 0,02s (26.22 a 26.24). O Yehe comeca mesmo aos 27.66. A ancora de 21/08 nao era o ouvido dele errando: era eu escolhendo o bloco de voz errado para o que ele descreveu. Fica registrada porque nao se apaga reparo de ouvido em silencio."
+    },
+    {
+      "nussach": "chabad_yatom",
+      "era": {
+        "verso": 13,
+        "palavra": 1,
+        "inicio": 53.22,
+        "nota": "tushbechata — o audio dela estava dentro do verso 12 (sincronia.html, Erez 23/08)"
+      },
+      "substituida_por": {
+        "verso": 13,
+        "palavra": 1,
+        "inicio": 52.3
+      },
+      "porque": "Ele arrastou para 53.22 e depois ouviu: 'quando rodo o audio na linha 13 so da para ouvir o ultimo A do tushbechata'. O sinal explica: o bloco de voz 52.30-53.14 (0,84s) e a palavra inteira, e 53.22-53.40 (0,18s) e so a cauda dela. Ele arrastou para o bloco que DAVA PARA VER — o certo estava fora da janela que a pagina desenhava (folga de 0,6s antes do verso). A pagina foi consertada junto: agora mostra 1,5s de folga e acusa bloco de voz que nenhuma palavra cobre."
+    },
+    {
+      "nussach": "chabad_derabanan",
+      "era": {
+        "verso": 2,
+        "palavra": 1,
+        "inicio": 3.36,
+        "nota": "bealma — o Erez ouviu que o raba do verso 1 estava partido: 'so da para ouvir o ra do raba e no verso 2 comeca com raba'. Ele confirmou que o raba e UM bloco de voz so (2.70-3.28), entao o verso 1 acaba aos 3.36 e o bealma comeca ali. Erez 23/08."
+      },
+      "substituida_por": null,
+      "porque": "Eu criei esta ancora em 23/08 lendo errado a resposta do Erez. Ele disse que o raba e UM bloco de voz so, e eu entendi que era o bloco onde o raba ja estava (2.70-3.28) — entao so estiquei o fim ate 3.36 e preguei o bealma ali. O Whisper mostra que aquele bloco e o SHEME: ele ouve o bealma aos 4.50s, e nao aos 3.36. A ancora ficou pregando a palavra no lugar errado, e como ancora e restricao rigida, ela travava o realinhamento do Kadish inteiro. Sai porque nao e reparo de ouvido dele: e engano meu vestido de ancora. O que ele ouviu continua valendo e esta atendido pelo realinhamento — o raba passa a ser o bloco 3.36-3.76, que era o que ele descrevia quando disse 'no verso 2 comeca com raba'."
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 50.56,
+      "nota": "tushbechata comeca em 50.54 - o som que parecia respiracao era o tush [24/08: o sinal foi remedido com o limiar do sinal.py e este comeco de voz andou 0,02s. A decisao dele — QUAL comeco de voz — nao mudou; o numero exato sempre foi do sinal. O que ele deu fica em inicio_que_ele_deu.]",
+      "inicio_que_ele_deu": 50.54,
+      "nussach": "ashkenaz_yatom",
+      "por_que_saiu": "O proprio Erez a desdisse em 24/08, na fita continua: pos o tushbechata em 51,46. O bloco de 50,56 dura 0,08s — e a respiracao, nao a palavra."
+    }
+  ],
+  "chabad_derabanan": [
+    {
+      "verso": 2,
+      "palavra": 3,
+      "inicio": 5.56,
+      "nota": "verá — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 2,
+      "palavra": 4,
+      "inicio": 5.86,
+      "nota": "chir'utêh — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 4,
+      "palavra": 2,
+      "inicio": 10.38,
+      "nota": "purkanêh — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 5,
+      "palavra": 1,
+      "inicio": 13.66,
+      "nota": "bechayechon — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 7,
+      "palavra": 3,
+      "inicio": 21.86,
+      "nota": "carív — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 9,
+      "palavra": 1,
+      "inicio": 31.14,
+      "nota": "Yitbarêch — recado do Erez de 24/08 (sincronia.html, a fita continua). Ele pôs em 31,06, que cai no silêncio; o começo de voz é 31,14, a 0,08s — um triz além do encosto automático de 0,06 da página. Vale a regra de sempre: o dedo dele aponta, o sinal dá o número. Com isto o \"Yit-\" (bloco 31,14~31,32) deixa de ficar no verso 8.",
+      "inicio_que_ele_deu": 31.06
+    },
+    {
+      "verso": 10,
+      "palavra": 2,
+      "inicio": 35.72,
+      "nota": "veyitnasse — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 44.5,
+      "nota": "leela — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 55.7,
+      "nota": "Al — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 59.2,
+      "nota": "veal — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 16,
+      "palavra": 1,
+      "inicio": 65.4,
+      "nota": "veal — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 16,
+      "palavra": 2,
+      "inicio": 66.6,
+      "nota": "kol — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 17,
+      "palavra": 1,
+      "inicio": 70.72,
+      "nota": "di — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 18,
+      "palavra": 1,
+      "inicio": 77.92,
+      "nota": "yehê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 20,
+      "palavra": 1,
+      "inicio": 86.1,
+      "nota": "vechayin — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 22,
+      "palavra": 1,
+      "inicio": 98.98,
+      "nota": "Yehê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 23,
+      "palavra": 1,
+      "inicio": 110.54,
+      "nota": "Ossê — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    },
+    {
+      "verso": 24,
+      "palavra": 9,
+      "inicio": 121.04,
+      "nota": "amên — recado do Erez de 24/08 (sincronia.html, a fita continua)"
+    }
+  ],
+  "ashkenaz_derabanan": [
+    {
+      "verso": 1,
+      "palavra": 2,
+      "inicio": 1.64,
+      "nota": "veyitkadash — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 2,
+      "palavra": 1,
+      "inicio": 5.06,
+      "nota": "bealma — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 6,
+      "palavra": 1,
+      "inicio": 20.28,
+      "nota": "baagalá — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 6,
+      "palavra": 3,
+      "inicio": 22.78,
+      "nota": "carív — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 7,
+      "palavra": 4,
+      "inicio": 29.7,
+      "nota": "mevarách — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 7,
+      "palavra": 6,
+      "inicio": 32.22,
+      "nota": "ul'almei — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 7,
+      "palavra": 7,
+      "inicio": 33.4,
+      "nota": "almayá — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 34.88,
+      "nota": "Yitbarêch — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 2,
+      "inicio": 36.04,
+      "nota": "veyishtabach — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 3,
+      "inicio": 37.54,
+      "nota": "veyitpaar — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 10,
+      "palavra": 4,
+      "inicio": 47.6,
+      "nota": "decudshá — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 11,
+      "palavra": 1,
+      "inicio": 50.82,
+      "nota": "leela — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 3,
+      "inicio": 59.64,
+      "nota": "dáamiran — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 13,
+      "palavra": 1,
+      "inicio": 64.98,
+      "nota": "Al — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 13,
+      "palavra": 3,
+      "inicio": 67.12,
+      "nota": "veal — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 69.16,
+      "nota": "veal — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 75.86,
+      "nota": "veal — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 2,
+      "inicio": 76.86,
+      "nota": "kol — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 5,
+      "inicio": 79.36,
+      "nota": "beoraytá — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 5,
+      "inicio": 84.82,
+      "nota": "vechol — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 6,
+      "inicio": 85.8,
+      "nota": "atar — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 7,
+      "inicio": 86.72,
+      "nota": "vaatár — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 17,
+      "palavra": 1,
+      "inicio": 88.24,
+      "nota": "yehê — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 17,
+      "palavra": 3,
+      "inicio": 89.92,
+      "nota": "ulechon — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 17,
+      "palavra": 4,
+      "inicio": 91.02,
+      "nota": "shelamá — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 18,
+      "palavra": 2,
+      "inicio": 94.04,
+      "nota": "vechisdá — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 19,
+      "palavra": 1,
+      "inicio": 96.72,
+      "nota": "vechayin — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 20,
+      "palavra": 2,
+      "inicio": 103.46,
+      "nota": "min — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 20,
+      "palavra": 4,
+      "inicio": 105.26,
+      "nota": "avuhon — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 20,
+      "palavra": 6,
+      "inicio": 107.94,
+      "nota": "vear-á — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 21,
+      "palavra": 1,
+      "inicio": 112.2,
+      "nota": "Yehê — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 21,
+      "palavra": 4,
+      "inicio": 114.84,
+      "nota": "min — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 21,
+      "palavra": 9,
+      "inicio": 119.9,
+      "nota": "kol — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 22,
+      "palavra": 3,
+      "inicio": 126.68,
+      "nota": "bimromav — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 23,
+      "palavra": 1,
+      "inicio": 128.04,
+      "nota": "hu — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 23,
+      "palavra": 4,
+      "inicio": 131.54,
+      "nota": "shalom — recado do Erez (recados/2026-08-24-ashkenaz_derabanan.txt). em cima do comeco de voz."
+    }
+  ],
+  "sefard_yatom": [
+    {
+      "verso": 1,
+      "palavra": 3,
+      "inicio": 3.42,
+      "nota": "shemê — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 2,
+      "palavra": 1,
+      "inicio": 5.64,
+      "nota": "bealma — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 2,
+      "palavra": 3,
+      "inicio": 6.89,
+      "nota": "verá — recado do Erez (recados/2026-08-24-sefard_yatom.txt). dentro do bloco 6.56~7.22 (palavra colada)."
+    },
+    {
+      "verso": 2,
+      "palavra": 4,
+      "inicio": 7.26,
+      "nota": "chir'utêh — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 5,
+      "palavra": 1,
+      "inicio": 17.06,
+      "nota": "bechayechon — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 6,
+      "palavra": 1,
+      "inicio": 20.28,
+      "nota": "uvechayê — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 7,
+      "palavra": 2,
+      "inicio": 25.74,
+      "nota": "uvizmán — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 30.38,
+      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 3,
+      "inicio": 32.08,
+      "nota": "raba — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 11,
+      "palavra": 2,
+      "inicio": 46.84,
+      "nota": "veyithalal — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 52.4,
+      "nota": "leela — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 3,
+      "inicio": 54.44,
+      "nota": "kol — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 65.66,
+      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 14,
+      "palavra": 4,
+      "inicio": 68.48,
+      "nota": "min — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 78.5,
+      "nota": "Ossê — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 3,
+      "inicio": 80.86,
+      "nota": "bimromav — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 5,
+      "inicio": 86.9,
+      "nota": "aleinu — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 6,
+      "inicio": 88.16,
+      "nota": "veal — recado do Erez (recados/2026-08-24-sefard_yatom.txt). em cima do comeco de voz."
+    }
+  ],
+  "sefard_derabanan": [
+    {
+      "verso": 4,
+      "palavra": 3,
+      "inicio": 13.1,
+      "nota": "vikarev — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 5,
+      "palavra": 1,
+      "inicio": 15.58,
+      "nota": "bechayechon — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 7,
+      "palavra": 2,
+      "inicio": 23.36,
+      "nota": "uvizmán — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 3,
+      "inicio": 29.2,
+      "nota": "raba — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 9,
+      "palavra": 1,
+      "inicio": 34.22,
+      "nota": "Yitbarêch — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 2,
+      "inicio": 49.34,
+      "nota": "min — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 63.66,
+      "nota": "veal — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 3,
+      "inicio": 65.88,
+      "nota": "veal — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 1,
+      "inicio": 70.28,
+      "nota": "veal — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 16,
+      "palavra": 4,
+      "inicio": 72.7,
+      "nota": "daaskin — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 17,
+      "palavra": 1,
+      "inicio": 74.88,
+      "nota": "di — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 18,
+      "palavra": 1,
+      "inicio": 82.42,
+      "nota": "yehê — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 19,
+      "palavra": 2,
+      "inicio": 88.04,
+      "nota": "vechisdá — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 20,
+      "palavra": 1,
+      "inicio": 90.66,
+      "nota": "vechayin — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 20,
+      "palavra": 4,
+      "inicio": 94.44,
+      "nota": "revichei — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 21,
+      "palavra": 1,
+      "inicio": 95.72,
+      "nota": "ufurkaná — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 21,
+      "palavra": 5,
+      "inicio": 99.92,
+      "nota": "di — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 21,
+      "palavra": 7,
+      "inicio": 102.02,
+      "nota": "vear-á — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 22,
+      "palavra": 1,
+      "inicio": 105.92,
+      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 23,
+      "palavra": 1,
+      "inicio": 117.96,
+      "nota": "Ossê — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 23,
+      "palavra": 3,
+      "inicio": 119.94,
+      "nota": "bimromav — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 24,
+      "palavra": 4,
+      "inicio": 124.14,
+      "nota": "shalom — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 24,
+      "palavra": 9,
+      "inicio": 129.06,
+      "nota": "veimrú — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 24,
+      "palavra": 10,
+      "inicio": 130.46,
+      "nota": "amên — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
+    }
+  ],
+  "sefaradi_yatom": [
+    {
+      "verso": 1,
+      "palavra": 1,
+      "inicio": 0.16,
+      "nota": "Yitgadal — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). Ele pos em 0.03, antes de qualquer voz; a primeira voz do arquivo abre aos 0.16 e e ali que a palavra pode comecar.",
+      "inicio_que_ele_deu": 0.03
+    },
+    {
+      "verso": 3,
+      "palavra": 1,
+      "inicio": 8.74,
+      "nota": "veyamlich — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 4,
+      "palavra": 3,
+      "inicio": 13.78,
+      "nota": "vikarev — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). caiu no silencio; encostei na voz de 13.78 (0.08s adiante).",
+      "inicio_que_ele_deu": 13.7
+    },
+    {
+      "verso": 5,
+      "palavra": 1,
+      "inicio": 16.5,
+      "nota": "bechayechon — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 7,
+      "palavra": 1,
+      "inicio": 23.74,
+      "nota": "baagalá — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 3,
+      "inicio": 32.16,
+      "nota": "raba — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 14,
+      "palavra": 1,
+      "inicio": 65.24,
+      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 15,
+      "palavra": 1,
+      "inicio": 69.06,
+      "nota": "chayim — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 19,
+      "palavra": 1,
+      "inicio": 91.98,
+      "nota": "hu — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). caiu no silencio; encostei na voz de 91.98 (0.11s adiante).",
+      "inicio_que_ele_deu": 91.87
+    },
+    {
+      "verso": 19,
+      "palavra": 2,
+      "inicio": 92.8,
+      "nota": "berachamav — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 19,
+      "palavra": 3,
+      "inicio": 94.28,
+      "nota": "yaassê — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 19,
+      "palavra": 6,
+      "inicio": 97.36,
+      "nota": "veal — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+    }
+  ],
+  "sefaradi_derabanan": [
+    {
+      "verso": 2,
+      "palavra": 1,
+      "inicio": 4.58,
+      "nota": "bealma — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 8,
+      "palavra": 1,
+      "inicio": 27.88,
+      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 11,
+      "palavra": 1,
+      "inicio": 43.98,
+      "nota": "veyitaleh — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). caiu no silencio; encostei na voz de 43.98 (0.07s adiante).",
+      "inicio_que_ele_deu": 43.91
+    },
+    {
+      "verso": 11,
+      "palavra": 2,
+      "inicio": 45.26,
+      "nota": "veyithalal — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 1,
+      "inicio": 50.74,
+      "nota": "leela — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 12,
+      "palavra": 3,
+      "inicio": 52.58,
+      "nota": "kol — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 17,
+      "palavra": 1,
+      "inicio": 77.9,
+      "nota": "di — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 17,
+      "palavra": 2,
+      "inicio": 78.37,
+      "nota": "veatrá — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). dentro do bloco 77.90~78.54 (palavra colada)."
+    },
+    {
+      "verso": 18,
+      "palavra": 5,
+      "inicio": 88.64,
+      "nota": "chiná — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 18,
+      "palavra": 6,
+      "inicio": 89.74,
+      "nota": "vechisdá — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 19,
+      "palavra": 5,
+      "inicio": 95.84,
+      "nota": "vear-á — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 23,
+      "palavra": 8,
+      "inicio": 123.04,
+      "nota": "amên — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 24,
+      "palavra": 1,
+      "inicio": 124.64,
+      "nota": "Ossê — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 24,
+      "palavra": 3,
+      "inicio": 126.62,
+      "nota": "bimromav — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 25,
+      "palavra": 1,
+      "inicio": 127.88,
+      "nota": "hu — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 25,
+      "palavra": 6,
+      "inicio": 132.78,
+      "nota": "veal — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+    }
   ]
 }

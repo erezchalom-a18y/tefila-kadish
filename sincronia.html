@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sincronia — ver a voz · Kadish</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+  :root{--fundo:#f4ede0;--cartao:#fbf7ef;--linha:#ddd3c0;--txt:#2a1f15;--fraco:#6b6153;
+        --brass:#8b6a3e;--ok:#2f6b3a;--erro:#8a3a1a;--voz:#cfe0cf}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:17px/1.5 Georgia,"Times New Roman",serif;padding-bottom:110px}
+  header{padding:10px 14px;border-bottom:1px solid var(--linha);position:sticky;top:0;
+         background:var(--fundo);z-index:10}
+  .topo{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  a.voltar{color:var(--brass);text-decoration:none;white-space:nowrap;font-size:16px}
+  h1{font-size:18px;margin:0;font-weight:600}
+  select,button{font:inherit;font-size:16px;border:1px solid var(--linha);border-radius:9px;
+       background:var(--cartao);color:var(--txt);min-height:40px;padding:7px 11px}
+  button{cursor:pointer}
+  button.forte{background:var(--brass);color:#fff;border-color:var(--brass)}
+  button:disabled{opacity:.4}
+  main{padding:14px}
+  .nota{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+        padding:13px 15px;margin-bottom:14px;font-size:15px;color:var(--fraco)}
+  .verso{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+         padding:13px 15px;margin-bottom:16px}
+  .cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+       font-size:13px;color:var(--fraco);margin-bottom:6px}
+  .heb{font-size:24px;direction:rtl;text-align:right;line-height:1.7;margin-bottom:4px}
+  .heb .w{padding:1px 3px;border-radius:5px;cursor:pointer}
+  .heb .w.mal{background:#f6ddd0}
+  .heb .w.sel{background:var(--brass);color:#fff}
+  .tl{font-size:14px;color:var(--fraco);margin-bottom:9px;word-spacing:3px}
+  .tl .w{padding:1px 3px;border-radius:5px;cursor:pointer}
+  .tl .w.mal{background:#f6ddd0;color:var(--erro)}
+  .tl .w.sel{background:var(--brass);color:#fff}
+  .rolo{overflow-x:auto;overflow-y:hidden;position:relative;border-radius:9px;
+        background:#fff;border:1px solid var(--linha);-webkit-overflow-scrolling:touch}
+  .rolo canvas{width:auto;height:200px;display:block;border:0;border-radius:0}
+  .agulha{position:absolute;top:0;bottom:0;width:2px;background:#1f6feb;pointer-events:none;display:none}
+  .zoom{display:flex;gap:8px;align-items:center;margin:8px 0}
+  canvas{width:100%;height:132px;display:block;border-radius:9px;background:#fff;
+         border:1px solid var(--linha);touch-action:none}
+  .diag{margin-top:9px;font-size:15px}
+  .diag div{margin:5px 0}
+  .diag b{color:var(--erro)}
+  .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .rodape{position:fixed;left:0;right:0;bottom:0;background:var(--cartao);
+          border-top:1px solid var(--linha);padding:10px 14px;display:flex;gap:9px;
+          align-items:center;justify-content:space-between;flex-wrap:wrap;
+          padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .saida{width:100%;height:300px;font:14px/1.45 ui-monospace,Menlo,monospace;
+         border:1px solid var(--linha);border-radius:10px;padding:11px;background:#fff;
+         color:var(--txt)}
+  .legenda{font-size:13px;color:var(--fraco);margin-top:6px}
+  .legenda i{display:inline-block;width:11px;height:11px;border-radius:3px;
+             background:var(--voz);vertical-align:-1px;margin-right:3px}
+</style>
+</head>
+<body>
+<header>
+  <div class="topo">
+    <a class="voltar" href="./">‹ voltar</a>
+    <h1>Sincronia</h1>
+    <select id="alvo"></select>
+    <button id="soFalta" title="a lista de cima: só o suspeito, ou todas as palavras">só o suspeito: sim</button>
+  </div>
+  <div id="andamento" style="font-size:13px;color:var(--fraco);margin-top:5px"></div>
+</header>
+
+<main id="corpo"><p style="color:var(--fraco)">carregando…</p></main>
+
+<div class="rodape">
+  <span id="contagem" style="font-size:14px;color:var(--fraco)"></span>
+  <span>
+    <button id="devagar">meia velocidade: não</button>
+    <button id="gerar" class="forte">Gerar o recado</button>
+  </span>
+</div>
+
+<audio id="au" preload="metadata"></audio>
+
+<script>
+/**
+ * sincronia.html — VER a voz do rabino com as palavras em cima.
+ *
+ * O Erez pediu isto em 23/08, com estas palavras: "queria um sistema mais
+ * facil, pois dificil saber o motivo das diferencas de sincronia". O
+ * conferidor toca; esta pagina MOSTRA. O motivo de quase toda diferenca e um
+ * destes quatro, e os quatro ficam obvios no desenho:
+ *   1. a palavra caiu dentro de um silencio (o rabino nao estava falando ali);
+ *   2. varias palavras foram espremidas num bloco de voz so (ele disse
+ *      coladas, e o corte entre elas foi chute);
+ *   3. a palavra esta perto de um comeco de voz, mas nao em cima dele;
+ *   4. uma palavra ENGOLE a seguinte: tem, dentro dela, um silencio grande e
+ *      depois mais voz. Foi o caso do tushbechata, e este e o unico dos quatro
+ *      que a MEDIDA nao ve — ela olha o comeco de cada palavra, e o comeco do
+ *      veshirata estava certo; o que estava errado era o fim.
+ *
+ * A pagina SO LE. Nao escreve em sync/*.json, ancoras.json nem cortes.json —
+ * ela monta um recado para o Erez copiar e mandar, e a ancora entra depois,
+ * por script, com prova. A regra 1 continua de pe: ancora e reparo de ouvido
+ * DELE, e o sinal so diz o numero exato.
+ *
+ * O desenho vem pronto de sinal/<alvo>.json (gerar-envelope.py). Decodificar o
+ * audio no navegador seria lento no iPad e gastaria dados a toa.
+ */
+const NUSSACH = { ashkenaz:'Ashkenaz', chabad:'Chabad', sefard:'Sefard', sefaradi:'Sefaradi' };
+const TIPO = { yatom:'Yatom', derabanan: 'Derabanan' };
+const ALVOS = Object.keys(NUSSACH).flatMap(n => Object.keys(TIPO).map(t => `${n}_${t}`));
+
+// Quanto o comeco de uma palavra pode estar longe do comeco de voz mais
+// proximo antes de virar suspeita. Mesmos numeros do sinal.py, de proposito:
+// se a pagina e a medida discordarem, uma das duas esta mentindo.
+const TOLERANCIA = 0.15;
+const SUSPEITO   = 0.30;
+
+// MARCA DOS DADOS. Muda toda vez que eu mexo em sync/ ou em sinal/.
+//
+// Por que existe: o Erez recarregou a pagina e continuou vendo o raba partido.
+// A pagina era a nova — a conta batia com o arquivo novo — mas o JSON era o
+// velho: o GitHub Pages guarda os arquivos num cache que o Ctrl+Shift+R do
+// navegador nao fura. O endereco pedido passa a levar ?d=<marca>, entao um
+// dado novo e um ENDERECO novo, e nem o navegador nem o cache do GitHub tem
+// como devolver o de ontem.
+//
+// A marca aparece na tela de proposito: se o que ele ve e o que eu digo aqui
+// nao forem iguais, e cache, e nao defeito de sincronia.
+const DADOS = '25/08-d';
+
+const el = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const seg = t => `${t.toFixed(2)}s`;
+
+const au = el('au');
+const alvoSel = el('alvo');
+alvoSel.innerHTML = ALVOS.map(a => {
+  const [n, t] = a.split('_');
+  return `<option value="${a}">${NUSSACH[n]} · ${TIPO[t]}</option>`;
+}).join('');
+alvoSel.value = localStorage.getItem('sinc_alvo') || 'chabad_yatom';
+if (!ALVOS.includes(alvoSel.value)) alvoSel.value = 'chabad_yatom';
+
+let sync = null, desenho = null, mexidas = {}, sel = null;
+let soFalta = localStorage.getItem('sinc_sofalta') !== 'nao';
+let devagar = false;
+
+const chaveMex = () => 'sinc_mex_' + alvoSel.value;
+const lerMex = () => { try { return JSON.parse(localStorage.getItem(chaveMex()) || '{}'); }
+                       catch (e) { return {}; } };
+const gravarMex = () => { try { localStorage.setItem(chaveMex(), JSON.stringify(mexidas)); } catch (e) {} };
+
+// Quanto o arrasto tem que andar para CONTAR como correcao. O risco encosta
+// sozinho no comeco de voz mais proximo quando chega a menos de 0.06s; sem
+// esta regra, so encostar o dedo num risco ja "corrigia" a palavra em 0,02s.
+// Foi o que aconteceu na primeira rodada do Erez: das 71 correcoes que ele
+// mandou, 49 eram de 0,02s — a pagina encostando, nao o ouvido dele. Ninguem
+// escuta 0,02s, e cada uma dessas viraria uma ancora a toa num arquivo que e
+// so o ouvido dele.
+const MINIMO = 0.06;
+
+// o comeco valendo agora: o que ele arrastou, ou o do arquivo
+const inicio = p => {
+  const m = mexidas[`${p.verso}|${p.i}`];
+  return m === undefined ? p.start : m;
+};
+// MEXIDA e a que esta LONGE do arquivo, nao a que tem uma chave guardada.
+// Sem isso, o que ficou no aparelho de uma sessao anterior continua contando
+// como correcao mesmo depois de eu ter aplicado a ancora — e o arquivo ja
+// estar com aquele numero. O Erez mandou um recado inteiro assim: 70 linhas
+// dizendo "estava 27.66s, ponha em 27.66s".
+// O FIM de uma palavra e o COMECO da seguinte. Nao existe fim proprio: as
+// palavras se tocam de ponta a ponta, no arquivo e no aplicar-ancoras.py, que
+// encosta a fronteira vizinha em cada ancora. Sem isto, arrastar o comeco de
+// uma palavra deixava o fim parado e nascia bobagem: o Erez viu "shemê nao tem
+// voz nenhuma: de 2.70s a 2.70s" e "bealma: de 4.38s a 4.36s" — comeco depois
+// do fim.
+let ordem = [];
+function fim(p) {
+  const s = ordem[p.ord + 1];
+  return s ? inicio(s) : p.end;
+}
+
+const mexida = p => {
+  const m = mexidas[`${p.verso}|${p.i}`];
+  return m !== undefined && Math.abs(m - p.start) > MINIMO;
+};
+
+// Limpa o que sobrou no aparelho e ja nao diz nada: ou porque a ancora foi
+// aplicada e o arquivo alcancou o numero, ou porque era um encostao de 0,02s.
+function limparVelharia() {
+  let tirou = 0;
+  for (const p of palavras()) {
+    const k = `${p.verso}|${p.i}`;
+    if (mexidas[k] !== undefined && Math.abs(mexidas[k] - p.start) <= MINIMO) {
+      delete mexidas[k]; tirou++;
+    }
+  }
+  if (tirou) gravarMex();
+  return tirou;
+}
+
+// Grava so o que anda o bastante; se voltou para perto do original, apaga.
+// A trava contra passar por cima do vizinho mora AQUI, e nao no arrasto, para
+// valer tambem no "empurrar o verso" — que sem ela punha duas palavras no
+// mesmo segundo (vi 2|1 e 2|2 as duas em 6.70s). Os tempos tem que subir
+// sempre; o aplicar-ancoras.py reprova se nao subirem.
+function pôr(p, t) {
+  const k = `${p.verso}|${p.i}`;
+  const ant = ordem[p.ord - 1], dep = ordem[p.ord + 1];
+  if (ant) t = Math.max(t, inicio(ant) + 0.10);
+  if (dep) t = Math.min(t, inicio(dep) - 0.10);
+  if (Math.abs(t - p.start) <= MINIMO) delete mexidas[k];
+  else mexidas[k] = Math.round(t * 1000) / 1000;
+}
+
+// Empurrar o VERSO INTEIRO um bloco de voz para frente ou para tras.
+// Existe porque o Erez precisou de 7 arrastos para dizer uma coisa so — "este
+// verso todo esta um bloco adiantado". Um gesto, um recado.
+// Anda pelo comeco dos BLOCOS verdes, nao pela lista de inicios de voz: os
+// inicios sao mais densos que as palavras (109 para 80 no chabad_yatom), e
+// "o proximo inicio" as vezes esta a 0,03s — que nao move nada e ainda cai
+// abaixo do MINIMO, entao a palavra nem contava. O bloco verde e o que ele ve.
+function empurrarVerso(n, passos) {
+  // Para FRENTE, mexer da ultima para a primeira; para TRAS, da primeira para a
+  // ultima. Na ordem errada cada palavra trava na vizinha que ainda nao andou.
+  const ps = diagnosticar().filter(p => p.verso === n);
+  if (passos > 0) ps.reverse();
+  const grade = desenho.blocos.map(b => b[0]);
+  for (const p of ps) {
+    let t = inicio(p);
+    for (let k = 0; k < Math.abs(passos); k++) {
+      const prox = passos > 0 ? grade.find(x => x > t + MINIMO)
+                              : [...grade].reverse().find(x => x < t - MINIMO);
+      if (prox === undefined) break;
+      t = prox;
+    }
+    pôr(p, t);
+  }
+  gravarMex();
+}
+
+// ---------- ler os dados ----------
+function palavras() {
+  let n = 0;
+  return sync.versos.flatMap(v => (v.palavras || []).map(p => ({
+    verso: v.n, i: p.i, hebrew: p.hebrew, ord: n++,
+    tl: p.transliteration_pt || '', start: p.start, end: p.end,
+  })));
+}
+
+// AS TRES PISTAS QUE A MEDIDA NAO VE.
+//
+// O medir-desvio.py olha o COMECO de cada palavra e pergunta se ele cai num
+// comeco de voz. Isso deixa passar tres coisas, e o Erez achou as tres de
+// ouvido antes de eu ter detector nenhum:
+//
+//  1. CORTADA — o fim da palavra cai no MEIO de um bloco de voz. A palavra
+//     esta partida ao meio, e ele ouve so um pedaco. Ele descreveu isso tres
+//     vezes: "so da para ouvir o ultimo A do tushbechata", "so da para ouvir o
+//     'ra' do raba", "o chirute para no chir'u".
+//  2. MUDA — nao ha voz nenhuma dentro da palavra. O rabino nao esta falando
+//     durante ela.
+//  3. ENGOLINDO — dentro da palavra ha um silencio grande e DEPOIS mais voz:
+//     ela esta engolindo a palavra seguinte. Foi o caso do veshirata.
+//
+// Nenhuma das tres entra na conta de "para olhar", que continua sendo a mesma
+// da medida — a pagina nunca pode acusar mais que o sinal. Elas aparecem numa
+// conta propria.
+//
+// O CONSERTO DE 24/08 — as tres perguntavam a coisa errada
+//
+// Enquanto o alinhador empurrava toda palavra para um COMECO de bloco, as tres
+// funcionavam. So que era esse empurrao o defeito: o rabino diz "Yehe sheme"
+// num folego so, o sinal ve UM bloco, e forcar as duas a comecar num comeco de
+// bloco escorregava o Kadish inteiro uma palavra — era por isso que ele ouvia
+// o yishtabach na linha 8 e via na 9.
+//
+// Corrigido o alinhador, palavra colada passou a comecar no MEIO do bloco (que
+// e onde ela soa mesmo), e as tres perguntas viraram armadilha:
+//
+//   CORTADA olhava o fim de CADA PALAVRA. Com duas palavras num bloco so, o fim
+//   da primeira cai dentro da voz por construcao — ela acusava todo par colado.
+//   Mas o que o Erez toca no app e o VERSO, e a queixa dele sempre foi de
+//   verso: "o raba ainda para no meio", "o chirute para no chir'u". Agora ela
+//   olha o fim do VERSO, que e onde o corte se ouve.
+//
+//   MUDA perguntava se o MEIO de algum bloco caia dentro da palavra. Palavra
+//   curta dentro de bloco grande nao contem o meio dele — e era dada como muda
+//   tendo voz do comeco ao fim. Agora ela pergunta: ha algum pedaco de voz
+//   dentro dela?
+//
+//   ENGOLINDO contava como voz o fio de dois centesimos que sobra do bloco da
+//   vizinha colada, e transformava a articulacao silaba-a-silaba do rabino em
+//   "silencio". So conta pedaco de voz de verdade (VOZ_MINIMA).
+//
+// As mesmas tres contas estao no checar-sincronia.mjs, escritas igual. Se
+// sairem de sincronia, a pagina volta a mentir para ele.
+const SILENCIO_GRANDE = 0.35;
+const FOLGA_CORTE = 0.08;      // 2 quadros: nao acusar por um triz
+const VOZ_MINIMA = 0.10;       // menos que isto e fio da vizinha, nao voz dela
+// No fio final do bloco a voz ja e da palavra de tras morrendo. O corte nao e
+// fixo: muitos blocos deste rabino sao mais curtos que 0,10s, e um numero fixo
+// condenaria o bloco inteiro. Vale o menor entre SOBRA e metade do bloco.
+// Mesma regra do checar-sincronia.mjs e do realinhador.
+const SOBRA = 0.10;
+
+// os pedacos de voz que caem DENTRO da palavra, recortados nela
+function vozDentro(p) {
+  const a0 = inicio(p), z0 = fim(p);
+  return desenho.blocos
+    .filter(([a, z]) => z > a0 && a < z0)
+    .map(([a, z]) => [Math.max(a, a0), Math.min(z, z0)])
+    .filter(([a, z]) => z - a > 0.01);
+}
+// a palavra comeca com a voz ja correndo? entao esta colada na de tras
+function coladaNaDeTras(p) {
+  const t = inicio(p);
+  return desenho.blocos.some(([a, z]) => t >= a && z - t > Math.min(SOBRA, (z - a) / 2));
+}
+// cortada: o fim do VERSO no meio da voz — e o verso que ele toca
+function cortada(p) {
+  const v = sync.versos.find(x => x.n === p.verso);
+  if (!v || v.palavras[v.palavras.length - 1].i !== p.i) return null;
+  const f = fim(p);
+  return desenho.blocos.find(([a, z]) => f > a + FOLGA_CORTE && f < z - FOLGA_CORTE) || null;
+}
+function muda(p) { return vozDentro(p).length === 0; }
+function engolindo(p) {
+  const reais = vozDentro(p).filter(([a, z]) => z - a >= VOZ_MINIMA);
+  for (let k = 1; k < reais.length; k++) {
+    if (reais[k][0] - reais[k - 1][1] >= SILENCIO_GRANDE) return reais[k];
+  }
+  return null;
+}
+const partida = p => cortada(p) || muda(p) || engolindo(p);
+
+// ---------- o motivo ----------
+// Para cada palavra, a razao em portugues simples de por que ela esta suspeita.
+function diagnosticar() {
+  const ps = palavras();
+  ordem = ps;
+  const inicios = desenho.inicios_de_voz;
+  const blocos = desenho.blocos;
+
+  // quantas palavras caem em cada bloco de voz — e o caso "espremidas"
+  const noBloco = blocos.map(() => []);
+  for (const p of ps) {
+    const t = inicio(p);
+    const b = blocos.findIndex(([a, z]) => t >= a && t < z);
+    if (b >= 0) noBloco[b].push(p);
+  }
+
+  for (const p of ps) {
+    const t = inicio(p);
+    let d = Infinity, perto = null;
+    for (const x of inicios) { const dd = Math.abs(x - t); if (dd < d) { d = dd; perto = x; } }
+    p.distancia = d;
+    p.vizinho = perto;
+    p.dentroDeBloco = blocos.some(([a, z]) => t >= a && t < z);
+    const b = blocos.findIndex(([a, z]) => t >= a && t < z);
+    p.juntas = b >= 0 ? noBloco[b] : [];
+
+    // QUEM MANDA E A DISTANCIA, igual ao medir-desvio.py. Se esta pagina
+    // acusar mais coisa que a medida, ela esta mentindo — e foi o que
+    // aconteceu na primeira versao: eu perguntava "caiu num silencio?" ANTES
+    // de olhar a distancia, e uma palavra que comeca 0,1s antes do bloco (o
+    // que e normal, a voz sobe aos poucos) virava suspeita. Deu 48 suspeitas
+    // onde a medida via 6.
+    // Comecar com a voz JA CORRENDO nao e defeito: e o rabino dizendo duas
+    // palavras num folego so. Defeito e comecar no SILENCIO. (24/08)
+    p.colada = coladaNaDeTras(p);
+    p.grau = (d <= TOLERANCIA || p.colada) ? 0 : d > SUSPEITO ? 2 : 1;
+
+    // O MOTIVO so e escrito para quem ja e suspeito. Ele explica, nao acusa.
+    if (!p.grau) {
+      p.motivo = null;
+    } else if (!p.dentroDeBloco) {
+      p.motivo = 'caiu num <b>silêncio</b> — o rabino não está falando neste ponto. ' +
+        `A voz mais próxima começa aos ${seg(perto)}, ${seg(d)} ${t > perto ? 'antes' : 'depois'}.`;
+    } else if (p.juntas.length > 1) {
+      p.motivo = `<b>${p.juntas.length} palavras no mesmo trecho de voz</b> ` +
+        `(${p.juntas.map(x => x.tl || x.hebrew).join(', ')}). O rabino disse coladas, ` +
+        `e o corte entre elas foi calculado, não ouvido — está ${seg(d)} do começo de voz.`;
+    } else {
+      p.motivo = `começa ${seg(d)} <b>${t > perto ? 'depois' : 'antes'}</b> do começo de voz ` +
+        `mais próximo (${seg(perto)}).`;
+    }
+  }
+  return ps;
+}
+
+// ---------- desenhar ----------
+function pintar(cv, ps, v) {
+  const L = cv.clientWidth, A = cv.clientHeight;
+  // a fita e larga; o navegador nao aguenta qualquer tamanho de canvas
+  const dpr = Math.max(0.5, Math.min(devicePixelRatio || 1, 2, 16000 / Math.max(1, L)));
+  cv.width = L * dpr; cv.height = A * dpr;
+  const c = cv.getContext('2d');
+  c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  c.clearRect(0, 0, L, A);
+
+  const t0 = cv._t0, t1 = cv._t1;
+  const x = t => (t - t0) / (t1 - t0) * L;
+  const passo = desenho.passo, linha = desenho.linha;
+
+  // 1) os trechos em que ele esta falando, ao fundo. Vermelho claro onde
+  //    ninguem reivindica aquela voz — e ali que quase sempre esta o erro.
+  const orfas = cv._ps.map(p => [p, cortada(p) || engolindo(p)]).filter(x => x[1]);
+  for (const [a, z] of desenho.blocos) {
+    if (z < t0 || a > t1) continue;
+    const orfa = orfas.some(([, b]) => b[0] === a && b[1] === z);
+    c.fillStyle = orfa ? '#f6d8cc' : (getComputedStyle(document.body).getPropertyValue('--voz') || '#cfe0cf');
+    c.fillRect(x(a), 16, Math.max(1, x(z) - x(a)), A - 40);
+  }
+
+  // 2) a voz
+  c.strokeStyle = '#7a8a7a'; c.lineWidth = 1; c.beginPath();
+  const i0 = Math.max(0, Math.floor(t0 / passo)), i1 = Math.min(linha.length - 1, Math.ceil(t1 / passo));
+  for (let i = i0; i <= i1; i++) {
+    const px = x(i * passo), py = A - 24 - (linha[i] / 100) * (A - 44);
+    i === i0 ? c.moveTo(px, py) : c.lineTo(px, py);
+  }
+  c.stroke();
+
+  // 3) cada palavra: uma linha no seu comeco, com o nome em cima
+  c.font = '12px Georgia, serif';
+  let alt = 0;
+  for (const p of ps) {
+    const t = inicio(p);
+    if (t < t0 || t > t1) continue;
+    const px = x(t);
+    // o nome vai alternando entre duas alturas: numa fita apertada eles se
+    // escreveriam por cima uns dos outros e nao daria para ler nenhum
+    alt = 1 - alt;
+    // o que ELE arrastou sai sempre em cor propria e grosso: nunca pode passar
+    // por leitura do arquivo
+    const cor = mexida(p) ? '#8b6a3e'
+              : p.grau === 2 ? '#8a3a1a' : p.grau === 1 ? '#a8781f' : '#2f6b3a';
+    c.strokeStyle = cor;
+    c.lineWidth = mexida(p) ? 3.5 : (sel && sel.verso === p.verso && sel.i === p.i) ? 3 : 1.5;
+    c.beginPath(); c.moveTo(px, alt ? 14 : 28); c.lineTo(px, A - 22); c.stroke();
+    c.fillStyle = cor;
+    c.fillText((p.tl || p.hebrew).slice(0, 13), px + 3, alt ? 12 : 26);
+    if (mexida(p)) {                                  // marca do que ele arrastou
+      c.fillStyle = '#8b6a3e'; c.beginPath(); c.arc(px, A - 18, 4, 0, 7); c.fill();
+    }
+  }
+
+  // 3b) a fronteira de verso: um risco tracejado com o numero. Ela deixou de
+  //     ser a dona do desenho e virou o que e — uma marca em cima da fita.
+  c.setLineDash([4, 4]);
+  c.strokeStyle = '#b9ae9c'; c.lineWidth = 1;
+  c.font = 'bold 11px Georgia, serif';
+  for (const v of sync.versos) {
+    const pv = (v.palavras || []);
+    if (!pv.length) continue;
+    const t = inicio({ verso: v.n, i: pv[0].i, start: pv[0].start, end: pv[0].end });
+    if (t < t0 || t > t1) continue;
+    const px = x(t);
+    c.beginPath(); c.moveTo(px, 0); c.lineTo(px, A); c.stroke();
+    c.fillStyle = '#8a8072';
+    c.fillText('§' + v.n, Math.min(px + 3, L - 26), A - 26);
+  }
+  c.setLineDash([]);
+
+  // 4) regua de segundos
+  c.fillStyle = '#9a9184'; c.font = '11px Georgia, serif';
+  for (let s = Math.ceil(t0); s <= t1; s++) {
+    c.fillRect(x(s), A - 14, 1, 5);
+    if (s % 2 === 0) c.fillText(s + 's', x(s) + 2, A - 3);   // segundo do Kadish inteiro
+  }
+
+  // A agulha NAO e desenhada aqui: redesenhar uma fita de 20 mil pixels 60
+  // vezes por segundo trava o iPad. Ela e um risco de CSS por cima, movido
+  // pela xDaAgulha().
+}
+
+function repintarTudo() {
+  for (const cv of document.querySelectorAll('canvas')) pintar(cv, cv._ps, null);
+}
+
+// ---------- montar a tela ----------
+// As contas do cabecalho e do rodape saem do MESMO lugar e sao escritas
+// juntas. Antes o arrasto so mexia no rodape, e o cabecalho ficava para tras:
+// o Erez viu "5 correcoes prontas" embaixo e "0 arrastadas por voce" em cima,
+// no mesmo instante, e leu o defeito do arquivo onde era arrasto dele.
+function atualizarContas(ps) {
+  const ruins = ps.filter(p => p.grau > 0);
+  const arrastadas = ps.filter(mexida).length;
+  el('andamento').textContent =
+    `${ps.length} palavras · ${ruins.length} para olhar · ` +
+    `${ps.filter(partida).length} partidas ao meio · ` +
+    `${arrastadas} arrastadas por você · dados ${DADOS}`;
+  el('contagem').textContent = arrastadas
+    ? `${arrastadas} correção(ões) prontas` : 'nada arrastado ainda';
+}
+
+// ---------- montar a tela: A FITA CONTINUA (24/08) ----------
+//
+// Antes esta pagina desenhava UM quadro por verso, cada um com a sua janela de
+// tempo e a sua escala. Duas consequencias ruins, e o Erez bateu nas duas:
+//
+//   * uma palavra que SOA no verso de cima aparecia no quadro do verso de
+//     baixo, e ali nao havia como arrasta-la para tras: aquele instante nem
+//     existia naquela janela. Foi o "yitbarach e ouvido na linha 8 e mostrado
+//     na 9" — ele via o defeito e nao tinha como consertar;
+//   * cada quadro tinha a sua escala, entao dois versos seguidos nao se
+//     encaixavam, e a fronteira entre eles ficava invisivel.
+//
+// Ele disse: "quero que a sincronia seja feita nao por linha, mas de forma
+// continua, assim nao ocorrerao os erros relatados". Esta certo.
+//
+// Agora a tela e UMA fita do Kadish inteiro, cortada em faixas de FAIXA
+// segundos so para caber no papel — como uma partitura. A escala e a mesma do
+// comeco ao fim, nao ha buraco entre uma faixa e a seguinte, e a fronteira de
+// verso virou o que ela e: um risco tracejado com o numero em cima. Qualquer
+// palavra pode ser arrastada para qualquer lugar, inclusive para dentro do
+// verso vizinho.
+// UMA LINHA SO. Cortar em faixas de 10s ainda cortava: uma palavra que caisse
+// na emenda aparecia pela metade, e ele viu logo — "algumas palavras cortam no
+// meio como purkane, so vejo o audio de pur...". Agora o Kadish inteiro e um
+// desenho unico que rola de lado. Nao ha emenda nenhuma para cortar nada.
+let PXS = Number(localStorage.getItem('sinc_pxs') || 70);   // pixels por segundo
+const PXS_OPCOES = [35, 50, 70, 100, 140];
+const LARGURA_MAX = 20000;   // acima disto o navegador nao aguenta o canvas
+
+function janela() {
+  const t0 = Math.max(0, (sync.fala_inicio ?? 0) - 0.5);
+  const t1 = Math.min(desenho.duracao, (sync.fala_fim ?? desenho.duracao) + 0.5);
+  return [t0, t1];
+}
+
+function desenhar_tela() {
+  const ps = diagnosticar();
+  atualizarContas(ps);
+
+  // AVISO GRANDE quando ha arrasto. Tres vezes o Erez leu como defeito do
+  // ARQUIVO o que era arrasto DELE — a ultima com 9 arrastos na tela, dizendo
+  // "veytpaer e falado no verso 8", quando o arquivo punha o veyitpaar no
+  // lugar certo e quem o tinha movido era ele.
+  const nArrastadas = ps.filter(mexida).length;
+  let h = nArrastadas ? `<div class="nota" style="background:#8b6a3e;color:#fff;border-color:#8b6a3e">
+    <b>Você arrastou ${nArrastadas} palavra(s).</b> O que está desenhado abaixo é o
+    <b>seu arrasto</b>, não o que está no arquivo — inclusive os avisos de erro.
+    As suas ficam com o risco grosso e marcadas com ●.
+    <div class="acoes" style="margin-top:10px">
+      <button id="verArquivo" style="background:#fff;color:#2a1f15;border:0">Ver o arquivo, sem os meus arrastos</button>
+      <button id="desfazerTudo" style="background:#fff;color:#2a1f15;border:0">Desfazer tudo o que arrastei</button>
+    </div></div>` : '';
+  h += `<div class="nota">
+    Esta é a <b>fita inteira do Kadish, numa linha só</b>. Arraste de lado para
+    andar no tempo. Os riscos <b>tracejados</b> com número são onde cada verso
+    começa; o fundo verde é onde o rabino <b>está falando</b>.
+    Cada risco fino é o começo de uma palavra:
+    <span style="color:#2f6b3a">verde</span> em cima da voz,
+    <span style="color:#a8781f">amarelo</span> um pouco fora,
+    <span style="color:#8a3a1a">vermelho</span> fora.
+    <br><br>Toque numa palavra para ouvir só ela. <b>Arraste o risco</b> para o
+    lugar certo — pode passar para dentro do verso vizinho, a fita é uma só.
+    Nada é gravado aqui: no fim, o botão monta um recado para você me mandar.
+    <div class="legenda"><i></i> o rabino falando &nbsp;
+      <i style="background:#f6d8cc"></i> voz partida ao meio — olhe aqui primeiro</div></div>`;
+
+  // A LISTA DO QUE OLHAR leva ate cada palavra. Antes o jeito de nao se perder
+  // era esconder os versos certos, e esconder e o oposto de continuo.
+  const maus = ps.filter(p => p.grau > 0);
+  const olhar = soFalta ? ps.filter(p => p.grau > 0 || partida(p) || mexida(p)) : ps;
+  h += `<div class="nota"><b>${maus.length} para olhar</b>` +
+    (olhar.length ? ` — toque para ir até a palavra:<div class="acoes">` +
+      olhar.slice(0, 60).map(p => `<button data-ir="${p.verso}|${p.i}">` +
+        `${esc(p.tl || p.hebrew)} <small>§${p.verso} · ${seg(inicio(p))}</small></button>`).join('') +
+      `</div>` : ' — nada suspeito neste Kadish.') + `</div>`;
+
+  h += `<div class="zoom">
+      <button data-zoom="-1">− afastar</button>
+      <button data-zoom="1">+ aproximar</button>
+      <small style="color:var(--fraco)">${PXS} pixels por segundo</small>
+    </div>
+    <div class="rolo" id="rolo"><canvas data-f="0"></canvas><div class="agulha" id="agulha"></div></div>
+    <div class="acoes"><button data-tocartudo="1">▶ ouvir o Kadish inteiro</button></div>
+    <div class="diag" id="diagF0"></div>`;
+
+  // Os controles POR VERSO continuam: o empurrao da linha inteira e o gesto
+  // dele para "este verso esta um bloco fora".
+  h += `<div class="verso"><div class="cab"><span>verso a verso</span>
+      <span>ouvir · empurrar a linha inteira · desfazer</span></div>`;
+  for (const v of sync.versos) {
+    const pv = ps.filter(p => p.verso === v.n);
+    const mau = pv.filter(p => p.grau > 0).length;
+    h += `<div class="acoes" style="align-items:center">
+      <b style="min-width:74px">verso ${v.n}</b>
+      <small style="min-width:96px;color:var(--fraco)">${mau ? mau + ' para olhar' : 'parece certo'}</small>
+      <button data-tocar="${v.n}">▶ ouvir</button>
+      <button data-empurrar="${v.n}" data-passos="-1">◀ um bloco atrás</button>
+      <button data-empurrar="${v.n}" data-passos="1">um bloco à frente ▶</button>
+      <button data-devolver="${v.n}">desfazer</button>
+    </div>`;
+  }
+  h += `</div>`;
+
+  const rolagem = el('rolo') ? el('rolo').scrollLeft : 0;
+  el('corpo').innerHTML = h;
+  montarCanvas(ps);
+  if (el('rolo')) el('rolo').scrollLeft = rolagem;   // nao perder o lugar
+}
+
+function montarCanvas(ps) {
+  const cv = document.querySelector('.rolo canvas');
+  if (!cv) return;
+  const [t0, t1] = janela();
+  cv._t0 = t0; cv._t1 = t1; cv._ps = ps;
+  cv.style.width = Math.min(LARGURA_MAX, (t1 - t0) * PXS) + 'px';
+  pintar(cv, ps, null);
+  escreverDiag(0, ps);
+}
+
+/** rola a fita ate deixar o instante t no meio da tela */
+function irAte(t) {
+  const cv = document.querySelector('.rolo canvas'), r = el('rolo');
+  if (!cv || !r) return;
+  const px = (t - cv._t0) / (cv._t1 - cv._t0) * cv.clientWidth;
+  r.scrollTo({ left: Math.max(0, px - r.clientWidth / 2), behavior: 'smooth' });
+}
+
+function xDaAgulha() {
+  const cv = document.querySelector('.rolo canvas');
+  const ag = el('agulha');
+  if (!cv || !ag) return;
+  const [t0, t1] = [cv._t0, cv._t1];
+  if (au.paused || au.currentTime < t0 || au.currentTime > t1) { ag.style.display = 'none'; return; }
+  const px = (au.currentTime - t0) / (t1 - t0) * cv.clientWidth;
+  ag.style.display = 'block';
+  ag.style.left = px + 'px';
+  // a fita anda sozinha atras da agulha, para ele nao ter que empurrar
+  const r = el('rolo');
+  if (px < r.scrollLeft + 60 || px > r.scrollLeft + r.clientWidth - 60)
+    r.scrollLeft = Math.max(0, px - r.clientWidth / 2);
+}
+
+function escreverDiag(i, pv) {
+  const alvo = el('diagF' + i);
+  if (!alvo) return;
+  const mau = pv.filter(p => p.grau > 0);
+  const avisoOrfa = pv.map(p => {
+    // se a palavra foi arrastada por ele, o aviso e sobre o ARRASTO dele
+    const marca = mexida(p)
+      ? ` <span style="color:var(--brass)">(você a pôs aqui; no arquivo ela começa aos ${seg(p.start)})</span>`
+      : '';
+    const nome = `<b>${esc(p.tl || p.hebrew)}</b>`;
+    const c = cortada(p);
+    if (c) return `<div style="color:var(--erro)">${nome} <b>está partida ao meio</b>: ` +
+      `o verso ${p.verso} acaba aos ${seg(fim(p))}, mas o rabino só para de falar aos ${seg(c[1])}. ` +
+      `Você vai ouvir só um pedaço dela, e o resto cai na linha de baixo. ` +
+      `O fim do verso devia ser ${seg(c[1])}.${marca}</div>`;
+    if (muda(p)) return `<div style="color:var(--erro)">${nome} <b>não tem voz nenhuma</b>: ` +
+      `de ${seg(inicio(p))} a ${seg(fim(p))} o rabino não está falando.${marca}</div>`;
+    const b = engolindo(p);
+    if (b) return `<div style="color:var(--erro)">${nome} <b>engole outra voz</b>: depois ` +
+      `dela vem silêncio e, aos ${seg(b[0])}, o rabino fala de novo até ${seg(b[1])} — ` +
+      `ainda dentro desta palavra. Quase sempre isso é a palavra seguinte, que devia ` +
+      `começar aos ${seg(b[0])}.${marca}</div>`;
+    return '';
+  }).join('');
+  alvo.innerHTML = avisoOrfa + (mau.length
+    ? mau.map(p => `<div><b>${esc(p.tl || p.hebrew)}</b> <small>(§${p.verso})</small> — ${p.motivo}
+        ${mexida(p) ? ` <span style="color:var(--brass)">(você pôs aos ${seg(inicio(p))})</span>` : ''}</div>`).join('')
+    : (avisoOrfa ? '' : ''));
+}
+
+// ---------- tocar ----------
+let pararEm = null;
+function tocar(t0, t1) {
+  pararEm = t1;
+  au.playbackRate = devagar ? 0.5 : 1;
+  au.currentTime = Math.max(0, t0);
+  au.play().catch(() => {});
+}
+au.addEventListener('timeupdate', () => {
+  if (pararEm !== null && au.currentTime >= pararEm) { au.pause(); pararEm = null; }
+});
+(function agulha() { xDaAgulha(); requestAnimationFrame(agulha); })();
+
+// ---------- toques e arrasto ----------
+el('corpo').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b && b.dataset.tocar) {
+    const v = sync.versos.find(x => x.n === Number(b.dataset.tocar));
+    return tocar(v.start, v.end + 0.15);
+  }
+  if (b && b.dataset.empurrar) {
+    empurrarVerso(Number(b.dataset.empurrar), Number(b.dataset.passos));
+    return desenhar_tela();
+  }
+  if (b && b.id === 'desfazerTudo') { mexidas = {}; gravarMex(); return desenhar_tela(); }
+  if (b && b.id === 'verArquivo') {
+    const guardado = mexidas; mexidas = {}; desenhar_tela(); mexidas = guardado;
+    return;   // volta a aparecer no proximo toque; o que ele arrastou nao se perdeu
+  }
+  if (b && b.dataset.devolver) {
+    const n = Number(b.dataset.devolver);
+    for (const k of Object.keys(mexidas)) if (k.startsWith(n + '|')) delete mexidas[k];
+    gravarMex(); return desenhar_tela();
+  }
+  if (b && b.dataset.tocartudo) { const [t0, t1] = janela(); return tocar(t0, t1); }
+  if (b && b.dataset.zoom) {
+    const i = PXS_OPCOES.indexOf(PXS);
+    const j = Math.max(0, Math.min(PXS_OPCOES.length - 1, (i < 0 ? 2 : i) + Number(b.dataset.zoom)));
+    PXS = PXS_OPCOES[j]; localStorage.setItem('sinc_pxs', String(PXS));
+    return desenhar_tela();
+  }
+  if (b && b.dataset.ir) {
+    const [v, i] = b.dataset.ir.split('|').map(Number);
+    sel = { verso: v, i };
+    document.querySelectorAll('.w.sel').forEach(x => x.classList.remove('sel'));
+    const p = diagnosticar().find(x => x.verso === v && x.i === i);
+    repintarTudo();
+    if (p) {
+      irAte(inicio(p));
+      tocar(inicio(p) - 0.05, fim(p) + 0.1);
+    }
+    return;
+  }
+  const w = e.target.closest('.w');
+  if (w) {
+    sel = { verso: Number(w.dataset.v), i: Number(w.dataset.i) };
+    const p = diagnosticar().find(x => x.verso === sel.verso && x.i === sel.i);
+    document.querySelectorAll('.w.sel').forEach(x => x.classList.remove('sel'));
+    document.querySelectorAll(`.w[data-v="${sel.verso}"][data-i="${sel.i}"]`)
+      .forEach(x => x.classList.add('sel'));
+    repintarTudo();
+    tocar(inicio(p) - 0.05, fim(p) + 0.1);
+  }
+});
+
+// arrastar o risco de uma palavra
+let arrastando = null;
+function tempoNoX(cv, clientX) {
+  const r = cv.getBoundingClientRect();
+  const f = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+  return cv._t0 + f * (cv._t1 - cv._t0);
+}
+el('corpo').addEventListener('pointerdown', e => {
+  const cv = e.target.closest('canvas'); if (!cv) return;
+  const t = tempoNoX(cv, e.clientX);
+  let melhor = null, dist = Infinity;
+  for (const p of cv._ps) { const d = Math.abs(inicio(p) - t); if (d < dist) { dist = d; melhor = p; } }
+  const porPixel = (cv._t1 - cv._t0) / cv.clientWidth;
+  if (!melhor || dist > porPixel * 22) return;      // longe de qualquer risco: nao arrasta
+  arrastando = { cv, p: melhor };
+  sel = { verso: melhor.verso, i: melhor.i };
+  cv.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
+el('corpo').addEventListener('pointermove', e => {
+  if (!arrastando) return;
+  const { cv, p } = arrastando;
+  let t = tempoNoX(cv, e.clientX);
+  // encosta no comeco de voz mais proximo, se estiver bem perto — o sinal e
+  // que sabe o numero exato; o dedo dele so aponta
+  for (const x of desenho.inicios_de_voz) if (Math.abs(x - t) < 0.06) t = x;
+  pôr(p, t);
+  arrastando.mexeu = true;
+  repintarTudo();
+  e.preventDefault();
+});
+el('corpo').addEventListener('pointerup', () => {
+  if (!arrastando) return;
+  // Toque sem arrastar = "quero ouvir esta". Sem isto nao havia como ouvir uma
+  // palavra: o texto solto por fora do desenho saiu quando a fita virou uma
+  // linha so.
+  if (!arrastando.mexeu) {
+    const p = arrastando.p;
+    arrastando = null;
+    const at = diagnosticar().find(x => x.verso === p.verso && x.i === p.i);
+    if (at) { repintarTudo(); tocar(inicio(at) - 0.05, fim(at) + 0.1); }
+    return;
+  }
+  arrastando = null; gravarMex();
+  // A palavra pode ter ATRAVESSADO para outra faixa — e esse era justamente o
+  // movimento que a tela por verso nao deixava fazer. Entao refaz as faixas
+  // todas, em vez de so a de onde ela saiu.
+  const ps = diagnosticar();
+  montarCanvas(ps);
+  atualizarContas(ps);
+});
+
+// ---------- botoes ----------
+alvoSel.addEventListener('change', () => { localStorage.setItem('sinc_alvo', alvoSel.value); carregar();
+
+// A PAGINA SE DEFENDE DO CACHE.
+//
+// O GitHub Pages guarda os arquivos, e o Ctrl+Shift+R do navegador nao fura
+// isso. O Erez passou tres rodadas vendo o raba partido depois de eu ter
+// consertado — a pagina dele era de antes. Agora ela pergunta ao versao.json
+// (que e pedido com um numero diferente toda vez, entao ninguem consegue
+// guardar) qual e a versao publicada. Se nao for a dela, avisa e recarrega
+// num endereco novo, que o cache nao tem como responder.
+fetch('./versao.json?t=' + Date.now(), { cache: 'no-store' })
+  .then(r => r.json())
+  .then(v => {
+    if (!v.marca || v.marca === DADOS) return;
+    const aviso = document.createElement('div');
+    aviso.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99;background:#8b6a3e;' +
+      'color:#fff;padding:13px 16px;font-size:16px;display:flex;gap:12px;align-items:center;' +
+      'justify-content:center;flex-wrap:wrap';
+    aviso.innerHTML = `Existe uma versão mais nova desta página (${esc(v.marca)}). ` +
+      `A sua é a ${esc(DADOS)}.` +
+      `<button id="atualizar" style="background:#fff;color:#2a1f15;border:0;border-radius:9px;` +
+      `padding:8px 14px;font:inherit;font-size:16px;cursor:pointer">Atualizar agora</button>`;
+    document.body.appendChild(aviso);
+    document.getElementById('atualizar').onclick = () =>
+      location.replace(location.pathname + '?v=' + encodeURIComponent(v.marca));
+  })
+  .catch(() => {}); });
+el('soFalta').addEventListener('click', () => {
+  soFalta = !soFalta;
+  localStorage.setItem('sinc_sofalta', soFalta ? 'sim' : 'nao');
+  el('soFalta').textContent = `só o suspeito: ${soFalta ? 'sim' : 'não'}`;
+  desenhar_tela(); scrollTo(0, 0);
+});
+el('devagar').addEventListener('click', () => {
+  devagar = !devagar;
+  el('devagar').textContent = `meia velocidade: ${devagar ? 'sim' : 'não'}`;
+  au.playbackRate = devagar ? 0.5 : 1;
+});
+addEventListener('resize', repintarTudo);
+
+el('gerar').addEventListener('click', () => {
+  const ps = diagnosticar();
+  const feitas = ps.filter(p => mexida(p));
+  const [n, t] = alvoSel.value.split('_');
+  const linhas = feitas.map(p =>
+    `verso ${p.verso}, palavra ${p.i + 1} (${p.tl || p.hebrew})\n` +
+    `   estava: ${seg(p.start)}\n   ponha em: ${seg(inicio(p))}`);
+  const recado =
+    `Sincronia — ${NUSSACH[n]} · ${TIPO[t]} (${alvoSel.value})\n` +
+    `${feitas.length} correção(ões) que eu ouvi e arrastei.\n\n` +
+    (linhas.length ? linhas.join('\n\n') + '\n' : 'Nada a mudar.\n');
+  el('corpo').innerHTML =
+    `<div class="nota">Copie tudo abaixo e mande para o Claude. Depois toque em
+      <i>Voltar</i> — nada se perdeu.</div>
+     <textarea class="saida" id="saida" readonly></textarea>
+     <div class="acoes"><button id="copiar">Copiar</button>
+       <button id="continuar">Voltar</button></div>`;
+  el('saida').value = recado;
+  el('copiar').onclick = () => {
+    const x = el('saida'); x.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    if (navigator.clipboard) navigator.clipboard.writeText(x.value).catch(() => {});
+    el('copiar').textContent = 'Copiado ✓';
+  };
+  el('continuar').onclick = () => { desenhar_tela(); scrollTo(0, 0); };
+  scrollTo(0, 0);
+});
+
+// ---------- carregar ----------
+function formato() {
+  const a = document.createElement('audio');
+  return a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+}
+async function carregar() {
+  el('corpo').innerHTML = '<p style="color:var(--fraco)">carregando…</p>';
+  const alvo = alvoSel.value, [n, t] = alvo.split('_');
+  try {
+    const [s, d] = await Promise.all([
+      fetch(`./sync/${alvo}_sync.json?d=${DADOS}`, { cache: 'no-cache' }).then(r => r.json()),
+      fetch(`./sinal/${alvo}.json?d=${DADOS}`, { cache: 'no-cache' }).then(r => r.json()),
+    ]);
+    sync = s; desenho = d; sel = null;
+    // Dado novo faz o que ele arrastou perder o sentido: aquilo foi decidido
+    // em cima de outros numeros. Apaga tudo, uma vez, quando a marca muda.
+    if (localStorage.getItem('sinc_dados') !== DADOS) {
+      for (const k of Object.keys(localStorage)) if (k.startsWith('sinc_mex_')) localStorage.removeItem(k);
+      localStorage.setItem('sinc_dados', DADOS);
+    }
+    mexidas = lerMex();
+    limparVelharia();
+    au.src = `./tefila-audio/${n}/${t}.${formato()}`;
+    el('soFalta').textContent = `só o suspeito: ${soFalta ? 'sim' : 'não'}`;
+    desenhar_tela();
+  } catch (e) {
+    el('corpo').innerHTML = `<div class="nota">Não consegui abrir: ${esc(e.message)}.
+      Se a mensagem fala de <i>sinal/</i>, é porque o desenho da voz ainda não foi
+      gerado — rode <i>python3 gerar-envelope.py</i>.</div>`;
+  }
+}
+carregar();
+
+// A PAGINA SE DEFENDE DO CACHE.
+//
+// O GitHub Pages guarda os arquivos, e o Ctrl+Shift+R do navegador nao fura
+// isso. O Erez passou tres rodadas vendo o raba partido depois de eu ter
+// consertado — a pagina dele era de antes. Agora ela pergunta ao versao.json
+// (que e pedido com um numero diferente toda vez, entao ninguem consegue
+// guardar) qual e a versao publicada. Se nao for a dela, avisa e recarrega
+// num endereco novo, que o cache nao tem como responder.
+fetch('./versao.json?t=' + Date.now(), { cache: 'no-store' })
+  .then(r => r.json())
+  .then(v => {
+    if (!v.marca || v.marca === DADOS) return;
+    const aviso = document.createElement('div');
+    aviso.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99;background:#8b6a3e;' +
+      'color:#fff;padding:13px 16px;font-size:16px;display:flex;gap:12px;align-items:center;' +
+      'justify-content:center;flex-wrap:wrap';
+    aviso.innerHTML = `Existe uma versão mais nova desta página (${esc(v.marca)}). ` +
+      `A sua é a ${esc(DADOS)}.` +
+      `<button id="atualizar" style="background:#fff;color:#2a1f15;border:0;border-radius:9px;` +
+      `padding:8px 14px;font:inherit;font-size:16px;cursor:pointer">Atualizar agora</button>`;
+    document.body.appendChild(aviso);
+    document.getElementById('atualizar').onclick = () =>
+      location.replace(location.pathname + '?v=' + encodeURIComponent(v.marca));
+  })
+  .catch(() => {});
+if (localStorage.getItem('tefila_theme') === 'claro') document.body.style.background = '#fff';
+</script>
+</body></html>

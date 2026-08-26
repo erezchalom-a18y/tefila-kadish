@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="Tefila Kadish">
+  <rect width="192" height="192" rx="34" fill="#f4ede0"/>
+  <g fill="none" stroke="#8b6a3e" stroke-width="11" stroke-linejoin="round">
+    <path d="M96 34 L146 122 L46 122 Z"/>
+    <path d="M96 158 L46 70 L146 70 Z"/>
+  </g>
+</svg>

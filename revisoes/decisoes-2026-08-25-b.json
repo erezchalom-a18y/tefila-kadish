@@ -1,0 +1,408 @@
+{
+  "_leia": "As palavrinhas (glosas) de 24 versos, para a fila delas LER A FRASE que ele aprovou. Isto nao e decisao nova: e a regra dele de 23/08 — 'a glosa de uma palavra nao e uma-para-uma com a frase, ela pode cobrir duas ou mais palavras' — aplicada onde ela nunca tinha sido. Ele viu em 25/08 que o verso 1 lia 'Exaltado e santificado Seu Nome grande' e perguntou de onde eu tinha tirado aquilo: veio do glossario, origem tehilat_hashem, e nunca passou pela revisao dele em FILA. As frases sao dele; eu so escolhi onde cortar cada uma.",
+  "decisoes": [
+    {
+      "id": "g1",
+      "tipo": "glosas_do_verso",
+      "chave": "יתגדלויתקדששמהרבא",
+      "frase": "Exaltado e santificado seja o Seu grande Nome",
+      "glosas": [
+        "Exaltado",
+        "e santificado",
+        "seja o Seu grande Nome",
+        ""
+      ],
+      "_nota": "Ele resolveu o no: 'basta juntar as duas palavras na transliteracao, nao'. Em hebraico e שְׁמֵהּ רַבָּא (Nome-grande) e em portugues 'grande Nome' — a ordem e trocada, e cortar no meio obrigava o raba a receber a palavrinha 'Nome', que nao e o que raba quer dizer. Juntando, o par inteiro fica no sheme e o raba fica sem palavrinha propria. A fila le a frase dele e nenhuma palavra recebe significado errado. Juntar as PALAVRAS mesmo nao da: cada uma tem o seu segundo no audio, e ele passou uma noite acertando isso."
+    },
+    {
+      "id": "g3",
+      "tipo": "glosas_do_verso",
+      "chave": "וימליךמלכותה",
+      "frase": "e que nele estabeleça o Seu reinado",
+      "glosas": [
+        "e que nele estabeleça o",
+        "Seu reinado"
+      ]
+    },
+    {
+      "id": "g7",
+      "tipo": "glosas_do_verso",
+      "chave": "יהאשמהרבאמברךלעלםולעלמיעלמיא",
+      "frase": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
+      "glosas": [
+        "Que",
+        "Seu grande Nome",
+        "",
+        "seja abençoado",
+        "para sempre",
+        "e para toda",
+        "eternidade"
+      ],
+      "_nota": "Mesmo caso do verso 1: sheme+raba viram um par so."
+    },
+    {
+      "id": "g9",
+      "tipo": "glosas_do_verso",
+      "chave": "ויתרומםויתנשאויתהדר",
+      "frase": "elevado, enaltecido e honrado",
+      "glosas": [
+        "elevado",
+        "enaltecido",
+        "e honrado"
+      ]
+    },
+    {
+      "id": "g10",
+      "tipo": "glosas_do_verso",
+      "chave": "ויתעלהויתהללשמהדקדשאבריךהוא",
+      "frase": "exaltado e louvado seja o Nome do Santo, bendito seja Ele",
+      "glosas": [
+        "exaltado",
+        "e louvado",
+        "seja o Nome",
+        "do Santo",
+        "bendito",
+        "seja Ele"
+      ]
+    },
+    {
+      "id": "g13",
+      "tipo": "glosas_do_verso",
+      "chave": "עלישראלועלרבנן",
+      "frase": "Sobre Israel e sobre os nossos sábios",
+      "glosas": [
+        "Sobre",
+        "Israel",
+        "e sobre",
+        "os nossos sábios"
+      ]
+    },
+    {
+      "id": "g14",
+      "tipo": "glosas_do_verso",
+      "chave": "ועלתלמידיהוןועלכלתלמידיתלמידיהון",
+      "frase": "e sobre seus discípulos e sobre todos os discípulos de seus discípulos",
+      "glosas": [
+        "e sobre",
+        "seus discípulos",
+        "e sobre",
+        "todos os",
+        "discípulos de",
+        "seus discípulos"
+      ]
+    },
+    {
+      "id": "g15",
+      "tipo": "glosas_do_verso",
+      "chave": "ועלכלמאןדעסקיןבאוריתא",
+      "frase": "e sobre todos os que se dedicam ao estudo da Torá",
+      "glosas": [
+        "e sobre",
+        "todos",
+        "os que",
+        "se dedicam",
+        "ao estudo da Torá"
+      ]
+    },
+    {
+      "id": "g16",
+      "tipo": "glosas_do_verso",
+      "chave": "דיבאתראהדיןודיבכלאתרואתר",
+      "frase": "neste lugar e em todo e qualquer lugar",
+      "glosas": [
+        "neste",
+        "lugar",
+        "e",
+        "em",
+        "todo",
+        "e qualquer",
+        "lugar"
+      ]
+    },
+    {
+      "id": "g17",
+      "tipo": "glosas_do_verso",
+      "chave": "יהאלהוןולכוןשלמארבא",
+      "frase": "que haja para eles e para vocês paz em abundância",
+      "glosas": [
+        "que haja",
+        "para eles",
+        "e para vocês",
+        "paz",
+        "em abundância"
+      ]
+    },
+    {
+      "id": "g19",
+      "tipo": "glosas_do_verso",
+      "chave": "וחייןאריכיןומזונארויחא",
+      "frase": "vida longa e sustento em abundância",
+      "glosas": [
+        "vida",
+        "longa",
+        "e sustento",
+        "em abundância"
+      ]
+    },
+    {
+      "id": "g40",
+      "tipo": "glosas_do_verso",
+      "chave": "וחייןאריכיןומזונירויחי",
+      "frase": "vida longa e sustento em abundância",
+      "glosas": [
+        "vida",
+        "longa",
+        "e sustento",
+        "em abundância"
+      ]
+    },
+    {
+      "id": "g20",
+      "tipo": "glosas_do_verso",
+      "chave": "ופורקנאמןקדםאבוהוןדבשמיאוארעאואמרואמן",
+      "frase": "e redenção vinda do seu Pai que está nos céus e na terra — e digam Amen",
+      "glosas": [
+        "e redenção",
+        "vinda",
+        "do",
+        "seu Pai",
+        "que está nos céus",
+        "e na terra",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g26",
+      "tipo": "glosas_do_verso",
+      "chave": "ופורקנאמןקדםאבוהוןדבשמיאואמרואמן",
+      "frase": "e redenção vinda do seu Pai que está nos céus — e digam Amen",
+      "glosas": [
+        "e redenção",
+        "vinda",
+        "do",
+        "seu Pai",
+        "que está nos céus",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g41",
+      "tipo": "glosas_do_verso",
+      "chave": "ופרקנאמןקדםאבוהוןדיבשמיאוארעאואמרואמן",
+      "frase": "e redenção vinda do seu Pai que está nos céus e na terra — e digam Amen",
+      "glosas": [
+        "e redenção",
+        "vinda",
+        "do",
+        "seu Pai",
+        "que está",
+        "nos céus",
+        "e na terra",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g21",
+      "tipo": "glosas_do_verso",
+      "chave": "יהאשלמארבאמןשמיאוחייםעלינוועלכלישראלואמרואמן",
+      "frase": "Que haja paz em abundância vinda dos céus, e vida para nós e para todo o povo de Israel — e digam Amen",
+      "glosas": [
+        "Que haja",
+        "paz",
+        "em abundância",
+        "vinda",
+        "dos céus",
+        "e vida",
+        "para nós",
+        "e para",
+        "todo o povo",
+        "de Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g27",
+      "tipo": "glosas_do_verso",
+      "chave": "יהאשלמארבאמןשמיאוחייםטוביםעלינוועלכלישראלואמרואמן",
+      "frase": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
+      "glosas": [
+        "Que haja",
+        "paz",
+        "em abundância",
+        "vinda",
+        "dos céus",
+        "e uma vida",
+        "boa",
+        "para nós",
+        "e para",
+        "todo o povo",
+        "de Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g34",
+      "tipo": "glosas_do_verso",
+      "chave": "יהאשלמארבאמןשמיא",
+      "frase": "Que haja paz em abundância vinda dos céus",
+      "glosas": [
+        "Que haja",
+        "paz",
+        "em abundância",
+        "vinda",
+        "dos céus"
+      ]
+    },
+    {
+      "id": "g23",
+      "tipo": "glosas_do_verso",
+      "chave": "הואיעשהברחמיושלוםעלינוועלכלישראלואמרואמן",
+      "frase": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
+      "_nota": "Aqui o hebraico poe o 'em Sua misericordia' DEPOIS do 'faca' (hu yaasse verachamav), ao contrario do portugues. Cortei na ordem do hebraico: em fila le 'que Ele faca em Sua misericordia paz sobre nos...', que e portugues correto e nao mente sobre palavra nenhuma.",
+      "glosas": [
+        "que Ele",
+        "faça",
+        "em Sua misericórdia",
+        "paz",
+        "sobre nós",
+        "e sobre",
+        "todo o povo",
+        "de Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g39",
+      "tipo": "glosas_do_verso",
+      "chave": "הואברחמיויעשהשלוםעלינוועלכלעמוישראלואמרואמן",
+      "frase": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o Seu povo Israel — e digam Amen",
+      "glosas": [
+        "que Ele",
+        "em Sua misericórdia",
+        "faça",
+        "paz",
+        "sobre nós",
+        "e sobre",
+        "todo",
+        "o Seu povo",
+        "Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g42",
+      "tipo": "glosas_do_verso",
+      "chave": "הואברחמיויעשהשלוםעלינוועלכלישראלואמרואמן",
+      "frase": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
+      "glosas": [
+        "que Ele",
+        "em Sua misericórdia",
+        "faça",
+        "paz",
+        "sobre nós",
+        "e sobre",
+        "todo o povo",
+        "de Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g24",
+      "tipo": "glosas_do_verso",
+      "chave": "עושהשלוםבמרומיוהואיעשהשלוםעלינוועלכלישראלואמרואמן",
+      "frase": "Aquele que faz paz em Suas alturas celestiais, que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen",
+      "glosas": [
+        "Aquele que faz",
+        "paz",
+        "em Suas alturas celestiais",
+        "que Ele",
+        "faça",
+        "a paz",
+        "para nós",
+        "e para",
+        "todo seu povo",
+        "de Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g33",
+      "tipo": "glosas_do_verso",
+      "chave": "מןקדםמראשמיאוארעאואמרואמן",
+      "frase": "de diante do Senhor dos céus e da terra — e digam Amen",
+      "glosas": [
+        "de",
+        "diante do",
+        "Senhor",
+        "dos céus",
+        "e da terra",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g32",
+      "tipo": "glosas_do_verso",
+      "chave": "יהאלנאולהוןולכוןחנאוחסדאורחמי",
+      "frase": "que haja para nós, para eles e para vocês graça, bondade e compaixão",
+      "glosas": [
+        "que haja",
+        "para nós",
+        "para eles",
+        "e para vocês",
+        "graça",
+        "bondade",
+        "e compaixão"
+      ]
+    },
+    {
+      "id": "g37",
+      "tipo": "glosas_do_verso",
+      "chave": "ורוחוהצלהלנוולכלעמוישראלואמרואמן",
+      "frase": "alívio e salvação, para nós e para todo o Seu povo Israel — e digam Amen",
+      "glosas": [
+        "alívio",
+        "e salvação",
+        "para nós",
+        "e para todo",
+        "o Seu povo",
+        "Israel",
+        "e digam",
+        "Amen"
+      ]
+    },
+    {
+      "id": "g25",
+      "tipo": "glosas_do_verso",
+      "chave": "ויצמחפורקנהויקרבמשיחה",
+      "frase": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
+      "glosas": [
+        "e que faça brotar",
+        "Sua redenção",
+        "e apresse",
+        "a vinda de seu Mashiach"
+      ]
+    },
+    {
+      "id": "g29",
+      "tipo": "glosas_do_verso",
+      "chave": "ויצמחפרקנהויקרבמשיחה",
+      "frase": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
+      "glosas": [
+        "e que faça brotar",
+        "Sua redenção",
+        "e apresse",
+        "a vinda de seu Mashiach"
+      ]
+    }
+  ]
+}

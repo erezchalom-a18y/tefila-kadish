@@ -6,10 +6,10 @@
   "versos": [
     {
       "n": 1,
-      "start": 0.14,
-      "end": 4.88,
+      "start": 0.16,
+      "end": 4.9,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
-      "transliteration_pt": "Yitgadal veyitkadash shemei raba",
+      "transliteration_pt": "Yitgadal veyitkadash shemê raba",
       "translation_pt": "Exaltado e santificado seja o Seu grande Nome",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -17,8 +17,8 @@
           "i": 0,
           "hebrew": "יִתְגַּדַּל",
           "transliteration_pt": "Yitgadal",
-          "start": 0.14,
-          "end": 1.58,
+          "start": 0.16,
+          "end": 1.62,
           "glosa_pt": "Exaltado",
           "glosas": {
             "pt": "Exaltado",
@@ -29,14 +29,21 @@
             "de": "Erhoben",
             "ru": "Да возвысится",
             "he": "יִתְעַלֶּה"
+          },
+          "transliteracoes": {
+            "en": "Yitgadal",
+            "es": "Yitgadal",
+            "fr": "Yitgadal",
+            "it": "Yitgadal",
+            "ru": "Йитгадаль"
           }
         },
         {
           "i": 1,
           "hebrew": "וְיִתְקַדַּשׁ",
           "transliteration_pt": "veyitkadash",
-          "start": 1.58,
-          "end": 3.02,
+          "start": 1.62,
+          "end": 3.04,
           "glosa_pt": "e santificado",
           "glosas": {
             "pt": "e santificado",
@@ -47,17 +54,24 @@
             "de": "und geheiligt",
             "ru": "и освятится",
             "he": "וְיִתְקַדֵּשׁ"
+          },
+          "transliteracoes": {
+            "en": "veyitkadash",
+            "es": "veyitkadash",
+            "fr": "véyitkadach",
+            "it": "veyitkadash",
+            "ru": "вэйиткадаш"
           }
         },
         {
           "i": 2,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shemei",
-          "start": 3.02,
-          "end": 3.82,
-          "glosa_pt": "Seu Nome",
+          "transliteration_pt": "shemê",
+          "start": 3.04,
+          "end": 3.84,
+          "glosa_pt": "seja o Seu grande Nome",
           "glosas": {
-            "pt": "Seu Nome",
+            "pt": "seja o Seu grande Nome",
             "en": "His Name",
             "es": "Su Nombre",
             "fr": "Son Nom",
@@ -65,17 +79,24 @@
             "de": "Sein Name",
             "ru": "Имя Его",
             "he": "שְׁמוֹ"
+          },
+          "transliteracoes": {
+            "en": "sh’me",
+            "es": "sh’me",
+            "fr": "ch’mé",
+            "it": "sh’me",
+            "ru": "шмэ"
           }
         },
         {
           "i": 3,
           "hebrew": "רַבָּא",
           "transliteration_pt": "raba",
-          "start": 3.82,
-          "end": 4.88,
-          "glosa_pt": "grande",
+          "start": 3.84,
+          "end": 4.9,
+          "glosa_pt": "",
           "glosas": {
-            "pt": "grande",
+            "pt": "",
             "en": "great",
             "es": "grande",
             "fr": "grand",
@@ -83,6 +104,13 @@
             "de": "großer",
             "ru": "великое",
             "he": "הַגָּדוֹל"
+          },
+          "transliteracoes": {
+            "en": "raba",
+            "es": "raba",
+            "fr": "raba",
+            "it": "raba",
+            "ru": "раба"
           }
         }
       ],
@@ -99,19 +127,19 @@
     },
     {
       "n": 2,
-      "start": 4.88,
-      "end": 7.9,
+      "start": 4.9,
+      "end": 7.92,
       "hebrew": "בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ",
-      "transliteration_pt": "balma di vera chirutei",
-      "translation_pt": "no mundo que Ele criou segundo Sua vontade",
+      "transliteration_pt": "bealma di verá chir'utêh",
+      "translation_pt": "no mundo que Ele criou de acordo com Sua vontade",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "בְּעָלְמָא",
-          "transliteration_pt": "balma",
-          "start": 4.88,
-          "end": 5.84,
+          "transliteration_pt": "bealma",
+          "start": 4.9,
+          "end": 5.86,
           "glosa_pt": "no mundo",
           "glosas": {
             "pt": "no mundo",
@@ -122,14 +150,21 @@
             "de": "in der Welt",
             "ru": "в мире",
             "he": "בָּעוֹלָם"
+          },
+          "transliteracoes": {
+            "en": "be’alma",
+            "es": "be’alma",
+            "fr": "bé’alma",
+            "it": "be’alma",
+            "ru": "бэальма"
           }
         },
         {
           "i": 1,
           "hebrew": "דִּי",
           "transliteration_pt": "di",
-          "start": 5.84,
-          "end": 6.22,
+          "start": 5.86,
+          "end": 6.01,
           "glosa_pt": "que",
           "glosas": {
             "pt": "que",
@@ -140,14 +175,21 @@
             "de": "die",
             "ru": "который",
             "he": "אֲשֶׁר"
+          },
+          "transliteracoes": {
+            "en": "di",
+            "es": "di",
+            "fr": "di",
+            "it": "di",
+            "ru": "ди"
           }
         },
         {
           "i": 2,
           "hebrew": "בְרָא",
-          "transliteration_pt": "vera",
-          "start": 6.22,
-          "end": 6.68,
+          "transliteration_pt": "verá",
+          "start": 6.01,
+          "end": 6.7,
           "glosa_pt": "Ele criou",
           "glosas": {
             "pt": "Ele criou",
@@ -158,17 +200,24 @@
             "de": "Er erschuf",
             "ru": "Он сотворил",
             "he": "בָּרָא"
+          },
+          "transliteracoes": {
+            "en": "vera",
+            "es": "vera",
+            "fr": "véra",
+            "it": "vera",
+            "ru": "вэра"
           }
         },
         {
           "i": 3,
           "hebrew": "כִרְעוּתֵהּ",
-          "transliteration_pt": "chirutei",
-          "start": 6.68,
-          "end": 7.9,
-          "glosa_pt": "por Sua vontade",
+          "transliteration_pt": "chir'utêh",
+          "start": 6.7,
+          "end": 7.92,
+          "glosa_pt": "de acordo com Sua vontade",
           "glosas": {
-            "pt": "por Sua vontade",
+            "pt": "de acordo com Sua vontade",
             "en": "by His will",
             "es": "según Su voluntad",
             "fr": "selon Sa volonté",
@@ -176,11 +225,18 @@
             "de": "nach Seinem Willen",
             "ru": "по воле Своей",
             "he": "כִּרְצוֹנוֹ"
+          },
+          "transliteracoes": {
+            "en": "chir’utei",
+            "es": "jir’utei",
+            "fr": "’hir’outeï",
+            "it": "chir’utei",
+            "ru": "хирутэй"
           }
         }
       ],
       "translations": {
-        "pt": "no mundo que Ele criou segundo Sua vontade",
+        "pt": "no mundo que Ele criou de acordo com Sua vontade",
         "en": "in the world He created according to His will",
         "es": "en el mundo que Él creó según Su voluntad",
         "fr": "dans le monde qu'Il a créé selon Sa volonté",
@@ -192,22 +248,22 @@
     },
     {
       "n": 3,
-      "start": 7.9,
+      "start": 7.92,
       "end": 10.3,
       "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
-      "transliteration_pt": "veyamlich malchutei",
-      "translation_pt": "e que faça reinar o Seu reino",
+      "transliteration_pt": "veyamlich malchutêh",
+      "translation_pt": "e que nele estabeleça o Seu reinado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיַמְלִיךְ",
           "transliteration_pt": "veyamlich",
-          "start": 7.9,
-          "end": 9.06,
-          "glosa_pt": "e faça reinar",
+          "start": 7.92,
+          "end": 9.08,
+          "glosa_pt": "e que nele estabeleça o",
           "glosas": {
-            "pt": "e faça reinar",
+            "pt": "e que nele estabeleça o",
             "en": "and may He reign",
             "es": "y haga reinar",
             "fr": "et qu'Il fasse régner",
@@ -215,17 +271,24 @@
             "de": "und Er lasse herrschen",
             "ru": "и да воцарится",
             "he": "וְיַמְלִיךְ"
+          },
+          "transliteracoes": {
+            "en": "v’yamlich",
+            "es": "v’yamlij",
+            "fr": "véyamli’h",
+            "it": "v’yamlich",
+            "ru": "вэямлих"
           }
         },
         {
           "i": 1,
           "hebrew": "מַלְכוּתֵהּ",
-          "transliteration_pt": "malchutei",
-          "start": 9.06,
+          "transliteration_pt": "malchutêh",
+          "start": 9.08,
           "end": 10.3,
-          "glosa_pt": "Seu reino",
+          "glosa_pt": "Seu reinado",
           "glosas": {
-            "pt": "Seu reino",
+            "pt": "Seu reinado",
             "en": "His kingdom",
             "es": "Su reino",
             "fr": "Son règne",
@@ -233,11 +296,18 @@
             "de": "Sein Reich",
             "ru": "царство Его",
             "he": "מַלְכוּתוֹ"
+          },
+          "transliteracoes": {
+            "en": "malchutei",
+            "es": "maljutei",
+            "fr": "mal’houteï",
+            "it": "malchutei",
+            "ru": "малхутэй"
           }
         }
       ],
       "translations": {
-        "pt": "e que faça reinar o Seu reino",
+        "pt": "e que nele estabeleça o Seu reinado",
         "en": "and may He establish His kingdom",
         "es": "y haga reinar Su reino",
         "fr": "et qu'Il établisse Son règne",
@@ -250,21 +320,21 @@
     {
       "n": 4,
       "start": 10.3,
-      "end": 14.96,
+      "end": 14.98,
       "hebrew": "וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
-      "transliteration_pt": "veyatsmach purkanei vikarev meshichei",
-      "translation_pt": "e que floresça Sua redenção e aproxime o Seu Mashiach",
+      "transliteration_pt": "veyatsmách purkanêh vikarev meshichêh",
+      "translation_pt": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיַצְמַח",
-          "transliteration_pt": "veyatsmach",
+          "transliteration_pt": "veyatsmách",
           "start": 10.3,
-          "end": 11.52,
-          "glosa_pt": "e faça florescer",
+          "end": 11.54,
+          "glosa_pt": "e que faça brotar",
           "glosas": {
-            "pt": "e faça florescer",
+            "pt": "e que faça brotar",
             "en": "and may He sprout",
             "es": "y haga florecer",
             "fr": "et qu'Il fasse fleurir",
@@ -272,14 +342,21 @@
             "de": "und Er lasse sprießen",
             "ru": "и да взрастит",
             "he": "וְיַצְמִיחַ"
+          },
+          "transliteracoes": {
+            "en": "v’yatsmach",
+            "es": "v’yatsmaj",
+            "fr": "véyatsma’h",
+            "it": "v’yatsmach",
+            "ru": "вэяцмах"
           }
         },
         {
           "i": 1,
           "hebrew": "פּוּרְקָנֵהּ",
-          "transliteration_pt": "purkanei",
-          "start": 11.52,
-          "end": 12.58,
+          "transliteration_pt": "purkanêh",
+          "start": 11.54,
+          "end": 12.6,
           "glosa_pt": "Sua redenção",
           "glosas": {
             "pt": "Sua redenção",
@@ -290,17 +367,24 @@
             "de": "Seine Erlösung",
             "ru": "избавление Своё",
             "he": "גְּאֻלָּתוֹ"
+          },
+          "transliteracoes": {
+            "en": "purkane",
+            "es": "purkane",
+            "fr": "pourkané",
+            "it": "purkane",
+            "ru": "пурканэ"
           }
         },
         {
           "i": 2,
           "hebrew": "וִיקָרֵב",
           "transliteration_pt": "vikarev",
-          "start": 12.58,
-          "end": 13.56,
-          "glosa_pt": "e aproxime",
+          "start": 12.6,
+          "end": 13.58,
+          "glosa_pt": "e apresse",
           "glosas": {
-            "pt": "e aproxime",
+            "pt": "e apresse",
             "en": "and hasten",
             "es": "y acerque",
             "fr": "et qu'Il rapproche",
@@ -308,17 +392,24 @@
             "de": "und Er bringe nah",
             "ru": "и приблизит",
             "he": "וִיקָרֵב"
+          },
+          "transliteracoes": {
+            "en": "vikarev",
+            "es": "vikarev",
+            "fr": "vikarev",
+            "it": "vikarev",
+            "ru": "викарэв"
           }
         },
         {
           "i": 3,
           "hebrew": "מְשִׁיחֵהּ",
-          "transliteration_pt": "meshichei",
-          "start": 13.56,
-          "end": 14.96,
-          "glosa_pt": "Seu Mashiach",
+          "transliteration_pt": "meshichêh",
+          "start": 13.58,
+          "end": 14.98,
+          "glosa_pt": "a vinda de seu Mashiach",
           "glosas": {
-            "pt": "Seu Mashiach",
+            "pt": "a vinda de seu Mashiach",
             "en": "His Mashiach",
             "es": "Su Mashíaj",
             "fr": "Son Machia'h",
@@ -326,11 +417,18 @@
             "de": "Seinen Maschiach",
             "ru": "Машиаха Своего",
             "he": "מְשִׁיחוֹ"
+          },
+          "transliteracoes": {
+            "en": "meshichei",
+            "es": "meshijei",
+            "fr": "mechi’heï",
+            "it": "meshichei",
+            "ru": "мешихэй"
           }
         }
       ],
       "translations": {
-        "pt": "e que floresça Sua redenção e aproxime o Seu Mashiach",
+        "pt": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
         "en": "and may His redemption sprout and His Mashiach draw near",
         "es": "y haga florecer Su redención y acerque a Su Mashíaj",
         "fr": "et qu'Il fasse fleurir Sa délivrance et rapproche Son Machia'h",
@@ -342,22 +440,22 @@
     },
     {
       "n": 5,
-      "start": 14.96,
+      "start": 14.98,
       "end": 18.06,
       "hebrew": "בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן",
-      "transliteration_pt": "bechayeichon uveyomeichon",
-      "translation_pt": "em vossas vidas e em vossos dias",
+      "transliteration_pt": "bechayechon uveyomechon",
+      "translation_pt": "em sua vida e em seus dias",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "בְּחַיֵּיכוֹן",
-          "transliteration_pt": "bechayeichon",
-          "start": 14.96,
-          "end": 16.52,
-          "glosa_pt": "em vossas vidas",
+          "transliteration_pt": "bechayechon",
+          "start": 14.98,
+          "end": 16.54,
+          "glosa_pt": "em sua vida",
           "glosas": {
-            "pt": "em vossas vidas",
+            "pt": "em sua vida",
             "en": "in your lifetime",
             "es": "en vuestras vidas",
             "fr": "de votre vivant",
@@ -365,17 +463,24 @@
             "de": "in eurem Leben",
             "ru": "при жизни вашей",
             "he": "בְּחַיֵּיכֶם"
+          },
+          "transliteracoes": {
+            "en": "b’chayechon",
+            "es": "b’jayejon",
+            "fr": "be’hayé’hon",
+            "it": "b’chayechon",
+            "ru": "бэхаейхон"
           }
         },
         {
           "i": 1,
           "hebrew": "וּבְיוֹמֵיכוֹן",
-          "transliteration_pt": "uveyomeichon",
-          "start": 16.52,
+          "transliteration_pt": "uveyomechon",
+          "start": 16.54,
           "end": 18.06,
-          "glosa_pt": "e em vossos dias",
+          "glosa_pt": "e em seus dias",
           "glosas": {
-            "pt": "e em vossos dias",
+            "pt": "e em seus dias",
             "en": "and in your days",
             "es": "y en vuestros días",
             "fr": "et de vos jours",
@@ -383,11 +488,18 @@
             "de": "und in euren Tagen",
             "ru": "и во дни ваши",
             "he": "וּבִימֵיכֶם"
+          },
+          "transliteracoes": {
+            "en": "uv’yomechon",
+            "es": "uv’yomejon",
+            "fr": "ouve’yomé’hon",
+            "it": "uv’yomechon",
+            "ru": "увйомэйхон"
           }
         }
       ],
       "translations": {
-        "pt": "em vossas vidas e em vossos dias",
+        "pt": "em sua vida e em seus dias",
         "en": "in your lifetime and in your days",
         "es": "en vuestras vidas y en vuestros días",
         "fr": "de votre vivant et de vos jours",
@@ -400,21 +512,21 @@
     {
       "n": 6,
       "start": 18.06,
-      "end": 22.02,
+      "end": 22.04,
       "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
-      "transliteration_pt": "uvechayei dechol beit yisrael",
-      "translation_pt": "e na vida de toda a casa de Israel",
+      "transliteration_pt": "uvechayê dechol beit Israel",
+      "translation_pt": "e durante a vida de toda a casa de Israel",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וּבְחַיֵּי",
-          "transliteration_pt": "uvechayei",
+          "transliteration_pt": "uvechayê",
           "start": 18.06,
-          "end": 19.18,
-          "glosa_pt": "e na vida",
+          "end": 19.2,
+          "glosa_pt": "e durante a vida",
           "glosas": {
-            "pt": "e na vida",
+            "pt": "e durante a vida",
             "en": "and in the life",
             "es": "y en la vida",
             "fr": "et de la vie",
@@ -422,14 +534,21 @@
             "de": "und im Leben",
             "ru": "и при жизни",
             "he": "וּבְחַיֵּי"
+          },
+          "transliteracoes": {
+            "en": "uv’chaye",
+            "es": "uv’jaye",
+            "fr": "ouve’hayé",
+            "it": "uv’chaye",
+            "ru": "увхаей"
           }
         },
         {
           "i": 1,
           "hebrew": "דְכָל",
           "transliteration_pt": "dechol",
-          "start": 19.18,
-          "end": 19.42,
+          "start": 19.2,
+          "end": 20.16,
           "glosa_pt": "de toda",
           "glosas": {
             "pt": "de toda",
@@ -440,14 +559,21 @@
             "de": "des ganzen",
             "ru": "всего",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "d’chol",
+            "es": "d’jol",
+            "fr": "de’hol",
+            "it": "d’chol",
+            "ru": "дэхоль"
           }
         },
         {
           "i": 2,
           "hebrew": "בֵּית",
           "transliteration_pt": "beit",
-          "start": 19.42,
-          "end": 20.7,
+          "start": 20.16,
+          "end": 20.72,
           "glosa_pt": "a casa",
           "glosas": {
             "pt": "a casa",
@@ -458,14 +584,21 @@
             "de": "Hauses",
             "ru": "дома",
             "he": "בֵּית"
+          },
+          "transliteracoes": {
+            "en": "beit",
+            "es": "beit",
+            "fr": "beït",
+            "it": "beit",
+            "ru": "бэйт"
           }
         },
         {
           "i": 3,
           "hebrew": "יִשְׂרָאֵל",
-          "transliteration_pt": "yisrael",
-          "start": 20.7,
-          "end": 22.02,
+          "transliteration_pt": "Israel",
+          "start": 20.72,
+          "end": 22.04,
           "glosa_pt": "de Israel",
           "glosas": {
             "pt": "de Israel",
@@ -476,11 +609,18 @@
             "de": "Israel",
             "ru": "Израиля",
             "he": "יִשְׂרָאֵל"
+          },
+          "transliteracoes": {
+            "en": "Yisrael",
+            "es": "Yisrael",
+            "fr": "Yisraël",
+            "it": "Yisrael",
+            "ru": "Исраэль"
           }
         }
       ],
       "translations": {
-        "pt": "e na vida de toda a casa de Israel",
+        "pt": "e durante a vida de toda a casa de Israel",
         "en": "and in the life of the whole house of Israel",
         "es": "y en la vida de toda la casa de Israel",
         "fr": "et de la vie de toute la maison d'Israël",
@@ -492,19 +632,19 @@
     },
     {
       "n": 7,
-      "start": 22.02,
-      "end": 26.49,
+      "start": 22.04,
+      "end": 27.66,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "baagala uvezman qariv veimru amen",
-      "translation_pt": "rapidamente e em breve — e dizei amém",
+      "transliteration_pt": "baagalá uvizmán carív veimrú Amen",
+      "translation_pt": "rapidamente e em breve — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "בַּעֲגָלָא",
-          "transliteration_pt": "baagala",
-          "start": 22.02,
-          "end": 23.18,
+          "transliteration_pt": "baagalá",
+          "start": 22.04,
+          "end": 23.2,
           "glosa_pt": "rapidamente",
           "glosas": {
             "pt": "rapidamente",
@@ -515,17 +655,24 @@
             "de": "bald",
             "ru": "вскоре",
             "he": "בִּמְהֵרָה"
+          },
+          "transliteracoes": {
+            "en": "ba’agala",
+            "es": "ba’agala",
+            "fr": "ba’agala",
+            "it": "ba’agala",
+            "ru": "баагала"
           }
         },
         {
           "i": 1,
           "hebrew": "וּבִזְמַן",
-          "transliteration_pt": "uvezman",
-          "start": 23.18,
+          "transliteration_pt": "uvizmán",
+          "start": 23.2,
           "end": 24.32,
-          "glosa_pt": "e em tempo",
+          "glosa_pt": "e em",
           "glosas": {
-            "pt": "e em tempo",
+            "pt": "e em",
             "en": "and in a time",
             "es": "y en un tiempo",
             "fr": "et en un temps",
@@ -533,17 +680,24 @@
             "de": "und in naher",
             "ru": "и во время",
             "he": "וּבִזְמַן"
+          },
+          "transliteracoes": {
+            "en": "uvizman",
+            "es": "uvizman",
+            "fr": "ouvizmane",
+            "it": "uvizman",
+            "ru": "увизман"
           }
         },
         {
           "i": 2,
           "hebrew": "קָרִיב",
-          "transliteration_pt": "qariv",
+          "transliteration_pt": "carív",
           "start": 24.32,
-          "end": 25.2,
-          "glosa_pt": "próximo",
+          "end": 25.24,
+          "glosa_pt": "breve",
           "glosas": {
-            "pt": "próximo",
+            "pt": "breve",
             "en": "near",
             "es": "cercano",
             "fr": "proche",
@@ -551,17 +705,24 @@
             "de": "Zeit",
             "ru": "близкое",
             "he": "קָרוֹב"
+          },
+          "transliteracoes": {
+            "en": "kariv",
+            "es": "kariv",
+            "fr": "kariv",
+            "it": "kariv",
+            "ru": "карив"
           }
         },
         {
           "i": 3,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimru",
-          "start": 25.2,
-          "end": 26.22,
-          "glosa_pt": "e dizei",
+          "transliteration_pt": "veimrú",
+          "start": 25.24,
+          "end": 26.24,
+          "glosa_pt": "e digam",
           "glosas": {
-            "pt": "e dizei",
+            "pt": "e digam",
             "en": "and say",
             "es": "y decid",
             "fr": "et dites",
@@ -569,17 +730,24 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "ve’imru",
+            "es": "ve’imru",
+            "fr": "véïmrou",
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
           "i": 4,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amen",
-          "start": 26.22,
-          "end": 26.49,
-          "glosa_pt": "amém",
+          "transliteration_pt": "Amen",
+          "start": 26.24,
+          "end": 27.66,
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amém",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -587,11 +755,18 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
       "translations": {
-        "pt": "rapidamente e em breve — e dizei amém",
+        "pt": "rapidamente e em breve — e digam Amen",
         "en": "speedily and soon — and say amen",
         "es": "pronto y en breve — y decid amén",
         "fr": "rapidement et bientôt — et dites amen",
@@ -603,22 +778,22 @@
     },
     {
       "n": 8,
-      "start": 26.49,
-      "end": 34.44,
+      "start": 27.66,
+      "end": 34.46,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
-      "transliteration_pt": "Yehei shmei raba mevarach lalam ulalmei almaya",
-      "translation_pt": "Que Seu grande Nome seja abençoado eternamente e para sempre",
+      "transliteration_pt": "Yehê shemê raba mevarách lealám ul'almei almayá",
+      "translation_pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יְהֵא",
-          "transliteration_pt": "Yehei",
-          "start": 26.49,
-          "end": 27.64,
-          "glosa_pt": "seja",
+          "transliteration_pt": "Yehê",
+          "start": 27.66,
+          "end": 28.52,
+          "glosa_pt": "Que",
           "glosas": {
-            "pt": "seja",
+            "pt": "Que",
             "en": "may be",
             "es": "sea",
             "fr": "que soit",
@@ -626,17 +801,24 @@
             "de": "es sei",
             "ru": "да будет",
             "he": "יְהִי"
+          },
+          "transliteracoes": {
+            "en": "y’he",
+            "es": "y’he",
+            "fr": "yéhé",
+            "it": "y’he",
+            "ru": "йехэ"
           }
         },
         {
           "i": 1,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shmei",
-          "start": 27.64,
-          "end": 28.5,
-          "glosa_pt": "Seu Nome",
+          "transliteration_pt": "shemê",
+          "start": 28.52,
+          "end": 29.38,
+          "glosa_pt": "Seu grande Nome",
           "glosas": {
-            "pt": "Seu Nome",
+            "pt": "Seu grande Nome",
             "en": "His Name",
             "es": "Su Nombre",
             "fr": "Son Nom",
@@ -644,17 +826,24 @@
             "de": "Sein Name",
             "ru": "Имя Его",
             "he": "שְׁמוֹ"
+          },
+          "transliteracoes": {
+            "en": "sh’me",
+            "es": "sh’me",
+            "fr": "ch’mé",
+            "it": "sh’me",
+            "ru": "шмэ"
           }
         },
         {
           "i": 2,
           "hebrew": "רַבָּא",
           "transliteration_pt": "raba",
-          "start": 28.5,
-          "end": 29.36,
-          "glosa_pt": "grande",
+          "start": 29.38,
+          "end": 30.24,
+          "glosa_pt": "",
           "glosas": {
-            "pt": "grande",
+            "pt": "",
             "en": "great",
             "es": "grande",
             "fr": "grand",
@@ -662,17 +851,24 @@
             "de": "großer",
             "ru": "великое",
             "he": "הַגָּדוֹל"
+          },
+          "transliteracoes": {
+            "en": "raba",
+            "es": "raba",
+            "fr": "raba",
+            "it": "raba",
+            "ru": "раба"
           }
         },
         {
           "i": 3,
           "hebrew": "מְבָרַךְ",
-          "transliteration_pt": "mevarach",
-          "start": 29.36,
-          "end": 30.24,
-          "glosa_pt": "abençoado",
+          "transliteration_pt": "mevarách",
+          "start": 30.24,
+          "end": 31.4,
+          "glosa_pt": "seja abençoado",
           "glosas": {
-            "pt": "abençoado",
+            "pt": "seja abençoado",
             "en": "blessed",
             "es": "bendecido",
             "fr": "béni",
@@ -680,14 +876,21 @@
             "de": "gepriesen",
             "ru": "благословенно",
             "he": "מְבֹרָךְ"
+          },
+          "transliteracoes": {
+            "en": "m’varach",
+            "es": "m’varaj",
+            "fr": "mevara’h",
+            "it": "m’varach",
+            "ru": "мэварах"
           }
         },
         {
           "i": 4,
           "hebrew": "לְעָלַם",
-          "transliteration_pt": "lalam",
-          "start": 30.24,
-          "end": 31.38,
+          "transliteration_pt": "lealám",
+          "start": 31.4,
+          "end": 32.48,
           "glosa_pt": "para sempre",
           "glosas": {
             "pt": "para sempre",
@@ -698,17 +901,24 @@
             "de": "für immer",
             "ru": "вовеки",
             "he": "לְעוֹלָם"
+          },
+          "transliteracoes": {
+            "en": "le’alam",
+            "es": "le’alam",
+            "fr": "le’alam",
+            "it": "le’alam",
+            "ru": "лэалам"
           }
         },
         {
           "i": 5,
           "hebrew": "וּלְעָלְמֵי",
-          "transliteration_pt": "ulalmei",
-          "start": 31.38,
-          "end": 32.46,
-          "glosa_pt": "e por todas",
+          "transliteration_pt": "ul'almei",
+          "start": 32.48,
+          "end": 33.46,
+          "glosa_pt": "e para toda",
           "glosas": {
-            "pt": "e por todas",
+            "pt": "e para toda",
             "en": "and for all",
             "es": "y por toda",
             "fr": "et pour toute",
@@ -716,17 +926,24 @@
             "de": "und in alle",
             "ru": "и во веки",
             "he": "וּלְעוֹלְמֵי"
+          },
+          "transliteracoes": {
+            "en": "ul’almei",
+            "es": "ul’almei",
+            "fr": "oule’almeï",
+            "it": "ul’almei",
+            "ru": "улалмэй"
           }
         },
         {
           "i": 6,
           "hebrew": "עָלְמַיָּא",
-          "transliteration_pt": "almaya",
-          "start": 32.46,
-          "end": 34.44,
-          "glosa_pt": "as eternidades",
+          "transliteration_pt": "almayá",
+          "start": 33.46,
+          "end": 34.46,
+          "glosa_pt": "eternidade",
           "glosas": {
-            "pt": "as eternidades",
+            "pt": "eternidade",
             "en": "eternity",
             "es": "la eternidad",
             "fr": "l'éternité",
@@ -734,11 +951,18 @@
             "de": "Ewigkeit",
             "ru": "веков",
             "he": "עוֹלָמִים"
+          },
+          "transliteracoes": {
+            "en": "almaya",
+            "es": "almaya",
+            "fr": "almaya",
+            "it": "almaya",
+            "ru": "алмая"
           }
         }
       ],
       "translations": {
-        "pt": "Que Seu grande Nome seja abençoado eternamente e para sempre",
+        "pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
         "en": "May His great Name be blessed forever and for all eternity",
         "es": "Que Su gran Nombre sea bendecido por siempre y para toda la eternidad",
         "fr": "Que Son grand Nom soit béni à jamais et pour toute l'éternité",
@@ -750,22 +974,22 @@
     },
     {
       "n": 9,
-      "start": 34.44,
-      "end": 38.32,
-      "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
-      "translation_pt": "Bendito, louvado e glorificado seja",
+      "start": 34.46,
+      "end": 38.34,
+      "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
+      "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr",
+      "translation_pt": "abençoado louvado glorificado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יִתְבָּרֵךְ",
-          "transliteration_pt": "Yitbarach",
-          "start": 34.44,
-          "end": 35.7,
-          "glosa_pt": "bendito",
+          "transliteration_pt": "Yitbarêch",
+          "start": 34.46,
+          "end": 35.72,
+          "glosa_pt": "abençoado",
           "glosas": {
-            "pt": "bendito",
+            "pt": "abençoado",
             "en": "blessed",
             "es": "bendito",
             "fr": "béni",
@@ -773,17 +997,24 @@
             "de": "gepriesen",
             "ru": "благословенно",
             "he": "יִתְבָּרֵךְ"
+          },
+          "transliteracoes": {
+            "en": "yitbarach",
+            "es": "yitbaraj",
+            "fr": "yitbara’h",
+            "it": "yitbarach",
+            "ru": "йитбарах"
           }
         },
         {
           "i": 1,
           "hebrew": "וְיִשְׁתַּבַּח",
           "transliteration_pt": "veyishtabach",
-          "start": 35.7,
-          "end": 36.92,
-          "glosa_pt": "e louvado",
+          "start": 35.72,
+          "end": 36.94,
+          "glosa_pt": "louvado",
           "glosas": {
-            "pt": "e louvado",
+            "pt": "louvado",
             "en": "and praised",
             "es": "y alabado",
             "fr": "et loué",
@@ -791,17 +1022,24 @@
             "de": "und gelobt",
             "ru": "и восхваляемо",
             "he": "וְיִשְׁתַּבֵּחַ"
+          },
+          "transliteracoes": {
+            "en": "v’yishtabach",
+            "es": "v’yishtabaj",
+            "fr": "véyichtaba’h",
+            "it": "v’yishtabach",
+            "ru": "вэйиштабах"
           }
         },
         {
           "i": 2,
-          "hebrew": "וְיִתְפָּאַר",
-          "transliteration_pt": "veyitpaar",
-          "start": 36.92,
-          "end": 38.32,
-          "glosa_pt": "e glorificado",
+          "hebrew": "וְיִתְפָּאֵר",
+          "transliteration_pt": "veyitpaêr",
+          "start": 36.94,
+          "end": 38.34,
+          "glosa_pt": "glorificado",
           "glosas": {
-            "pt": "e glorificado",
+            "pt": "glorificado",
             "en": "and glorified",
             "es": "y glorificado",
             "fr": "et glorifié",
@@ -809,11 +1047,18 @@
             "de": "und verherrlicht",
             "ru": "и прославляемо",
             "he": "וְיִתְפָּאֵר"
+          },
+          "transliteracoes": {
+            "en": "v’yitpa’ar",
+            "es": "v’yitpa’ar",
+            "fr": "véyitpa’ar",
+            "it": "v’yitpa’ar",
+            "ru": "вэйитпаар"
           }
         }
       ],
       "translations": {
-        "pt": "Bendito, louvado e glorificado seja",
+        "pt": "Seja abençoado, louvado e glorificado",
         "en": "Blessed, praised and glorified be He",
         "es": "Bendito, alabado y glorificado sea",
         "fr": "Béni, loué et glorifié soit-Il",
@@ -825,22 +1070,22 @@
     },
     {
       "n": 10,
-      "start": 38.32,
-      "end": 41.82,
+      "start": 38.34,
+      "end": 41.84,
       "hebrew": "וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
-      "transliteration_pt": "veyitromam veyitnassa veyithadar",
-      "translation_pt": "exaltado, elevado e honrado seja",
+      "transliteration_pt": "veyitromam veyitnasse veyithadar",
+      "translation_pt": "elevado, enaltecido e honrado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיִתְרוֹמָם",
           "transliteration_pt": "veyitromam",
-          "start": 38.32,
-          "end": 39.42,
-          "glosa_pt": "e exaltado",
+          "start": 38.34,
+          "end": 39.44,
+          "glosa_pt": "elevado",
           "glosas": {
-            "pt": "e exaltado",
+            "pt": "elevado",
             "en": "and exalted",
             "es": "y exaltado",
             "fr": "et exalté",
@@ -848,17 +1093,24 @@
             "de": "und erhoben",
             "ru": "и возвышаемо",
             "he": "וְיִתְרוֹמֵם"
+          },
+          "transliteracoes": {
+            "en": "v’yitromam",
+            "es": "v’yitromam",
+            "fr": "véyitromam",
+            "it": "v’yitromam",
+            "ru": "вэйитромам"
           }
         },
         {
           "i": 1,
           "hebrew": "וְיִתְנַשֵּׂא",
-          "transliteration_pt": "veyitnassa",
-          "start": 39.42,
-          "end": 40.66,
-          "glosa_pt": "e elevado",
+          "transliteration_pt": "veyitnasse",
+          "start": 39.44,
+          "end": 40.68,
+          "glosa_pt": "enaltecido",
           "glosas": {
-            "pt": "e elevado",
+            "pt": "enaltecido",
             "en": "and uplifted",
             "es": "y elevado",
             "fr": "et élevé",
@@ -866,14 +1118,21 @@
             "de": "und erhöht",
             "ru": "и превозносимо",
             "he": "וְיִתְנַשֵּׂא"
+          },
+          "transliteracoes": {
+            "en": "v’yitnasse",
+            "es": "v’yitnasse",
+            "fr": "véyitnassé",
+            "it": "v’yitnasse",
+            "ru": "вэйитнассэ"
           }
         },
         {
           "i": 2,
           "hebrew": "וְיִתְהַדָּר",
           "transliteration_pt": "veyithadar",
-          "start": 40.66,
-          "end": 41.82,
+          "start": 40.68,
+          "end": 41.84,
           "glosa_pt": "e honrado",
           "glosas": {
             "pt": "e honrado",
@@ -884,11 +1143,18 @@
             "de": "und geehrt",
             "ru": "и почитаемо",
             "he": "וְיִתְהַדֵּר"
+          },
+          "transliteracoes": {
+            "en": "v’yithadar",
+            "es": "v’yithadar",
+            "fr": "véyithadar",
+            "it": "v’yithadar",
+            "ru": "вэйитхадар"
           }
         }
       ],
       "translations": {
-        "pt": "exaltado, elevado e honrado seja",
+        "pt": "elevado, enaltecido e honrado",
         "en": "exalted, uplifted and honored be He",
         "es": "exaltado, elevado y honrado sea",
         "fr": "exalté, élevé et honoré soit-Il",
@@ -900,22 +1166,22 @@
     },
     {
       "n": 11,
-      "start": 41.82,
-      "end": 47.38,
+      "start": 41.84,
+      "end": 47.4,
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
-      "transliteration_pt": "veyitaleh veyithalal shmei dequdsha berich hu",
-      "translation_pt": "e elevado e exaltado seja o Nome do Santo Bendito Seja",
+      "transliteration_pt": "veyitaleh veyithalal shemê decudshá berich hu",
+      "translation_pt": "exaltado e louvado seja o Nome do Santo, bendito seja Ele",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיִתְעַלֶּה",
           "transliteration_pt": "veyitaleh",
-          "start": 41.82,
-          "end": 42.82,
-          "glosa_pt": "e enaltecido",
+          "start": 41.84,
+          "end": 42.88,
+          "glosa_pt": "exaltado",
           "glosas": {
-            "pt": "e enaltecido",
+            "pt": "exaltado",
             "en": "and elevated",
             "es": "y enaltecido",
             "fr": "et magnifié",
@@ -923,17 +1189,24 @@
             "de": "und gefeiert",
             "ru": "и возвеличиваемо",
             "he": "וְיִתְעַלֶּה"
+          },
+          "transliteracoes": {
+            "en": "v’yit’aleh",
+            "es": "v’yit’aleh",
+            "fr": "véyit’alé",
+            "it": "v’yit’aleh",
+            "ru": "вэйиталэх"
           }
         },
         {
           "i": 1,
           "hebrew": "וְיִתְהַלָּל",
           "transliteration_pt": "veyithalal",
-          "start": 42.82,
-          "end": 44.18,
-          "glosa_pt": "e celebrado",
+          "start": 42.88,
+          "end": 44.22,
+          "glosa_pt": "e louvado",
           "glosas": {
-            "pt": "e celebrado",
+            "pt": "e louvado",
             "en": "and lauded",
             "es": "y celebrado",
             "fr": "et célébré",
@@ -941,17 +1214,24 @@
             "de": "und gerühmt",
             "ru": "и воспеваемо",
             "he": "וְיִתְהַלֵּל"
+          },
+          "transliteracoes": {
+            "en": "v’yit’halal",
+            "es": "v’yit’halal",
+            "fr": "véyit’halal",
+            "it": "v’yit’halal",
+            "ru": "вэйитхалаль"
           }
         },
         {
           "i": 2,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shmei",
-          "start": 44.18,
-          "end": 45,
-          "glosa_pt": "Seu Nome",
+          "transliteration_pt": "shemê",
+          "start": 44.22,
+          "end": 45.02,
+          "glosa_pt": "seja o Nome",
           "glosas": {
-            "pt": "Seu Nome",
+            "pt": "seja o Nome",
             "en": "His Name",
             "es": "Su Nombre",
             "fr": "Son Nom",
@@ -959,14 +1239,21 @@
             "de": "Sein Name",
             "ru": "Имя Его",
             "he": "שְׁמוֹ"
+          },
+          "transliteracoes": {
+            "en": "sh’me",
+            "es": "sh’me",
+            "fr": "ch’mé",
+            "it": "sh’me",
+            "ru": "шмэ"
           }
         },
         {
           "i": 3,
           "hebrew": "דְּקֻדְשָׁא",
-          "transliteration_pt": "dequdsha",
-          "start": 45,
-          "end": 45.82,
+          "transliteration_pt": "decudshá",
+          "start": 45.02,
+          "end": 45.84,
           "glosa_pt": "do Santo",
           "glosas": {
             "pt": "do Santo",
@@ -977,17 +1264,24 @@
             "de": "des Heiligen",
             "ru": "Святого",
             "he": "שֶׁל הַקָּדוֹשׁ"
+          },
+          "transliteracoes": {
+            "en": "d’kudsha",
+            "es": "d’kudsha",
+            "fr": "de’koudcha",
+            "it": "d’kudsha",
+            "ru": "дэкудша"
           }
         },
         {
           "i": 4,
           "hebrew": "בְּרִיךְ",
           "transliteration_pt": "berich",
-          "start": 45.82,
-          "end": 46.58,
-          "glosa_pt": "Bendito",
+          "start": 45.84,
+          "end": 46.6,
+          "glosa_pt": "bendito",
           "glosas": {
-            "pt": "Bendito",
+            "pt": "bendito",
             "en": "blessed",
             "es": "bendito",
             "fr": "béni",
@@ -995,17 +1289,24 @@
             "de": "gepriesen",
             "ru": "благословен",
             "he": "בָּרוּךְ"
+          },
+          "transliteracoes": {
+            "en": "b’rich",
+            "es": "b’rij",
+            "fr": "be’ri’h",
+            "it": "b’rich",
+            "ru": "брих"
           }
         },
         {
           "i": 5,
           "hebrew": "הוּא",
           "transliteration_pt": "hu",
-          "start": 46.58,
-          "end": 47.38,
-          "glosa_pt": "Ele",
+          "start": 46.6,
+          "end": 47.4,
+          "glosa_pt": "seja Ele",
           "glosas": {
-            "pt": "Ele",
+            "pt": "seja Ele",
             "en": "is He",
             "es": "Él",
             "fr": "soit-Il",
@@ -1013,11 +1314,18 @@
             "de": "sei Er",
             "ru": "Он",
             "he": "הוּא"
+          },
+          "transliteracoes": {
+            "en": "hu",
+            "es": "hu",
+            "fr": "hou",
+            "it": "hu",
+            "ru": "ху"
           }
         }
       ],
       "translations": {
-        "pt": "e elevado e exaltado seja o Nome do Santo Bendito Seja",
+        "pt": "exaltado e louvado seja o Nome do Santo, bendito seja Ele",
         "en": "elevated and lauded be the Name of the Holy One, blessed be He",
         "es": "y enaltecido y celebrado sea el Nombre del Santo, bendito sea",
         "fr": "et magnifié et célébré soit le Nom du Saint, béni soit-Il",
@@ -1029,19 +1337,19 @@
     },
     {
       "n": 12,
-      "start": 47.38,
-      "end": 53.76,
+      "start": 47.4,
+      "end": 52.3,
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
-      "transliteration_pt": "leila min kol birchata veshirata",
-      "translation_pt": "acima de todas as bênçãos e cânticos",
+      "transliteration_pt": "leela min kol birchatá veshiratá",
+      "translation_pt": "acima de todas as bênçãos, cânticos",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "לְעֵלָּא",
-          "transliteration_pt": "leila",
-          "start": 47.38,
-          "end": 48.34,
+          "transliteration_pt": "leela",
+          "start": 47.4,
+          "end": 48.36,
           "glosa_pt": "acima",
           "glosas": {
             "pt": "acima",
@@ -1052,14 +1360,21 @@
             "de": "über",
             "ru": "превыше",
             "he": "לְמַעְלָה"
+          },
+          "transliteracoes": {
+            "en": "l’ela",
+            "es": "l’ela",
+            "fr": "lé’ela",
+            "it": "l’ela",
+            "ru": "лээла"
           }
         },
         {
           "i": 1,
           "hebrew": "מִן",
           "transliteration_pt": "min",
-          "start": 48.34,
-          "end": 48.58,
+          "start": 48.36,
+          "end": 48.76,
           "glosa_pt": "de",
           "glosas": {
             "pt": "de",
@@ -1070,14 +1385,21 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "mine",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {
           "i": 2,
           "hebrew": "כָּל",
           "transliteration_pt": "kol",
-          "start": 48.58,
-          "end": 49.06,
+          "start": 48.76,
+          "end": 49.16,
           "glosa_pt": "todas",
           "glosas": {
             "pt": "todas",
@@ -1088,14 +1410,21 @@
             "de": "alle",
             "ru": "всех",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "mikol",
+            "es": "mikol",
+            "fr": "mikol",
+            "it": "mikol",
+            "ru": "миколь"
           }
         },
         {
           "i": 3,
           "hebrew": "בִּרְכָתָא",
-          "transliteration_pt": "birchata",
-          "start": 49.06,
-          "end": 50.52,
+          "transliteration_pt": "birchatá",
+          "start": 49.16,
+          "end": 50.54,
           "glosa_pt": "as bênçãos",
           "glosas": {
             "pt": "as bênçãos",
@@ -1106,17 +1435,24 @@
             "de": "Segnungen",
             "ru": "благословений",
             "he": "הַבְּרָכוֹת"
+          },
+          "transliteracoes": {
+            "en": "birchata",
+            "es": "birjata",
+            "fr": "bir’hata",
+            "it": "birchata",
+            "ru": "бирхата"
           }
         },
         {
           "i": 4,
           "hebrew": "וְשִׁירָתָא",
-          "transliteration_pt": "veshirata",
-          "start": 50.52,
-          "end": 53.76,
-          "glosa_pt": "e cânticos",
+          "transliteration_pt": "veshiratá",
+          "start": 50.54,
+          "end": 52.3,
+          "glosa_pt": "cânticos",
           "glosas": {
-            "pt": "e cânticos",
+            "pt": "cânticos",
             "en": "and songs",
             "es": "y cánticos",
             "fr": "et les chants",
@@ -1124,11 +1460,18 @@
             "de": "und Lieder",
             "ru": "и песнопений",
             "he": "וְהַשִּׁירוֹת"
+          },
+          "transliteracoes": {
+            "en": "v’shirata",
+            "es": "v’shirata",
+            "fr": "véchirata",
+            "it": "v’shirata",
+            "ru": "вэширата"
           }
         }
       ],
       "translations": {
-        "pt": "acima de todas as bênçãos e cânticos",
+        "pt": "acima de todas as bênçãos, cânticos",
         "en": "above all blessings and songs",
         "es": "por encima de todas las bendiciones y cánticos",
         "fr": "au-dessus de toutes les bénédictions et de tous les chants",
@@ -1140,19 +1483,19 @@
     },
     {
       "n": 13,
-      "start": 53.76,
-      "end": 60.02,
+      "start": 52.3,
+      "end": 59.76,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechamata daamiran balma veimru amen",
-      "translation_pt": "louvores e consolações que se recitam no mundo — e dizei amém",
+      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
+      "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "תֻּשְׁבְּחָתָא",
           "transliteration_pt": "tushbechata",
-          "start": 53.76,
-          "end": 55.7,
+          "start": 52.3,
+          "end": 53.76,
           "glosa_pt": "louvores",
           "glosas": {
             "pt": "louvores",
@@ -1163,17 +1506,24 @@
             "de": "Lobpreisungen",
             "ru": "восхвалений",
             "he": "הַתִּשְׁבָּחוֹת"
+          },
+          "transliteracoes": {
+            "en": "tushbechata",
+            "es": "tushbejata",
+            "fr": "touchbé’hata",
+            "it": "tushbechata",
+            "ru": "тушбэхата"
           }
         },
         {
           "i": 1,
           "hebrew": "וְנֶחָמָתָא",
-          "transliteration_pt": "venechamata",
-          "start": 55.7,
-          "end": 56.58,
-          "glosa_pt": "e consolações",
+          "transliteration_pt": "venechemata",
+          "start": 53.76,
+          "end": 55.72,
+          "glosa_pt": "e consolos",
           "glosas": {
-            "pt": "e consolações",
+            "pt": "e consolos",
             "en": "and consolations",
             "es": "y consuelos",
             "fr": "et consolations",
@@ -1181,17 +1531,24 @@
             "de": "und Tröstungen",
             "ru": "и утешений",
             "he": "וְהַנֶּחָמוֹת"
+          },
+          "transliteracoes": {
+            "en": "v’nechemata",
+            "es": "v’nejemata",
+            "fr": "véné’hémata",
+            "it": "v’nechemata",
+            "ru": "вэнэхэмата"
           }
         },
         {
           "i": 2,
           "hebrew": "דַּאֲמִירָן",
-          "transliteration_pt": "daamiran",
-          "start": 56.58,
-          "end": 57.58,
-          "glosa_pt": "que se dizem",
+          "transliteration_pt": "dáamiran",
+          "start": 55.72,
+          "end": 56.6,
+          "glosa_pt": "que são proferidos",
           "glosas": {
-            "pt": "que se dizem",
+            "pt": "que são proferidos",
             "en": "that are uttered",
             "es": "que se dicen",
             "fr": "prononcées",
@@ -1199,14 +1556,21 @@
             "de": "die gesprochen werden",
             "ru": "произносимых",
             "he": "הַנֶּאֱמָרוֹת"
+          },
+          "transliteracoes": {
+            "en": "da’amiran",
+            "es": "da’amiran",
+            "fr": "da’amirane",
+            "it": "da’amiran",
+            "ru": "даамиран"
           }
         },
         {
           "i": 3,
           "hebrew": "בְּעָלְמָא",
-          "transliteration_pt": "balma",
-          "start": 57.58,
-          "end": 58.7,
+          "transliteration_pt": "bealma",
+          "start": 56.6,
+          "end": 57.6,
           "glosa_pt": "no mundo",
           "glosas": {
             "pt": "no mundo",
@@ -1217,17 +1581,24 @@
             "de": "in der Welt",
             "ru": "в мире",
             "he": "בָּעוֹלָם"
+          },
+          "transliteracoes": {
+            "en": "b’alma",
+            "es": "b’alma",
+            "fr": "béalma",
+            "it": "b’alma",
+            "ru": "бэалма"
           }
         },
         {
           "i": 4,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimru",
-          "start": 58.7,
-          "end": 59.74,
-          "glosa_pt": "e dizei",
+          "transliteration_pt": "veimrú",
+          "start": 57.6,
+          "end": 58.72,
+          "glosa_pt": "e digam",
           "glosas": {
-            "pt": "e dizei",
+            "pt": "e digam",
             "en": "and say",
             "es": "y decid",
             "fr": "et dites",
@@ -1235,17 +1606,24 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "ve’imru",
+            "es": "ve’imru",
+            "fr": "véïmrou",
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
           "i": 5,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amen",
-          "start": 59.74,
-          "end": 60.02,
-          "glosa_pt": "amém",
+          "transliteration_pt": "Amen",
+          "start": 58.72,
+          "end": 59.76,
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amém",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -1253,11 +1631,18 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
       "translations": {
-        "pt": "louvores e consolações que se recitam no mundo — e dizei amém",
+        "pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
         "en": "praises and consolations uttered in the world — and say amen",
         "es": "alabanzas y consuelos que se recitan en el mundo — y decid amén",
         "fr": "louanges et consolations prononcées dans le monde — et dites amen",
@@ -1269,22 +1654,22 @@
     },
     {
       "n": 14,
-      "start": 60.02,
-      "end": 73.14,
+      "start": 59.76,
+      "end": 73.16,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehei shlama raba min shamaya vechayim tovim aleinu val kol yisrael veimru amen",
-      "translation_pt": "Que grande paz do céu e boa vida venha sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen",
+      "translation_pt": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יְהֵא",
-          "transliteration_pt": "Yehei",
-          "start": 60.02,
-          "end": 60.58,
-          "glosa_pt": "seja",
+          "transliteration_pt": "Yehê",
+          "start": 59.76,
+          "end": 60.6,
+          "glosa_pt": "Que haja",
           "glosas": {
-            "pt": "seja",
+            "pt": "Que haja",
             "en": "may be",
             "es": "sea",
             "fr": "que soit",
@@ -1292,14 +1677,21 @@
             "de": "es sei",
             "ru": "да будет",
             "he": "יְהִי"
+          },
+          "transliteracoes": {
+            "en": "y’he",
+            "es": "y’he",
+            "fr": "yéhé",
+            "it": "y’he",
+            "ru": "йехэ"
           }
         },
         {
           "i": 1,
           "hebrew": "שְׁלָמָא",
-          "transliteration_pt": "shlama",
-          "start": 60.58,
-          "end": 61.36,
+          "transliteration_pt": "shelamá",
+          "start": 60.6,
+          "end": 61.38,
           "glosa_pt": "paz",
           "glosas": {
             "pt": "paz",
@@ -1310,17 +1702,24 @@
             "de": "Frieden",
             "ru": "мир",
             "he": "שָׁלוֹם"
+          },
+          "transliteracoes": {
+            "en": "shelama",
+            "es": "shelama",
+            "fr": "chélama",
+            "it": "shelama",
+            "ru": "шлама"
           }
         },
         {
           "i": 2,
           "hebrew": "רַבָּא",
           "transliteration_pt": "raba",
-          "start": 61.36,
-          "end": 62.46,
-          "glosa_pt": "grande",
+          "start": 61.38,
+          "end": 62.48,
+          "glosa_pt": "em abundância",
           "glosas": {
-            "pt": "grande",
+            "pt": "em abundância",
             "en": "great",
             "es": "grande",
             "fr": "grand",
@@ -1328,17 +1727,24 @@
             "de": "großer",
             "ru": "великое",
             "he": "הַגָּדוֹל"
+          },
+          "transliteracoes": {
+            "en": "raba",
+            "es": "raba",
+            "fr": "raba",
+            "it": "raba",
+            "ru": "раба"
           }
         },
         {
           "i": 3,
           "hebrew": "מִן",
           "transliteration_pt": "min",
-          "start": 62.46,
-          "end": 62.68,
-          "glosa_pt": "de",
+          "start": 62.48,
+          "end": 62.96,
+          "glosa_pt": "vinda",
           "glosas": {
-            "pt": "de",
+            "pt": "vinda",
             "en": "beyond",
             "es": "de",
             "fr": "de",
@@ -1346,17 +1752,24 @@
             "de": "alle",
             "ru": "всех",
             "he": "מִן"
+          },
+          "transliteracoes": {
+            "en": "min",
+            "es": "min",
+            "fr": "mine",
+            "it": "min",
+            "ru": "мин"
           }
         },
         {
           "i": 4,
           "hebrew": "שְׁמַיָּא",
-          "transliteration_pt": "shamaya",
-          "start": 62.68,
-          "end": 64.18,
-          "glosa_pt": "o céu",
+          "transliteration_pt": "shemayá",
+          "start": 62.96,
+          "end": 64.2,
+          "glosa_pt": "dos céus",
           "glosas": {
-            "pt": "o céu",
+            "pt": "dos céus",
             "en": "heaven",
             "es": "el cielo",
             "fr": "le ciel",
@@ -1364,17 +1777,24 @@
             "de": "dem Himmel",
             "ru": "небес",
             "he": "הַשָּׁמַיִם"
+          },
+          "transliteracoes": {
+            "en": "shemaya",
+            "es": "shemaya",
+            "fr": "chémaya",
+            "it": "shemaya",
+            "ru": "шмая"
           }
         },
         {
           "i": 5,
           "hebrew": "וְחַיִּים",
           "transliteration_pt": "vechayim",
-          "start": 64.18,
-          "end": 65.3,
-          "glosa_pt": "e vida",
+          "start": 64.2,
+          "end": 65.32,
+          "glosa_pt": "e uma vida",
           "glosas": {
-            "pt": "e vida",
+            "pt": "e uma vida",
             "en": "and life",
             "es": "y vida",
             "fr": "et vie",
@@ -1382,14 +1802,21 @@
             "de": "und Leben",
             "ru": "и жизнь",
             "he": "וְחַיִּים"
+          },
+          "transliteracoes": {
+            "en": "chayim",
+            "es": "jayim",
+            "fr": "’hayim",
+            "it": "chayim",
+            "ru": "хайим"
           }
         },
         {
           "i": 6,
           "hebrew": "טוֹבִים",
           "transliteration_pt": "tovim",
-          "start": 65.3,
-          "end": 66.04,
+          "start": 65.32,
+          "end": 66.06,
           "glosa_pt": "boa",
           "glosas": {
             "pt": "boa",
@@ -1400,17 +1827,24 @@
             "de": "gutes",
             "ru": "добрая",
             "he": "טוֹבִים"
+          },
+          "transliteracoes": {
+            "en": "tovim",
+            "es": "tovim",
+            "fr": "tovim",
+            "it": "tovim",
+            "ru": "товим"
           }
         },
         {
           "i": 7,
           "hebrew": "עָלֵינוּ",
           "transliteration_pt": "aleinu",
-          "start": 66.04,
-          "end": 67.12,
-          "glosa_pt": "sobre nós",
+          "start": 66.06,
+          "end": 67.14,
+          "glosa_pt": "para nós",
           "glosas": {
-            "pt": "sobre nós",
+            "pt": "para nós",
             "en": "upon us",
             "es": "sobre nosotros",
             "fr": "sur nous",
@@ -1418,17 +1852,24 @@
             "de": "über uns",
             "ru": "нам",
             "he": "עָלֵינוּ"
+          },
+          "transliteracoes": {
+            "en": "aleinu",
+            "es": "aleinu",
+            "fr": "aléïnou",
+            "it": "aleinu",
+            "ru": "алэйну"
           }
         },
         {
           "i": 8,
           "hebrew": "וְעַל",
-          "transliteration_pt": "val",
-          "start": 67.12,
-          "end": 67.36,
-          "glosa_pt": "e sobre",
+          "transliteration_pt": "veal",
+          "start": 67.14,
+          "end": 68.04,
+          "glosa_pt": "e para",
           "glosas": {
-            "pt": "e sobre",
+            "pt": "e para",
             "en": "and upon",
             "es": "y sobre",
             "fr": "et sur",
@@ -1436,17 +1877,24 @@
             "de": "und über",
             "ru": "и всему",
             "he": "וְעַל"
+          },
+          "transliteracoes": {
+            "en": "ve’al",
+            "es": "ve’al",
+            "fr": "véal",
+            "it": "ve’al",
+            "ru": "вэаль"
           }
         },
         {
           "i": 9,
           "hebrew": "כָּל",
           "transliteration_pt": "kol",
-          "start": 67.36,
-          "end": 68.76,
-          "glosa_pt": "todas",
+          "start": 68.04,
+          "end": 68.78,
+          "glosa_pt": "todo o povo",
           "glosas": {
-            "pt": "todas",
+            "pt": "todo o povo",
             "en": "all",
             "es": "todas",
             "fr": "toutes",
@@ -1454,14 +1902,21 @@
             "de": "alle",
             "ru": "всех",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "kol",
+            "es": "kol",
+            "fr": "kol",
+            "it": "kol",
+            "ru": "коль"
           }
         },
         {
           "i": 10,
           "hebrew": "יִשְׂרָאֵל",
-          "transliteration_pt": "yisrael",
-          "start": 68.76,
-          "end": 69.84,
+          "transliteration_pt": "Israel",
+          "start": 68.78,
+          "end": 69.9,
           "glosa_pt": "de Israel",
           "glosas": {
             "pt": "de Israel",
@@ -1472,17 +1927,24 @@
             "de": "Israel",
             "ru": "Израиля",
             "he": "יִשְׂרָאֵל"
+          },
+          "transliteracoes": {
+            "en": "Yisrael",
+            "es": "Yisrael",
+            "fr": "Yisraël",
+            "it": "Yisrael",
+            "ru": "Исраэль"
           }
         },
         {
           "i": 11,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimru",
-          "start": 69.84,
-          "end": 70.9,
-          "glosa_pt": "e dizei",
+          "transliteration_pt": "veimrú",
+          "start": 69.9,
+          "end": 70.92,
+          "glosa_pt": "e digam",
           "glosas": {
-            "pt": "e dizei",
+            "pt": "e digam",
             "en": "and say",
             "es": "y decid",
             "fr": "et dites",
@@ -1490,17 +1952,24 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "ve’imru",
+            "es": "ve’imru",
+            "fr": "véïmrou",
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
           "i": 12,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amen",
-          "start": 70.9,
-          "end": 73.14,
-          "glosa_pt": "amém",
+          "transliteration_pt": "Amen",
+          "start": 70.92,
+          "end": 73.16,
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amém",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -1508,11 +1977,18 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
       "translations": {
-        "pt": "Que grande paz do céu e boa vida venha sobre nós e sobre toda Israel — e dizei amém",
+        "pt": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
         "en": "May abundant peace from heaven, and good life, come upon us and upon all Israel — and say amen",
         "es": "Que gran paz del cielo y buena vida vengan sobre nosotros y sobre todo Israel — y decid amén",
         "fr": "Que du ciel viennent une paix abondante et une bonne vie, sur nous et sur tout Israël — et dites amen",
@@ -1524,19 +2000,19 @@
     },
     {
       "n": 15,
-      "start": 73.14,
-      "end": 76.02,
+      "start": 73.16,
+      "end": 76.04,
       "hebrew": "עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
-      "transliteration_pt": "Oseh shalom bimromav",
-      "translation_pt": "Aquele que faz paz em Suas alturas",
+      "transliteration_pt": "Ossê shalom bimromav",
+      "translation_pt": "Aquele que faz paz em Suas alturas celestiais",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "עֹשֶׂה",
-          "transliteration_pt": "Oseh",
-          "start": 73.14,
-          "end": 73.9,
+          "transliteration_pt": "Ossê",
+          "start": 73.16,
+          "end": 73.94,
           "glosa_pt": "Aquele que faz",
           "glosas": {
             "pt": "Aquele que faz",
@@ -1547,14 +2023,21 @@
             "de": "Der Frieden stiftet",
             "ru": "Творящий",
             "he": "עוֹשֶׂה"
+          },
+          "transliteracoes": {
+            "en": "oseh",
+            "es": "oseh",
+            "fr": "ossé",
+            "it": "oseh",
+            "ru": "осэ"
           }
         },
         {
           "i": 1,
           "hebrew": "שָׁלוֹם",
           "transliteration_pt": "shalom",
-          "start": 73.9,
-          "end": 74.92,
+          "start": 73.94,
+          "end": 74.94,
           "glosa_pt": "paz",
           "glosas": {
             "pt": "paz",
@@ -1565,17 +2048,24 @@
             "de": "Frieden",
             "ru": "мир",
             "he": "שָׁלוֹם"
+          },
+          "transliteracoes": {
+            "en": "shalom",
+            "es": "shalom",
+            "fr": "chalom",
+            "it": "shalom",
+            "ru": "шалом"
           }
         },
         {
           "i": 2,
           "hebrew": "בִּמְרוֹמָיו",
           "transliteration_pt": "bimromav",
-          "start": 74.92,
-          "end": 76.02,
-          "glosa_pt": "em Suas alturas",
+          "start": 74.94,
+          "end": 76.04,
+          "glosa_pt": "em Suas alturas celestiais",
           "glosas": {
-            "pt": "em Suas alturas",
+            "pt": "em Suas alturas celestiais",
             "en": "in His heights",
             "es": "en Sus alturas",
             "fr": "dans Ses hauteurs",
@@ -1583,11 +2073,18 @@
             "de": "in Seinen Höhen",
             "ru": "в высотах Своих",
             "he": "בִּמְרוֹמָיו"
+          },
+          "transliteracoes": {
+            "en": "bimromav",
+            "es": "bimromav",
+            "fr": "bimromav",
+            "it": "bimromav",
+            "ru": "бимромав"
           }
         }
       ],
       "translations": {
-        "pt": "Aquele que faz paz em Suas alturas",
+        "pt": "Aquele que faz paz em Suas alturas celestiais",
         "en": "He who makes peace in His heights",
         "es": "El que hace la paz en Sus alturas",
         "fr": "Celui qui fait la paix dans Ses hauteurs",
@@ -1599,18 +2096,18 @@
     },
     {
       "n": 16,
-      "start": 76.02,
+      "start": 76.04,
       "end": 83.99,
       "hebrew": "הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu yaaseh shalom aleinu val kol yisrael veimru amen",
-      "translation_pt": "que Ele faça paz sobre nós e sobre toda Israel — e dizei amém",
+      "transliteration_pt": "hu yaassê shalom aleinu veal kol Israel veimrú Amen",
+      "translation_pt": "que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "הוּא",
           "transliteration_pt": "hu",
-          "start": 76.02,
+          "start": 76.04,
           "end": 76.84,
           "glosa_pt": "Ele",
           "glosas": {
@@ -1622,14 +2119,21 @@
             "de": "sei Er",
             "ru": "Он",
             "he": "הוּא"
+          },
+          "transliteracoes": {
+            "en": "hu",
+            "es": "hu",
+            "fr": "hou",
+            "it": "hu",
+            "ru": "ху"
           }
         },
         {
           "i": 1,
           "hebrew": "יַעֲשֶׂה",
-          "transliteration_pt": "yaaseh",
+          "transliteration_pt": "yaassê",
           "start": 76.84,
-          "end": 77.68,
+          "end": 77.7,
           "glosa_pt": "fará",
           "glosas": {
             "pt": "fará",
@@ -1640,17 +2144,24 @@
             "de": "stifte",
             "ru": "дарует",
             "he": "יַעֲשֶׂה"
+          },
+          "transliteracoes": {
+            "en": "ya’aseh",
+            "es": "ya’aseh",
+            "fr": "ya’assé",
+            "it": "ya’aseh",
+            "ru": "яасэ"
           }
         },
         {
           "i": 2,
           "hebrew": "שָׁלוֹם",
           "transliteration_pt": "shalom",
-          "start": 77.68,
-          "end": 78.54,
-          "glosa_pt": "paz",
+          "start": 77.7,
+          "end": 78.56,
+          "glosa_pt": "a paz",
           "glosas": {
-            "pt": "paz",
+            "pt": "a paz",
             "en": "peace",
             "es": "paz",
             "fr": "la paix",
@@ -1658,17 +2169,24 @@
             "de": "Frieden",
             "ru": "мир",
             "he": "שָׁלוֹם"
+          },
+          "transliteracoes": {
+            "en": "shalom",
+            "es": "shalom",
+            "fr": "chalom",
+            "it": "shalom",
+            "ru": "шалом"
           }
         },
         {
           "i": 3,
           "hebrew": "עָלֵינוּ",
           "transliteration_pt": "aleinu",
-          "start": 78.54,
-          "end": 79.64,
-          "glosa_pt": "sobre nós",
+          "start": 78.56,
+          "end": 79.68,
+          "glosa_pt": "para nós",
           "glosas": {
-            "pt": "sobre nós",
+            "pt": "para nós",
             "en": "upon us",
             "es": "sobre nosotros",
             "fr": "sur nous",
@@ -1676,17 +2194,24 @@
             "de": "über uns",
             "ru": "нам",
             "he": "עָלֵינוּ"
+          },
+          "transliteracoes": {
+            "en": "aleinu",
+            "es": "aleinu",
+            "fr": "aléïnou",
+            "it": "aleinu",
+            "ru": "алэйну"
           }
         },
         {
           "i": 4,
           "hebrew": "וְעַל",
-          "transliteration_pt": "val",
-          "start": 79.64,
-          "end": 79.9,
-          "glosa_pt": "e sobre",
+          "transliteration_pt": "veal",
+          "start": 79.68,
+          "end": 80.58,
+          "glosa_pt": "e",
           "glosas": {
-            "pt": "e sobre",
+            "pt": "e",
             "en": "and upon",
             "es": "y sobre",
             "fr": "et sur",
@@ -1694,17 +2219,24 @@
             "de": "und über",
             "ru": "и всему",
             "he": "וְעַל"
+          },
+          "transliteracoes": {
+            "en": "ve’al",
+            "es": "ve’al",
+            "fr": "véal",
+            "it": "ve’al",
+            "ru": "вэаль"
           }
         },
         {
           "i": 5,
           "hebrew": "כָּל",
           "transliteration_pt": "kol",
-          "start": 79.9,
-          "end": 80.56,
-          "glosa_pt": "todas",
+          "start": 80.58,
+          "end": 81,
+          "glosa_pt": "todo o povo",
           "glosas": {
-            "pt": "todas",
+            "pt": "todo o povo",
             "en": "all",
             "es": "todas",
             "fr": "toutes",
@@ -1712,14 +2244,21 @@
             "de": "alle",
             "ru": "всех",
             "he": "כָּל"
+          },
+          "transliteracoes": {
+            "en": "kol",
+            "es": "kol",
+            "fr": "kol",
+            "it": "kol",
+            "ru": "коль"
           }
         },
         {
           "i": 6,
           "hebrew": "יִשְׂרָאֵל",
-          "transliteration_pt": "yisrael",
-          "start": 80.56,
-          "end": 82.28,
+          "transliteration_pt": "Israel",
+          "start": 81,
+          "end": 82.3,
           "glosa_pt": "de Israel",
           "glosas": {
             "pt": "de Israel",
@@ -1730,17 +2269,24 @@
             "de": "Israel",
             "ru": "Израиля",
             "he": "יִשְׂרָאֵל"
+          },
+          "transliteracoes": {
+            "en": "Yisrael",
+            "es": "Yisrael",
+            "fr": "Yisraël",
+            "it": "Yisrael",
+            "ru": "Исраэль"
           }
         },
         {
           "i": 7,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimru",
-          "start": 82.28,
+          "transliteration_pt": "veimrú",
+          "start": 82.3,
           "end": 83.48,
-          "glosa_pt": "e dizei",
+          "glosa_pt": "e digam",
           "glosas": {
-            "pt": "e dizei",
+            "pt": "e digam",
             "en": "and say",
             "es": "y decid",
             "fr": "et dites",
@@ -1748,17 +2294,24 @@
             "de": "und sprecht",
             "ru": "и скажите",
             "he": "וְאִמְרוּ"
+          },
+          "transliteracoes": {
+            "en": "ve’imru",
+            "es": "ve’imru",
+            "fr": "véïmrou",
+            "it": "ve’imru",
+            "ru": "вэимру"
           }
         },
         {
           "i": 8,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "amen",
+          "transliteration_pt": "Amen",
           "start": 83.48,
-          "end": 83.88,
-          "glosa_pt": "amém",
+          "end": 83.99,
+          "glosa_pt": "Amen",
           "glosas": {
-            "pt": "amém",
+            "pt": "Amen",
             "en": "amen",
             "es": "amén",
             "fr": "amen",
@@ -1766,11 +2319,18 @@
             "de": "Amen",
             "ru": "амен",
             "he": "אָמֵן"
+          },
+          "transliteracoes": {
+            "en": "amen",
+            "es": "amen",
+            "fr": "amen",
+            "it": "amen",
+            "ru": "амэн"
           }
         }
       ],
       "translations": {
-        "pt": "que Ele faça paz sobre nós e sobre toda Israel — e dizei amém",
+        "pt": "que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen",
         "en": "may He make peace upon us and upon all Israel — and say amen",
         "es": "que Él haga la paz sobre nosotros y sobre todo Israel — y decid amén",
         "fr": "qu'Il fasse la paix sur nous et sur tout Israël — et dites amen",

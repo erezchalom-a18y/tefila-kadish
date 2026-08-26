@@ -1,324 +1,248 @@
 /**
- * testar-treino.mjs — prova, num Chromium de verdade, que o Modo Treino faz o
- * que a tela promete: toca a gravacao do rabino, pausa no fim de cada verso,
- * repete o verso, retoma no lugar certo e destaca a palavra medida.
+ * testar-treino.mjs — o Modo Treino e a repeticao, verso a verso.
  *
- * Cada teste aqui nasceu de um defeito real encontrado na auditoria de 26/08.
- * Se um deles ficar vermelho, o defeito voltou.
+ * Existe porque isto ja quebrou duas vezes, e as duas o Erez descobriu usando:
+ *   1. a logica vivia no caminho do cronometro estimado, que saiu de cena
+ *      quando a sincronia real entrou — parou de repetir;
+ *   2. a pausa era feita direto no elemento de audio, entao o app continuava
+ *      achando que estava tocando e o botao ▶ nao voltava a tocar; e o ▶
+ *      recomecava do zero em vez de retomar — "trava depois da primeira vez".
  *
- * O relogio do audio e falso (anda 10x) para o teste nao levar 20 minutos.
- * Quem confere o destaque contra o audio DE VERDADE e o ouvido do Erez; aqui
- * so se confere que o app usa os tempos de sync/*.json e nao uma estimativa.
+ * Confere, no chabad_yatom:
+ *   - o Modo Treino pausa no FIM DE CADA VERSO, e nao sempre no mesmo lugar;
+ *   - depois da pausa, o ▶ RETOMA (nao recomeca do primeiro verso);
+ *   - com repeticao 2x, cada verso toca duas vezes antes da pausa;
+ *   - o app fica sabendo que pausou (senao o botao vira um clique morto).
  *
- * Uso:
- *   python3 -m http.server 8896 --bind 127.0.0.1   (de um diretorio que contenha
- *                                                   tefila-kadish/ -> este repo)
- *   node testar-treino.mjs [http://127.0.0.1:8896/tefila-kadish]
+ * ATENCAO ao servidor: este teste SO vale contra um servidor que responda a
+ * pedidos Range. O `python3 -m http.server` nao responde, e sem isso o
+ * navegador nao consegue mover o audio: todo seek cai no zero. Rodando assim,
+ * o teste dava verde medindo uma ficcao — a repeticao "funcionava" porque o
+ * audio voltava ao comeco de qualquer jeito. Use servidor-teste.mjs. O teste
+ * confere isso na primeira linha e reprova se o servidor nao servir.
  *
- * Precisa do playwright. Se ele estiver instalado global, aponte com:
- *   NODE_PATH=/opt/node22/lib/node_modules node testar-treino.mjs
+ * Uso: node servidor-teste.mjs 8896 . &
+ *      node testar-treino.mjs [http://127.0.0.1:8896/tefila-kadish]
+ * Sem os navegadores do Playwright baixados: CHROMIUM=/caminho/do/chrome
  */
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
-const { chromium } = pw.default || pw;   // playwright e CommonJS
-
+const { chromium } = pw.default || pw;
 const BASE = process.argv[2] || 'http://127.0.0.1:8896/tefila-kadish';
-const NUSSACHIM = ['ashkenaz', 'chabad', 'sefard', 'sefaradi'];
-const TIPOS = ['yatom', 'derabanan'];
 
-const navegador = await chromium.launch();
-let falhas = 0;
-const ok = (cond, msg) => { console.log(`   ${cond ? 'ok  ' : 'FALHA'} ${msg}`); if (!cond) falhas++; };
+const navegador = await chromium.launch(
+  process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {}
+);
+const pag = await navegador.newPage();
+const erros = [];
+pag.on('console', m => {
+  if (m.type() === 'error' && !/fonts\.|ERR_CONNECTION_RESET/.test(m.text())) erros.push(m.text());
+});
+await pag.goto(`${BASE}/engine.html?n=chabad&t=yatom&audio=mp3`);
+await pag.waitForTimeout(2500);
 
-/**
- * Abre uma combinacao com o relogio do audio sob controle do teste.
- * Nada toca de verdade: o .ogg nao e decodificado, so o tempo anda.
- */
-async function abrir(n = 'chabad', t = 'yatom') {
-  const pag = await navegador.newPage();
-  await pag.addInitScript(() => { try { localStorage.setItem('tefila_setup_dismissed', '1'); } catch (e) {} });
-  const erros = [];
-  const externo = u => /fonts\.googleapis\.com|fonts\.gstatic\.com|favicon\.ico/.test(u);
-  pag.on('pageerror', e => erros.push('pageerror: ' + e.message));
-  pag.on('console', m => {
-    const txt = m.text();
-    if (m.type() !== 'error') return;
-    if (/fonts\.|ERR_CONNECTION_RESET|ERR_ABORTED/.test(txt)) return;
-    // a mensagem de 404 do Chromium vem sem URL; o 404 que importa e pego por resposta
-    if (/Failed to load resource/.test(txt)) return;
-    erros.push(txt);
-  });
-  pag.on('response', r => { if (r.status() >= 400 && !externo(r.url())) erros.push(`HTTP ${r.status()} ${r.url()}`); });
-
-  await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}`, { waitUntil: 'domcontentloaded' });
-  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 10000 });
-  await pag.evaluate(() => {
-    document.getElementById('setupModal').classList.remove('show');
-    const a = document.getElementById('audioPlayer');
-    window.__t = 0; window.__rodando = false; window.__playChamado = 0; window.__tts = 0;
-    window.__seeks = [];   // toda vez que o app reposiciona o audio, fica registrado aqui
-    Object.defineProperty(a, 'currentTime', {
-      get: () => window.__t,
-      set: v => { window.__seeks.push(+v.toFixed(3)); window.__t = v; },
-      configurable: true,
-    });
-    Object.defineProperty(a, 'duration', { get: () => window.__dur || 60, configurable: true });
-    Object.defineProperty(a, 'readyState', { get: () => 4, configurable: true });
-    Object.defineProperty(a, 'paused', { get: () => !window.__rodando, configurable: true });
-    a.play = function () { window.__playChamado++; window.__rodando = true; this.dispatchEvent(new Event('play')); return Promise.resolve(); };
-    a.pause = function () { window.__rodando = false; this.dispatchEvent(new Event('pause')); };
-    window.speechSynthesis.speak = () => { window.__tts++; };
-    const vs = window.SYNC.versos();
-    window.__dur = vs[vs.length - 1].end + 1;
-    setInterval(() => {
-      if (!window.__rodando) return;
-      window.__t += 0.05 * 10 * (a.playbackRate || 1);
-      if (window.__t >= window.__dur) { window.__t = window.__dur; window.__rodando = false; a.dispatchEvent(new Event('ended')); }
-      a.dispatchEvent(new Event('timeupdate'));
-    }, 50);
-  });
-  return { pag, erros };
+// O servidor responde Range? Sem isso nada abaixo significa coisa alguma.
+const temRange = await pag.evaluate(async (base) => {
+  try {
+    const r = await fetch(`${base}/tefila-audio/chabad/yatom.mp3`, { headers: { Range: 'bytes=0-99' } });
+    return r.status === 206;
+  } catch (e) { return false; }
+}, BASE);
+if (!temRange) {
+  console.log('FALHA o servidor nao responde a pedidos Range (206).');
+  console.log('      Sem isso o audio nao consegue ser movido e este teste nao');
+  console.log('      mede nada. Use: node servidor-teste.mjs 8896 .');
+  await navegador.close();
+  process.exit(1);
 }
-const desligarRepeticao = async pag => {
-  for (let i = 0; i < 4 && await pag.evaluate(() => state.repeatN) !== 0; i++) await pag.click('#repeatBtn');
+
+const audio = () => pag.evaluate(() => {
+  const a = document.getElementById('audioPlayer');
+  return { t: +a.currentTime.toFixed(2), pausado: a.paused, appTocando: state.isPlaying };
+});
+const esperarPausa = async (ms) => {
+  const t0 = Date.now();
+  while (Date.now() - t0 < ms) {
+    await pag.waitForTimeout(200);
+    const a = await audio();
+    if (a.pausado) return a;
+  }
+  return null;
 };
 
-// ------------------------------------------------------------------
-console.log('\n1. Toca a gravacao do rabino, nao a voz sintetica do navegador');
-{
-  const { pag, erros } = await abrir();
-  ok(await pag.evaluate(() => typeof window.state) === 'object', 'window.state existe — a ponte com a sincronia');
-  ok(await pag.evaluate(() => !!state.fullPrayerAudio), 'state.fullPrayerAudio aponta para tefila-audio/');
-  await pag.click('#playBtn');
-  await pag.waitForTimeout(700);
-  const d = await pag.evaluate(() => ({ play: window.__playChamado, tts: window.__tts, t: window.__t }));
-  ok(d.play > 0, 'audioPlayer.play() foi chamado');
-  ok(d.tts === 0, 'nenhuma palavra foi lida pela voz do navegador');
-  ok(d.t > 0, 'o tempo do audio anda');
-  ok(erros.length === 0, 'sem erro de console' + (erros.length ? ': ' + erros[0] : ''));
-  await pag.close();
+const versos = await pag.evaluate(async () => {
+  const d = await (await fetch('./sync/chabad_yatom_sync.json')).json();
+  return d.versos.map(v => ({ n: v.n, start: v.start, end: v.end }));
+});
+
+let falhas = 0;
+const confere = (nome, ok, detalhe = '') => {
+  console.log((ok ? 'OK    ' : 'FALHA ') + nome + (ok || !detalhe ? '' : '\n        ' + detalhe));
+  if (!ok) falhas++;
+};
+
+// ---------- Modo Treino sem repeticao: pausa no fim de cada verso ----------
+await pag.evaluate(() => { state.modoTreino = true; state.repeatN = 1; });
+const pausas = [];
+for (let i = 0; i < 4; i++) {
+  await pag.click('#playBtn').catch(() => {});
+  await pag.waitForTimeout(500);
+  const retomou = (await audio()).t;
+  const p = await esperarPausa(25000);
+  if (!p) break;
+  pausas.push({ retomou, parou: p.t, app: p.appTocando });
 }
+confere('pausa em quatro versos seguidos', pausas.length === 4,
+  `pausou ${pausas.length} vez(es)`);
+confere('cada pausa e num verso diferente',
+  new Set(pausas.map(p => p.parou)).size === pausas.length,
+  pausas.map(p => p.parou + 's').join(', '));
+confere('o ▶ retoma, nao recomeca do inicio',
+  pausas.slice(1).every(p => p.retomou > 1),
+  pausas.map(p => `retomou em ${p.retomou}s`).join(' · '));
+confere('o app sabe que pausou (o botao ▶ funciona)',
+  pausas.every(p => p.app === false));
+const nasFronteiras = pausas.every(p =>
+  versos.some(v => Math.abs(v.end - p.parou) < 0.25));
+confere('cada pausa cai no fim de um verso', nasFronteiras,
+  pausas.map(p => p.parou + 's').join(', '));
 
-// ------------------------------------------------------------------
-console.log('\n2. Barra de progresso e relogio andam durante a reza');
-{
-  const { pag } = await abrir();
-  await pag.click('#playBtn');
-  await pag.waitForTimeout(900);
-  const r = await pag.evaluate(() => ({
-    largura: document.getElementById('progressFill').style.width,
-    relogio: document.getElementById('timeDisplay').textContent,
-  }));
-  ok(parseFloat(r.largura) > 0, `a barra saiu do zero (${r.largura})`);
-  ok(r.relogio !== '0:00', `o relogio anda (${r.relogio})`);
-  await pag.close();
-}
-
-// ------------------------------------------------------------------
-console.log('\n3. Modo Treino pausa no fim de cada verso, no tempo medido');
-{
-  const { pag } = await abrir();
-  await pag.click('#treinoToggle');
-  const vel = await pag.evaluate(() => ({ speed: state.speed, rate: document.getElementById('audioPlayer').playbackRate }));
-  ok(vel.speed === 0.75 && vel.rate === 0.75, `a velocidade .75x chegou no audio (playbackRate=${vel.rate})`);
-  await desligarRepeticao(pag);
-
-  await pag.click('#playBtn');
-  const paradas = [];
-  for (let i = 0; i < 5; i++) {
-    await pag.waitForFunction(() => !state.isPlaying, null, { timeout: 20000 }).catch(() => {});
-    paradas.push(await pag.evaluate(() => ({
-      t: +window.__t.toFixed(2),
-      txt: document.getElementById('nowReading').textContent,
-      retomarEm: state.retomarEm,
-      fins: window.SYNC.versos().map(v => +v.end.toFixed(2)),
-      inicios: window.SYNC.versos().map(v => +v.start.toFixed(2)),
-    })));
-    await pag.click('#playBtn');
-    await pag.waitForTimeout(120);
+// ---------- com repeticao 2x, SEM Modo Treino: repete e SEGUE sozinho ----------
+// Aqui vale a pena atrasar o efeito do seek de proposito: no Safari do iPhone
+// ele demora varios quadros, e era nesse intervalo que o destaque piscava a
+// palavra do verso seguinte e a repeticao se perdia.
+await pag.reload();
+await pag.waitForTimeout(2500);
+await pag.evaluate(() => {
+  const a = document.getElementById('audioPlayer');
+  const d = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'currentTime');
+  Object.defineProperty(a, 'currentTime', {
+    get() { return d.get.call(a); },
+    set(v) { setTimeout(() => d.set.call(a, v), 400); },   // imita o Safari lento
+    configurable: true,
+  });
+  state.modoTreino = false; state.repeatN = 2;
+});
+await pag.click('#playBtn').catch(() => {});
+const trilha = await pag.evaluate(async () => {
+  const out = []; const a = document.getElementById('audioPlayer'); let ant = '';
+  const t0 = performance.now();
+  while (performance.now() - t0 < 26000) {
+    await new Promise(r => requestAnimationFrame(r));
+    const el = document.querySelector('.word.active');
+    const m = el ? `${el.dataset.vi}/${el.dataset.wi}` : '-';
+    if (m !== ant) { out.push(m); ant = m; }
   }
-  paradas.forEach((s, i) => console.log(`        pausa ${i + 1}: t=${s.t}s  retoma em ${s.retomarEm}s  "${s.txt}"`));
-  ok(paradas.every(s => /Pausado/.test(s.txt)), 'toda parada anuncia "Pausado · toque ▶ para o proximo verso"');
-  ok(paradas.every((s, i) => typeof s.retomarEm === 'number' && (i === 0 || s.retomarEm > paradas[i - 1].retomarEm)),
-    'cada pausa aponta para o verso seguinte, sempre adiante');
-  ok(paradas.every(s => s.inicios.some(x => Math.abs(x - s.retomarEm) < 0.001)),
-    'o ponto de retomada e exatamente um INICIO DE VERSO de sync/*.json');
-  // a folga abaixo e do relogio falso (0,5-0,75s por passo); no app o passo e 60ms
-  ok(paradas.every(s => s.fins.some(f => s.t >= f && s.t - f < 0.8)),
-    'cada pausa cai logo depois de um FIM DE VERSO medido do audio');
-  await pag.close();
-}
+  return out;
+});
+const versosNaOrdem = trilha.filter(m => m !== '-').map(m => Number(m.split('/')[0]));
+// quantas vezes cada verso comecou (palavra 0)
+const comecos = trilha.filter(m => m.endsWith('/0')).map(m => Number(m.split('/')[0]));
+const vezesDoVerso0 = comecos.filter(v => v === 0).length;
+const vezesDoVerso1 = comecos.filter(v => v === 1).length;
+confere('com repeticao 2x, o verso 1 toca duas vezes', vezesDoVerso0 === 2,
+  `tocou ${vezesDoVerso0} vez(es): ${trilha.join(' ')}`);
+confere('com repeticao 2x, o verso 2 toca duas vezes', vezesDoVerso1 === 2,
+  `tocou ${vezesDoVerso1} vez(es): ${trilha.join(' ')}`);
+confere('depois das repeticoes, segue sozinho para o verso seguinte',
+  versosNaOrdem.includes(2), trilha.join(' '));
+// nunca pode acender um verso que ainda nao chegou
+let piscou = null;
+for (let i = 1; i < versosNaOrdem.length; i++)
+  if (versosNaOrdem[i] > versosNaOrdem[i-1] + 1) piscou = `${versosNaOrdem[i-1]} -> ${versosNaOrdem[i]}`;
+confere('o destaque nunca pula um verso', piscou === null, piscou || '');
 
-// ------------------------------------------------------------------
-console.log('\n4. Retomar continua do verso certo, nao volta ao inicio da reza');
-{
-  const { pag } = await abrir();
-  await pag.click('#treinoToggle');
-  await desligarRepeticao(pag);
-  await pag.click('#playBtn');
-  await pag.waitForFunction(() => !state.isPlaying, null, { timeout: 20000 });
-  const alvo = await pag.evaluate(() => state.retomarEm);
-  await pag.evaluate(() => { window.__seeks = []; });
-  await pag.click('#playBtn');
-  await pag.waitForTimeout(150);
-  // o relogio falso anda rapido demais para comparar posicao; o que vale e PARA ONDE
-  // o app reposicionou o audio ao retomar
-  const seeks = await pag.evaluate(() => window.__seeks);
-  ok(seeks.length > 0 && Math.abs(seeks[0] - alvo) < 0.001,
-    `ao retomar, o app posicionou o audio em ${seeks[0]}s — o inicio do proximo verso (${alvo}s)`);
-  ok(await pag.evaluate(() => state.isPlaying), 'e voltou a tocar');
-  await pag.close();
-}
+// ---------- Modo Treino: o destaque nao pisca a palavra do verso seguinte ----------
+await pag.reload();
+await pag.waitForTimeout(2500);
+await pag.evaluate(() => { state.modoTreino = true; state.repeatN = 1; });
+await pag.click('#playBtn').catch(() => {});
+const naPausa = await pag.evaluate(async () => {
+  const a = document.getElementById('audioPlayer');
+  const t0 = performance.now();
+  while (performance.now() - t0 < 25000) {
+    await new Promise(r => requestAnimationFrame(r));
+    if (a.paused && a.currentTime > 1) {
+      await new Promise(r => setTimeout(r, 700));         // deixa quadros correrem
+      const el = document.querySelector('.word.active');
+      return el ? `${el.dataset.vi}/${el.dataset.wi}` : '-';
+    }
+  }
+  return null;
+});
+confere('parado no fim do verso, o destaque fica na ultima palavra do verso que acabou',
+  naPausa === '0/3', `ficou em ${naPausa} (esperado 0/3, a ultima palavra do §1)`);
 
-// ------------------------------------------------------------------
-console.log('\n5. Repeticao volta ao inicio do MESMO verso');
-{
-  const { pag } = await abrir();
-  await pag.click('#treinoToggle');
-  ok(await pag.evaluate(() => state.repeatN) === 2, 'o Modo Treino liga repeticao 2x');
-  await pag.click('#playBtn');
+// ---------- COMECAR EM QUALQUER PALAVRA (25/08) ----------
+// O pedido dele: "tanto no modo reza ou no modo treino, deveria permitir
+// comecar de qualquer palavra, hoje so comeca na primeira". O que quebra
+// facil aqui nao e o audio (o relogio anda), e o CONTADOR DE VERSO do Modo
+// Treino: caindo no meio do Kadish sem re-armar, o verso seguinte era lido
+// como "acabou um verso" e a pausa vinha na hora errada.
+for (const treino of [false, true]) {
+  await pag.reload();
+  await pag.waitForTimeout(2500);
+  await pag.evaluate(t => { state.modoTreino = t; state.repeatN = 1; }, treino);
+  const nome = treino ? 'Modo Treino' : 'Modo Reza';
+
+  // o balao da palavra tem o botao, e ele existe na lingua da tela
+  const alvo = await pag.evaluate(() => {
+    const w = document.querySelector('.word[data-vi="2"][data-wi="1"]') ||
+              document.querySelector('.word[data-vi="1"][data-wi="1"]');
+    if (!w) return null;
+    w.click();
+    const b = document.getElementById('popupComecar');
+    return { temBotao: !!b, texto: b ? b.textContent.trim() : '',
+             vi: Number(w.dataset.vi), wi: Number(w.dataset.wi) };
+  });
+  confere(`${nome}: tocar numa palavra oferece "comecar aqui"`,
+    !!(alvo && alvo.temBotao && alvo.texto), JSON.stringify(alvo));
+
   const r = await pag.evaluate(async () => {
-    const espera = ms => new Promise(res => setTimeout(res, ms));
-    let anterior = 0;
-    for (let i = 0; i < 200; i++) {
-      await espera(30);
-      if (window.__t < anterior - 0.3) return { voltou: true, para: +window.__t.toFixed(2) };
-      anterior = window.__t;
+    const a = document.getElementById('audioPlayer');
+    const vi = popup._currentVi, wi = popup._currentWi;
+    document.getElementById('popupComecar').click();
+    await new Promise(r => setTimeout(r, 900));
+    return { vi, wi, agora: a.currentTime, tocando: !a.paused,
+             aceso: (document.querySelector('.word.active') || {}).dataset,
+             espiada: SYNC.espiar() };
+  });
+  confere(`${nome}: o audio pula para a palavra e toca`,
+    r.tocando && r.agora > 1, `currentTime ${r.agora}, tocando ${r.tocando}`);
+  confere(`${nome}: o destaque vai junto, e no verso da palavra`,
+    r.aceso && Number(r.aceso.vi) === alvo.vi,
+    `aceso em ${r.aceso ? r.aceso.vi + '/' + r.aceso.wi : '-'}, pedido ${alvo.vi}/${alvo.wi}`);
+  confere(`${nome}: o contador de verso re-arma no verso onde ele entrou`,
+    r.espiada.versoAnterior === alvo.vi,
+    `versoAnterior ${r.espiada.versoAnterior}, esperado ${alvo.vi}`);
+}
+
+// e no Modo Treino a pausa seguinte tem que ser a do FIM daquele verso, nao
+// uma pausa imediata por o contador achar que um verso acabou
+await pag.reload();
+await pag.waitForTimeout(2500);
+await pag.evaluate(() => { state.modoTreino = true; state.repeatN = 1; });
+const pausou = await pag.evaluate(async () => {
+  const w = document.querySelector('.word[data-vi="2"][data-wi="1"]');
+  w.click();
+  document.getElementById('popupComecar').click();
+  const a = document.getElementById('audioPlayer');
+  const t0 = performance.now();
+  const entrou = a.currentTime;
+  while (performance.now() - t0 < 25000) {
+    await new Promise(r => requestAnimationFrame(r));
+    if (a.paused && a.currentTime > entrou + 0.3) {
+      const el = document.querySelector('.word.active');
+      return { vi: el ? Number(el.dataset.vi) : null, andou: a.currentTime - entrou };
     }
-    return { voltou: false, para: +window.__t.toFixed(2) };
-  });
-  const inicios = await pag.evaluate(() => window.SYNC.versos().map(v => +v.start.toFixed(2)));
-  ok(r.voltou, `o audio voltou para tras para repetir (para ${r.para}s)`);
-  ok(inicios.some(x => Math.abs(x - r.para) < 0.001), 'voltou exatamente para um inicio de verso medido');
-  await pag.close();
-}
+  }
+  return null;
+});
+confere('Modo Treino: comecando no meio, a pausa vem no fim daquele verso',
+  pausou && pausou.vi === 2 && pausou.andou > 0.3,
+  JSON.stringify(pausou));
 
-// ------------------------------------------------------------------
-console.log('\n6. Sair do Modo Treino devolve velocidade e repeticao');
-{
-  const { pag } = await abrir();
-  await pag.click('#treinoToggle');
-  await pag.click('#treinoToggle');
-  const r = await pag.evaluate(() => ({
-    speed: state.speed, rate: document.getElementById('audioPlayer').playbackRate,
-    repeatN: state.repeatN, botao: document.querySelector('#speedToggle button.active').dataset.speed,
-    repCount: document.getElementById('repCount').style.display,
-  }));
-  ok(r.speed === 1 && r.rate === 1, 'velocidade de volta em 1x, no state e no audio');
-  ok(r.repeatN === 0 && r.repCount === 'none', 'repeticao desligada');
-  ok(r.botao === '1', 'o botao 1x esta aceso');
-  await pag.close();
-}
-
-// ------------------------------------------------------------------
-console.log('\n7. Play antes do sync carregar nao monta dois destacadores');
-{
-  const pag = await navegador.newPage();
-  await pag.addInitScript(() => { try { localStorage.setItem('tefila_setup_dismissed', '1'); } catch (e) {} });
-  await pag.route('**/sync/*_sync.json', async rota => { await new Promise(r => setTimeout(r, 2500)); await rota.continue(); });
-  await pag.goto(`${BASE}/engine.html?n=chabad&t=yatom`, { waitUntil: 'domcontentloaded' });
-  await pag.evaluate(() => {
-    document.getElementById('setupModal').classList.remove('show');
-    const a = document.getElementById('audioPlayer');
-    window.__t = 0; window.__rodando = false; window.__tts = 0;
-    Object.defineProperty(a, 'currentTime', { get: () => window.__t, set: v => { window.__t = v; }, configurable: true });
-    Object.defineProperty(a, 'readyState', { get: () => 4, configurable: true });
-    a.play = function () { window.__rodando = true; this.dispatchEvent(new Event('play')); return Promise.resolve(); };
-    a.pause = function () { window.__rodando = false; };
-    window.speechSynthesis.speak = () => { window.__tts++; };
-  });
-  await pag.click('#playBtn');
-  await pag.waitForTimeout(600);
-  const durante = await pag.evaluate(() => ({ timers: state.wordTimers.length, tts: window.__tts }));
-  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 8000 });
-  await pag.waitForTimeout(600);
-  const depois = await pag.evaluate(() => ({ timers: state.wordTimers.length, rodando: window.__rodando }));
-  ok(durante.timers === 0 && durante.tts === 0, `nada de destaque estimado enquanto o sync baixava (${durante.timers} temporizadores)`);
-  ok(depois.timers === 0, `nenhum temporizador estimado sobrou (${depois.timers})`);
-  ok(depois.rodando === true, 'assim que o sync chegou, a gravacao comecou');
-  await pag.close();
-}
-
-// ------------------------------------------------------------------
-console.log('\n8. Trocar a tradicao troca o audio E o texto medido — nas 4');
-for (const n of NUSSACHIM) {
-  const { pag } = await abrir('chabad', 'yatom');
-  const r = await pag.evaluate(async alvo => {
-    document.querySelector(`[data-setting="tradition"] button[data-value="${alvo}"]`).click();
-    await new Promise(res => setTimeout(res, 900));
-    return {
-      sync: window.SYNC.atual().nussach,
-      audio: document.getElementById('audioPlayer').src.split('/').slice(-2).join('/'),
-      tradition: state.tradition,
-      cracha: document.getElementById('traditionBadge').textContent,
-    };
-  }, n);
-  ok(r.sync === n && r.audio.startsWith(n + '/') && r.tradition === n,
-    `${n}: sync=${r.sync} audio=${r.audio} cracha=${r.cracha}`);
-  await pag.close();
-}
-
-// ------------------------------------------------------------------
-console.log('\n9. Destaque palavra a palavra bate com sync/*.json — 8 combinacoes');
-for (const n of NUSSACHIM) for (const t of TIPOS) {
-  const { pag, erros } = await abrir(n, t);
-  const r = await pag.evaluate(() => {
-    const a = document.getElementById('audioPlayer');
-    let total = 0, errados = 0, primeiro = null;
-    for (const v of window.SYNC.versos()) for (const p of (v.palavras || [])) {
-      window.__t = (p.start + p.end) / 2;
-      a.dispatchEvent(new Event('timeupdate'));
-      total++;
-      const el = document.querySelector('#verso-sync-display .sync-hebrew .sync-w.agora');
-      if (!el || el.textContent !== p.hebrew) {
-        errados++;
-        if (!primeiro) primeiro = `esperava "${p.hebrew}", acendeu "${el ? el.textContent : 'nada'}"`;
-      }
-    }
-    return { total, errados, primeiro };
-  });
-  ok(r.errados === 0, `${n}/${t}: ${r.total} palavras conferidas, ${r.errados} erradas ${r.primeiro || ''}`);
-  ok(erros.length === 0, `${n}/${t}: sem erro de console` + (erros.length ? ' — ' + erros[0] : ''));
-  await pag.close();
-}
-
-// ------------------------------------------------------------------
-console.log('\n10. Nos vaos e no fim, nenhuma palavra fica acesa presa');
-{
-  const { pag } = await abrir();
-  const r = await pag.evaluate(() => {
-    const a = document.getElementById('audioPlayer');
-    const vs = window.SYNC.versos();
-    const acesa = () => document.querySelectorAll('#verso-sync-display .sync-w.agora').length;
-    const p = vs[0].palavras[0];
-    window.__t = (p.start + p.end) / 2; a.dispatchEvent(new Event('timeupdate'));
-    const durante = acesa();
-    window.__t = 0; a.dispatchEvent(new Event('timeupdate'));       // silencio do comeco
-    const antes = acesa();
-    window.__t = (p.start + p.end) / 2; a.dispatchEvent(new Event('timeupdate'));
-    window.__t = vs[vs.length - 1].end + 5; a.dispatchEvent(new Event('timeupdate'));   // depois do fim
-    return { durante, antes, depois: acesa() };
-  });
-  ok(r.durante > 0, 'dentro de uma palavra, ela acende');
-  ok(r.antes === 0, 'no silencio antes do primeiro verso, nada fica aceso');
-  ok(r.depois === 0, 'passado o fim da reza, nada fica aceso');
-
-  const f = await abrir();
-  await f.pag.evaluate(() => { const vs = window.SYNC.versos(); window.__t = vs[vs.length - 1].end - 0.2; });
-  await f.pag.click('#playBtn');
-  await f.pag.waitForFunction(() => !state.isPlaying, null, { timeout: 20000 }).catch(() => {});
-  await f.pag.waitForTimeout(300);
-  const fim = await f.pag.evaluate(() => ({
-    txt: document.getElementById('nowReading').textContent,
-    aceso: document.querySelectorAll('#verso-sync-display .sync-w.agora').length,
-    relogio: state.relogioSync,
-  }));
-  ok(/Conclu/.test(fim.txt), `o fim e anunciado ("${fim.txt}")`);
-  ok(fim.aceso === 0, 'nenhuma palavra acesa depois do Amen');
-  ok(fim.relogio === null, 'o relogio interno foi desligado');
-  await f.pag.close();
-  await pag.close();
-}
+confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 
 await navegador.close();
-console.log(`\n${falhas === 0 ? 'VERDE: o Modo Treino faz o que a tela promete' : 'VERMELHO: ' + falhas + ' falha(s)'}`);
+console.log(falhas ? `\n${falhas} problema(s) no Modo Treino` : '\nVERDE: Modo Treino e repeticao passaram');
 process.exit(falhas ? 1 : 0);

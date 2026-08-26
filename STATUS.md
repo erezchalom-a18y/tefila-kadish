@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `baec4a4`, de 20/08/2026 14:59.
+Gerado por `gerar-status.py` no commit `edfba5b`, de 26/08/2026 00:30.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -15,8 +15,8 @@ sabe procurar não estão aí.
 
 | Revisão | Último relatório | O que ela olha |
 | --- | --- | --- |
-| ChatGPT (glossário) | 20/08/2026 14:47 | as 42 entradas × 8 línguas, às cegas |
-| Whisper (áudio) | 20/08/2026 14:59 | os 8 áudios contra os sync/*.json |
+| ChatGPT (glossário) | 26/08/2026 00:05 | as 42 entradas × 8 línguas, às cegas |
+| Whisper (áudio) | 26/08/2026 00:05 | os 8 áudios contra os sync/*.json |
 
 Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
@@ -24,15 +24,15 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 
 | Nussach | Palavras em cima da voz | Desvio que o sinal sugere | Mediana do Whisper | Palavras fora da voz | Versos na lista curta | Âncoras |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ashkenaz_yatom | 69/75 (92.0%) | -0.10s | -1.34s | 3 | 2 | 5 |
-| ashkenaz_derabanan | 108/118 (91.5%) | -0.04s | -1.59s | 6 | 2 | 0 |
-| chabad_yatom | 72/80 (90.0%) | -0.08s | +0.64s | 1 | 0 | 0 |
-| chabad_derabanan | 110/121 (90.9%) | -0.10s | +1.75s | 4 | 0 | 0 |
-| sefard_yatom | 69/81 (85.2%) | -0.06s | +0.75s | 7 | 3 | 0 |
-| sefard_derabanan | 112/124 (90.3%) | -0.10s | +0.62s | 5 | 3 | 0 |
-| sefaradi_yatom | 83/91 (91.2%) | -0.12s | -0.66s | 6 | 2 | 0 |
-| sefaradi_derabanan | 116/125 (92.8%) | -0.12s | -0.66s | 4 | 0 | 0 |
-| **total** | | | | **36** | **12** | **5** |
+| ashkenaz_yatom | 74/75 (98.7%) | -0.14s | — | 1 | 2 | 22 |
+| ashkenaz_derabanan | 118/118 (100.0%) | -0.14s | -0.75s | 0 | 2 | 36 |
+| chabad_yatom | 80/80 (100.0%) | -0.14s | -1.04s | 0 | 0 | 36 |
+| chabad_derabanan | 119/121 (98.3%) | -0.14s | -0.79s | 2 | 0 | 18 |
+| sefard_yatom | 79/81 (97.5%) | -0.14s | -0.87s | 2 | 3 | 18 |
+| sefard_derabanan | 123/124 (99.2%) | -0.14s | -0.72s | 0 | 3 | 24 |
+| sefaradi_yatom | 87/91 (95.6%) | -0.14s | -0.70s | 4 | 2 | 12 |
+| sefaradi_derabanan | 121/125 (96.8%) | +0.10s | -0.97s | 2 | 0 | 16 |
+| **total** | | | | **11** | **12** | **186** |
 
 Como ler cada coluna:
 

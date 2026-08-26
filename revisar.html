@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revisar traduções · Kadish</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+  :root{--fundo:#f4ede0;--cartao:#fbf7ef;--linha:#ddd3c0;--txt:#2a1f15;--fraco:#6b6153;
+        --brass:#8b6a3e;--ok:#2f6b3a;--erro:#8a3a1a}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--fundo);color:var(--txt);
+       font:17px/1.55 Georgia,"Times New Roman",serif;padding-bottom:96px}
+  header{padding:12px 16px;border-bottom:1px solid var(--linha);position:sticky;top:0;
+         background:var(--fundo);z-index:10}
+  .topo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  a.voltar{color:var(--brass);text-decoration:none;white-space:nowrap;font-size:16px}
+  h1{font-size:18px;margin:0;font-weight:600}
+  select{font:inherit;font-size:16px;padding:7px 9px;border:1px solid var(--linha);
+         border-radius:9px;background:var(--cartao);color:var(--txt);min-height:40px}
+  .filtro{display:flex;align-items:center;gap:7px;font-size:15px;color:var(--fraco);cursor:pointer}
+  .filtro input{width:19px;height:19px}
+  .barra{height:7px;background:var(--linha);border-radius:99px;margin-top:9px;overflow:hidden}
+  .barra i{display:block;height:100%;background:var(--ok);width:0}
+  .andamento{font-size:14px;color:var(--fraco);margin-top:6px}
+  main{max-width:760px;margin:0 auto;padding:16px}
+  .verso{background:var(--cartao);border:1px solid var(--linha);border-radius:12px;
+         padding:14px 16px;margin-bottom:14px}
+  .fonte{font-size:12px;color:var(--fraco);letter-spacing:.08em;text-transform:uppercase}
+  .heb{font-size:25px;line-height:1.85;direction:rtl;text-align:right;margin:6px 0 4px}
+  .item{border-top:1px solid var(--linha);padding:11px 0}
+  .item:first-of-type{border-top:none}
+  .rot{font-size:11.5px;color:var(--fraco);letter-spacing:.08em;text-transform:uppercase}
+  .hebp{font-size:21px;direction:rtl;text-align:right;margin:1px 0 5px}
+  .linha{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin:2px 0}
+  .lado{font-size:12px;color:var(--fraco);min-width:26px}
+  .txt{font-size:17.5px;flex:1;min-width:120px}
+  .txt.tl{font-style:italic;color:#5a4a34}
+  .txt.rtl{direction:rtl;text-align:right}
+  .txt.falta{color:var(--fraco);font-style:italic;font-size:15px}
+  .acoes{display:flex;gap:8px;margin-top:8px}
+  .acoes button{font:inherit;font-size:15px;border-radius:9px;padding:9px 14px;cursor:pointer;
+                border:1px solid var(--linha);background:#fff;color:var(--txt);min-height:42px}
+  .acoes button.sim.ativo{background:var(--ok);border-color:var(--ok);color:#fff}
+  .acoes button.nao.ativo{background:var(--erro);border-color:var(--erro);color:#fff}
+  .item.certo{opacity:.55}
+  .item.corrigir{background:#fdf3e6;margin:0 -16px;padding:11px 16px}
+  .anotado{color:var(--ok);font-size:14px;margin-top:7px}
+  input.corr{width:100%;font:inherit;font-size:16.5px;padding:10px;border:1px solid var(--linha);
+             border-radius:9px;background:#fff;color:var(--txt);margin-top:8px}
+  .rodape{position:fixed;left:0;right:0;bottom:0;background:var(--cartao);
+          border-top:1px solid var(--linha);padding:11px 16px calc(11px + env(safe-area-inset-bottom));
+          display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .rodape span{color:var(--fraco);font-size:14px}
+  .rodape button{font:inherit;font-size:16px;border-radius:10px;padding:11px 16px;cursor:pointer;
+                 border:1px solid var(--linha);background:#fff;color:var(--txt);min-height:44px}
+  .nota{font-size:15px;color:var(--fraco);background:var(--cartao);border:1px dashed var(--linha);
+        border-radius:12px;padding:14px 16px;margin-bottom:14px}
+  .saida{width:100%;min-height:240px;font-family:ui-monospace,monospace;font-size:13px;
+         border:1px solid var(--linha);border-radius:10px;padding:11px;background:#fff}
+  .fim{text-align:center;color:var(--fraco);padding:34px 16px}
+  .fim b{display:block;font-size:21px;color:var(--ok);margin-bottom:6px}
+</style></head>
+<body>
+<header>
+  <div class="topo">
+    <a class="voltar" href="./">‹ voltar</a>
+    <h1>Revisar</h1>
+    <select id="lingua"></select>
+    <label class="filtro"><input type="checkbox" id="sofalta" checked> só o que falta</label>
+  </div>
+  <div class="barra"><i id="barra"></i></div>
+  <div class="andamento" id="andamento"></div>
+</header>
+
+<main id="corpo"><p style="color:var(--fraco)">carregando os 8 kadishim…</p></main>
+
+<div class="rodape">
+  <span id="contagem"></span>
+  <button id="gerar">Gerar o recado</button>
+</div>
+
+<script>
+const LINGUAS = { pt:'português', en:'inglês', es:'espanhol', fr:'francês',
+                  it:'italiano', de:'alemão', ru:'russo', he:'hebraico' };
+// Linguas que nao tem linha de transliteracao no app, e por isso nao entram na
+// revisao dela: o hebraico (quem le hebraico le o hebraico) e o alemao, que o
+// Erez mandou tirar (21/08) — a portuguesa soaria errado na boca de quem le
+// alemao, e nao ha documento alemao nenhum. Sem esta lista, o alemao pedia
+// para ele escrever as 113 palavras a mao.
+// Quem NAO tem linha de transliteracao para revisar.
+// O portugues saiu desta lista em 23/08, a pedido do Erez: ele quer conferir a
+// transliteracao portuguesa tambem. Ate entao valia a decisao anterior dele, de
+// que ela era o que sempre foi e nao se mexia — mudou de ideia, e a regra 7 do
+// CLAUDE.md foi atualizada junto.
+// Alemao nao entra porque ele mandou tirar a transliteracao de la; hebraico nao
+// precisa (quem le hebraico le o hebraico).
+const SEM_TRANSLITERACAO = ['de', 'he'];
+// Ordem de leitura: o mesmo item aparece uma vez só, no primeiro lugar em que
+// surge. Como as palavras se repetem entre os 8, isso encolhe 6.520 palavras
+// para ~113 distintas por língua.
+const ARQUIVOS = ['chabad_yatom','chabad_derabanan','ashkenaz_yatom','ashkenaz_derabanan',
+                  'sefard_yatom','sefard_derabanan','sefaradi_yatom','sefaradi_derabanan'];
+const NOMES = { chabad:'Chabad', ashkenaz:'Ashkenaz', sefard:'Sefard', sefaradi:'Sefaradi',
+                yatom:'Yatom', derabanan:'deRabanan' };
+// Marca da versao, so para saber se o aparelho esta com a pagina velha. O
+// Safari do iPad guarda o HTML; ja aconteceu de o Erez estar vendo uma versao
+// anterior e o defeito ja estar consertado aqui.
+const VERSAO = '23/08';
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const semNikud = s => (s || '').normalize('NFD').replace(/[֑-ׇ̀-ͯ]/g, '')
+                                .replace(/[^א-ת]/g, '');
+const nomeArquivo = a => { const [n, t] = a.split('_'); return `${NOMES[n]} · ${NOMES[t]}`; };
+
+const lingua = document.getElementById('lingua');
+const soFalta = document.getElementById('sofalta');
+for (const [k, n] of Object.entries(LINGUAS)) lingua.add(new Option(n, k));
+// A escolha guardada no aparelho pode ser de uma versao anterior da pagina.
+// A primeira versao tinha "portugues" na lista; esta nao tem. Sem esta
+// conferencia o seletor ficava VAZIO, e com lingua vazia nenhuma palavra tinha
+// transliteracao — a pagina dizia "falta fonte" nas 113, inclusive no Yitgadal,
+// que tem fonte. Foi o que o Erez viu.
+const guardada = localStorage.getItem('revisar_lingua');
+lingua.value = Object.keys(LINGUAS).includes(guardada) ? guardada : 'es';
+if (!lingua.value) lingua.value = 'es';
+soFalta.checked = localStorage.getItem('revisar_sofalta') !== 'nao';
+
+let arquivos = {}, blocos = [], marcas = {};
+const chaveGuardada = () => 'revisar_v2_' + lingua.value;
+const ler = () => { try { return JSON.parse(localStorage.getItem(chaveGuardada()) || '{}'); }
+                    catch (e) { return {}; } };
+const gravar = () => { try { localStorage.setItem(chaveGuardada(), JSON.stringify(marcas)); } catch (e) {} };
+
+/**
+ * Monta a lista de itens a revisar, SEM repetição.
+ *
+ * A unidade é o conteúdo, não a posição: a chave de um item é a palavra
+ * hebraica (sem nikud) + a língua + o texto atual. Por isso, corrigir uma
+ * palavra vale para os 8 kadishim de uma vez — é a mesma palavra.
+ */
+function montar() {
+  const lg = lingua.value;
+  if (!LINGUAS[lg]) { blocos = []; return; }   // nunca montar com lingua invalida
+  const vistos = new Set();
+  blocos = [];
+  for (const nome of ARQUIVOS) {
+    const d = arquivos[nome];
+    if (!d) continue;
+    for (const v of d.versos) {
+      const itens = [];
+
+      const trad = lg === 'pt' ? (v.translation_pt || '') : (v.translations || {})[lg];
+      if (trad) {
+        const ch = `trad|${semNikud(v.hebrew)}|${lg}|${trad}`;
+        if (!vistos.has(ch)) { vistos.add(ch);
+          itens.push({ ch, tipo: 'trad', rot: 'tradução do verso',
+                       heb: v.hebrew, pt: v.translation_pt || '', alvo: trad }); }
+      }
+
+      for (const p of (v.palavras || [])) {
+        const hp = semNikud(p.hebrew);
+        if (!SEM_TRANSLITERACAO.includes(lg)) {
+          // Em portugues a transliteracao mora noutro campo: e a original, a
+          // que serve de apoio para todas as linguas.
+          const propria = lg === 'pt' ? p.transliteration_pt
+                                      : (p.transliteracoes && p.transliteracoes[lg]);
+          if (propria) {
+            const ch = `tl|${hp}|${lg}|${propria}`;
+            if (!vistos.has(ch)) { vistos.add(ch);
+              itens.push({ ch, tipo: 'tl', rot: 'transliteração',
+                           heb: p.hebrew, pt: p.transliteration_pt || '', alvo: propria }); }
+          } else {
+            const ch = `tl-falta|${hp}|${lg}`;
+            if (!vistos.has(ch)) { vistos.add(ch);
+              itens.push({ ch, tipo: 'tl-falta', rot: 'transliteração',
+                           heb: p.hebrew, pt: p.transliteration_pt || '', alvo: null }); }
+          }
+        }
+        const g = lg === 'pt' ? ((p.glosas || {}).pt || p.glosa_pt || '')
+                              : (p.glosas || {})[lg];
+        if (g) {
+          const ch = `glosa|${hp}|${lg}|${g}`;
+          if (!vistos.has(ch)) { vistos.add(ch);
+            itens.push({ ch, tipo: 'glosa', rot: 'tradução da palavra',
+                         heb: p.hebrew, pt: (p.glosas || {}).pt || p.glosa_pt || '', alvo: g }); }
+        }
+      }
+
+      if (itens.length) blocos.push({ arquivo: nome, n: v.n, hebrew: v.hebrew, itens });
+    }
+  }
+}
+
+// As palavras sem fonte CONTAM. O Erez pediu para inclui-las (21/08): ele
+// mesmo e a fonte humana que faltava. Elas nao tem o que aprovar — tem o que
+// escrever —, entao os botoes ali sao outros: "Escrever" ou "Deixar em
+// portugues".
+const revisaveis = () => blocos.flatMap(b => b.itens);
+const feito = i => !!(marcas[i.ch] || {}).estado;
+// "So o que falta" esconde o que ja esta RESOLVIDO. Resolvido e:
+//   - "esta certo";
+//   - a palavra sem fonte que ele decidiu deixar em portugues;
+//   - a correcao (ou a transliteracao nova) que ele JA ESCREVEU.
+//
+// O terceiro caso entrou em 23/08. O Erez disse "nao esta corrigindo": ele
+// escrevia a correcao e a palavra continuava ali, igual, como se nada tivesse
+// acontecido. Estava certo em reclamar — so o "Esta certo" tirava o item da
+// lista, e escrever a correcao nao tirava nada.
+//
+// O que NAO da para fazer e esconder no mesmo toque que abre a caixa: foi esse
+// o defeito de ontem. Por isso o esconder so acontece quando ele SAI da caixa
+// (evento 'change'), nunca a cada tecla ('input' so grava).
+const temTexto = m => !!((m || {}).texto ?? '').trim();
+const resolvido = i => {
+  const m = marcas[i.ch] || {};
+  return ['certo', 'portugues'].includes(m.estado) ||
+         (['corrigir', 'escrever'].includes(m.estado) && temTexto(m));
+};
+
+function desenhar() {
+  const lg = lingua.value, nome = LINGUAS[lg] || lg;
+  const todos = revisaveis();
+  const prontos = todos.filter(feito).length;
+  const pct = todos.length ? Math.round(prontos / todos.length * 100) : 0;
+  document.getElementById('barra').style.width = pct + '%';
+  document.getElementById('andamento').textContent =
+    `${prontos} de ${todos.length} conferidos em ${nome} · ` +
+    `${todos.filter(i => (marcas[i.ch] || {}).estado === 'corrigir').length} para corrigir`;
+  document.getElementById('contagem').textContent =
+    prontos === todos.length ? 'terminou esta língua' : `faltam ${todos.length - prontos}`;
+
+  const mostrar = blocos
+    .map(b => ({ ...b, itens: soFalta.checked
+      ? b.itens.filter(i => !resolvido(i)) : b.itens }))
+    .filter(b => b.itens.length);
+
+  let h = `<div class="nota">
+    Cada palavra aparece <b>uma vez só</b>, mesmo estando nos 8 kadishim — o que
+    você marcar aqui vale para todos eles. São ${todos.length} itens em ${esc(nome)}.
+    ${lg === 'pt' ? '<br><br>Em português entra também a <b>transliteração</b>, ' +
+      'que é a original — ela serve de apoio nas línguas que não têm a sua.' : ''}
+    <br><br>Onde estiver escrito <b>falta fonte</b>, a palavra não existe nesta língua
+    em documento nenhum. Se você souber como se escreve, digite ali — o que você
+    escrever é fonte humana, e é assim que essas palavras entram.
+    <br><br>Quando você escrever uma correção e sair da caixa, o item sai da
+    lista e o contador anda — está anotado. <b>A palavra no app continua a
+    mesma:</b> ela só muda depois que eu aplicar o seu recado, porque texto de
+    reza não se altera sem decisão sua.
+    <br><br>Suas respostas ficam neste aparelho: pode fechar e voltar depois.
+    <br><br><small style="color:var(--fraco)">versão ${VERSAO} — se aqui aparecer
+    outra data, o iPad guardou a página velha: puxe a tela para baixo para
+    recarregar.</small></div>`;
+
+  if (!mostrar.length) {
+    h += `<div class="fim"><b>Nada faltando em ${esc(nome)}.</b>
+      ${prontos ? 'Toque em <i>Gerar o recado</i> para me mandar o resultado.' :
+                  'Desmarque “só o que falta” para rever o que já conferiu.'}</div>`;
+    document.getElementById('corpo').innerHTML = h;
+    return;
+  }
+
+  for (const b of mostrar) {
+    h += `<div class="verso">
+      <div class="fonte">${esc(nomeArquivo(b.arquivo))} · verso ${b.n}</div>
+      <div class="heb">${esc(b.hebrew)}</div>`;
+    for (const i of b.itens) {
+      const m = marcas[i.ch] || {};
+      if (i.tipo === 'tl-falta') {
+        h += `<div class="item ${m.estado === 'portugues' ? 'certo' : m.estado === 'escrever' ? 'corrigir' : ''}"
+            data-ch="${esc(i.ch)}">
+          <div class="rot">${esc(i.rot)} — falta fonte</div>
+          <div class="hebp">${esc(i.heb)}</div>
+          <div class="linha"><span class="lado">pt</span>
+            <span class="txt tl">${esc(i.pt)}</span></div>
+          <div class="txt falta">Não existe em ${esc(nome)}. Se você souber como se
+            escreve, digite — vira fonte sua, não da máquina.</div>
+          <div class="acoes">
+            <button class="nao ${m.estado === 'escrever' ? 'ativo' : ''}" data-e="escrever">Escrever</button>
+            <button class="sim ${m.estado === 'portugues' ? 'ativo' : ''}" data-e="portugues">Deixar em português</button>
+          </div>
+          ${m.estado === 'escrever'
+            ? `<input class="corr" value="${esc(m.texto ?? '')}"
+                 placeholder="como se escreve em ${esc(nome)}">
+               ${temTexto(m) ? '<div class="anotado">✓ anotado — vale para os 8 kadishim. ' +
+                 'O texto do app só muda depois que eu aplicar.</div>' : ''}` : ''}
+        </div>`;
+        continue;
+      }
+      const rtl = (lg === 'he' && i.tipo !== 'tl');
+      h += `<div class="item ${m.estado || ''}" data-ch="${esc(i.ch)}">
+        <div class="rot">${esc(i.rot)}</div>
+        ${i.tipo === 'trad' ? '' : `<div class="hebp">${esc(i.heb)}</div>`}
+        ${lg === 'pt' ? '' : `<div class="linha"><span class="lado">pt</span>
+          <span class="txt ${i.tipo === 'tl' ? 'tl' : ''}">${esc(i.pt)}</span></div>`}
+        <div class="linha"><span class="lado">${esc(lg)}</span>
+          <span class="txt ${i.tipo === 'tl' ? 'tl' : ''} ${rtl ? 'rtl' : ''}">${esc(i.alvo)}</span></div>
+        <div class="acoes">
+          <button class="sim ${m.estado === 'certo' ? 'ativo' : ''}" data-e="certo">Está certo</button>
+          <button class="nao ${m.estado === 'corrigir' ? 'ativo' : ''}" data-e="corrigir">Corrigir</button>
+        </div>
+        ${m.estado === 'corrigir'
+          ? `<input class="corr" value="${esc(m.texto ?? i.alvo)}"
+               placeholder="como deveria ser em ${esc(nome)}">
+             ${temTexto(m) ? '<div class="anotado">✓ anotado — vale para os 8 kadishim. ' +
+               'O texto do app só muda depois que eu aplicar.</div>' : ''}` : ''}
+      </div>`;
+    }
+    h += `</div>`;
+  }
+  document.getElementById('corpo').innerHTML = h;
+}
+
+document.getElementById('corpo').addEventListener('click', e => {
+  const b = e.target.closest('.acoes button');
+  if (!b) return;
+  // A tela do recado tambem tem .acoes (Copiar / Voltar a revisao). Sem esta
+  // linha, tocar num deles estourava aqui — item vinha null.
+  const item = b.closest('.item');
+  if (!item) return;
+  const ch = item.dataset.ch;
+  marcas[ch] = marcas[ch] || {};
+  marcas[ch].estado = marcas[ch].estado === b.dataset.e ? null : b.dataset.e;
+  if (!marcas[ch].estado) delete marcas[ch];
+  gravar();
+  const y = item.getBoundingClientRect().top;
+  desenhar();
+  const novo = document.querySelector(`.item[data-ch="${CSS.escape(ch)}"]`);
+  if (novo) window.scrollBy(0, novo.getBoundingClientRect().top - y);
+});
+
+// A cada tecla: so GRAVA. Nunca redesenha — redesenhar aqui tirava a caixa
+// debaixo do dedo dele.
+document.getElementById('corpo').addEventListener('input', e => {
+  if (!e.target.classList.contains('corr')) return;
+  const ch = e.target.closest('.item').dataset.ch;
+  marcas[ch] = marcas[ch] || {}; marcas[ch].texto = e.target.value;
+  gravar();
+});
+
+// Ao SAIR da caixa: redesenha. E aqui que o item escrito vira resolvido, some
+// da lista de "so o que falta" e o contador anda — que era o que faltava para
+// o Erez ver que a correcao dele foi anotada.
+document.getElementById('corpo').addEventListener('change', e => {
+  if (!e.target.classList.contains('corr')) return;
+  desenhar();
+});
+
+lingua.addEventListener('change', () => {
+  localStorage.setItem('revisar_lingua', lingua.value);
+  marcas = ler(); montar(); desenhar(); scrollTo(0, 0);
+});
+soFalta.addEventListener('change', () => {
+  localStorage.setItem('revisar_sofalta', soFalta.checked ? 'sim' : 'nao');
+  desenhar(); scrollTo(0, 0);
+});
+
+document.getElementById('gerar').addEventListener('click', () => {
+  const lg = lingua.value, nome = LINGUAS[lg];
+  const todos = revisaveis();
+  const ruins = todos.filter(i => (marcas[i.ch] || {}).estado === 'corrigir');
+  const novas = todos.filter(i => (marcas[i.ch] || {}).estado === 'escrever'
+                                  && (marcas[i.ch].texto ?? '').trim());
+  const emPt = todos.filter(i => (marcas[i.ch] || {}).estado === 'portugues');
+  const ROTULO = { trad:'tradução do verso', glosa:'tradução da palavra', tl:'transliteração' };
+  const linhas = ruins.map(i => {
+    const m = marcas[i.ch];
+    return `${ROTULO[i.tipo]} — ${i.heb}\n   está: ${i.alvo}\n   deveria ser: ` +
+           `${(m.texto ?? '').trim() || '(não escrevi, mas está errado)'}`;
+  });
+  const linhasNovas = novas.map(i =>
+    `${i.heb} (pt: ${i.pt})\n   ${nome}: ${marcas[i.ch].texto.trim()}`);
+  const prontos = todos.filter(feito).length;
+  const recado =
+    `Revisão de ${nome} — ${prontos} de ${todos.length} itens conferidos.\n` +
+    `${ruins.length} para corrigir · ${novas.length} transliterações escritas por mim` +
+    (emPt.length ? ` · ${emPt.length} deixadas em português` : '') + `\n` +
+    `(cada item vale para os 8 kadishim)\n\n` +
+    (linhas.length ? `— PARA CORRIGIR —\n\n` + linhas.join('\n\n') + '\n\n' : '') +
+    (linhasNovas.length
+      ? `— TRANSLITERAÇÕES QUE EU ESCREVI (não tinham fonte) —\n\n` +
+        linhasNovas.join('\n\n') + '\n'
+      : '') +
+    (!linhas.length && !linhasNovas.length ? 'Nada a mudar.' : '');
+  document.getElementById('corpo').innerHTML =
+    `<div class="nota">Copie tudo abaixo e mande para o Claude. Depois toque em
+      <i>Voltar à revisão</i> — nada se perdeu.</div>
+     <textarea class="saida" id="saida" readonly></textarea>
+     <div class="acoes"><button id="copiar">Copiar</button>
+       <button id="continuar">Voltar à revisão</button></div>`;
+  document.getElementById('saida').value = recado;
+  document.getElementById('copiar').onclick = () => {
+    const t = document.getElementById('saida');
+    t.select(); try { document.execCommand('copy'); } catch (e) {}
+    if (navigator.clipboard) navigator.clipboard.writeText(t.value).catch(() => {});
+    document.getElementById('copiar').textContent = 'Copiado ✓';
+  };
+  document.getElementById('continuar').onclick = () => { desenhar(); scrollTo(0, 0); };
+  scrollTo(0, 0);
+});
+
+Promise.all(ARQUIVOS.map(n =>
+  fetch(`./sync/${n}_sync.json`, { cache: 'no-cache' }).then(r => r.json()).then(d => [n, d])))
+  .then(pares => {
+    arquivos = Object.fromEntries(pares);
+    marcas = ler(); montar(); desenhar();
+  })
+  .catch(e => { document.getElementById('corpo').innerHTML =
+    `<div class="nota">Não consegui abrir os textos: ${esc(e.message)}</div>`; });
+
+if (localStorage.getItem('tefila_theme') === 'claro') document.body.style.background = '#fff';
+</script>
+</body></html>

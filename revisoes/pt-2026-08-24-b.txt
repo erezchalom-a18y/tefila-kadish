@@ -1,0 +1,46 @@
+Revisão de português — os quatro últimos da auditoria, decididos pelo Erez
+5 para corrigir · 0 transliterações escritas por mim
+(cada item vale para os 8 kadishim)
+
+Segunda rodada da AUDITORIA-PT-2026-08-24. Ele tinha respondido 6 itens no
+recado -a; estes são os 4 que ele não tinha entendido, depois de eu explicar.
+O que ele escreveu, em 24/08:
+
+    5.  "siga sua proposta"  → a vírgula, porque a frase continua na linha
+        de baixo ("…bênçãos, cânticos / louvores e consolos…")
+    7.  "use para todos: que Ele faça a paz para nós e para todo seu povo
+        de Israel"  → a mesma preposição duas vezes. Vale para os dois versos
+        que têm essa oração: o do ashkenaz yatom §14 e o dos dois chabad.
+        Os que dizem "em Sua misericórdia" NÃO entram: eles já usam a mesma
+        preposição duas vezes ("sobre nós e sobre todo"), não estavam tortos,
+        e mudá-los seria mexer em texto que ele não olhou.
+    8.  opção "a"  → "exaltado e louvado seja o Nome do Santo, bendito seja
+        Ele". Arruma as duas coisas: as linhas 9 e 10 não começam mais com
+        "elevado", e o berich hu volta a ser bênção, com Ele em maiúscula.
+    10a. "fica sabios"  → "os nossos sábios" permanece. Nada a fazer.
+    10b. "segue com: que haja para eles e para vocês paz em abundância"
+        → a preposição igual dos dois lados, e shelamá rabá passa a "paz em
+        abundância", como ele padronizou no item 3 do recado -a.
+
+— PARA CORRIGIR —
+
+tradução do verso — לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
+   está: acima de todas as bênçãos e cânticos
+   deveria ser: acima de todas as bênçãos, cânticos
+
+tradução do verso — עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: Aquele que faz paz em Suas alturas celestiais, que Ele faça a paz para nós e sobre todo seu povo de Israel — e digam Amen
+   deveria ser: Aquele que faz paz em Suas alturas celestiais, que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen
+
+tradução do verso — הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+   está: que Ele faça paz para nós e para todo seu povo Israel — e digam Amen
+   deveria ser: que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen
+
+tradução do verso — וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא
+   está: elevado e elogiado o Nome do Santo Bendito é ele
+   deveria ser: exaltado e louvado seja o Nome do Santo, bendito seja Ele
+
+tradução do verso — יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
+   está: que haja sobre eles e para vocês grande paz
+   deveria ser: que haja para eles e para vocês paz em abundância
+
