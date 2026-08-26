@@ -9,9 +9,10 @@
       "glosas": [
         "Exaltado",
         "e santificado",
-        "seja o Seu grande",
-        "Nome"
-      ]
+        "seja o Seu grande Nome",
+        ""
+      ],
+      "_nota": "Ele resolveu o no: 'basta juntar as duas palavras na transliteracao, nao'. Em hebraico e שְׁמֵהּ רַבָּא (Nome-grande) e em portugues 'grande Nome' — a ordem e trocada, e cortar no meio obrigava o raba a receber a palavrinha 'Nome', que nao e o que raba quer dizer. Juntando, o par inteiro fica no sheme e o raba fica sem palavrinha propria. A fila le a frase dele e nenhuma palavra recebe significado errado. Juntar as PALAVRAS mesmo nao da: cada uma tem o seu segundo no audio, e ele passou uma noite acertando isso."
     },
     {
       "id": "g3",
@@ -30,13 +31,14 @@
       "frase": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "glosas": [
         "Que",
-        "Seu grande",
-        "Nome",
+        "Seu grande Nome",
+        "",
         "seja abençoado",
         "para sempre",
         "e para toda",
         "eternidade"
-      ]
+      ],
+      "_nota": "Mesmo caso do verso 1: sheme+raba viram um par so."
     },
     {
       "id": "g9",

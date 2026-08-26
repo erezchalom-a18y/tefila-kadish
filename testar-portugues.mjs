@@ -229,7 +229,12 @@ for (const n of ['ashkenaz', 'chabad', 'sefard', 'sefaradi'])
     d.versos.forEach((v, i) => {
       const linhas = (r.versos[i] || '').split('\n');
       const tl = v.palavras.map(p => p.transliteration_pt).join(' ');
-      const gl = v.palavras.map(p => p.glosa_pt).join(' ');
+      // Palavrinha VAZIA e legitima desde 25/08: quando o hebraico poe as
+      // palavras noutra ordem que o portugues, o par inteiro fica numa so
+      // (sheme = "seja o Seu grande Nome", raba = ""), para nenhuma palavra
+      // receber significado que nao e dela. Foi ideia dele: "basta juntar as
+      // duas palavras". Na tela isso aparece como um espaco so; aqui tambem.
+      const gl = v.palavras.map(p => p.glosa_pt).filter(Boolean).join(' ');
       if (!linhas.includes(tl)) erradas.push(`§${v.n} transliteracao: tela "${linhas[1]}" x arquivo "${tl}"`);
       if (!linhas.includes(gl)) erradas.push(`§${v.n} glosas: tela "${linhas[2]}" x arquivo "${gl}"`);
     });
