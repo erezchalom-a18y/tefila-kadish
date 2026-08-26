@@ -408,7 +408,13 @@ ${sozinhos.length ? `${secao(sozinhos, 'Objeções sem alternativa proposta')}` 
 
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
 const { chromium } = pw.default || pw;
-const navegador = await chromium.launch();
+// Em maquina sem os navegadores do Playwright baixados (o container remoto ja
+// traz um Chromium pronto), da para apontar o executavel por variavel de
+// ambiente, como no gerar-pdf.mjs e nos testes:
+//   CHROMIUM=/caminho/do/chrome node gerar-escolha-rabino.mjs
+const navegador = await chromium.launch(
+  process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {}
+);
 const pag = await navegador.newPage();
 
 async function escrever(nomeBase, itens, rotulo) {
