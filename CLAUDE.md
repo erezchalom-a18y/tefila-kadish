@@ -338,6 +338,21 @@ Para as que imprimem, também playwright + Chromium.
 - testar-treino.mjs — o Modo Treino pausa no fim de cada verso, o ▶ retoma de
   onde parou, e a repetição toca o verso o número de vezes pedido. Já quebrou
   duas vezes; existe para não quebrar uma terceira.
+- checar-treino-fita.mjs → o Modo Treino medido NA FITA, tocando o audio de
+  verdade. Os outros testes olham o app por dentro; este grava a posicao do audio
+  quadro a quadro e pergunta o que o OUVIDO pega: vazou som depois do fim do
+  passo? ficou pedaco da fita sem tocar? a parada caiu numa fronteira? E confere
+  que entrar no Modo Treino volta para a primeira palavra.
+
+  **O relogio do audio nao serve para saber quando o passo acaba.** No iOS o
+  currentTime salta de ~250 em 250 ms, mesmo lendo 60 vezes por segundo: medido,
+  o verso 1 do chabad_derabanan acaba em 4,380 e o audio soava ate 4,512 — 132 ms
+  de "bealma" escapando, o "be" que o Erez ouvia. Nenhuma melhora na BUSCA
+  conserta isso; o atraso nao esta na volta, esta em ficar sabendo. Por isso o
+  fim do passo e AGENDADO por relogio de parede a partir de uma posicao conhecida,
+  e o relogio do audio so serve de piso (ele nunca adianta) e de ancora nos
+  instantes em que VIRA — que e quando ele nao mente.
+
 - testar-treino-palavra.mjs → o Modo Treino PALAVRA A PALAVRA. Desde 26/08 esse
   modo NAO tem botao na tela — o Erez pediu "so por verso por enquanto" — e o
   teste chega nele por **?treino=palavra** no endereco. O caminho fica inteiro e

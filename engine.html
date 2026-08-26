@@ -1751,7 +1751,7 @@
          do DADOS no sincronia.html. TROCAR A CADA MUDANCA QUE ELE VAI TESTAR.
          Sem a palavra "versao": o testar-linguas.mjs a acusaria como portugues
          vazando nas outras 7, e com razao. Um "v" e uma data servem nas 8. -->
-    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 3</div>
+    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 5</div>
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="theme_label">Tema</div>
@@ -5011,6 +5011,10 @@ function toggleModoTreino() {
       repCount.style.display = 'inline-block';
       repCount.textContent = '2×';
     }
+    // Entrar no treino recomeca do Yitgadal — pedido dele, 26/08: "quando muda
+    // da reza para o treino deve comecar no Yitgadal sempre". Treinar e comecar
+    // do zero; cair no meio da reza onde a leitura parou nao ensina nada.
+    if (window.SYNC && SYNC.voltarAoInicio) SYNC.voltarAoInicio();
     showToast(TXT('toast_mode_training'));
   } else {
     showToast(TXT('toast_mode_prayer'));
@@ -5635,6 +5639,101 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // a volta, nada acontece ate o relogio realmente cair no ponto pedido.
     // O prazo existe para o caso de o navegador ignorar o pedido — melhor
     // destravar do que congelar o destaque.
+    // ---------- O DESPERTADOR DO TREINO (26/08) ----------
+    //
+    // Perguntar ao audio "que horas sao?" NAO serve para saber quando o verso
+    // acaba. No iOS o `currentTime` nao anda liso: ele salta de ~250 em 250 ms,
+    // mesmo lendo 60 vezes por segundo. Medido aqui, com o relogio engrossado
+    // desse jeito: o verso 1 do chabad_derabanan acaba em 4,380 e o audio soava
+    // ate 4,512 — 132 ms de "bealma" escapando. E o "be" que o Erez ouve, e
+    // nenhuma melhora na BUSCA conserta, porque o atraso nao esta na volta, esta
+    // em ficar sabendo.
+    //
+    // Entao o fim do passo deixa de ser descoberto e passa a ser AGENDADO. Ao
+    // comecar a tocar de uma posicao conhecida, marca-se a hora do relogio de
+    // parede; dali em diante a posicao no audio e conta de padaria — quanto
+    // tempo passou, vezes a velocidade. Isso e exato ao milissegundo e nao
+    // depende do aparelho.
+    //
+    // O relogio do audio continua servindo de piso: ele nunca ADIANTA, entao se
+    // ele ja passou da estimativa, e ele quem manda.
+    const ANTECIPA = 0.02;          // so o quadro em que a pausa acontece
+    let ancora = null;              // { parede: ms, pos: segundos no audio }
+    let alarme = null, alarmeDoPasso = -1;
+
+    // Qual fim de passo JA foi tratado. Existe porque agora ha DOIS caminhos que
+    // podem tratar o mesmo fim — o despertador (que chega primeiro, de proposito)
+    // e a troca de passo do acender() (que fica de reserva). Sem esta marca, o
+    // segundo caminho chamava fimDeVerso outra vez com o contador de repeticao ja
+    // zerado, ele recomecava a contar, e o verso 1 repetia para sempre.
+    //
+    // Marcar o fim e melhor do que adiantar o contador de passo: adiantar nao
+    // funciona, porque enquanto a voz nao cruza a fronteira o proprio acender()
+    // puxa o contador de volta — e ai o laco voltava.
+    let fimJaTratado = -1;
+    /** Trata o fim do passo k uma unica vez. Devolve true se algo aconteceu. */
+    function tratarFimDe(k) {
+      if (fimJaTratado === k) return false;
+      const fim = fimDeVerso(k);
+      // na repeticao a voz volta e aquele fim vai acontecer DE NOVO: nao marca
+      fimJaTratado = (fim === 'repetiu') ? -1 : k;
+      return !!fim;
+    }
+
+    function ancorar(pos) {
+      const antes = ancora ? ancora.pos : null;
+      ancora = { parede: performance.now(), pos };
+      // Voltou no tempo? Entao aquele fim vai acontecer de novo e tem que ser
+      // tratado de novo — senao quem recomecasse a reza passaria direto pelo
+      // primeiro verso, sem o treino pausar.
+      //
+      // Tem que ser um SALTO PARA TRAS, nao "ainda nao chegou ao fim". O
+      // despertador age um fio ANTES da fronteira (4,88 num passo que acaba em
+      // 4,90), e nos 20 ms seguintes a voz ainda esta antes do fim: uma guarda
+      // ingenua limpava a marca ali, a troca de passo tratava o mesmo fim de
+      // novo, o contador de repeticao recomecava — e o verso 1 repetia para
+      // sempre. Apanhei disso duas vezes.
+      const p = passos[fimJaTratado];
+      if (p && antes !== null && pos < antes - 0.05 && pos < p.end - 0.001) fimJaTratado = -1;
+    }
+    function posicaoEstimada() {
+      const a = audioEl();
+      if (!a) return 0;
+      if (a.paused || !ancora) return a.currentTime;
+      const rate = a.playbackRate || 1;
+      const est = ancora.pos + (performance.now() - ancora.parede) / 1000 * rate;
+      return Math.max(est, a.currentTime);
+    }
+    function desarmarAlarme() {
+      if (alarme) { clearTimeout(alarme); alarme = null; }
+      alarmeDoPasso = -1;
+    }
+    /** Agenda o fim do passo em que a voz esta agora. */
+    function armarAlarme() {
+      desarmarAlarme();
+      const a = audioEl();
+      if (!a || a.paused || typeof state === 'undefined') return;
+      if (!(state.modoTreino || state.repeatN > 1)) return;   // so o treino e a repeticao param
+      const k = versoAnterior;
+      const passo = passos[k];
+      if (!passo) return;
+      const rate = a.playbackRate || 1;
+      const faltam = (passo.end - ANTECIPA - posicaoEstimada()) / rate;
+      // Ja passou do fim deste passo? Entao nao ha o que agendar — quem trata e
+      // a troca de passo, la no acender(). Sem esta guarda o alarme disparava na
+      // hora, de novo no MESMO passo, e a repeticao entrava em laco: o verso 1
+      // tocava sem parar. (Apanhei disso no testar-treino.mjs.)
+      if (faltam <= 0) return;
+      alarmeDoPasso = k;
+      alarme = setTimeout(() => {
+        alarme = null; alarmeDoPasso = -1;
+        const aa = audioEl();
+        if (!aa || aa.paused) return;
+        if (typeof state === 'undefined' || !(state.modoTreino || state.repeatN > 1)) return;
+        tratarFimDe(k);
+      }, Math.max(0, faltam * 1000));
+    }
+
     let rebobinadoAte = null, prazoDaVolta = 0;
 
     /**
@@ -5660,7 +5759,9 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         if (pronto) return;
         pronto = true;
         a.removeEventListener('seeked', chegou);
+        ancorar(destino);               // aqui a posicao e EXATA: fomos nos que pedimos
         if (estavaTocando && a.paused) { const p = a.play(); if (p && p.catch) p.catch(() => {}); }
+        armarAlarme();
         if (aoChegar) aoChegar(a.currentTime);
       };
       const chegou = () => {
@@ -5708,7 +5809,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           // fio DE ANTES do verso fazia o contador de versos achar que o verso
           // anterior tinha acabado. Inaudivel, e resolve.
           const destino = Math.min(v.start + 0.03, v.end - 0.01);
-          irPara(destino);
+          irPara(destino);        // ancora e re-agenda o alarme sozinho
           rebobinadoAte = destino;
           prazoDaVolta = Date.now() + 2000;
           if (typeof showToast === 'function')
@@ -5723,8 +5824,14 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // que nao fazia nada. Era isso que travava o Modo Treino depois da
       // primeira pausa.
       if (state.modoTreino) {
+        desarmarAlarme();
         if (typeof pause === 'function') pause(); else a.pause();
         paradoNoFimDoVerso = true;
+        // Ja deixa a agulha no comeco do passo seguinte, com o audio parado: a
+        // busca acontece com calma enquanto ele le a linha, e o ▶ entra limpo,
+        // sem repetir o rabinho do verso que acabou.
+        const proximo = passos[k + 1];
+        if (proximo) irPara(proximo.start);
         return 'pausou';
       }
       return false;
@@ -5787,6 +5894,23 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // Pausado no fim de um verso: o destaque fica onde esta ate o ▶.
       if (paradoNoFimDoVerso && audioEl().paused) return;
       paradoNoFimDoVerso = false;
+
+      // ANTECIPA o fim do passo — 26/08, o "be" que o Erez continua ouvindo.
+      //
+      // Esperar a voz CRUZAR a fronteira e tarde demais: no chabad_derabanan o
+      // verso 1 acaba em 4,380 e o "bealma" comeca em 4,380, o MESMO instante.
+      // Quando o relogio acusa que trocou de verso, o "be" ja soou — e nenhuma
+      // melhora na busca conserta isso, porque o problema nao e a volta, e a
+      // hora de decidir. Agindo um fio ANTES, o corte cai antes da palavra
+      // seguinte comecar.
+      if (rebobinadoAte === null && versoAnterior >= 0 && typeof state !== 'undefined'
+          && (state.modoTreino || state.repeatN > 1)) {
+        const passo = passos[versoAnterior];
+        if (passo && t >= passo.end - ANTECIPA && t < passo.end + 0.5) {
+          if (tratarFimDe(versoAnterior)) return;
+        }
+      }
+
       // passou para o verso seguinte? o anterior acabou de terminar
       // So conta como "acabou o verso" quando a voz ANDA PARA A FRENTE, um
       // verso de cada vez. Sem isto, o rebobinar da propria repeticao era lido
@@ -5804,11 +5928,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         // So conta como "acabou o verso" quando a voz anda PARA A FRENTE, um
         // verso de cada vez. Arrastar o audio ou voltar so re-arma.
         if (k === anterior + 1) {
-          const fim = fimDeVerso(anterior);
-          if (fim) {
+          const antes = fimJaTratado;
+          if (tratarFimDe(anterior)) {
             // Depois de repetir, a voz voltou para o verso ANTERIOR: e nele que
             // o contador fica armado.
-            versoAnterior = (fim === 'repetiu') ? anterior : k;
+            versoAnterior = (fimJaTratado === -1 && antes !== -1) || fimJaTratado === -1 ? anterior : k;
             return;
           }
         }
@@ -5816,6 +5940,9 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       } else {
         versoAnterior = k;
       }
+
+      // trocou de passo no curso normal: agenda o fim do novo
+      if (alarmeDoPasso !== versoAnterior) armarAlarme();
 
       const wi = agora.wi;
       // roda 60 vezes por segundo: so mexe na tela quando a palavra muda
@@ -5865,8 +5992,30 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // 'timeupdate' fica so de rede de seguranca.
       if (audio && !ouvindo) {
         audio.addEventListener('timeupdate', acender);
-        const porQuadro = () => { acender(); if (!audio.paused) requestAnimationFrame(porQuadro); };
-        audio.addEventListener('play', () => requestAnimationFrame(porQuadro));
+        // Re-ancorar no instante em que o relogio VIRA.
+        //
+        // No iOS o currentTime e um piso: ele fica parado e salta. No salto, o
+        // valor entregue e exatamente o tempo real daquele instante — e o unico
+        // momento em que o relogio do audio nao mente. Ancorando ai, a conta de
+        // relogio de parede fica exata, e o alarme deixa de cortar cedo.
+        // Sem isto o fim do passo vinha ate 250 ms adiantado, comendo o rabinho
+        // da ultima palavra.
+        let ultimoLido = -1;
+        const porQuadro = () => {
+          const t = audio.currentTime;
+          if (t !== ultimoLido) { ultimoLido = t; ancorar(t); armarAlarme(); }
+          acender();
+          if (!audio.paused) requestAnimationFrame(porQuadro);
+        };
+        audio.addEventListener('play', () => {
+          // ancora ao comecar a tocar: dali em diante a posicao e conta de
+          // relogio de parede, e nao leitura do audio (que no iOS e grossa)
+          ancorar(audio.currentTime);
+          armarAlarme();
+          requestAnimationFrame(porQuadro);
+        });
+        audio.addEventListener('pause', desarmarAlarme);
+        audio.addEventListener('ratechange', armarAlarme);
         audio.addEventListener('seeking', () => { acesoVerso = -1; acesoPalavra = -1; });
         if (!audio.paused) requestAnimationFrame(porQuadro);
         ouvindo = true;
@@ -5963,6 +6112,20 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         return passos.length;
       },
       passos: () => passos.slice(),
+      /** Volta a agulha para a PRIMEIRA palavra e re-arma o contador. */
+      voltarAoInicio: () => {
+        if (!fita.length) return null;
+        const inicio = fita[0].start;
+        rebobinadoAte = null; prazoDaVolta = 0; paradoNoFimDoVerso = false;
+        versoAnterior = 0; dedo = 0;
+        acesoVerso = -1; acesoPalavra = -1;
+        if (typeof state !== 'undefined') {
+          state.repeatVerso = 0; state.repeatRestante = undefined;
+          state.irPara = inicio;          // o play() nao pode zerar nem ignorar
+        }
+        irPara(inicio, () => acender());
+        return inicio;
+      },
       trocar: (n, t) => {
         if (n) { const x = normalizarNome(n); if (NUSSACHIM.includes(x)) { nussach = x; escolhaExplicita = true; } }
         if (t && TIPOS.includes(t)) { tipo = t; escolhaExplicita = true; }
