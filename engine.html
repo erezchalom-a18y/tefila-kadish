@@ -1756,7 +1756,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-26 · 7';
+const VERSAO = '2026-08-26 · 8';
 (async function conferirVersao() {
   try {
     const r = await fetch('./versao.json?' + Date.now(), { cache: 'no-store' });
@@ -1787,7 +1787,7 @@ const VERSAO = '2026-08-26 · 7';
          do DADOS no sincronia.html. TROCAR A CADA MUDANCA QUE ELE VAI TESTAR.
          Sem a palavra "versao": o testar-linguas.mjs a acusaria como portugues
          vazando nas outras 7, e com razao. Um "v" e uma data servem nas 8. -->
-    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 7</div>
+    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 8</div>
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="theme_label">Tema</div>
@@ -5040,17 +5040,19 @@ function toggleModoTreino() {
   if (state.modoTreino) {
     // Set defaults: speed .75, repeat 2x — DOES NOT touch explanations (user controls)
     // Guarda o que FOI o treino que mexeu, para devolver so isso ao sair.
-    state.treinoMexeu = { speed: state.speed !== 0.75, repeat: state.repeatN === 0 };
+    // O treino NAO liga mais a repeticao 2x sozinho.
+    //
+    // Isso vinha de antes de existir a pausa por verso, quando repetir era o
+    // unico jeito de treinar. Agora que ele pausa e segue sozinho, a repeticao
+    // virou atrapalho: o verso 1 tocava duas vezes seguidas e a volta entre as
+    // duas soava como engasgo — "esta engasgando quando muda de uma frase a
+    // outra, na primeira frase repetiu 2 vezes a sequencia". Quem quiser repetir
+    // continua tendo o botao de repeticao, e ai e escolha dele.
+    state.treinoMexeu = { speed: state.speed !== 0.75, repeat: false };
     if (state.treinoMexeu.speed) {
       state.speed = 0.75;
       if (audioPlayer) audioPlayer.playbackRate = 0.75;
       document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '0.75'));
-    }
-    if (state.treinoMexeu.repeat) {
-      state.repeatN = 2;
-      repeatBtn.classList.add('active');
-      repCount.style.display = 'inline-block';
-      repCount.textContent = '2×';
     }
     // Entrar no treino recomeca do Yitgadal — pedido dele, 26/08: "quando muda
     // da reza para o treino deve comecar no Yitgadal sempre". Treinar e comecar

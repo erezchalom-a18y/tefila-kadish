@@ -1,4 +1,4 @@
 {
-  "versao": "2026-08-26 · 7",
+  "versao": "2026-08-26 · 8",
   "o_que_e": "A versao que DEVE estar rodando. O engine.html traz a sua propria gravada dentro; se as duas discordarem, ele recarrega sozinho. Existe porque o iPad do Erez ficou preso na pagina de ontem e nem ele nem eu sabiamos - tudo o que eu consertava nao chegava nele. TROCAR JUNTO com a constante VERSAO do engine.html."
 }
