@@ -1756,7 +1756,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-26 · 6';
+const VERSAO = '2026-08-26 · 7';
 (async function conferirVersao() {
   try {
     const r = await fetch('./versao.json?' + Date.now(), { cache: 'no-store' });
@@ -1787,7 +1787,7 @@ const VERSAO = '2026-08-26 · 6';
          do DADOS no sincronia.html. TROCAR A CADA MUDANCA QUE ELE VAI TESTAR.
          Sem a palavra "versao": o testar-linguas.mjs a acusaria como portugues
          vazando nas outras 7, e com razao. Um "v" e uma data servem nas 8. -->
-    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 6</div>
+    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 7</div>
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="theme_label">Tema</div>
@@ -5035,14 +5035,19 @@ function toggleModoTreino() {
   const btn = document.getElementById('treinoToggle');
   btn.classList.toggle('active', state.modoTreino);
   document.body.classList.toggle('modo-treino', state.modoTreino);
+  const repeatBtn = document.getElementById('repeatBtn');
+  const repCount = document.getElementById('repCount');
   if (state.modoTreino) {
     // Set defaults: speed .75, repeat 2x — DOES NOT touch explanations (user controls)
-    state.speed = 0.75;
-    document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '0.75'));
-    if (state.repeatN === 0) {
+    // Guarda o que FOI o treino que mexeu, para devolver so isso ao sair.
+    state.treinoMexeu = { speed: state.speed !== 0.75, repeat: state.repeatN === 0 };
+    if (state.treinoMexeu.speed) {
+      state.speed = 0.75;
+      if (audioPlayer) audioPlayer.playbackRate = 0.75;
+      document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '0.75'));
+    }
+    if (state.treinoMexeu.repeat) {
       state.repeatN = 2;
-      const repeatBtn = document.getElementById('repeatBtn');
-      const repCount = document.getElementById('repCount');
       repeatBtn.classList.add('active');
       repCount.style.display = 'inline-block';
       repCount.textContent = '2×';
@@ -5053,6 +5058,26 @@ function toggleModoTreino() {
     if (window.SYNC && SYNC.voltarAoInicio) SYNC.voltarAoInicio();
     showToast(TXT('toast_mode_training'));
   } else {
+    // Sair do treino PARA e volta ao inicio — pedido dele, 26/08: "quando muda
+    // para o modo reza no meio, deve parar e reiniciar como reza, esta
+    // repetindo". Rezar nao e continuar um treino pela metade; e comecar a reza.
+    //
+    // O "esta repetindo" era literal: o treino tinha ligado a repeticao 2x e
+    // ninguem a desligava ao sair, entao a reza seguia repetindo cada verso.
+    const mexeu = state.treinoMexeu || { speed: false, repeat: false };
+    if (mexeu.speed) {
+      state.speed = 1;
+      if (audioPlayer) audioPlayer.playbackRate = 1;
+      document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '1'));
+    }
+    if (mexeu.repeat) {
+      state.repeatN = 0; state.repeatRemaining = 0; state.repeatRestante = undefined;
+      repeatBtn.classList.remove('active');
+      repCount.style.display = 'none';
+    }
+    state.treinoMexeu = { speed: false, repeat: false };
+    if (typeof pause === 'function') pause();
+    if (window.SYNC && SYNC.voltarAoInicio) SYNC.voltarAoInicio();
     showToast(TXT('toast_mode_prayer'));
   }
   updateTreinoLabel();
@@ -5884,8 +5909,14 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         // repeti-lo —, entre 1,2s e 6s. Qualquer toque no ▶ interrompe, e ai
         // ele manda: o app so retoma sozinho se ninguem mexeu.
         if (proximo) {
-          const duracao = (passo => passo.end - passo.start)(passos[k]);
-          const silencio = Math.min(6, Math.max(1.2, duracao)) * 1000;
+          // O silencio era do tamanho do verso inteiro — o tempo de repeti-lo.
+          // Na pratica ficou longo demais ("esta levando alguns segundos para
+          // comecar o proximo versiculo"), porque quem treina ja vai dizendo
+          // junto, nao espera o verso acabar para so entao repetir. Metade do
+          // verso, entre 0,5s e 2s, e o que soa como respiracao e nao como
+          // travada.
+          const duracao = passos[k].end - passos[k].start;
+          const silencio = Math.min(2, Math.max(0.5, duracao * 0.5)) * 1000;
           const eraEsse = k;
           desarmarSeguir();
           seguirSozinho = setTimeout(() => {

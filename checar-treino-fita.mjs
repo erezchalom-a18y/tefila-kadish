@@ -191,19 +191,62 @@ for (const [n, t] of COMBINACOES) {
     state.modoTreino = true; state.repeatN = 1;
     document.body.classList.add('modo-treino');
     const eventos = [];
-    a.addEventListener('play', () => eventos.push({ e: 'toca', t: +a.currentTime.toFixed(2) }));
-    a.addEventListener('pause', () => eventos.push({ e: 'para', t: +a.currentTime.toFixed(2) }));
+    a.addEventListener('play', () => eventos.push({ e: 'toca', t: +a.currentTime.toFixed(2), ms: performance.now() }));
+    a.addEventListener('pause', () => eventos.push({ e: 'para', t: +a.currentTime.toFixed(2), ms: performance.now() }));
     document.getElementById('playBtn').click();      // UM toque, e mais nenhum
     await espera(24000);
+    const sil = [];
+    for (let i = 0; i < eventos.length - 1; i++)
+      if (eventos[i].e === 'para' && eventos[i + 1].e === 'toca')
+        sil.push((eventos[i + 1].ms - eventos[i].ms) / 1000);
     return {
       paradas: eventos.filter(e => e.e === 'para').length,
       retomadas: eventos.filter(e => e.e === 'toca').length - 1,
       onde: eventos.filter(e => e.e === 'para').map(e => e.t),
+      silencios: sil,
     };
   });
-  linha(r.retomadas >= 2 && r.paradas >= 3,
-    `${n}/${t}: ${r.paradas} paradas e ${r.retomadas} retomadas SOZINHAS ` +
-    `(parou em ${r.onde.join(', ')})`);
+  const silencios = r.silencios || [];
+  const maior = silencios.length ? Math.max(...silencios) : 0;
+  // O silencio e para ele repetir o verso, nao para esperar. Passou de 2,5s,
+  // soa como travada — foi o que ele disse: "esta levando alguns segundos para
+  // comecar o proximo versiculo".
+  linha(r.retomadas >= 2 && r.paradas >= 3 && maior <= 2.5,
+    `${n}/${t}: ${r.paradas} paradas, ${r.retomadas} retomadas SOZINHAS, ` +
+    `silencio ${silencios.map(x => x.toFixed(1) + 's').join(' ')} (maior ${maior.toFixed(1)}s)`);
+  await pag.close();
+}
+
+// ---------- sair do treino para a reza: para e volta ao inicio ----------
+// Pedido dele, 26/08: "quando muda para o modo reza no meio, deve parar e
+// reiniciar como reza, esta repetindo". O "repetindo" era literal — o treino
+// ligava a repeticao 2x e ninguem a desligava ao sair.
+console.log('\nSair do Modo Treino para e volta ao inicio:\n');
+for (const [n, t] of COMBINACOES) {
+  const pag = await navegador.newPage();
+  await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}&audio=mp3`);
+  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo && window.SYNC.ativo(), null, { timeout: 15000 });
+  await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
+  const r = await pag.evaluate(async () => {
+    const espera = ms => new Promise(res => setTimeout(res, ms));
+    const a = document.getElementById('audioPlayer');
+    const primeira = SYNC.passos()[0].start;
+    document.getElementById('treinoToggle').click();     // entra no treino
+    await espera(600);
+    document.getElementById('playBtn').click();
+    await espera(6000);                                   // treina um pedaco
+    document.getElementById('treinoToggle').click();      // volta para a reza
+    await espera(1200);
+    return {
+      primeira, parado: a.paused, onde: +a.currentTime.toFixed(2),
+      repeticao: state.repeatN, velocidade: state.speed,
+      modo: state.modoTreino,
+    };
+  });
+  linha(r.parado && Math.abs(r.onde - r.primeira) < 0.25 && r.repeticao === 0
+        && r.velocidade === 1 && r.modo === false,
+    `${n}/${t}: parado=${r.parado} em ${r.onde}s (inicio ${r.primeira}s) | ` +
+    `repeticao=${r.repeticao} velocidade=${r.velocidade}x`);
   await pag.close();
 }
 

@@ -272,12 +272,17 @@ const vazou = await pag.evaluate(async () => {
   const d = await (await fetch('./sync/chabad_derabanan_sync.json')).json();
   const fimV1 = d.versos[0].end;                       // 4.38
   document.getElementById('playBtn').click();
-  let maior = 0;
+  let maior = 0, anterior = 0;
   const t0 = performance.now();
   while (performance.now() - t0 < 14000) {
     await new Promise(r => requestAnimationFrame(r));
     if (!a.paused && a.currentTime > maior) maior = a.currentTime;
-    if (a.currentTime < fimV1 - 1 && maior > fimV1) break;   // ja rebobinou
+    // Para no primeiro REBOBINAR. Antes parava so quando ja tinha passado do
+    // fim do verso — o que hoje nao acontece mais, e o teste seguia medindo o
+    // verso 2, que o treino ja toca sozinho. Media o conserto como se fosse o
+    // defeito.
+    if (anterior > 1 && a.currentTime < anterior - 0.5) break;
+    anterior = a.currentTime;
   }
   return { fimV1, maiorTocado: +maior.toFixed(2) };
 });
