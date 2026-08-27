@@ -788,33 +788,7 @@ el('corpo').addEventListener('pointerup', () => {
 });
 
 // ---------- botoes ----------
-alvoSel.addEventListener('change', () => { localStorage.setItem('sinc_alvo', alvoSel.value); carregar();
-
-// A PAGINA SE DEFENDE DO CACHE.
-//
-// O GitHub Pages guarda os arquivos, e o Ctrl+Shift+R do navegador nao fura
-// isso. O Erez passou tres rodadas vendo o raba partido depois de eu ter
-// consertado — a pagina dele era de antes. Agora ela pergunta ao versao.json
-// (que e pedido com um numero diferente toda vez, entao ninguem consegue
-// guardar) qual e a versao publicada. Se nao for a dela, avisa e recarrega
-// num endereco novo, que o cache nao tem como responder.
-fetch('./versao.json?t=' + Date.now(), { cache: 'no-store' })
-  .then(r => r.json())
-  .then(v => {
-    if (!v.marca || v.marca === DADOS) return;
-    const aviso = document.createElement('div');
-    aviso.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99;background:#8b6a3e;' +
-      'color:#fff;padding:13px 16px;font-size:16px;display:flex;gap:12px;align-items:center;' +
-      'justify-content:center;flex-wrap:wrap';
-    aviso.innerHTML = `Existe uma versão mais nova desta página (${esc(v.marca)}). ` +
-      `A sua é a ${esc(DADOS)}.` +
-      `<button id="atualizar" style="background:#fff;color:#2a1f15;border:0;border-radius:9px;` +
-      `padding:8px 14px;font:inherit;font-size:16px;cursor:pointer">Atualizar agora</button>`;
-    document.body.appendChild(aviso);
-    document.getElementById('atualizar').onclick = () =>
-      location.replace(location.pathname + '?v=' + encodeURIComponent(v.marca));
-  })
-  .catch(() => {}); });
+alvoSel.addEventListener('change', () => { localStorage.setItem('sinc_alvo', alvoSel.value); carregar(); });
 el('soFalta').addEventListener('click', () => {
   soFalta = !soFalta;
   localStorage.setItem('sinc_sofalta', soFalta ? 'sim' : 'nao');

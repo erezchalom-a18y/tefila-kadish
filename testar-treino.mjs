@@ -325,16 +325,50 @@ confere('"Comecar aqui" cai DENTRO da palavra pedida, nao no zero nem na seguint
 // qual codigo o iPad dele estava rodando. Sem esta linha na tela, todo relato
 // dele fica ambiguo entre "o conserto nao funciona" e "o aparelho tem a copia
 // de ontem".
+// A versao tem que estar NO ALTO DA TELA, sem abrir nada. Ela ja esteve so
+// dentro dos Ajustes e o Erez nao a achou duas vezes — escondida, nao servia.
 const versao = await pag.evaluate(() => {
+  const topo = document.getElementById('versaoTopo');
+  const rt = topo && topo.getBoundingClientRect();
   document.getElementById('settingsToggle').click();
   const el = document.getElementById('settingsVersao');
-  if (!el) return null;
-  const r = el.getBoundingClientRect();
-  return { txt: el.textContent.trim(), visivel: r.width > 0 && r.height > 0 };
+  const r = el && el.getBoundingClientRect();
+  return {
+    topo: topo ? topo.textContent.trim() : null,
+    topoVisivel: !!(rt && rt.width > 0 && rt.height > 0 && rt.top >= 0 && rt.top < 300),
+    ajustes: el ? el.textContent.trim() : null,
+    ajustesVisivel: !!(r && r.width > 0 && r.height > 0),
+  };
 });
-confere('a versao aparece nos ajustes', !!versao && versao.visivel && /\d{4}-\d{2}-\d{2}/.test(versao.txt),
+confere('a versao aparece NO ALTO da tela, sem abrir nada',
+  !!versao.topo && versao.topoVisivel, JSON.stringify(versao));
+confere('a versao tambem aparece nos ajustes, com a data',
+  !!versao.ajustes && versao.ajustesVisivel && /\d{4}-\d{2}-\d{2}/.test(versao.ajustes),
   JSON.stringify(versao));
-if (versao) console.log(`        (mostrando: "${versao.txt}")`);
+if (versao) console.log(`        (no alto: "${versao.topo}" · nos ajustes: "${versao.ajustes}")`);
+
+// E o numero da tela tem que ser o MESMO que esta publicado no versao.json.
+// Se o arquivo estiver na frente da constante, todo aparelho recarrega uma vez
+// a cada visita; se estiver atras, a atualizacao automatica nunca dispara e o
+// iPad dele fica preso de novo — que e o defeito que este mecanismo existe para
+// consertar. Os dois so servem juntos.
+//
+// O versao.json carrega DUAS marcas: "versao" (o app) e "marca" (os dados de
+// sincronia, que o sincronia.html le). Em 26/08 eu reescrevi o arquivo so com a
+// primeira e apaguei a segunda sem perceber. Por isso a conferencia aqui olha as
+// duas: uma some calada.
+const pubJson = JSON.parse((await import('node:fs')).readFileSync('versao.json', 'utf8'));
+const constante = (await import('node:fs')).readFileSync('engine.html', 'utf8')
+  .match(/const VERSAO = '([^']+)'/);
+confere('a versao do engine.html e a mesma publicada no versao.json',
+  !!constante && constante[1] === pubJson.versao,
+  `engine.html: "${constante ? constante[1] : '(nao achei)'}"  versao.json: "${pubJson.versao}"`);
+confere('o versao.json nao perdeu a marca dos dados de sincronia',
+  typeof pubJson.marca === 'string' && pubJson.marca.length > 0,
+  `marca: ${JSON.stringify(pubJson.marca)}`);
+confere('o que aparece no alto da tela sai da constante, nao de um numero a mao',
+  !!constante && versao.topo === 'v' + constante[1].split('·').pop().trim(),
+  `no alto: "${versao.topo}"  constante: "${constante ? constante[1] : ''}"`);
 
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 

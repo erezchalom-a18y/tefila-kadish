@@ -345,7 +345,18 @@ Para as que imprimem, também playwright + Chromium.
   buscado sem cache nenhum; se discordar da constante gravada dentro do
   engine.html, a pagina se recarrega num endereco novo, que o cache e obrigado a
   buscar. **TROCAR OS DOIS JUNTOS a cada mudanca que ele va testar**, e o numero
-  aparece nos Ajustes para ele conferir de olho.
+  aparece NO ALTO DA TELA, sem abrir nada, para ele conferir de olho (esteve so
+  dentro dos Ajustes e ele nao o achou duas vezes; escondido nao servia). O que
+  a barra mostra sai da constante — nunca escrever um numero a mao no HTML, que
+  e o jeito de a tela mentir no dia em que alguem esquecer de troca-lo.
+
+  **O versao.json carrega DUAS marcas, e cada uma serve a uma pagina:**
+  `versao` e a do app (engine.html, constante VERSAO); `marca` e a dos DADOS de
+  sincronia (sincronia.html, constante DADOS, muda quando sync/ ou sinal/ mudam).
+  Em 26/08 eu reescrevi o arquivo so com a primeira e apaguei a segunda — o aviso
+  de "ha versao nova" do sincronia.html ficou morto por dois commits, calado, e
+  so o testar-sincronia.mjs pegou. Nunca reescrever esse arquivo inteiro sem
+  olhar o que ja esta la. O testar-treino.mjs agora confere as duas.
 
 - checar-treino-fita.mjs → o Modo Treino medido NA FITA, tocando o audio de
   verdade. Os outros testes olham o app por dentro; este grava a posicao do audio

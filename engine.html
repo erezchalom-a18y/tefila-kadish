@@ -120,6 +120,19 @@
     align-items: center;
     gap: 8px;
   }
+  /* A versao no ALTO da tela, sempre visivel.
+     Ela ja existia dentro dos Ajustes e o Erez nao a achou duas vezes — e a
+     pergunta "qual versao esta rodando no seu iPad?" e a que decide se um
+     relato dele e defeito novo ou pagina de ontem. Escondida, nao servia. */
+  .versao-topo {
+    /* 12px e o piso do projeto para texto de cabecalho, e o testar-telas.mjs
+       reprova abaixo disso — com razao: quem reza pode ter 70 anos e estar sem
+       oculos. Tentei 10px para ficar discreto e a checagem me pegou. A
+       discricao vem da opacidade, nao do tamanho. */
+    font-size: 12px; opacity: .4; margin-left: 6px; letter-spacing: 0;
+    font-variant-numeric: tabular-nums; user-select: all; white-space: nowrap;
+    text-transform: none;
+  }
   .brand-mark {
     font-family: 'Cormorant Garamond', serif;
     font-size: 12px;
@@ -1690,7 +1703,7 @@
 
 <div class="topbar">
   <div class="brand">
-    <div class="brand-mark"><button class="tradition-badge" id="traditionBadge" title="Trocar tradição">Chabad</button><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button></div>
+    <div class="brand-mark"><button class="tradition-badge" id="traditionBadge" title="Trocar tradição">Chabad</button><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
     <div class="brand-right">
       <button class="treino-toggle" id="treinoToggle" data-i18n="modo_reza">Modo Reza</button>
       <button class="lang-toggle" id="langToggle" title="Idioma">
@@ -1756,7 +1769,16 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-26 · 8';
+const VERSAO = '2026-08-27 · 9';
+// Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
+// tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
+document.addEventListener('DOMContentLoaded', () => {
+  const curto = 'v' + VERSAO.split('·').pop().trim();
+  const topo = document.getElementById('versaoTopo');
+  if (topo) topo.textContent = curto;
+  const nos = document.getElementById('settingsVersao');
+  if (nos) nos.textContent = 'v ' + VERSAO;
+});
 (async function conferirVersao() {
   try {
     const r = await fetch('./versao.json?' + Date.now(), { cache: 'no-store' });
