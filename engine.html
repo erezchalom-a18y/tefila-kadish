@@ -1740,6 +1740,42 @@
   </div>
 </div>
 
+<script>
+// ============================================================
+// A PAGINA SE DESATUALIZA SOZINHA (26/08)
+// ============================================================
+// O Erez abriu o app no iPad e a versao nova nao estava la; no computador
+// estava. Era o iPad servindo a copia de ontem — e enquanto isso durar, nada
+// do que eu conserto chega nele. Pior: ele testa, ve o defeito de sempre e diz
+// "nada mudou", e eu vou procurar o defeito no lugar errado. Ja aconteceu.
+//
+// O app nao tem como impedir o aparelho de guardar o HTML. Mas tem como
+// PERCEBER: o versao.json e buscado sem cache nenhum, e se ele disser outra
+// coisa que a versao gravada aqui dentro, a pagina se recarrega num endereco
+// novo — que o cache nao conhece e e obrigado a buscar.
+//
+// A trava do sessionStorage existe para nao entrar em laco de recarga se algum
+// dia os dois numeros discordarem por engano.
+const VERSAO = '2026-08-26 · 6';
+(async function conferirVersao() {
+  try {
+    const r = await fetch('./versao.json?' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return;
+    const nova = (await r.json()).versao;
+    if (!nova || nova === VERSAO) return;
+    const marca = 'tefila_recarregou_' + nova;
+    if (sessionStorage.getItem(marca)) {
+      console.warn('versao ainda velha depois de recarregar:', VERSAO, '!=', nova);
+      return;
+    }
+    sessionStorage.setItem(marca, '1');
+    const u = new URL(location.href);
+    u.searchParams.set('v', nova.replace(/\D+/g, ''));
+    location.replace(u.toString());
+  } catch (e) { /* sem rede: segue com o que tem */ }
+})();
+</script>
+
 <div class="settings-overlay" id="settingsOverlay">
   <div class="settings-panel">
     <button class="info-close" id="settingsClose" style="float:right;">×</button>
@@ -1751,7 +1787,7 @@
          do DADOS no sincronia.html. TROCAR A CADA MUDANCA QUE ELE VAI TESTAR.
          Sem a palavra "versao": o testar-linguas.mjs a acusaria como portugues
          vazando nas outras 7, e com razao. Um "v" e uma data servem nas 8. -->
-    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 5</div>
+    <div class="settings-versao" id="settingsVersao">v 2026-08-26 · 6</div>
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="theme_label">Tema</div>
@@ -5708,6 +5744,12 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       if (alarme) { clearTimeout(alarme); alarme = null; }
       alarmeDoPasso = -1;
     }
+    // O tempo de silencio do treino, para ele repetir o verso. Desarmado por
+    // qualquer toque no ▶ — quem mexe manda.
+    let seguirSozinho = null;
+    function desarmarSeguir() {
+      if (seguirSozinho) { clearTimeout(seguirSozinho); seguirSozinho = null; }
+    }
     /** Agenda o fim do passo em que a voz esta agora. */
     function armarAlarme() {
       desarmarAlarme();
@@ -5832,6 +5874,29 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         // sem repetir o rabinho do verso que acabou.
         const proximo = passos[k + 1];
         if (proximo) irPara(proximo.start);
+
+        // O TREINO SEGUE SOZINHO — pedido dele, 26/08: "a ideia e que o modo
+        // teste continue enquanto nao for interrompido". A pausa e para ele
+        // repetir o verso em voz alta, nao para tocar num botao: quem esta
+        // rezando de pe, no minyan, com o sidur na mao, nao tem dedo sobrando.
+        //
+        // O silencio dura o tempo do proprio verso — e o que se leva para
+        // repeti-lo —, entre 1,2s e 6s. Qualquer toque no ▶ interrompe, e ai
+        // ele manda: o app so retoma sozinho se ninguem mexeu.
+        if (proximo) {
+          const duracao = (passo => passo.end - passo.start)(passos[k]);
+          const silencio = Math.min(6, Math.max(1.2, duracao)) * 1000;
+          const eraEsse = k;
+          desarmarSeguir();
+          seguirSozinho = setTimeout(() => {
+            seguirSozinho = null;
+            const aa = audioEl();
+            if (!aa || !aa.paused) return;                 // ele ja retomou
+            if (typeof state === 'undefined' || !state.modoTreino) return;
+            if (fimJaTratado !== eraEsse) return;           // ele mexeu em algo
+            if (typeof play === 'function') play(); else aa.play().catch(() => {});
+          }, silencio);
+        }
         return 'pausou';
       }
       return false;
@@ -6008,12 +6073,19 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           if (!audio.paused) requestAnimationFrame(porQuadro);
         };
         audio.addEventListener('play', () => {
+          // tocou o ▶ na mao? entao ele manda, e o "seguir sozinho" sai de cena
+          desarmarSeguir();
           // ancora ao comecar a tocar: dali em diante a posicao e conta de
           // relogio de parede, e nao leitura do audio (que no iOS e grossa)
           ancorar(audio.currentTime);
           armarAlarme();
           requestAnimationFrame(porQuadro);
         });
+        // NAO desarmar o "seguir sozinho" aqui. Os eventos de midia chegam
+        // DEPOIS do codigo que os disparou: o fimDeVerso pausa, arma o tempo de
+        // silencio, e so entao este 'pause' chega — e matava o tempo que acabara
+        // de ser armado. O treino pausava e nunca mais voltava.
+        // Quem desarma e o 'play', que so acontece quando alguem toca no ▶.
         audio.addEventListener('pause', desarmarAlarme);
         audio.addEventListener('ratechange', armarAlarme);
         audio.addEventListener('seeking', () => { acesoVerso = -1; acesoPalavra = -1; });

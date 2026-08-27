@@ -338,6 +338,15 @@ Para as que imprimem, também playwright + Chromium.
 - testar-treino.mjs — o Modo Treino pausa no fim de cada verso, o ▶ retoma de
   onde parou, e a repetição toca o verso o número de vezes pedido. Já quebrou
   duas vezes; existe para não quebrar uma terceira.
+- versao.json + a constante VERSAO no engine.html → a pagina se desatualiza
+  sozinha. O iPad do Erez ficou preso na copia de ontem: no computador a versao
+  nova aparecia, nele nao, e tudo o que eu consertava simplesmente nao chegava —
+  ele testava, via o defeito de sempre e dizia "nada mudou". O versao.json e
+  buscado sem cache nenhum; se discordar da constante gravada dentro do
+  engine.html, a pagina se recarrega num endereco novo, que o cache e obrigado a
+  buscar. **TROCAR OS DOIS JUNTOS a cada mudanca que ele va testar**, e o numero
+  aparece nos Ajustes para ele conferir de olho.
+
 - checar-treino-fita.mjs → o Modo Treino medido NA FITA, tocando o audio de
   verdade. Os outros testes olham o app por dentro; este grava a posicao do audio
   quadro a quadro e pergunta o que o OUVIDO pega: vazou som depois do fim do

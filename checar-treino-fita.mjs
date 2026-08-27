@@ -175,6 +175,38 @@ for (const [n, t] of COMBINACOES) {
   await pag.close();
 }
 
+// ---------- o treino segue sozinho enquanto ninguem interrompe ----------
+// Pedido dele, 26/08: "a ideia e que o modo teste continue enquanto nao for
+// interrompido". A pausa e para repetir o verso em voz alta, nao para tocar num
+// botao — quem reza de pe, no minyan, com o sidur na mao, nao tem dedo sobrando.
+console.log('\nUm toque no ▶ e o treino segue sozinho:\n');
+for (const [n, t] of COMBINACOES) {
+  const pag = await navegador.newPage();
+  await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}&audio=mp3`);
+  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo && window.SYNC.ativo(), null, { timeout: 15000 });
+  await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
+  const r = await pag.evaluate(async () => {
+    const espera = ms => new Promise(res => setTimeout(res, ms));
+    const a = document.getElementById('audioPlayer');
+    state.modoTreino = true; state.repeatN = 1;
+    document.body.classList.add('modo-treino');
+    const eventos = [];
+    a.addEventListener('play', () => eventos.push({ e: 'toca', t: +a.currentTime.toFixed(2) }));
+    a.addEventListener('pause', () => eventos.push({ e: 'para', t: +a.currentTime.toFixed(2) }));
+    document.getElementById('playBtn').click();      // UM toque, e mais nenhum
+    await espera(24000);
+    return {
+      paradas: eventos.filter(e => e.e === 'para').length,
+      retomadas: eventos.filter(e => e.e === 'toca').length - 1,
+      onde: eventos.filter(e => e.e === 'para').map(e => e.t),
+    };
+  });
+  linha(r.retomadas >= 2 && r.paradas >= 3,
+    `${n}/${t}: ${r.paradas} paradas e ${r.retomadas} retomadas SOZINHAS ` +
+    `(parou em ${r.onde.join(', ')})`);
+  await pag.close();
+}
+
 await navegador.close();
-console.log(falhas ? `\n${falhas} problema(s) no Modo Treino` : '\nVERDE: o Modo Treino nao vaza, nao deixa buraco e recomeca no inicio');
+console.log(falhas ? `\n${falhas} problema(s) no Modo Treino` : '\nVERDE: o Modo Treino nao vaza, nao deixa buraco, recomeca no inicio e segue sozinho');
 process.exit(falhas ? 1 : 0);
