@@ -380,16 +380,18 @@ confere('o que aparece no alto da tela sai da constante, nao de um numero a mao'
 // ligava a repeticao e ninguem a desligava, entao a reza seguia repetindo.
 const rep = await pag.evaluate(async () => {
   const seg = () => new Promise(r => setTimeout(r, 250));
-  const bt = document.getElementById('treinoToggle');
+  // Dois botoes desde 27/08: um entra no treino, o outro volta para a reza.
+  const btTreino = document.getElementById('treinoToggle');
+  const btReza = document.getElementById('rezaToggle');
   const cont = document.getElementById('repCount');
   // garante que comeca fora do treino e sem repeticao
-  if (state.modoTreino) { bt.click(); await seg(); }
+  if (state.modoTreino) { btReza.click(); await seg(); }
   state.repeatN = 0; state.repeatRemaining = 0; state.repeatRestante = undefined;
-  bt.click(); await seg();
+  btTreino.click(); await seg();
   const dentro = { n: state.repeatN, rotulo: cont.textContent.trim(),
                    visivel: getComputedStyle(cont).display !== 'none',
                    velocidade: state.speed };
-  bt.click(); await seg();
+  btReza.click(); await seg();
   const fora = { n: state.repeatN, visivel: getComputedStyle(cont).display !== 'none',
                  velocidade: state.speed, tocando: !document.getElementById('audioPlayer').paused };
   return { dentro, fora };
@@ -410,14 +412,15 @@ const camadas = await pag.evaluate(async () => {
   const seg = () => new Promise(r => setTimeout(r, 200));
   const visivel = sel => { const e = document.querySelector(sel);
     return !!e && getComputedStyle(e).display !== 'none'; };
-  const bt = document.getElementById('treinoToggle');
-  if (!state.modoTreino) { bt.click(); await seg(); }
+  const btTreino = document.getElementById('treinoToggle');
+  const btReza = document.getElementById('rezaToggle');
+  if (!state.modoTreino) { btTreino.click(); await seg(); }
   const olhar = () => ({ heb: visivel('.hebrew'), tr: visivel('.translit'), pt: visivel('.pt-merged') });
   aplicarCamadasDoTreino('heb-tr');     await seg(); const padrao = olhar();
   aplicarCamadasDoTreino('so-translit');await seg(); const so = olhar();
   aplicarCamadasDoTreino('tudo');       await seg(); const tudo = olhar();
   aplicarCamadasDoTreino('heb-tr');     await seg();
-  bt.click(); await seg();              // sai do treino
+  btReza.click(); await seg();          // sai do treino
   const naReza = olhar();
   return { padrao, so, tudo, naReza };
 });
@@ -441,6 +444,56 @@ confere('a faixa "Modo Treino · pausa apos cada verso" saiu da tela',
   tirados.faixa === false, JSON.stringify(tirados));
 confere('os pictogramas "em pe · minyan · voz audivel" sairam da tela',
   tirados.pictos === 0, JSON.stringify(tirados));
+
+// ---------- 27/08: os DOIS modos aparecem sem apertar nada ----------
+// "ele so aparece quando clicado e o usuario nao sabe de sua existencia."
+// Um botao so, escrito "Modo Reza", nao dizia se aquilo era o estado ou o
+// destino — e de nenhuma das duas leituras saia que existe um Modo Treino.
+// Agora sao dois, sempre visiveis, e o aceso e onde voce esta.
+const dois = await pag.evaluate(async () => {
+  const seg = () => new Promise(r => setTimeout(r, 250));
+  const rz = document.getElementById('rezaToggle');
+  const tr = document.getElementById('treinoToggle');
+  const ver = () => ({
+    rezaVisivel: !!rz && rz.getBoundingClientRect().width > 0,
+    treinoVisivel: !!tr && tr.getBoundingClientRect().width > 0,
+    rezaTexto: rz ? rz.textContent.trim() : null,
+    treinoTexto: tr ? tr.textContent.trim() : null,
+    rezaAceso: !!rz && rz.classList.contains('active'),
+    treinoAceso: !!tr && tr.classList.contains('active'),
+    alturaTreino: tr ? Math.round(tr.getBoundingClientRect().height) : 0,
+  });
+  if (state.modoTreino) { rz.click(); await seg(); }
+  const naReza = ver();
+  tr.click(); await seg();
+  const noTreino = ver();
+  // tocar no que JA esta aceso nao pode fazer nada: e o toque mais provavel de
+  // todos, o de quem so quer conferir onde esta, e reiniciaria a reza.
+  const ondeEstava = document.getElementById('audioPlayer').currentTime;
+  const repAntes = state.repeatN;
+  tr.click(); await seg();
+  const inerte = { aindaTreino: state.modoTreino, rep: state.repeatN === repAntes,
+                   mexeu: Math.abs(document.getElementById('audioPlayer').currentTime - ondeEstava) > 0.3 };
+  rz.click(); await seg();
+  return { naReza, noTreino, inerte };
+});
+confere('os dois modos aparecem na barra ao mesmo tempo, sem apertar nada',
+  dois.naReza.rezaVisivel && dois.naReza.treinoVisivel,
+  JSON.stringify(dois.naReza));
+confere('cada um tem o seu nome, e nao um nome que troca',
+  !!dois.naReza.rezaTexto && !!dois.naReza.treinoTexto &&
+  dois.naReza.rezaTexto === dois.noTreino.rezaTexto &&
+  dois.naReza.treinoTexto === dois.noTreino.treinoTexto,
+  `reza:"${dois.naReza.rezaTexto}" treino:"${dois.naReza.treinoTexto}"`);
+confere('na reza o aceso e o Reza; no treino e o Treino',
+  dois.naReza.rezaAceso && !dois.naReza.treinoAceso &&
+  dois.noTreino.treinoAceso && !dois.noTreino.rezaAceso,
+  JSON.stringify({ naReza: dois.naReza, noTreino: dois.noTreino }));
+confere('o botao do modo tem pelo menos 30px de altura (dedo de quem reza em pe)',
+  dois.naReza.alturaTreino >= 30, `${dois.naReza.alturaTreino}px`);
+confere('tocar no modo em que ele JA esta nao faz nada',
+  dois.inerte.aindaTreino && dois.inerte.rep && !dois.inerte.mexeu,
+  JSON.stringify(dois.inerte));
 
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 

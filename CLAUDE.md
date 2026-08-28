@@ -697,6 +697,32 @@ tocar. Trocar Treino→Reza depressa fazia a voz voltar sozinha. Agora cada busc
 tira uma ficha e só religa se a ficha ainda for a última E o app ainda achar que
 está tocando.
 
+## Reza | Treino: os dois caminhos sempre à vista (28/08)
+
+Ele disse: *"dar um destaque maior para o modo treino — ele só aparece quando
+clicado e o usuário não sabe de sua existência"*. Tinha razão, e o defeito era
+de **linguagem**: havia UM botão que trocava de nome. Escrito "Modo Reza", ele
+não dizia se aquilo era o estado em que se está ou o destino de apertá-lo — e de
+nenhuma das duas leituras saía que existe um Modo Treino. Quem nunca apertou
+nunca soube.
+
+Agora são dois botões num segmentado (`.modo-switch`): **Reza | Treino**. O aceso
+é onde você está; o apagado (opacidade .62) não pode sumir — é ele que conta que
+o outro modo existe. Os rótulos são curtos de propósito (`modo_reza_curto` /
+`modo_treino_curto` nas 8): o segmentado já diz "modo" pela forma, e repetir a
+palavra nos dois lados só ocupava a barra.
+
+Duas coisas que o teste cobra e não podem se perder:
+
+- **Tocar no modo em que ele JÁ está não faz nada** (`irParaModo` sai cedo). É o
+  toque mais provável de todos — o de quem só quer conferir onde está — e antes
+  ele reiniciaria a reza e religaria a repetição.
+- Os botões têm 30px de altura, que é o piso do projeto: dedo de quem reza de pé,
+  com o sidur na outra mão.
+
+Os ids: `#rezaToggle` e `#treinoToggle`. O `#treinoToggle` continua com o nome
+antigo de propósito — é por onde os testes entram no treino desde o começo.
+
 ## Nunca
 
 - git push --force

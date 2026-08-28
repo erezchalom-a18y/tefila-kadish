@@ -1270,6 +1270,39 @@
   }
   .treino-toggle.active::before { content: '⊙ '; }
 
+  /* ===== Reza | Treino: os dois caminhos sempre a vista (27/08) ===== */
+  .modo-switch {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .modo-op {
+    background: transparent;
+    border: 0;
+    color: var(--text-faint);
+    padding: 6px 13px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition: all 0.2s;
+    /* 30px e o piso de altura de botao do projeto (testar-telas.mjs reprova
+       abaixo disso): dedo de quem reza de pe, com o sidur na outra mao. */
+    min-height: 30px;
+  }
+  .modo-op:hover { color: var(--brass); }
+  .modo-op.active {
+    background: var(--brass);
+    color: var(--bg);
+    font-weight: 600;
+  }
+  /* O apagado nao pode sumir: e ele que conta que o outro modo existe. */
+  .modo-op:not(.active) { opacity: 0.62; }
+
   /* Community response indicator */
   .community-respond {
     margin: -8px 20px 16px;
@@ -1744,7 +1777,18 @@
   <div class="brand">
     <div class="brand-mark"><button class="tradition-badge" id="traditionBadge" title="Trocar tradição">Chabad</button><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
     <div class="brand-right">
-      <button class="treino-toggle" id="treinoToggle" data-i18n="modo_reza">Modo Reza</button>
+      <!-- DOIS BOTOES, nao um que troca de nome (27/08).
+           "ele so aparece quando clicado e o usuario nao sabe de sua existencia."
+           Ele tem razao, e o defeito era de linguagem: um botao so, escrito
+           "Modo Reza", nao diz se isso e o que ESTA acontecendo ou o que VAI
+           acontecer se eu apertar — e, das duas leituras, nenhuma revela que
+           existe um Modo Treino. Quem nunca apertou nunca soube.
+           Dois botoes lado a lado nao tem essa ambiguidade: os dois caminhos
+           ficam visiveis o tempo todo, e o aceso e onde voce esta. -->
+      <div class="modo-switch" role="group" aria-label="Modo">
+        <button class="modo-op active" id="rezaToggle" data-i18n="modo_reza_curto">Reza</button>
+        <button class="modo-op" id="treinoToggle" data-i18n="modo_treino_curto">Treino</button>
+      </div>
       <button class="lang-toggle" id="langToggle" title="Idioma">
         <span class="lang-flag">🇧🇷</span><span id="langCode">PT</span><span class="arr">▾</span>
       </button>
@@ -1806,7 +1850,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-27 · 10';
+const VERSAO = '2026-08-28 · 11';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -4385,6 +4429,7 @@ const I18N = {
     toast_audio_error: "Erro de áudio",
     toast_audio_failed: "O áudio não tocou",
     ph_relation: "Pai, mãe, avô...",
+    modo_reza_curto: 'Reza', modo_treino_curto: 'Treino',
     modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
     comecar_aqui: '▶ Começar aqui',
     treino_active: '⊙ Modo Treino · pausa após cada verso',
@@ -4430,6 +4475,7 @@ const I18N = {
     toast_audio_error: "Audio error",
     toast_audio_failed: "The audio did not play",
     ph_relation: "Father, mother, grandfather...",
+    modo_reza_curto: 'Prayer', modo_treino_curto: 'Practice',
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
     comecar_aqui: '▶ Start here',
     treino_active: '⊙ Practice Mode · pauses after each verse',
@@ -4475,6 +4521,7 @@ const I18N = {
     toast_audio_error: "Error de audio",
     toast_audio_failed: "El audio no sonó",
     ph_relation: "Padre, madre, abuelo...",
+    modo_reza_curto: 'Rezo', modo_treino_curto: 'Práctica',
     modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
     comecar_aqui: '▶ Empezar aquí',
     treino_active: '⊙ Modo Práctica · pausa después de cada verso',
@@ -4520,6 +4567,7 @@ const I18N = {
     toast_audio_error: "Erreur audio",
     toast_audio_failed: "L’audio n’a pas démarré",
     ph_relation: "Père, mère, grand-père...",
+    modo_reza_curto: 'Prière', modo_treino_curto: 'Pratique',
     modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
     comecar_aqui: '▶ Commencer ici',
     treino_active: '⊙ Mode Pratique · pause après chaque verset',
@@ -4565,6 +4613,7 @@ const I18N = {
     toast_audio_error: "Errore audio",
     toast_audio_failed: "L’audio non è partito",
     ph_relation: "Padre, madre, nonno...",
+    modo_reza_curto: 'Preghiera', modo_treino_curto: 'Pratica',
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
     comecar_aqui: '▶ Inizia qui',
     treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
@@ -4610,6 +4659,7 @@ const I18N = {
     toast_audio_error: "Audiofehler",
     toast_audio_failed: "Der Ton wurde nicht abgespielt",
     ph_relation: "Vater, Mutter, Großvater...",
+    modo_reza_curto: 'Gebet', modo_treino_curto: 'Übung',
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
     comecar_aqui: '▶ Hier beginnen',
     treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
@@ -4655,6 +4705,7 @@ const I18N = {
     toast_audio_error: "Ошибка звука",
     toast_audio_failed: "Звук не воспроизвёлся",
     ph_relation: "Отец, мать, дед...",
+    modo_reza_curto: 'Молитва', modo_treino_curto: 'Практика',
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     comecar_aqui: '▶ Начать отсюда',
     treino_active: '⊙ Режим Практики · пауза после каждого стиха',
@@ -4700,6 +4751,7 @@ const I18N = {
     toast_audio_error: "שגיאת שמע",
     toast_audio_failed: "השמע לא התנגן",
     ph_relation: "אבא, אמא, סבא...",
+    modo_reza_curto: 'תפילה', modo_treino_curto: 'תרגול',
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
     comecar_aqui: '▶ להתחיל כאן',
     treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
@@ -5108,29 +5160,40 @@ function applyKadishType(t) {
 
 // ---------- Modo Treino ----------
 state.modoTreino = false;
+// Os rotulos nao mudam mais — sao dois, fixos. O que muda e qual esta aceso.
+// (O nome da funcao fica: e chamado de varios lugares, e o que ela faz continua
+// sendo "poe a barra de acordo com o modo".)
 function updateTreinoLabel() {
-  const btn = document.getElementById('treinoToggle');
-  const t = I18N[state.lang] || I18N.pt;
-  btn.textContent = state.modoTreino ? t.modo_treino : t.modo_reza;
+  const reza = document.getElementById('rezaToggle');
+  const treino = document.getElementById('treinoToggle');
+  if (reza) reza.classList.toggle('active', !state.modoTreino);
+  if (treino) treino.classList.toggle('active', !!state.modoTreino);
+  if (reza) reza.setAttribute('aria-pressed', String(!state.modoTreino));
+  if (treino) treino.setAttribute('aria-pressed', String(!!state.modoTreino));
+}
+// irParaModo(true) = treino, irParaModo(false) = reza. Chamar com o modo em que
+// ja se esta nao faz nada: com dois botoes, tocar no que ja esta aceso nao pode
+// reiniciar a reza nem religar a repeticao — e o toque mais provavel de todos,
+// o de quem so quer conferir onde esta.
+function irParaModo(querTreino) {
+  if (!!state.modoTreino === !!querTreino) return;
+  toggleModoTreino();
 }
 function toggleModoTreino() {
   state.modoTreino = !state.modoTreino;
-  const btn = document.getElementById('treinoToggle');
-  btn.classList.toggle('active', state.modoTreino);
   document.body.classList.toggle('modo-treino', state.modoTreino);
   const repeatBtn = document.getElementById('repeatBtn');
   const repCount = document.getElementById('repCount');
   if (state.modoTreino) {
-    // Set defaults: speed .75, repeat 2x — DOES NOT touch explanations (user controls)
-    // Guarda o que FOI o treino que mexeu, para devolver so isso ao sair.
-    // O treino NAO liga mais a repeticao 2x sozinho.
+    // Entrar no treino poe velocidade .75x e 3 repeticoes por verso. Guarda o que
+    // FOI o treino que mexeu, para devolver so isso ao sair — nao mexe nas
+    // explicacoes, que sao escolha dele.
     //
-    // Isso vinha de antes de existir a pausa por verso, quando repetir era o
-    // unico jeito de treinar. Agora que ele pausa e segue sozinho, a repeticao
-    // virou atrapalho: o verso 1 tocava duas vezes seguidas e a volta entre as
-    // duas soava como engasgo — "esta engasgando quando muda de uma frase a
-    // outra, na primeira frase repetiu 2 vezes a sequencia". Quem quiser repetir
-    // continua tendo o botao de repeticao, e ai e escolha dele.
+    // A repeticao ja esteve em 2x, foi DESLIGADA em 26/08 e voltou em 3x em
+    // 27/08. Nao e indecisao: em 26/08 a volta entre uma repeticao e outra era
+    // instantanea e soava como engasgo ("na primeira frase repetiu 2 vezes a
+    // sequencia"). Com a respiracao de RESPIRO entre elas, repetir voltou a ser
+    // o que ele queria — ouvir o verso tres vezes antes de seguir.
     //
     // 27/08 — ELE PEDIU A REPETICAO DE VOLTA, agora em 3x: "no modo treino entra
     // sem repeticao, deve entrar com 3 repeticoes por frase como padrao". Nao e
@@ -5183,7 +5246,9 @@ function toggleModoTreino() {
   }
   updateTreinoLabel();
 }
-document.getElementById('treinoToggle').addEventListener('click', toggleModoTreino);
+document.getElementById('treinoToggle').addEventListener('click', () => irParaModo(true));
+document.getElementById('rezaToggle').addEventListener('click', () => irParaModo(false));
+updateTreinoLabel();      // acende o Reza na carga
 
 // ---------- Treino por verso ou por palavra ----------
 // Por palavra, TODO ponto de parada e um numero que o Erez conferiu de ouvido:

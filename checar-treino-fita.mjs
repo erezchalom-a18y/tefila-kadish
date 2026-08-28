@@ -249,7 +249,7 @@ for (const [n, t] of COMBINACOES) {
     await espera(600);
     document.getElementById('playBtn').click();
     await espera(6000);                                   // treina um pedaco
-    document.getElementById('treinoToggle').click();      // volta para a reza
+    document.getElementById('rezaToggle').click();        // volta para a reza
     await espera(1200);
     return {
       primeira, parado: a.paused, onde: +a.currentTime.toFixed(2),
