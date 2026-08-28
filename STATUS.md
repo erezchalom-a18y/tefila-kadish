@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `bfec0d9`, de 28/08/2026 13:57.
+Gerado por `gerar-status.py` no commit `3670cc4`, de 28/08/2026 14:55.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
