@@ -650,6 +650,53 @@ verso dela, zera a repetição e o "parado no fim do verso", e toca.
 O testar-treino.mjs cobra as duas coisas nos dois modos, e mais uma: começando
 no meio, a pausa do Modo Treino tem que vir no fim DAQUELE verso.
 
+## O que ele mandou tirar e mudar no treino (27/08)
+
+Seis recados numa mensagem só, depois de ver a v9 no computador.
+
+1. **Entra com 3 repetições por verso.** `TREINO_REPETICOES = 3`, e tem que ser
+   um dos números do `REPEAT_CYCLE` — senão o botão de repetição pula o valor
+   atual no primeiro toque e ele perde o controle do que está ligado. Sair do
+   treino desliga (o "está repetindo" dele foi literal, em 26/08).
+2. **A tradução sai do treino; o hebraico é escolha dele.** Ajustes → "No Modo
+   Treino mostrar": *Só transliteração · Hebraico + transliteração · Tudo*. A
+   transliteração nunca sai — é ela que a boca lê. Vale SÓ dentro do treino: as
+   classes ficam no body, mas o CSS delas está preso a `.modo-treino`.
+3. **A "engasgada" na troca de frase era o silêncio DESIGUAL.** Medido quadro a
+   quadro: nenhum pedaço tocado duas vezes, nenhum salto, nenhuma volta. O
+   silêncio é que era metade da duração de cada verso — 2,00s, 1,32s, 1,03s. O
+   ouvido não conta segundos, conta ritmo, e ritmo que muda a cada compasso é
+   exatamente o que se chama de engasgo. Agora é `RESPIRO = 900ms`, **igual**
+   entre versos e entre repetições. Entre repetições não havia silêncio nenhum —
+   era esse o engasgo que fez a repetição 2× ser desligada em 26/08.
+   O `checar-treino-fita.mjs` passou a exigir CONSTÂNCIA (varia ≤ 150ms), não só
+   "é curto?". Se alguém voltar a calcular o silêncio a partir do verso, fica
+   vermelho antes de ele precisar ouvir de novo.
+4. **A faixa "MODO TREINO · PAUSA APÓS CADA VERSO" saiu.** Quem apertou o botão
+   acabou de ler o que ela dizia. O aviso continua no toast — que passou a dizer
+   a VERDADE: era texto fixo com "repetição 2×" escrito dentro e continuou
+   dizendo isso os dois dias em que a repetição esteve desligada.
+5. **Os pictogramas "em pé · em minyan (10) · em voz audível" saíram.** Eu tinha
+   escrito aqui que eles FICAVAM porque eram instrução e não enfeite. A instrução
+   continua valendo, mas quem decide o que ocupa a tela dele é ele. A informação
+   não se perdeu: o minyan está no painel da ℹ e "recitado em pé" na linha ao
+   lado do título. Os dados por verso (`pictograms: [...]`) ficam intactos.
+6. **Tela grande.** "no computador está muito pequeno, o espaço grande." A
+   coluna tinha os mesmos 720px do celular e a letra os mesmos 28px, calibrados
+   para um iPhone a 30cm do rosto. Agora crescem juntas: 880px/34px a partir de
+   1000px de tela, 1040px/40px a partir de 1400px. **As regras têm que vir DEPOIS
+   da regra base no arquivo** — pus antes e não pegaram, porque a base vinha mais
+   abaixo e ganhava por ser a última. Medido: o verso mais largo rende 948px dos
+   976px úteis. A coluna não está larga demais; o vazio à esquerda é dos versos
+   CURTOS, e isso é o hebraico alinhado à direita, que é como se lê.
+
+**E um defeito achado no meio, que não era do treino:** uma busca antiga podia
+RELIGAR o áudio depois de ele mandar parar. `irPara` guardava "estava tocando" e,
+ao terminar — o que pode ser 1,5s depois, pela rede de segurança —, mandava
+tocar. Trocar Treino→Reza depressa fazia a voz voltar sozinha. Agora cada busca
+tira uma ficha e só religa se a ficha ainda for a última E o app ainda achar que
+está tocando.
+
 ## Nunca
 
 - git push --force

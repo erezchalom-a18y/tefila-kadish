@@ -208,12 +208,26 @@ for (const [n, t] of COMBINACOES) {
   });
   const silencios = r.silencios || [];
   const maior = silencios.length ? Math.max(...silencios) : 0;
-  // O silencio e para ele repetir o verso, nao para esperar. Passou de 2,5s,
-  // soa como travada — foi o que ele disse: "esta levando alguns segundos para
-  // comecar o proximo versiculo".
-  linha(r.retomadas >= 2 && r.paradas >= 3 && maior <= 2.5,
+  const menor = silencios.length ? Math.min(...silencios) : 0;
+  // O SILENCIO TEM QUE SER SEMPRE O MESMO, e curto.
+  //
+  // Ele reclamou tres vezes desta pausa. Primeiro que era longa ("esta levando
+  // alguns segundos para comecar o proximo versiculo"); eu encurtei para METADE
+  // do verso, entre 0,5s e 2s, e ele voltou: "quando muda de frase ainda da uma
+  // engasgada". Medindo quadro a quadro nao havia som repetido nem salto — o
+  // que havia era silencio de tamanho DIFERENTE a cada verso: 2,00s, 1,32s,
+  // 1,03s. O ouvido nao conta segundos, conta ritmo, e ritmo que muda a cada
+  // compasso e exatamente o que se chama de engasgo.
+  //
+  // Por isso a conta aqui nao e so "e curto?": e "e sempre o mesmo?". A folga de
+  // 150 ms e para o navegador, nao para o codigo — o valor sai de uma constante
+  // (RESPIRO). Se alguem voltar a calcular o silencio a partir do verso, esta
+  // linha fica vermelha antes de o Erez precisar ouvir de novo.
+  const constante = silencios.length < 2 || (maior - menor) <= 0.15;
+  linha(r.retomadas >= 2 && r.paradas >= 3 && maior <= 1.5 && constante,
     `${n}/${t}: ${r.paradas} paradas, ${r.retomadas} retomadas SOZINHAS, ` +
-    `silencio ${silencios.map(x => x.toFixed(1) + 's').join(' ')} (maior ${maior.toFixed(1)}s)`);
+    `silencio ${silencios.map(x => x.toFixed(1) + 's').join(' ')} ` +
+    `(maior ${maior.toFixed(1)}s · varia ${((maior - menor) * 1000).toFixed(0)}ms)`);
   await pag.close();
 }
 

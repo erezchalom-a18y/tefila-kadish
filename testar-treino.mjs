@@ -370,6 +370,78 @@ confere('o que aparece no alto da tela sai da constante, nao de um numero a mao'
   !!constante && versao.topo === 'v' + constante[1].split('·').pop().trim(),
   `no alto: "${versao.topo}"  constante: "${constante ? constante[1] : ''}"`);
 
+// ---------- 27/08: o que o botao "Modo Treino" liga e desliga ----------
+// Ele pediu: "no modo treino entra sem repeticao, deve entrar com 3 repeticoes
+// por frase como padrao". Isto anda junto com a respiracao entre repeticoes
+// (checar-treino-fita.mjs): repetir sem respirar foi o que fez a repeticao 2x
+// ser desligada em 26/08, e voltar a liga-la sem ela traz o engasgo de volta.
+//
+// E tem que DESLIGAR ao sair: o "esta repetindo" dele foi literal — o treino
+// ligava a repeticao e ninguem a desligava, entao a reza seguia repetindo.
+const rep = await pag.evaluate(async () => {
+  const seg = () => new Promise(r => setTimeout(r, 250));
+  const bt = document.getElementById('treinoToggle');
+  const cont = document.getElementById('repCount');
+  // garante que comeca fora do treino e sem repeticao
+  if (state.modoTreino) { bt.click(); await seg(); }
+  state.repeatN = 0; state.repeatRemaining = 0; state.repeatRestante = undefined;
+  bt.click(); await seg();
+  const dentro = { n: state.repeatN, rotulo: cont.textContent.trim(),
+                   visivel: getComputedStyle(cont).display !== 'none',
+                   velocidade: state.speed };
+  bt.click(); await seg();
+  const fora = { n: state.repeatN, visivel: getComputedStyle(cont).display !== 'none',
+                 velocidade: state.speed, tocando: !document.getElementById('audioPlayer').paused };
+  return { dentro, fora };
+});
+confere('entrar no Modo Treino liga 3 repeticoes por verso',
+  rep.dentro.n === 3 && rep.dentro.rotulo === '3×' && rep.dentro.visivel,
+  JSON.stringify(rep.dentro));
+confere('e o botao de repeticao mostra isso na tela, sem abrir nada',
+  rep.dentro.visivel && rep.dentro.rotulo === '3×', JSON.stringify(rep.dentro));
+confere('sair do Modo Treino desliga a repeticao e volta a 1x',
+  rep.fora.n === 0 && !rep.fora.visivel && rep.fora.velocidade === 1 && !rep.fora.tocando,
+  JSON.stringify(rep.fora));
+
+// ---------- 27/08: o que o Modo Treino MOSTRA ----------
+// "acho que nao precisa da traducao no modo treino e o hebraico e opcional (nas
+// configuracoes)". A transliteracao nunca sai: e ela que a boca le.
+const camadas = await pag.evaluate(async () => {
+  const seg = () => new Promise(r => setTimeout(r, 200));
+  const visivel = sel => { const e = document.querySelector(sel);
+    return !!e && getComputedStyle(e).display !== 'none'; };
+  const bt = document.getElementById('treinoToggle');
+  if (!state.modoTreino) { bt.click(); await seg(); }
+  const olhar = () => ({ heb: visivel('.hebrew'), tr: visivel('.translit'), pt: visivel('.pt-merged') });
+  aplicarCamadasDoTreino('heb-tr');     await seg(); const padrao = olhar();
+  aplicarCamadasDoTreino('so-translit');await seg(); const so = olhar();
+  aplicarCamadasDoTreino('tudo');       await seg(); const tudo = olhar();
+  aplicarCamadasDoTreino('heb-tr');     await seg();
+  bt.click(); await seg();              // sai do treino
+  const naReza = olhar();
+  return { padrao, so, tudo, naReza };
+});
+confere('no Modo Treino a traducao sai e o hebraico fica (padrao)',
+  camadas.padrao.heb && camadas.padrao.tr && !camadas.padrao.pt, JSON.stringify(camadas.padrao));
+confere('"So transliteracao" tira tambem o hebraico',
+  !camadas.so.heb && camadas.so.tr && !camadas.so.pt, JSON.stringify(camadas.so));
+confere('"Tudo" traz a traducao de volta',
+  camadas.tudo.heb && camadas.tudo.tr && camadas.tudo.pt, JSON.stringify(camadas.tudo));
+confere('e a REZA nao muda por causa desse ajuste',
+  camadas.naReza.heb && camadas.naReza.tr && camadas.naReza.pt, JSON.stringify(camadas.naReza));
+
+// ---------- 27/08: o que ele mandou tirar da tela ----------
+// "esta escrito modo treino - pausa apos cada verso (desnecessario na minha
+// opiniao)" e "em pe em minian de 10 e em voz audivel e desnecessario tambem".
+const tirados = await pag.evaluate(() => ({
+  faixa: !!document.querySelector('.treino-banner'),
+  pictos: document.querySelectorAll('.picto').length,
+}));
+confere('a faixa "Modo Treino · pausa apos cada verso" saiu da tela',
+  tirados.faixa === false, JSON.stringify(tirados));
+confere('os pictogramas "em pe · minyan · voz audivel" sairam da tela',
+  tirados.pictos === 0, JSON.stringify(tirados));
+
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 
 await navegador.close();

@@ -239,27 +239,37 @@ console.log('\n5. O destaque continua na palavra certa, no verso certo');
   await pag.close();
 }
 
-// ---------- 6. a faixa do Modo Treino fala as 8 linguas ----------
-// O botao "por verso | por palavra" saiu da tela em 26/08 (o Erez pediu so por
-// verso por enquanto). O que sobrou na faixa e o aviso, e ele tem que existir
-// nas 8 — a regra 6 do CLAUDE.md vale para todo texto de tela.
-console.log('\n6. A faixa do Modo Treino nas 8 linguas');
+// ---------- 6. o aviso do Modo Treino fala as 8 linguas ----------
+// A FAIXA saiu da tela em 27/08 ("desnecessario na minha opiniao"): quem apertou
+// o botao acabou de ler o que ela dizia, e o botao fica aceso enquanto o modo
+// esta ligado. O AVISO continua existindo, no toast de quem entra no modo — e
+// continua tendo que existir nas 8, que e a regra 6 do CLAUDE.md.
+//
+// O toast tambem passou a dizer a VERDADE: era um texto fixo com "repeticao 2x"
+// escrito dentro, e continuou dizendo isso durante os dois dias em que a
+// repeticao esteve desligada. Agora le o estado.
+console.log('\n6. O aviso do Modo Treino nas 8 linguas');
 {
   const { pag } = await abrir('chabad', 'yatom');
   const r = await pag.evaluate(() => {
     const out = {};
     for (const L of ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he']) {
       applyLanguage(L);
-      out[L] = document.getElementById('treinoTexto').textContent.trim();
+      out[L] = TXT('toast_mode_training', { v: 0.75, n: 3 });
     }
     return out;
   });
   for (const [L, txt] of Object.entries(r)) confere(`${L}: "${txt}"`, !!txt);
   const iguaisAoPt = Object.entries(r).filter(([L, t]) => L !== 'pt' && t === r.pt).map(([L]) => L);
   confere('nenhuma lingua ficou em portugues', iguaisAoPt.length === 0, iguaisAoPt.join(', '));
+  const semNumero = Object.entries(r).filter(([, t]) => !t.includes('3')).map(([L]) => L);
+  confere('e o aviso diz a repeticao de verdade, nao um numero escrito a mao',
+    semNumero.length === 0, semNumero.join(', '));
+  // A faixa nao pode voltar por descuido: se voltar, volta a comer altura da tela.
+  const temFaixa = await pag.evaluate(() => !!document.querySelector('.treino-banner'));
+  confere('a faixa continua fora da tela', temFaixa === false);
   await pag.close();
 }
-
 
 await navegador.close();
 console.log(`\n${falhas === 0 ? 'VERDE: o Modo Treino por palavra faz o que a tela promete' : 'VERMELHO: ' + falhas + ' falha(s)'}`);

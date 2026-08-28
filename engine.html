@@ -1131,6 +1131,33 @@
     .picto { font-size: 10px !important; }
   }
 
+  /* ===== TELA GRANDE (27/08) =====
+     "no computador esta muito pequeno, o espaco grande." Ele tinha razao e a
+     medida confirmou: num monitor de 1440px a coluna continuava com os mesmos
+     720px do celular — metade da tela vazia — e a letra hebraica com os mesmos
+     28px que foram calibrados para um iPhone a 30cm do rosto. No computador o
+     rosto esta a 60cm: a mesma altura de letra rende metade do tamanho aparente.
+     Aqui a coluna e a letra crescem juntas com a tela. Nada encolhe em lugar
+     nenhum — o celular fica exatamente como estava.
+
+     Medido a 1440px: o verso hebraico mais largo do chabad_derabanan rende
+     948px dentro dos 976px uteis da coluna. Ou seja, a coluna nao esta larga
+     demais — ela esta do tamanho do verso mais longo. O vazio que sobra a
+     esquerda e dos versos CURTOS, e isso e o hebraico alinhado a direita, que
+     e como se le. Estreitar a coluna nao tira o vazio: quebra o verso longo. */
+  @media (min-width: 1000px) {
+    main { max-width: 880px; padding: 36px 28px; }
+    .hebrew    { font-size: calc(34px * var(--font-scale)); }
+    .translit  { font-size: calc(23px * var(--font-scale)); }
+    .pt-merged { font-size: calc(16px * var(--font-scale)); }
+  }
+  @media (min-width: 1400px) {
+    main { max-width: 1040px; padding: 40px 32px; }
+    .hebrew    { font-size: calc(40px * var(--font-scale)); }
+    .translit  { font-size: calc(26px * var(--font-scale)); }
+    .pt-merged { font-size: calc(18px * var(--font-scale)); }
+  }
+
   /* ============ V3 NEW COMPONENTS ============ */
 
   /* Modo Treino banner */
@@ -1156,6 +1183,18 @@
     pointer-events: none;
   }
   body.modo-treino .treino-banner { display: flex; }
+
+  /* ===== O QUE O MODO TREINO MOSTRA (27/08) =====
+     "acho que nao precisa da traducao no modo treino e o hebraico e opcional".
+     Treinar e dizer o Kadish em voz alta: o que a boca le e a TRANSLITERACAO, e
+     ela nunca sai. A traducao e para entender, e entender se faz na reza, com
+     calma — no treino ela so ocupa a linha e puxa o olho para longe do que se
+     esta dizendo. O hebraico e a letra verdadeira: quem ja le, le por ele; quem
+     nao le ainda, ganha a tela de volta. Por isso ele escolhe, nos Ajustes.
+     Fora do Modo Treino nada disto vale — a reza continua com as tres camadas. */
+  body.modo-treino.treino-so-translit .hebrew,
+  body.modo-treino.treino-heb-tr      .pt-merged,
+  body.modo-treino.treino-so-translit .pt-merged { display: none; }
   .settings-versao {
     font-size: 11px; opacity: .5; margin: -6px 0 14px;
     font-variant-numeric: tabular-nums; user-select: all;
@@ -1731,26 +1770,24 @@
     <span class="ls-text" data-i18n-html="learn_title"><span data-i18n="learn_title">Por que dizemos o Kadish?</span><small data-i18n="learn_sub">O significado, a história e quem instituiu</small></span>
     <span class="ls-arrow">→</span>
   </button>
-  <div class="treino-banner" id="treinoBanner">
-    <span id="treinoTexto" data-i18n="treino_active">⊙ Modo Treino · pausa após cada verso</span>
-  </div>
+  <!-- A faixa "MODO TREINO - PAUSA APOS CADA VERSO" saiu em 27/08, a pedido do
+     Erez: "desnecessario na minha opiniao". Ele tem razao — quem apertou o
+     botao acabou de ler o que ele diz, e o botao fica aceso enquanto o modo
+     esta ligado. A faixa repetia isso a tela inteira e custava altura.
+     O aviso continua existindo, mas onde nao atrapalha: no toast de quem
+     entra no modo. As chaves treino_active/_palavra continuam nas 8 linguas
+     e sao usadas por ele. -->
   <div class="studio-banner" data-i18n="studio_banner">
     Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)
   </div>
-  <div class="pictograms" id="pictograms">
-    <div class="picto" data-pic="stand">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M12 6v9M12 15l-3 5M12 15l3 5M8 9h8"/></svg>
-      Em pé
-    </div>
-    <div class="picto" data-pic="minyan">
-      <svg viewBox="0 0 24 24"><circle cx="7" cy="6" r="2"/><circle cx="17" cy="6" r="2"/><circle cx="12" cy="5" r="2"/><path d="M3 20v-2a3 3 0 0 1 3-3h2M21 20v-2a3 3 0 0 0-3-3h-2M9 20v-3a3 3 0 0 1 6 0v3"/></svg>
-      Em minyan (10)
-    </div>
-    <div class="picto" data-pic="voice">
-      <svg viewBox="0 0 24 24"><path d="M3 10v4h3l4 4V6L6 10H3z"/><path d="M14 8a4 4 0 0 1 0 8M16.5 5.5a8 8 0 0 1 0 13"/></svg>
-      Em voz audível
-    </div>
-  </div>
+  <!-- Os pictogramas "em pe / em minyan (10) / em voz audivel" sairam em 27/08,
+     a pedido do Erez: "desnecessario tambem". Eu tinha escrito aqui que eles
+     FICAVAM porque eram instrucao e nao enfeite — e a instrucao continua a
+     valer, mas quem decide o que ocupa a tela dele e ele.
+     A informacao NAO se perdeu: o minyan de 10 esta no painel da ℹ ("O Kadish
+     exige minyan"), e "recitado em pe" esta na linha ao lado do titulo. Os
+     dados por verso (pictograms: [...]) ficam nos versos, intactos, para o dia
+     em que ele quiser a faixa de volta. -->
 </div>
 
 <script>
@@ -1769,7 +1806,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-27 · 9';
+const VERSAO = '2026-08-27 · 10';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -1881,6 +1918,15 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="settings-eyebrow" style="margin-top:24px;" data-i18n="layers_title">Camadas</div>
+
+    <div class="settings-row">
+      <div class="settings-row-label" data-i18n="treino_camadas_label">No Modo Treino mostrar</div>
+      <div class="seg-control" data-setting="treinocamadas">
+        <button data-treino="so-translit" data-i18n="treino_so_translit">Só transliteração</button>
+        <button class="active" data-treino="heb-tr" data-i18n="treino_heb_tr">Hebraico + transliteração</button>
+        <button data-treino="tudo" data-i18n="treino_tudo">Tudo</button>
+      </div>
+    </div>
 
     <div class="settings-row">
       <div class="settings-row-label" data-i18n="layer_hebrew">Hebraico</div>
@@ -3884,7 +3930,9 @@ function formatTime(ms) {
 }
 function updatePictograms(verseIdx) {
   const v = verses[verseIdx];
-  if (!v) return;
+  // A faixa saiu da tela em 27/08; isto vira um nada. Fica de pe porque os dados
+  // por verso continuam nos versos e trazer a faixa de volta e so devolver o HTML.
+  if (!v || !v.pictograms) return;
   document.querySelectorAll('.picto').forEach(p => {
     p.classList.toggle('active', v.pictograms.includes(p.dataset.pic));
   });
@@ -4299,6 +4347,11 @@ infoOverlay.addEventListener('click', (e) => {
 state.repeatN = 0;
 state.repeatRemaining = 0; // counter during playback
 const REPEAT_CYCLE = [0, 2, 3, 5];
+// Quantas vezes o Modo Treino repete cada verso ao ser ligado. Decisao dele,
+// 27/08: "deve entrar com 3 repeticoes por frase como padrao". Tem que ser um
+// dos numeros do ciclo acima, senao o botao de repeticao pula o valor atual
+// no primeiro toque e ele perde o controle do que esta ligado.
+const TREINO_REPETICOES = 3;
 const repeatBtn = document.getElementById('repeatBtn');
 const repCount = document.getElementById('repCount');
 repeatBtn.addEventListener('click', () => {
@@ -4323,7 +4376,7 @@ repeatBtn.addEventListener('click', () => {
 const I18N = {
   pt: {
     toast_repeat: "Repetição {n} de {t}",
-    toast_mode_training: "Modo Treino · velocidade .75× · repetição 2× · pausa após cada verso",
+    toast_mode_training: "Modo Treino · velocidade {v}× · repetição {n}× · pausa após cada verso",
     toast_mode_prayer: "Modo Reza · leitura limpa, sem pausas",
     toast_calendar_saved: "Abra o arquivo baixado para pôr no calendário",
     toast_need_name: "Preencha pelo menos o nome",
@@ -4342,6 +4395,7 @@ const I18N = {
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Escuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamanho da fonte', font_small: 'Pequena', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muito grande',
     tradition_label: 'Tradição', language_label: 'Idioma',
+    treino_camadas_label: 'No Modo Treino mostrar', treino_so_translit: 'Só transliteração', treino_heb_tr: 'Hebraico + transliteração', treino_tudo: 'Tudo',
     layers_title: 'Camadas', layer_hebrew: 'Hebraico', layer_translit: 'Transliteração', layer_translation: 'Tradução',
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destaque',
     dedication_title: 'Dedicação', edit_memorial: 'Editar perfil "Em memória de"',
@@ -4367,7 +4421,7 @@ const I18N = {
   },
   en: {
     toast_repeat: "Repetition {n} of {t}",
-    toast_mode_training: "Practice mode · speed .75× · repeat 2× · pause after each verse",
+    toast_mode_training: "Practice mode · speed {v}× · repeat {n}× · pause after each verse",
     toast_mode_prayer: "Prayer mode · clean reading, no pauses",
     toast_calendar_saved: "Open the downloaded file to add it to your calendar",
     toast_need_name: "Please fill in at least the name",
@@ -4386,6 +4440,7 @@ const I18N = {
     theme_label: 'Theme', theme_light: 'Light', theme_dark: 'Dark', theme_contrast: 'Contrast',
     font_size_label: 'Font size', font_small: 'Small', font_normal: 'Normal', font_large: 'Large', font_xlarge: 'Extra large',
     tradition_label: 'Tradition', language_label: 'Language',
+    treino_camadas_label: 'In Practice Mode show', treino_so_translit: 'Transliteration only', treino_heb_tr: 'Hebrew + transliteration', treino_tudo: 'Everything',
     layers_title: 'Layers', layer_hebrew: 'Hebrew', layer_translit: 'Transliteration', layer_translation: 'Translation',
     hide: 'Hide', normal: 'Normal', highlight: 'Highlight',
     dedication_title: 'Dedication', edit_memorial: 'Edit "In memory of" profile',
@@ -4411,7 +4466,7 @@ const I18N = {
   },
   es: {
     toast_repeat: "Repetición {n} de {t}",
-    toast_mode_training: "Modo Práctica · velocidad .75× · repetición 2× · pausa tras cada versículo",
+    toast_mode_training: "Modo Práctica · velocidad {v}× · repetición {n}× · pausa tras cada versículo",
     toast_mode_prayer: "Modo Rezo · lectura limpia, sin pausas",
     toast_calendar_saved: "Abra el archivo descargado para añadirlo al calendario",
     toast_need_name: "Complete al menos el nombre",
@@ -4430,6 +4485,7 @@ const I18N = {
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Oscuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamaño de fuente', font_small: 'Pequeña', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muy grande',
     tradition_label: 'Tradición', language_label: 'Idioma',
+    treino_camadas_label: 'En Modo Práctica mostrar', treino_so_translit: 'Solo transliteración', treino_heb_tr: 'Hebreo + transliteración', treino_tudo: 'Todo',
     layers_title: 'Capas', layer_hebrew: 'Hebreo', layer_translit: 'Transliteración', layer_translation: 'Traducción',
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destacar',
     dedication_title: 'Dedicación', edit_memorial: 'Editar perfil "En memoria de"',
@@ -4455,7 +4511,7 @@ const I18N = {
   },
   fr: {
     toast_repeat: "Répétition {n} sur {t}",
-    toast_mode_training: "Mode Entraînement · vitesse .75× · répétition 2× · pause après chaque verset",
+    toast_mode_training: "Mode Entraînement · vitesse {v}× · répétition {n}× · pause après chaque verset",
     toast_mode_prayer: "Mode Prière · lecture continue, sans pauses",
     toast_calendar_saved: "Ouvrez le fichier téléchargé pour l’ajouter à votre agenda",
     toast_need_name: "Indiquez au moins le nom",
@@ -4474,6 +4530,7 @@ const I18N = {
     theme_label: 'Thème', theme_light: 'Clair', theme_dark: 'Sombre', theme_contrast: 'Contraste',
     font_size_label: 'Taille de police', font_small: 'Petite', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Très grande',
     tradition_label: 'Tradition', language_label: 'Langue',
+    treino_camadas_label: 'En Mode Pratique afficher', treino_so_translit: 'Translittération seule', treino_heb_tr: 'Hébreu + translittération', treino_tudo: 'Tout',
     layers_title: 'Couches', layer_hebrew: 'Hébreu', layer_translit: 'Translittération', layer_translation: 'Traduction',
     hide: 'Masquer', normal: 'Normal', highlight: 'Mettre en avant',
     dedication_title: 'Dédicace', edit_memorial: 'Éditer le profil "En mémoire de"',
@@ -4499,7 +4556,7 @@ const I18N = {
   },
   it: {
     toast_repeat: "Ripetizione {n} di {t}",
-    toast_mode_training: "Modalità Studio · velocità .75× · ripetizione 2× · pausa dopo ogni versetto",
+    toast_mode_training: "Modalità Studio · velocità {v}× · ripetizione {n}× · pausa dopo ogni versetto",
     toast_mode_prayer: "Modalità Preghiera · lettura continua, senza pause",
     toast_calendar_saved: "Apra il file scaricato per aggiungerlo al calendario",
     toast_need_name: "Inserisca almeno il nome",
@@ -4518,6 +4575,7 @@ const I18N = {
     theme_label: 'Tema', theme_light: 'Chiaro', theme_dark: 'Scuro', theme_contrast: 'Contrasto',
     font_size_label: 'Dimensione del testo', font_small: 'Piccola', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Molto grande',
     tradition_label: 'Tradizione', language_label: 'Lingua',
+    treino_camadas_label: 'In Modalità Pratica mostrare', treino_so_translit: 'Solo traslitterazione', treino_heb_tr: 'Ebraico + traslitterazione', treino_tudo: 'Tutto',
     layers_title: 'Livelli', layer_hebrew: 'Ebraico', layer_translit: 'Traslitterazione', layer_translation: 'Traduzione',
     hide: 'Nascondi', normal: 'Normale', highlight: 'Evidenzia',
     dedication_title: 'Dedica', edit_memorial: 'Modifica il profilo "In memoria di"',
@@ -4543,7 +4601,7 @@ const I18N = {
   },
   de: {
     toast_repeat: "Wiederholung {n} von {t}",
-    toast_mode_training: "Übungsmodus · Tempo .75× · Wiederholung 2× · Pause nach jedem Vers",
+    toast_mode_training: "Übungsmodus · Tempo {v}× · Wiederholung {n}× · Pause nach jedem Vers",
     toast_mode_prayer: "Gebetsmodus · durchgehendes Lesen, ohne Pausen",
     toast_calendar_saved: "Öffnen Sie die geladene Datei, um sie in den Kalender zu übernehmen",
     toast_need_name: "Bitte geben Sie zumindest den Namen an",
@@ -4562,6 +4620,7 @@ const I18N = {
     theme_label: 'Design', theme_light: 'Hell', theme_dark: 'Dunkel', theme_contrast: 'Kontrast',
     font_size_label: 'Schriftgröße', font_small: 'Klein', font_normal: 'Normal', font_large: 'Groß', font_xlarge: 'Sehr groß',
     tradition_label: 'Tradition', language_label: 'Sprache',
+    treino_camadas_label: 'Im Übungsmodus zeigen', treino_so_translit: 'Nur Umschrift', treino_heb_tr: 'Hebräisch + Umschrift', treino_tudo: 'Alles',
     layers_title: 'Ebenen', layer_hebrew: 'Hebräisch', layer_translit: 'Umschrift', layer_translation: 'Übersetzung',
     hide: 'Ausblenden', normal: 'Normal', highlight: 'Hervorheben',
     dedication_title: 'Widmung', edit_memorial: 'Profil „Zum Andenken an" bearbeiten',
@@ -4587,7 +4646,7 @@ const I18N = {
   },
   ru: {
     toast_repeat: "Повтор {n} из {t}",
-    toast_mode_training: "Режим тренировки · скорость .75× · повтор 2× · пауза после каждого стиха",
+    toast_mode_training: "Режим тренировки · скорость {v}× · повтор {n}× · пауза после каждого стиха",
     toast_mode_prayer: "Режим молитвы · чтение без пауз",
     toast_calendar_saved: "Откройте загруженный файл, чтобы добавить его в календарь",
     toast_need_name: "Укажите хотя бы имя",
@@ -4606,6 +4665,7 @@ const I18N = {
     theme_label: 'Тема', theme_light: 'Светлая', theme_dark: 'Тёмная', theme_contrast: 'Контраст',
     font_size_label: 'Размер шрифта', font_small: 'Малый', font_normal: 'Нормальный', font_large: 'Большой', font_xlarge: 'Очень большой',
     tradition_label: 'Традиция', language_label: 'Язык',
+    treino_camadas_label: 'В режиме практики показывать', treino_so_translit: 'Только транслитерацию', treino_heb_tr: 'Иврит + транслитерацию', treino_tudo: 'Всё',
     layers_title: 'Слои', layer_hebrew: 'Иврит', layer_translit: 'Транслитерация', layer_translation: 'Перевод',
     hide: 'Скрыть', normal: 'Норма', highlight: 'Выделить',
     dedication_title: 'Посвящение', edit_memorial: 'Редактировать профиль "В память о"',
@@ -4631,7 +4691,7 @@ const I18N = {
   },
   he: {
     toast_repeat: "חזרה {n} מתוך {t}",
-    toast_mode_training: "מצב אימון · מהירות .75× · חזרה ×2 · עצירה אחרי כל פסוק",
+    toast_mode_training: "מצב אימון · מהירות {v}× · חזרה ×{n} · עצירה אחרי כל פסוק",
     toast_mode_prayer: "מצב תפילה · קריאה רצופה, ללא עצירות",
     toast_calendar_saved: "פתחו את הקובץ שהורד כדי להוסיף אותו ליומן",
     toast_need_name: "נא למלא לפחות את השם",
@@ -4650,6 +4710,7 @@ const I18N = {
     theme_label: 'ערכת נושא', theme_light: 'בהיר', theme_dark: 'כהה', theme_contrast: 'ניגודיות',
     font_size_label: 'גודל גופן', font_small: 'קטן', font_normal: 'רגיל', font_large: 'גדול', font_xlarge: 'גדול מאוד',
     tradition_label: 'מסורת', language_label: 'שפה',
+    treino_camadas_label: 'במצב תרגול להציג', treino_so_translit: 'תעתיק בלבד', treino_heb_tr: 'ארמית + תעתיק', treino_tudo: 'הכול',
     layers_title: 'שכבות', layer_hebrew: 'ארמית', layer_translit: 'תעתיק', layer_translation: 'תרגום לעברית',
     hide: 'הסתר', normal: 'רגיל', highlight: 'הדגש',
     dedication_title: 'הקדשה', edit_memorial: 'עריכת פרופיל "לזכר"',
@@ -5070,17 +5131,33 @@ function toggleModoTreino() {
     // duas soava como engasgo — "esta engasgando quando muda de uma frase a
     // outra, na primeira frase repetiu 2 vezes a sequencia". Quem quiser repetir
     // continua tendo o botao de repeticao, e ai e escolha dele.
-    state.treinoMexeu = { speed: state.speed !== 0.75, repeat: false };
+    //
+    // 27/08 — ELE PEDIU A REPETICAO DE VOLTA, agora em 3x: "no modo treino entra
+    // sem repeticao, deve entrar com 3 repeticoes por frase como padrao". Nao e
+    // desdizer o de cima: o que atrapalhava era a VOLTA entre uma repeticao e
+    // outra, que era instantanea e soava como engasgo. Agora ha uma respiracao
+    // igual entre elas, e repetir passou a ser o que ele queria desde o comeco —
+    // ouvir o verso tres vezes antes de seguir.
+    state.treinoMexeu = { speed: state.speed !== 0.75, repeat: state.repeatN !== TREINO_REPETICOES };
     if (state.treinoMexeu.speed) {
       state.speed = 0.75;
       if (audioPlayer) audioPlayer.playbackRate = 0.75;
       document.querySelectorAll('#speedToggle button').forEach(b => b.classList.toggle('active', b.dataset.speed === '0.75'));
     }
+    if (state.treinoMexeu.repeat) {
+      state.repeatN = TREINO_REPETICOES;
+      state.repeatRemaining = 0; state.repeatRestante = undefined;
+      repeatBtn.classList.add('active');
+      repCount.style.display = 'inline-block';
+      repCount.textContent = TREINO_REPETICOES + '×';
+    }
     // Entrar no treino recomeca do Yitgadal — pedido dele, 26/08: "quando muda
     // da reza para o treino deve comecar no Yitgadal sempre". Treinar e comecar
     // do zero; cair no meio da reza onde a leitura parou nao ensina nada.
     if (window.SYNC && SYNC.voltarAoInicio) SYNC.voltarAoInicio();
-    showToast(TXT('toast_mode_training'));
+    // O toast era um texto fixo que dizia "velocidade .75x · repeticao 2x" — e
+    // mentia desde o dia em que a repeticao foi desligada. Agora ele le o estado.
+    showToast(TXT('toast_mode_training', { v: state.speed, n: state.repeatN }));
   } else {
     // Sair do treino PARA e volta ao inicio — pedido dele, 26/08: "quando muda
     // para o modo reza no meio, deve parar e reiniciar como reza, esta
@@ -5273,8 +5350,28 @@ document.querySelectorAll('.seg-control').forEach(seg => {
     }
     else if (setting === 'explanations') applyExplanations(value);
     else if (setting === 'audiosrc') applyAudioSource(value);
+    else if (setting === 'treinocamadas') aplicarCamadasDoTreino(btn.dataset.treino);
   });
 });
+
+// ---------- O que o Modo Treino mostra (27/08) ----------
+// Vale SO dentro do Modo Treino: as classes ficam no body o tempo todo, mas o
+// CSS delas esta preso a .modo-treino. A reza nao muda de aparencia por causa
+// deste ajuste, e e de proposito — quem reza escolhe camadas na secao de baixo.
+function aplicarCamadasDoTreino(qual) {
+  const valido = ['so-translit', 'heb-tr', 'tudo'].includes(qual) ? qual : 'heb-tr';
+  state.camadasTreino = valido;
+  document.body.classList.remove('treino-so-translit', 'treino-heb-tr', 'treino-tudo');
+  document.body.classList.add('treino-' + valido);
+  try { localStorage.setItem('tefila_camadas_treino', valido); } catch (e) {}
+  const seg = document.querySelector('[data-setting="treinocamadas"]');
+  if (seg) seg.querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', b.dataset.treino === valido));
+}
+aplicarCamadasDoTreino((() => {
+  try { return localStorage.getItem('tefila_camadas_treino') || 'heb-tr'; }
+  catch (e) { return 'heb-tr'; }
+})());
 
 // ---------- Language toggle in topbar cycles through languages ----------
 const LANG_ORDER = ['pt','en','es','fr','it','de','ru','he'];
@@ -5743,6 +5840,9 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // O relogio do audio continua servindo de piso: ele nunca ADIANTA, entao se
     // ele ja passou da estimativa, e ele quem manda.
     const ANTECIPA = 0.02;          // so o quadro em que a pausa acontece
+    // A respiracao entre um passo e o seguinte, e entre repeticoes do mesmo
+    // passo. SEMPRE a mesma — ver o comentario da funcao respirar().
+    const RESPIRO = 900;            // ms
     let ancora = null;              // { parede: ms, pos: segundos no audio }
     let alarme = null, alarmeDoPasso = -1;
 
@@ -5795,9 +5895,45 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     }
     // O tempo de silencio do treino, para ele repetir o verso. Desarmado por
     // qualquer toque no ▶ — quem mexe manda.
-    let seguirSozinho = null;
+    let seguirSozinho = null, fichaDoRespiro = 0;
     function desarmarSeguir() {
       if (seguirSozinho) { clearTimeout(seguirSozinho); seguirSozinho = null; }
+      fichaDoRespiro++;              // qualquer respiro ja agendado perde a vez
+    }
+
+    // A RESPIRACAO ENTRE PASSOS (27/08)
+    //
+    // "quando muda de frase ainda da uma engasgada." Medi a troca quadro a
+    // quadro: nao ha pedaco tocado duas vezes, nao ha volta para tras, nao ha
+    // salto. O que ha e o SILENCIO — e ele era DESIGUAL: 2,00s depois do verso
+    // 1, 1,32s depois do 2, 1,03s depois do 3. Era metade da duracao de cada
+    // verso, o que parecia razoavel escrito e soa como travada ouvido: o ouvido
+    // nao mede silencio em segundos, mede em RITMO, e um silencio que muda de
+    // tamanho a cada verso e exatamente o que se chama de engasgo.
+    //
+    // Agora e sempre o mesmo: uma respiracao de RESPIRO, igual entre versos e
+    // entre repeticoes do mesmo verso. Vira pulso, e pulso o ouvido acompanha.
+    //
+    // Entre repeticoes nao havia silencio NENHUM — a volta era instantanea, o
+    // verso emendava nele mesmo. Era esse o "engasgo" da repeticao 2x que fez
+    // ela ser desligada em 26/08. Com a respiracao, repetir voltou a servir.
+    function respirar(destino, aoVoltar) {
+      const a = audioEl();
+      if (!a) return;
+      if (typeof pause === 'function') pause(); else a.pause();
+      desarmarAlarme();
+      if (destino !== null) irPara(destino);
+      desarmarSeguir();
+      const ficha = fichaDoRespiro;
+      seguirSozinho = setTimeout(() => {
+        seguirSozinho = null;
+        const aa = audioEl();
+        if (!aa || !aa.paused) return;                    // ele ja retomou na mao
+        if (ficha !== fichaDoRespiro) return;             // ele mexeu em algo
+        if (typeof state === 'undefined' || !state.modoTreino) return;
+        if (aoVoltar && aoVoltar() === false) return;
+        if (typeof play === 'function') play(); else aa.play().catch(() => {});
+      }, RESPIRO);
     }
     /** Agenda o fim do passo em que a voz esta agora. */
     function armarAlarme() {
@@ -5841,17 +5977,31 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
      *    sair do lugar. Agora, se pousou a mais de 60 ms do pedido, pede de novo
      *    — uma vez so, para nao entrar em laco.
      */
+    // Cada busca tira uma ficha. Uma busca so pode religar o audio se a ficha
+    // dela ainda for a ultima E o app ainda achar que esta tocando.
+    //
+    // Sem isso: uma busca comecada com o audio tocando guardava "estava tocando"
+    // e, ao terminar — que pode ser 1,5s depois, pela rede de seguranca —,
+    // mandava tocar. Se nesse meio tempo alguem tivesse mandado PARAR, o audio
+    // voltava sozinho. Aparecia ao trocar de Modo Treino para Modo Reza depressa:
+    // entrar no treino comeca uma busca com som; sair manda parar; a busca de
+    // entrar terminava depois e religava a voz. E o "esta repetindo" dele visto
+    // por outro angulo — o app ligando som que ninguem pediu.
+    let fichaDaBusca = 0;
     function irPara(destino, aoChegar) {
       const a = audioEl();
       if (!a) return;
       const estavaTocando = !a.paused;
+      const ficha = ++fichaDaBusca;
       let tentou = false, pronto = false;
       const terminar = () => {
         if (pronto) return;
         pronto = true;
         a.removeEventListener('seeked', chegou);
         ancorar(destino);               // aqui a posicao e EXATA: fomos nos que pedimos
-        if (estavaTocando && a.paused) { const p = a.play(); if (p && p.catch) p.catch(() => {}); }
+        const querTocar = estavaTocando && ficha === fichaDaBusca
+          && (typeof state === 'undefined' || state.isPlaying !== false);
+        if (querTocar && a.paused) { const p = a.play(); if (p && p.catch) p.catch(() => {}); }
         armarAlarme();
         if (aoChegar) aoChegar(a.currentTime);
       };
@@ -5900,11 +6050,15 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           // fio DE ANTES do verso fazia o contador de versos achar que o verso
           // anterior tinha acabado. Inaudivel, e resolve.
           const destino = Math.min(v.start + 0.03, v.end - 0.01);
-          irPara(destino);        // ancora e re-agenda o alarme sozinho
           rebobinadoAte = destino;
-          prazoDaVolta = Date.now() + 2000;
+          prazoDaVolta = Date.now() + 2000 + RESPIRO;
           if (typeof showToast === 'function')
             showToast(TXT('toast_repeat', { n: state.repeatN - state.repeatRestante + 1, t: state.repeatN }));
+          // No Modo Treino a volta ganha a mesma respiracao das trocas de verso.
+          // Fora dele (repeticao ligada na reza) continua emendando direto, que e
+          // o que quem reza espera de um "repetir".
+          if (state.modoTreino) respirar(destino);
+          else { irPara(destino); }   // irPara ancora e re-agenda o alarme sozinho
           return 'repetiu';
         }
         state.repeatRestante = undefined;
@@ -5915,42 +6069,23 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // que nao fazia nada. Era isso que travava o Modo Treino depois da
       // primeira pausa.
       if (state.modoTreino) {
-        desarmarAlarme();
-        if (typeof pause === 'function') pause(); else a.pause();
         paradoNoFimDoVerso = true;
         // Ja deixa a agulha no comeco do passo seguinte, com o audio parado: a
         // busca acontece com calma enquanto ele le a linha, e o ▶ entra limpo,
         // sem repetir o rabinho do verso que acabou.
-        const proximo = passos[k + 1];
-        if (proximo) irPara(proximo.start);
-
+        //
         // O TREINO SEGUE SOZINHO — pedido dele, 26/08: "a ideia e que o modo
         // teste continue enquanto nao for interrompido". A pausa e para ele
         // repetir o verso em voz alta, nao para tocar num botao: quem esta
         // rezando de pe, no minyan, com o sidur na mao, nao tem dedo sobrando.
-        //
-        // O silencio dura o tempo do proprio verso — e o que se leva para
-        // repeti-lo —, entre 1,2s e 6s. Qualquer toque no ▶ interrompe, e ai
-        // ele manda: o app so retoma sozinho se ninguem mexeu.
+        // Qualquer toque no ▶ interrompe, e ai ele manda.
+        const proximo = passos[k + 1];
         if (proximo) {
-          // O silencio era do tamanho do verso inteiro — o tempo de repeti-lo.
-          // Na pratica ficou longo demais ("esta levando alguns segundos para
-          // comecar o proximo versiculo"), porque quem treina ja vai dizendo
-          // junto, nao espera o verso acabar para so entao repetir. Metade do
-          // verso, entre 0,5s e 2s, e o que soa como respiracao e nao como
-          // travada.
-          const duracao = passos[k].end - passos[k].start;
-          const silencio = Math.min(2, Math.max(0.5, duracao * 0.5)) * 1000;
           const eraEsse = k;
-          desarmarSeguir();
-          seguirSozinho = setTimeout(() => {
-            seguirSozinho = null;
-            const aa = audioEl();
-            if (!aa || !aa.paused) return;                 // ele ja retomou
-            if (typeof state === 'undefined' || !state.modoTreino) return;
-            if (fimJaTratado !== eraEsse) return;           // ele mexeu em algo
-            if (typeof play === 'function') play(); else aa.play().catch(() => {});
-          }, silencio);
+          respirar(proximo.start, () => fimJaTratado === eraEsse);
+        } else {
+          desarmarAlarme();
+          if (typeof pause === 'function') pause(); else a.pause();
         }
         return 'pausou';
       }
