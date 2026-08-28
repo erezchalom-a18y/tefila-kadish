@@ -769,6 +769,46 @@ a .75× é respeitada? volta a tocar sozinho? o que está guardado no localStora
 e monta um texto para ele copiar e mandar. Sem número de aparelho de verdade,
 qualquer conserto meu é chute — e chute já custou três rodadas dele.
 
+## O formato do áudio, e o caminho que ninguém media (28/08)
+
+O diagnóstico rodado no iPad dele resolveu a dúvida, e o resultado **derrubou a
+minha hipótese**: no aparelho dele a busca é EXATA (0 ms de erro em 6 alvos) e o
+relógio anda de 53 em 53 ms. Nada de desvio de busca. O que apareceu foi outro:
+
+```
+mp3: "maybe"   ogg: "probably"
+```
+
+O app escolhia o formato assim:
+
+```js
+_formato = a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+```
+
+com o comentário *"O Safari (iPad e Mac) NÃO toca Ogg Vorbis"*. Era verdade
+quando foi escrito; o iOS 26 toca. **Duas coisas erradas nessa linha:**
+
+1. `canPlayType` devolve TEXTO — `''`, `'maybe'` ou `'probably'` — e tanto
+   `'maybe'` quanto `'probably'` são verdadeiros num `if`. Aquele ternário nunca
+   perguntou "toca Ogg melhor?"; perguntou "sabe alguma coisa sobre Ogg?".
+2. **O iPad dele caiu, calado, num caminho que nenhuma das 14 checagens cobre:**
+   todas passam `?audio=mp3`. A sincronia foi conferida no MP3, o Modo Treino
+   foi medido no MP3, e ele estava ouvindo o Ogg.
+
+Agora o formato é **MP3 em todo lugar**. O Ogg não pagava nada em troca: o MP3
+daqui é até MENOR (1,95 MB contra 2,08 MB no chabad_derabanan) e toca em tudo.
+Os dois arquivos são idênticos ao milissegundo (correlação cruzada: 0,0 ms de
+deslocamento; primeira voz em 0,175s no Ogg e 0,173s no MP3), então trocar não
+mexe em número nenhum de sincronia. `?audio=ogg` continua forçando o Ogg.
+
+**A lição, que vale além deste caso:** um `if` sobre o que o navegador *diz que
+talvez* consiga fazer é um desvio de caminho que ninguém vê. Se houver dois
+caminhos, ou os dois são medidos, ou só existe um.
+
+O `tefila_audio_src = tts` que apareceu no localStorage dele é inofensivo com a
+sincronia ligada (o `playFullPrayer` retorna antes de chegar ao TTS), mas o nome
+engana — é dívida a arrumar um dia.
+
 ## Nunca
 
 - git push --force

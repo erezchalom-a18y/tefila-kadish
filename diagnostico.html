@@ -111,7 +111,7 @@ $('ir').addEventListener('click', async () => {
 
   // ---- 2. a busca cai onde se pede? (E A PERGUNTA QUE IMPORTA) ----
   $('passo').textContent = 'Testando se o áudio vai para onde é pedido…';
-  const alvos = [0.18, 4.38, 7.04, 12.00, 20.00];
+  const alvos = [0.18, 1.28, 4.38, 7.04, 12.00, 20.00];
   const erros = [];
   for (const alvo of alvos) {
     const t0 = performance.now();
@@ -135,6 +135,35 @@ $('ir').addEventListener('click', async () => {
       mediaErro > 0.05 ? 'sempre DEPOIS do pedido — é isto que come o Yitgadal'
         : (mediaErro < -0.05 ? 'sempre ANTES do pedido' : 'não erra para um lado só'));
   pos('Quanto ela demora', lentidao + ' ms', lentidao < 600);
+
+  // ---- 2b. e no OGG? ----
+  // O app escolhia o formato por canPlayType, e canPlayType devolve TEXTO:
+  // 'maybe' tambem e verdadeiro num if. O iPad dele responde 'probably' para
+  // Ogg, entao ele estava ouvindo o Ogg — um caminho que nenhuma checagem
+  // cobre, porque todas passam ?audio=mp3. Desde 28/08 o app usa MP3 em todo
+  // lugar; isto aqui fica para saber se o Ogg era mesmo o culpado.
+  $('passo').textContent = 'Testando o outro formato (OGG)…';
+  const ogg = new Audio('./tefila-audio/chabad/derabanan.ogg');
+  ogg.preload = 'auto';
+  await new Promise(ok => { ogg.addEventListener('canplaythrough', ok, { once: true });
+                            ogg.addEventListener('error', ok, { once: true });
+                            setTimeout(ok, 12000); });
+  const errosOgg = [];
+  if (isFinite(ogg.duration) && ogg.duration > 0) {
+    for (const alvo of alvos) {
+      ogg.currentTime = alvo;
+      await new Promise(ok => { const f = () => { ogg.removeEventListener('seeked', f); ok(); };
+                                ogg.addEventListener('seeked', f); setTimeout(ok, 3000); });
+      await espera(50);
+      errosOgg.push({ alvo, caiu: ogg.currentTime });
+    }
+  }
+  bruto.buscasOgg = errosOgg;
+  const piorOgg = errosOgg.length ? Math.max(...errosOgg.map(e => Math.abs(e.caiu - e.alvo))) : null;
+  pos('A busca no OGG cai onde se pede?',
+      piorOgg === null ? 'não tocou OGG' : (piorOgg * 1000).toFixed(0) + ' ms de erro',
+      piorOgg === null ? null : piorOgg < 0.06,
+      errosOgg.map(e => `pediu ${e.alvo} → caiu ${e.caiu.toFixed(3)}`).join(' · '));
 
   // ---- 3. o relogio do audio anda liso ou aos saltos? ----
   $('passo').textContent = 'Vendo o relógio do áudio enquanto toca…';
@@ -213,6 +242,8 @@ duração lida: ${bruto.duracao}
 buscas:
 ${bruto.buscas.map(e => `  pediu ${e.alvo}s -> caiu ${e.caiu.toFixed(4)}s  (erro ${((e.caiu-e.alvo)*1000).toFixed(0)}ms, ${e.ms}ms)`).join('\n')}
 erro medio: ${(mediaErro*1000).toFixed(0)}ms   pior: ${(piorErro*1000).toFixed(0)}ms
+buscas no OGG (duracao ${ogg.duration}):
+${bruto.buscasOgg.length ? bruto.buscasOgg.map(e => `  pediu ${e.alvo}s -> caiu ${e.caiu.toFixed(4)}s  (erro ${((e.caiu-e.alvo)*1000).toFixed(0)}ms)`).join('\n') : '  (nao tocou OGG)'}
 passo do relogio: ${(bruto.passoRelogio*1000).toFixed(0)}ms  (${bruto.leituras} leituras em 3s)
 velocidade .75x respeitada: ${bruto.velocidade.toFixed(3)}
 volta sozinho: ${bruto.voltouSozinho}

@@ -1902,7 +1902,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-28 · 12';
+const VERSAO = '2026-08-28 · 13';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -5895,16 +5895,36 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       tipo = TIPOS.includes(t) ? t : 'yatom';
     }
 
-    // O Safari (iPad e Mac) NAO toca Ogg Vorbis. Sem isto o audio do rabino nao
-    // carrega no iPad e o app cai na voz sintetizada do navegador.
+    // O FORMATO E MP3 EM TODO LUGAR (28/08). Antes esta linha era:
+    //
+    //     _formato = a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+    //
+    // com o comentario "O Safari (iPad e Mac) NAO toca Ogg Vorbis". Era verdade
+    // quando foi escrito. Nao e mais: a medida que o Erez mandou do iPad dele
+    // (iOS 26.6) responde 'probably' para Ogg e 'maybe' para MP3.
+    //
+    // Duas coisas erradas ali, e a segunda e a que dói:
+    //
+    // 1. `canPlayType` devolve TEXTO — '', 'maybe' ou 'probably' —, e tanto
+    //    'maybe' quanto 'probably' sao verdadeiros num `if`. Aquele ternario
+    //    nunca perguntou "toca Ogg melhor?"; perguntou "sabe alguma coisa sobre
+    //    Ogg?". Bastava o navegador nao dizer um nao redondo.
+    // 2. O iPad dele caiu, calado, num caminho que NENHUMA das nossas checagens
+    //    cobre: todas passam ?audio=mp3. A sincronia foi conferida no MP3, o
+    //    Modo Treino foi medido no MP3, e ele estava ouvindo o Ogg.
+    //
+    // O Ogg nao paga nada em troca: o MP3 daqui e ate MENOR (1,95 MB contra
+    // 2,08 MB no chabad_derabanan), e MP3 toca em tudo que existe. Entao o
+    // formato passa a ser um so, o mesmo que as checagens medem. Uma coisa a
+    // menos que pode diferir entre o aparelho dele e este servidor.
+    //
+    // ?audio=ogg continua forcando o Ogg, para poder medi-lo quando preciso.
     let _formato = null;
     function formatoAudio() {
       if (_formato) return _formato;
       const pedido = param('audio');   // ?audio=mp3 | ogg forca, para testar
       if (pedido === 'mp3' || pedido === 'ogg') return (_formato = pedido);
-      const a = document.createElement('audio');
-      _formato = a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
-      return _formato;
+      return (_formato = 'mp3');
     }
     function caminhoAudio(n, t) { return `./tefila-audio/${n}/${t}.${formatoAudio()}`; }
 
