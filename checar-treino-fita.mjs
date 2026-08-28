@@ -109,11 +109,15 @@ for (const [n, t] of COMBINACOES) {
   }, PARADAS);
 
   // ---- as tres perguntas, so com os segundos ----
-  const fronteiras = r.passos.map(p => p.end);
+  // O ALVO DE CADA PARADA MUDOU EM 28/08: e o fim da VOZ do verso, nao a
+  // fronteira. Ver o comentario grande da secao "a parada cai no silencio", mais
+  // abaixo: a fronteira esta colada no ataque da palavra seguinte nas 153, entao
+  // parar nela e o defeito, nao o certo. `parar` vem de fim-da-voz.json.
+  const fronteiras = r.passos.map(p => (typeof p.parar === 'number') ? p.parar : p.end);
   const problemas = [];
 
   r.paradas.forEach((par, i) => {
-    // a fronteira que esta parada devia respeitar
+    // o ponto de parada que esta parada devia respeitar
     const alvo = fronteiras.reduce((m, f) => Math.abs(f - par.parou) < Math.abs(m - par.parou) ? f : m, fronteiras[0]);
 
     // 1. VAZOU: soou alguma coisa depois do fim do passo?
@@ -123,20 +127,51 @@ for (const [n, t] of COMBINACOES) {
     if (vazou > 0.02)
       problemas.push(`parada ${i + 1}: vazou ${(vazou * 1000).toFixed(0)} ms depois de ${alvo}s (soou ate ${maior}s)`);
 
-    // 2. FORA: a parada caiu perto de uma fronteira da fita?
-    if (Math.abs(par.parou - alvo) > 0.35)
-      problemas.push(`parada ${i + 1}: parou em ${par.parou}s, longe da fronteira ${alvo}s`);
+    // 2. A AGULHA FICA ESTACIONADA NO COMECO DO PASSO SEGUINTE.
+    //
+    // Nao e o mesmo que a pergunta 1. Ali se mede ate onde SOOU; aqui, onde a
+    // agulha FICOU depois de parar. O app, ao pausar, ja procura o comeco do
+    // proximo verso com o audio calado — assim a busca acontece com calma
+    // enquanto ele le a linha, e o ▶ entra limpo, sem repetir o rabinho do
+    // verso que acabou.
+    //
+    // Ate 28/08 isto conferia se a agulha ficava perto da FRONTEIRA, e dava no
+    // mesmo porque a fronteira era tambem o ponto de parada. Agora sao coisas
+    // diferentes: para-se no fim da voz (~400 ms antes) e estaciona-se no comeco
+    // do verso seguinte. Comparar a agulha com o ponto de parada acusaria um
+    // defeito que nao existe.
+    const inicioSeguinte = r.passos[i + 1] ? r.passos[i + 1].start : null;
+    if (inicioSeguinte !== null && Math.abs(par.parou - inicioSeguinte) > 0.35)
+      problemas.push(`parada ${i + 1}: a agulha ficou em ${par.parou}s, e nao no ` +
+                     `comeco do verso seguinte (${inicioSeguinte}s)`);
   });
 
-  // 3. BURACO: junta tudo o que tocou e procura pedaco da fita nao ouvido
+  // 3. BURACO: pedaco de fita nao ouvido — mas so conta se tinha VOZ dentro.
+  //
+  // Ate 28/08 esta conta olhava a fita e reprovava qualquer pedaco nao tocado.
+  // Desde que a parada passou a acontecer no fim da VOZ e nao na fronteira, o
+  // treino pula de proposito a respiracao do rabino no fim de cada verso — 400 a
+  // 800 ms de silencio. Isso nao e buraco: e o que ele pediu, e nada se perde ao
+  // ouvido. Buraco de verdade e trecho com VOZ que nunca soou, e e isso que se
+  // pergunta agora, contra o sinal medido. A conta ficou mais exigente, nao menos.
   const ouvido = r.tocado.slice().sort((x, y) => x - y);
+  let blocosDaVoz = null;
+  try {
+    const sig = JSON.parse((await import('node:fs')).readFileSync(`sinal/${n}_${t}.json`, 'utf8'));
+    blocosDaVoz = sig.blocos.map(b => Array.isArray(b) ? b : [b.start, b.end]);
+  } catch (e) {}
   let buracos = 0, maiorBuraco = 0;
+  const ultimoOuvido = ouvido.length ? ouvido[ouvido.length - 1] : 0;
   for (let i = 1; i < ouvido.length; i++) {
-    const d = ouvido[i] - ouvido[i - 1];
-    if (d > TOLERANCIA_BURACO) { buracos++; if (d > maiorBuraco) maiorBuraco = d; }
+    const de = ouvido[i - 1], ate = ouvido[i];
+    if (ate - de <= TOLERANCIA_BURACO) continue;
+    if (de >= ultimoOuvido - 0.01) continue;       // o resto da reza, que nem chegamos a tocar
+    // tinha voz nesse buraco?
+    const comVoz = !blocosDaVoz || blocosDaVoz.some(b => b[1] > de + 0.05 && b[0] < ate - 0.05);
+    if (!comVoz) continue;
+    buracos++; if (ate - de > maiorBuraco) maiorBuraco = ate - de;
   }
-  // o ultimo buraco e o resto da reza que nao chegamos a tocar: nao conta
-  const buracosReais = Math.max(0, buracos - 1);
+  const buracosReais = buracos;
 
   const ok = problemas.length === 0 && buracosReais === 0 && erros.length === 0
              && r.paradas.length === PARADAS;
@@ -262,6 +297,82 @@ for (const [n, t] of COMBINACOES) {
     `${n}/${t}: parado=${r.parado} em ${r.onde}s (inicio ${r.primeira}s) | ` +
     `repeticao=${r.repeticao} velocidade=${r.velocidade}x`);
   await pag.close();
+}
+
+// ---------------------------------------------------------------------------
+// A PARADA CAI DENTRO DO SILENCIO, LONGE DO ATAQUE SEGUINTE
+// ---------------------------------------------------------------------------
+// 28/08, no iPhone e no iPad: "no final da frase da para ouvir o comeco da outra
+// (bea) antes de recomecar a frase. na segunda tambem (ve), na terceira tambem".
+//
+// Medido nas 153 fronteiras de verso dos 8: ha de 320 a 760 ms de silencio ANTES
+// da fronteira e ZERO DEPOIS, nas 153. E assim por construcao — as palavras se
+// encostam na fita, entao a ultima palavra do verso engole a respiracao do
+// rabino e so acaba quando a proxima ja esta soando. "Parar no fim do verso" era
+// parar no instante exato do ataque seguinte, com 20 ms de margem. Aqui no
+// Chromium a pausa cai no milissegundo e nao se ouve nada; num aparelho de
+// verdade escapa o ataque, e foi o que ele ouviu.
+//
+// A conta abaixo e contra a VOZ (sinal/*.json), nao contra a fronteira — a
+// fronteira nao sabe onde o rabino calou. Duas coisas ao mesmo tempo: nao pode
+// VAZAR (chegar ao ataque seguinte) e nao pode CORTAR (parar antes de a voz do
+// verso acabar). Entre uma coisa e outra ha meio segundo de silencio, e e ali
+// que a parada tem que cair.
+console.log('\nA parada cai no silencio, longe do ataque seguinte:\n');
+{
+  const { readFileSync } = await import('node:fs');
+  const MARGEM_MINIMA = 0.20;
+  for (const [n, t] of COMBINACOES) {
+    let blocos;
+    try {
+      const sig = JSON.parse(readFileSync(`sinal/${n}_${t}.json`, 'utf8'));
+      blocos = sig.blocos.map(b => Array.isArray(b) ? b : [b.start, b.end]);
+    } catch (e) { linha(false, `${n}/${t}: nao achei sinal/${n}_${t}.json`); continue; }
+
+    const pag = await navegador.newPage();
+    await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}`);
+    await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 25000 });
+    await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
+    const r = await pag.evaluate(async () => {
+      const a = document.getElementById('audioPlayer');
+      document.getElementById('treinoToggle').click();
+      await new Promise(r => setTimeout(r, 1200));
+      state.repeatN = 0;
+      document.getElementById('playBtn').click();
+      const am = []; const t0 = performance.now();
+      while (performance.now() - t0 < 16000) {
+        await new Promise(r => setTimeout(r, 10));
+        am.push({ t: a.currentTime, pausado: a.paused });
+      }
+      a.pause();
+      return { am, passos: SYNC.passos() };
+    });
+    const paradas = [];
+    for (let i = 1; i < r.am.length; i++)
+      if (r.am[i].pausado && !r.am[i - 1].pausado) paradas.push(r.am[i - 1].t);
+
+    let menorFolga = 9, piorCorte = -9, detalhe = '';
+    paradas.forEach((p, i) => {
+      const passo = r.passos[i];
+      if (!passo) return;
+      const proxima = blocos.find(b => b[0] >= passo.end - 0.02);
+      const ultima = blocos.filter(b => b[1] <= passo.end + 0.02).pop();
+      if (proxima) {
+        const folga = proxima[0] - p;
+        if (folga < menorFolga) { menorFolga = folga;
+          detalhe = `verso ${i + 1}: parou a ${(folga * 1000).toFixed(0)} ms do ataque seguinte`; }
+      }
+      if (ultima) { const corte = ultima[1] - p; if (corte > piorCorte) piorCorte = corte; }
+    });
+    // 2 paradas bastam: o que se mede aqui e a FOLGA de cada parada, nao quantas
+    // couberam nos 16 segundos. O ashkenaz_derabanan tem versos longos e so da
+    // duas nesse tempo — exigir tres reprovava um caso que estava certo.
+    const ok = paradas.length >= 2 && menorFolga >= MARGEM_MINIMA && piorCorte <= 0.02;
+    linha(ok, `${n}/${t}: ${paradas.length} paradas · folga ate o ataque seguinte ` +
+      `${(menorFolga * 1000).toFixed(0)} ms · corte no fim da voz ` +
+      `${(Math.max(0, piorCorte) * 1000).toFixed(0)} ms` + (ok ? '' : `  ${detalhe}`));
+    await pag.close();
+  }
 }
 
 await navegador.close();

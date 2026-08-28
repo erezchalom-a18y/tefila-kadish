@@ -1902,7 +1902,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-28 · 16';
+const VERSAO = '2026-08-28 · 17';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -5849,6 +5849,17 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
      * nos 8 arquivos). O que muda e de ONDE eles vem — e as correcoes de ouvido
      * do Erez estao nas palavras.
      */
+    // ONDE A VOZ DE CADA VERSO ACABA (28/08).
+    //
+    // Carregado de fim-da-voz.json, escrito por medir-fim-da-voz.py. Se nao vier,
+    // o app continua funcionando: `parar` fica indefinido e vale a fronteira,
+    // como antes. Nada aqui move palavra nenhuma nem toca em ancora.
+    let paradasDaVoz = null;
+    fetch('./fim-da-voz.json?' + (typeof VERSAO === 'string' ? VERSAO.replace(/\D+/g, '') : ''))
+      .then(r => r.ok ? r.json() : null)
+      .then(j => { if (j && j.paradas) { paradasDaVoz = j.paradas; montarPassos(); } })
+      .catch(() => {});
+
     function montarPassos() {
       passos = [];
       if (!fita.length) return;
@@ -5863,6 +5874,31 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         else atual.end = w.end;
       }
       if (atual) passos.push(atual);
+
+      // ONDE O TREINO PARA — e nao e o fim do verso.
+      //
+      // "no final da frase da para ouvir o comeco da outra (bea) antes de
+      // recomecar a frase. na segunda tambem (ve), na terceira tambem (ve)."
+      //
+      // Medido nas 153 fronteiras dos 8: ha de 320 a 760 ms de silencio ANTES da
+      // fronteira e ZERO DEPOIS, nas 153. E assim por construcao — as palavras se
+      // encostam na fita, entao a ultima palavra do verso engole a respiracao do
+      // rabino e so acaba quando a proxima ja esta soando.
+      //
+      // Entao "parar no fim do verso" e parar no instante exato em que a proxima
+      // palavra ataca. No Chromium a pausa cai no milissegundo e nao se ouve nada
+      // — por isso as checagens ficavam verdes. Num aparelho de verdade, com
+      // relogio grosso e som ja no buffer, escapa o ataque: o "bea", o "ve".
+      //
+      // O conserto nao e apertar a conta, e parar onde a VOZ acaba. Isso da meio
+      // segundo de folga contra qualquer atraso e nao corta nada: o rabino ja
+      // tinha calado. O `end` continua sendo a fronteira, porque e dele que sai
+      // o comeco do passo seguinte; muda so ONDE SE PARA.
+      const lista = paradasDaVoz && paradasDaVoz[`${nussach}_${tipo}`];
+      if (lista) passos.forEach((p, i) => {
+        const t = lista[p.k !== undefined ? p.k : i];
+        if (typeof t === 'number' && t > p.start && t <= p.end) p.parar = t;
+      });
     }
     /** Indice do passo que contem t (ou o ultimo que ja comecou). */
     function passoEm(t) {
@@ -6036,6 +6072,25 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // A respiracao entre um passo e o seguinte, e entre repeticoes do mesmo
     // passo. SEMPRE a mesma — ver o comentario da funcao respirar().
     const RESPIRO = 900;            // ms
+
+    /**
+     * ONDE O TREINO PARA num passo. UM lugar so, de proposito.
+     *
+     * `parar` e o fim da VOZ daquele verso (fim-da-voz.json). Sem ele — arquivo
+     * ausente, ou modo por palavra — vale a fronteira menos a antecipacao, que
+     * e o que valia antes.
+     *
+     * Isto tem que ser UMA funcao porque ha DOIS caminhos que param o passo: o
+     * alarme de relogio de parede e, se ele falhar, o quadro que ve o relogio
+     * cruzar o ponto. Em 28/08 eu mudei so o primeiro, e o segundo continuou
+     * parando na fronteira — no chabad_yatom o teste mediu a parada a 16 ms do
+     * ataque seguinte, que e exatamente o "ve" que ele ouve. Duas contas para a
+     * mesma pergunta e sempre uma delas errada.
+     */
+    function pontoDeParada(passo) {
+      if (!passo) return 0;
+      return (typeof passo.parar === 'number') ? passo.parar : (passo.end - ANTECIPA);
+    }
     let ancora = null;              // { parede: ms, pos: segundos no audio }
     let alarme = null, alarmeDoPasso = -1;
 
@@ -6151,7 +6206,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       const passo = passos[k];
       if (!passo) return;
       const rate = a.playbackRate || 1;
-      const faltam = (passo.end - ANTECIPA - posicaoEstimada()) / rate;
+      const faltam = (pontoDeParada(passo) - posicaoEstimada()) / rate;
       // Ja passou do fim deste passo? Entao nao ha o que agendar — quem trata e
       // a troca de passo, la no acender(). Sem esta guarda o alarme disparava na
       // hora, de novo no MESMO passo, e a repeticao entrava em laco: o verso 1
@@ -6444,7 +6499,26 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     let acesoVerso = -1, acesoPalavra = -1;
     function acender() {
       if (!dados || !mapa || typeof highlightWord !== 'function') return;
-      const t = audioEl().currentTime;
+      // O DESTAQUE LE A MESMA CONTA QUE O RESTO (28/08).
+      //
+      // Ate aqui esta linha era `audioEl().currentTime` — o relogio CRU. E o
+      // relogio cru, no iOS, e um piso: fica parado e salta, de 27 em 27 ms no
+      // iPhone dele, de 53 em 53 no iPad. Entao o destaque ficava ate um salto
+      // inteiro atrasado em relacao a voz, e numa palavra curta isso e a palavra
+      // toda. Era a metade visivel da queixa de sempre: "iluminando as palavras
+      // erradas".
+      //
+      // O app JA sabia a posicao boa: posicaoEstimada() conta por relogio de
+      // parede a partir da ultima ancora, e usa o relogio do audio so como piso
+      // (ele nunca adianta). E o que manda no fim do verso desde 26/08. So o
+      // destaque continuava perguntando ao relogio cru — duas contas para a
+      // mesma pergunta, que e o defeito que este projeto ja pagou caro tres
+      // vezes. Agora e uma so.
+      //
+      // Medido no perfil "iPad no pior dia" (relogio de 250 ms): os quadros em
+      // que a tela acende uma palavra e o audio toca outra caem de 13% para
+      // perto de zero.
+      const t = posicaoEstimada();
       // UMA busca so, na fita continua. O verso vem da palavra — nunca o
       // contrario. Ver "A FITA CONTINUA", la em cima.
       const agora = palavraEm(t);
@@ -6473,7 +6547,7 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       if (rebobinadoAte === null && versoAnterior >= 0 && typeof state !== 'undefined'
           && (state.modoTreino || state.repeatN > 1)) {
         const passo = passos[versoAnterior];
-        if (passo && t >= passo.end - ANTECIPA && t < passo.end + 0.5) {
+        if (passo && t >= pontoDeParada(passo) && t < passo.end + 0.5) {
           if (tratarFimDe(versoAnterior)) return;
         }
       }

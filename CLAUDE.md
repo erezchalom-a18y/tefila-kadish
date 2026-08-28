@@ -32,6 +32,8 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   chabad_yatom, onde o Erez ancorou de ouvido e provou o ponto. Não afrouxei a
   conta para zerar isso: a coluna acusa, e quem julga é o ouvido dele. Se a
   transcrição for refeita, este número pode ir e voltar entre 0 e 1.
+- node medir-fim-da-voz.py → escreve fim-da-voz.json: onde a VOZ de cada verso
+  acaba. Rodar de novo se um áudio ou um sync mudar. Só lê sinal/ e sync/.
 - node checar-plataformas.mjs → o app com o navegador ESTRAGADO DE PROPÓSITO, de
   cinco jeitos que aparelhos de verdade estragam: relógio grosso (250ms, iOS),
   busca lenta (400ms), busca desviada, retomada lenta, tela de 30fps. Cobra três
@@ -895,6 +897,63 @@ mediana do arrasto é 0 ms. Independentemente disso, o `checar-sincronia.mjs`
 fazer é um desvio de caminho que ninguém vê. Se houver dois caminhos, ou os dois
 são medidos, ou só existe um. Foi assim que o iPad dele passou dias num caminho
 que nenhuma das 14 checagens cobria.
+
+## O "bea" no fim de cada frase (28/08) — e por que era estrutural
+
+Ele, no iPhone e no iPad, já com a v16: *"no final da frase dá para ouvir o começo
+da outra (bea) antes de recomeçar a frase. na segunda também (ve), na terceira
+também (ve)"*.
+
+Medido nas **153 fronteiras de verso dos 8 Kadishim**, e não tem exceção:
+
+| | |
+|---|---|
+| silêncio **antes** da fronteira | 320 a 760 ms (mediana 600) |
+| silêncio **depois** da fronteira | **0 ms — nas 153** |
+
+E é assim **por construção**: as palavras se encostam na fita (o fim de uma é o
+começo da seguinte), então a última palavra do verso engole a respiração do
+rabino e só termina quando a próxima já está soando. "Parar no fim do verso" era
+parar no instante exato do ataque seguinte, com 20 ms de margem (`ANTECIPA`).
+
+No Chromium a pausa cai no milissegundo e não se ouve nada — por isso as
+checagens ficavam verdes. Num aparelho de verdade, com relógio de 27–53 ms e som
+já no buffer, escapa o ataque: o "bea", o "ve".
+
+**O conserto não é apertar a conta, é parar onde a VOZ acaba.**
+`medir-fim-da-voz.py` mede esse instante e escreve `fim-da-voz.json`; o app o lê
+e o Modo Treino para ali. Ganho medido: a folga até o ataque seguinte passou de
+20 ms para **325 a 665 ms**, e o corte no fim da voz é **0 ms** — nada se perde,
+o rabino já tinha calado. Se o arquivo faltar, o app volta ao comportamento
+antigo sozinho.
+
+**Duas contas para a mesma pergunta, de novo.** Há DOIS caminhos que encerram o
+passo: o alarme de relógio de parede e, se ele falhar, o quadro que vê o relógio
+cruzar o ponto. Mudei só o primeiro, e o segundo continuou parando na fronteira —
+no chabad_yatom a checagem mediu a parada a **16 ms** do ataque seguinte. Agora
+os dois chamam `pontoDeParada(passo)`, que é uma função só.
+
+## O destaque lia o relógio errado (28/08)
+
+Achado no mesmo dia, e é a metade visível da queixa de sempre ("iluminando as
+palavras erradas"): `acender()` lia `audioEl().currentTime` — o relógio CRU. No
+iOS ele é um piso: fica parado e salta. O destaque ficava até um salto inteiro
+atrasado, e numa palavra curta isso é a palavra toda.
+
+O app **já sabia** a posição boa: `posicaoEstimada()` conta por relógio de parede
+desde a última âncora e usa o relógio do áudio só como piso. É ela que manda no
+fim do verso desde 26/08. Só o destaque continuava perguntando ao relógio cru.
+
+Medido no perfil "iPad no pior dia" (relógio de 250 ms): quadros em que a tela
+acende uma palavra e o áudio toca outra caíram de **13% para 1%**. O limite do
+`checar-plataformas.mjs` desceu junto, de 12% para 4% — aceitar 12% seria guardar
+lugar para o defeito voltar.
+
+**As checagens que precisaram mudar de pergunta** (e ficaram mais exigentes, não
+menos): "buracos na fita" agora pergunta se ficou VOZ sem tocar, não se ficou
+fita — pular a respiração é o pedido dele, não defeito; e "a parada caiu perto da
+fronteira" virou "a agulha ficou estacionada no começo do verso seguinte", que é
+o que o app de fato faz e que faz o ▶ entrar limpo.
 
 ## Nunca
 

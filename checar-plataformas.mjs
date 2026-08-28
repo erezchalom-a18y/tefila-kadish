@@ -191,7 +191,13 @@ for (const perfil of perfis) {
       }
     }
     const proporcao = tocando.length ? erradas / tocando.length : 0;
-    linha(proporcao <= 0.12,
+    // 4%, e nao 12%. Estava em 12% enquanto o destaque lia o relogio CRU do
+    // audio, que no iOS e um piso e fica ate um salto inteiro atrasado — no
+    // perfil "iPad no pior dia" isso dava 13% de quadros em que a tela acendia
+    // uma palavra e o audio tocava outra. Desde 28/08 o destaque le a mesma
+    // conta de relogio de parede que o resto do app, e a medida caiu para 1%.
+    // O limite acompanha: aceitar 12% seria guardar lugar para o defeito voltar.
+    linha(proporcao <= 0.04,
       `${nome}: a palavra acesa é a que está soando`,
       `${erradas} de ${tocando.length} quadros discordam (${(proporcao * 100).toFixed(0)}%)` +
       (exemplo ? ` · ex.: ${exemplo}` : ''));
