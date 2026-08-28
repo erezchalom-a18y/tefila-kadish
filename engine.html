@@ -1049,10 +1049,22 @@
      Kadish precisa saber que se diz de pe, que precisa de dez, e em voz alta. */
   body:not(.modo-treino) .learn-strip { padding: 7px 12px; }
   body:not(.modo-treino) .learn-strip small { display: none; }
+  /* 28/08 — no TREINO o cartao "Por que dizemos o Kadish?" sai inteiro. Ele
+     sugeriu, e faz sentido: quem esta treinando esta praticando a boca, nao lendo
+     sobre a reza. Era a faixa mais alta do cabecalho (65px no computador, contra
+     36px na reza, porque no treino ela mostra tambem a linha de baixo). Sai ela
+     e o cabecalho do treino cai de 167px para ~102px. Na REZA o cartao fica: e
+     ali que quem chega pela primeira vez descobre que ha o que ler. */
+  body.modo-treino .learn-strip { display: none; }
   /* barra de baixo mais magra: o ▶ continua grande (quem reza de pe precisa
-     acertar pausar sem olhar), o resto e que encolhe */
-  body:not(.modo-treino) .audio-bar { padding: 8px 20px calc(10px + env(safe-area-inset-bottom)); }
-  body:not(.modo-treino) .audio-bar-top { font-size: 12px; margin-bottom: 2px; }
+     acertar pausar sem olhar), o resto e que encolhe.
+     28/08 — vale nos DOIS modos. Estava so na reza, e por isso a barra do treino
+     media 130px contra 104px da reza no computador. Ele circulou as duas faixas
+     na tela: "no computador a tela tanto em cima quanto embaixo esta muito
+     grande". Nao ha razao para a barra do treino ser mais gorda que a da reza —
+     sao os mesmos botoes. */
+  .audio-bar { padding: 8px 20px calc(10px + env(safe-area-inset-bottom)); }
+  .audio-bar-top { font-size: 12px; margin-bottom: 2px; }
 
   /* a velocidade sai da barra fixa e vai para os ajustes */
   .velocidade-nos-ajustes { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -1302,6 +1314,44 @@
   }
   /* O apagado nao pode sumir: e ele que conta que o outro modo existe. */
   .modo-op:not(.active) { opacity: 0.62; }
+
+  /* ===== Yatom | deRabanan, e o nussach em destaque (28/08) =====
+     Mesmo raciocinio do Reza | Treino, e pedido dele: "o que acha de seguir os
+     dois botoes para yatom e derabanan (similar aos botoes de treino e reza)
+     dando maior destaque ao nussach que esta um pouco apagado".
+     O tipo era UM botao que trocava de nome — nao dizia que existia o outro. O
+     nussach continua sendo um botao que gira (sao quatro, nao cabem em fila),
+     mas deixa de ser um sussurro: passa a ter contorno e cor propria. */
+  /* As duas fitas do alto: a TRADICAO (4 opcoes, uma acesa) e o TIPO (2).
+     Pedido dele, 28/08: "um botao de tradicao, com as 4 opcoes, com uma unica
+     opcao possivel, que fica fixa apos o usuario escolher e que acende, e no
+     lado ou embaixo o botao de tipo yatom ou derabanan".
+     Elas ficam lado a lado quando cabe e quebram para duas linhas quando nao —
+     e por isso o `flex-wrap` do .brand-mark, e nao uma media query com numero
+     escolhido a dedo: a conta de caber e do navegador, que sabe a largura da
+     fonte de cada lingua. */
+  .brand-mark { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .trad-switch, .tipo-switch { vertical-align: middle; }
+  .trad-switch .modo-op, .tipo-switch .modo-op {
+    /* 12px e o piso de texto de cabecalho do projeto e 30px o de altura de
+       botao — o testar-telas.mjs reprova abaixo dos dois, com razao: quem reza
+       pode ter 70 anos e estar de pe com o sidur na outra mao. Tentei 10,5px
+       para caber melhor e a checagem me pegou. */
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 5px 10px;
+    min-height: 30px;
+  }
+  .tipo-switch .modo-op { letter-spacing: 0.1em; }
+  .trad-switch .modo-op.active,
+  .tipo-switch .modo-op.active { background: var(--brass); color: var(--bg); }
+  .tipo-switch .modo-op .kt-size {
+    margin-left: 4px; font-weight: 400; font-style: italic;
+    text-transform: lowercase; letter-spacing: 0.02em; opacity: 0.85;
+    /* 12px tambem aqui: e texto de cabecalho como qualquer outro. */
+    font-size: 12px;
+  }
 
   /* Community response indicator */
   .community-respond {
@@ -1567,18 +1617,11 @@
   .chabad-link:hover { opacity: 0.85; }
 
   /* Tradition badge in topbar */
-  .tradition-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    background: rgba(139, 106, 62, 0.12);
-    color: var(--brass);
-    border-radius: 100px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 10.5px;
-    font-style: italic;
-    letter-spacing: 0.1em;
-    margin-left: 10px;
-  }
+  /* O nussach estava "um pouco apagado" (palavras dele): fundo de 12% de
+     opacidade, italico, sem contorno — parecia legenda, nao botao, e e ele que
+     manda em QUAL Kadish se esta rezando. Virou a fita de 4 opcoes acima; esta
+     regra ficou so para o caso de o id ser usado como caixa. */
+  .tradition-badge { display: inline-flex; align-items: center; }
 
   .kadish-type-toggle {
     display: inline-block;
@@ -1756,6 +1799,15 @@
      Nada aqui reduz fonte abaixo de 12px — encolhe espaco, nunca legibilidade. */
   @media (max-height: 460px) and (orientation: landscape) {
     .pictograms { display: none; }
+    /* Deitado no celular a altura e o bem mais escasso, e agora ha duas fitas no
+       alto (tradicao e tipo) que podem quebrar em duas linhas. Aqui saem as duas
+       coisas que menos servem a quem esta rezando de pe com o aparelho deitado:
+       o cartao "Por que dizemos o Kadish?" (leitura, nao reza) e o sufixo
+       "· pequeno / · grande" do tipo, que so repete o que o nome ja diz.
+       Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
+    .learn-strip { display: none; }
+    .kt-size { display: none; }
+    .trad-switch .modo-op, .tipo-switch .modo-op { padding: 5px 8px; }
     /* Deitado no celular a altura e o bem mais escasso. A linha que repete a
        palavra que esta tocando sai: ela ja esta acesa no texto, logo acima. */
     .audio-bar-top { display: none; }
@@ -1775,7 +1827,7 @@
 
 <div class="topbar">
   <div class="brand">
-    <div class="brand-mark"><button class="tradition-badge" id="traditionBadge" title="Trocar tradição">Chabad</button><button class="kadish-type-toggle" id="kadishTypeToggle" title="Trocar tipo de Kadish">YATOM</button><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
+    <div class="brand-mark"><span class="modo-switch trad-switch" id="traditionBadge" role="group" aria-label="Tradição"><button class="modo-op" data-trad="ashkenazi">Ashkenazi</button><button class="modo-op active" data-trad="chabad">Chabad</button><button class="modo-op" data-trad="sefard">Sefard</button><button class="modo-op" data-trad="sefaradi">Sefaradi</button></span><span class="modo-switch tipo-switch" role="group" aria-label="Tipo de Kadish"><button class="modo-op active" id="kadishTypeToggle" data-tipo="yatom" title="Kadish do Enlutado">YATOM</button><button class="modo-op" id="kadishDerabananToggle" data-tipo="derabanan" title="Kadish deRabanan">DERABANAN</button></span><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
     <div class="brand-right">
       <!-- DOIS BOTOES, nao um que troca de nome (27/08).
            "ele so aparece quando clicado e o usuario nao sabe de sua existencia."
@@ -1850,7 +1902,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-28 · 11';
+const VERSAO = '2026-08-28 · 12';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -4227,17 +4279,32 @@ function playFullPrayer(url) {
   // Sincronia real: o destaque vem do sync/*.json, medido do audio. Os
   // temporizadores estimados abaixo brigariam com ele, entao nem sao montados.
   if (window.SYNC && window.SYNC.ativo()) {
-    const pr = audioPlayer.play();
-    if (pr && pr.catch) pr.catch(err => {
-      showToast(TXT('toast_audio_failed') + ': ' + err.message);
-      state.isPlaying = false;
-      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-    });
+    // NAO TOCAR COM A AGULHA A CAMINHO.
+    //
+    // O ▶ pode ser apertado enquanto uma busca ainda esta em voo — e a mais
+    // comum de todas e a do proprio app: entrar no Modo Treino manda voltar ao
+    // Yitgadal, e ele aperta ▶ logo em seguida. Se a busca ainda nao chegou, o
+    // audio toca de ONDE ELE ESTAVA, no meio da reza, e so depois pula para o
+    // comeco. No Chromium a busca acaba no mesmo quadro e isso nunca aparece;
+    // no iPad demora, e foi o que ele ouviu: um pedaco do lugar errado e um
+    // pulo. Esperar aqui nao atrasa nada onde a busca e rapida — nesse caso
+    // quandoChegar() chama de volta na mesma hora.
+    const tocarDeVerdade = () => {
+      if (state.isPlaying === false) return;   // ele desistiu enquanto se esperava
+      const pr = audioPlayer.play();
+      if (pr && pr.catch) pr.catch(err => {
+        showToast(TXT('toast_audio_failed') + ': ' + err.message);
+        state.isPlaying = false;
+        playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      });
+    };
     audioPlayer.onended = () => {
       state.isPlaying = false;
       playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
       nowReading.textContent = 'Concluído · Amen';
     };
+    if (window.SYNC.quandoChegar) window.SYNC.quandoChegar(tocarDeVerdade);
+    else tocarDeVerdade();
     return;
   }
 
@@ -5072,8 +5139,11 @@ state.tradition = localStorage.getItem('tefila_tradition') || 'chabad';
 function applyTradition(t) {
   state.tradition = t;
   localStorage.setItem('tefila_tradition', t);
-  const labels = {chabad:'Chabad', sefard:'Sefard', ashkenazi:'Ashkenazi'};
-  document.getElementById('traditionBadge').textContent = labels[t] || t;
+  const labels = {chabad:'Chabad', sefard:'Sefard', sefaradi:'Sefaradi', ashkenazi:'Ashkenazi'};
+  // A tradicao virou uma fita de 4 em 28/08: acende a escolhida, em vez de
+  // reescrever o nome de um botao so. O sefaradi faltava nesta tabela e caia no
+  // `|| t`, entao ele aparecia escrito "sefaradi", em minusculas.
+  acenderTradicao(t);
   if (t !== 'chabad') {
     showToast(TXT('toast_tradition_pending', { n: labels[t] }));
   }
@@ -5115,11 +5185,19 @@ function applyKadishType(t) {
   };
   const size = (sizeLabels[state.lang] || sizeLabels.pt)[t];
 
-  const btn = document.getElementById('kadishTypeToggle');
-  if (btn) {
-    const name = (t === 'derabanan') ? 'DERABANAN' : 'YATOM';
-    btn.innerHTML = `${name}<span class="kt-size">· ${size}</span>`;
-    btn.classList.toggle('derabanan', t === 'derabanan');
+  // Dois botoes desde 28/08: cada um com o seu nome, fixo. O que muda e o aceso.
+  // O tamanho ("pequeno"/"grande") so aparece no que esta ligado — nos dois de
+  // uma vez a barra ficava com duas legendas competindo.
+  const btYatom = document.getElementById('kadishTypeToggle');
+  const btDerab = document.getElementById('kadishDerabananToggle');
+  if (btYatom && btDerab) {
+    const ehDerab = (t === 'derabanan');
+    btYatom.innerHTML = 'YATOM' + (ehDerab ? '' : `<span class="kt-size">· ${size}</span>`);
+    btDerab.innerHTML = 'DERABANAN' + (ehDerab ? `<span class="kt-size">· ${size}</span>` : '');
+    btYatom.classList.toggle('active', !ehDerab);
+    btDerab.classList.toggle('active', ehDerab);
+    btYatom.setAttribute('aria-pressed', String(!ehDerab));
+    btDerab.setAttribute('aria-pressed', String(ehDerab));
   }
   // Reset playback position on type switch
   if (typeof state !== 'undefined') {
@@ -5278,16 +5356,34 @@ aplicarGranularidade(state.granularidadeTreino);
 // A tradicao e o tipo sao as duas coisas que mudam de verdade no dia a dia.
 // Estavam enterradas no menu; agora giram no proprio topo, num toque.
 const NOME_TRADICAO = { chabad: 'Chabad', sefard: 'Sefard', sefaradi: 'Sefaradi', ashkenazi: 'Ashkenazi' };
-const GIRO_TRADICAO = ['chabad', 'sefard', 'sefaradi', 'ashkenazi'];
-document.getElementById('traditionBadge').addEventListener('click', () => {
-  const atual = state.tradition || 'chabad';
-  const prox = GIRO_TRADICAO[(GIRO_TRADICAO.indexOf(atual) + 1) % GIRO_TRADICAO.length];
-  applyTradition(prox);
-  document.getElementById('traditionBadge').textContent = NOME_TRADICAO[prox] || prox;
+
+// AS 4 TRADICOES NUMA FITA, uma acesa (28/08).
+//
+// Antes era um botao so que GIRAVA: cada toque passava para a proxima. Tres
+// defeitos nisso, e o dele foi o primeiro: (1) so mostrava uma, entao ninguem
+// sabia que havia quatro; (2) para chegar da Chabad a Ashkenazi eram tres
+// toques, e cada um deles TROCAVA O AUDIO E O TEXTO no caminho; (3) nao havia
+// como saber, olhando, quantas existiam nem onde a sua estava na roda.
+// Agora as quatro estao a vista e a escolhida fica acesa e fixa.
+function acenderTradicao(t) {
+  document.querySelectorAll('#traditionBadge .modo-op').forEach(b => {
+    const meu = b.dataset.trad === t;
+    b.classList.toggle('active', meu);
+    b.setAttribute('aria-pressed', String(meu));
+  });
   document.querySelectorAll('[data-setting="tradition"] button')
-    .forEach(b => b.classList.toggle('active', b.dataset.value === prox));
-  if (window.SYNC) window.SYNC.trocar(prox, null);
-  showToast(NOME_TRADICAO[prox] || prox);
+    .forEach(b => b.classList.toggle('active', b.dataset.value === t));
+}
+document.querySelectorAll('#traditionBadge .modo-op').forEach(b => {
+  b.addEventListener('click', () => {
+    const escolhida = b.dataset.trad;
+    // tocar na que JA esta acesa nao faz nada: trocar de tradicao troca o audio
+    // e o texto inteiros, e quem toca na acesa so quer conferir qual e a sua.
+    if ((state.tradition || 'chabad') === escolhida) return;
+    applyTradition(escolhida);
+    if (window.SYNC) window.SYNC.trocar(escolhida, null);
+    showToast(NOME_TRADICAO[escolhida] || escolhida);
+  });
 });
 
 // a velocidade saiu da barra fixa; os dois controles andam juntos
@@ -5488,12 +5584,16 @@ document.getElementById('consentDecline').addEventListener('click', () => {
   applyKadishType(state.kadishType);
 
   // Bind Kadish type toggle (now that everything is loaded)
-  const kadishBtn = document.getElementById('kadishTypeToggle');
-  if (kadishBtn) {
-    kadishBtn.addEventListener('click', () => {
-      applyKadishType(state.kadishType === 'yatom' ? 'derabanan' : 'yatom');
+  // Tocar no tipo em que ele JA esta nao faz nada — mesma regra do Reza|Treino.
+  // Aqui pesa mais: trocar de tipo troca o ARQUIVO de audio e zera a posicao, e
+  // quem toca no botao aceso so quer conferir qual Kadish esta aberto.
+  [['kadishTypeToggle', 'yatom'], ['kadishDerabananToggle', 'derabanan']].forEach(([id, tipo]) => {
+    const b = document.getElementById(id);
+    if (b) b.addEventListener('click', () => {
+      if (state.kadishType === tipo) return;
+      applyKadishType(tipo);
     });
-  }
+  });
 
   const savedAudioSrc = localStorage.getItem('tefila_audio_src') || 'tts';
   applyAudioSource(savedAudioSrc);
@@ -5990,7 +6090,19 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       if (destino !== null) irPara(destino);
       desarmarSeguir();
       const ficha = fichaDoRespiro;
-      seguirSozinho = setTimeout(() => {
+      // O RESPIRO SO COMECA A CONTAR DEPOIS QUE A AGULHA CHEGOU.
+      //
+      // Antes ele contava do instante da pausa. Num aparelho onde a busca e
+      // instantanea da na mesma; num iPad, onde ela demora, o app voltava a
+      // tocar com a agulha ainda no lugar velho — soava um pedaco do verso que
+      // acabara de terminar, e so entao a busca chegava e o audio pulava.
+      // Era o "falando bealma, e depois veyitkadash" dele.
+      //
+      // O silencio que ele ouve continua sendo de RESPIRO: a busca acontece
+      // dentro dele, calada, e o relogio so parte quando ha para onde partir.
+      aoTerminarABusca(() => {
+        if (ficha !== fichaDoRespiro) return;
+        seguirSozinho = setTimeout(() => {
         seguirSozinho = null;
         const aa = audioEl();
         if (!aa || !aa.paused) return;                    // ele ja retomou na mao
@@ -5998,7 +6110,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         if (typeof state === 'undefined' || !state.modoTreino) return;
         if (aoVoltar && aoVoltar() === false) return;
         if (typeof play === 'function') play(); else aa.play().catch(() => {});
-      }, RESPIRO);
+        }, RESPIRO);
+      });
     }
     /** Agenda o fim do passo em que a voz esta agora. */
     function armarAlarme() {
@@ -6053,38 +6166,145 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // entrar terminava depois e religava a voz. E o "esta repetindo" dele visto
     // por outro angulo — o app ligando som que ninguem pediu.
     let fichaDaBusca = 0;
+
+    // ===================================================================
+    // A BUSCA NAO CAI ONDE SE PEDE, E ISSO MUDA DE APARELHO PARA APARELHO
+    // ===================================================================
+    //
+    // 28/08. Ele abriu no iPad, com a versao certa, e continuava: "comeca no
+    // veyitkadash, falando bealma, e depois veyitkadash".
+    //
+    // No Chromium daqui isso NUNCA acontece — pedir 0,18s poe o audio em 0,18s,
+    // ao milissegundo. Foi por isso que doze checagens verdes nao pegaram nada:
+    // elas mediam um navegador onde o defeito nao existe.
+    //
+    // Reproduzido no laboratorio, ligando uma diferenca de cada vez: das cinco
+    // que o WebKit do iOS tem (relogio grosso, busca lenta, busca cai antes,
+    // busca cai depois, retomada atrasada), UMA reproduz o relato dele letra por
+    // letra — a busca cair DEPOIS do pedido. Pedimos 0,18s (o Yitgadal), o
+    // aparelho vai para 0,53s (o veyitkadash), e o resto desanda em cadeia:
+    // o comeco fica faltando, a conta do fim do verso fica adiantada de 0,35s e
+    // por isso a voz vaza para o "bealma", e a repeticao volta para o mesmo
+    // lugar errado. Tudo o que ele descreveu, de uma causa so.
+    //
+    // (No iPad ele usa o Chrome. Nao muda nada: no iOS todo navegador roda o
+    // WebKit por baixo, por regra da Apple. Um app nativo tambem rodaria.)
+    //
+    // Duas coisas erradas no codigo antigo, e as duas eram de CONFIANCA:
+    //
+    // 1. `ancorar(destino)` gravava no modelo a posicao que PEDIMOS, com um
+    //    comentario dizendo "aqui a posicao e EXATA: fomos nos que pedimos".
+    //    Era falso fora do Chromium. O modelo passava a mentir, e quem manda no
+    //    fim do verso e no destaque e o modelo.
+    // 2. `chegou()` conferia se caiu no lugar e tentava DE NOVO uma vez. Contra
+    //    um desvio SISTEMATICO isso nao serve para nada: a segunda tentativa
+    //    cai no mesmo lugar errado que a primeira.
+    //
+    // Agora: o modelo ancora no que o aparelho DIZ, nunca no que pedimos; e o
+    // desvio e medido e compensado. Se ele pedir 0,18 e cair em 0,53, da proxima
+    // vez pedimos 0,18 menos o desvio. Onde a busca e exata (Chromium, Firefox,
+    // computador) o desvio mede zero e nada disto entra em acao — nao ha
+    // "correcao" ligada por engano num aparelho que nao precisa dela.
+    let desvioDaBusca = 0;          // segundos; o quanto o aparelho passa do pedido
+    let amostrasDoDesvio = 0;
+    const DESVIO_QUE_IMPORTA = 0.05;   // menos que isto e ruido, nao defeito
+
+    function aprenderDesvio(pedido, caiuEm) {
+      if (!isFinite(pedido) || !isFinite(caiuEm)) return;
+      // No comeco e no fim da fita o aparelho GRAMPEIA a posicao (nao ha para
+      // onde ir), e isso nao e desvio nenhum — nao pode entrar na media.
+      const d = audioEl() ? audioEl().duration : 0;
+      if (pedido <= 0.02 || (d && pedido >= d - 0.05)) return;
+      const erro = caiuEm - pedido;
+      if (Math.abs(erro) > 2) return;      // isso nao e desvio, e outra coisa
+      // media que esquece devagar: um tranco isolado nao vira regra, e uma
+      // mudanca real (o aparelho troca de fonte de audio) entra em poucas voltas
+      amostrasDoDesvio = Math.min(amostrasDoDesvio + 1, 8);
+      desvioDaBusca += (erro - desvioDaBusca) / amostrasDoDesvio;
+      if (Math.abs(desvioDaBusca) < DESVIO_QUE_IMPORTA) desvioDaBusca = 0;
+    }
+
+    // Quantas buscas estao EM VOO. Enquanto houver alguma, o audio nao esta onde
+    // o app pensa que esta, e mandar tocar agora toca o lugar VELHO.
+    //
+    // Foi este o defeito do iPad (28/08). "comeca no veyitkadash, falando
+    // bealma, e depois veyitkadash": ele estava no meio da reza, apertou Treino,
+    // o app pediu a volta ao Yitgadal, ele apertou ▶ — e a voz saiu de onde a
+    // agulha AINDA estava, porque a busca do iPad demora e a do Chromium nao.
+    // Depois a busca chegava e o audio dava o pulo. Um pedaco do lugar errado,
+    // depois o pulo: exatamente as tres coisas que ele descreveu, nessa ordem.
+    //
+    // Aqui isto nunca apareceu porque no Chromium a busca acaba no mesmo quadro.
+    // Doze checagens verdes num navegador onde o defeito nao pode existir.
+    let buscasEmVoo = 0;
+    const esperandoABusca = [];
+    function aoTerminarABusca(fn) {
+      if (buscasEmVoo === 0) { fn(); return; }
+      esperandoABusca.push(fn);
+    }
+    function avisarQueChegou() {
+      if (buscasEmVoo > 0) return;
+      const fila = esperandoABusca.splice(0);
+      fila.forEach(fn => { try { fn(); } catch (e) {} });
+    }
+
     function irPara(destino, aoChegar) {
       const a = audioEl();
       if (!a) return;
       const estavaTocando = !a.paused;
       const ficha = ++fichaDaBusca;
-      let tentou = false, pronto = false;
+      buscasEmVoo++;
+      let tentativas = 0, pronto = false;
+      // pede compensado, mas nunca antes do zero nem depois do fim
+      const pedir = (alvo) => {
+        const d = a.duration;
+        let x = alvo - desvioDaBusca;
+        x = Math.max(0, isFinite(d) && d ? Math.min(x, d - 0.05) : x);
+        try { a.currentTime = x; } catch (e) {}
+        return x;
+      };
+      let pedido = null;
       const terminar = () => {
         if (pronto) return;
         pronto = true;
+        buscasEmVoo = Math.max(0, buscasEmVoo - 1);
         a.removeEventListener('seeked', chegou);
-        ancorar(destino);               // aqui a posicao e EXATA: fomos nos que pedimos
+        const caiuEm = a.currentTime;
+        if (pedido !== null) aprenderDesvio(pedido, caiuEm);
+        // ANCORA NO QUE O APARELHO DIZ, nao no que pedimos. Se ele nao chegou
+        // onde queriamos, o modelo tem que saber ONDE ELE ESTA — do contrario
+        // o destaque e o fim do verso passam a contar a partir de uma ficcao.
+        ancorar(isFinite(caiuEm) ? caiuEm : destino);
         const querTocar = estavaTocando && ficha === fichaDaBusca
           && (typeof state === 'undefined' || state.isPlaying !== false);
         if (querTocar && a.paused) { const p = a.play(); if (p && p.catch) p.catch(() => {}); }
         armarAlarme();
         if (aoChegar) aoChegar(a.currentTime);
+        avisarQueChegou();
       };
       const chegou = () => {
         if (pronto) return;
-        if (Math.abs(a.currentTime - destino) > 0.06 && !tentou) {
-          tentou = true;
-          try { a.currentTime = destino; } catch (e) {}
+        const erro = a.currentTime - destino;
+        // Ate DUAS tentativas, e a segunda ja vai compensada pelo que a primeira
+        // ensinou. Mais que isso e insistir: se o aparelho grampeia a posicao
+        // (comeco de arquivo, trecho ainda nao baixado), tentar de novo so gasta
+        // tempo e faz a voz gaguejar.
+        if (Math.abs(erro) > 0.06 && tentativas < 2) {
+          tentativas++;
+          if (pedido !== null) aprenderDesvio(pedido, a.currentTime);
+          pedido = pedir(destino);
           return;                       // continua ouvindo o mesmo 'seeked'
         }
         terminar();
       };
       a.addEventListener('seeked', chegou);
       if (estavaTocando) a.pause();     // sem isto a voz vaza durante a busca
-      try { a.currentTime = destino; } catch (e) {}
+      pedido = pedir(destino);
       // rede de seguranca: se 'seeked' nunca vier (acontece), nao deixa parado
       setTimeout(terminar, 1500);
     }
+    // Para as checagens poderem perguntar o que o app aprendeu do aparelho.
+    window.__desvioDaBusca = () => ({ desvio: desvioDaBusca, amostras: amostrasDoDesvio });
     // Ligado quando o Modo Treino pausa no fim de um verso. A pausa nao e
     // instantanea: sobrava um quadro em que o relogio ja estava no verso
     // seguinte e o destaque acendia a primeira palavra dele — a piscada que o
@@ -6439,6 +6659,15 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         return passos.length;
       },
       passos: () => passos.slice(),
+      /** Ha alguma busca em voo? Enquanto houver, mandar tocar toca o lugar VELHO. */
+      buscando: () => buscasEmVoo > 0,
+      /** Chama fn quando a agulha chegar (agora mesmo, se ja chegou). */
+      quandoChegar: (fn) => aoTerminarABusca(fn),
+      // A fita inteira, palavra a palavra: { k (verso), wi, start, end }.
+      // Serve as checagens que precisam saber QUAL palavra soa em cada
+      // segundo — e a unica pergunta que distingue o app estar certo do app
+      // estar convencido de que esta. Ver checar-plataformas.mjs.
+      fita: () => fita.map(w => ({ k: w.k, wi: w.wi, start: w.start, end: w.end })),
       /** Volta a agulha para a PRIMEIRA palavra e re-arma o contador. */
       voltarAoInicio: () => {
         if (!fita.length) return null;
@@ -6451,6 +6680,24 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
           state.irPara = inicio;          // o play() nao pode zerar nem ignorar
         }
         irPara(inicio, () => acender());
+        // E A TELA VOLTA JUNTO (28/08).
+        //
+        // "se esta no meio do modo reza, quando vai para o treino, o texto deve
+        // voltar ao inicio." O audio ja voltava — o que nao voltava era a
+        // ROLAGEM, e o motivo estava na propria camera: ela sai de cena por 3
+        // segundos sempre que alguem mexe na tela (pointerdown, wheel, toque),
+        // para nao brigar com o dedo de quem esta rolando. So que APERTAR O
+        // BOTAO tambem e um pointerdown. Entao a camera se desligava no exato
+        // instante em que ela mais precisava agir, e o texto ficava onde estava
+        // enquanto a voz voltava ao Yitgadal.
+        //
+        // Aqui nao ha briga nenhuma: ele PEDIU para voltar ao inicio. Zerar o
+        // relogio da tregua e rolar direto e obedecer, nao atropelar.
+        mexeuNaTela = 0;
+        alvoRolagem = null;
+        try {
+          window.scrollTo({ top: 0, behavior: MENOS_ANIMACAO ? 'auto' : 'smooth' });
+        } catch (e) { window.scrollTo(0, 0); }
         return inicio;
       },
       trocar: (n, t) => {
@@ -6463,11 +6710,15 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
   document.addEventListener('DOMContentLoaded', () => {
     window.SYNC.montar();
-    // trocar o tipo de Kadish troca o audio e o JSON junto
-    const bt = document.getElementById('kadishTypeToggle');
-    if (bt) bt.addEventListener('click', () => setTimeout(() => {
-      window.SYNC.trocar(null, (temState() && state.kadishType) || null);
-    }, 0));
+    // trocar o tipo de Kadish troca o audio e o JSON junto. Sao DOIS botoes
+    // desde 28/08 — se este ouvinte ficasse so no primeiro, escolher deRabanan
+    // trocaria o rotulo e deixaria o audio e o texto do Yatom na tela.
+    ['kadishTypeToggle', 'kadishDerabananToggle'].forEach(id => {
+      const bt = document.getElementById(id);
+      if (bt) bt.addEventListener('click', () => setTimeout(() => {
+        window.SYNC.trocar(null, (temState() && state.kadishType) || null);
+      }, 0));
+    });
   });
   </script>
 

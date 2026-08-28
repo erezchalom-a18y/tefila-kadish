@@ -1,0 +1,231 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tefilá · O que este aparelho faz</title>
+<!--
+  POR QUE ESTA PAGINA EXISTE (28/08)
+  =================================
+  O Erez abriu o app no iPad, com a versao certa na tela, e o Modo Treino
+  continuava errado: "comeca no veyitkadash, falando bealma, e depois
+  veyitkadash". Aqui no Chromium do servidor isso NUNCA acontece.
+
+  Doze checagens verdes nao pegaram nada porque todas medem o mesmo navegador —
+  um em que pedir 0,18s poe o audio em 0,18s ao milissegundo. O aparelho dele
+  pode nao fazer isso, e eu nao tenho como saber daqui: nao ha iPad neste
+  servidor, e adivinhar ja custou tres rodadas dele.
+
+  Entao esta pagina nao conserta nada. Ela MEDE, no aparelho dele, as cinco
+  coisas de que o Modo Treino depende, e escreve o resultado em portugues para
+  ele copiar e mandar. Sem numero de aparelho de verdade, qualquer conserto meu
+  e chute.
+
+  Ela nao escreve em lugar nenhum: nao toca em sync/, nem nas ancoras, nem no
+  localStorage do app.
+-->
+<style>
+  :root { --bg:#f4ede0; --fg:#2a1f15; --brass:#8b6a3e; --linha:#ddd3c0; --ok:#2e7d32; --mau:#b3261e; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1a1410; --fg:#efe6d8; --linha:#3a3128; } }
+  body { margin:0; padding:20px 16px calc(30px + env(safe-area-inset-bottom));
+         background:var(--bg); color:var(--fg);
+         font-family:'Cormorant Garamond',Georgia,serif; font-size:17px; line-height:1.55; }
+  .caixa { max-width:640px; margin:0 auto; }
+  h1 { font-size:22px; font-weight:500; margin:0 0 4px; }
+  p.sub { margin:0 0 20px; color:var(--brass); font-style:italic; font-size:15px; }
+  button { display:block; width:100%; padding:16px; font:inherit; font-size:18px; font-weight:600;
+           background:var(--brass); color:var(--bg); border:0; border-radius:12px; cursor:pointer;
+           min-height:52px; }
+  button[disabled] { opacity:.5; }
+  #passo { margin:16px 0 0; font-size:15px; color:var(--brass); min-height:22px; }
+  table { width:100%; border-collapse:collapse; margin-top:18px; font-size:15px; }
+  td { padding:9px 4px; border-bottom:1px solid var(--linha); vertical-align:top; }
+  td:last-child { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .bom { color:var(--ok); font-weight:600; }
+  .mau { color:var(--mau); font-weight:600; }
+  #recado { width:100%; min-height:220px; margin-top:18px; font-family:ui-monospace,Menlo,monospace;
+            font-size:12.5px; line-height:1.45; padding:12px; border:1px solid var(--linha);
+            border-radius:10px; background:transparent; color:var(--fg); display:none; }
+  .nota { font-size:14px; color:var(--brass); font-style:italic; margin-top:14px; }
+</style>
+
+<div class="caixa">
+<h1>O que este aparelho faz com o áudio</h1>
+<p class="sub">Aperte o botão, espere uns 20 segundos e me mande o texto que aparecer.</p>
+
+<button id="ir">Medir este aparelho</button>
+<div id="passo"></div>
+<table id="tabela"></table>
+<textarea id="recado" readonly></textarea>
+<div class="nota" id="nota"></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const linhas = [];
+function pos(nome, valor, bom, detalhe) {
+  linhas.push({ nome, valor, bom, detalhe });
+  $('tabela').innerHTML = linhas.map(l =>
+    `<td>${l.nome}${l.detalhe ? `<br><small style="opacity:.7">${l.detalhe}</small>` : ''}</td>` +
+    `<td class="${l.bom === null ? '' : (l.bom ? 'bom' : 'mau')}">${l.valor}</td>`)
+    .map(x => `<tr>${x}</tr>`).join('');
+}
+const espera = ms => new Promise(r => setTimeout(r, ms));
+
+$('ir').addEventListener('click', async () => {
+  $('ir').disabled = true;
+  linhas.length = 0;
+  const bruto = {};
+
+  // ---- 0. quem e este aparelho ----
+  $('passo').textContent = 'Vendo que aparelho é este…';
+  bruto.ua = navigator.userAgent;
+  bruto.tela = `${screen.width}x${screen.height} @${devicePixelRatio}`;
+  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  pos('Aparelho', ios ? 'iPad / iPhone' : (/Android/.test(navigator.userAgent) ? 'Android' : 'computador'), null,
+      bruto.tela);
+
+  // ---- 1. que arquivo de audio ele consegue tocar ----
+  const a = new Audio();
+  bruto.mp3 = a.canPlayType('audio/mpeg');
+  bruto.ogg = a.canPlayType('audio/ogg; codecs=vorbis');
+  pos('Toca MP3', bruto.mp3 || 'não', !!bruto.mp3);
+  pos('Toca OGG', bruto.ogg || 'não', null,
+      bruto.ogg ? '' : 'normal no iPad — o app usa MP3 nele');
+
+  // ---- carrega o audio de verdade, o mesmo que o app usa ----
+  $('passo').textContent = 'Baixando o áudio do rabino…';
+  const url = './tefila-audio/chabad/derabanan.mp3';
+  a.src = url; a.preload = 'auto';
+  await new Promise((ok, falhou) => {
+    a.addEventListener('canplaythrough', ok, { once: true });
+    a.addEventListener('error', () => falhou(new Error('nao carregou')), { once: true });
+    setTimeout(ok, 12000);
+  }).catch(() => {});
+  bruto.duracao = a.duration;
+  // A ultima palavra do chabad_derabanan acaba em 121.61s; o arquivo tem de sobrar
+  // dai para a frente. Se a duracao vier menor, o aparelho leu o arquivo errado
+  // ou nao leu inteiro — e ai nada mais aqui embaixo significa coisa alguma.
+  const FIM_DA_FALA = 121.61;
+  pos('Duração do arquivo', isFinite(a.duration) ? a.duration.toFixed(2) + 's' : 'não soube dizer',
+      isFinite(a.duration) && a.duration >= FIM_DA_FALA - 0.15,
+      'a última palavra acaba em ' + FIM_DA_FALA.toFixed(2) + 's');
+
+  // ---- 2. a busca cai onde se pede? (E A PERGUNTA QUE IMPORTA) ----
+  $('passo').textContent = 'Testando se o áudio vai para onde é pedido…';
+  const alvos = [0.18, 4.38, 7.04, 12.00, 20.00];
+  const erros = [];
+  for (const alvo of alvos) {
+    const t0 = performance.now();
+    a.currentTime = alvo;
+    await new Promise(ok => {
+      const f = () => { a.removeEventListener('seeked', f); ok(); };
+      a.addEventListener('seeked', f);
+      setTimeout(ok, 2500);
+    });
+    await espera(60);
+    erros.push({ alvo, caiu: a.currentTime, ms: Math.round(performance.now() - t0) });
+  }
+  bruto.buscas = erros;
+  const piorErro = Math.max(...erros.map(e => Math.abs(e.caiu - e.alvo)));
+  const mediaErro = erros.reduce((s, e) => s + (e.caiu - e.alvo), 0) / erros.length;
+  const lentidao = Math.max(...erros.map(e => e.ms));
+  pos('A busca cai onde se pede?', (piorErro * 1000).toFixed(0) + ' ms de erro', piorErro < 0.06,
+      erros.map(e => `pediu ${e.alvo} → caiu ${e.caiu.toFixed(3)}`).join(' · '));
+  pos('E ela erra sempre para o mesmo lado?', (mediaErro * 1000).toFixed(0) + ' ms',
+      Math.abs(mediaErro) < 0.05,
+      mediaErro > 0.05 ? 'sempre DEPOIS do pedido — é isto que come o Yitgadal'
+        : (mediaErro < -0.05 ? 'sempre ANTES do pedido' : 'não erra para um lado só'));
+  pos('Quanto ela demora', lentidao + ' ms', lentidao < 600);
+
+  // ---- 3. o relogio do audio anda liso ou aos saltos? ----
+  $('passo').textContent = 'Vendo o relógio do áudio enquanto toca…';
+  a.currentTime = 1.0;
+  a.playbackRate = 0.75;
+  try { await a.play(); } catch (e) { bruto.playFalhou = String(e && e.message || e); }
+  const lidos = [];
+  await new Promise(ok => {
+    const t0 = performance.now();
+    (function q() {
+      lidos.push({ p: performance.now() - t0, t: a.currentTime });
+      if (performance.now() - t0 < 3000) requestAnimationFrame(q); else ok();
+    })();
+  });
+  a.pause();
+  const saltos = [];
+  for (let i = 1; i < lidos.length; i++) {
+    const d = lidos[i].t - lidos[i - 1].t;
+    if (d > 0.0001) saltos.push(d);
+  }
+  const passoDoRelogio = saltos.length ? Math.max(...saltos) : 0;
+  bruto.passoRelogio = passoDoRelogio;
+  bruto.leituras = lidos.length;
+  pos('O relógio do áudio anda de', (passoDoRelogio * 1000).toFixed(0) + ' em ' +
+      (passoDoRelogio * 1000).toFixed(0) + ' ms', passoDoRelogio < 0.08,
+      passoDoRelogio > 0.08 ? 'aos saltos — o app já conta por relógio de parede por causa disto'
+                            : 'liso, como no computador');
+
+  // ---- 4. a velocidade .75x e respeitada? ----
+  const andou = lidos[lidos.length - 1].t - lidos[0].t;
+  const deviaAndar = (lidos[lidos.length - 1].p - lidos[0].p) / 1000 * 0.75;
+  bruto.velocidade = andou / deviaAndar;
+  pos('A velocidade .75× é respeitada?', (andou / deviaAndar).toFixed(2) + '× do esperado',
+      Math.abs(andou / deviaAndar - 1) < 0.12,
+      `andou ${andou.toFixed(2)}s onde devia andar ${deviaAndar.toFixed(2)}s`);
+
+  // ---- 5. pausar e voltar a tocar sozinho (o "segue sozinho" do treino) ----
+  $('passo').textContent = 'Testando a pausa e a volta sozinha…';
+  a.currentTime = 2.0;
+  try { await a.play(); } catch (e) {}
+  await espera(400);
+  a.pause();
+  await espera(900);
+  let voltouSozinho = true;
+  try { await a.play(); } catch (e) { voltouSozinho = false; bruto.retomarFalhou = String(e && e.message || e); }
+  await espera(300);
+  voltouSozinho = voltouSozinho && !a.paused;
+  a.pause();
+  bruto.voltouSozinho = voltouSozinho;
+  pos('Volta a tocar sozinho depois da pausa?', voltouSozinho ? 'sim' : 'NÃO', voltouSozinho,
+      voltouSozinho ? '' : 'sem isto o Modo Treino para no fim do primeiro verso');
+
+  // ---- 6. o que o app guardou NESTE aparelho ----
+  // Vale a pena: um ajuste antigo guardado aqui manda mais que qualquer codigo
+  // novo que eu suba, e nao ha como eu ver isso daqui.
+  const guardado = {};
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf('tefila') === 0) guardado[k] = String(localStorage.getItem(k)).slice(0, 60);
+    }
+  } catch (e) { guardado.erro = String(e && e.message || e); }
+  bruto.guardado = guardado;
+  pos('Ajustes guardados neste aparelho', Object.keys(guardado).length + ' itens', null,
+      Object.entries(guardado).map(([k, v]) => `${k} = ${v}`).join('<br>') || 'nenhum');
+
+  // ---- o recado ----
+  $('passo').textContent = 'Pronto.';
+  const txt =
+`=== TEFILÁ · MEDIDA DO APARELHO ===
+${new Date().toISOString()}
+navegador: ${bruto.ua}
+tela: ${bruto.tela}
+mp3: "${bruto.mp3}"  ogg: "${bruto.ogg}"
+duração lida: ${bruto.duracao}
+buscas:
+${bruto.buscas.map(e => `  pediu ${e.alvo}s -> caiu ${e.caiu.toFixed(4)}s  (erro ${((e.caiu-e.alvo)*1000).toFixed(0)}ms, ${e.ms}ms)`).join('\n')}
+erro medio: ${(mediaErro*1000).toFixed(0)}ms   pior: ${(piorErro*1000).toFixed(0)}ms
+passo do relogio: ${(bruto.passoRelogio*1000).toFixed(0)}ms  (${bruto.leituras} leituras em 3s)
+velocidade .75x respeitada: ${bruto.velocidade.toFixed(3)}
+volta sozinho: ${bruto.voltouSozinho}
+guardado no aparelho:
+${Object.entries(bruto.guardado).map(([k,v])=>`  ${k} = ${v}`).join('\n') || '  (nada)'}
+${bruto.playFalhou ? 'play() falhou: ' + bruto.playFalhou : ''}
+${bruto.retomarFalhou ? 'retomar falhou: ' + bruto.retomarFalhou : ''}
+=== FIM ===`;
+  $('recado').style.display = 'block';
+  $('recado').value = txt;
+  $('nota').innerHTML = 'Toque no texto acima, segure, <strong>Selecionar tudo → Copiar</strong>, e me mande.';
+  $('ir').disabled = false;
+  $('ir').textContent = 'Medir de novo';
+  try { $('recado').select(); } catch (e) {}
+});
+</script>

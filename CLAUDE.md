@@ -32,6 +32,14 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   chabad_yatom, onde o Erez ancorou de ouvido e provou o ponto. Não afrouxei a
   conta para zerar isso: a coluna acusa, e quem julga é o ouvido dele. Se a
   transcrição for refeita, este número pode ir e voltar entre 0 e 1.
+- node checar-plataformas.mjs → o app com o navegador ESTRAGADO DE PROPÓSITO, de
+  cinco jeitos que aparelhos de verdade estragam: relógio grosso (250ms, iOS),
+  busca lenta (400ms), busca desviada, retomada lenta, tela de 30fps. Cobra três
+  coisas: a voz começa DENTRO da primeira palavra, não vaza para o verso
+  seguinte, e a palavra acesa é a que está soando (medida pelo relógio real).
+  **Não prova que o iPad dele está consertado** — rodei os cinco perfis contra o
+  relato de 28/08 e nenhum o reproduziu. Ler o cabeçalho do arquivo antes de
+  confiar num verde dele.
 - node testar-sincronia.mjs → a página que mostra a voz (sincronia.html). A
   checagem que importa ali: a conta da página tem que dar o MESMO número de
   suspeitas que a medida do sinal. Se ela acusar demais, o Erez arrasta palavra
@@ -722,6 +730,44 @@ Duas coisas que o teste cobra e não podem se perder:
 
 Os ids: `#rezaToggle` e `#treinoToggle`. O `#treinoToggle` continua com o nome
 antigo de propósito — é por onde os testes entram no treino desde o começo.
+
+## O iPad que não obedece (28/08) — e o que aprendi com isso
+
+Ele abriu no iPad, **com a v11 na tela**, e o Modo Treino continuava errado:
+*"começa no veyitkadash, falando bealma, e depois veyitkadash"*. Aqui as doze
+checagens estavam verdes.
+
+**Estavam verdes e não valiam nada para aquela pergunta.** Todas medem o mesmo
+navegador — um Chromium de servidor, onde pedir 0,18s põe o áudio em 0,18s ao
+milissegundo e o relógio anda de 19 em 19 ms. O aparelho dele não é assim, e
+nenhuma delas teria como perceber. (Ele usa o Chrome no iPad; não muda nada — no
+iOS todo navegador roda o WebKit por baixo, por regra da Apple. **Um app nativo
+também rodaria**, então empacotar não resolveria isto.)
+
+**Três suposições do código que só valiam no Chromium**, todas consertadas:
+
+1. `ancorar(destino)`, com o comentário *"aqui a posição é EXATA: fomos nós que
+   pedimos"*. Era falso fora do Chromium. O modelo passava a mentir, e é o modelo
+   que manda no fim do verso e no destaque. Agora ancora no que o aparelho DIZ.
+2. `chegou()` tentava a busca de novo UMA vez se caísse fora do lugar. Contra um
+   desvio sistemático isso não serve: a segunda tentativa cai no mesmo lugar
+   errado. Agora o desvio é MEDIDO e compensado, e onde a busca é exata ele mede
+   zero e nada disso entra em ação.
+3. **O app mandava tocar com a busca ainda em voo.** O respiro contava do
+   instante da pausa, e o ▶ tocava na hora. Onde a busca é instantânea dá na
+   mesma; onde demora, a voz sai do lugar VELHO e só depois o áudio pula. Agora
+   `buscasEmVoo` conta as buscas a caminho e `quandoChegar()` segura o play.
+
+**O que eu NÃO consegui:** reproduzir o relato dele. Rodei cinco perfis de
+aparelho, incluindo um "iPad no pior dia", e nenhum falha — nem o código de
+antes dos consertos. Então os três consertos acima são corretos e defensáveis,
+mas **não são a prova de que o iPad dele sarou**, e não devo dizer que são.
+
+Por isso existe o **diagnostico.html**: ele abre no iPad, aperta um botão e o
+aparelho mede a si mesmo (busca exata? erra para um lado só? relógio grosso?
+a .75× é respeitada? volta a tocar sozinho? o que está guardado no localStorage?)
+e monta um texto para ele copiar e mandar. Sem número de aparelho de verdade,
+qualquer conserto meu é chute — e chute já custou três rodadas dele.
 
 ## Nunca
 
