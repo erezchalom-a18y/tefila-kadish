@@ -864,6 +864,38 @@ saber, **porque nunca perguntou**. Agora pergunta quando o áudio carrega, e avi
 nas 8 línguas (`toast_audio_torto`). O `checar-plataformas.mjs` confere as duas
 metades: calado no arquivo certo, avisando no arquivo torto.
 
+## O Ogg de 48kHz e o iOS 26 (28/08) — e as páginas que quase corromperam as âncoras
+
+Confirmado nos DOIS aparelhos dele, com o mesmo número: o WebKit do iOS 26
+decodifica o nosso Ogg Vorbis de 48kHz com uma linha do tempo de **111,351s**
+onde o arquivo tem **121,603s** — 9,21% adiantado. Não é um aparelho com defeito;
+é o decodificador do sistema. O MP3 no mesmo aparelho lê 121,632s (certo, com o
+enchimento normal do codificador).
+
+O `engine.html` já passou a usar MP3 sempre. **Mas a mesma linha quebrada estava
+em mais dois lugares**, e num deles era pior:
+
+- **`sincronia.html`** — é onde ele ARRASTA as palavras ouvindo, e o que ele
+  arrasta vira âncora. Um defeito do decodificador do aparelho estava a um toque
+  de entrar no `ancoras.json` como se fosse o ouvido dele. Isso é a regra 1 das
+  invioláveis pelo avesso: em vez de medição passar por cima do ouvido dele, o
+  ouvido dele seria contaminado pela medição errada do aparelho.
+- **`conferidor.html`** — existe para ele ouvir e reportar o segundo exato. Com
+  o áudio correndo depressa, o segundo que ele reporta está errado.
+
+Os dois passaram a `return 'mp3'`, sem `canPlayType`.
+
+**As 159 correções de 24/08 estão limpas.** Testado: se ele tivesse arrastado
+ouvindo o Ogg torto, os arrastos teriam uma deriva PROPORCIONAL ao instante —
+9,21% crescendo ao longo do Kadish. A inclinação medida é 0,00% nos 8, e a
+mediana do arrasto é 0 ms. Independentemente disso, o `checar-sincronia.mjs`
+(que compara com o sinal medido) dá zero em "verso errado" nos 8. Nada a refazer.
+
+**A regra que fica:** um `if` sobre o que o navegador *diz que talvez* consiga
+fazer é um desvio de caminho que ninguém vê. Se houver dois caminhos, ou os dois
+são medidos, ou só existe um. Foi assim que o iPad dele passou dias num caminho
+que nenhuma das 14 checagens cobria.
+
 ## Nunca
 
 - git push --force

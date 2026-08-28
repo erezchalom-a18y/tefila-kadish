@@ -832,8 +832,15 @@ el('gerar').addEventListener('click', () => {
 
 // ---------- carregar ----------
 function formato() {
-  const a = document.createElement('audio');
-  return a.canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+  // MP3 SEMPRE. Ver o comentario gemeo no engine.html (28/08).
+  //
+  // Esta linha era `canPlayType('audio/ogg...') ? 'ogg' : 'mp3'`, e aqui ela era
+  // PIOR que no app: o iOS 26 decodifica o nosso Ogg de 48kHz com uma linha do
+  // tempo 9,21% mais curta (121,603s viram 111,351s, medido no iPad E no iPhone
+  // do Erez). Nesta pagina ele ARRASTA as palavras ouvindo, e o que ele arrasta
+  // vira ancora. Ou seja: um defeito do decodificador do aparelho estava a um
+  // toque de entrar no ancoras.json como se fosse ouvido dele.
+  return 'mp3';
 }
 async function carregar() {
   el('corpo').innerHTML = '<p style="color:var(--fraco)">carregando…</p>';

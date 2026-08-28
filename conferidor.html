@@ -171,7 +171,11 @@ async function carregar(){
   const id = sel.value, [n,t] = id.split('_'), v = 'v=' + Date.now();
   diag('carregando…');
   // Safari nao toca Ogg Vorbis; ali usa o .m4a
-  const ext = document.createElement('audio').canPlayType('audio/ogg; codecs=vorbis') ? 'ogg' : 'mp3';
+  // MP3 SEMPRE. Era canPlayType('audio/ogg...') ? 'ogg' : 'mp3', e o iOS 26
+  // decodifica o nosso Ogg 9,21% adiantado (medido no iPad e no iPhone dele).
+  // Esta pagina existe para ele CONFERIR de ouvido e reportar o segundo exato:
+  // com o audio correndo depressa, o segundo que ele reporta esta errado.
+  const ext = 'mp3';
   a.src = `${BASE}/tefila-audio/${n}/${t}.${ext}?${v}`;
   a.load();
   try { dados = await baixarJson(id, v); }
