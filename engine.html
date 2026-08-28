@@ -1902,7 +1902,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-28 · 13';
+const VERSAO = '2026-08-28 · 15';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -4487,6 +4487,7 @@ repeatBtn.addEventListener('click', () => {
 const I18N = {
   pt: {
     toast_repeat: "Repetição {n} de {t}",
+    toast_audio_torto: "O áudio não carregou certo neste aparelho. Feche e abra o app de novo.",
     toast_mode_training: "Modo Treino · velocidade {v}× · repetição {n}× · pausa após cada verso",
     toast_mode_prayer: "Modo Reza · leitura limpa, sem pausas",
     toast_calendar_saved: "Abra o arquivo baixado para pôr no calendário",
@@ -4533,6 +4534,7 @@ const I18N = {
   },
   en: {
     toast_repeat: "Repetition {n} of {t}",
+    toast_audio_torto: "The audio did not load correctly on this device. Close and reopen the app.",
     toast_mode_training: "Practice mode · speed {v}× · repeat {n}× · pause after each verse",
     toast_mode_prayer: "Prayer mode · clean reading, no pauses",
     toast_calendar_saved: "Open the downloaded file to add it to your calendar",
@@ -4579,6 +4581,7 @@ const I18N = {
   },
   es: {
     toast_repeat: "Repetición {n} de {t}",
+    toast_audio_torto: "El audio no cargó bien en este dispositivo. Cierre y abra la app otra vez.",
     toast_mode_training: "Modo Práctica · velocidad {v}× · repetición {n}× · pausa tras cada versículo",
     toast_mode_prayer: "Modo Rezo · lectura limpia, sin pausas",
     toast_calendar_saved: "Abra el archivo descargado para añadirlo al calendario",
@@ -4625,6 +4628,7 @@ const I18N = {
   },
   fr: {
     toast_repeat: "Répétition {n} sur {t}",
+    toast_audio_torto: "L'audio ne s'est pas chargé correctement sur cet appareil. Fermez et rouvrez l'application.",
     toast_mode_training: "Mode Entraînement · vitesse {v}× · répétition {n}× · pause après chaque verset",
     toast_mode_prayer: "Mode Prière · lecture continue, sans pauses",
     toast_calendar_saved: "Ouvrez le fichier téléchargé pour l’ajouter à votre agenda",
@@ -4671,6 +4675,7 @@ const I18N = {
   },
   it: {
     toast_repeat: "Ripetizione {n} di {t}",
+    toast_audio_torto: "L'audio non si è caricato bene su questo dispositivo. Chiudi e riapri l'app.",
     toast_mode_training: "Modalità Studio · velocità {v}× · ripetizione {n}× · pausa dopo ogni versetto",
     toast_mode_prayer: "Modalità Preghiera · lettura continua, senza pause",
     toast_calendar_saved: "Apra il file scaricato per aggiungerlo al calendario",
@@ -4717,6 +4722,7 @@ const I18N = {
   },
   de: {
     toast_repeat: "Wiederholung {n} von {t}",
+    toast_audio_torto: "Die Audiodatei wurde auf diesem Gerät nicht richtig geladen. App schließen und neu öffnen.",
     toast_mode_training: "Übungsmodus · Tempo {v}× · Wiederholung {n}× · Pause nach jedem Vers",
     toast_mode_prayer: "Gebetsmodus · durchgehendes Lesen, ohne Pausen",
     toast_calendar_saved: "Öffnen Sie die geladene Datei, um sie in den Kalender zu übernehmen",
@@ -4763,6 +4769,7 @@ const I18N = {
   },
   ru: {
     toast_repeat: "Повтор {n} из {t}",
+    toast_audio_torto: "Аудио загрузилось на этом устройстве неверно. Закройте и снова откройте приложение.",
     toast_mode_training: "Режим тренировки · скорость {v}× · повтор {n}× · пауза после каждого стиха",
     toast_mode_prayer: "Режим молитвы · чтение без пауз",
     toast_calendar_saved: "Откройте загруженный файл, чтобы добавить его в календарь",
@@ -4809,6 +4816,7 @@ const I18N = {
   },
   he: {
     toast_repeat: "חזרה {n} מתוך {t}",
+    toast_audio_torto: "השמע לא נטען כראוי במכשיר הזה. סגור ופתח מחדש את האפליקציה.",
     toast_mode_training: "מצב אימון · מהירות {v}× · חזרה ×{n} · עצירה אחרי כל פסוק",
     toast_mode_prayer: "מצב תפילה · קריאה רצופה, ללא עצירות",
     toast_calendar_saved: "פתחו את הקובץ שהורד כדי להוסיף אותו ליומן",
@@ -6225,24 +6233,23 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // vez pedimos 0,18 menos o desvio. Onde a busca e exata (Chromium, Firefox,
     // computador) o desvio mede zero e nada disto entra em acao — nao ha
     // "correcao" ligada por engano num aparelho que nao precisa dela.
-    let desvioDaBusca = 0;          // segundos; o quanto o aparelho passa do pedido
-    let amostrasDoDesvio = 0;
-    const DESVIO_QUE_IMPORTA = 0.05;   // menos que isto e ruido, nao defeito
-
-    function aprenderDesvio(pedido, caiuEm) {
-      if (!isFinite(pedido) || !isFinite(caiuEm)) return;
-      // No comeco e no fim da fita o aparelho GRAMPEIA a posicao (nao ha para
-      // onde ir), e isso nao e desvio nenhum — nao pode entrar na media.
-      const d = audioEl() ? audioEl().duration : 0;
-      if (pedido <= 0.02 || (d && pedido >= d - 0.05)) return;
-      const erro = caiuEm - pedido;
-      if (Math.abs(erro) > 2) return;      // isso nao e desvio, e outra coisa
-      // media que esquece devagar: um tranco isolado nao vira regra, e uma
-      // mudanca real (o aparelho troca de fonte de audio) entra em poucas voltas
-      amostrasDoDesvio = Math.min(amostrasDoDesvio + 1, 8);
-      desvioDaBusca += (erro - desvioDaBusca) / amostrasDoDesvio;
-      if (Math.abs(desvioDaBusca) < DESVIO_QUE_IMPORTA) desvioDaBusca = 0;
-    }
+    // A COMPENSACAO DE BUSCA FOI RETIRADA EM 28/08, NO MESMO DIA EM QUE ENTROU.
+    //
+    // Eu a escrevi para um desvio que eu SUPUS que o iPad dele tivesse. A medida
+    // que ele mandou do aparelho mostrou o contrario: a busca la e exata, 0 ms
+    // de erro em seis alvos. Ela nao consertava nada — e quebrava.
+    //
+    // O jeito como ela aprendia o desvio era: pedir x, ler currentTime, tirar a
+    // diferenca. So que no iOS o currentTime vem ARREDONDADO PARA BAIXO, ate um
+    // quarto de segundo. Entao ela media um erro negativo que nao existia,
+    // concluia que o aparelho cai antes do pedido, e passava a pedir tudo
+    // ADIANTADO — dessincronizando o app inteiro. No Chromium o relogio e fino,
+    // media zero, e nada disso aparecia. Ele viu em minutos, no iPhone:
+    // "o audio nao esta sincronizando, isso ja estava 100% certo".
+    //
+    // A licao fica: nao se mede o erro de um relogio com o proprio relogio.
+    // Se algum dia houver prova de um desvio de busca num aparelho de verdade,
+    // a compensacao volta — medida contra o SINAL, nunca contra o currentTime.
 
     // Quantas buscas estao EM VOO. Enquanto houver alguma, o audio nao esta onde
     // o app pensa que esta, e mandar tocar agora toca o lugar VELHO.
@@ -6274,27 +6281,28 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       const estavaTocando = !a.paused;
       const ficha = ++fichaDaBusca;
       buscasEmVoo++;
-      let tentativas = 0, pronto = false;
-      // pede compensado, mas nunca antes do zero nem depois do fim
+      let tentativas = 0, pronto = false, avisouQueChegou = false;
+      // pede o que se quer, so sem sair do arquivo
       const pedir = (alvo) => {
         const d = a.duration;
-        let x = alvo - desvioDaBusca;
-        x = Math.max(0, isFinite(d) && d ? Math.min(x, d - 0.05) : x);
+        const x = Math.max(0, isFinite(d) && d ? Math.min(alvo, d - 0.05) : alvo);
         try { a.currentTime = x; } catch (e) {}
         return x;
       };
-      let pedido = null;
       const terminar = () => {
         if (pronto) return;
         pronto = true;
         buscasEmVoo = Math.max(0, buscasEmVoo - 1);
         a.removeEventListener('seeked', chegou);
+        // ONDE ANCORAR: no que o aparelho diz, mas SO quando ele avisou que a
+        // busca acabou ('seeked'). Se chegamos aqui pela rede de seguranca, a
+        // busca pode nem ter acontecido e o currentTime ainda ser o lugar VELHO
+        // — ancorar nele poe o modelo num lugar que nada tem a ver com o pedido.
+        // Nesse caso vale a intencao, que e o melhor palpite que existe.
         const caiuEm = a.currentTime;
-        if (pedido !== null) aprenderDesvio(pedido, caiuEm);
-        // ANCORA NO QUE O APARELHO DIZ, nao no que pedimos. Se ele nao chegou
-        // onde queriamos, o modelo tem que saber ONDE ELE ESTA — do contrario
-        // o destaque e o fim do verso passam a contar a partir de uma ficcao.
-        ancorar(isFinite(caiuEm) ? caiuEm : destino);
+        const confiavel = avisouQueChegou && isFinite(caiuEm)
+          && Math.abs(caiuEm - destino) < 1.0;
+        ancorar(confiavel ? caiuEm : destino);
         const querTocar = estavaTocando && ficha === fichaDaBusca
           && (typeof state === 'undefined' || state.isPlaying !== false);
         if (querTocar && a.paused) { const p = a.play(); if (p && p.catch) p.catch(() => {}); }
@@ -6304,27 +6312,26 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       };
       const chegou = () => {
         if (pronto) return;
-        const erro = a.currentTime - destino;
-        // Ate DUAS tentativas, e a segunda ja vai compensada pelo que a primeira
-        // ensinou. Mais que isso e insistir: se o aparelho grampeia a posicao
-        // (comeco de arquivo, trecho ainda nao baixado), tentar de novo so gasta
-        // tempo e faz a voz gaguejar.
-        if (Math.abs(erro) > 0.06 && tentativas < 2) {
+        avisouQueChegou = true;
+        // UMA segunda tentativa, e so. Contra um aparelho que grampeia a posicao
+        // (comeco do arquivo, trecho ainda nao baixado) insistir nao adianta e
+        // faz a voz gaguejar. E o `erro` aqui e medido com o relogio do proprio
+        // aparelho, que no iOS e grosso: tolerancia larga de proposito, senao a
+        // segunda tentativa dispara por causa do arredondamento, nao do desvio.
+        if (Math.abs(a.currentTime - destino) > 0.30 && tentativas < 1) {
           tentativas++;
-          if (pedido !== null) aprenderDesvio(pedido, a.currentTime);
-          pedido = pedir(destino);
+          pedir(destino);
           return;                       // continua ouvindo o mesmo 'seeked'
         }
         terminar();
       };
       a.addEventListener('seeked', chegou);
       if (estavaTocando) a.pause();     // sem isto a voz vaza durante a busca
-      pedido = pedir(destino);
+      pedir(destino);
       // rede de seguranca: se 'seeked' nunca vier (acontece), nao deixa parado
       setTimeout(terminar, 1500);
     }
-    // Para as checagens poderem perguntar o que o app aprendeu do aparelho.
-    window.__desvioDaBusca = () => ({ desvio: desvioDaBusca, amostras: amostrasDoDesvio });
+
     // Ligado quando o Modo Treino pausa no fim de um verso. A pausa nao e
     // instantanea: sobrava um quadro em que o relogio ja estava no verso
     // seguinte e o destaque acendia a primeira palavra dele — a piscada que o
@@ -6551,6 +6558,46 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       // Agora quem manda e o quadro do video (~60 vezes por segundo), e o
       // 'timeupdate' fica so de rede de seguranca.
       if (audio && !ouvindo) {
+        // ===============================================================
+        // O ARQUIVO DURA O QUE A FITA DIZ? (28/08)
+        // ===============================================================
+        //
+        // Esta e a trava que faltava, e ela custou dias. A medida que o Erez
+        // mandou do iPad tinha esta linha, que eu quase deixei passar:
+        //
+        //     buscas no OGG (duracao 111.35145833333333)
+        //
+        // O arquivo dura 121,603s. O aparelho dele decodificava o Ogg com uma
+        // linha do tempo 10,25 SEGUNDOS mais curta — 9,21% adiantado. Nao era a
+        // busca (media 0 ms de erro), nao era o relogio, nao era o Modo Treino:
+        // era o audio correndo depressa demais, e piorando verso a verso.
+        // No fim do verso 1 ja estavam 403 ms adiantados, que e exatamente o
+        // "bealma" que ele ouvia. No verso 6, 1,8 segundo.
+        //
+        // A sincronia inteira e uma regra de tres contra o relogio do arquivo.
+        // Se esse relogio esta errado, NADA em cima dele pode estar certo — e o
+        // app nao tinha como saber, porque nunca perguntou. Agora pergunta, uma
+        // vez, quando o arquivo carrega. E avisa, porque errar calado foi o que
+        // fez ele passar dias reouvindo defeito que nao era de sincronia.
+        const conferirDuracao = () => {
+          if (!fita.length || !isFinite(audio.duration) || audio.duration <= 0) return;
+          const fimDaFita = fita[fita.length - 1].end;
+          const sobra = audio.duration - fimDaFita;
+          // O MP3 costuma vir alguns milissegundos mais longo (enchimento do
+          // codificador), e isso e normal. Curto e que nao pode: significa que
+          // o aparelho leu o arquivo com outra base de tempo.
+          if (sobra > -1) return;
+          if (window.__avisouDuracao) return;
+          window.__avisouDuracao = true;
+          console.warn('[tefila] o audio carregou com a duracao errada:',
+            audio.duration, 'quando a fita vai ate', fimDaFita, '·', audio.src);
+          if (typeof showToast === 'function' && typeof TXT === 'function') {
+            setTimeout(() => showToast(TXT('toast_audio_torto')), 1500);
+          }
+        };
+        audio.addEventListener('loadedmetadata', conferirDuracao);
+        audio.addEventListener('durationchange', conferirDuracao);
+        conferirDuracao();
         audio.addEventListener('timeupdate', acender);
         // Re-ancorar no instante em que o relogio VIRA.
         //

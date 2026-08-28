@@ -201,6 +201,44 @@ for (const perfil of perfis) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// O ARQUIVO DURA O QUE A FITA DIZ?
+// ---------------------------------------------------------------------------
+// Esta e a checagem que faltava, e a falta dela custou dias ao Erez.
+//
+// A medida que ele mandou do iPad tinha esta linha:
+//     buscas no OGG (duracao 111.35145833333333)
+// O arquivo dura 121,603s. O aparelho decodificava o Ogg com uma linha do tempo
+// 10,25 SEGUNDOS mais curta — 9,21% adiantado. Nao era a busca (0 ms de erro),
+// nao era o relogio, nao era o Modo Treino: era o audio correndo depressa.
+// No fim do verso 1 ja eram 403 ms de adianto, que e o "bealma" que ele ouvia;
+// no verso 6, 1,8 segundo.
+//
+// A sincronia inteira e uma regra de tres contra o relogio do arquivo. Se esse
+// relogio esta errado, nada em cima dele pode estar certo — e o app nao tinha
+// como saber, porque nunca perguntou. Agora pergunta, e aqui se confere que ele
+// pergunta: calado no arquivo certo, e avisando no arquivo torto.
+console.log('\n=== o arquivo dura o que a fita diz? ===');
+for (const torto of [false, true]) {
+  const pag = await navegador.newPage();
+  if (torto) await pag.addInitScript(() => {
+    const dd = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'duration');
+    Object.defineProperty(HTMLMediaElement.prototype, 'duration', {
+      get() { const v = dd.get.call(this); return isFinite(v) ? v * 0.9157 : v; },
+      configurable: true });
+  });
+  await pag.goto(`${BASE}/engine.html?n=chabad&t=derabanan`);
+  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 25000 });
+  await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
+  await pag.waitForTimeout(3000);
+  const avisou = await pag.evaluate(() => !!window.__avisouDuracao);
+  linha(avisou === torto,
+    torto ? 'áudio com a base de tempo errada: o app AVISA'
+          : 'áudio certo: o app fica calado (não assusta quem reza)',
+    `avisou = ${avisou}`);
+  await pag.close();
+}
+
 await navegador.close();
 console.log(falhas
   ? `\n${falhas} problema(s) — o app NAO se comporta igual em todo aparelho`

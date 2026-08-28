@@ -809,6 +809,61 @@ O `tefila_audio_src = tts` que apareceu no localStorage dele é inofensivo com a
 sincronia ligada (o `playFullPrayer` retorna antes de chegar ao TTS), mas o nome
 engana — é dívida a arrumar um dia.
 
+## O relógio que mediu a si mesmo (28/08) — erro meu, e o conserto
+
+Entre a v13 e a v15 eu pus no ar uma **compensação de busca**: o app media quanto
+o aparelho errava ao procurar uma posição e passava a pedir compensado. Escrevi
+para um desvio que eu SUPUS que o iPad dele tivesse.
+
+A medida que ele mandou do aparelho mostrou o contrário: **a busca lá é exata,
+0 ms de erro em seis alvos**. Não consertava nada. E quebrava.
+
+O jeito como ela aprendia o desvio era: pedir x, ler `currentTime`, tirar a
+diferença. Só que **no iOS o `currentTime` vem arredondado para baixo**, até um
+quarto de segundo. Ela media um erro negativo que não existia, concluía que o
+aparelho cai antes do pedido, e passava a pedir tudo ADIANTADO — dessincronizando
+o app inteiro. No Chromium o relógio é fino, media zero, e nada aparecia. Ele viu
+em minutos, no iPhone: *"o áudio não está sincronizando, isso já estava 100%
+certo"*.
+
+**Não se mede o erro de um relógio com o próprio relógio.** Se um dia houver
+prova de desvio de busca num aparelho de verdade, a compensação volta — medida
+contra o SINAL, nunca contra o `currentTime`.
+
+O que ficou da rodada, e é sólido:
+
+- `irPara` só ancora na posição MEDIDA quando o navegador avisou que a busca
+  acabou (`seeked`). Pela rede de segurança a busca pode nem ter acontecido, e aí
+  vale a intenção.
+- `buscasEmVoo` + `quandoChegar()`: o app não manda tocar com a agulha a caminho.
+- A trava de duração (abaixo), que é a que realmente pega o defeito dele.
+
+## A trava que faltava: o arquivo dura o que a fita diz? (28/08)
+
+A medida do iPad trazia esta linha, que eu quase deixei passar:
+
+```
+buscas no OGG (duracao 111.35145833333333)
+```
+
+O arquivo dura **121,603s**. O aparelho dele decodificava o Ogg com uma linha do
+tempo **10,25 segundos mais curta — 9,21% adiantado**. Não era a busca, não era
+o relógio, não era o Modo Treino: era o áudio correndo depressa demais, e
+piorando verso a verso.
+
+| verso | acaba em | adianto no iPad dele |
+|---|---|---|
+| 1 | 4,38s | **403 ms** ← o "bealma" |
+| 2 | 7,04s | 648 ms |
+| 3 | 9,12s | 840 ms |
+| 6 | 19,78s | 1,8 s |
+
+A sincronia inteira é uma regra de três contra o relógio do arquivo. Se esse
+relógio está errado, nada em cima dele pode estar certo — e o app não tinha como
+saber, **porque nunca perguntou**. Agora pergunta quando o áudio carrega, e avisa
+nas 8 línguas (`toast_audio_torto`). O `checar-plataformas.mjs` confere as duas
+metades: calado no arquivo certo, avisando no arquivo torto.
+
 ## Nunca
 
 - git push --force

@@ -83,6 +83,25 @@ $('ir').addEventListener('click', async () => {
   pos('Aparelho', ios ? 'iPad / iPhone' : (/Android/.test(navigator.userAgent) ? 'Android' : 'computador'), null,
       bruto.tela);
 
+  // ---- 0b. QUE VERSAO DO APP ESTE APARELHO TEM ----
+  // Sem isto eu fico adivinhando que codigo ele esta rodando, e ja adivinhei
+  // errado. A pagina do app guarda a sua versao dentro dela; o versao.json diz
+  // qual e a publicada. Se as duas discordarem, o aparelho tem copia velha e
+  // nada do que ele relatar vale para o codigo de agora.
+  $('passo').textContent = 'Vendo a versão do app…';
+  let publicada = '?', naPagina = '?';
+  try {
+    publicada = (await (await fetch('./versao.json?' + Date.now(), { cache: 'no-store' })).json()).versao;
+  } catch (e) {}
+  try {
+    const html = await (await fetch('./engine.html?' + Date.now(), { cache: 'reload' })).text();
+    const m = html.match(/const VERSAO = '([^']+)'/);
+    if (m) naPagina = m[1];
+  } catch (e) {}
+  bruto.versaoPublicada = publicada; bruto.versaoDoApp = naPagina;
+  pos('Versão do app neste aparelho', naPagina, naPagina === publicada,
+      naPagina === publicada ? 'igual à publicada' : `a publicada é ${publicada} — este aparelho tem cópia velha`);
+
   // ---- 1. que arquivo de audio ele consegue tocar ----
   const a = new Audio();
   bruto.mp3 = a.canPlayType('audio/mpeg');
@@ -235,6 +254,7 @@ $('ir').addEventListener('click', async () => {
   const txt =
 `=== TEFILÁ · MEDIDA DO APARELHO ===
 ${new Date().toISOString()}
+versao do app aqui: ${bruto.versaoDoApp}   publicada: ${bruto.versaoPublicada}
 navegador: ${bruto.ua}
 tela: ${bruto.tela}
 mp3: "${bruto.mp3}"  ogg: "${bruto.ogg}"
