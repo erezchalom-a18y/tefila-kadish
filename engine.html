@@ -1902,7 +1902,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-30 · 19';
+const VERSAO = '2026-08-30 · 20';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -6610,29 +6610,6 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
         };
       }
       const audio = audioEl();
-      // TROCAR DE KADISH NO MEIO DA REZA (30/08).
-      //
-      // "ao passar de um kadish para outro ou de reza para treino da erro, de
-      // sincronia." Trocar o `src` para o navegador e comecar outra coisa: ele
-      // para o audio e zera o relogio, e nada aqui religava. Pior, o modelo de
-      // posicao (a ancora) continuava com o instante do Kadish ANTERIOR — e
-      // desde 28/08 e a ancora que manda no destaque. Bastava um quadro entre o
-      // play e o evento 'play' para a tela acender uma palavra do meio da reza
-      // enquanto a voz saia do comeco.
-      //
-      // Agora: guarda se estava tocando, zera o modelo junto com o audio, e no
-      // fim volta ao comeco do Kadish NOVO — tocando, se estava tocando. Trocar
-      // de Kadish e escolher outro Kadish, nao pausar a reza.
-      const estavaTocando = !!(audio && !audio.paused);
-      ancora = null;
-      desarmarAlarme();
-      desarmarSeguir();
-      rebobinadoAte = null; prazoDaVolta = 0; paradoNoFimDoVerso = false;
-      versoAnterior = -1;
-      fimJaTratado = -1;
-      if (typeof state !== 'undefined' && state) {
-        state.repeatVerso = 0; state.repeatRestante = undefined;
-      }
       if (audio) audio.src = caminhoAudio(nussach, tipo);
 
       try {
@@ -6646,20 +6623,6 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
       montarPassos();                        // os passos do Modo Treino
       dedo = 0;
       acesoVerso = -1; acesoPalavra = -1;   // texto novo: o cache de destaque cai
-      versoAnterior = 0;
-      // O Kadish novo comeca do comeco. A primeira palavra raramente esta em
-      // 0,000s — ha um respiro antes da voz —, e cair antes dela deixaria o
-      // destaque apagado ate o rabino abrir a boca.
-      if (fita.length) {
-        const inicio = fita[0].start;
-        if (typeof state !== 'undefined' && state) state.irPara = inicio;
-        irPara(inicio, () => acender());
-        if (estavaTocando) aoTerminarABusca(() => {
-          const aa = audioEl();
-          if (!aa || !aa.paused) return;
-          if (typeof play === 'function') play(); else aa.play().catch(() => {});
-        });
-      }
       // O destaque era movido pelo evento 'timeupdate', que o navegador dispara
       // umas 4 vezes por segundo. Isso deixa o realce ate um quarto de segundo
       // atrasado — e num trecho rapido como "yehei shmei raba", onde uma palavra
@@ -6891,18 +6854,10 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     // trocar o tipo de Kadish troca o audio e o JSON junto. Sao DOIS botoes
     // desde 28/08 — se este ouvinte ficasse so no primeiro, escolher deRabanan
     // trocaria o rotulo e deixaria o audio e o texto do Yatom na tela.
-    //
-    // `temState` mora DENTRO do modulo SYNC e nunca esteve visivel aqui. Este
-    // ouvinte lancava "temState is not defined" a cada toque, e o
-    // window.SYNC.trocar() logo depois NUNCA rodava: o rotulo do botao trocava,
-    // o audio e o texto ficavam no Kadish anterior. Estava assim desde antes dos
-    // dois botoes; ninguem viu porque o erro morria calado dentro do setTimeout
-    // e nenhuma checagem trocava de tipo com o app rodando.
     ['kadishTypeToggle', 'kadishDerabananToggle'].forEach(id => {
       const bt = document.getElementById(id);
       if (bt) bt.addEventListener('click', () => setTimeout(() => {
-        const t = (typeof state !== 'undefined' && state && state.kadishType) || null;
-        window.SYNC.trocar(null, t);
+        window.SYNC.trocar(null, (temState() && state.kadishType) || null);
       }, 0));
     });
   });
