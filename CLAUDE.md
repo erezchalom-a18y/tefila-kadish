@@ -34,6 +34,10 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   transcrição for refeita, este número pode ir e voltar entre 0 e 1.
 - node medir-fim-da-voz.py → escreve fim-da-voz.json: onde a VOZ de cada verso
   acaba. Rodar de novo se um áudio ou um sync mudar. Só lê sinal/ e sync/.
+- node checar-trocas.mjs → trocar de Kadish e de modo NO MEIO da reza, oito
+  trocas seguidas sem recarregar a página. Nenhuma outra checagem trocava de nada
+  com o app rodando, e foi por isso que "trocar o tipo de Kadish" ficou quebrado
+  sem ninguém ver. GROSSO=0.25 roda com o relógio grosso do iOS.
 - node checar-plataformas.mjs → o app com o navegador ESTRAGADO DE PROPÓSITO, de
   cinco jeitos que aparelhos de verdade estragam: relógio grosso (250ms, iOS),
   busca lenta (400ms), busca desviada, retomada lenta, tela de 30fps. Cobra três
@@ -954,6 +958,65 @@ menos): "buracos na fita" agora pergunta se ficou VOZ sem tocar, não se ficou
 fita — pular a respiração é o pedido dele, não defeito; e "a parada caiu perto da
 fronteira" virou "a agulha ficou estacionada no começo do verso seguinte", que é
 o que o app de fato faz e que faz o ▶ entrar limpo.
+
+## Trocar de Kadish e de modo no meio da reza (30/08)
+
+Ele: *"ao passar de um kadish para outro ou de reza para treino dá erro, de
+sincronia, etc"*.
+
+**Nenhuma das quinze checagens trocava de nada com o app rodando.** Todas abriam
+um Kadish, mediam e fechavam. Por isso ninguém viu que **trocar o tipo de Kadish
+nunca funcionou**: o ouvinte chamava `temState()`, que mora dentro do módulo SYNC
+e nunca esteve visível ali. Cada toque lançava *"temState is not defined"* dentro
+de um `setTimeout`, morria calado, e o `SYNC.trocar()` logo depois nunca rodava —
+o rótulo do botão trocava e o áudio e o texto ficavam no Kadish anterior.
+
+E o segundo: trocar o `src` do áudio faz o navegador **parar e zerar o relógio**,
+e nada religava. Pior, a âncora continuava com o instante do Kadish ANTERIOR — e
+desde 28/08 é a âncora que manda no destaque. Agora `montar()` guarda se estava
+tocando, zera o modelo junto com o áudio, e no fim volta ao começo do Kadish NOVO,
+tocando se estava tocando. Trocar de Kadish é escolher outro Kadish, não pausar
+a reza.
+
+**checar-trocas.mjs** faz oito trocas em sequência **sem recarregar a página** —
+de propósito: defeitos deste tipo são de ESTADO QUE SOBRA, e estado que sobra só
+aparece quando se troca várias vezes seguidas. A pergunta é sempre a mesma: depois
+da troca, a palavra acesa é a que está soando? Roda também com `GROSSO=0.25`, o
+relógio grosso do iOS.
+
+## As palavrinhas passam a ler a frase, nas 7 línguas (30/08)
+
+Ele: *"gostaria que as evoluções que fiz em português fossem feitas nas traduções
+nas outras línguas, como exaltado e santificado seja seu grande nome (no inglês
+está his name great)"*.
+
+O defeito não estava onde parecia. A tradução do VERSO está certa nas 8 línguas —
+"Exalted and sanctified be His great Name". Erradas eram as **palavrinhas**, uma
+por palavra hebraica: em fila davam *"Exalted and sanctified His Name great"*,
+porque seguiam a ordem do hebraico. Em **44 dos 47 versos** no inglês, 43 no
+alemão, 41 no espanhol e no francês, 39 no italiano, 36 no russo, 15 no hebraico.
+Em português, 5 — porque ele já tinha arrumado.
+
+**alinhar-glosas.mjs** + `fontes/glosas-alinhadas.json`. A regra que torna isto
+seguro, e é o coração do arquivo:
+
+> as glosas, juntas com espaços, têm de dar **exatamente** a frase que já existia
+> naquela língua.
+
+Com isso o único grau de liberdade é ONDE CORTAR — nenhuma palavra nova pode
+entrar, e a regra 5 das invioláveis continua de pé: a autoridade continua sendo
+quem escreveu a frase, não quem a repartiu. Um corte mal posto faz uma palavra
+acender uma posição adiante; nunca inventa tradução. **Ao escrever os cortes eu
+errei 46 de 329 na primeira volta** — pus os pedaços na ordem do hebraico — e foi
+essa conferência que os pegou.
+
+Escreve nos DOIS lugares (sync/*.json e glossario.json), pela lição de 23/08. Há
+prova de que rodar o `aplicar-glossario.mjs` por cima não desfaz nada.
+
+Resultado: as 7 línguas foram de 36–44 versos fora para **zero**. O português
+continua com 5, que são decisões dele e não foram tocadas — em quatro é só
+pontuação (vírgulas e o "e" final de uma enumeração) e em um o "Ele fará" da fila
+contra o "que Ele faça" da frase. Ficam para ele decidir.
 
 ## Nunca
 

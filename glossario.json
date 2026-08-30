@@ -25,38 +25,38 @@
         "en": [
           "Exalted",
           "and sanctified",
-          "His Name",
-          "great"
+          "be His great Name",
+          ""
         ],
         "es": [
           "Exaltado",
           "y santificado",
-          "Su Nombre",
-          "grande"
+          "sea Su gran Nombre",
+          ""
         ],
         "fr": [
           "Exalté",
           "et sanctifié",
-          "Son Nom",
-          "grand"
+          "soit Son grand Nom",
+          ""
         ],
         "it": [
           "Esaltato",
           "e santificato",
-          "il Suo Nome",
-          "grande"
+          "sia il Suo grande Nome",
+          ""
         ],
         "de": [
           "Erhoben",
           "und geheiligt",
-          "Sein Name",
-          "großer"
+          "werde Sein großer Name",
+          ""
         ],
         "ru": [
           "Да возвысится",
           "и освятится",
-          "Имя Его",
-          "великое"
+          "великое Имя Его",
+          ""
         ],
         "he": [
           "יִתְעַלֶּה",
@@ -89,9 +89,9 @@
       "glosas": {
         "en": [
           "in the world",
-          "which",
+          "",
           "He created",
-          "by His will"
+          "according to His will"
         ],
         "es": [
           "en el mundo",
@@ -101,8 +101,8 @@
         ],
         "fr": [
           "dans le monde",
-          "que",
-          "Il a créé",
+          "qu'Il",
+          "a créé",
           "selon Sa volonté"
         ],
         "it": [
@@ -112,21 +112,21 @@
           "secondo la Sua volontà"
         ],
         "de": [
-          "in der Welt",
+          "in der Welt,",
           "die",
-          "Er erschuf",
-          "nach Seinem Willen"
+          "",
+          "Er nach Seinem Willen erschuf"
         ],
         "ru": [
-          "в мире",
+          "в мире,",
           "который",
           "Он сотворил",
           "по воле Своей"
         ],
         "he": [
           "בָּעוֹלָם",
-          "אֲשֶׁר",
-          "בָּרָא",
+          "",
+          "שֶׁבָּרָא",
           "כִּרְצוֹנוֹ"
         ]
       }
@@ -151,7 +151,7 @@
       },
       "glosas": {
         "en": [
-          "and may He reign",
+          "and may He establish",
           "His kingdom"
         ],
         "es": [
@@ -159,7 +159,7 @@
           "Su reino"
         ],
         "fr": [
-          "et qu'Il fasse régner",
+          "et qu'Il établisse",
           "Son règne"
         ],
         "it": [
@@ -167,8 +167,8 @@
           "il Suo regno"
         ],
         "de": [
-          "und Er lasse herrschen",
-          "Sein Reich"
+          "und Er lasse",
+          "Sein Reich erstehen"
         ],
         "ru": [
           "и да воцарится",
@@ -202,21 +202,21 @@
       },
       "glosas": {
         "en": [
-          "and may He sprout",
-          "His redemption",
-          "and hasten",
-          "His Mashiach"
+          "and may",
+          "His redemption sprout",
+          "and",
+          "His Mashiach draw near"
         ],
         "es": [
           "y haga florecer",
           "Su redención",
           "y acerque",
-          "Su Mashíaj"
+          "a Su Mashíaj"
         ],
         "fr": [
           "et qu'Il fasse fleurir",
           "Sa délivrance",
-          "et qu'Il rapproche",
+          "et rapproche",
           "Son Machia'h"
         ],
         "it": [
@@ -226,10 +226,10 @@
           "il Suo Mashiach"
         ],
         "de": [
-          "und Er lasse sprießen",
-          "Seine Erlösung",
-          "und Er bringe nah",
-          "Seinen Maschiach"
+          "und Er lasse",
+          "Seine Erlösung sprießen",
+          "und bringe",
+          "Seinen Maschiach nah"
         ],
         "ru": [
           "и да взрастит",
@@ -317,8 +317,8 @@
       "glosas": {
         "en": [
           "and in the life",
-          "of all",
-          "the house",
+          "of the whole",
+          "house",
           "of Israel"
         ],
         "es": [
@@ -383,50 +383,50 @@
       "glosas": {
         "en": [
           "speedily",
-          "and in a time",
-          "near",
+          "and",
+          "soon —",
           "and say",
           "amen"
         ],
         "es": [
           "pronto",
-          "y en un tiempo",
-          "cercano",
+          "y",
+          "en breve —",
           "y decid",
           "amén"
         ],
         "fr": [
           "rapidement",
-          "et en un temps",
-          "proche",
+          "et",
+          "bientôt —",
           "et dites",
           "amen"
         ],
         "it": [
           "presto",
-          "e in un tempo",
-          "vicino",
+          "e",
+          "in breve —",
           "e dite",
           "amen"
         ],
         "de": [
           "bald",
-          "und in naher",
-          "Zeit",
+          "und",
+          "in naher Zeit —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "вскоре",
-          "и во время",
-          "близкое",
-          "и скажите",
+          "вскоре,",
+          "",
+          "в ближайшее время —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "בִּמְהֵרָה",
           "וּבִזְמַן",
-          "קָרוֹב",
+          "קָרוֹב —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -457,54 +457,54 @@
       },
       "glosas": {
         "en": [
-          "may be",
-          "His Name",
-          "great",
-          "blessed",
+          "May",
+          "His great Name",
+          "",
+          "be blessed",
           "forever",
           "and for all",
           "eternity"
         ],
         "es": [
-          "sea",
-          "Su Nombre",
-          "grande",
-          "bendecido",
+          "Que",
+          "Su gran Nombre",
+          "",
+          "sea bendecido",
           "por siempre",
-          "y por toda",
+          "y para toda",
           "la eternidad"
         ],
         "fr": [
-          "que soit",
-          "Son Nom",
-          "grand",
-          "béni",
+          "Que",
+          "Son grand Nom",
+          "",
+          "soit béni",
           "à jamais",
           "et pour toute",
           "l'éternité"
         ],
         "it": [
-          "sia",
-          "il Suo Nome",
-          "grande",
+          "Sia",
+          "il Suo grande Nome",
+          "",
           "benedetto",
           "per sempre",
           "e per tutta",
           "l'eternità"
         ],
         "de": [
-          "es sei",
-          "Sein Name",
-          "großer",
-          "gepriesen",
+          "",
+          "Sein großer Name",
+          "",
+          "sei gepriesen",
           "für immer",
           "und in alle",
           "Ewigkeit"
         ],
         "ru": [
-          "да будет",
-          "Имя Его",
-          "великое",
+          "Да будет",
+          "великое Имя Его",
+          "",
           "благословенно",
           "вовеки",
           "и во веки",
@@ -542,33 +542,33 @@
       },
       "glosas": {
         "en": [
-          "blessed",
-          "and praised",
-          "and glorified"
+          "Blessed,",
+          "praised",
+          "and glorified be He"
         ],
         "es": [
-          "bendito",
-          "y alabado",
-          "y glorificado"
+          "Bendito,",
+          "alabado",
+          "y glorificado sea"
         ],
         "fr": [
-          "béni",
-          "et loué",
-          "et glorifié"
+          "Béni,",
+          "loué",
+          "et glorifié soit-Il"
         ],
         "it": [
-          "benedetto",
-          "e lodato",
-          "e glorificato"
+          "Benedetto,",
+          "lodato",
+          "e glorificato sia"
         ],
         "de": [
-          "gepriesen",
-          "und gelobt",
-          "und verherrlicht"
+          "Gepriesen,",
+          "gelobt",
+          "und verherrlicht sei Er"
         ],
         "ru": [
-          "благословенно",
-          "и восхваляемо",
+          "Благословенно,",
+          "восхваляемо",
           "и прославляемо"
         ],
         "he": [
@@ -609,33 +609,33 @@
       },
       "glosas": {
         "en": [
-          "and exalted",
-          "and uplifted",
-          "and honored"
+          "exalted,",
+          "uplifted",
+          "and honored be He"
         ],
         "es": [
-          "y exaltado",
-          "y elevado",
-          "y honrado"
+          "exaltado,",
+          "elevado",
+          "y honrado sea"
         ],
         "fr": [
-          "et exalté",
-          "et élevé",
-          "et honoré"
+          "exalté,",
+          "élevé",
+          "et honoré soit-Il"
         ],
         "it": [
-          "ed esaltato",
-          "ed elevato",
-          "e onorato"
+          "esaltato,",
+          "elevato",
+          "e onorato sia"
         ],
         "de": [
-          "und erhoben",
-          "und erhöht",
-          "und geehrt"
+          "erhoben,",
+          "erhöht",
+          "und geehrt sei Er"
         ],
         "ru": [
-          "и возвышаемо",
-          "и превозносимо",
+          "возвышаемо,",
+          "превозносимо",
           "и почитаемо"
         ],
         "he": [
@@ -669,50 +669,50 @@
       },
       "glosas": {
         "en": [
-          "and elevated",
+          "elevated",
           "and lauded",
-          "His Name",
-          "of the Holy One",
+          "be the Name",
+          "of the Holy One,",
           "blessed",
-          "is He"
+          "be He"
         ],
         "es": [
           "y enaltecido",
           "y celebrado",
-          "Su Nombre",
-          "del Santo",
+          "sea el Nombre",
+          "del Santo,",
           "bendito",
-          "Él"
+          "sea"
         ],
         "fr": [
           "et magnifié",
           "et célébré",
-          "Son Nom",
-          "du Saint",
+          "soit le Nom",
+          "du Saint,",
           "béni",
           "soit-Il"
         ],
         "it": [
-          "ed innalzato",
+          "e innalzato",
           "e celebrato",
-          "il Suo Nome",
-          "del Santo",
+          "sia il Nome",
+          "del Santo,",
           "benedetto",
-          "Egli"
+          "Egli sia"
         ],
         "de": [
           "und gefeiert",
           "und gerühmt",
-          "Sein Name",
-          "des Heiligen",
+          "sei der Name",
+          "des Heiligen,",
           "gepriesen",
           "sei Er"
         ],
         "ru": [
-          "и возвеличиваемо",
-          "и воспеваемо",
-          "Имя Его",
-          "Святого",
+          "и возвеличено",
+          "и воспето",
+          "Имя",
+          "Святого,",
           "благословен",
           "Он"
         ],
@@ -750,7 +750,7 @@
       "glosas": {
         "en": [
           "above",
-          "beyond",
+          "",
           "all",
           "blessings",
           "and songs"
@@ -767,7 +767,7 @@
           "de",
           "toutes",
           "les bénédictions",
-          "et les chants"
+          "et de tous les chants"
         ],
         "it": [
           "al di sopra",
@@ -778,22 +778,22 @@
         ],
         "de": [
           "über",
-          "alle",
+          "",
           "alle",
           "Segnungen",
-          "und Lieder"
+          "und Lieder hinaus"
         ],
         "ru": [
           "превыше",
-          "всех",
+          "",
           "всех",
           "благословений",
           "и песнопений"
         ],
         "he": [
           "לְמַעְלָה",
-          "מִן",
-          "כָּל",
+          "",
+          "מִכָּל",
           "הַבְּרָכוֹת",
           "וְהַשִּׁירוֹת"
         ]
@@ -825,16 +825,16 @@
         "en": [
           "praises",
           "and consolations",
-          "that are uttered",
-          "in the world",
+          "uttered",
+          "in the world —",
           "and say",
           "amen"
         ],
         "es": [
           "alabanzas",
           "y consuelos",
-          "que se dicen",
-          "en el mundo",
+          "que se recitan",
+          "en el mundo —",
           "y decid",
           "amén"
         ],
@@ -842,39 +842,39 @@
           "louanges",
           "et consolations",
           "prononcées",
-          "dans le monde",
+          "dans le monde —",
           "et dites",
           "amen"
         ],
         "it": [
           "lodi",
           "e consolazioni",
-          "che si dicono",
-          "nel mondo",
+          "che si recitano",
+          "nel mondo —",
           "e dite",
           "amen"
         ],
         "de": [
           "Lobpreisungen",
-          "und Tröstungen",
-          "die gesprochen werden",
-          "in der Welt",
+          "und Tröstungen,",
+          "die",
+          "in der Welt gesprochen werden —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
           "восхвалений",
-          "и утешений",
+          "и утешений,",
           "произносимых",
-          "в мире",
-          "и скажите",
+          "в мире —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "הַתִּשְׁבָּחוֹת",
           "וְהַנֶּחָמוֹת",
           "הַנֶּאֱמָרוֹת",
-          "בָּעוֹלָם",
+          "בָּעוֹלָם —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -919,99 +919,99 @@
       },
       "glosas": {
         "en": [
-          "may be",
-          "peace",
-          "great",
-          "beyond",
-          "heaven",
-          "and life",
-          "good",
-          "upon us",
+          "May",
+          "abundant peace",
+          "",
+          "",
+          "from heaven,",
+          "and good life,",
+          "",
+          "come upon us",
           "and upon",
           "all",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "sea",
-          "paz",
-          "grande",
-          "de",
-          "el cielo",
-          "y vida",
-          "buena",
-          "sobre nosotros",
+          "Que",
+          "gran paz",
+          "",
+          "",
+          "del cielo",
+          "y buena vida",
+          "",
+          "vengan sobre nosotros",
           "y sobre",
-          "todas",
-          "de Israel",
+          "todo",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "que soit",
-          "paix",
-          "grand",
-          "de",
-          "le ciel",
-          "et vie",
-          "bonne",
+          "Que du ciel viennent",
+          "une paix",
+          "abondante",
+          "",
+          "",
+          "et une bonne vie,",
+          "",
           "sur nous",
           "et sur",
-          "toutes",
-          "d'Israël",
+          "tout",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "sia",
-          "pace",
-          "grande",
-          "di",
-          "il cielo",
-          "e vita",
-          "buona",
-          "su di noi",
+          "Che",
+          "una grande pace",
+          "",
+          "",
+          "dal cielo",
+          "e una buona vita",
+          "",
+          "vengano su di noi",
           "e su",
-          "tutte",
-          "d'Israele",
+          "tutto",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "es sei",
-          "Frieden",
-          "großer",
-          "alle",
-          "dem Himmel",
-          "und Leben",
-          "gutes",
+          "Möge",
+          "großer Friede",
+          "",
+          "vom",
+          "Himmel",
+          "und gutes Leben",
+          "",
           "über uns",
-          "und über",
-          "alle",
-          "Israel",
+          "und",
+          "ganz",
+          "Israel kommen —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "да будет",
-          "мир",
-          "великое",
-          "всех",
-          "небес",
-          "и жизнь",
-          "добрая",
+          "Да будут дарованы с небес",
+          "великий мир",
+          "",
+          "",
+          "",
+          "и добрая жизнь",
+          "",
           "нам",
-          "и всему",
-          "всех",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "יְהִי",
           "שָׁלוֹם",
-          "הַגָּדוֹל",
+          "רָב",
           "מִן",
           "הַשָּׁמַיִם",
           "וְחַיִּים",
@@ -1019,7 +1019,7 @@
           "עָלֵינוּ",
           "וְעַל",
           "כָּל",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -1052,7 +1052,7 @@
         ],
         "es": [
           "El que hace",
-          "paz",
+          "la paz",
           "en Sus alturas"
         ],
         "fr": [
@@ -1062,12 +1062,12 @@
         ],
         "it": [
           "Colui che fa",
-          "pace",
+          "la pace",
           "nelle Sue altezze"
         ],
         "de": [
-          "Der Frieden stiftet",
-          "Frieden",
+          "Der",
+          "Frieden stiftet",
           "in Seinen Höhen"
         ],
         "ru": [
@@ -1109,69 +1109,69 @@
       },
       "glosas": {
         "en": [
-          "is He",
-          "shall make",
+          "may He",
+          "make",
           "peace",
           "upon us",
-          "and upon",
-          "all",
-          "of Israel",
+          "and",
+          "upon all",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "Él",
-          "hará",
-          "paz",
+          "que Él",
+          "haga",
+          "la paz",
           "sobre nosotros",
-          "y sobre",
-          "todas",
-          "de Israel",
+          "y",
+          "sobre todo",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "soit-Il",
-          "fera",
+          "qu'Il",
+          "fasse",
           "la paix",
           "sur nous",
-          "et sur",
-          "toutes",
-          "d'Israël",
+          "et",
+          "sur tout",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "Egli",
-          "farà",
-          "pace",
+          "faccia Egli",
+          "",
+          "la pace",
           "su di noi",
-          "e su",
-          "tutte",
-          "d'Israele",
+          "e",
+          "su tutto",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "sei Er",
+          "Er",
           "stifte",
           "Frieden",
           "über uns",
-          "und über",
-          "alle",
-          "Israel",
+          "und",
+          "ganz",
+          "Israel —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "Он",
-          "дарует",
+          "да дарует",
+          "",
           "мир",
           "нам",
-          "и всему",
-          "всех",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
@@ -1181,7 +1181,7 @@
           "עָלֵינוּ",
           "וְעַל",
           "כָּל",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -1209,40 +1209,40 @@
       },
       "glosas": {
         "en": [
-          "upon",
-          "of Israel",
+          "Upon",
+          "Israel",
           "and upon",
           "the sages"
         ],
         "es": [
-          "sobre",
-          "de Israel",
+          "Sobre",
+          "Israel",
           "y sobre",
           "los maestros"
         ],
         "fr": [
-          "sur",
-          "d'Israël",
+          "Sur",
+          "Israël",
           "et sur",
           "les maîtres"
         ],
         "it": [
-          "su",
-          "d'Israele",
-          "e su",
-          "i maestri"
+          "Su",
+          "Israele",
+          "",
+          "e sui maestri"
         ],
         "de": [
-          "über",
+          "Über",
           "Israel",
           "und über",
           "die Gelehrten"
         ],
         "ru": [
+          "",
           "Израилю",
-          "Израиля",
-          "и всему",
-          "и мудрецам"
+          "и",
+          "мудрецам"
         ],
         "he": [
           "עַל",
@@ -1278,50 +1278,50 @@
         "en": [
           "and upon",
           "their disciples",
-          "and upon",
+          "and",
           "all",
-          "the disciples",
+          "the disciples of",
           "their disciples"
         ],
         "es": [
           "y sobre",
           "sus discípulos",
           "y sobre",
-          "todas",
-          "los discípulos",
+          "todos",
+          "los discípulos de",
           "sus discípulos"
         ],
         "fr": [
           "et sur",
           "leurs disciples",
           "et sur",
-          "toutes",
-          "les disciples",
+          "tous",
+          "les disciples de",
           "leurs disciples"
         ],
         "it": [
+          "e sui",
+          "loro discepoli",
           "e su",
-          "i loro discepoli",
-          "e su",
-          "tutte",
-          "i discepoli",
-          "i loro discepoli"
+          "tutti",
+          "i discepoli dei",
+          "loro discepoli"
         ],
         "de": [
           "und über",
           "ihre Schüler",
-          "und über",
+          "und",
           "alle",
-          "die Schüler",
-          "ihre Schüler"
+          "Schüler",
+          "ihrer Schüler"
         ],
         "ru": [
-          "и всему",
-          "их ученикам",
-          "и всему",
-          "всех",
+          "и",
+          "ученикам их,",
+          "и",
+          "всем",
           "ученикам",
-          "их ученикам"
+          "их учеников"
         ],
         "he": [
           "וְעַל",
@@ -1329,7 +1329,7 @@
           "וְעַל",
           "כָּל",
           "תַּלְמִידֵי",
-          "תַּלְמִידֵיהֶם"
+          "תַלְמִידֵיהֶם"
         ]
       }
     },
@@ -1358,42 +1358,42 @@
         "en": [
           "and upon",
           "all",
-          "whoever",
-          "who engage",
+          "who",
+          "engage",
           "in Torah"
         ],
         "es": [
           "y sobre",
-          "todas",
-          "quien",
-          "que se dedican",
+          "todos",
+          "los que",
+          "se dedican",
           "a la Torá"
         ],
         "fr": [
           "et sur",
-          "toutes",
-          "quiconque",
-          "qui s'adonnent",
+          "tous",
+          "ceux qui",
+          "s'adonnent",
           "à la Torah"
         ],
         "it": [
           "e su",
-          "tutte",
-          "chiunque",
-          "che si dedicano",
+          "tutti",
+          "coloro che",
+          "si dedicano",
           "alla Torà"
         ],
         "de": [
           "und über",
-          "alle",
-          "jeden der",
-          "sich widmet",
-          "der Tora"
+          "alle,",
+          "die sich",
+          "",
+          "der Tora widmen"
         ],
         "ru": [
-          "и всему",
-          "всех",
-          "всем кто",
+          "и",
+          "всем,",
+          "кто",
           "занимается",
           "Торой"
         ],
@@ -1428,33 +1428,33 @@
       "glosas": {
         "en": [
           "who engage",
-          "in Torah",
-          "holy"
+          "in the holy Torah",
+          ""
         ],
         "es": [
           "que se dedican",
-          "a la Torá",
-          "sagrada"
+          "a la sagrada",
+          "Torá"
         ],
         "fr": [
           "qui s'adonnent",
-          "à la Torah",
-          "sainte"
+          "à la sainte",
+          "Torah"
         ],
         "it": [
           "che si dedicano",
-          "alla Torà",
-          "santa"
+          "alla santa",
+          "Torà"
         ],
         "de": [
-          "sich widmet",
-          "der Tora",
-          "der heiligen"
+          "die sich",
+          "der heiligen Tora widmen",
+          ""
         ],
         "ru": [
-          "занимается",
-          "Торой",
-          "святой"
+          "занимающимся",
+          "святой",
+          "Торой"
         ],
         "he": [
           "שֶׁעוֹסְקִים",
@@ -1488,65 +1488,65 @@
       },
       "glosas": {
         "en": [
-          "which",
-          "in this place",
-          "here",
-          "and who are",
-          "in every",
-          "place",
-          "and place"
+          "in",
+          "this place",
+          "",
+          "and",
+          "in",
+          "",
+          "every place"
         ],
         "es": [
-          "que",
-          "en este lugar",
-          "aquí",
-          "y que",
-          "en todo",
-          "lugar",
-          "y lugar"
+          "en",
+          "este lugar",
+          "",
+          "y",
+          "en",
+          "",
+          "todo lugar"
         ],
         "fr": [
-          "que",
-          "en ce lieu",
-          "ici",
-          "et qui sont",
-          "en tout",
-          "lieu",
-          "et lieu"
+          "en",
+          "ce lieu",
+          "",
+          "et",
+          "en",
+          "",
+          "tout lieu"
         ],
         "it": [
-          "che",
-          "in questo luogo",
-          "qui",
-          "e che",
-          "in ogni",
-          "luogo",
-          "e luogo"
+          "in",
+          "questo luogo",
+          "",
+          "e",
+          "in",
+          "",
+          "ogni luogo"
         ],
         "de": [
-          "die",
-          "an diesem Ort",
-          "hier",
-          "und die",
-          "an jedem",
-          "Ort",
-          "und Ort"
+          "an",
+          "diesem Ort",
+          "",
+          "und",
+          "an",
+          "",
+          "jedem Ort"
         ],
         "ru": [
-          "который",
-          "в этом месте",
-          "здесь",
-          "и во",
-          "всяком",
-          "месте",
-          "и месте"
+          "в",
+          "этом месте",
+          "",
+          "и",
+          "во",
+          "",
+          "всяком месте"
         ],
         "he": [
-          "אֲשֶׁר",
-          "בַּמָּקוֹם הַזֶּה",
-          "כָּאן",
-          "וַאֲשֶׁר",
-          "בְּכָל",
+          "",
+          "בַּמָּקוֹם",
+          "הַזֶּה",
+          "וּבְכָל",
+          "",
           "מָקוֹם",
           "וּמָקוֹם"
         ]
@@ -1575,53 +1575,53 @@
       },
       "glosas": {
         "en": [
-          "may be",
+          "may there be",
           "for them",
           "and for you",
-          "peace",
-          "great"
+          "abundant peace",
+          ""
         ],
         "es": [
-          "sea",
+          "que haya",
           "para ellos",
           "y para vosotros",
-          "paz",
-          "grande"
+          "gran paz",
+          ""
         ],
         "fr": [
-          "que soit",
+          "qu'il y ait",
           "pour eux",
           "et pour vous",
-          "paix",
-          "grand"
+          "une paix",
+          "abondante"
         ],
         "it": [
-          "sia",
+          "che vi sia",
           "per loro",
           "e per voi",
-          "pace",
-          "grande"
+          "grande pace",
+          ""
         ],
         "de": [
-          "es sei",
+          "möge",
           "ihnen",
           "und euch",
-          "Frieden",
-          "großer"
+          "",
+          "großer Friede zuteilwerden"
         ],
         "ru": [
           "да будет",
           "им",
           "и вам",
-          "мир",
-          "великое"
+          "великий мир",
+          ""
         ],
         "he": [
           "יְהִי",
           "לָהֶם",
           "וְלָכֶם",
           "שָׁלוֹם",
-          "הַגָּדוֹל"
+          "רָב"
         ]
       }
     },
@@ -1650,57 +1650,57 @@
       },
       "glosas": {
         "en": [
-          "may be",
-          "for us",
-          "and for them",
+          "may there be",
+          "for us,",
+          "for them",
           "and for you",
-          "grace",
-          "and kindness",
+          "grace,",
+          "kindness",
           "and mercy"
         ],
         "es": [
-          "sea",
-          "para nosotros",
-          "y para ellos",
+          "que haya",
+          "para nosotros,",
+          "para ellos",
           "y para vosotros",
-          "gracia",
-          "y bondad",
+          "gracia,",
+          "bondad",
           "y misericordia"
         ],
         "fr": [
-          "que soit",
-          "pour nous",
-          "et pour eux",
+          "qu'il y ait",
+          "pour nous,",
+          "pour eux",
           "et pour vous",
-          "grâce",
-          "et bonté",
+          "grâce,",
+          "bonté",
           "et miséricorde"
         ],
         "it": [
-          "sia",
-          "per noi",
-          "e per loro",
+          "che vi sia",
+          "per noi,",
+          "per loro",
           "e per voi",
-          "grazia",
-          "e bontà",
+          "grazia,",
+          "bontà",
           "e misericordia"
         ],
         "de": [
-          "es sei",
-          "uns",
-          "und ihnen",
+          "möge",
+          "uns,",
+          "ihnen",
           "und euch",
-          "Gnade",
-          "und Güte",
-          "und Erbarmen"
+          "Gnade,",
+          "Güte",
+          "und Erbarmen zuteilwerden"
         ],
         "ru": [
-          "да будет",
-          "нам",
-          "и им",
+          "да будут",
+          "нам,",
+          "им",
           "и вам",
-          "милость",
-          "и доброта",
+          "милость,",
+          "доброта",
           "и милосердие"
         ],
         "he": [
@@ -1735,33 +1735,33 @@
       },
       "glosas": {
         "en": [
-          "grace",
-          "and kindness",
+          "grace,",
+          "kindness",
           "and mercy"
         ],
         "es": [
-          "gracia",
-          "y bondad",
+          "gracia,",
+          "bondad",
           "y misericordia"
         ],
         "fr": [
-          "grâce",
-          "et bonté",
+          "grâce,",
+          "bonté",
           "et miséricorde"
         ],
         "it": [
-          "grazia",
-          "e bontà",
+          "grazia,",
+          "bontà",
           "e misericordia"
         ],
         "de": [
-          "Gnade",
-          "und Güte",
+          "Gnade,",
+          "Güte",
           "und Erbarmen"
         ],
         "ru": [
-          "милость",
-          "и доброта",
+          "милость,",
+          "доброта",
           "и милосердие"
         ],
         "he": [
@@ -1793,40 +1793,40 @@
       },
       "glosas": {
         "en": [
-          "and life",
-          "long",
-          "and sustenance",
-          "abundant"
+          "long life",
+          "",
+          "and abundant sustenance",
+          ""
         ],
         "es": [
-          "y vida",
+          "vida",
           "larga",
           "y sustento",
           "abundante"
         ],
         "fr": [
-          "et une vie",
-          "longue",
+          "une longue vie",
+          "",
           "et une subsistance",
           "abondante"
         ],
         "it": [
-          "e vita",
+          "vita",
           "lunga",
           "e sostentamento",
           "abbondante"
         ],
         "de": [
-          "und langes",
-          "Leben",
-          "und reichliche",
-          "Nahrung"
+          "langes Leben",
+          "",
+          "und reichliche Nahrung",
+          ""
         ],
         "ru": [
-          "и жизнь",
-          "долгая",
-          "и пропитание",
-          "обильное"
+          "долгая жизнь",
+          "",
+          "и обильное пропитание",
+          ""
         ],
         "he": [
           "וְחַיִּים",
@@ -1858,40 +1858,40 @@
       },
       "glosas": {
         "en": [
-          "and life",
-          "long",
-          "and sustenance",
-          "abundant"
+          "long life",
+          "",
+          "and abundant sustenance",
+          ""
         ],
         "es": [
-          "y vida",
+          "vida",
           "larga",
           "y sustento",
           "abundante"
         ],
         "fr": [
-          "et une vie",
-          "longue",
+          "une longue vie",
+          "",
           "et une subsistance",
           "abondante"
         ],
         "it": [
-          "e vita",
+          "vita",
           "lunga",
           "e sostentamento",
           "abbondante"
         ],
         "de": [
-          "und langes",
-          "Leben",
-          "und reichliche",
-          "Nahrung"
+          "langes Leben",
+          "",
+          "und reichliche Nahrung",
+          ""
         ],
         "ru": [
-          "и жизнь",
-          "долгая",
-          "и пропитание",
-          "обильное"
+          "долгая жизнь",
+          "",
+          "и обильное пропитание",
+          ""
         ],
         "he": [
           "וְחַיִּים",
@@ -1927,64 +1927,64 @@
       "glosas": {
         "en": [
           "and deliverance",
-          "beyond",
-          "from before",
+          "from",
+          "before",
           "their Father",
-          "who is in heaven",
+          "in heaven —",
           "and say",
           "amen"
         ],
         "es": [
           "y redención",
           "de",
-          "de ante",
+          "ante",
           "su Padre",
-          "que está en los cielos",
+          "que está en los cielos —",
           "y decid",
           "amén"
         ],
         "fr": [
           "et la délivrance",
           "de",
-          "de devant",
+          "devant",
           "leur Père",
-          "qui est aux cieux",
+          "qui est aux cieux —",
           "et dites",
           "amen"
         ],
         "it": [
           "e redenzione",
-          "di",
-          "da davanti a",
-          "il loro Padre",
-          "che è nei cieli",
+          "da",
+          "davanti al",
+          "loro Padre",
+          "che è nei cieli —",
           "e dite",
           "amen"
         ],
         "de": [
           "und Erlösung",
-          "alle",
           "von",
+          "",
           "ihrem Vater",
-          "im Himmel",
+          "im Himmel —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
           "и избавление",
-          "всех",
           "от",
+          "",
           "Отца их",
-          "небесного",
-          "и скажите",
+          "небесного —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "וּגְאֻלָּה",
-          "מִן",
+          "",
           "מִלִּפְנֵי",
           "אֲבִיהֶם",
-          "שֶׁבַּשָּׁמַיִם",
+          "שֶׁבַּשָּׁמַיִם —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2017,71 +2017,71 @@
       "glosas": {
         "en": [
           "and deliverance",
-          "beyond",
-          "from before",
+          "from",
+          "before",
           "their Father",
-          "who is in heaven",
-          "and earth",
+          "in heaven",
+          "and earth —",
           "and say",
           "amen"
         ],
         "es": [
           "y redención",
           "de",
-          "de ante",
+          "ante",
           "su Padre",
           "que está en los cielos",
-          "y la tierra",
+          "y en la tierra —",
           "y decid",
           "amén"
         ],
         "fr": [
           "et la délivrance",
           "de",
-          "de devant",
+          "devant",
           "leur Père",
           "qui est aux cieux",
-          "et la terre",
+          "et sur la terre —",
           "et dites",
           "amen"
         ],
         "it": [
           "e redenzione",
-          "di",
-          "da davanti a",
-          "il loro Padre",
+          "da",
+          "davanti al",
+          "loro Padre",
           "che è nei cieli",
-          "e la terra",
+          "e sulla terra —",
           "e dite",
           "amen"
         ],
         "de": [
           "und Erlösung",
-          "alle",
           "von",
+          "",
           "ihrem Vater",
           "im Himmel",
-          "und auf Erden",
+          "und auf Erden —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
           "и избавление",
-          "всех",
           "от",
-          "Отца их",
-          "небесного",
-          "и на земле",
-          "и скажите",
+          "",
+          "Отца их,",
+          "что на небесах",
+          "и на земле —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "וּגְאֻלָּה",
-          "מִן",
+          "",
           "מִלִּפְנֵי",
           "אֲבִיהֶם",
           "שֶׁבַּשָּׁמַיִם",
-          "וּבָאָרֶץ",
+          "וּבָאָרֶץ —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2115,78 +2115,78 @@
       "glosas": {
         "en": [
           "and deliverance",
-          "beyond",
-          "from before",
+          "from",
+          "before",
           "their Father",
-          "which",
+          "",
           "in heaven",
-          "and earth",
+          "and earth —",
           "and say",
           "amen"
         ],
         "es": [
           "y redención",
           "de",
-          "de ante",
+          "ante",
           "su Padre",
-          "que",
+          "que está",
           "en los cielos",
-          "y la tierra",
+          "y en la tierra —",
           "y decid",
           "amén"
         ],
         "fr": [
           "et la délivrance",
           "de",
-          "de devant",
+          "devant",
           "leur Père",
-          "que",
+          "qui est",
           "aux cieux",
-          "et la terre",
+          "et sur la terre —",
           "et dites",
           "amen"
         ],
         "it": [
           "e redenzione",
-          "di",
-          "da davanti a",
-          "il loro Padre",
-          "che",
+          "da",
+          "davanti al",
+          "loro Padre",
+          "che è",
           "nei cieli",
-          "e la terra",
+          "e sulla terra —",
           "e dite",
           "amen"
         ],
         "de": [
           "und Erlösung",
-          "alle",
           "von",
+          "",
           "ihrem Vater",
-          "die",
+          "",
           "im Himmel",
-          "und auf Erden",
+          "und auf Erden —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
           "и избавление",
-          "всех",
           "от",
-          "Отца их",
-          "который",
+          "",
+          "Отца их,",
+          "что",
           "на небесах",
-          "и на земле",
-          "и скажите",
+          "и на земле —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "וּגְאֻלָּה",
-          "מִן",
+          "",
           "מִלִּפְנֵי",
           "אֲבִיהֶם",
-          "אֲשֶׁר",
-          "בַּשָּׁמַיִם",
-          "וּבָאָרֶץ",
+          "",
+          "שֶׁבַּשָּׁמַיִם",
+          "וּבָאָרֶץ —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2217,65 +2217,65 @@
       },
       "glosas": {
         "en": [
-          "beyond",
-          "from before",
-          "the Master of",
-          "heaven",
-          "and earth",
+          "from",
+          "before",
+          "the Master",
+          "of heaven",
+          "and earth —",
           "and say",
           "amen"
         ],
         "es": [
           "de",
-          "de ante",
-          "el Señor de",
-          "el cielo",
-          "y la tierra",
+          "ante",
+          "el Señor",
+          "del cielo",
+          "y de la tierra —",
           "y decid",
           "amén"
         ],
         "fr": [
           "de",
-          "de devant",
-          "le Maître de",
-          "le ciel",
-          "et la terre",
+          "devant",
+          "le Maître",
+          "du ciel",
+          "et de la terre —",
           "et dites",
           "amen"
         ],
         "it": [
-          "di",
-          "da davanti a",
-          "il Signore di",
-          "il cielo",
-          "e la terra",
+          "da",
+          "davanti al",
+          "Signore",
+          "del cielo",
+          "e della terra —",
           "e dite",
           "amen"
         ],
         "de": [
-          "alle",
-          "von",
-          "dem Herrn von",
-          "dem Himmel",
-          "und auf Erden",
+          "",
+          "vom",
+          "Herrn",
+          "des Himmels",
+          "und der Erde —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "всех",
+          "",
           "от",
           "Владыки",
-          "небес",
-          "и на земле",
-          "и скажите",
+          "неба",
+          "и земли —",
+          "и скажите:",
           "амен"
         ],
         "he": [
-          "מִן",
+          "",
           "מִלִּפְנֵי",
           "אֲדוֹן",
           "הַשָּׁמַיִם",
-          "וּבָאָרֶץ",
+          "וְהָאָרֶץ —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2304,51 +2304,51 @@
       },
       "glosas": {
         "en": [
-          "may be",
-          "peace",
-          "great",
-          "beyond",
-          "heaven"
+          "May",
+          "abundant peace",
+          "",
+          "come",
+          "from heaven"
         ],
         "es": [
-          "sea",
-          "paz",
-          "grande",
-          "de",
-          "el cielo"
+          "Que venga",
+          "gran paz",
+          "",
+          "",
+          "del cielo"
         ],
         "fr": [
-          "que soit",
-          "paix",
-          "grand",
-          "de",
-          "le ciel"
+          "Que vienne du ciel",
+          "une paix",
+          "abondante",
+          "",
+          ""
         ],
         "it": [
-          "sia",
-          "pace",
-          "grande",
-          "di",
-          "il cielo"
+          "Che venga",
+          "una grande pace",
+          "",
+          "",
+          "dal cielo"
         ],
         "de": [
-          "es sei",
-          "Frieden",
-          "großer",
-          "alle",
-          "dem Himmel"
+          "Möge",
+          "großer Friede",
+          "",
+          "vom",
+          "Himmel kommen"
         ],
         "ru": [
-          "да будет",
-          "мир",
-          "великое",
-          "всех",
-          "небес"
+          "Да снизойдёт с небес",
+          "великий мир",
+          "",
+          "",
+          ""
         ],
         "he": [
           "יְהִי",
           "שָׁלוֹם",
-          "הַגָּדוֹל",
+          "רָב",
           "מִן",
           "הַשָּׁמַיִם"
         ]
@@ -2384,100 +2384,100 @@
       },
       "glosas": {
         "en": [
-          "may be",
-          "peace",
-          "great",
-          "beyond",
-          "heaven",
-          "and life",
-          "upon us",
+          "May",
+          "abundant peace",
+          "",
+          "",
+          "from heaven,",
+          "and life,",
+          "come upon us",
           "and upon",
           "all",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "sea",
-          "paz",
-          "grande",
-          "de",
-          "el cielo",
-          "y vida",
+          "Que vengan",
+          "gran paz",
+          "",
+          "",
+          "del cielo,",
+          "y vida,",
           "sobre nosotros",
           "y sobre",
-          "todas",
-          "de Israel",
+          "todo",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "que soit",
-          "paix",
-          "grand",
-          "de",
-          "le ciel",
-          "et vie",
+          "Que viennent du ciel",
+          "une paix",
+          "abondante,",
+          "",
+          "",
+          "et la vie,",
           "sur nous",
           "et sur",
-          "toutes",
-          "d'Israël",
+          "tout",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "sia",
-          "pace",
-          "grande",
-          "di",
-          "il cielo",
-          "e vita",
+          "Che vengano dal cielo",
+          "una grande pace,",
+          "",
+          "",
+          "",
+          "e la vita,",
           "su di noi",
           "e su",
-          "tutte",
-          "d'Israele",
+          "tutto",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "es sei",
-          "Frieden",
-          "großer",
-          "alle",
-          "dem Himmel",
+          "Möge",
+          "großer Friede",
+          "",
+          "vom",
+          "Himmel",
           "und Leben",
           "über uns",
-          "und über",
-          "alle",
-          "Israel",
+          "und",
+          "ganz",
+          "Israel kommen —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "да будет",
-          "мир",
-          "великое",
-          "всех",
-          "небес",
+          "Да будут дарованы с небес",
+          "великий мир",
+          "",
+          "",
+          "",
           "и жизнь",
           "нам",
-          "и всему",
-          "всех",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "יְהִי",
           "שָׁלוֹם",
-          "הַגָּדוֹל",
+          "רָב",
           "מִן",
           "הַשָּׁמַיִם",
           "וְחַיִּים",
           "עָלֵינוּ",
           "וְעַל",
           "כָּל",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2506,45 +2506,45 @@
       },
       "glosas": {
         "en": [
-          "life",
-          "and plenty",
-          "and salvation",
-          "and comfort",
+          "life,",
+          "plenty,",
+          "salvation,",
+          "comfort",
           "and rescue"
         ],
         "es": [
-          "vida",
-          "y abundancia",
-          "y salvación",
-          "y consuelo",
+          "vida,",
+          "abundancia,",
+          "salvación,",
+          "consuelo",
           "y rescate"
         ],
         "fr": [
-          "vie",
-          "et abondance",
-          "et salut",
-          "et consolation",
+          "vie,",
+          "abondance,",
+          "salut,",
+          "consolation",
           "et secours"
         ],
         "it": [
-          "vita",
-          "e abbondanza",
-          "e salvezza",
-          "e consolazione",
+          "vita,",
+          "abbondanza,",
+          "salvezza,",
+          "consolazione",
           "e soccorso"
         ],
         "de": [
-          "Leben",
-          "und Fülle",
-          "und Rettung",
-          "und Trost",
+          "Leben,",
+          "Fülle,",
+          "Rettung,",
+          "Trost",
           "und Befreiung"
         ],
         "ru": [
-          "жизнь",
-          "и изобилие",
-          "и спасение",
-          "и утешение",
+          "жизнь,",
+          "изобилие,",
+          "спасение,",
+          "утешение",
           "и избавление"
         ],
         "he": [
@@ -2578,39 +2578,39 @@
       },
       "glosas": {
         "en": [
-          "and healing",
-          "and redemption",
-          "and forgiveness",
+          "healing,",
+          "redemption,",
+          "forgiveness",
           "and atonement"
         ],
         "es": [
-          "y curación",
-          "y redención",
-          "y perdón",
+          "curación,",
+          "redención,",
+          "perdón",
           "y expiación"
         ],
         "fr": [
-          "et guérison",
-          "et rédemption",
-          "et pardon",
+          "guérison,",
+          "rédemption,",
+          "pardon",
           "et expiation"
         ],
         "it": [
-          "e guarigione",
-          "e redenzione",
-          "e perdono",
+          "guarigione,",
+          "redenzione,",
+          "perdono",
           "ed espiazione"
         ],
         "de": [
-          "und Heilung",
-          "und Erlösung",
-          "und Vergebung",
+          "Heilung,",
+          "Erlösung,",
+          "Vergebung",
           "und Sühne"
         ],
         "ru": [
-          "и исцеление",
-          "и освобождение",
-          "и прощение",
+          "исцеление,",
+          "освобождение,",
+          "прощение",
           "и искупление"
         ],
         "he": [
@@ -2647,63 +2647,63 @@
       },
       "glosas": {
         "en": [
-          "and relief",
-          "and deliverance",
+          "relief",
+          "and deliverance,",
           "for us",
           "and for all",
           "His people",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "y alivio",
-          "y salvación",
+          "alivio",
+          "y salvación,",
           "para nosotros",
           "y para todo",
           "Su pueblo",
-          "de Israel",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "et soulagement",
-          "et délivrance",
+          "soulagement",
+          "et délivrance,",
           "pour nous",
           "et pour tout",
           "Son peuple",
-          "d'Israël",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "e sollievo",
-          "e salvezza",
+          "sollievo",
+          "e salvezza,",
           "per noi",
           "e per tutto",
           "il Suo popolo",
-          "d'Israele",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "und Erleichterung",
-          "und Errettung",
+          "Erleichterung",
+          "und Errettung,",
           "für uns",
-          "und für Sein ganzes",
+          "und Sein ganzes",
           "Volk",
-          "Israel",
+          "Israel —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "и облегчение",
+          "облегчение",
           "и спасение",
           "нам",
           "и всему",
-          "народу Его",
-          "Израиля",
-          "и скажите",
+          "народу Его,",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
@@ -2712,7 +2712,7 @@
           "לָנוּ",
           "וּלְכָל",
           "עַמּוֹ",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2745,7 +2745,7 @@
         ],
         "es": [
           "El que hace",
-          "paz",
+          "la paz",
           "en Sus alturas"
         ],
         "fr": [
@@ -2755,12 +2755,12 @@
         ],
         "it": [
           "Colui che fa",
-          "pace",
+          "la pace",
           "nelle Sue altezze"
         ],
         "de": [
-          "Der Frieden stiftet",
-          "Frieden",
+          "Der",
+          "Frieden stiftet",
           "in Seinen Höhen"
         ],
         "ru": [
@@ -2803,75 +2803,75 @@
       },
       "glosas": {
         "en": [
-          "is He",
-          "in His mercy",
-          "shall make",
+          "may He,",
+          "in His mercy,",
+          "make",
           "peace",
           "upon us",
           "and upon",
           "all",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "Él",
-          "en Su misericordia",
-          "hará",
-          "paz",
+          "que Él,",
+          "en Su misericordia,",
+          "haga",
+          "la paz",
           "sobre nosotros",
           "y sobre",
-          "todas",
-          "de Israel",
+          "todo",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "soit-Il",
-          "dans Sa miséricorde",
-          "fera",
+          "qu'Il",
+          "fasse, dans Sa miséricorde,",
+          "",
           "la paix",
           "sur nous",
           "et sur",
-          "toutes",
-          "d'Israël",
+          "tout",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "Egli",
-          "nella Sua misericordia",
-          "farà",
-          "pace",
+          "faccia Egli,",
+          "nella Sua misericordia,",
+          "",
+          "la pace",
           "su di noi",
           "e su",
-          "tutte",
-          "d'Israele",
+          "tutto",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "sei Er",
-          "in Seinem Erbarmen",
-          "stifte",
+          "Er",
+          "stifte in Seinem Erbarmen",
+          "",
           "Frieden",
           "über uns",
-          "und über",
-          "alle",
-          "Israel",
+          "und",
+          "ganz",
+          "Israel —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "Он",
+          "да дарует Он",
           "в милосердии Своём",
-          "дарует",
+          "",
           "мир",
           "нам",
-          "и всему",
-          "всех",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
@@ -2882,7 +2882,7 @@
           "עָלֵינוּ",
           "וְעַל",
           "כָּל",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -2917,81 +2917,81 @@
       },
       "glosas": {
         "en": [
-          "is He",
-          "in His mercy",
-          "shall make",
+          "may He,",
+          "in His mercy,",
+          "make",
           "peace",
           "upon us",
           "and upon",
           "all",
           "His people",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "Él",
-          "en Su misericordia",
-          "hará",
-          "paz",
+          "que Él,",
+          "en Su misericordia,",
+          "haga",
+          "la paz",
           "sobre nosotros",
           "y sobre",
-          "todas",
+          "todo",
           "Su pueblo",
-          "de Israel",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "soit-Il",
-          "dans Sa miséricorde",
-          "fera",
+          "qu'Il",
+          "fasse, dans Sa miséricorde,",
+          "",
           "la paix",
           "sur nous",
           "et sur",
-          "toutes",
+          "tout",
           "Son peuple",
-          "d'Israël",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "Egli",
-          "nella Sua misericordia",
-          "farà",
-          "pace",
+          "faccia Egli,",
+          "nella Sua misericordia,",
+          "",
+          "la pace",
           "su di noi",
           "e su",
-          "tutte",
+          "tutto",
           "il Suo popolo",
-          "d'Israele",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "sei Er",
-          "in Seinem Erbarmen",
-          "stifte",
+          "Er",
+          "stifte in Seinem Erbarmen",
+          "",
           "Frieden",
           "über uns",
-          "und über",
-          "alle",
-          "Volk",
-          "Israel",
+          "und",
+          "",
+          "Sein ganzes Volk",
+          "Israel —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "Он",
+          "да дарует Он",
           "в милосердии Своём",
-          "дарует",
+          "",
           "мир",
           "нам",
-          "и всему",
-          "всех",
-          "народу Его",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "народу Его,",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
@@ -3003,7 +3003,7 @@
           "וְעַל",
           "כָּל",
           "עַמּוֹ",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -3037,86 +3037,86 @@
       },
       "glosas": {
         "en": [
-          "is He",
-          "shall make",
-          "in His mercy",
+          "may He,",
+          "",
+          "in His mercy, make",
           "peace",
           "upon us",
           "and upon",
           "all",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
-          "Él",
-          "hará",
-          "en Su misericordia",
-          "paz",
+          "que Él,",
+          "",
+          "en Su misericordia, haga",
+          "la paz",
           "sobre nosotros",
           "y sobre",
-          "todas",
-          "de Israel",
+          "todo",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
-          "soit-Il",
-          "fera",
-          "dans Sa miséricorde",
+          "qu'Il",
+          "fasse,",
+          "dans Sa miséricorde,",
           "la paix",
           "sur nous",
           "et sur",
-          "toutes",
-          "d'Israël",
+          "tout",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
-          "Egli",
-          "farà",
-          "nella Sua misericordia",
-          "pace",
+          "faccia Egli,",
+          "",
+          "nella Sua misericordia,",
+          "la pace",
           "su di noi",
           "e su",
-          "tutte",
-          "d'Israele",
+          "tutto",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "sei Er",
+          "Er",
           "stifte",
           "in Seinem Erbarmen",
           "Frieden",
           "über uns",
-          "und über",
-          "alle",
-          "Israel",
+          "und",
+          "ganz",
+          "Israel —",
           "und sprecht",
           "Amen"
         ],
         "ru": [
-          "Он",
-          "дарует",
+          "да дарует Он",
+          "",
           "в милосердии Своём",
           "мир",
           "нам",
-          "и всему",
-          "всех",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
           "הוּא",
-          "יַעֲשֶׂה",
+          "",
           "בְּרַחֲמָיו",
-          "שָׁלוֹם",
+          "יַעֲשֶׂה שָׁלוֹם",
           "עָלֵינוּ",
           "וְעַל",
           "כָּל",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -3154,70 +3154,70 @@
         "en": [
           "He who makes",
           "peace",
-          "in His heights",
-          "is He",
-          "shall make",
+          "in His heights,",
+          "may He",
+          "make",
           "peace",
           "upon us",
           "and upon",
           "all",
-          "of Israel",
+          "Israel —",
           "and say",
           "amen"
         ],
         "es": [
           "El que hace",
-          "paz",
-          "en Sus alturas",
-          "Él",
-          "hará",
-          "paz",
+          "la paz",
+          "en Sus alturas,",
+          "que Él",
+          "haga",
+          "la paz",
           "sobre nosotros",
           "y sobre",
-          "todas",
-          "de Israel",
+          "todo",
+          "Israel —",
           "y decid",
           "amén"
         ],
         "fr": [
           "Celui qui fait",
           "la paix",
-          "dans Ses hauteurs",
-          "soit-Il",
-          "fera",
+          "dans Ses hauteurs,",
+          "qu'Il",
+          "fasse",
           "la paix",
           "sur nous",
           "et sur",
-          "toutes",
-          "d'Israël",
+          "tout",
+          "Israël —",
           "et dites",
           "amen"
         ],
         "it": [
           "Colui che fa",
-          "pace",
-          "nelle Sue altezze",
-          "Egli",
-          "farà",
-          "pace",
+          "la pace",
+          "nelle Sue altezze,",
+          "",
+          "faccia",
+          "la pace",
           "su di noi",
           "e su",
-          "tutte",
-          "d'Israele",
+          "tutto",
+          "Israele —",
           "e dite",
           "amen"
         ],
         "de": [
-          "Der Frieden stiftet",
-          "Frieden",
-          "in Seinen Höhen",
-          "sei Er",
+          "Der",
+          "Frieden stiftet",
+          "in Seinen Höhen,",
+          "Er",
           "stifte",
           "Frieden",
           "über uns",
-          "und über",
-          "alle",
-          "Israel",
+          "und",
+          "ganz",
+          "Israel —",
           "und sprecht",
           "Amen"
         ],
@@ -3225,14 +3225,14 @@
           "Творящий",
           "мир",
           "в высотах Своих",
-          "Он",
-          "дарует",
+          "",
+          "да дарует",
           "мир",
           "нам",
-          "и всему",
-          "всех",
-          "Израиля",
-          "и скажите",
+          "и",
+          "всему",
+          "Израилю —",
+          "и скажите:",
           "амен"
         ],
         "he": [
@@ -3245,7 +3245,7 @@
           "עָלֵינוּ",
           "וְעַל",
           "כָּל",
-          "יִשְׂרָאֵל",
+          "יִשְׂרָאֵל —",
           "וְאִמְרוּ",
           "אָמֵן"
         ]
@@ -3273,21 +3273,21 @@
       },
       "glosas": {
         "en": [
-          "and may He sprout",
-          "His redemption",
-          "and hasten",
-          "His Mashiach"
+          "and may",
+          "His redemption sprout",
+          "and",
+          "His Mashiach draw near"
         ],
         "es": [
           "y haga florecer",
           "Su redención",
           "y acerque",
-          "Su Mashíaj"
+          "a Su Mashíaj"
         ],
         "fr": [
           "et qu'Il fasse fleurir",
           "Sa délivrance",
-          "et qu'Il rapproche",
+          "et rapproche",
           "Son Machia'h"
         ],
         "it": [
@@ -3297,10 +3297,10 @@
           "il Suo Mashiach"
         ],
         "de": [
-          "und Er lasse sprießen",
-          "Seine Erlösung",
-          "und Er bringe nah",
-          "Seinen Maschiach"
+          "und Er lasse",
+          "Seine Erlösung sprießen",
+          "und bringe",
+          "Seinen Maschiach nah"
         ],
         "ru": [
           "и да взрастит",
@@ -3340,52 +3340,52 @@
       "glosas": {
         "en": [
           "above",
-          "beyond",
+          "",
           "all",
           "blessings",
-          "songs"
+          "and songs"
         ],
         "es": [
           "por encima",
           "de",
           "todas",
           "las bendiciones",
-          "cánticos"
+          "y cánticos"
         ],
         "fr": [
           "au-dessus",
           "de",
           "toutes",
           "les bénédictions",
-          "chants"
+          "et de tous les chants"
         ],
         "it": [
           "al di sopra",
           "di",
           "tutte",
           "le benedizioni",
-          "canti"
+          "e i canti"
         ],
         "de": [
           "über",
-          "alle",
+          "",
           "alle",
           "Segnungen",
-          "Lieder"
+          "und Lieder hinaus"
         ],
         "ru": [
           "превыше",
-          "всех",
+          "",
           "всех",
           "благословений",
-          "песнопений"
+          "и песнопений"
         ],
         "he": [
           "לְמַעְלָה",
-          "מִן",
-          "כָּל",
+          "",
+          "מִכָּל",
           "הַבְּרָכוֹת",
-          "הַשִּׁירוֹת"
+          "וְהַשִּׁירוֹת"
         ]
       }
     }
