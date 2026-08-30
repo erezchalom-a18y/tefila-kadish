@@ -77,5 +77,11 @@ jobs:
       - name: checar-sincronia.mjs (a sincronia dos 8, sem navegador)
         run: node checar-sincronia.mjs
 
+      # Trocar de Kadish e de modo NO MEIO da reza, oito trocas seguidas sem
+      # recarregar a pagina. Ficou fora daqui entre 30/08 e o conserto, porque o
+      # conserto tinha sido desfeito a pedido dele; volta junto com ele.
+      - name: checar-trocas.mjs (trocar de Kadish e de modo no meio da reza)
+        run: node checar-trocas.mjs http://127.0.0.1:8896/tefila-kadish
+
       - name: testar-sincronia.mjs (a pagina que mostra a voz)
         run: node testar-sincronia.mjs http://127.0.0.1:8896/tefila-kadish

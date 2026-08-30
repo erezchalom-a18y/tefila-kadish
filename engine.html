@@ -1902,7 +1902,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-30 · 21';
+const VERSAO = '2026-08-30 · 22';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -5382,6 +5382,36 @@ function acenderTradicao(t) {
   document.querySelectorAll('[data-setting="tradition"] button')
     .forEach(b => b.classList.toggle('active', b.dataset.value === t));
 }
+// ===========================================================================
+// TROCAR DE KADISH SEM DEIXAR A REZA PARADA (30/08)
+// ===========================================================================
+//
+// Ele: "ao passar de um kadish para outro ou de reza para treino da erro". Duas
+// coisas estavam erradas, e as duas ficam consertadas AQUI FORA — nenhuma linha
+// do modulo SYNC e tocada, entao a sincronia que ele aprovou (regra 0 das
+// inviolaveis, trava-sincronia.mjs) continua byte a byte a mesma.
+//
+// 1. Trocar o `src` do audio faz o navegador PARAR e zerar o relogio, e nada
+//    religava: ele trocava de Kadish e a reza ficava muda.
+// 2. O modelo de posicao continuava no instante do Kadish ANTERIOR. Quem zera
+//    isso e o SYNC.voltarAoInicio(), que ja existia e ja era usado pelo Modo
+//    Treino desde 26/08 — nao ha nada novo, so passou a ser chamado tambem
+//    aqui. Ele reposiciona na primeira palavra e re-arma os contadores.
+//
+// A ordem importa: calar ANTES de trocar o arquivo (senao escapa um fio do
+// Kadish velho), esperar o texto e a fita novos, so entao voltar ao inicio, e
+// so entao voltar a tocar — e so se estava tocando. Trocar de Kadish e escolher
+// outro Kadish, nao pausar a reza.
+async function trocarKadish(nussach, tipo) {
+  const a = document.getElementById('audioPlayer');
+  const tocava = !!(a && !a.paused);
+  if (typeof pause === 'function') pause();
+  if (!window.SYNC) return;
+  try { await window.SYNC.trocar(nussach, tipo); } catch (e) { return; }
+  if (window.SYNC.voltarAoInicio) window.SYNC.voltarAoInicio();
+  if (tocava && typeof play === 'function') play();
+}
+
 document.querySelectorAll('#traditionBadge .modo-op').forEach(b => {
   b.addEventListener('click', () => {
     const escolhida = b.dataset.trad;
@@ -5389,7 +5419,7 @@ document.querySelectorAll('#traditionBadge .modo-op').forEach(b => {
     // e o texto inteiros, e quem toca na acesa so quer conferir qual e a sua.
     if ((state.tradition || 'chabad') === escolhida) return;
     applyTradition(escolhida);
-    if (window.SYNC) window.SYNC.trocar(escolhida, null);
+    trocarKadish(escolhida, null);
     showToast(NOME_TRADICAO[escolhida] || escolhida);
   });
 });
@@ -5600,6 +5630,7 @@ document.getElementById('consentDecline').addEventListener('click', () => {
     if (b) b.addEventListener('click', () => {
       if (state.kadishType === tipo) return;
       applyKadishType(tipo);
+      trocarKadish(null, tipo);
     });
   });
 
@@ -6851,15 +6882,14 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
 
   document.addEventListener('DOMContentLoaded', () => {
     window.SYNC.montar();
-    // trocar o tipo de Kadish troca o audio e o JSON junto. Sao DOIS botoes
-    // desde 28/08 — se este ouvinte ficasse so no primeiro, escolher deRabanan
-    // trocaria o rotulo e deixaria o audio e o texto do Yatom na tela.
-    ['kadishTypeToggle', 'kadishDerabananToggle'].forEach(id => {
-      const bt = document.getElementById(id);
-      if (bt) bt.addEventListener('click', () => setTimeout(() => {
-        window.SYNC.trocar(null, (temState() && state.kadishType) || null);
-      }, 0));
-    });
+    // O ouvinte que vivia aqui chamava `temState()`, que mora DENTRO do modulo
+    // SYNC e nunca esteve visivel neste escopo. Cada toque lancava
+    // "temState is not defined" dentro de um setTimeout, o erro morria calado, e
+    // o window.SYNC.trocar() logo depois NUNCA rodava: o rotulo do botao trocava
+    // e o audio e o texto ficavam no Kadish anterior. Estava assim havia muito
+    // tempo; ninguem viu porque nenhuma checagem trocava de tipo com o app
+    // rodando (e por isso existe agora o checar-trocas.mjs).
+    // A troca passou a ser feita pelo trocarKadish(), junto com o botao.
   });
   </script>
 

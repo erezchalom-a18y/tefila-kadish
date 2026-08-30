@@ -37,17 +37,14 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node trava-sincronia.mjs → a sincronia é a mesma que ele aprovou? Confere os
   tempos de todas as palavras dos 8 E o módulo SYNC do engine.html. É a regra 0
   das invioláveis com dentes. VERMELHO = alguém mexeu na sincronia sem ele.
-- node checar-trocas.mjs → **VERMELHO de propósito desde 30/08.** Trocar de
-  Kadish e de modo NO MEIO da reza, oito
+- node checar-trocas.mjs → trocar de Kadish e de modo NO MEIO da reza, oito
   trocas seguidas sem recarregar a página. Nenhuma outra checagem trocava de nada
   com o app rodando, e foi por isso que "trocar o tipo de Kadish" ficou quebrado
   sem ninguém ver. GROSSO=0.25 roda com o relógio grosso do iOS.
-  O conserto que o deixava verde entrou na v19 e **saiu na v20 a pedido dele**;
-  então hoje ele mede um defeito real e conhecido — trocar o tipo de Kadish não
-  troca o áudio (`temState is not defined`), e trocar de Kadish para a reza. Fica
-  fora do workflow até o conserto voltar, não para esconder, mas porque um
-  vermelho permanente treina todo mundo a ignorar o vermelho. Entra no workflow
-  no mesmo commit em que o conserto voltar.
+  O conserto entrou na v19, **saiu na v20** (a v19 dessincronizou o aparelho dele
+  e ele mandou voltar) e **voltou na v22**, agora escrito FORA do módulo SYNC:
+  trocar de Kadish é trabalho dos BOTÕES, e quem reposiciona é o
+  `SYNC.voltarAoInicio()`, que já existia. A `trava-sincronia.mjs` fica verde.
 - node checar-plataformas.mjs → o app com o navegador ESTRAGADO DE PROPÓSITO, de
   cinco jeitos que aparelhos de verdade estragam: relógio grosso (250ms, iOS),
   busca lenta (400ms), busca desviada, retomada lenta, tela de 30fps. Cobra três
