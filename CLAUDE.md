@@ -601,14 +601,30 @@ uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
   de 20/08, o sinal e o Whisper concordam. O OUVIR-PRIMEIRO.md (v1, 36 suspeitos
   em 28 versos) fica como registro do que foi medido.
 - Levar o ESCOLHA-RABINO.pdf ao rabino (170 itens, 60 páginas).
-- **Responder a revisoes/AUDITORIA-PT-2026-08-24.md** (10 itens). Em 24/08 ele
-  disse: "reparei que algumas das frases dos 8 kadishim em portugues estao com
-  traducao incorreta". Nos 42 versos distintos, o mesmo hebraico tem sempre o
-  mesmo português — o defeito é outro: versos que são o MESMO texto com uma
-  letra a mais ou a menos viraram dois itens na página de revisão, ele corrigiu
-  um e o outro ficou como estava. O caso que muda sentido é o meshichêh
-  ("apresse a vinda de" no chabad, "aproxime o" nos outros 4). Nada foi
-  alterado: só ele decide, e a lista espera o sim ou não dele.
+
+## A auditoria do português — RESPONDIDA E APLICADA (24/08)
+
+`revisoes/AUDITORIA-PT-2026-08-24.md` esteve listada como pendência aqui até
+30/08, e não era. Ele respondeu os 10 itens no mesmo dia 24/08, em duas rodadas
+(`revisoes/pt-2026-08-24-a.txt`, os 6 que ele entendeu de cara; e `-b.txt`, os 4
+restantes depois de eu explicar), e tudo entrou por `aplicar-revisao.mjs`.
+Conferido item a item contra os arquivos de hoje: os 10 estão como ele decidiu.
+
+Ficam duas coisas registradas, porque são o tipo de coisa que some:
+
+1. **No item 3 ele desfez o "emanada" que tinha decidido no dia anterior**, e
+   isso é decisão dele, não engano meu: a auditoria listou as três aberturas com
+   a dele entre elas, e ele escolheu outra — hoje é "paz em abundância **vinda**
+   dos céus". O "emanada" tinha levado três rodadas (`pt-2026-08-23-c.txt`). Se
+   um dia alguém achar o -23-c e quiser "corrigir" para emanada, é isto aqui que
+   diz que não.
+2. **O "seu povo" a mais e o "nossos sábios" ficam**, por decisão dele ("pode
+   manter", "fica sabios"), mesmo não estando no aramaico. Não são erros
+   pendentes; são escolhas dele.
+
+A lição sobre esta CHECAGEM DE PENDÊNCIA: uma lista de "esperando ele" tem de ser
+conferida contra os DADOS antes de ser repetida. Esta ficou seis dias pedindo
+uma resposta que já tinha sido dada e aplicada.
 
 ## A noite em que ele passou os 8 (24/08)
 

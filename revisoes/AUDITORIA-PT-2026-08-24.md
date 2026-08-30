@@ -1,5 +1,23 @@
 # Auditoria do português dos versos — 24/08
 
+> **RESPONDIDA E APLICADA no mesmo dia 24/08. Não há nada esperando aqui.**
+>
+> Ele respondeu os 10 itens em duas rodadas: `pt-2026-08-24-a.txt` (os 6 que ele
+> entendeu de cara) e `pt-2026-08-24-b.txt` (os 4 restantes, depois de eu
+> explicar). Tudo entrou por `aplicar-revisao.mjs`. Conferido item a item contra
+> os `sync/*.json` em 30/08: os 10 estão como ele decidiu.
+>
+> Duas decisões dele que contrariam o que está proposto mais abaixo, e valem:
+> no **item 3** ele escolheu "paz em abundância **vinda** dos céus", desfazendo o
+> "emanada" do dia anterior; e no **item 6** e no **10a** ele mandou manter o
+> "seu povo" e o "nossos sábios" ("pode manter", "fica sabios"), mesmo não
+> estando no aramaico.
+>
+> O texto abaixo fica como registro de como a auditoria foi feita. As "Propostas"
+> são as minhas de 24/08, não o estado de hoje — onde ele decidiu diferente,
+> vale ele.
+
+
 O Erez disse: *"reparei que algumas das frases dos 8 kadishim em portugues
 estao com traducao incorreta, favor re-checar e auditar com o que corrigi e te
 enviei, so altere algo dos textos com minha aprovacao, me lise um a um dos
