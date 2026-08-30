@@ -20,6 +20,20 @@
  * defeitos deste tipo sao de ESTADO QUE SOBRA, e estado que sobra so aparece
  * quando se troca varias vezes seguidas.
  *
+ * ELE ESTA VERMELHO DE PROPOSITO DESDE 30/08, E NAO E PARA AFROUXAR.
+ *
+ * O conserto que o deixava verde entrou na v19 e SAIU na v20, a pedido dele: a
+ * v19 dessincronizou o aparelho dele e ele mandou voltar ("a versao 17 estava
+ * perfeita na sincronia na reza e treino, agora esta tudo errado"). Desfiz o
+ * engine.html inteiro, e o conserto das trocas veio junto.
+ *
+ * Entao este arquivo hoje mede um defeito REAL e CONHECIDO, que ele decidiu
+ * conviver com ele por enquanto: trocar o tipo de Kadish nao troca o audio
+ * (temState is not defined), e trocar de Kadish para a reza. Fica fora do
+ * .github/workflows/checagens.yml ate o conserto voltar — nao para esconder,
+ * mas porque um vermelho permanente treina todo mundo a ignorar o vermelho.
+ * Entra no workflow no mesmo commit em que o conserto voltar.
+ *
  *   node checar-trocas.mjs
  *   GROSSO=0.25 node checar-trocas.mjs   → com o relogio grosso do iOS
  *

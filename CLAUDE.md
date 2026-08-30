@@ -34,10 +34,20 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   transcrição for refeita, este número pode ir e voltar entre 0 e 1.
 - node medir-fim-da-voz.py → escreve fim-da-voz.json: onde a VOZ de cada verso
   acaba. Rodar de novo se um áudio ou um sync mudar. Só lê sinal/ e sync/.
-- node checar-trocas.mjs → trocar de Kadish e de modo NO MEIO da reza, oito
+- node trava-sincronia.mjs → a sincronia é a mesma que ele aprovou? Confere os
+  tempos de todas as palavras dos 8 E o módulo SYNC do engine.html. É a regra 0
+  das invioláveis com dentes. VERMELHO = alguém mexeu na sincronia sem ele.
+- node checar-trocas.mjs → **VERMELHO de propósito desde 30/08.** Trocar de
+  Kadish e de modo NO MEIO da reza, oito
   trocas seguidas sem recarregar a página. Nenhuma outra checagem trocava de nada
   com o app rodando, e foi por isso que "trocar o tipo de Kadish" ficou quebrado
   sem ninguém ver. GROSSO=0.25 roda com o relógio grosso do iOS.
+  O conserto que o deixava verde entrou na v19 e **saiu na v20 a pedido dele**;
+  então hoje ele mede um defeito real e conhecido — trocar o tipo de Kadish não
+  troca o áudio (`temState is not defined`), e trocar de Kadish para a reza. Fica
+  fora do workflow até o conserto voltar, não para esconder, mas porque um
+  vermelho permanente treina todo mundo a ignorar o vermelho. Entra no workflow
+  no mesmo commit em que o conserto voltar.
 - node checar-plataformas.mjs → o app com o navegador ESTRAGADO DE PROPÓSITO, de
   cinco jeitos que aparelhos de verdade estragam: relógio grosso (250ms, iOS),
   busca lenta (400ms), busca desviada, retomada lenta, tela de 30fps. Cobra três
@@ -58,6 +68,19 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   vermelho passe despercebido.
 
 ## Regras invioláveis
+
+0. **A SINCRONIA SÓ MUDA COM AUTORIZAÇÃO DELE.** Em 30/08, depois de eu subir
+   três mudanças de comportamento em dois dias e quebrar o que estava bom, ele
+   disse: *"voltou ao normal, está perfeito. salve as sincronizações do áudio com
+   o texto tanto no modo reza como treino e só altere com minha autorização"*.
+   Promessa não vale — eu já quebrei isto sem perceber. Por isso existe a
+   **trava-sincronia.mjs**, que guarda a impressão digital do que ele aprovou:
+   os 1.630 números de tempo das 815 palavras dos 8, o módulo SYNC inteiro do
+   engine.html (1.068 linhas), e onde o Modo Treino para. Ela fica VERMELHA se
+   qualquer um deles mudar — provado com um centésimo de segundo numa palavra e
+   com uma linha de código. Ela não impede mudança; impede mudança CALADA.
+   Quando ele autorizar: `node trava-sincronia.mjs --regravar "o que ele
+   autorizou"`, e o motivo fica no histórico do arquivo.
 
 1. ancoras.json = reparos DE OUVIDO do Erez. Nunca sobrescrever, nunca realinhar
    sem eles. alinhar-global.py os respeita por construção.
@@ -1017,6 +1040,28 @@ Resultado: as 7 línguas foram de 36–44 versos fora para **zero**. O portuguê
 continua com 5, que são decisões dele e não foram tocadas — em quatro é só
 pontuação (vírgulas e o "e" final de uma enumeração) e em um o "Ele fará" da fila
 contra o "que Ele faça" da frase. Ficam para ele decidir.
+
+## Três mudanças em dois dias, e o que isso custou (30/08)
+
+Entre a v17 e a v19 eu subi três mudanças de comportamento sem ele testar entre
+elas: o ponto de parada do treino, o destaque lendo outro relógio, e um bloco
+novo no `montar()` para consertar a troca de Kadish. Ele voltou dizendo *"a versão
+17 estava perfeita na sincronia na reza e treino, agora está tudo errado"* — e
+**nem ele nem eu tínhamos como saber qual das três foi**.
+
+Aqui as dezesseis checagens estavam verdes, e a medida do desencontro entre a
+palavra acesa e a que soa dava 1% na v19 e 1% na v17. Ou seja: **eu não sabia, e
+continuo não sabendo, o que aquele bloco fazia no aparelho dele.**
+
+O que fiz foi desfazer, não consertar por cima: o `engine.html` voltou byte a byte
+ao da v17. Saiu junto um defeito real que eu tinha achado no caminho — trocar o
+TIPO de Kadish nunca funcionou, porque o ouvinte chamava `temState()`, que não
+existe naquele escopo, e o erro morria calado dentro de um `setTimeout`. Ele volta
+sozinho, num commit que mexa só nisso, para ele poder testar uma coisa de cada vez.
+
+**A regra que fica, e vale mais que qualquer conserto:** uma mudança de
+comportamento por versão, e esperar ele dizer que está bom antes da seguinte.
+É mais lento, e é o único jeito de saber o que quebrou quando quebrar.
 
 ## Nunca
 

@@ -1,0 +1,52 @@
+{
+ "_leia": "A sincronia que o Erez aprovou. Confira com: node trava-sincronia.mjs\nSo se regrava com autorizacao DELE, e o motivo fica no historico abaixo.\nGuarda os tempos de todas as palavras dos 8 e o codigo do modulo SYNC.",
+ "gravado_em": "2026-08-30",
+ "numeros": {
+  "ashkenaz_derabanan": {
+   "palavras": 118,
+   "marca": "aaa48c1149da97d6"
+  },
+  "ashkenaz_yatom": {
+   "palavras": 75,
+   "marca": "ccf9657c5cf16cb1"
+  },
+  "chabad_derabanan": {
+   "palavras": 121,
+   "marca": "78faf0924099f3cf"
+  },
+  "chabad_yatom": {
+   "palavras": 80,
+   "marca": "eb4b5353d064ef35"
+  },
+  "sefaradi_derabanan": {
+   "palavras": 125,
+   "marca": "e206ddad97966580"
+  },
+  "sefaradi_yatom": {
+   "palavras": 91,
+   "marca": "fb2d01055bfb1dc1"
+  },
+  "sefard_derabanan": {
+   "palavras": 124,
+   "marca": "90ec48df2da1e105"
+  },
+  "sefard_yatom": {
+   "palavras": 81,
+   "marca": "c10b8d97e432aff9"
+  }
+ },
+ "codigo": {
+  "linhas": 1068,
+  "marca": "f3fab475d5376b93"
+ },
+ "paradas": {
+  "marca": "0b5a45ea1b02f6e5"
+ },
+ "palavras": 815,
+ "historico": [
+  {
+   "data": "2026-08-30",
+   "motivo": "a v20, que ele aprovou: 'voltou ao normal, esta perfeito'"
+  }
+ ]
+}

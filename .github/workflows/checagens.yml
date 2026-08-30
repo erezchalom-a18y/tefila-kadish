@@ -18,6 +18,11 @@ jobs:
         with:
           node-version: '22'
 
+      # REGRA 0 DAS INVIOLAVEIS. Vem PRIMEIRO de proposito: se a sincronia que ele
+      # aprovou mudou, nada mais importa ate ele autorizar.
+      - name: trava-sincronia.mjs (a sincronia e a que ele aprovou?)
+        run: node trava-sincronia.mjs
+
       - name: checar.mjs (estrutura, contagem, ritmo)
         run: node checar.mjs
 
