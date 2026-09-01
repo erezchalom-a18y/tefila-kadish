@@ -204,6 +204,14 @@
   .info-toggle svg { width: 18px; height: 18px; }
   .info-toggle:hover { color: var(--brass); border-color: var(--brass); }
 
+  /* Mudo: o risco vermelho so existe quando esta mudo, e as ondas somem junto —
+     um alto-falante sem onda ja se le como calado, e o risco confirma. */
+  .mudo-toggle .risco-mudo { display: none; }
+  .mudo-toggle[aria-pressed="true"] { border-color: #d93025; color: var(--text); }
+  .mudo-toggle[aria-pressed="true"] .risco-mudo { display: block; }
+  .mudo-toggle[aria-pressed="true"] .onda-perto,
+  .mudo-toggle[aria-pressed="true"] .onda-longe { display: none; }
+
   /* Prominent labeled entry to the educational panel */
   .learn-strip {
     display: flex;
@@ -1844,6 +1852,22 @@
       <button class="lang-toggle" id="langToggle" title="Idioma">
         <span class="lang-flag">🇧🇷</span><span id="langCode">PT</span><span class="arr">▾</span>
       </button>
+      <!-- O BOTAO DE MUDO (01/09). Pedido dele, com o desenho que ele mandou: o
+           alto-falante com o circulo vermelho cortado por cima quando esta mudo.
+           Fica no alto porque silenciar e coisa de quem esta rezando AGORA — o
+           telefone tocou, alguem entrou na sala — e nao coisa de abrir menu.
+           O risco vermelho so aparece quando esta mudo: e ele que diz o estado
+           sem precisar de legenda. -->
+      <button class="info-toggle mudo-toggle" id="mudoToggle" aria-pressed="false" title="Silenciar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 9.5h3l4-3.5v12l-4-3.5H4z" fill="currentColor" stroke="none"/>
+          <path class="onda-perto" d="M14.5 9.2a4 4 0 0 1 0 5.6"/>
+          <path class="onda-longe" d="M17.3 6.6a8 8 0 0 1 0 10.8"/>
+          <line class="risco-mudo" x1="3.5" y1="20.5" x2="20.5" y2="3.5"
+                stroke="#d93025" stroke-width="2.4"/>
+        </svg>
+      </button>
       <button class="info-toggle" id="settingsToggle" title="Configurações">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
@@ -1902,7 +1926,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-08-30 · 22';
+const VERSAO = '2026-09-01 · 23';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2006,10 +2030,16 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="settings-row">
-      <div class="settings-row-label" data-i18n="audio_source_label">Áudio</div>
+      <!-- Dizia "Áudio: Voz do dispositivo | Silencioso" e mentia duas vezes: o
+           app nunca toca voz do dispositivo (toca a gravação do rabino), e o
+           "Silencioso" só cancelava a voz sintetizada — que nunca soa com a
+           sincronia ligada. Ele viu: "quando desabilito o som no configurações o
+           som continua". Agora diz Som: Ligado | Mudo, e é o mesmo estado do
+           botão do alto: uma pergunta, uma conta. -->
+      <div class="settings-row-label" data-i18n="som_label">Som</div>
       <div class="seg-control" data-setting="audiosrc">
-        <button class="active" data-value="tts" data-i18n="audio_tts">Voz do dispositivo</button>
-        <button data-value="silent" data-i18n="audio_silent">Silencioso</button>
+        <button class="active" data-value="tts" data-i18n="som_ligado">Ligado</button>
+        <button data-value="silent" data-i18n="som_mudo">Mudo</button>
       </div>
     </div>
 
@@ -4509,6 +4539,7 @@ const I18N = {
     font_size_label: 'Tamanho da fonte', font_small: 'Pequena', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muito grande',
     tradition_label: 'Tradição', language_label: 'Idioma',
     treino_camadas_label: 'No Modo Treino mostrar', treino_so_translit: 'Só transliteração', treino_heb_tr: 'Hebraico + transliteração', treino_tudo: 'Tudo',
+    som_label: 'Som', som_ligado: 'Ligado', som_mudo: 'Mudo', som_silenciar: 'Silenciar', som_religar: 'Religar o som', toast_mudo: 'Som desligado', toast_som: 'Som ligado',
     layers_title: 'Camadas', layer_hebrew: 'Hebraico', layer_translit: 'Transliteração', layer_translation: 'Tradução',
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destaque',
     dedication_title: 'Dedicação', edit_memorial: 'Editar perfil "Em memória de"',
@@ -4556,6 +4587,7 @@ const I18N = {
     font_size_label: 'Font size', font_small: 'Small', font_normal: 'Normal', font_large: 'Large', font_xlarge: 'Extra large',
     tradition_label: 'Tradition', language_label: 'Language',
     treino_camadas_label: 'In Practice Mode show', treino_so_translit: 'Transliteration only', treino_heb_tr: 'Hebrew + transliteration', treino_tudo: 'Everything',
+    som_label: 'Sound', som_ligado: 'On', som_mudo: 'Muted', som_silenciar: 'Mute', som_religar: 'Unmute', toast_mudo: 'Sound off', toast_som: 'Sound on',
     layers_title: 'Layers', layer_hebrew: 'Hebrew', layer_translit: 'Transliteration', layer_translation: 'Translation',
     hide: 'Hide', normal: 'Normal', highlight: 'Highlight',
     dedication_title: 'Dedication', edit_memorial: 'Edit "In memory of" profile',
@@ -4603,6 +4635,7 @@ const I18N = {
     font_size_label: 'Tamaño de fuente', font_small: 'Pequeña', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muy grande',
     tradition_label: 'Tradición', language_label: 'Idioma',
     treino_camadas_label: 'En Modo Práctica mostrar', treino_so_translit: 'Solo transliteración', treino_heb_tr: 'Hebreo + transliteración', treino_tudo: 'Todo',
+    som_label: 'Sonido', som_ligado: 'Activado', som_mudo: 'Silencio', som_silenciar: 'Silenciar', som_religar: 'Activar el sonido', toast_mudo: 'Sonido apagado', toast_som: 'Sonido activado',
     layers_title: 'Capas', layer_hebrew: 'Hebreo', layer_translit: 'Transliteración', layer_translation: 'Traducción',
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destacar',
     dedication_title: 'Dedicación', edit_memorial: 'Editar perfil "En memoria de"',
@@ -4650,6 +4683,7 @@ const I18N = {
     font_size_label: 'Taille de police', font_small: 'Petite', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Très grande',
     tradition_label: 'Tradition', language_label: 'Langue',
     treino_camadas_label: 'En Mode Pratique afficher', treino_so_translit: 'Translittération seule', treino_heb_tr: 'Hébreu + translittération', treino_tudo: 'Tout',
+    som_label: 'Son', som_ligado: 'Activé', som_mudo: 'Muet', som_silenciar: 'Couper le son', som_religar: 'Rétablir le son', toast_mudo: 'Son coupé', toast_som: 'Son rétabli',
     layers_title: 'Couches', layer_hebrew: 'Hébreu', layer_translit: 'Translittération', layer_translation: 'Traduction',
     hide: 'Masquer', normal: 'Normal', highlight: 'Mettre en avant',
     dedication_title: 'Dédicace', edit_memorial: 'Éditer le profil "En mémoire de"',
@@ -4697,6 +4731,7 @@ const I18N = {
     font_size_label: 'Dimensione del testo', font_small: 'Piccola', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Molto grande',
     tradition_label: 'Tradizione', language_label: 'Lingua',
     treino_camadas_label: 'In Modalità Pratica mostrare', treino_so_translit: 'Solo traslitterazione', treino_heb_tr: 'Ebraico + traslitterazione', treino_tudo: 'Tutto',
+    som_label: 'Suono', som_ligado: 'Attivo', som_mudo: 'Muto', som_silenciar: 'Silenzia', som_religar: 'Riattiva il suono', toast_mudo: 'Suono disattivato', toast_som: 'Suono attivato',
     layers_title: 'Livelli', layer_hebrew: 'Ebraico', layer_translit: 'Traslitterazione', layer_translation: 'Traduzione',
     hide: 'Nascondi', normal: 'Normale', highlight: 'Evidenzia',
     dedication_title: 'Dedica', edit_memorial: 'Modifica il profilo "In memoria di"',
@@ -4744,6 +4779,7 @@ const I18N = {
     font_size_label: 'Schriftgröße', font_small: 'Klein', font_normal: 'Normal', font_large: 'Groß', font_xlarge: 'Sehr groß',
     tradition_label: 'Tradition', language_label: 'Sprache',
     treino_camadas_label: 'Im Übungsmodus zeigen', treino_so_translit: 'Nur Umschrift', treino_heb_tr: 'Hebräisch + Umschrift', treino_tudo: 'Alles',
+    som_label: 'Ton', som_ligado: 'An', som_mudo: 'Stumm', som_silenciar: 'Stummschalten', som_religar: 'Ton einschalten', toast_mudo: 'Ton aus', toast_som: 'Ton an',
     layers_title: 'Ebenen', layer_hebrew: 'Hebräisch', layer_translit: 'Umschrift', layer_translation: 'Übersetzung',
     hide: 'Ausblenden', normal: 'Normal', highlight: 'Hervorheben',
     dedication_title: 'Widmung', edit_memorial: 'Profil „Zum Andenken an" bearbeiten',
@@ -4791,6 +4827,7 @@ const I18N = {
     font_size_label: 'Размер шрифта', font_small: 'Малый', font_normal: 'Нормальный', font_large: 'Большой', font_xlarge: 'Очень большой',
     tradition_label: 'Традиция', language_label: 'Язык',
     treino_camadas_label: 'В режиме практики показывать', treino_so_translit: 'Только транслитерацию', treino_heb_tr: 'Иврит + транслитерацию', treino_tudo: 'Всё',
+    som_label: 'Звук', som_ligado: 'Включён', som_mudo: 'Без звука', som_silenciar: 'Выключить звук', som_religar: 'Включить звук', toast_mudo: 'Звук выключен', toast_som: 'Звук включён',
     layers_title: 'Слои', layer_hebrew: 'Иврит', layer_translit: 'Транслитерация', layer_translation: 'Перевод',
     hide: 'Скрыть', normal: 'Норма', highlight: 'Выделить',
     dedication_title: 'Посвящение', edit_memorial: 'Редактировать профиль "В память о"',
@@ -4838,6 +4875,7 @@ const I18N = {
     font_size_label: 'גודל גופן', font_small: 'קטן', font_normal: 'רגיל', font_large: 'גדול', font_xlarge: 'גדול מאוד',
     tradition_label: 'מסורת', language_label: 'שפה',
     treino_camadas_label: 'במצב תרגול להציג', treino_so_translit: 'תעתיק בלבד', treino_heb_tr: 'ארמית + תעתיק', treino_tudo: 'הכול',
+    som_label: 'צליל', som_ligado: 'פועל', som_mudo: 'מושתק', som_silenciar: 'השתקה', som_religar: 'הפעלת הצליל', toast_mudo: 'הצליל כבוי', toast_som: 'הצליל פועל',
     layers_title: 'שכבות', layer_hebrew: 'ארמית', layer_translit: 'תעתיק', layer_translation: 'תרגום לעברית',
     hide: 'הסתר', normal: 'רגיל', highlight: 'הדגש',
     dedication_title: 'הקדשה', edit_memorial: 'עריכת פרופיל "לזכר"',
@@ -5140,6 +5178,9 @@ function applyLanguage(lang) {
   if (typeof applyKadishType === 'function' && state.kadishType) {
     applyKadishType(state.kadishType);
   }
+  // O titulo do botao de mudo depende do ESTADO ("Silenciar" x "Religar o som"),
+  // entao ele nao cabe num data-i18n — tem de ser reescrito ao trocar de lingua.
+  if (typeof aplicarSom === 'function' && typeof state.mudo === 'boolean') aplicarSom(state.mudo);
 }
 
 // ---------- Tradition ----------
@@ -5167,13 +5208,44 @@ function applyExplanations(v) {
 
 // ---------- Audio source (TTS or silent) ----------
 state.disableTTS = localStorage.getItem('tefila_audio_src') === 'silent';
-function applyAudioSource(v) {
-  state.disableTTS = (v === 'silent');
-  localStorage.setItem('tefila_audio_src', v);
-  if (state.disableTTS) {
-    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+// ===========================================================================
+// O SOM (01/09) — "quando desabilito o som no configuracoes o som continua"
+// ===========================================================================
+//
+// Ele tinha razao, e esta funcao era o defeito inteiro. Ela so punha
+// disableTTS, que cancela a VOZ SINTETIZADA do navegador — e essa nunca soa
+// quando a sincronia esta ligada, porque o playFullPrayer retorna antes de
+// chegar la. Entao o botao "Silencioso" nao silenciava nada: a gravacao do
+// rabino continuava tocando, exatamente como ele descreveu.
+//
+// Agora ha UMA conta so para "esta mudo?", e ela mexe no elemento de audio, que
+// e quem faz o som. O botao do alto e a linha dos Ajustes leem e escrevem essa
+// mesma conta — se fossem duas, elas se contradiriam, que e o defeito que este
+// projeto ja pagou caro mais de uma vez.
+//
+// Mudo NAO e pausa, de proposito: a reza continua andando e o destaque continua
+// acompanhando. Quem silencia no meio do Kadish quer que a reza siga; e o
+// telefone que tocou, nao a reza que acabou. Por isso nada aqui toca no modulo
+// SYNC — a sincronia que ele aprovou (regra 0) fica byte a byte a mesma.
+function aplicarSom(mudo) {
+  mudo = !!mudo;
+  state.mudo = mudo;
+  state.disableTTS = mudo;
+  if (typeof audioPlayer !== 'undefined' && audioPlayer) audioPlayer.muted = mudo;
+  if (mudo) { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {} }
+  try { localStorage.setItem('tefila_audio_src', mudo ? 'silent' : 'tts'); } catch (e) {}
+
+  const bt = document.getElementById('mudoToggle');
+  if (bt) {
+    bt.setAttribute('aria-pressed', String(mudo));
+    bt.title = TXT(mudo ? 'som_religar' : 'som_silenciar');
+    bt.setAttribute('aria-label', bt.title);
   }
+  document.querySelectorAll('[data-setting="audiosrc"] button').forEach(b =>
+    b.classList.toggle('active', (b.dataset.value === 'silent') === mudo));
 }
+// O nome antigo continua existindo porque e ele que o painel de Ajustes chama.
+function applyAudioSource(v) { aplicarSom(v === 'silent'); }
 
 // ---------- Kadish type toggle (Yatom <-> DeRabanan) ----------
 state.kadishType = localStorage.getItem('tefila_kadish_type') || 'yatom';
@@ -5634,9 +5706,16 @@ document.getElementById('consentDecline').addEventListener('click', () => {
     });
   });
 
-  const savedAudioSrc = localStorage.getItem('tefila_audio_src') || 'tts';
-  applyAudioSource(savedAudioSrc);
-  document.querySelectorAll('[data-setting="audiosrc"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedAudioSrc));
+  // O som: guardado no aparelho, e o botao do alto e a linha dos Ajustes leem a
+  // MESMA conta. Nada de estado duplicado — ver aplicarSom().
+  let somGuardado = 'tts';
+  try { somGuardado = localStorage.getItem('tefila_audio_src') || 'tts'; } catch (e) {}
+  aplicarSom(somGuardado === 'silent');
+  const btMudo = document.getElementById('mudoToggle');
+  if (btMudo) btMudo.addEventListener('click', () => {
+    aplicarSom(!state.mudo);
+    showToast(TXT(state.mudo ? 'toast_mudo' : 'toast_som'));
+  });
 
   renderMemorial();
   // O app abre DIRETO no Kadish.

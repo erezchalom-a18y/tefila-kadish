@@ -85,6 +85,49 @@ for (const lg of LINGUAS) {
   await pag.close();
 }
 
+// ---------------------------------------------------------------------------
+// TODA CHAVE data-i18n DA TELA EXISTE NAS 8 TABELAS? (01/09)
+// ---------------------------------------------------------------------------
+// O applyI18n IGNORA EM SILENCIO a chave que nao existe:
+//
+//     if (t[key]) { ...troca o texto... }        // e se nao existir, nada
+//
+// Entao o portugues escrito no HTML fica na tela e nada acusa. Foi assim que
+// "Voz do dispositivo" e "Silencioso" ficaram em portugues nas 8 linguas desde
+// sempre, dentro dos Ajustes — este teste nunca abria aquele painel, e mesmo se
+// abrisse, procurar palavra portuguesa da falso positivo: "Normal" e "Normal" em
+// ingles, "Tema" e "Tema" em italiano, "Idioma" e "Idioma" em espanhol.
+//
+// A pergunta exata nao e "sobrou portugues?" e sim "a chave EXISTE na tabela
+// daquela lingua?". Sem falso positivo, e pega o painel inteiro de uma vez —
+// inclusive o que estiver escondido atras de um botao.
+console.log('\nToda chave data-i18n existe nas 8 tabelas:\n');
+{
+  const pag = await navegador.newPage();
+  await pag.goto(`${BASE}/engine.html?n=chabad&t=yatom`);
+  await pag.waitForTimeout(2200);
+  const r = await pag.evaluate((linguas) => {
+    const m = document.getElementById('setupModal'); if (m) m.classList.remove('show');
+    // abre tudo o que esconde texto, senao as chaves de dentro nao sao vistas
+    ['settingsToggle', 'infoToggle'].forEach(id => { const b = document.getElementById(id); if (b) b.click(); });
+    const chaves = [...new Set([...document.querySelectorAll('[data-i18n]')].map(e => e.dataset.i18n))];
+    const falta = {};
+    for (const lg of linguas) {
+      const t = I18N[lg] || {};
+      const sem = chaves.filter(k => !t[k]);
+      if (sem.length) falta[lg] = sem;
+    }
+    return { total: chaves.length, falta };
+  }, LINGUAS);
+  const ruins = Object.keys(r.falta);
+  if (ruins.length) falhas++;
+  console.log(`${ruins.length ? 'FALHA' : 'OK   '} ${r.total} chaves na tela` +
+    (ruins.length ? '' : ' — todas nas 8 tabelas'));
+  for (const [lg, sem] of Object.entries(r.falta))
+    console.log(`        ${lg}: faltam ${sem.length} — ${sem.slice(0, 8).join(', ')}`);
+  await pag.close();
+}
+
 await navegador.close();
 console.log(falhas ? `\n${falhas} lingua(s) com problema` : '\nVERDE: as 8 linguas passaram');
 process.exit(falhas ? 1 : 0);

@@ -10,7 +10,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
 - node checar.mjs         → estrutura, contagem, ritmo. Tem que dar VERDE nos 8.
 - node checar-ritos.mjs   → marcas de rito. Tem que dar VERDE nos 8.
 - node testar-app.mjs     → o app num Chromium: 8 combinações × 2 formatos.
-- node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8.
+- node testar-linguas.mjs → a tela inteira nas 8 línguas. VERDE nas 8. Desde
+  01/09 confere também que **toda chave data-i18n da tela existe nas 8 tabelas** —
+  o applyI18n ignora em silêncio a chave que falta, e o português do HTML fica
+  na tela sem nada acusar. Foi assim que "Voz do dispositivo" e "Silencioso"
+  ficaram em português nas 8 desde sempre.
 - node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado. VERDE nas 7.
 - node testar-treino.mjs  → Modo Treino e repetição, verso a verso.
 - node testar-revisar.mjs → a página de revisão das línguas (revisar.html).
@@ -1075,6 +1079,53 @@ sozinho, num commit que mexa só nisso, para ele poder testar uma coisa de cada 
 **A regra que fica, e vale mais que qualquer conserto:** uma mudança de
 comportamento por versão, e esperar ele dizer que está bom antes da seguinte.
 É mais lento, e é o único jeito de saber o que quebrou quando quebrar.
+
+## O botão de mudo, e o "Silencioso" que não silenciava (01/09)
+
+Ele: *"quando desabilito o som nas configurações o som continua, favor corrigir.
+gostaria de incluir um ícone em cima para bloquear o som"* — com o desenho do
+alto-falante cortado por um círculo vermelho.
+
+**Eram três defeitos numa linha só de Ajustes, não um.**
+
+1. **O "Silencioso" não silenciava.** `applyAudioSource` só punha
+   `state.disableTTS`, que cancela a voz sintetizada do navegador — e essa nunca
+   soa com a sincronia ligada, porque o `playFullPrayer` retorna antes de chegar
+   lá. A gravação do rabino continuava tocando, exatamente como ele descreveu.
+2. **O rótulo mentia duas vezes.** "Áudio: Voz do dispositivo | Silencioso" — o
+   app nunca toca voz do dispositivo, e o silencioso não silencia. Virou
+   **"Som: Ligado | Mudo"**.
+3. **Estava em português nas 8 línguas.** As chaves `audio_tts` e `audio_silent`
+   nunca existiram na tabela I18N, e o `applyI18n` **ignora em silêncio** a chave
+   que não existe (`if (t[key])`). Violação da regra 6 que ninguém via.
+
+**O botão fica no alto**, e não dentro do menu, porque silenciar é coisa de quem
+está rezando AGORA — o telefone tocou, alguém entrou na sala. O risco vermelho
+só aparece quando está mudo, e as ondas somem junto: é ele que diz o estado sem
+precisar de legenda.
+
+**Mudo não é pausa, de propósito.** A reza continua andando e o destaque continua
+acompanhando. Quem silencia no meio do Kadish quer que a reza siga.
+
+**Uma conta só para "está mudo?"** (`aplicarSom`), lida e escrita pelo botão do
+alto E pela linha dos Ajustes. Se fossem duas, elas se contradiriam — é o defeito
+que este projeto já pagou caro mais de uma vez. Nada disso toca no módulo SYNC:
+a `trava-sincronia.mjs` fica verde.
+
+## A checagem que deixou o português passar, e como ela mudou de pergunta
+
+O `testar-linguas.mjs` nunca abria o painel de Ajustes. Mas abrir não bastava:
+procurar palavra portuguesa dá **falso positivo** — "Normal" é "Normal" em
+inglês, "Tema" é "Tema" em italiano, "Idioma" é "Idioma" em espanhol. Foi o que
+aconteceu na primeira tentativa: 5 línguas vermelhas, todas erradas.
+
+A pergunta exata não é *"sobrou português?"* e sim **"a chave existe na tabela
+daquela língua?"**. Sem falso positivo, e pega o app inteiro de uma vez — as 61
+chaves da tela, inclusive as escondidas atrás de um botão. Provado que sabe
+falhar: tirando `som_mudo` do inglês e do alemão, ela acusa as duas pelo nome.
+
+Mesma classe de defeito do `canPlayType` e do `temState`: **um caminho que
+nenhuma checagem visitava.**
 
 ## Nunca
 
