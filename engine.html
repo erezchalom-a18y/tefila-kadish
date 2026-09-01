@@ -544,11 +544,16 @@
     color: var(--text-soft);
     font-style: italic;
     border-radius: 0 4px 4px 0;
-    display: none; /* hidden by default - shown only when explanations enabled */
+    /* 01/09 — antes era display:none aqui e uma chave nos Ajustes ("Explicacoes
+       entre versos") para ligar. A chave saiu a pedido do Erez, e ela nao
+       escondia nada: medido, 0 dos 161 versos dos 8 Kadishim tem tip ou
+       communityResponds. Era uma linha do ⚙ que nao mudava um pixel da tela.
+       O desenho continua aqui: no dia em que houver uma explicacao nos dados,
+       ela aparece por existir, sem chave para procurar. */
+    display: flex;
     gap: 10px;
     align-items: flex-start;
   }
-  body.show-explanations .tip { display: flex; }
   .tip-icon {
     color: var(--brass);
     font-size: 14px;
@@ -557,8 +562,6 @@
   }
   body.completo .tip { display: none; }
 
-  /* community-respond hidden by default, shown when explanations enabled */
-  body:not(.show-explanations) .community-respond { display: none; }
 
   /* Declaration verse (Shema itself) gets bigger Hebrew */
   .verse.declaration .hebrew {
@@ -776,6 +779,28 @@
     background: var(--brass);
     color: var(--bg);
   }
+
+  /* 01/09 — os tres botoes de CAMADA mostram o efeito em vez de so nomea-lo.
+     Ele perguntou como explicar, ao entrar no app, que da para mostrar,
+     destacar ou ocultar hebraico, traducao e transliteracao. A explicacao mais
+     curta e nenhuma palavra: "Ocultar" vem esmaecido e riscado, "Destaque" vem
+     maior e em latao, "Normal" fica como esta. Zero pixel novo, zero palavra
+     nova, zero lingua nova — e nao ha o que traduzir num desenho.
+     Vale SO para as camadas (seletor com [data-layer]); os outros seg-control
+     — tema, tamanho, tradicao, lingua, som — continuam iguais. */
+  .seg-control[data-layer] button[data-state="hidden"] {
+    opacity: 0.5;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+  /* aceso, ele e o estado atual: continua riscado (e o que ele faz), mas legivel */
+  .seg-control[data-layer] button[data-state="hidden"].active { opacity: 1; }
+  .seg-control[data-layer] button.focus-state {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--brass);
+  }
+  .seg-control[data-layer] button.focus-state.active { color: var(--bg); }
   .settings-hint {
     margin-top: 18px;
     padding: 12px 14px;
@@ -1815,6 +1840,15 @@
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
     .learn-strip { display: none; }
     .kt-size { display: none; }
+    /* 01/09 — a faixa do titulo ("Kadish do Enlutado · recitado em pe") tambem
+       sai AQUI, e so aqui. Ela so aparece no Modo Treino, e no celular deitado
+       custava 34px de 375 — a sobra para o Kadish caia de 61% para 52%, abaixo
+       do piso de 60% do projeto. Nao se perde informacao: na REZA esta faixa ja
+       fica escondida em TODA tela desde 27/08, o nome do Kadish continua nas
+       fitas do alto (tradicao e tipo), e "recitado em pe" continua no painel da
+       ℹ e de pe no mesmo aparelho. O testar-telas.mjs mede os dois modos desde
+       hoje; era esse o caminho que nenhuma checagem visitava. */
+    .prayer-meta { display: none !important; }
     .trad-switch .modo-op, .tipo-switch .modo-op { padding: 5px 8px; }
     /* Deitado no celular a altura e o bem mais escasso. A linha que repete a
        palavra que esta tocando sai: ela ja esta acesa no texto, logo acima. */
@@ -1926,7 +1960,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-01 · 23';
+const VERSAO = '2026-09-01 · 24';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2022,14 +2056,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="settings-row">
-      <div class="settings-row-label" data-i18n="explanations_label">Explicações entre versos</div>
-      <div class="seg-control" data-setting="explanations">
-        <button class="active" data-value="off" data-i18n="explanations_off">Ocultar</button>
-        <button data-value="on" data-i18n="explanations_on">Mostrar</button>
-      </div>
-    </div>
-
-    <div class="settings-row">
       <!-- Dizia "Áudio: Voz do dispositivo | Silencioso" e mentia duas vezes: o
            app nunca toca voz do dispositivo (toca a gravação do rabino), e o
            "Silencioso" só cancelava a voz sintetizada — que nunca soa com a
@@ -2052,6 +2078,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="active" data-treino="heb-tr" data-i18n="treino_heb_tr">Hebraico + transliteração</button>
         <button data-treino="tudo" data-i18n="treino_tudo">Tudo</button>
       </div>
+    </div>
+
+    <!-- 01/09 — a dica estava DEPOIS das tres linhas de camada e depois do
+         cartao de Yahrzeit: medido num iPhone SE, as camadas comecam a 887px de
+         painel e a dica so a 1242px — duas telas de rolagem abaixo de onde se
+         decide. Ela subiu para aqui, encostada nas tres linhas que explica. E o
+         mesmo texto, a mesma chave (settings_hint), ja nas 8 linguas. -->
+    <div class="settings-hint" data-i18n="settings_hint">
+      Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem. Apenas uma camada pode estar em destaque por vez.
     </div>
 
     <div class="settings-row">
@@ -2094,10 +2129,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <div id="yzAvisos" style="margin-top:10px;font-size:12.5px;color:#8a5a12;line-height:1.5"></div>
       <button id="yzCalendario" data-i18n="yahrzeit_calendar_btn" style="margin-top:12px;width:100%;background:var(--brass);color:#fff;border:0;border-radius:9px;padding:11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer">pôr no calendário do telefone</button>
       <div data-i18n="yahrzeit_reminder_note" style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da véspera (hora de acender a vela) e na manhã do dia.</div>
-    </div>
-
-    <div class="settings-hint" data-i18n="settings_hint">
-      Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem. Apenas uma camada pode estar em destaque por vez.
     </div>
 
     <div class="honoring-counter">
@@ -4560,8 +4591,7 @@ const I18N = {
     setup_skip_btn: 'Pular', setup_save: 'Salvar', setup_skip_link: 'Depois, no menu ⚙',
     consent_title: 'Privacidade', consent_text: 'Este app coleta dados anônimos de uso e, se você cadastrar, seu nome e data do falecimento ficam guardados localmente. Conforme LGPD/GDPR, você pode apagar tudo a qualquer momento.',
     consent_decline: 'Apenas o essencial', consent_accept: 'OK, prosseguir',
-    find_chabad: 'Encontrar Beit Chabad próximo →',
-    explanations_label: 'Explicações entre versos', explanations_off: 'Ocultar', explanations_on: 'Mostrar'
+    find_chabad: 'Encontrar Beit Chabad próximo →'
   },
   en: {
     toast_repeat: "Repetition {n} of {t}",
@@ -4608,8 +4638,7 @@ const I18N = {
     setup_skip_btn: 'Skip', setup_save: 'Save', setup_skip_link: 'Later, in ⚙ menu',
     consent_title: 'Privacy', consent_text: 'This app collects anonymous usage data, and if you register, your name and date of passing are stored locally. Per GDPR/LGPD, you can delete everything at any time.',
     consent_decline: 'Essential only', consent_accept: 'OK, proceed',
-    find_chabad: 'Find nearest Chabad House →',
-    explanations_label: 'Explanations between verses', explanations_off: 'Hide', explanations_on: 'Show'
+    find_chabad: 'Find nearest Chabad House →'
   },
   es: {
     toast_repeat: "Repetición {n} de {t}",
@@ -4656,8 +4685,7 @@ const I18N = {
     setup_skip_btn: 'Omitir', setup_save: 'Guardar', setup_skip_link: 'Después, en el menú ⚙',
     consent_title: 'Privacidad', consent_text: 'Esta app recolecta datos de uso anónimos y, si te registras, tu nombre y fecha de fallecimiento se guardan localmente. Según LGPD/GDPR, puedes borrar todo en cualquier momento.',
     consent_decline: 'Solo lo esencial', consent_accept: 'OK, continuar',
-    find_chabad: 'Encontrar Beit Jabad cercano →',
-    explanations_label: 'Explicaciones entre versos', explanations_off: 'Ocultar', explanations_on: 'Mostrar'
+    find_chabad: 'Encontrar Beit Jabad cercano →'
   },
   fr: {
     toast_repeat: "Répétition {n} sur {t}",
@@ -4704,8 +4732,7 @@ const I18N = {
     setup_skip_btn: 'Passer', setup_save: 'Sauvegarder', setup_skip_link: 'Plus tard, dans le menu ⚙',
     consent_title: 'Confidentialité', consent_text: "Cette app recueille des données d'usage anonymes et, si vous vous inscrivez, votre nom et date de décès sont stockés localement. Conformément au RGPD/LGPD, vous pouvez tout supprimer à tout moment.",
     consent_decline: 'Essentiel uniquement', consent_accept: 'OK, continuer',
-    find_chabad: 'Trouver Beth Habad proche →',
-    explanations_label: 'Explications entre versets', explanations_off: 'Masquer', explanations_on: 'Afficher'
+    find_chabad: 'Trouver Beth Habad proche →'
   },
   it: {
     toast_repeat: "Ripetizione {n} di {t}",
@@ -4752,8 +4779,7 @@ const I18N = {
     setup_skip_btn: 'Salta', setup_save: 'Salva', setup_skip_link: 'Più tardi, nel menu ⚙',
     consent_title: 'Privacy', consent_text: 'Questa app raccoglie dati d\'uso anonimi e, se ti registri, il tuo nome e la data del decesso restano salvati solo sul tuo dispositivo. In base al GDPR puoi cancellare tutto in qualsiasi momento.',
     consent_decline: 'Solo l\'essenziale', consent_accept: 'OK, continua',
-    find_chabad: 'Trova il Beit Chabad più vicino →',
-    explanations_label: 'Spiegazioni tra i versetti', explanations_off: 'Nascondi', explanations_on: 'Mostra'
+    find_chabad: 'Trova il Beit Chabad più vicino →'
   },
   de: {
     toast_repeat: "Wiederholung {n} von {t}",
@@ -4800,8 +4826,7 @@ const I18N = {
     setup_skip_btn: 'Überspringen', setup_save: 'Speichern', setup_skip_link: 'Später, im Menü ⚙',
     consent_title: 'Datenschutz', consent_text: 'Diese App erfasst anonyme Nutzungsdaten. Wenn Sie sich eintragen, bleiben Name und Sterbedatum nur auf Ihrem Gerät gespeichert. Gemäß DSGVO können Sie jederzeit alles löschen.',
     consent_decline: 'Nur das Nötigste', consent_accept: 'OK, weiter',
-    find_chabad: 'Nächstes Beit Chabad finden →',
-    explanations_label: 'Erklärungen zwischen den Versen', explanations_off: 'Ausblenden', explanations_on: 'Anzeigen'
+    find_chabad: 'Nächstes Beit Chabad finden →'
   },
   ru: {
     toast_repeat: "Повтор {n} из {t}",
@@ -4848,8 +4873,7 @@ const I18N = {
     setup_skip_btn: 'Пропустить', setup_save: 'Сохранить', setup_skip_link: 'Позже, в меню ⚙',
     consent_title: 'Конфиденциальность', consent_text: 'Приложение собирает анонимные данные использования. Если вы зарегистрируетесь, ваше имя и дата хранятся локально. По LGPD/GDPR, можно удалить всё в любой момент.',
     consent_decline: 'Только необходимое', consent_accept: 'OK, продолжить',
-    find_chabad: 'Найти ближайший Бейт Хабад →',
-    explanations_label: 'Пояснения между стихами', explanations_off: 'Скрыть', explanations_on: 'Показать'
+    find_chabad: 'Найти ближайший Бейт Хабад →'
   },
   he: {
     toast_repeat: "חזרה {n} מתוך {t}",
@@ -4896,8 +4920,7 @@ const I18N = {
     setup_skip_btn: 'דלג', setup_save: 'שמור', setup_skip_link: 'מאוחר יותר, בתפריט ⚙',
     consent_title: 'פרטיות', consent_text: 'אפליקציה זו אוספת נתוני שימוש אנונימיים. אם תירשם, השם והתאריך נשמרים מקומית. ע"פ LGPD/GDPR ניתן למחוק הכל בכל זמן.',
     consent_decline: 'רק חיוני', consent_accept: 'אישור, המשך',
-    find_chabad: 'מצא בית חב"ד קרוב →',
-    explanations_label: 'הסברים בין פסוקים', explanations_off: 'הסתר', explanations_on: 'הצג'
+    find_chabad: 'מצא בית חב"ד קרוב →'
   }
 };
 
@@ -5198,13 +5221,6 @@ function applyTradition(t) {
   }
 }
 
-// ---------- Explanations toggle (tips + community-respond) ----------
-state.showExplanations = localStorage.getItem('tefila_explanations') === 'on';
-function applyExplanations(v) {
-  state.showExplanations = (v === 'on');
-  localStorage.setItem('tefila_explanations', v);
-  document.body.classList.toggle('show-explanations', state.showExplanations);
-}
 
 // ---------- Audio source (TTS or silent) ----------
 state.disableTTS = localStorage.getItem('tefila_audio_src') === 'silent';
@@ -5619,7 +5635,6 @@ document.querySelectorAll('.seg-control').forEach(seg => {
       // o texto e o audio vem do sync/*.json daquele nussach
       if (window.SYNC) window.SYNC.trocar(value, null);
     }
-    else if (setting === 'explanations') applyExplanations(value);
     else if (setting === 'audiosrc') applyAudioSource(value);
     else if (setting === 'treinocamadas') aplicarCamadasDoTreino(btn.dataset.treino);
   });
@@ -5687,9 +5702,6 @@ document.getElementById('consentDecline').addEventListener('click', () => {
   applyTradition(state.tradition);
   document.querySelectorAll('[data-setting="tradition"] button').forEach(b => b.classList.toggle('active', b.dataset.value === state.tradition));
 
-  const savedExpl = localStorage.getItem('tefila_explanations') || 'off';
-  applyExplanations(savedExpl);
-  document.querySelectorAll('[data-setting="explanations"] button').forEach(b => b.classList.toggle('active', b.dataset.value === savedExpl));
 
   applyKadishType(state.kadishType);
 

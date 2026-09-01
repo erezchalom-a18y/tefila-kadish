@@ -6,11 +6,17 @@
  * fonte pequena comparados ao texto do Kadish". Estava: o menor texto do
  * cabecalho tinha 9,2px num iPhone SE, contra 26px do hebraico.
  *
- * Reprova quando, em qualquer tela:
+ * Reprova quando, em qualquer tela E EM QUALQUER DOS DOIS MODOS:
  *   - algum texto visivel do cabecalho fica abaixo de MIN_FONTE;
  *   - algum botao do cabecalho fica com menos de MIN_TOQUE de altura;
  *   - a pagina rola de lado (nunca deve);
  *   - sobra menos de MIN_LEITURA da altura para o texto do Kadish.
+ *
+ * 01/09 — ate aqui ele media SO o Modo Reza. Era mais um "caminho que nenhuma
+ * checagem visitava": o Modo Treino mostra a faixa .prayer-meta, que a reza
+ * esconde, e no iPhone deitado isso derrubava a sobra para 52% — abaixo do
+ * piso de 60% — sem nada acusar. Agora cada tela e medida duas vezes: como ela
+ * abre (reza) e depois de apertar o Treino, no mesmo carregamento.
  *
  * Uso: node testar-telas.mjs [http://127.0.0.1:8896/tefila-kadish]
  * Sem os navegadores do Playwright baixados: CHROMIUM=/caminho/do/chrome
@@ -40,7 +46,7 @@ for (const [nome, largura, altura] of TELAS) {
   await pag.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3`);
   await pag.waitForTimeout(2000);
 
-  const r = await pag.evaluate(() => {
+  const medir = () => pag.evaluate(() => {
     const topo = document.querySelector('.topbar');
     const heb = document.querySelector('.verse .w, .verse .word, .verse [data-wi]');
     const pequenas = [], baixos = [];
@@ -69,25 +75,45 @@ for (const [nome, largura, altura] of TELAS) {
       })(),
       janela: innerHeight,
       rolaLado: document.documentElement.scrollWidth > innerWidth + 1,
+      treino: document.body.classList.contains('modo-treino'),
     };
   });
 
-  const leitura = (r.janela - r.altTopo - r.altBaixo) / r.janela;
-  const problemas = [];
-  if (r.pequenas.length) problemas.push('texto miudo: ' + r.pequenas.join(', '));
-  if (r.baixos.length) problemas.push('botao baixo demais: ' + r.baixos.join(', '));
-  if (r.rolaLado) problemas.push('a pagina rola de lado');
-  if (leitura < MIN_LEITURA) problemas.push(`so ${Math.round(leitura * 100)}% da tela sobra para o Kadish`);
-  if (!r.hebraico) problemas.push('nao achei o texto hebraico');
+  const julgar = (r) => {
+    const leitura = (r.janela - r.altTopo - r.altBaixo) / r.janela;
+    const problemas = [];
+    if (r.pequenas.length) problemas.push('texto miudo: ' + r.pequenas.join(', '));
+    if (r.baixos.length) problemas.push('botao baixo demais: ' + r.baixos.join(', '));
+    if (r.rolaLado) problemas.push('a pagina rola de lado');
+    if (leitura < MIN_LEITURA) problemas.push(`so ${Math.round(leitura * 100)}% da tela sobra para o Kadish`);
+    if (!r.hebraico) problemas.push('nao achei o texto hebraico');
+    return { leitura, problemas };
+  };
 
-  if (problemas.length) falhas++;
-  console.log(`${problemas.length ? 'FALHA' : 'OK   '} ${nome.padEnd(19)} ${largura}x${altura} | ` +
-              `hebraico ${r.hebraico}px | cabecalho ${r.altTopo}px | barra ${r.altBaixo}px | ` +
-              `sobra ${Math.round(leitura * 100)}%` +
-              (problemas.length ? '\n        ' + problemas.join('\n        ') : ''));
+  const linha = (rotulo, r, j) =>
+    `${j.problemas.length ? 'FALHA' : 'OK   '} ${(nome + ' · ' + rotulo).padEnd(30)} ${largura}x${altura} | ` +
+    `hebraico ${r.hebraico}px | cabecalho ${r.altTopo}px | barra ${r.altBaixo}px | ` +
+    `sobra ${Math.round(j.leitura * 100)}%` +
+    (j.problemas.length ? '\n        ' + j.problemas.join('\n        ') : '');
+
+  // como o app abre
+  const reza = await medir();
+  const jr = julgar(reza);
+  if (jr.problemas.length) falhas++;
+  console.log(linha('reza  ', reza, jr));
+
+  // e depois de apertar o Treino, no MESMO carregamento
+  await pag.click('#treinoToggle');
+  await pag.waitForTimeout(600);
+  const treino = await medir();
+  if (!treino.treino) { falhas++; console.log(`FALHA ${nome} — apertar o Treino nao ligou o modo-treino`); }
+  const jt = julgar(treino);
+  if (jt.problemas.length) falhas++;
+  console.log(linha('treino', treino, jt));
+
   await pag.close();
 }
 
 await navegador.close();
-console.log(falhas ? `\n${falhas} tela(s) com problema` : '\nVERDE: as 7 telas passaram');
+console.log(falhas ? `\n${falhas} medida(s) com problema` : '\nVERDE: as 7 telas passaram nos dois modos');
 process.exit(falhas ? 1 : 0);

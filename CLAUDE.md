@@ -15,7 +15,10 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   o applyI18n ignora em silêncio a chave que falta, e o português do HTML fica
   na tela sem nada acusar. Foi assim que "Voz do dispositivo" e "Silencioso"
   ficaram em português nas 8 desde sempre.
-- node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado. VERDE nas 7.
+- node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado, **nos DOIS modos**
+  (reza e treino, no mesmo carregamento). VERDE nas 14 medidas. Desde 01/09 ele
+  aperta o Treino: media só a reza, e por isso ninguém via que no iPhone deitado
+  o treino deixava só 52% da tela para o Kadish — abaixo do piso de 60%.
 - node testar-treino.mjs  → Modo Treino e repetição, verso a verso.
 - node testar-revisar.mjs → a página de revisão das línguas (revisar.html).
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
@@ -1136,3 +1139,55 @@ nenhuma checagem visitava.**
 - afrouxar o prompt da revisão cega para produzir mais apontamentos
 - gravar arquivos de texto em UTF-16 (foi um `echo >>` do PowerShell em UTF-16
   no .gitignore que quebrou o repositório uma vez — todo texto em UTF-8)
+
+## O que ele autorizou em 01/09, e o que entrou (v24)
+
+Quatro coisas numa versão só. Nenhuma toca no módulo SYNC nem em número de
+tempo — a `trava-sincronia.mjs` fica verde, e a regra 0 continua de pé.
+
+1. **O `testar-telas.mjs` passou a medir também o Modo Treino**, e achou o
+   defeito que ele já estava vendo: no iPhone deitado o treino mostra a faixa
+   `.prayer-meta` ("Kadish do Enlutado · recitado em pé"), que a reza esconde em
+   toda tela desde 27/08. São 34px de 375, e a sobra para o Kadish caía de 61%
+   para **52%** — abaixo do piso de 60% do projeto. Mais um **caminho que
+   nenhuma checagem visitava**: a checagem abria o app e media, sem nunca
+   apertar o botão do Treino.
+   O conserto é uma linha de CSS dentro do `@media (max-height:460px) and
+   (orientation:landscape)`, ao lado do que já sai ali (o cartão "Por que
+   dizemos o Kadish?", os pictogramas, o sufixo do tipo). Não se perde
+   informação: o nome do Kadish está nas fitas do alto, "recitado em pé" está no
+   painel da ℹ, e de pé no mesmo aparelho a faixa volta. Medido depois: os dois
+   modos dão **61%** no iPhone SE deitado e **72%** no iPhone 15 deitado — os
+   dois modos idênticos, que é como tem de ser.
+
+2. **Os botões das camadas desenham o que fazem.** Ele perguntou como explicar,
+   ao entrar no app, que dá para mostrar, destacar ou ocultar hebraico, tradução
+   e transliteração. A explicação mais curta é nenhuma palavra: em
+   `Ocultar | Normal | Destaque`, o "Ocultar" vem esmaecido e riscado e o
+   "Destaque" vem maior e em latão. Zero pixel novo na barra, zero palavra nova,
+   **zero língua nova** — não há o que traduzir num desenho, então a regra 6 nem
+   entra. O seletor é `.seg-control[data-layer]`: tema, tamanho, tradição,
+   língua e som continuam iguais.
+
+3. **A dica subiu para junto das três linhas.** Medido num iPhone SE, o painel
+   punha as camadas a 887px e a dica a 1242px — duas telas de rolagem depois de
+   onde se decide, e depois do cartão de Yahrzeit. Agora ela vem imediatamente
+   antes da linha do Hebraico. É o **mesmo texto e a mesma chave**
+   (`settings_hint`), que já existia nas 8 línguas; nada foi reescrito.
+
+4. **"Explicações entre versos" saiu do ⚙.** Medido antes de tirar: **0 dos 161
+   versos** dos 8 Kadishim tem `tip` ou `communityResponds`. A chave não escondia
+   nada — era uma linha do painel que não mudava um pixel da tela, em qualquer
+   posição. Saíram junto o `applyExplanations`, o `tefila_explanations` do
+   localStorage e as chaves `explanations_*` das 8 tabelas (o
+   `testar-linguas.mjs` foi de 61 para **58 chaves na tela**). O desenho do
+   `.tip` e do `.community-respond` FICA no CSS, agora sem interruptor: no dia em
+   que houver uma explicação nos dados, ela aparece por existir. O painel encolheu
+   de 1.460px para 1.354px.
+
+**Uma nota sobre o `checar-plataformas.mjs` neste ambiente:** ele reprova de vez
+em quando com `ERR_CERT_AUTHORITY_INVALID` no perfil "iPad no pior dia". Não é o
+app: é o `fonts.googleapis.com` falhando o TLS no proxy do contêiner remoto. A
+checagem cobra "nenhum erro de console" e conta esse também. Se aparecer, rodar
+de novo; se passar a aparecer sempre, o conserto é ensinar a checagem a ignorar
+falha de rede EXTERNA — nunca a ignorar erro de console.
