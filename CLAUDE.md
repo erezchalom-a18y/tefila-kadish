@@ -1226,6 +1226,16 @@ O que ficou valendo, decidido por ele:
   empilhar ao trocar de língua).
 - O texto novo é só o que está entre parênteses (`CONVITE`, nas 8). O rótulo é o
   `DEDICATORIA`, que já existia nas 8 — nada foi reescrito.
+- **A LETRA é outra, e é de propósito (v26).** A primeira tentativa reaproveitou
+  também o *estilo* do rótulo da dedicatória — caixa-alta, espaçada, em duas
+  linhas — e ele viu na hora: *"poderia ser uma fonte mais discreta, fina, você
+  tinha feito uma que estava perfeita"*. Tinha razão, e a razão é de peso
+  tipográfico: a dedicatória CHEIA carrega um nome, e caixa-alta espaçada é o
+  que segura um nome; o convite não carrega nada — é um sussurro. Agora é uma
+  linha só, em Cormorant Garamond 300, 0,95rem, sem caixa-alta, sem espaçamento
+  de letra, sem caixa tracejada e **sem risco embaixo** (o risco ficaria mais
+  escuro que a própria frase). Mediu 58px de altura na primeira versão e
+  **27px** nesta. A dedicatória cheia não mudou.
 
 **Virou checagem** (`testar-dedicatoria.mjs`, no workflow): as 8 línguas com o
 memorial vazio, o convite antes do primeiro verso, um só de cada vez, some ao

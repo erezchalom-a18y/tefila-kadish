@@ -1059,26 +1059,28 @@
     display: block; font-size: 0.9rem; font-style: italic;
     color: var(--text-faint, #8a8070); margin-top: 4px;
   }
-  /* O convite e a dedicatoria VAZIA: mesma vaga, mesma moldura, mesmo rotulo.
-     Sem caixa tracejada — "bem discreto", nas palavras dele. O que muda e que no
-     lugar do nome ha uma linha em italico convidando, e o bloco inteiro e um
-     botao. */
+  /* O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo.
+     A LETRA e outra, e de proposito (ele: "poderia ser uma fonte mais discreta,
+     fina"). A dedicatoria CHEIA carrega um nome e por isso o rotulo dela e
+     caixa-alta espacada, que pesa; o convite nao carrega nada — e um sussurro.
+     Entao aqui e uma linha so, em Cormorant leve, sem caixa-alta, sem
+     espacamento de letra, sem caixa tracejada e sem risco embaixo. O risco
+     ficaria mais escuro que a propria frase. */
   .convite-dedicar {
     display: block; width: 100%; text-align: center;
-    margin: 6px 0 26px; padding: 0 0 18px;
-    background: none; border: 0; border-bottom: 1px solid var(--line, #ddd3c0);
-    font: inherit; cursor: pointer;
-  }
-  .convite-dedicar .ded-rotulo {
-    display: block; font-size: 0.78rem; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--text-faint, #8a8070); margin-bottom: 6px;
-  }
-  .convite-dedicar .conv-acao {
-    display: block; font-size: 0.95rem; font-style: italic;
+    margin: 6px 0 30px; padding: 2px 0;
+    background: none; border: 0; cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 0.95rem; line-height: 1.5;
     color: var(--text-faint, #8a8070);
   }
-  .convite-dedicar:hover .conv-acao,
-  .convite-dedicar:hover .ded-rotulo { color: var(--brass, #8b6a3e); }
+  .convite-dedicar .ded-rotulo,
+  .convite-dedicar .conv-acao {
+    display: inline; font-size: inherit; letter-spacing: normal;
+    text-transform: none; color: inherit; margin: 0;
+  }
+  .convite-dedicar .conv-acao { font-style: italic; opacity: .72; margin-left: .35em; }
+  .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
      O botao ja existia mas nao liberava um pixel — media 346px de moldura antes
      e depois de aperta-lo. O que ele liga chama-se modo-treino, e "Modo Reza" e
@@ -1973,7 +1975,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-01 · 25';
+const VERSAO = '2026-09-01 · 26';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
