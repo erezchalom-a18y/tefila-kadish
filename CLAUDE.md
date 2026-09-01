@@ -15,6 +15,10 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   o applyI18n ignora em silêncio a chave que falta, e o português do HTML fica
   na tela sem nada acusar. Foi assim que "Voz do dispositivo" e "Silencioso"
   ficaram em português nas 8 desde sempre.
+- node testar-dedicatoria.mjs → o "Em memória de" e o convite que o substitui
+  quando está vazio: aparece nas 8 línguas (e não em português nas 8), fica
+  antes do primeiro verso, nunca aparecem os dois, some ao preencher o nome e
+  volta ao apagá-lo.
 - node testar-telas.mjs   → 7 tamanhos de tela, em pé e deitado, **nos DOIS modos**
   (reza e treino, no mesmo carregamento). VERDE nas 14 medidas. Desde 01/09 ele
   aperta o Treino: media só a reza, e por isso ninguém via que no iPhone deitado
@@ -1191,3 +1195,40 @@ app: é o `fonts.googleapis.com` falhando o TLS no proxy do contêiner remoto. A
 checagem cobra "nenhum erro de console" e conta esse também. Se aparecer, rodar
 de novo; se passar a aparecer sempre, o conserto é ensinar a checagem a ignorar
 falha de rede EXTERNA — nunca a ignorar erro de console.
+
+## "Em memória de (clique aqui para incluir)" (01/09, v25)
+
+Ele: *"o que acha em memória de (clique aqui para incluir) bem discreto"*, e
+depois, nas mesmas palavras: *"acompanha o texto do kadish enquanto ele desce"*
+e *"é permanente; se preencher ótimo, se não permanece"*.
+
+**O convite já existia e ninguém o via.** Era uma caixa tracejada no FIM do
+texto — "✦ dedicar este Kadish a alguém" — escrita com a intenção certa (ficar
+fora do caminho de quem só quer rezar) e com o efeito errado: quem nunca rolou
+até o fim do Kadish nunca soube que a dedicatória existe. A ideia dele resolve
+isso sem custar nada, e é melhor que a minha por um motivo simples: **o convite
+passou a ser a dedicatória VAZIA**, na mesma vaga e com o MESMO rótulo. Quem lê
+"Em memória de · (clique aqui para incluir)" entende de uma vez o que aquilo
+vira depois de preenchido. Não há palavra explicando a função; a função se
+mostra.
+
+O que ficou valendo, decidido por ele:
+
+- **Fica antes do primeiro verso e desce junto com o texto.** Não é faixa fixa —
+  faixa fixa rouba altura de leitura, e o `.memorial-strip` do cabeçalho
+  continua desligado desde 27/08 justamente por isso.
+- **É permanente até ser preenchido.** Sem "agora não", sem botão de fechar. Ao
+  preencher, o convite some e no lugar dele fica a dedicatória — e essa também
+  é permanente.
+- **Nunca aparecem os dois**, e nunca dois do mesmo. As duas funções agora usam
+  `main.prepend` e disputam a mesma vaga; o `atualizarDedicatoria` deixou de
+  fazer a dança de mover elemento que fazia antes (era ali que dava para
+  empilhar ao trocar de língua).
+- O texto novo é só o que está entre parênteses (`CONVITE`, nas 8). O rótulo é o
+  `DEDICATORIA`, que já existia nas 8 — nada foi reescrito.
+
+**Virou checagem** (`testar-dedicatoria.mjs`, no workflow): as 8 línguas com o
+memorial vazio, o convite antes do primeiro verso, um só de cada vez, some ao
+preencher e volta ao apagar. E, com dentes na regra 6: fora do português, o
+texto TEM de ser diferente do português — senão a checagem passaria com o
+convite em português nas 8, que é o defeito clássico daqui.

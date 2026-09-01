@@ -1059,13 +1059,26 @@
     display: block; font-size: 0.9rem; font-style: italic;
     color: var(--text-faint, #8a8070); margin-top: 4px;
   }
+  /* O convite e a dedicatoria VAZIA: mesma vaga, mesma moldura, mesmo rotulo.
+     Sem caixa tracejada — "bem discreto", nas palavras dele. O que muda e que no
+     lugar do nome ha uma linha em italico convidando, e o bloco inteiro e um
+     botao. */
   .convite-dedicar {
-    display: block; margin: 30px auto 8px; background: none;
-    border: 1px dashed var(--line, #ddd3c0); border-radius: 10px;
-    padding: 12px 18px; font: inherit; font-size: 0.95rem;
-    color: var(--text-faint, #8a8070); cursor: pointer;
+    display: block; width: 100%; text-align: center;
+    margin: 6px 0 26px; padding: 0 0 18px;
+    background: none; border: 0; border-bottom: 1px solid var(--line, #ddd3c0);
+    font: inherit; cursor: pointer;
   }
-  .convite-dedicar:hover { color: var(--brass, #8b6a3e); border-color: var(--brass, #8b6a3e); }
+  .convite-dedicar .ded-rotulo {
+    display: block; font-size: 0.78rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--text-faint, #8a8070); margin-bottom: 6px;
+  }
+  .convite-dedicar .conv-acao {
+    display: block; font-size: 0.95rem; font-style: italic;
+    color: var(--text-faint, #8a8070);
+  }
+  .convite-dedicar:hover .conv-acao,
+  .convite-dedicar:hover .ded-rotulo { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
      O botao ja existia mas nao liberava um pixel — media 346px de moldura antes
      e depois de aperta-lo. O que ele liga chama-se modo-treino, e "Modo Reza" e
@@ -1960,7 +1973,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-01 · 24';
+const VERSAO = '2026-09-01 · 25';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3564,11 +3577,18 @@ const DEDICATORIA = {
   pt: 'Em memória de', en: 'In memory of', es: 'En memoria de', fr: 'À la mémoire de',
   it: 'In memoria di', de: 'Zum Andenken an', ru: 'В память о', he: 'לְזֵכֶר נִשְׁמַת',
 };
+// 01/09 — o convite era uma caixa tracejada no FIM do texto dizendo "dedicar
+// este Kadish a alguem". Quem nunca rolou ate la nunca soube que existia. Ele
+// pediu, com as palavras dele: "em memoria de (clique aqui para incluir), bem
+// discreto". Entao o convite passou a ser a PROPRIA dedicatoria vazia, no lugar
+// dela: o mesmo rotulo (DEDICATORIA, ja nas 8 linguas) e, no lugar do nome,
+// esta linha. Quem le entende de uma vez o que aquilo vira depois de preenchido.
+// So o que esta entre parenteses e novo — o resto ja existia.
 const CONVITE = {
-  pt: 'dedicar este Kadish a alguém', en: 'dedicate this Kaddish to someone',
-  es: 'dedicar este Kadish a alguien', fr: 'dédier ce Kaddish à quelqu’un',
-  it: 'dedicare questo Kaddish a qualcuno', de: 'dieses Kaddisch jemandem widmen',
-  ru: 'посвятить этот кадиш', he: 'לְהַקְדִּישׁ קַדִּישׁ זֶה',
+  pt: 'clique aqui para incluir', en: 'click here to add a name',
+  es: 'haga clic aquí para incluir', fr: 'cliquez ici pour ajouter',
+  it: 'clicca qui per aggiungere', de: 'hier klicken zum Hinzufügen',
+  ru: 'нажмите, чтобы добавить', he: 'לחצו כאן להוספה',
 };
 
 /**
@@ -3576,8 +3596,11 @@ const CONVITE = {
  * dedicatoria de um livro — nao como faixa fixa, que roubaria altura de leitura
  * e brigaria com o hebraico pela atencao.
  *
- * Sem nome preenchido nao aparece NADA: nem espaco vazio, nem "clique aqui".
- * O convite para dedicar fica no fim do texto, fora do caminho de quem so quer rezar.
+ * Sem nome preenchido aparece o CONVITE, no mesmo lugar e com o mesmo rotulo —
+ * nunca as duas coisas, e nunca um formulario. O app abre direto no Kadish de
+ * proposito (ver o comentario do setup): quem abre pode ter enterrado o pai
+ * ontem e estar de pe no minyan. Uma linha discreta que rola junto com o texto
+ * nao fica entre ele e a primeira palavra; um modal ficaria.
  */
 function desenharDedicatoria(main) {
   const m = (typeof loadMemorial === 'function') ? loadMemorial() : null;
@@ -3590,7 +3613,7 @@ function desenharDedicatoria(main) {
   el.innerHTML = `<span class="ded-rotulo">${DEDICATORIA[L] || DEDICATORIA.pt}</span>` +
     `<span class="ded-nome">${quem.map(x => x.replace(/[&<>]/g, '')).join(' · ')}</span>` +
     (m.relation ? `<span class="ded-rel">${String(m.relation).replace(/[&<>]/g, '')}</span>` : '');
-  main.appendChild(el);
+  main.prepend(el);
 }
 
 function desenharConvite(main) {
@@ -3599,13 +3622,15 @@ function desenharConvite(main) {
   const L = (typeof state !== 'undefined' && state.lang) || 'pt';
   const b = document.createElement('button');
   b.className = 'convite-dedicar';
-  b.textContent = '✦ ' + (CONVITE[L] || CONVITE.pt);
+  if (L === 'he') b.dir = 'rtl';
+  b.innerHTML = `<span class="ded-rotulo">${DEDICATORIA[L] || DEDICATORIA.pt}</span>` +
+    `<span class="conv-acao">(${CONVITE[L] || CONVITE.pt})</span>`;
   b.addEventListener('click', () => {
     const ed = document.getElementById('editMemorial');
     if (ed) ed.click();
     else document.getElementById('setupModal').classList.add('show');
   });
-  main.appendChild(b);
+  main.prepend(b);
 }
 
 /** Redesenha so a dedicatoria e o convite — chamada ao trocar de lingua. */
@@ -3613,13 +3638,8 @@ function atualizarDedicatoria() {
   const main = document.getElementById('main');
   if (!main) return;
   main.querySelectorAll('.dedicatoria, .convite-dedicar').forEach(e => e.remove());
-  const ded = document.createElement('div');
-  main.prepend(ded);
-  desenharDedicatoria(main);
-  const nova = main.querySelector('.dedicatoria');
-  if (nova) main.prepend(nova);          // dedicatoria sempre antes do 1o verso
-  ded.remove();
-  desenharConvite(main);                 // convite sempre no fim
+  desenharDedicatoria(main);   // uma das duas desiste sozinha: ou ha nome, ou nao ha
+  desenharConvite(main);
 }
 
 function desenharVersos() {
@@ -3628,6 +3648,7 @@ function desenharVersos() {
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
   desenharDedicatoria(main);
+  desenharConvite(main);   // ocupa a mesma vaga quando nao ha nome
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
@@ -3762,7 +3783,6 @@ function desenharVersos() {
 
     main.appendChild(verseEl);
   });
-  desenharConvite(main);
 }
 desenharVersos();
 
