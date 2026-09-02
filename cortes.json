@@ -1,11 +1,11 @@
 {
-  "_leia": "Segundo em que a reza comeca em cada arquivo de audio completo/. Os 8 foram conferidos de ouvido pelo Erez em 19/08/2026: todos comecam em yitgadal. NAO trocar por \"auto\" - o automatico errou em 2 dos 8.",
+  "_leia": "Segundo em que a reza comeca em cada arquivo de audio completo/. Os 8 foram conferidos de ouvido pelo Erez em 19/08/2026: todos comecam em yitgadal. NAO trocar por \"auto\" - o automatico errou em 2 dos 8. Os dois do sefaradi sao de 02/09/2026, de uma GRAVACAO NOVA (originais/sefaradi_*_2026-09-02.m4a): o Erez regravou e mandou tirar o anuncio do chazan. Ele pediu \"cortar os primeiros 3 segundos\"; a medida do sinal poe o anuncio em 0,66-3,08 (yatom) e 0,82-3,34 (derabanan) e a reza abrindo em 4,52 e 4,40. Cortar em 3,0 deixaria ~1,4s de silencio na frente, entao o corte foi 0,15s antes da reza, como nos outros seis.",
   "ashkenaz_yatom": 6.91,
   "ashkenaz_derabanan": 5.83,
   "chabad_yatom": 4.1,
   "chabad_derabanan": 5.23,
   "sefard_yatom": 6.07,
   "sefard_derabanan": 6.55,
-  "sefaradi_yatom": 5.75,
-  "sefaradi_derabanan": 5.3
+  "sefaradi_yatom": 4.37,
+  "sefaradi_derabanan": 4.25
 }

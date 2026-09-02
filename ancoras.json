@@ -407,6 +407,318 @@
       "inicio_que_ele_deu": 50.54,
       "nussach": "ashkenaz_yatom",
       "por_que_saiu": "O proprio Erez a desdisse em 24/08, na fita continua: pos o tushbechata em 51,46. O bloco de 50,56 dura 0,08s — e a respiracao, nao a palavra."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 1,
+        "palavra": 1,
+        "inicio": 0.16,
+        "nota": "Yitgadal — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). Ele pos em 0.03, antes de qualquer voz; a primeira voz do arquivo abre aos 0.16 e e ali que a palavra pode comecar.",
+        "inicio_que_ele_deu": 0.03
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 3,
+        "palavra": 1,
+        "inicio": 8.74,
+        "nota": "veyamlich — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 4,
+        "palavra": 3,
+        "inicio": 13.78,
+        "nota": "vikarev — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). caiu no silencio; encostei na voz de 13.78 (0.08s adiante).",
+        "inicio_que_ele_deu": 13.7
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 5,
+        "palavra": 1,
+        "inicio": 16.5,
+        "nota": "bechayechon — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 7,
+        "palavra": 1,
+        "inicio": 23.74,
+        "nota": "baagalá — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 8,
+        "palavra": 3,
+        "inicio": 32.16,
+        "nota": "raba — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 14,
+        "palavra": 1,
+        "inicio": 65.24,
+        "nota": "Yehê — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 15,
+        "palavra": 1,
+        "inicio": 69.06,
+        "nota": "chayim — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 19,
+        "palavra": 1,
+        "inicio": 91.98,
+        "nota": "hu — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). caiu no silencio; encostei na voz de 91.98 (0.11s adiante).",
+        "inicio_que_ele_deu": 91.87
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 19,
+        "palavra": 2,
+        "inicio": 92.8,
+        "nota": "berachamav — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 19,
+        "palavra": 3,
+        "inicio": 94.28,
+        "nota": "yaassê — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_yatom",
+      "era": {
+        "verso": 19,
+        "palavra": 6,
+        "inicio": 97.36,
+        "nota": "veal — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 2,
+        "palavra": 1,
+        "inicio": 4.58,
+        "nota": "bealma — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 8,
+        "palavra": 1,
+        "inicio": 27.88,
+        "nota": "Yehê — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 11,
+        "palavra": 1,
+        "inicio": 43.98,
+        "nota": "veyitaleh — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). caiu no silencio; encostei na voz de 43.98 (0.07s adiante).",
+        "inicio_que_ele_deu": 43.91
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 11,
+        "palavra": 2,
+        "inicio": 45.26,
+        "nota": "veyithalal — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 12,
+        "palavra": 1,
+        "inicio": 50.74,
+        "nota": "leela — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 12,
+        "palavra": 3,
+        "inicio": 52.58,
+        "nota": "kol — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 17,
+        "palavra": 1,
+        "inicio": 77.9,
+        "nota": "di — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 17,
+        "palavra": 2,
+        "inicio": 78.37,
+        "nota": "veatrá — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). dentro do bloco 77.90~78.54 (palavra colada)."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 18,
+        "palavra": 5,
+        "inicio": 88.64,
+        "nota": "chiná — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 18,
+        "palavra": 6,
+        "inicio": 89.74,
+        "nota": "vechisdá — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 19,
+        "palavra": 5,
+        "inicio": 95.84,
+        "nota": "vear-á — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 23,
+        "palavra": 8,
+        "inicio": 123.04,
+        "nota": "amên — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 24,
+        "palavra": 1,
+        "inicio": 124.64,
+        "nota": "Ossê — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 24,
+        "palavra": 3,
+        "inicio": 126.62,
+        "nota": "bimromav — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 25,
+        "palavra": 1,
+        "inicio": 127.88,
+        "nota": "hu — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
+    },
+    {
+      "nussach": "sefaradi_derabanan",
+      "era": {
+        "verso": 25,
+        "palavra": 6,
+        "inicio": 132.78,
+        "nota": "veal — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
+      },
+      "substituida_por": null,
+      "porque": "O audio do sefaradi foi TROCADO em 02/09/2026: o Erez regravou os dois Kadishim para tirar o anuncio do chazan no comeco. A gravacao e outra, com outro andamento, entao o segundo que ele ouviu na gravacao velha nao aponta mais para a mesma palavra. Nao se apaga reparo de ouvido em silencio: cada uma fica registrada aqui, e ele vai ouvir a fita nova."
     }
   ],
   "chabad_derabanan": [
@@ -994,180 +1306,6 @@
       "nota": "amên — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
     }
   ],
-  "sefaradi_yatom": [
-    {
-      "verso": 1,
-      "palavra": 1,
-      "inicio": 0.16,
-      "nota": "Yitgadal — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). Ele pos em 0.03, antes de qualquer voz; a primeira voz do arquivo abre aos 0.16 e e ali que a palavra pode comecar.",
-      "inicio_que_ele_deu": 0.03
-    },
-    {
-      "verso": 3,
-      "palavra": 1,
-      "inicio": 8.74,
-      "nota": "veyamlich — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 4,
-      "palavra": 3,
-      "inicio": 13.78,
-      "nota": "vikarev — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). caiu no silencio; encostei na voz de 13.78 (0.08s adiante).",
-      "inicio_que_ele_deu": 13.7
-    },
-    {
-      "verso": 5,
-      "palavra": 1,
-      "inicio": 16.5,
-      "nota": "bechayechon — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 7,
-      "palavra": 1,
-      "inicio": 23.74,
-      "nota": "baagalá — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 8,
-      "palavra": 3,
-      "inicio": 32.16,
-      "nota": "raba — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 14,
-      "palavra": 1,
-      "inicio": 65.24,
-      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 15,
-      "palavra": 1,
-      "inicio": 69.06,
-      "nota": "chayim — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 19,
-      "palavra": 1,
-      "inicio": 91.98,
-      "nota": "hu — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). caiu no silencio; encostei na voz de 91.98 (0.11s adiante).",
-      "inicio_que_ele_deu": 91.87
-    },
-    {
-      "verso": 19,
-      "palavra": 2,
-      "inicio": 92.8,
-      "nota": "berachamav — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 19,
-      "palavra": 3,
-      "inicio": 94.28,
-      "nota": "yaassê — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 19,
-      "palavra": 6,
-      "inicio": 97.36,
-      "nota": "veal — recado do Erez (recados/2026-08-24-sefaradi_yatom.txt). em cima do comeco de voz."
-    }
-  ],
-  "sefaradi_derabanan": [
-    {
-      "verso": 2,
-      "palavra": 1,
-      "inicio": 4.58,
-      "nota": "bealma — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 8,
-      "palavra": 1,
-      "inicio": 27.88,
-      "nota": "Yehê — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 11,
-      "palavra": 1,
-      "inicio": 43.98,
-      "nota": "veyitaleh — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). caiu no silencio; encostei na voz de 43.98 (0.07s adiante).",
-      "inicio_que_ele_deu": 43.91
-    },
-    {
-      "verso": 11,
-      "palavra": 2,
-      "inicio": 45.26,
-      "nota": "veyithalal — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 12,
-      "palavra": 1,
-      "inicio": 50.74,
-      "nota": "leela — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 12,
-      "palavra": 3,
-      "inicio": 52.58,
-      "nota": "kol — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 17,
-      "palavra": 1,
-      "inicio": 77.9,
-      "nota": "di — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 17,
-      "palavra": 2,
-      "inicio": 78.37,
-      "nota": "veatrá — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). dentro do bloco 77.90~78.54 (palavra colada)."
-    },
-    {
-      "verso": 18,
-      "palavra": 5,
-      "inicio": 88.64,
-      "nota": "chiná — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 18,
-      "palavra": 6,
-      "inicio": 89.74,
-      "nota": "vechisdá — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 19,
-      "palavra": 5,
-      "inicio": 95.84,
-      "nota": "vear-á — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 23,
-      "palavra": 8,
-      "inicio": 123.04,
-      "nota": "amên — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 24,
-      "palavra": 1,
-      "inicio": 124.64,
-      "nota": "Ossê — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 24,
-      "palavra": 3,
-      "inicio": 126.62,
-      "nota": "bimromav — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 25,
-      "palavra": 1,
-      "inicio": 127.88,
-      "nota": "hu — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    },
-    {
-      "verso": 25,
-      "palavra": 6,
-      "inicio": 132.78,
-      "nota": "veal — recado do Erez (recados/2026-08-24-sefaradi_derabanan.txt). em cima do comeco de voz."
-    }
-  ]
+  "sefaradi_yatom": [],
+  "sefaradi_derabanan": []
 }
