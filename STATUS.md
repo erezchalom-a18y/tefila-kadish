@@ -1,6 +1,6 @@
 # STATUS — Kadish
 
-Gerado por `gerar-status.py` no commit `a6c4982`, de 02/09/2026 22:32.
+Gerado por `gerar-status.py` no commit `a6b61d5`, de 02/09/2026 23:10.
 Atualizado sozinho pelo GitHub Actions a cada push na main.
 
 ## As checagens
@@ -30,9 +30,9 @@ Nenhuma das duas altera arquivo nenhum. As duas são opinião de máquina.
 | chabad_derabanan | 119/121 (98.3%) | -0.14s | -0.79s | 2 | 0 | 18 |
 | sefard_yatom | 79/81 (97.5%) | -0.14s | -0.87s | 2 | 3 | 18 |
 | sefard_derabanan | 123/124 (99.2%) | -0.14s | -0.64s | 0 | 3 | 24 |
-| sefaradi_yatom | 87/91 (95.6%) | -0.14s | -0.70s | 4 | 2 | 12 |
-| sefaradi_derabanan | 121/125 (96.8%) | +0.10s | -0.97s | 2 | 0 | 16 |
-| **total** | | | | **11** | **12** | **186** |
+| sefaradi_yatom | 85/91 (93.4%) | -0.14s | -0.70s | 3 | 2 | 0 |
+| sefaradi_derabanan | 111/125 (88.8%) | +0.12s | -0.97s | 6 | 0 | 0 |
+| **total** | | | | **14** | **12** | **186** |
 
 Como ler cada coluna:
 
