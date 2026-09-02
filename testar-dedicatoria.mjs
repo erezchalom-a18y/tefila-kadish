@@ -10,7 +10,10 @@
  * Reprova quando:
  *   - o convite nao aparece com o memorial vazio, ou aparece em portugues
  *     numa das 8 linguas (rotulo de DEDICATORIA + acao de CONVITE);
- *   - ele nao esta antes do primeiro verso;
+ *   - ele nao esta acima do texto, na vaga do .topbar;
+ *   - ele NAO acompanha a rolagem (02/09: a vaga mora no .topbar, que e sticky —
+ *     "o em memoria deve descer junto com a rolagem quando o kadish rola");
+ *   - ele aparece no Modo Treino, ou nao volta ao sair dele (02/09, pedido dele);
  *   - aparecem os DOIS ao mesmo tempo, ou dois de um deles (foi assim que a
  *     versao antiga podia empilhar ao trocar de lingua);
  *   - com nome preenchido o convite nao some;
@@ -28,18 +31,23 @@ const nav = await chromium.launch(
 const linguas = ['pt','en','es','fr','it','de','ru','he'];
 let ruim = 0;
 let textoPt = '';
+// 02/09 — a vaga saiu do #main e passou para dentro do .topbar, que e sticky.
+// Por isso a busca e no documento inteiro, e nao mais dentro do main.
 const ler = (p) => p.evaluate(() => {
-  const main = document.getElementById('main');
-  const conv = main.querySelector('.convite-dedicar');
-  const ded = main.querySelector('.dedicatoria');
-  const primeiro = main.querySelector('.verse');
-  const antesDoVerso = (el) => el && primeiro ? (el.compareDocumentPosition(primeiro) & 4) === 4 : null;
+  const vaga = document.getElementById('dedicatoriaFixa');
+  const conv = document.querySelector('.convite-dedicar');
+  const ded = document.querySelector('.dedicatoria');
+  const primeiro = document.querySelector('#main .verse');
+  const el = conv || ded;
+  const r = el ? el.getBoundingClientRect() : null;
   return {
-    convites: main.querySelectorAll('.convite-dedicar').length,
-    dedicatorias: main.querySelectorAll('.dedicatoria').length,
-    texto: conv ? conv.textContent.trim().replace(/\s+/g,' ') : (ded ? ded.textContent.trim().replace(/\s+/g,' ') : ''),
-    antesDoVerso: antesDoVerso(conv || ded),
+    convites: document.querySelectorAll('.convite-dedicar').length,
+    dedicatorias: document.querySelectorAll('.dedicatoria').length,
+    texto: el ? el.textContent.trim().replace(/\s+/g,' ') : '',
+    antesDoVerso: el && primeiro ? (el.compareDocumentPosition(primeiro) & 4) === 4 : null,
     alturaConv: conv ? Math.round(conv.getBoundingClientRect().height) : 0,
+    naVagaDoTopo: !!(vaga && el && vaga.contains(el)),
+    visivel: !!(r && r.height > 0 && r.bottom > 0 && r.top < innerHeight),
   };
 });
 // A — sem nome: o convite aparece, nas 8, no lugar da dedicatoria
@@ -88,8 +96,34 @@ for (const lg of linguas) {
   ok = r.convites === 1 && r.dedicatorias === 0;
   if (!ok) ruim++;
   console.log((ok?'OK   ':'FALHA') + ` sem nome de novo: ${JSON.stringify(r)}`);
+
+  // C — ele DESCE JUNTO com a rolagem (02/09). Antes disto ele saia da tela com
+  // 400px de rolagem e nao voltava mais.
+  await p.evaluate(() => window.scrollTo(0, 900));
+  await p.waitForTimeout(300);
+  r = await ler(p);
+  ok = r.visivel && r.naVagaDoTopo;
+  if (!ok) ruim++;
+  console.log((ok?'OK   ':'FALHA') + ` depois de rolar 900px continua na tela: ${JSON.stringify({visivel:r.visivel, naVaga:r.naVagaDoTopo})}`);
+  await p.evaluate(() => window.scrollTo(0, 0));
+  await p.waitForTimeout(200);
+
+  // D — e NAO aparece no Modo Treino, mas volta ao sair dele
+  await p.click('#treinoToggle');
+  await p.waitForTimeout(700);
+  r = await ler(p);
+  ok = !r.visivel;
+  if (!ok) ruim++;
+  console.log((ok?'OK   ':'FALHA') + ` no Modo Treino nao aparece: ${JSON.stringify({visivel:r.visivel})}`);
+  await p.click('#rezaToggle');
+  await p.waitForTimeout(700);
+  r = await ler(p);
+  ok = r.visivel;
+  if (!ok) ruim++;
+  console.log((ok?'OK   ':'FALHA') + ` e volta ao sair do Modo Treino: ${JSON.stringify({visivel:r.visivel})}`);
+
   await p.close();
 }
 await nav.close();
-console.log(ruim ? `${ruim} problema(s)` : 'VERDE: o convite ocupa a vaga da dedicatoria, uma vez so, nas 8');
+console.log(ruim ? `${ruim} problema(s)` : 'VERDE: o convite ocupa a vaga da dedicatoria, desce junto com o Kadish, e sai do Treino');
 process.exit(ruim ? 1 : 0);

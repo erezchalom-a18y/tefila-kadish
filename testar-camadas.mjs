@@ -9,6 +9,10 @@
  *
  * Reprova quando:
  *   - a fita nao esta na tela, ou nao tem as tres etiquetas;
+ *   - numa tela CURTA (<=700px de altura) ela nao sai — ali ela nao cabe junto
+ *     com a dedicatoria, e a escolha e explicita: fica a reza, sai o ajuste;
+ *   - numa tela curta o ⚙ nao continua com as tres linhas (o ajuste nao pode
+ *     sumir, so mudar de lugar);
  *   - o rotulo de uma lingua e igual ao do portugues (regra 6);
  *   - o ciclo nao e Normal → Destaque → Ocultar → Normal;
  *   - o corpo da pagina nao acompanha (heb-hidden / focus-heb);
@@ -56,7 +60,7 @@ const ler = (p) => p.evaluate(() => {
 const linguas = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 let rotPt = null;
 for (const lg of linguas) {
-  const p = await navegador.newPage({ viewport: { width: 375, height: 667 } });
+  const p = await navegador.newPage({ viewport: { width: 393, height: 852 } });
   await p.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=${lg}`, { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(1200);
   const r = await ler(p);
@@ -72,7 +76,7 @@ for (const lg of linguas) {
 }
 
 // ------------------------------------------------------------------ o resto
-const p = await navegador.newPage({ viewport: { width: 375, height: 667 } });
+const p = await navegador.newPage({ viewport: { width: 393, height: 852 } });
 await p.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
 await p.waitForTimeout(1500);
 const tocar = async (l) => {
@@ -128,6 +132,24 @@ linha(['heb', 'tr', 'pt'].every(l => novo[l] === 'normal'),
   'aparelho novo abre com as tres em Normal', JSON.stringify(novo));
 
 await p.close();
+
+// ---- tela curta: a fita sai, mas o ajuste continua inteiro no ⚙ ----
+{
+  const q = await navegador.newPage({ viewport: { width: 375, height: 667 } });
+  await q.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
+  await q.waitForTimeout(1200);
+  const r = await q.evaluate(() => {
+    const f = document.getElementById('camadasSwitch');
+    return {
+      fitaVisivel: !!(f && getComputedStyle(f).display !== 'none'),
+      linhasNoAjuste: document.querySelectorAll('.seg-control[data-layer]').length,
+    };
+  });
+  linha(!r.fitaVisivel && r.linhasNoAjuste === 3,
+    'numa tela curta a fita sai e as tres linhas continuam no ⚙', JSON.stringify(r));
+  await q.close();
+}
+
 await navegador.close();
 console.log(falhas ? `\n${falhas} problema(s)` : '\nVERDE: a fita das camadas e o ⚙ dizem a mesma coisa');
 process.exit(falhas ? 1 : 0);
