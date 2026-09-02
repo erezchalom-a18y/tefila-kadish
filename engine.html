@@ -1392,6 +1392,46 @@
     min-height: 30px;
   }
   .tipo-switch .modo-op { letter-spacing: 0.1em; }
+
+  /* ===== A fita das camadas (02/09) =====
+     Ela ocupa a largura toda e quebra para a linha de baixo do .brand — e por
+     isso `flex-basis:100%`, e nao uma media query: quem decide se cabe e o
+     navegador, que sabe a largura da fonte de cada lingua. Medido nas 8: as
+     tres palavras somam 273 a 290px dos 351px uteis de um iPhone SE, entao
+     cabem numa linha em todas.
+     Ela NAO usa .modo-op.active: aqui nao ha "o aceso e onde voce esta" — ha
+     TRES estados por etiqueta, e quem os conta e o data-estado. */
+  /* Linha propria do .topbar, e nao um item dentro do .brand: la dentro ela
+     obrigava um flex-wrap que reorganizava o cabecalho inteiro no celular
+     deitado (79px viravam 85px). Fora, e uma linha e so. */
+  .camadas-linha {
+    display: flex;
+    gap: 6px;
+    padding: 0 20px 6px;
+    flex-wrap: wrap;
+  }
+  .camada-op {
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 5px 10px;
+    font-size: 12px;           /* piso de texto de cabecalho do projeto */
+    min-height: 30px;          /* piso de altura de botao do projeto */
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    opacity: 1;
+  }
+  .camada-op[data-estado="hidden"] {
+    opacity: .45;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+  .camada-op[data-estado="focus"] {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+  /* a fita some no celular DEITADO, como o resto do que nao e a reza; ver a
+     media query la embaixo */
   .trad-switch .modo-op.active,
   .tipo-switch .modo-op.active { background: var(--brass); color: var(--bg); }
   .tipo-switch .modo-op .kt-size {
@@ -1824,6 +1864,22 @@
   .topbar .info-toggle { min-width: 38px !important; min-height: 38px !important; }
 
   /* a altura devolvida: espacamento mais justo no cabecalho */
+  /* 02/09 — no CELULAR o cartao "Por que dizemos o Kadish?" sai, e e ele que
+     paga a fita das camadas: 36px a menos contra 30px a mais, saldo de -6px.
+     A troca e essa, e foi decidida com numero na mao: sem ela a sobra para o
+     Kadish caia de 61% para 57%, abaixo do piso de 60% do projeto, e afrouxar
+     o piso para caber e exatamente o que a regra 3 proibe.
+     A pagina Aprender nao se perde: ganhou uma linha dentro do ℹ, que fica em
+     toda tela. No iPad e no computador o cartao continua. */
+  @media (max-width: 640px) {
+    body:not(.modo-treino) .learn-strip { display: none; }
+    /* E no TREINO quem paga e a faixa do titulo ("Kadish do Enlutado · recitado
+       em pe"): o cartao ja nao existe ali para pagar. Nao se perde nada — a
+       REZA esconde essa faixa em TODA tela desde 27/08, o nome do Kadish esta
+       nas fitas do alto e "recitado em pe" esta no painel da ℹ. */
+    .prayer-meta { display: none !important; }
+  }
+
   @media (max-width: 640px) {
     .brand { padding: 6px 12px 4px !important; row-gap: 4px !important; }
     .brand-right { row-gap: 4px !important; }
@@ -1855,6 +1911,9 @@
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
     .learn-strip { display: none; }
     .kt-size { display: none; }
+    /* A fita das camadas tambem sai deitado: sao 30px de 375, e quem vira o
+       telefone de lado quer LER, nao configurar. Continua no ⚙, e volta em pe. */
+    .camadas-linha { display: none; }
     /* 01/09 — a faixa do titulo ("Kadish do Enlutado · recitado em pe") tambem
        sai AQUI, e so aqui. Ela so aparece no Modo Treino, e no celular deitado
        custava 34px de 375 — a sobra para o Kadish caia de 61% para 52%, abaixo
@@ -1925,6 +1984,21 @@
       </button>
     </div>
   </div>
+  <!-- 02/09 — A TERCEIRA FITA: hebraico · transliteracao · traducao.
+       Pedido dele: "mais uma linha no topo junto com o nussach e tipo de
+       kadish, incluindo as configuracoes do hebraico, traducao e
+       transliteracao". Estavam so dentro do ⚙, e quem nunca abriu o ⚙ nunca
+       soube que da para ocultar ou destacar uma camada.
+       NAO e um botao que troca de nome. Ele descreveu "Hebraico (ocultar)" e
+       eu desaconselhei: e o mesmo defeito de linguagem do "Modo Reza" de
+       28/08 — "(ocultar)" pode ser lido como "esta oculto" ou como "aperte
+       para ocultar", e das duas leituras nao sai qual e o estado. Aqui a
+       PALAVRA nao muda; muda o DESENHO: apagada e riscada = oculta, dourada
+       e maior = em destaque, normal = normal. Zero palavra nova, zero lingua
+       nova — as tres chaves ja existiam nas 8 (layer_hebrew/translit/
+       translation), e desenho nao se traduz. -->
+  <div class="camadas-linha" id="camadasSwitch" role="group" aria-label="Camadas"><button class="modo-op camada-op" data-camada="heb" data-i18n="layer_hebrew">Hebraico</button><button class="modo-op camada-op" data-camada="tr" data-i18n="layer_translit">Transliteração</button><button class="modo-op camada-op" data-camada="pt" data-i18n="layer_translation">Tradução</button></div>
+
   <div class="memorial-strip" id="memorialStrip">
     <div class="mem-eyebrow" data-i18n="in_memory_of">Em memória de</div>
     <div><span class="mem-name" id="memName"></span><span class="mem-heb" id="memHeb"></span></div>
@@ -1975,7 +2049,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-01 · 26';
+const VERSAO = '2026-09-02 · 27';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2200,7 +2274,16 @@ document.addEventListener('DOMContentLoaded', () => {
     <button class="info-close" id="infoClose">×</button>
     <div id="infoCorpo"></div>
 
+    <!-- 02/09 — a porta para o Aprender passa a existir AQUI tambem. No celular
+         o cartao "Por que dizemos o Kadish?" saiu do alto para pagar os 30px da
+         linha das camadas, e ele era o UNICO caminho para o aprender.html: sem
+         esta linha, quem usa telefone ficaria sem a pagina inteira. E o lugar
+         certo — o ℹ e justamente onde se explica a reza. -->
     <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);text-align:center;">
+      <a href="#" id="infoAprender" class="chabad-link" data-i18n="learn_title">Por que dizemos o Kadish?</a>
+    </div>
+
+    <div style="margin-top:14px;text-align:center;">
       <a href="https://www.chabad.org/centers/default_cdo/jewish/Centers.htm" target="_blank" rel="noopener" class="chabad-link" data-i18n="find_chabad">Encontrar Beit Chabad próximo →</a>
     </div>
 
@@ -4488,49 +4571,96 @@ settingsOverlay.addEventListener('click', (e) => {
   if (e.target === settingsOverlay) settingsOverlay.classList.remove('show');
 });
 
-// Each segmented control handles one layer (heb/tr/pt) with 3 states (hidden/normal/focus)
-document.querySelectorAll('.seg-control').forEach(seg => {
-  const layer = seg.dataset.layer; // 'heb', 'tr', or 'pt'
-  seg.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    const state = btn.dataset.state;
-    // Update segment buttons UI
-    seg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    applyLayerState(layer, state);
-  });
+// ============================================================
+// AS CAMADAS — hebraico · transliteracao · traducao
+// ============================================================
+// UMA conta so para "em que estado esta cada camada", lida e escrita por DOIS
+// controles: a fita do alto (02/09) e as tres linhas do ⚙. Se fossem duas
+// contas elas se contradiriam — e esse e o defeito que este projeto ja pagou
+// caro mais de uma vez (o "esta mudo?" de 01/09, as duas contas do fim do
+// passo do treino em 28/08). Quem muda alguma coisa aqui chama aplicarCamada,
+// e quem DESENHA e a pintarCamadas, uma so.
+const CAMADAS = ['heb', 'tr', 'pt'];
+// A ordem do ciclo e dele: Normal → Destaque → Ocultar. Ele tinha proposto
+// comecar pelo ocultar; pular de "sumiu" direto para "esta gritando" e um
+// salto grande, e ele concordou em inverter.
+const CICLO_CAMADA = ['normal', 'focus', 'hidden'];
+const estadoCamada = { heb: 'normal', tr: 'normal', pt: 'normal' };
+
+function pintarCamadas() {
+  for (const l of CAMADAS) {
+    const e = estadoCamada[l];
+    document.body.classList.toggle(`${l}-hidden`, e === 'hidden');
+    document.body.classList.toggle(`focus-${l}`, e === 'focus');
+    const etiqueta = document.querySelector(`.camada-op[data-camada="${l}"]`);
+    if (etiqueta) etiqueta.dataset.estado = e;   // o CSS desenha o estado
+    const seg = document.querySelector(`.seg-control[data-layer="${l}"]`);
+    if (seg) seg.querySelectorAll('button').forEach(b =>
+      b.classList.toggle('active', b.dataset.state === e));
+  }
+  // Guardado no aparelho. Sem isto, quem nao le hebraico teria de ocultar o
+  // hebraico toda vez que abrisse o app — e foi por poder ser uma vez so na
+  // vida que dispensamos a pergunta na entrada.
+  try { localStorage.setItem('tefila_camadas', JSON.stringify(estadoCamada)); } catch (err) {}
+}
+
+function aplicarCamada(camada, estado) {
+  if (!CAMADAS.includes(camada) || !CICLO_CAMADA.includes(estado)) return;
+  // So UMA camada pode estar em destaque: quem entra apaga a anterior.
+  if (estado === 'focus') {
+    for (const l of CAMADAS) if (l !== camada && estadoCamada[l] === 'focus') estadoCamada[l] = 'normal';
+  }
+  estadoCamada[camada] = estado;
+  pintarCamadas();
+}
+
+// O que estava guardado. Quem nunca escolheu abre com as tres em NORMAL — e o
+// unico estado que nao decide pela pessoa: "Destaque" apaga as outras duas
+// para 45%, e quem le hebraico com a transliteracao de apoio abriria o app com
+// o apoio ja meio apagado, sem ter pedido.
+try {
+  const guardado = JSON.parse(localStorage.getItem('tefila_camadas') || '{}');
+  for (const l of CAMADAS) if (CICLO_CAMADA.includes(guardado[l])) estadoCamada[l] = guardado[l];
+} catch (err) {}
+// mesmo com o guardado corrompido a mao, nunca duas em destaque
+let jaTemFoco = false;
+for (const l of CAMADAS) {
+  if (estadoCamada[l] !== 'focus') continue;
+  if (jaTemFoco) estadoCamada[l] = 'normal'; else jaTemFoco = true;
+}
+pintarCamadas();
+
+// A fita do alto: um toque anda o ciclo.
+document.getElementById('camadasSwitch')?.addEventListener('click', (ev) => {
+  const b = ev.target.closest('.camada-op');
+  if (!b) return;
+  const l = b.dataset.camada;
+  const i = CICLO_CAMADA.indexOf(estadoCamada[l]);
+  aplicarCamada(l, CICLO_CAMADA[(i + 1) % CICLO_CAMADA.length]);
 });
 
-function applyLayerState(layer, state) {
-  // Remove all classes for this layer
-  document.body.classList.remove(`${layer}-hidden`, `focus-${layer}`);
-  if (state === 'hidden') {
-    document.body.classList.add(`${layer}-hidden`);
-  } else if (state === 'focus') {
-    // Only one focus at a time — remove other focus classes and reset their segments to normal
-    ['heb', 'tr', 'pt'].forEach(l => {
-      if (l !== layer && document.body.classList.contains(`focus-${l}`)) {
-        document.body.classList.remove(`focus-${l}`);
-        const otherSeg = document.querySelector(`.seg-control[data-layer="${l}"]`);
-        if (otherSeg) {
-          otherSeg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-          otherSeg.querySelector('[data-state="normal"]').classList.add('active');
-        }
-      }
-    });
-    document.body.classList.add(`focus-${layer}`);
-  }
-  // 'normal' state = no classes
-}
+// As tres linhas do ⚙: cada botao pede um estado direto. Mesma funcao.
+document.querySelectorAll('.seg-control[data-layer]').forEach(seg => {
+  seg.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('button');
+    if (btn) aplicarCamada(seg.dataset.layer, btn.dataset.state);
+  });
+});
 
 // Educational overlay
 const infoOverlay = document.getElementById('infoOverlay');
 document.getElementById('infoToggle').addEventListener('click', () => infoOverlay.classList.add('show'));
 // O cartao "Por que dizemos o Kadish?" leva a pagina Aprender, que guarda texto,
 // audio e video. Leva a lingua escolhida junto.
-document.getElementById('learnStrip').addEventListener('click', () => {
+function irParaAprender() {
   location.href = './aprender.html?lang=' + encodeURIComponent(state.lang || 'pt');
+}
+// Dois caminhos, uma conta so: o cartao do alto (que some no celular) e a linha
+// dentro do ℹ (que fica em toda tela) chamam a MESMA funcao.
+document.getElementById('learnStrip').addEventListener('click', irParaAprender);
+document.getElementById('infoAprender')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  irParaAprender();
 });
 document.getElementById('infoClose').addEventListener('click', () => infoOverlay.classList.remove('show'));
 infoOverlay.addEventListener('click', (e) => {

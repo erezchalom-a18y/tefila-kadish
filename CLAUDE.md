@@ -15,6 +15,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   o applyI18n ignora em silêncio a chave que falta, e o português do HTML fica
   na tela sem nada acusar. Foi assim que "Voz do dispositivo" e "Silencioso"
   ficaram em português nas 8 desde sempre.
+- node testar-camadas.mjs → a fita das camadas no alto e as três linhas do ⚙.
+  A pergunta que importa: **os dois dizem a mesma coisa?** Este projeto já pagou
+  caro por duas contas para a mesma pergunta. Confere também o ciclo
+  Normal → Destaque → Ocultar, que só uma camada fica em destaque, que a escolha
+  sobrevive a recarregar, e que aparelho novo abre com as três em Normal.
 - node testar-dedicatoria.mjs → o "Em memória de" e o convite que o substitui
   quando está vazio: aparece nas 8 línguas (e não em português nas 8), fica
   antes do primeiro verso, nunca aparecem os dois, some ao preencher o nome e
@@ -1242,3 +1247,79 @@ memorial vazio, o convite antes do primeiro verso, um só de cada vez, some ao
 preencher e volta ao apagar. E, com dentes na regra 6: fora do português, o
 texto TEM de ser diferente do português — senão a checagem passaria com o
 convite em português nas 8, que é o defeito clássico daqui.
+
+## A fita das camadas no alto (02/09, v27)
+
+Ele: *"gostaria de fazer mais uma linha no topo junto com o nussach e tipo de
+kadish, incluindo as configurações do hebraico, tradução e transliteração"*.
+
+Estavam só dentro do ⚙, e quem nunca abriu o ⚙ nunca soube que dá para ocultar
+ou destacar uma camada.
+
+**A conta da altura, que é o que decide o desenho.** Medi antes de fazer:
+
+| | |
+|---|---|
+| cabeçalho de um iPhone, hoje | 165px (tradição+tipo 72 · Reza\|Treino+idioma+mudo 38 · cartão do Kadish 36) |
+| a fita nova | **~30px** — as três palavras cabem numa linha nas 8 línguas (273 a 290px de 351 úteis) |
+| sobra para o Kadish, somando | **57%** — abaixo do piso de 60% do projeto |
+
+Somar não dava. Afrouxar o piso é o que a regra 3 proíbe. Então a fita **entrou
+trocando, não somando**:
+
+- **na REZA do celular** sai o cartão "Por que dizemos o Kadish?" (36px contra
+  30px: saldo −6px). Ele já saía no Modo Treino e no celular deitado.
+- **no TREINO do celular** sai a faixa `.prayer-meta` — ali o cartão já não
+  existia para pagar. Não se perde nada: a reza esconde essa faixa em TODA tela
+  desde 27/08.
+- **no celular deitado** a fita inteira não aparece: quem vira o telefone de
+  lado quer ler, não configurar. Continua no ⚙.
+- **no iPad e no computador** nada sai; lá sobra altura.
+
+Medido depois: **62%** em pé e **61%** deitado no iPhone SE, nos dois modos.
+
+**A página Aprender ganhou uma segunda porta, dentro do ℹ**, e isso não é
+enfeite: o cartão do alto era o ÚNICO caminho para o `aprender.html`, e escondê-lo
+no celular teria sumido com a página inteira para quem usa telefone. Achei isso
+ao fazer, não ao planejar.
+
+**Não é um botão que troca de nome.** Ele descreveu "Hebraico (ocultar)" e eu
+desaconselhei: é o mesmo defeito de linguagem do "Modo Reza" de 28/08 —
+"(ocultar)" tanto pode ser lido como "está oculto" quanto como "aperte para
+ocultar", e de nenhuma das duas leituras sai qual é o estado. Aqui **a palavra
+não muda; muda o desenho**: apagada e riscada = oculta, dourada = em destaque,
+normal = normal. Zero palavra nova, **zero língua nova** — as três chaves já
+existiam nas 8 (`layer_hebrew` · `layer_translit` · `layer_translation`), e
+desenho não se traduz.
+
+**O ciclo é Normal → Destaque → Ocultar.** Ele tinha proposto começar pelo
+ocultar; pular de "sumiu" direto para "está gritando" é um salto grande, e ele
+concordou em inverter.
+
+**Uma conta só** (`estadoCamada` + `aplicarCamada` + `pintarCamadas`), lida e
+escrita pela fita do alto E pelas três linhas do ⚙. Se fossem duas, elas se
+contradiriam — é o defeito que este projeto já pagou caro mais de uma vez.
+
+**A escolha fica guardada no aparelho** (`tefila_camadas`). Sem isso, quem não lê
+hebraico teria de ocultar o hebraico toda vez que abrisse o app — e foi por poder
+ser uma vez só na vida que dispensamos a pergunta na entrada. Quem nunca escolheu
+abre com **as três em Normal**: "Destaque" apaga as outras duas para 45%, e quem
+lê hebraico com a transliteração de apoio abriria o app com o apoio já meio
+apagado, sem ter pedido.
+
+**Sem pergunta na entrada**, e essa foi a decisão mais importante da rodada. Ele
+perguntou se valia perguntar "você sabe ler em hebraico?" ao abrir. Não vale:
+está escrito no código, por decisão dele, que o app abre direto no Kadish porque
+*"quem abre este app pode ter enterrado o pai ontem, e no minyan não há tempo de
+preencher formulário"*. Uma pergunta antes do Kadish é um formulário antes do
+Kadish. E "não sei ler hebraico" não quer dizer "não quero ver o hebraico" —
+muita gente que não lê as letras quer vê-las assim mesmo. A fita É a pergunta,
+respondida com o dedo, e o resultado aparece na hora.
+
+**Uma armadilha de layout, achada pela checagem.** Na primeira tentativa a fita
+era um item DENTRO do `.brand`, com `flex-basis:100%`. Isso obrigava um
+`flex-wrap` no `.brand` que reorganizava o cabeçalho inteiro: a página passou a
+rolar de lado no iPad e no computador (quatro medidas vermelhas), e no celular
+deitado o cabeçalho subiu de 79px para 85px mesmo com a fita escondida. Agora ela
+é uma **linha própria do `.topbar`**, irmã do `.brand`. Lição velha: mexer no
+`flex-wrap` de um contêiner muda o que os OUTROS filhos fazem.
