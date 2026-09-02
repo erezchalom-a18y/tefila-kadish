@@ -12,6 +12,12 @@
  *   - a pagina rola de lado (nunca deve);
  *   - sobra menos de MIN_LEITURA da altura para o texto do Kadish.
  *
+ * 02/09 — passou a ROLAR a pagina. Ate aqui nenhuma checagem rolava, e por
+ * isso ninguem via que no celular a barra de cima NUNCA grudou: o
+ * `overflow-x: hidden` em html/body a impedia de ser sticky, entao no
+ * computador ela ficava e no iPhone ela ia embora e nao voltava. Mais um
+ * caminho que nenhuma checagem visitava.
+ *
  * 01/09 — ate aqui ele media SO o Modo Reza. Era mais um "caminho que nenhuma
  * checagem visitava": o Modo Treino mostra a faixa .prayer-meta, que a reza
  * esconde, e no iPhone deitado isso derrubava a sobra para 52% — abaixo do
@@ -79,6 +85,22 @@ for (const [nome, largura, altura] of TELAS) {
     };
   });
 
+  // A barra de cima gruda? Rola 900px e pergunta onde ela esta. Um `overflow`
+  // diferente de `visible` num ancestral mata o `position: sticky` sem dizer
+  // nada — e foi assim por muito tempo no celular.
+  const barraGruda = async () => {
+    await pag.evaluate(() => window.scrollTo(0, 900));
+    await pag.waitForTimeout(250);
+    const r = await pag.evaluate(() => {
+      const t = document.querySelector('.topbar');
+      return { topo: Math.round(t.getBoundingClientRect().top), rolagem: Math.round(window.scrollY) };
+    });
+    await pag.evaluate(() => window.scrollTo(0, 0));
+    await pag.waitForTimeout(150);
+    // so vale a pergunta se a pagina rolou mesmo (numa tela alta pode nao rolar)
+    return r.rolagem < 50 || r.topo >= -1;
+  };
+
   const julgar = (r) => {
     const leitura = (r.janela - r.altTopo - r.altBaixo) / r.janela;
     const problemas = [];
@@ -105,6 +127,9 @@ for (const [nome, largura, altura] of TELAS) {
   // e depois de apertar o Treino, no MESMO carregamento
   await pag.click('#treinoToggle');
   await pag.waitForTimeout(600);
+  const grudouNaReza = await barraGruda();
+  if (!grudouNaReza) { falhas++; console.log(`FALHA ${nome} — a barra de cima nao gruda: rolou junto com o texto`); }
+
   const treino = await medir();
   if (!treino.treino) { falhas++; console.log(`FALHA ${nome} — apertar o Treino nao ligou o modo-treino`); }
   const jt = julgar(treino);

@@ -1059,27 +1059,46 @@
     display: block; font-size: 0.9rem; font-style: italic;
     color: var(--text-faint, #8a8070); margin-top: 4px;
   }
+  /* ===== A vaga da dedicatoria, dentro do .topbar (02/09) =====
+     Ela acompanha a rolagem porque o .topbar e sticky. No MODO TREINO nao
+     aparece — pedido dele: quem esta treinando a boca nao esta dedicando. */
+  .dedicatoria-fixa {
+    padding: 0 20px 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .dedicatoria-fixa:empty { display: none; padding: 0; border: 0; }
+  body.modo-treino .dedicatoria-fixa { display: none; }
+  /* dentro da vaga a dedicatoria nao repete o risco de baixo nem o respiro que
+     ela tinha quando rolava junto com o texto */
+  .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
+
   /* O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo.
-     A LETRA e outra, e de proposito (ele: "poderia ser uma fonte mais discreta,
-     fina"). A dedicatoria CHEIA carrega um nome e por isso o rotulo dela e
-     caixa-alta espacada, que pesa; o convite nao carrega nada — e um sussurro.
-     Entao aqui e uma linha so, em Cormorant leve, sem caixa-alta, sem
-     espacamento de letra, sem caixa tracejada e sem risco embaixo. O risco
-     ficaria mais escuro que a propria frase. */
+     A LETRA e Cormorant Garamond, que e a mais elegante das tres do app (as
+     outras sao Lora, do corpo, e Frank Ruhl Libre, do hebraico). Ele pediu duas
+     vezes por ela: primeiro "mais discreta, fina" (01/09) e agora "um pouco
+     mais a fonte, e numa fonte mais elegante" (02/09). Entao: mesma familia,
+     um ponto maior, peso 400 no rotulo — que carrega a frase — e o convite
+     entre parenteses em italico mais leve, que e o que da o ar antigo de
+     dedicatoria de livro. Sem caixa-alta e sem caixa tracejada: a dedicatoria
+     CHEIA e que usa caixa-alta, porque ela carrega um nome. */
   .convite-dedicar {
     display: block; width: 100%; text-align: center;
-    margin: 6px 0 30px; padding: 2px 0;
+    margin: 0; padding: 2px 0;
     background: none; border: 0; cursor: pointer;
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 300; font-size: 0.95rem; line-height: 1.5;
+    line-height: 1.45;
     color: var(--text-faint, #8a8070);
   }
   .convite-dedicar .ded-rotulo,
   .convite-dedicar .conv-acao {
-    display: inline; font-size: inherit; letter-spacing: normal;
+    display: inline; letter-spacing: normal;
     text-transform: none; color: inherit; margin: 0;
   }
-  .convite-dedicar .conv-acao { font-style: italic; opacity: .72; margin-left: .35em; }
+  .convite-dedicar .ded-rotulo { font-size: 1.18rem; font-weight: 400; }
+  .convite-dedicar .conv-acao {
+    font-size: 1.05rem; font-weight: 300; font-style: italic;
+    opacity: .68; margin-left: .4em;
+  }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
      O botao ja existia mas nao liberava um pixel — media 346px de moldura antes
@@ -1149,9 +1168,18 @@
     main { padding: 24px 20px; }
     .audio-controls { gap: 16px; }
 
-    /* === Mobile topbar fix — prevent horizontal overflow === */
-    html, body { overflow-x: hidden; max-width: 100vw; }
-    .topbar { max-width: 100vw; overflow-x: hidden; }
+    /* === Mobile topbar fix — prevent horizontal overflow ===
+       02/09 — era `overflow-x: hidden`, e isso MATAVA o `position: sticky` da
+       barra de cima no celular. Um elemento com overflow diferente de visible
+       vira contêiner de rolagem, e o sticky passa a se prender a ele em vez de
+       a janela: no computador a barra grudava, no iPhone ela rolava para fora
+       e nao voltava mais. Ninguem via porque NENHUMA checagem rolava a pagina —
+       o mesmo caminho-que-ninguem-visita do canPlayType e do temState.
+       `clip` corta igual e NAO cria contêiner de rolagem, entao o sticky
+       continua valendo. O testar-telas.mjs agora rola 900px e cobra que a
+       barra fique. */
+    html, body { overflow-x: clip; max-width: 100vw; }
+    .topbar { max-width: 100vw; overflow-x: clip; }
     .brand {
       padding: 10px 14px 4px;
       gap: 6px;
@@ -1899,6 +1927,21 @@
     .audio-controls { gap: 12px !important; }
   }
 
+  /* ===== TELA CURTA: quem fica e a reza, quem sai e o ajuste (02/09) =====
+     Com a dedicatoria grudada no alto, um iPhone SE (375x667) somava 201px de
+     cabecalho e a sobra para o Kadish caia para 56% — abaixo do piso de 60%.
+     Medi onde havia folga e nao havia: a fita das camadas custa 36px, a
+     dedicatoria 40px, e o resto do cabecalho ja esta no piso de 12px de texto e
+     30px de botao. Nao cabem as duas.
+     Entao a escolha e explicita: a dedicatoria FICA (e a reza, e foi o pedido
+     dele) e a fita das camadas SAI, porque e ajuste — continua inteira dentro
+     do ⚙, que e onde ela sempre esteve. E a mesma regra que ja valia no celular
+     deitado, agora escrita por ALTURA em vez de por orientacao.
+     Medido depois: 61% no iPhone SE em pe, nos dois modos. */
+  @media (max-height: 700px) {
+    .camadas-linha { display: none; }
+  }
+
   /* Deitado no celular sobra pouca altura: o cabecalho encolhe de proposito.
      Nada aqui reduz fonte abaixo de 12px — encolhe espaco, nunca legibilidade. */
   @media (max-height: 460px) and (orientation: landscape) {
@@ -1911,9 +1954,10 @@
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
     .learn-strip { display: none; }
     .kt-size { display: none; }
-    /* A fita das camadas tambem sai deitado: sao 30px de 375, e quem vira o
-       telefone de lado quer LER, nao configurar. Continua no ⚙, e volta em pe. */
-    .camadas-linha { display: none; }
+    /* Deitado num celular a dedicatoria tambem sai: custava 40px de 375 e
+       derrubava a sobra para 51%, abaixo do piso de 60%. Em pe ela volta.
+       (A fita das camadas ja sai pela regra de tela curta, logo abaixo.) */
+    .dedicatoria-fixa { display: none; }
     /* 01/09 — a faixa do titulo ("Kadish do Enlutado · recitado em pe") tambem
        sai AQUI, e so aqui. Ela so aparece no Modo Treino, e no celular deitado
        custava 34px de 375 — a sobra para o Kadish caia de 61% para 52%, abaixo
@@ -1998,6 +2042,17 @@
        nova — as tres chaves ja existiam nas 8 (layer_hebrew/translit/
        translation), e desenho nao se traduz. -->
   <div class="camadas-linha" id="camadasSwitch" role="group" aria-label="Camadas"><button class="modo-op camada-op" data-camada="heb" data-i18n="layer_hebrew">Hebraico</button><button class="modo-op camada-op" data-camada="tr" data-i18n="layer_translit">Transliteração</button><button class="modo-op camada-op" data-camada="pt" data-i18n="layer_translation">Tradução</button></div>
+
+  <!-- 02/09 — A DEDICATORIA PASSA A DESCER JUNTO COM A ROLAGEM.
+       Ele: "o em memoria deve descer junto com a rolagem quando o kadish rola".
+       Medido antes: ela rolava para fora com 400px e nao voltava mais — quem
+       comeca a rezar perde de vista para quem esta rezando. Agora ela mora
+       dentro do .topbar, que ja e `position: sticky`, entao acompanha a
+       rolagem por construcao. E estando no .topbar ela entra na conta do
+       testar-telas.mjs, que mede quanto da tela sobra para o Kadish: fosse um
+       elemento fixo por fora, comeria altura sem nenhuma checagem enxergar.
+       No Modo Treino ela nao aparece (pedido dele) — ver o CSS. -->
+  <div class="dedicatoria-fixa" id="dedicatoriaFixa"></div>
 
   <div class="memorial-strip" id="memorialStrip">
     <div class="mem-eyebrow" data-i18n="in_memory_of">Em memória de</div>
@@ -3687,7 +3742,9 @@ const CONVITE = {
  * ontem e estar de pe no minyan. Uma linha discreta que rola junto com o texto
  * nao fica entre ele e a primeira palavra; um modal ficaria.
  */
-function desenharDedicatoria(main) {
+function vagaDaDedicatoria() { return document.getElementById('dedicatoriaFixa'); }
+
+function desenharDedicatoria(vaga) {
   const m = (typeof loadMemorial === 'function') ? loadMemorial() : null;
   if (!m || !m.name) return;
   const L = (typeof state !== 'undefined' && state.lang) || 'pt';
@@ -3698,10 +3755,10 @@ function desenharDedicatoria(main) {
   el.innerHTML = `<span class="ded-rotulo">${DEDICATORIA[L] || DEDICATORIA.pt}</span>` +
     `<span class="ded-nome">${quem.map(x => x.replace(/[&<>]/g, '')).join(' · ')}</span>` +
     (m.relation ? `<span class="ded-rel">${String(m.relation).replace(/[&<>]/g, '')}</span>` : '');
-  main.prepend(el);
+  vaga.appendChild(el);
 }
 
-function desenharConvite(main) {
+function desenharConvite(vaga) {
   const m = (typeof loadMemorial === 'function') ? loadMemorial() : null;
   if (m && m.name) return;                       // ja tem dedicatoria
   const L = (typeof state !== 'undefined' && state.lang) || 'pt';
@@ -3715,16 +3772,16 @@ function desenharConvite(main) {
     if (ed) ed.click();
     else document.getElementById('setupModal').classList.add('show');
   });
-  main.prepend(b);
+  vaga.appendChild(b);
 }
 
-/** Redesenha so a dedicatoria e o convite — chamada ao trocar de lingua. */
+/** Redesenha so a dedicatoria e o convite — ao trocar de lingua, e ao montar. */
 function atualizarDedicatoria() {
-  const main = document.getElementById('main');
-  if (!main) return;
-  main.querySelectorAll('.dedicatoria, .convite-dedicar').forEach(e => e.remove());
-  desenharDedicatoria(main);   // uma das duas desiste sozinha: ou ha nome, ou nao ha
-  desenharConvite(main);
+  const vaga = vagaDaDedicatoria();
+  if (!vaga) return;
+  vaga.innerHTML = '';
+  desenharDedicatoria(vaga);   // uma das duas desiste sozinha: ou ha nome, ou nao ha
+  desenharConvite(vaga);
 }
 
 function desenharVersos() {
@@ -3732,8 +3789,7 @@ function desenharVersos() {
 
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
-  desenharDedicatoria(main);
-  desenharConvite(main);   // ocupa a mesma vaga quando nao ha nome
+  atualizarDedicatoria();   // a vaga e do .topbar, nao do main
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');

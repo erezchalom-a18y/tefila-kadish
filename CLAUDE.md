@@ -28,6 +28,9 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   (reza e treino, no mesmo carregamento). VERDE nas 14 medidas. Desde 01/09 ele
   aperta o Treino: media só a reza, e por isso ninguém via que no iPhone deitado
   o treino deixava só 52% da tela para o Kadish — abaixo do piso de 60%.
+  Desde 02/09 ele também **ROLA a página 900px e cobra que a barra de cima
+  fique**. Nenhuma checagem rolava, e foi por isso que a barra nunca ter grudado
+  no celular passou despercebido por semanas.
 - node testar-treino.mjs  → Modo Treino e repetição, verso a verso.
 - node testar-revisar.mjs → a página de revisão das línguas (revisar.html).
 - node testar-contador.mjs → o contador geral do Cloudflare, sem gastar nada.
@@ -1323,3 +1326,55 @@ rolar de lado no iPad e no computador (quatro medidas vermelhas), e no celular
 deitado o cabeçalho subiu de 79px para 85px mesmo com a fita escondida. Agora ela
 é uma **linha própria do `.topbar`**, irmã do `.brand`. Lição velha: mexer no
 `flex-wrap` de um contêiner muda o que os OUTROS filhos fazem.
+
+## A dedicatória desce junto com o Kadish (02/09, v28) — e a barra que nunca grudou
+
+Ele, dois pedidos: *"o em memória deve descer junto com a rolagem quando o
+kadish rola (aumentar um pouco mais a fonte e colocar numa fonte mais
+elegante)"* e *"retirar o em memória do modo treino"*.
+
+**Medido antes de mexer:** a dedicatória saía da tela com **400px de rolagem** e
+não voltava mais. Quem começava a rezar perdia de vista para quem estava
+rezando. Agora ela mora dentro do `.topbar`, que já é `position: sticky` — então
+acompanha a rolagem por construção, e por estar no `.topbar` ela **entra na
+conta** do `testar-telas.mjs`. Fosse um elemento fixo por fora, comeria altura
+sem nenhuma checagem enxergar.
+
+**E aí apareceu um defeito velho e grande: no celular a barra de cima NUNCA
+grudou.** O `overflow-x: hidden` em `html, body` — posto como "Mobile topbar fix"
+— faz do corpo um contêiner de rolagem, e um `overflow` diferente de `visible`
+num ancestral **mata o `position: sticky`**, calado. Medido: no computador a
+barra fica em 0 depois de rolar 600px; no iPhone ela vai para −600 e não volta.
+Nussach, tipo, Reza|Treino, idioma, mudo, ⚙, ℹ — tudo sumia e só voltava
+rolando até o topo.
+
+Ninguém via porque **nenhuma das vinte checagens rolava a página**. É o mesmo
+caminho-que-ninguém-visita do `canPlayType` e do `temState`. O conserto é
+`overflow-x: clip`, que corta igual e **não** cria contêiner de rolagem. O
+`testar-telas.mjs` passou a rolar 900px e a cobrar que a barra fique — e sabe
+falhar: repondo o `hidden`, ele acusa as duas telas de celular pelo nome.
+
+**A letra:** Cormorant Garamond, que é a mais elegante das três do app (as outras
+são Lora, do corpo, e Frank Ruhl Libre, do hebraico). Ele pediu por ela duas
+vezes — "mais discreta, fina" em 01/09 e "um pouco mais a fonte, e numa fonte
+mais elegante" agora. Ficou: rótulo em 1,18rem peso 400, o convite entre
+parênteses em 1,05rem itálico leve. É o ar antigo de dedicatória de livro.
+
+**A conta da altura, e uma escolha explícita.** Com a dedicatória grudada, um
+iPhone SE (375×667) somava 201px de cabeçalho e a sobra para o Kadish caía para
+**56%** — abaixo do piso de 60%. Medi onde havia folga e não havia: o resto do
+cabeçalho já está nos pisos de 12px de texto e 30px de botão. Não cabem as duas
+coisas. Então:
+
+> **numa tela curta (≤700px de altura) a dedicatória FICA e a fita das camadas
+> SAI** — porque a dedicatória é a reza e a fita é ajuste, e o ajuste continua
+> inteiro dentro do ⚙, que é onde ele sempre esteve.
+
+É a mesma regra que já valia no celular deitado, agora escrita por ALTURA em vez
+de por orientação. Medido depois: **61%** no iPhone SE em pé, nos dois modos, e
+os telefones maiores (393×852) mantêm as duas coisas com 66%.
+
+**No Modo Treino a dedicatória não aparece**, a pedido dele: quem está treinando
+a boca não está dedicando. Ela volta sozinha ao sair do treino, e o
+`testar-dedicatoria.mjs` cobra as três coisas — continua na tela depois de rolar
+900px, some no Treino, volta na Reza.
