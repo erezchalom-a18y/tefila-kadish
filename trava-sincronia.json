@@ -1,6 +1,6 @@
 {
  "_leia": "A sincronia que o Erez aprovou. Confira com: node trava-sincronia.mjs\nSo se regrava com autorizacao DELE, e o motivo fica no historico abaixo.\nGuarda os tempos de todas as palavras dos 8 e o codigo do modulo SYNC.",
- "gravado_em": "2026-08-30",
+ "gravado_em": "2026-09-02",
  "numeros": {
   "ashkenaz_derabanan": {
    "palavras": 118,
@@ -20,11 +20,11 @@
   },
   "sefaradi_derabanan": {
    "palavras": 125,
-   "marca": "e206ddad97966580"
+   "marca": "1d95d27b9c836be6"
   },
   "sefaradi_yatom": {
    "palavras": 91,
-   "marca": "fb2d01055bfb1dc1"
+   "marca": "ff32fa495d424b04"
   },
   "sefard_derabanan": {
    "palavras": 124,
@@ -40,13 +40,17 @@
   "marca": "f3fab475d5376b93"
  },
  "paradas": {
-  "marca": "0b5a45ea1b02f6e5"
+  "marca": "e6abcb85804649bf"
  },
  "palavras": 815,
  "historico": [
   {
    "data": "2026-08-30",
    "motivo": "a v20, que ele aprovou: 'voltou ao normal, esta perfeito'"
+  },
+  {
+   "data": "2026-09-02",
+   "motivo": "O Erez trocou a gravacao do sefaradi em 02/09 (mandou tirar o anuncio do chazan no comeco) e pediu a sincronia nova para conferir de ouvido na fita. O arquivo de audio e outro, entao os tempos dos dois sefaradi TINHAM de mudar; os outros seis nussachim nao foram tocados. Os tempos novos carregam a sincronia que ele ja aprovou, remapeada da gravacao velha pelo envelope de energia (remapear-gravacao.py). A conferencia dele ainda nao aconteceu: quando ela vier, entra por recado e esta marca e regravada de novo."
   }
  ]
 }

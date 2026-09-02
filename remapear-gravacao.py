@@ -44,7 +44,13 @@ import numpy as np
 import sinal
 
 BANDA = 0.28      # o caminho do DTW nao se afasta mais que 28% da diagonal
-ENCOSTO = 0.15    # encosta no inicio de voz mais proximo ate aqui
+# Encostar no inicio de voz e ASSIMETRICO, e a razao esta escrita no CLAUDE.md
+# (24/08, o purkaneh do chabad_yatom): a voz de uma palavra vem SEMPRE DEPOIS do
+# marcador que caiu no silencio — o rabino ainda nao a disse. Puxar para tras poe
+# o marcador no fio final da voz da vizinha, e tocar a palavra da o rabo da
+# anterior. Sao os mesmos numeros do realinhar-por-conteudo.mjs, de proposito.
+ENCOSTAR = 0.45       # para a frente: ate aqui, a voz e dela
+ENCOSTAR_TRAS = 0.12  # para tras: so um fio
 MIN_DUR = 0.20    # a mesma do realinhar-por-conteudo.mjs
 EPS = 1e-6
 
@@ -129,18 +135,21 @@ def main():
     palavras = [p for v in sync['versos'] for p in v['palavras']]
     ini = np.interp([p['start'] for p in palavras], tv, tn)
 
-    # encosta no inicio de voz mais proximo, quando ha um perto
-    for k, t in enumerate(ini):
-        d = np.abs(onsets - t)
-        if len(d) and d.min() <= ENCOSTO:
-            ini[k] = float(onsets[int(d.argmin())])
-
     fala_ini = float(onsets[0]) if len(onsets) else 0.0
     fala_fim = dur
     ini[0] = fala_ini
-    # tempos subindo, e ninguem mais curto que MIN_DUR
+
+    # Encosta cada palavra num inicio de voz, EM ORDEM e sem passar por cima de
+    # quem ja tomou o lugar. Encostar todas de uma vez punha duas no mesmo bloco,
+    # e a segunda era empurrada para o rabo dele — que e silencio para o ouvido —
+    # com o bloco seguinte vago logo adiante. Andando em fila, a segunda pega o
+    # bloco seguinte, que e onde ela soa.
+    piso = fala_ini + MIN_DUR
     for k in range(1, len(ini)):
-        ini[k] = max(ini[k], ini[k-1] + MIN_DUR)
+        t = ini[k]
+        cabe = onsets[(onsets >= max(piso, t - ENCOSTAR_TRAS)) & (onsets <= t + ENCOSTAR)]
+        ini[k] = float(cabe[np.abs(cabe - t).argmin()]) if len(cabe) else max(t, piso)
+        piso = ini[k] + MIN_DUR
     for k in range(len(ini) - 1, 0, -1):
         teto = (fala_fim if k == len(ini) - 1 else ini[k+1]) - MIN_DUR
         ini[k] = min(ini[k], teto)
