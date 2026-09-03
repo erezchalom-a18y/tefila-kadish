@@ -59,6 +59,9 @@ const nota = (k) => { conta[k] = (conta[k] || 0) + 1; };
 // ויתרומם com mem FINAL, e a decisao simplesmente nao aconteceu. Tudo deu
 // verde e a glosa continuou errada na tela dele.
 const achou = new Set();
+// onde uma decisao mandou mexer na transliteracao de outra lingua; a prova
+// la embaixo cobra que nada tenha mudado FORA desta lista.
+const mexidas = new Set();
 
 for (const d of decisoes) {
   if (d.tipo === 'verso_por_nussach') {
@@ -77,6 +80,21 @@ for (const d of decisoes) {
           if (!w) continue;
           if (p.hebrew) w.hebrew = p.hebrew;
           if (p.transliteration_pt) w.transliteration_pt = p.transliteration_pt;
+          // 04/09 — a transliteracao das OUTRAS linguas tambem pode ser escopada.
+          // Ela vem do documento humano dele (fontes/transliteracao-por-lingua.json),
+          // que e um so para os 8 e por isso nao sabe separar por nussach. Quando o
+          // hebraico diverge entre nussachim — o tsere do ashkenaz e do chabad contra
+          // o patach do sefard e do sefaradi — o documento traz a mesma forma nos oito,
+          // e a linha em portugues passa a discordar da linha em ingles na mesma tela.
+          // Ele mandou consertar: "no ingles deve estar igual porque segue o hebraico".
+          if (p.transliteracoes) {
+            w.transliteracoes = w.transliteracoes || {};
+            for (const [lg, txt] of Object.entries(p.transliteracoes)) {
+              w.transliteracoes[lg] = txt;
+              mexidas.add(`${f}|${v.n}|${p.i}|${lg}`);
+            }
+            nota('§ transliteracao por nussach nas outras linguas');
+          }
         }
         nota(`§ hebraico por nussach (${nussach})`);
       }
@@ -179,6 +197,13 @@ for (const f of arquivos) {
       for (const lg of ['en', 'es', 'fr', 'it', 'de', 'ru', 'he'])
         if (pa.glosas && pb.glosas && pa.glosas[lg] !== pb.glosas[lg])
           falhas.push(`${f} §${va.n}: mudou a glosa em ${lg} — so o portugues pode mudar`);
+      // a transliteracao das outras linguas so pode mudar onde uma decisao MANDOU,
+      // e o lugar exato fica registrado em `mexidas` quando ela e aplicada
+      for (const lg of ['en', 'es', 'fr', 'it', 'ru']) {
+        const x = (pa.transliteracoes || {})[lg], y = (pb.transliteracoes || {})[lg];
+        if (x !== y && !mexidas.has(`${f}|${va.n}|${j}|${lg}`))
+          falhas.push(`${f} §${va.n} palavra ${j + 1}: mudou a transliteracao em ${lg} sem decisao que mandasse`);
+      }
     });
     const somaHeb = vb.palavras.map(p => p.hebrew).join(' ');
     if (somaHeb !== vb.hebrew) falhas.push(`${f} §${va.n}: o verso nao e a soma das palavras (hebraico)`);

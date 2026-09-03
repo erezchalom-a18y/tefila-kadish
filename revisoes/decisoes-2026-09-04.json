@@ -1,0 +1,39 @@
+{
+  "_leia": "Decisao do Erez de 04/09, respondendo a auditoria de 03/09. ESCOPADA: vale so no ashkenaz e no chabad, que sao os dois nussachim em que ele mandou por TSERE em 25/08.",
+  "decisoes": [
+    {
+      "id": "tsere-nas-5",
+      "o_que": "No ashkenaz e no chabad, a transliteracao nas outras cinco linguas passa a seguir o TSERE, como ja seguem o hebraico e o portugues. Nos dois sefard e nos dois sefaradi nada muda: la o hebraico tem patach e as cinco ja estavam certas.",
+      "ele_disse": "04/09, sobre o item 1 da auditoria: 'no ingles deve estar igual porque segue o hebraico'.",
+      "_de_onde_saiu_cada_forma": "Nao inventei grafia. A convencao e a DELE, tirada do proprio documento (fontes/transliteracao-por-lingua.json), onde o som do tsere ja aparece dezenas de vezes: shemê = sh'me / sh'me / ch'mé / шмэ · Ossê = oseh / oseh / ossé / осэ · Yehê = y'he / y'he / yéhé / йехэ. Ou seja: tsere vira 'e' em ingles e espanhol, 'é' em frances e 'э' em russo. Apliquei exatamente isso, mudando SO a vogal e deixando intacto o resto de cada lingua (o 'ch' do ingles, o 'j' do espanhol, o ''h' do frances, o 'х' do russo).",
+      "_o_que_conferir_com_ele": "O frances do veyitpaêr foi o unico em que o documento dele nao tinha caso igual (tsere seguido de consoante). Pus 'véyitpa'ér', marcando o é como ele marca em ch'mé, yéhé, ossé e pourkané.",
+      "tipo": "verso_por_nussach",
+      "chave": "יתברךוישתבחויתפאר",
+      "nussachim": ["ashkenaz", "chabad"],
+      "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
+      "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr",
+      "palavras": [
+        {
+          "i": 0,
+          "transliteracoes": {
+            "en": "yitbarech",
+            "es": "yitbarej",
+            "fr": "yitbaré’h",
+            "it": "yitbarech",
+            "ru": "йитбарэх"
+          }
+        },
+        {
+          "i": 2,
+          "transliteracoes": {
+            "en": "v’yitpa’er",
+            "es": "v’yitpa’er",
+            "fr": "véyitpa’ér",
+            "it": "v’yitpa’er",
+            "ru": "вэйитпаэр"
+          }
+        }
+      ]
+    }
+  ]
+}

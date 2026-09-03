@@ -1,0 +1,291 @@
+{
+  "_leia": "As palavras que o documento de transliteracao do Erez NAO cobre. Ele e de 01/08/2026, tem 3 colunas (sefaradi, ashkenaz, chabad) e so do deRabanan; estas palavras caem nos versos longos do fim, fora do alcance dele. Enquanto estiverem vazias, o app mostra a transliteracao PORTUGUESA no lugar — o que passa despercebido em ingles, espanhol, frances e italiano (mesmo alfabeto) e salta aos olhos em RUSSO, que e cirilico. PARA PREENCHER: escreva em cada campo de lingua e rode node aplicar-transliteracoes.mjs. Quem preenche tem de ser humano: a regra 7 do projeto diz que o modelo nunca escreve transliteracao. Medido em 04/09: uma regra tirada dos 94 pares que ele ja escreveu so reproduz 50% deles, e nenhuma destas 20 aparece na letra dele em lugar nenhum.",
+  "_quantas": {
+    "palavras": 20,
+    "lugares": 41,
+    "urgente": "so o russo"
+  },
+  "palavras": [
+    {
+      "hebraico": "וְאַרְעָא",
+      "portugues": "vear-á",
+      "significado": "e na terra",
+      "onde": [
+        "ashkenaz_derabanan §20",
+        "sefaradi_derabanan §19",
+        "sefard_derabanan §21"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "בְרַחֲמָיו",
+      "portugues": "verachamav",
+      "significado": "em Sua misericórdia",
+      "onde": [
+        "ashkenaz_derabanan §23",
+        "sefaradi_derabanan §25",
+        "sefaradi_yatom §19",
+        "sefard_derabanan §24",
+        "sefard_yatom §16"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "לָנָא",
+      "portugues": "lána",
+      "significado": "para nós",
+      "onde": [
+        "sefaradi_derabanan §18"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "מָרֵא",
+      "portugues": "marê",
+      "significado": "Senhor",
+      "onde": [
+        "sefaradi_derabanan §19"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וְשָׂבָע",
+      "portugues": "vessavá",
+      "significado": "fartura",
+      "onde": [
+        "sefaradi_derabanan §21",
+        "sefaradi_yatom §15"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וִישׁוּעָה",
+      "portugues": "vishuá",
+      "significado": "salvação",
+      "onde": [
+        "sefaradi_derabanan §21",
+        "sefaradi_yatom §15"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וְנֶחָמָה",
+      "portugues": "venechamá",
+      "significado": "consolo",
+      "onde": [
+        "sefaradi_derabanan §21",
+        "sefaradi_yatom §15"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וְשֵׁיזָבָא",
+      "portugues": "veshezavá",
+      "significado": "libertação",
+      "onde": [
+        "sefaradi_derabanan §21",
+        "sefaradi_yatom §15"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וּרְפוּאָה",
+      "portugues": "urfuá",
+      "significado": "cura",
+      "onde": [
+        "sefaradi_derabanan §22",
+        "sefaradi_yatom §16"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וּגְאֻלָּה",
+      "portugues": "ug'ulá",
+      "significado": "redenção",
+      "onde": [
+        "sefaradi_derabanan §22",
+        "sefaradi_yatom §16"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וּסְלִיחָה",
+      "portugues": "usslichá",
+      "significado": "perdão",
+      "onde": [
+        "sefaradi_derabanan §22",
+        "sefaradi_yatom §16"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וְכַפָּרָה",
+      "portugues": "vechapará",
+      "significado": "expiação",
+      "onde": [
+        "sefaradi_derabanan §22",
+        "sefaradi_yatom §16"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וְרֶוַח",
+      "portugues": "verêvach",
+      "significado": "alívio",
+      "onde": [
+        "sefaradi_derabanan §23",
+        "sefaradi_yatom §17"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וְהַצָּלָה",
+      "portugues": "vehatsalá",
+      "significado": "e salvação",
+      "onde": [
+        "sefaradi_derabanan §23",
+        "sefaradi_yatom §17"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "לָנוּ",
+      "portugues": "lanu",
+      "significado": "para nós",
+      "onde": [
+        "sefaradi_derabanan §23",
+        "sefaradi_yatom §17"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וּלְכָל",
+      "portugues": "ulechol",
+      "significado": "e para todo",
+      "onde": [
+        "sefaradi_derabanan §23",
+        "sefaradi_yatom §17"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "עַמּוֹ",
+      "portugues": "amô",
+      "significado": "o Seu povo",
+      "onde": [
+        "sefaradi_derabanan §23",
+        "sefaradi_derabanan §25",
+        "sefaradi_yatom §17",
+        "sefaradi_yatom §19"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "וּמְזוֹנֵי",
+      "portugues": "umezonei",
+      "significado": "e sustento",
+      "onde": [
+        "sefard_derabanan §20"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "רְוִיחֵי",
+      "portugues": "revichei",
+      "significado": "em abundância",
+      "onde": [
+        "sefard_derabanan §20"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    },
+    {
+      "hebraico": "בִשְׁמַיָּא",
+      "portugues": "vishmayá",
+      "significado": "nos céus",
+      "onde": [
+        "sefard_derabanan §21"
+      ],
+      "en": "",
+      "es": "",
+      "fr": "",
+      "it": "",
+      "ru": ""
+    }
+  ]
+}
