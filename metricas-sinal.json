@@ -55,20 +55,20 @@
   },
   "sefaradi_yatom": {
     "palavras": 91,
-    "em_cima_da_voz": 87,
-    "pct": 95.6,
+    "em_cima_da_voz": 86,
+    "pct": 94.5,
     "desvio_global": -0.14,
-    "ganho_do_desvio": 1,
+    "ganho_do_desvio": 2,
     "mediana_distancia": 0.0,
     "palavras_fora": 3
   },
   "sefaradi_derabanan": {
     "palavras": 125,
-    "em_cima_da_voz": 116,
-    "pct": 92.8,
+    "em_cima_da_voz": 115,
+    "pct": 92.0,
     "desvio_global": -0.14,
-    "ganho_do_desvio": 1,
+    "ganho_do_desvio": 2,
     "mediana_distancia": 0.0,
-    "palavras_fora": 6
+    "palavras_fora": 7
   }
 }
