@@ -112,10 +112,27 @@
     return { ano: a, mes: m, dia: abs - absolutoDeGregoriano(a, m, 1) + 1 };
   }
 
-  /** Nome do mes hebraico, ciente de ano bissexto e da lingua da tela. */
+  /**
+   * Nome do mes hebraico, ciente de ano bissexto e da lingua da tela.
+   *
+   * A TABELA TEM TRES ADAR, e e por isso que isto ja errou (03/09):
+   *   indice 11 = 'Adar'  (o unico, de ano comum)
+   *   indice 12 = 'Adar I'
+   *   indice 13 = 'Adar II'
+   * O mes 12 e o Adar de ano comum E o Adar I de ano bissexto; o mes 13 so
+   * existe em ano bissexto e e o Adar II. A conta antiga fazia `tab[mes - 1]`
+   * fora do ano comum, entao num ano de DOIS Adar ela chamava o mes 12 de
+   * "Adar" e o mes 13 de "Adar I" — os dois errados, e o segundo com o nome do
+   * primeiro. A data estava certa; o NOME e que mentia.
+   *
+   * Isto nao e detalhe: a unica diferenca entre o costume ashkenazi e o
+   * sefaradi no yahrzeit e EM QUAL DOS DOIS ADAR se marca. Se o nome do mes
+   * esta trocado, a tela desmente a propria explicacao que da ao lado.
+   */
   function nomeMes(ano, mes, lingua) {
     const tab = MESES_LINGUA[lingua] || MESES;
-    if (!ehBissexto(ano) && mes === 12) return tab[11];
+    if (mes === 13) return tab[13];                          // Adar II
+    if (mes === 12) return ehBissexto(ano) ? tab[12] : tab[11];  // Adar I · Adar
     return tab[mes - 1];
   }
 

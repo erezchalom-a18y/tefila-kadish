@@ -33,6 +33,9 @@ jobs:
       - name: testar-contador.mjs (o contador geral, sem sair do computador)
         run: node testar-contador.mjs
 
+      - name: O calendario hebraico e a data do yahrzeit
+        run: node testar-yahrzeit.mjs
+
       # Estes dois abrem o app num Chromium de verdade. Foram acrescentados
       # depois que dois defeitos passaram pelas checagens de dados e so
       # apareceram na tela: a voz sintetizada no lugar do rabino, e o painel
