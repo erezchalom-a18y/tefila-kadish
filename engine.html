@@ -2104,7 +2104,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-03 · 31';
+const VERSAO = '2026-09-03 · 32';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -5840,8 +5840,14 @@ document.querySelectorAll('.seg-control').forEach(seg => {
     else if (setting === 'language') applyLanguage(value);
     else if (setting === 'tradition') {
       applyTradition(value);
-      // o texto e o audio vem do sync/*.json daquele nussach
-      if (window.SYNC) window.SYNC.trocar(value, null);
+      // O MESMO caminho do botao do alto (03/09). Aqui estava um
+      // `window.SYNC.trocar(value, null)` cru, e por isso trocar de tradicao
+      // DENTRO do engrenagem parava o audio: quem cala, troca, volta ao inicio
+      // e retoma se estava tocando e o trocarKadish, nao o SYNC.trocar. Eram
+      // duas contas para a mesma acao — o defeito de sempre — e nenhuma
+      // checagem passava por aqui: o checar-trocas.mjs so apertava o botao do
+      // alto. Agora ha um caminho so.
+      trocarKadish(value, null);
     }
     else if (setting === 'audiosrc') applyAudioSource(value);
     else if (setting === 'treinocamadas') aplicarCamadasDoTreino(btn.dataset.treino);

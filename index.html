@@ -7,9 +7,26 @@
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <script>
-    // Redirect to engine with nusach parameter (default: chabad)
-    const nusach = new URLSearchParams(window.location.search).get('n') || 'chabad';
-    window.location.href = './engine.html?n=' + encodeURIComponent(nusach);
+    // A PORTA DA FRENTE NAO ESCOLHE O KADISH (03/09).
+    //
+    // Esta linha dizia:
+    //     const nusach = ...get('n') || 'chabad';
+    //     window.location.href = './engine.html?n=' + nusach;
+    //
+    // Ou seja: quem abria o app pelo endereco principal era mandado, sempre,
+    // para ?n=chabad — e no engine.html o ?n= da URL manda MAIS que a escolha
+    // guardada no aparelho (tem de mandar: e assim que os testes e os links
+    // pedem um Kadish especifico). Resultado, e foi o Erez quem viu em 03/09:
+    // ele escolhia Sefaradi, fechava e voltava, e a tela dizia "Sefaradi"
+    // enquanto o audio e o texto eram os do Chabad. O rotulo le a escolha
+    // guardada; o audio lia a URL. DUAS CONTAS PARA A MESMA PERGUNTA — o
+    // defeito que este projeto ja pagou caro mais de uma vez.
+    //
+    // Agora a porta da frente so REPASSA o que lhe deram. Sem ?n=, ela nao
+    // inventa nenhum: quem escolhe e o aparelho (tefila_tradition), e na
+    // primeira vez na vida o engine.html cai no chabad sozinho.
+    const p = new URLSearchParams(window.location.search);
+    window.location.replace('./engine.html' + (p.toString() ? '?' + p.toString() : ''));
   </script>
 </head>
 <body>

@@ -112,6 +112,59 @@ await passo('trocou o TIPO ja no treino', async () => {
   await tocarSeParado();
 });
 
+// ---------- 03/09: TROCAR PELO ENGRENAGEM ----------
+// Havia DOIS caminhos para trocar de tradicao, e so um era medido. O de cima
+// passa pelo trocarKadish (cala, troca, volta ao inicio, retoma se estava
+// tocando); o de dentro do engrenagem chamava o SYNC.trocar cru, e por isso
+// parava o audio. Agora os dois chamam a mesma funcao, e este passo cobra isso.
+await passo('trocou a TRADICAO pelo ⚙, tocando', async () => {
+  await pag.click('#rezaToggle').catch(() => {}); await espera(400);
+  await tocarSeParado(); await espera(800);
+  await pag.click('#settingsBtn').catch(() => {}); await espera(500);
+  await pag.evaluate(() => document
+    .querySelector('.seg-control[data-setting="tradition"] button[data-value="sefaradi"]')?.click());
+  await espera(2000);
+  const parou = await pag.evaluate(() => document.getElementById('audioPlayer').paused);
+  if (parou) { console.log('        (o ⚙ PAROU o audio — o botao do alto nao para)'); falhas++; }
+  await pag.click('#settingsPanel .close, #settingsClose').catch(() => {});
+  await espera(300);
+});
+
+// ---------- 03/09: A PORTA DA FRENTE, E VOLTAR AO APP ----------
+// O defeito que o Erez achou: ele escolhia Sefaradi, saia e voltava, e a tela
+// dizia "Sefaradi" com o audio e o texto do Chabad. O index.html mandava sempre
+// para ?n=chabad, e no engine.html o ?n= da URL manda mais que a escolha
+// guardada no aparelho. O rotulo lia o aparelho; o audio lia a URL.
+//
+// NENHUMA checagem entrava pela porta da frente (todas iam direto ao
+// engine.html com ?n= e ?t=) e NENHUMA recarregava a pagina. E o mesmo
+// caminho-que-ninguem-visita do canPlayType e do temState.
+const olhar = () => pag.evaluate(() => ({
+  rotulo: document.querySelector('#traditionBadge .modo-op.active')?.dataset.trad,
+  tipo: document.querySelector('.tipo-switch .modo-op.active')?.dataset.tipo,
+  audio: (document.getElementById('audioPlayer')?.src || '').split('/tefila-audio/')[1] || '',
+  versos: document.querySelectorAll('.verse').length,
+}));
+for (const [trad, pasta, tipo] of [['sefaradi', 'sefaradi', 'yatom'],
+                                   ['ashkenazi', 'ashkenaz', 'derabanan']]) {
+  await pag.goto(`${BASE}/engine.html`);
+  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 25000 });
+  await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
+  await pag.click(`#traditionBadge [data-trad="${trad}"]`); await espera(1500);
+  await pag.click(tipo === 'derabanan' ? '#kadishDerabananToggle' : '#kadishTypeToggle'); await espera(1500);
+  const antes = await olhar();
+  // sai e volta PELA PORTA DA FRENTE, como ele faz
+  await pag.goto(`${BASE}/index.html`);
+  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 25000 });
+  await espera(1200);
+  const dep = await olhar();
+  const bate = dep.rotulo === trad && dep.audio === `${pasta}/${tipo}.mp3`
+            && dep.versos === antes.versos;
+  console.log(`${bate ? 'OK   ' : 'FALHA'} voltando pela porta da frente em ${trad}/${tipo}: ` +
+    `rotulo=${dep.rotulo} audio=${dep.audio} versos=${dep.versos}`);
+  if (!bate) { falhas++; console.log(`        antes de sair era ${antes.audio} com ${antes.versos} versos`); }
+}
+
 if (erros.length) { console.log(`FALHA erro de console: ${erros[0]}`); falhas++; }
 console.log(falhas ? `\n${falhas} problema(s) nas trocas` : '\nVERDE: as trocas nao dessincronizam');
 await nav.close();
