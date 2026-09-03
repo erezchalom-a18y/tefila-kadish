@@ -46,7 +46,7 @@ const ler = (p) => p.evaluate(() => {
     texto: el ? el.textContent.trim().replace(/\s+/g,' ') : '',
     antesDoVerso: el && primeiro ? (el.compareDocumentPosition(primeiro) & 4) === 4 : null,
     alturaConv: conv ? Math.round(conv.getBoundingClientRect().height) : 0,
-    naVagaDoTopo: !!(vaga && el && vaga.contains(el)),
+    naVagaDoTopo: !!(el && el.closest(".topbar")),
     visivel: !!(r && r.height > 0 && r.bottom > 0 && r.top < innerHeight),
   };
 });
@@ -97,16 +97,38 @@ for (const lg of linguas) {
   if (!ok) ruim++;
   console.log((ok?'OK   ':'FALHA') + ` sem nome de novo: ${JSON.stringify(r)}`);
 
-  // C — ele DESCE JUNTO com a rolagem (02/09). Antes disto ele saia da tela com
-  // 400px de rolagem e nao voltava mais.
+  // C — ele ROLA JUNTO com o Kadish (04/09), e esta pergunta ja mudou duas vezes.
+  //
+  // Ate 01/09 a dedicatoria saia da tela com 400px de rolagem e nao voltava
+  // mais. Em 02/09 ele pediu que ela "descesse junto com a rolagem", e a v28
+  // leu como "tem de ficar sempre a vista": foi para dentro do .topbar, que e
+  // sticky. Com o nome preenchido ela media 98px ali, e num iPhone SE a sobra
+  // para o Kadish caia para 52%, contra o piso de 60% do projeto — defeito que
+  // nenhuma checagem via, porque TODAS rodavam com a dedicatoria vazia.
+  // Em 04/09, com os numeros na mao, ele escolheu: ela sai do cabecalho e volta
+  // ao fluxo do texto, em toda tela. Entao a pergunta certa hoje sao TRES:
+  // aparece inteira ao abrir, sai de vista quando ele rola para rezar, e volta
+  // quando ele sobe. Isso e o oposto do que esta linha cobrava ate ontem — e e
+  // por isso que ela esta escrita por extenso aqui.
+  r = await ler(p);
+  const aoAbrir = r.visivel;
   await p.evaluate(() => window.scrollTo(0, 900));
   await p.waitForTimeout(300);
-  r = await ler(p);
-  ok = r.visivel && r.naVagaDoTopo;
-  if (!ok) ruim++;
-  console.log((ok?'OK   ':'FALHA') + ` depois de rolar 900px continua na tela: ${JSON.stringify({visivel:r.visivel, naVaga:r.naVagaDoTopo})}`);
+  const rolado = await ler(p);
   await p.evaluate(() => window.scrollTo(0, 0));
-  await p.waitForTimeout(200);
+  await p.waitForTimeout(300);
+  const devolta = await ler(p);
+  ok = aoAbrir && !rolado.visivel && devolta.visivel && !rolado.naVagaDoTopo;
+  if (!ok) ruim++;
+  console.log((ok?'OK   ':'FALHA') + ` rola junto com o Kadish: ${JSON.stringify(
+    { aoAbrir, some_ao_rolar: !rolado.visivel, volta_ao_subir: devolta.visivel })}`);
+
+  // e o cabecalho tem de ter DEVOLVIDO a altura: com a dedicatoria fora dele,
+  // nada dela pode continuar preso no alto
+  const noTopo = await p.evaluate(() =>
+    !!document.querySelector('.topbar .dedicatoria-fixa, .topbar .convite-dedicar, .topbar .dedicatoria'));
+  if (noTopo) ruim++;
+  console.log((noTopo?'FALHA':'OK   ') + ' a dedicatoria nao esta mais presa no cabecalho');
 
   // D — e NAO aparece no Modo Treino, mas volta ao sair dele
   await p.click('#treinoToggle');

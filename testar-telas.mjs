@@ -47,9 +47,30 @@ const navegador = await chromium.launch(
 );
 let falhas = 0;
 
-for (const [nome, largura, altura] of TELAS) {
+// 04/09 — MEDIR TAMBEM COM O NOME PREENCHIDO, e isto e a licao da rodada.
+//
+// Ate hoje todas as telas eram medidas com a dedicatoria VAZIA, que e o estado
+// de quem nunca preencheu. Mas o app existe para quem preenche: o "Em memoria
+// de" com nome, nome em hebraico e relacao mede 98px, contra 61px do convite.
+// Enquanto ela morava no cabecalho (v28), isso derrubava a sobra para o Kadish
+// a 52% num iPhone SE — abaixo do piso de 60% — e NENHUMA das dezessete
+// checagens via, porque nenhuma preenchia um nome. O defeito ficou dois dias no
+// ar. E o mesmo caminho-que-ninguem-visita do canPlayType e do temState.
+// Agora cada tela e medida duas vezes: sem nome e com nome.
+const MEMORIAL = { name: 'Itzhak Avraham Cohen', hebrew: 'יִצְחָק אַבְרָהָם בֶּן יוֹסֵף',
+                   relation: 'meu pai', deathDate: '2026-12-10' };
+
+for (const [nomeTela, largura, altura] of TELAS)
+for (const comNome of [false, true]) {
+  const nome = nomeTela + (comNome ? ' · com nome' : '');
   const pag = await navegador.newPage({ viewport: { width: largura, height: altura } });
   await pag.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3`);
+  await pag.waitForTimeout(600);
+  await pag.evaluate((m) => { try {
+      if (m) localStorage.setItem('tefila_memorial', JSON.stringify(m));
+      else localStorage.removeItem('tefila_memorial');
+    } catch (e) {} }, comNome ? MEMORIAL : null);
+  await pag.reload();
   await pag.waitForTimeout(2000);
 
   const medir = () => pag.evaluate(() => {

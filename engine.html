@@ -1067,7 +1067,7 @@
      Ela acompanha a rolagem porque o .topbar e sticky. No MODO TREINO nao
      aparece — pedido dele: quem esta treinando a boca nao esta dedicando. */
   .dedicatoria-fixa {
-    padding: 0 20px 8px;
+    padding: 14px 20px 12px;
     border-bottom: 1px solid var(--rule);
   }
   .dedicatoria-fixa:empty { display: none; padding: 0; border: 0; }
@@ -1914,25 +1914,12 @@
     .audio-controls { gap: 12px !important; }
   }
 
-  /* 04/09 — A FRASE EM CAIXA-ALTA CABE NUMA LINHA SO.
-     O rotulo novo dele ("Em memoria e pela elevacao da alma de:") e uma frase,
-     e em caixa-alta com .14em de espacamento ela mede 343px onde ha 335 — quebra
-     em duas linhas, e as duas linhas mais o convite levavam o cabecalho do
-     iPhone SE a 244px, com 50% de sobra contra o piso de 60%.
-     Medido: a .06em a mesma frase mede 305px e cabe. A LETRA nao muda — mesma
-     familia, mesmo corpo de 0.78rem (12.5px, acima do piso de 12px do projeto);
-     o que aperta e so o espaco ENTRE as letras, e so no celular estreito. No
-     iPad e no computador o espacamento largo fica. */
-  @media (max-width: 430px) {
-    .dedicatoria .ded-rotulo,
-    .convite-dedicar .ded-rotulo { letter-spacing: .06em; margin-bottom: 2px; }
-    /* e mais 10px de ESPACO, nunca de letra: o corpo do rotulo (12.5px) e o do
-       convite (16.8px) ficam onde estao; o que encolhe e o respiro entre eles e
-       embaixo do bloco. Sem isto o iPhone SE fica em 58%, abaixo do piso. */
-    .convite-dedicar .conv-acao { line-height: 1.25; }
-    .convite-dedicar { padding: 0; }
-    .dedicatoria-fixa { padding-bottom: 4px; }
-  }
+  /* 04/09 — os apertos de tela estreita SAIRAM daqui (espacamento de letra a
+     .06em, entrelinhas e respiros menores). Eles existiam porque a dedicatoria
+     morava no cabecalho e cada pixel dela era um pixel a menos de Kadish. Fora
+     do cabecalho nao ha o que pagar: a letra volta inteira, com o espacamento
+     largo de sempre, em toda tela. Num celular estreito a frase do rotulo passa
+     a quebrar em duas linhas, e agora isso nao custa nada — ela rola junto. */
 
   /* ===== TELA CURTA (02/09, reescrito em 04/09) =====
      Este bloco existia para tirar a fita das camadas na tela curta e, depois,
@@ -1954,10 +1941,9 @@
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
     .learn-strip { display: none; }
     .kt-size { display: none; }
-    /* Deitado num celular a dedicatoria tambem sai: custava 40px de 375 e
-       derrubava a sobra para 51%, abaixo do piso de 60%. Em pe ela volta.
-       (A fita das camadas ja sai pela regra de tela curta, logo abaixo.) */
-    .dedicatoria-fixa { display: none; }
+    /* 04/09 — deitado no celular ela VOLTOU. Ela saia daqui porque custava 40px
+       do cabecalho e derrubava a sobra para 51%; agora ela nao esta no
+       cabecalho, entao nao custa altura de leitura nenhuma. */
     /* 01/09 — a faixa do titulo ("Kadish do Enlutado · recitado em pe") tambem
        sai AQUI, e so aqui. Ela so aparece no Modo Treino, e no celular deitado
        custava 34px de 375 — a sobra para o Kadish caia de 61% para 52%, abaixo
@@ -2040,16 +2026,6 @@
        pintarCamadas) fica de pe e continua sendo UMA conta so; a pintarCamadas
        ja era null-safe para a etiqueta que agora nao existe. -->
 
-  <!-- 02/09 — A DEDICATORIA PASSA A DESCER JUNTO COM A ROLAGEM.
-       Ele: "o em memoria deve descer junto com a rolagem quando o kadish rola".
-       Medido antes: ela rolava para fora com 400px e nao voltava mais — quem
-       comeca a rezar perde de vista para quem esta rezando. Agora ela mora
-       dentro do .topbar, que ja e `position: sticky`, entao acompanha a
-       rolagem por construcao. E estando no .topbar ela entra na conta do
-       testar-telas.mjs, que mede quanto da tela sobra para o Kadish: fosse um
-       elemento fixo por fora, comeria altura sem nenhuma checagem enxergar.
-       No Modo Treino ela nao aparece (pedido dele) — ver o CSS. -->
-  <div class="dedicatoria-fixa" id="dedicatoriaFixa"></div>
 
   <div class="memorial-strip" id="memorialStrip">
     <div class="mem-eyebrow" data-i18n="in_memory_of">Em memória de</div>
@@ -2101,7 +2077,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 37';
+const VERSAO = '2026-09-04 · 38';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2367,6 +2343,22 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </div>
+
+<!-- 04/09 — A DEDICATORIA DESCE JUNTO COM O KADISH, EM TODA TELA.
+     Ele pediu isto em 02/09 ("o em memoria deve descer junto com a rolagem
+     quando o kadish rola") e a v28 leu como "tem de ficar sempre a vista":
+     poe-la dentro do .topbar, que e sticky. Media 98px com o nome preenchido,
+     e num iPhone SE (375x667) a sobra para o Kadish caia para 52% — abaixo do
+     piso de 60% do projeto. O defeito estava la desde 02/09 e NENHUMA checagem
+     o via, porque todas rodam com a dedicatoria VAZIA, que mede 61px.
+     Levei os numeros a ele em 04/09 com tres saidas desenhadas, e ele escolheu:
+     "podemos fazer o 1 mas para todas as plataformas" — a dedicatoria sai do
+     cabecalho e volta ao fluxo do texto, no celular, no iPad e no computador.
+     Ela aparece inteira ao abrir, sai de vista quando ele rola para rezar, e
+     volta quando ele sobe. Nada dela some: nome, nome em hebraico e relacao
+     continuam os tres. E o cabecalho devolve os 98px ao Kadish.
+     No Modo Treino continua sem aparecer, que e o pedido dele de 02/09. -->
+<div class="dedicatoria-fixa" id="dedicatoriaFixa"></div>
 
 <main id="main"></main>
 
