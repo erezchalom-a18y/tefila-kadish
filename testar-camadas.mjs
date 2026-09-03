@@ -128,6 +128,40 @@ linha(CAMADAS.every(l => novo[l] === 'normal'),
   'aparelho novo abre com as tres em Normal', JSON.stringify(novo));
 await p.close();
 
+// ---- a limpeza de 04/09: aparelho que ficou com Destaque preso da fita ----
+// O "Destaque" encolhe a transliteracao para 14px e a traducao para 12px, a 45%.
+// Enquanto a fita existia isso era visivel na etiqueta dourada; sem ela, o
+// aparelho ficava com a letra menor e nada na tela dizia por que. O app limpa
+// esse estado UMA vez. Se alguem tirar a limpeza, isto fica vermelho.
+{
+  const q = await navegador.newPage({ viewport: { width: 393, height: 852 } });
+  await q.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
+  await q.waitForTimeout(800);
+  await q.evaluate(() => { try {
+    localStorage.removeItem('tefila_camadas_limpo_0409');
+    localStorage.setItem('tefila_camadas', JSON.stringify({ heb: 'focus', tr: 'normal', pt: 'normal' }));
+  } catch (e) {} });
+  await q.reload({ waitUntil: 'domcontentloaded' });
+  await q.waitForTimeout(1500);
+  const r = await q.evaluate(() => {
+    const g = s => { const e = document.querySelector(s); if (!e) return null;
+      const c = getComputedStyle(e); return { px: c.fontSize, op: c.opacity }; };
+    return { corpo: document.body.className.includes('focus-'), tr: g('.translit'), pt: g('.pt-merged') };
+  });
+  const limpou = !r.corpo && r.tr.op === '1' && r.pt.op === '1';
+  linha(limpou, 'aparelho com Destaque preso da fita volta sozinho para Normal',
+    limpou ? '' : `translit ${JSON.stringify(r.tr)} · traducao ${JSON.stringify(r.pt)}`);
+  // e a escolha NOVA dele continua sendo guardada
+  await q.click('#settingsToggle'); await q.waitForTimeout(300);
+  await q.evaluate(() => document.querySelector('.seg-control[data-layer="tr"] button[data-state="focus"]')?.click());
+  await q.waitForTimeout(200);
+  await q.reload({ waitUntil: 'domcontentloaded' });
+  await q.waitForTimeout(1400);
+  const guardou = await q.evaluate(() => document.body.classList.contains('focus-tr'));
+  linha(guardou, 'e a escolha que ele fizer DEPOIS continua sendo guardada');
+  await q.close();
+}
+
 // ---- tela pequena: o ajuste continua inteiro, e a fita continua fora ----
 {
   const q = await navegador.newPage({ viewport: { width: 375, height: 667 } });

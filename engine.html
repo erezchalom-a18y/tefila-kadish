@@ -2077,7 +2077,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 38';
+const VERSAO = '2026-09-04 · 39';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -4674,6 +4674,33 @@ function aplicarCamada(camada, estado) {
 // unico estado que nao decide pela pessoa: "Destaque" apaga as outras duas
 // para 45%, e quem le hebraico com a transliteracao de apoio abriria o app com
 // o apoio ja meio apagado, sem ter pedido.
+// 04/09 — UMA LIMPEZA, UMA VEZ SO, E ELA TEM DONO: EU.
+//
+// O "Destaque" nao muda so o realce: ele APAGA as outras duas camadas para 45%
+// e encolhe a letra delas — a transliteracao de 18px para 14px e a traducao de
+// 14px para 12px (ver o CSS de body.focus-*). Era visivel porque a fita do alto
+// mostrava, com a etiqueta dourada, qual camada estava em destaque.
+//
+// Em 04/09 ele mandou tirar a fita. Tirei — e com ela sumiu o unico sinal de
+// que uma camada estava em destaque. O aparelho dele tinha o hebraico em
+// Destaque, guardado dali, e ele passou a ver a traducao e a transliteracao
+// menores sem nada na tela explicando por que. Reclamou duas vezes, e tinha
+// razao as duas: medi a v26, a v27 e a v38 em aparelho limpo e as tres dao
+// exatamente 26/18/14 no celular. O codigo nunca encolheu nada; o estado e que
+// ficou preso, e quem o prendeu fui eu ao remover o controle que o mostrava.
+//
+// Entao o app limpa esse estado UMA vez, e so uma: quem ainda nao tem a marca
+// abaixo volta as tres para Normal e ganha a marca. Depois disto o que ele
+// escolher no ⚙ e guardado como sempre foi. Isto nao e "desfazer a escolha de
+// alguem": e devolver ao padrao uma escolha feita num controle que nao existe
+// mais, e o CLAUDE.md manda escrever quando eu crio a armadilha.
+const MARCA_CAMADAS = 'tefila_camadas_limpo_0409';
+try {
+  if (!localStorage.getItem(MARCA_CAMADAS)) {
+    localStorage.removeItem('tefila_camadas');
+    localStorage.setItem(MARCA_CAMADAS, '1');
+  }
+} catch (err) {}
 try {
   const guardado = JSON.parse(localStorage.getItem('tefila_camadas') || '{}');
   for (const l of CAMADAS) if (CICLO_CAMADA.includes(guardado[l])) estadoCamada[l] = guardado[l];
@@ -4685,15 +4712,6 @@ for (const l of CAMADAS) {
   if (jaTemFoco) estadoCamada[l] = 'normal'; else jaTemFoco = true;
 }
 pintarCamadas();
-
-// A fita do alto: um toque anda o ciclo.
-document.getElementById('camadasSwitch')?.addEventListener('click', (ev) => {
-  const b = ev.target.closest('.camada-op');
-  if (!b) return;
-  const l = b.dataset.camada;
-  const i = CICLO_CAMADA.indexOf(estadoCamada[l]);
-  aplicarCamada(l, CICLO_CAMADA[(i + 1) % CICLO_CAMADA.length]);
-});
 
 // As tres linhas do ⚙: cada botao pede um estado direto. Mesma funcao.
 document.querySelectorAll('.seg-control[data-layer]').forEach(seg => {
