@@ -1048,16 +1048,30 @@
     padding-bottom: 18px;
     border-bottom: 1px solid var(--line, #ddd3c0);
   }
-  /* 04/09 — o rotulo VOLTOU a caixa-alta espacada da v28, a pedido dele:
-     "mantendo exatamente igual estava antes, inclusive fontes". Em 03/09 eu o
-     tinha tirado dela por achar que caixa-alta segura um nome e nao uma frase;
-     ele viu na tela e preferiu como estava. Vale ele. */
+  /* 04/09, a palavra final dele — ELEGANTE E MENOR, sem caixa-alta.
+     Este rotulo mudou tres vezes num dia e vale registrar por que, porque a
+     razao esta no que ele foi pedindo:
+       01/09  "uma fonte mais discreta, fina, voce tinha feito uma que estava
+              perfeita"          -> Cormorant Garamond, fina, sem caixa-alta
+       04/09  "mantendo exatamente igual estava antes, inclusive fontes"
+              -> eu li como a caixa-alta espacada da v28 e devolvi
+       04/09  "tinhamos definido que o em memoria ficaria junto com o kadish
+              numa fonte mais elegante e MENOR e rolaria junta"
+              -> a caixa-alta e o oposto disso: em 12,5px ela e pequena no
+                 papel, mas maiuscula + espacamento + centralizada numa tela
+                 larga vira uma faixa que grita mais que o Kadish. A "fonte
+                 mais elegante" das tres do app e a Cormorant Garamond, e e
+                 nela que ele reconheceu "a que estava perfeita".
+     Entao: Cormorant, corpo miudo, sem maiuscula e sem espacamento de letra. */
   .dedicatoria .ded-rotulo {
-    display: block; font-size: 0.78rem; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--text-faint, #8a8070); margin-bottom: 6px;
+    display: block; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.95rem; font-weight: 400; font-style: italic;
+    letter-spacing: normal; text-transform: none;
+    color: var(--text-faint, #8a8070); margin-bottom: 2px;
   }
   .dedicatoria .ded-nome {
-    display: block; font-size: 1.35rem; line-height: 1.4; color: var(--text, #2a1f15);
+    display: block; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.25rem; line-height: 1.35; color: var(--text, #2a1f15);
   }
   .dedicatoria .ded-rel {
     display: block; font-size: 0.9rem; font-style: italic;
@@ -1097,15 +1111,16 @@
      O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, e agora tambem a
      mesma letra — caixa-alta espacada em cima, o convite em Cormorant embaixo,
      no lugar exato em que o nome aparece depois de preenchido. */
+  /* o convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, mesma letra */
   .convite-dedicar .ded-rotulo {
-    display: block; font-family: 'Lora', Georgia, serif;
-    font-size: 0.78rem; font-weight: 400; letter-spacing: .14em;
-    text-transform: uppercase; color: inherit; margin: 0 0 6px;
+    display: block; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.95rem; font-weight: 400; font-style: italic;
+    letter-spacing: normal; text-transform: none; color: inherit; margin: 0 0 2px;
   }
   .convite-dedicar .conv-acao {
     display: block; letter-spacing: normal; text-transform: none;
     color: inherit; margin: 0;
-    font-size: 1.05rem; font-weight: 300; font-style: italic; opacity: .78;
+    font-size: 0.95rem; font-weight: 300; font-style: italic; opacity: .72;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
@@ -2077,7 +2092,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 39';
+const VERSAO = '2026-09-04 · 40';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
