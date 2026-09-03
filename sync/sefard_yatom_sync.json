@@ -977,14 +977,14 @@
       "start": 36.9,
       "end": 41,
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarêch veyishtabach veyitpaar",
+      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
       "translation_pt": "abençoado louvado glorificado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יִתְבָּרַךְ",
-          "transliteration_pt": "Yitbarêch",
+          "transliteration_pt": "Yitbarach",
           "start": 36.9,
           "end": 38.14,
           "glosa_pt": "abençoado",

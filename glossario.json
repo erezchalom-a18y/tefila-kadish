@@ -585,6 +585,14 @@
         "chabad": {
           "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
           "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr"
+        },
+        "sefard": {
+          "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
+          "transliteration_pt": "Yitbarach veyishtabach veyitpaar"
+        },
+        "sefaradi": {
+          "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
+          "transliteration_pt": "Yitbarach veyishtabach veyitpaar"
         }
       }
     },

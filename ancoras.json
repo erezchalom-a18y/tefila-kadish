@@ -1306,6 +1306,38 @@
       "nota": "amên — recado do Erez (recados/2026-08-24-sefard_derabanan.txt). em cima do comeco de voz."
     }
   ],
-  "sefaradi_yatom": [],
-  "sefaradi_derabanan": []
+  "sefaradi_yatom": [
+    {
+      "verso": 2,
+      "palavra": 3,
+      "inicio": 5.3,
+      "nota": "verá — recado do Erez (recados/2026-09-02-sefaradi_yatom.txt). dentro do bloco 5.14~5.74 (palavra colada)."
+    },
+    {
+      "verso": 2,
+      "palavra": 4,
+      "inicio": 5.88,
+      "nota": "chir'utêh — recado do Erez (recados/2026-09-02-sefaradi_yatom.txt). em cima do comeco de voz."
+    }
+  ],
+  "sefaradi_derabanan": [
+    {
+      "verso": 2,
+      "palavra": 3,
+      "inicio": 4.81,
+      "nota": "verá — recado do Erez (recados/2026-09-02-sefaradi_derabanan.txt). dentro do bloco 4.60~5.14 (palavra colada)."
+    },
+    {
+      "verso": 2,
+      "palavra": 4,
+      "inicio": 5.24,
+      "nota": "chir'utêh — recado do Erez (recados/2026-09-02-sefaradi_derabanan.txt). em cima do comeco de voz."
+    },
+    {
+      "verso": 18,
+      "palavra": 2,
+      "inicio": 64.39,
+      "nota": "lána — recado do Erez (recados/2026-09-02-sefaradi_derabanan.txt). dentro do bloco 64.00~64.88 (palavra colada)."
+    }
+  ]
 }

@@ -1,0 +1,19 @@
+{
+  "_leia": "Decisao do Erez de 02/09, conferindo a fita do sefaradi_yatom. Fica aqui, e nao num recado de revisoes/pt-*.txt, porque e ESCOPADA: a chave do recado casa por hebraico SEM NIKUD, e sem nikud as oito grafias sao a mesma palavra — um recado mudaria tambem o ashkenaz e o chabad, que estao certos com o tsere.",
+  "decisoes": [
+    {
+      "id": "tr1",
+      "o_que": "A transliteracao do primeiro Yitbarach do verso passa a ter A, e nao E, nos quatro Kadishim em que o hebraico tem PATACH: os dois sefaradi e os dois sefard. O hebraico NAO muda — ele ja esta com o patach desde 25/08.",
+      "ele_disse": "02/09, depois de conferir a fita do sefaradi_yatom: 'sefaradi yatom feito, um erro na transliteracao o correto e yitbarach nao veitbarech'.",
+      "_porque_nos_quatro": "O defeito nasceu na decisao dele de 25/08 (decisoes-2026-08-25.json, id 1). Ali ele mandou por TSERE no ashkenaz e no chabad e deixar o PATACH no sefard e no sefaradi. O hebraico foi trocado nos dois lados, e a transliteracao do veyitpaar acompanhou o patach — mas a do Yitbarech ficou com o E do ashkenaz nos quatro do patach. Ele apontou no sefaradi_yatom; os outros tres tem o MESMO hebraico com o mesmo patach, entao ficariam contradizendo o proprio nikud. Isto nao amplia a decisao dele: aplica onde a condicao que ele mesmo fixou em 25/08 vale. Se ele quiser so no sefaradi_yatom, e tirar dois nomes desta lista.",
+      "tipo": "verso_por_nussach",
+      "chave": "יתברךוישתבחויתפאר",
+      "nussachim": ["sefard", "sefaradi"],
+      "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
+      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
+      "palavras": [
+        { "i": 0, "transliteration_pt": "Yitbarach" }
+      ]
+    }
+  ]
+}

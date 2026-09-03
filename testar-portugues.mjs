@@ -183,6 +183,32 @@ for (const { d } of escapadas) {
     for (const p of v.palavras) vistos.add(`glosa|${semNikud(p.hebrew)}`);
   }
 }
+// O MESMO vale para a transliteracao, e so em 02/09 fez falta. Ate ali, toda
+// seta de transliteracao ainda tinha ao menos um lugar que nenhuma decisao
+// escapada cobria. Naquele dia o Erez conferiu a fita do sefaradi e disse "o
+// correto e yitbarach nao veitbarech": o יתברך do sefard e do sefaradi passou a
+// ter decisao escapada propria, o do ashkenaz e do chabad ja tinha desde 25/08,
+// e a seta dele de 23/08 ("Yitbarach -> Yitbarêch") ficou sem NENHUM lugar
+// descoberto para valer. Ela nao sumiu nem foi desobedecida — foi inteiramente
+// substituida pela palavra mais nova dele, em cada um dos 8, e as duas decisoes
+// que a substituiram sao cobradas uma a uma logo acima.
+// Isto NAO afrouxa o guarda: ele existe porque uma chave hebraica digitada com
+// letra errada casava com nada e a decisao nao acontecia, em silencio. Nesse
+// caso continua vermelho — chave que nao casa com verso nenhum nao ganha
+// decisao escapada nenhuma, entao nao entra aqui. Provado com chave falsa.
+for (const { d, vale } of escapadas) {
+  if (d.tipo !== 'verso_por_nussach') continue;
+  for (const f of ARQUIVOS) {
+    if (!vale(f)) continue;
+    for (const v of sync[f].versos) {
+      if (semNikud(v.hebrew) !== d.chave) continue;
+      for (const p of (d.palavras || [])) {
+        const w = v.palavras[p.i];
+        if (w) vistos.add(`tl|${semNikud(w.hebrew)}`);
+      }
+    }
+  }
+}
 const orfaos = [...finais.keys()].filter(k => !vistos.has(k));
 confere('toda decisao dele tem onde valer', orfaos.length === 0, orfaos.join(', '));
 

@@ -164,7 +164,7 @@
           "hebrew": "דִּי",
           "transliteration_pt": "di",
           "start": 5.14,
-          "end": 5.88,
+          "end": 5.3,
           "glosa_pt": "que",
           "glosas": {
             "pt": "que",
@@ -188,8 +188,8 @@
           "i": 2,
           "hebrew": "בְרָא",
           "transliteration_pt": "verá",
-          "start": 5.88,
-          "end": 6.22,
+          "start": 5.3,
+          "end": 5.88,
           "glosa_pt": "Ele criou",
           "glosas": {
             "pt": "Ele criou",
@@ -213,7 +213,7 @@
           "i": 3,
           "hebrew": "כִרְעוּתֵהּ",
           "transliteration_pt": "chir'utêh",
-          "start": 6.22,
+          "start": 5.88,
           "end": 7.28,
           "glosa_pt": "de acordo com Sua vontade",
           "glosas": {
@@ -719,7 +719,7 @@
           "hebrew": "וְאִמְרוּ",
           "transliteration_pt": "veimrú",
           "start": 24.1,
-          "end": 25.0,
+          "end": 25,
           "glosa_pt": "e digam",
           "glosas": {
             "pt": "e digam",
@@ -743,7 +743,7 @@
           "i": 4,
           "hebrew": "אָמֵן",
           "transliteration_pt": "Amen",
-          "start": 25.0,
+          "start": 25,
           "end": 26.24,
           "glosa_pt": "Amen",
           "glosas": {
@@ -977,14 +977,14 @@
       "start": 32.28,
       "end": 36.4,
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarêch veyishtabach veyitpaar",
+      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
       "translation_pt": "abençoado louvado glorificado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יִתְבָּרַךְ",
-          "transliteration_pt": "Yitbarêch",
+          "transliteration_pt": "Yitbarach",
           "start": 32.28,
           "end": 33.7,
           "glosa_pt": "abençoado",

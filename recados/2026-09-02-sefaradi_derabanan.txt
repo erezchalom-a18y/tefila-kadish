@@ -1,0 +1,14 @@
+Sincronia — Sefaradi · Derabanan (sefaradi_derabanan)
+3 correção(ões) que eu ouvi e arrastei.
+
+verso 2, palavra 3 (verá)
+   estava: 5.24s
+   ponha em: 4.81s
+
+verso 2, palavra 4 (chir'utêh)
+   estava: 5.64s
+   ponha em: 5.24s
+
+verso 18, palavra 2 (lána)
+   estava: 64.30s
+   ponha em: 64.39s
