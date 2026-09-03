@@ -1,22 +1,26 @@
 /**
- * testar-camadas.mjs — a fita das camadas no alto (hebraico · transliteracao ·
- * traducao) e as tres linhas do ⚙ que dizem a mesma coisa.
+ * testar-camadas.mjs — as tres camadas (hebraico · transliteracao · traducao)
+ * dentro do ⚙, e o texto que tem de acompanhar.
  *
- * Existe porque este projeto ja pagou caro por DUAS CONTAS PARA A MESMA
- * PERGUNTA — o "esta mudo?" de 01/09, as duas contas do fim do passo do treino
- * em 28/08. A fita do alto e o ⚙ mostram o mesmo estado; se um dia se
- * contradisserem, e aqui que fica vermelho.
+ * HISTORIA, porque ela explica o que esta checagem pergunta hoje:
+ * ela nasceu em 02/09 com a v27, quando as camadas ganharam uma FITA no alto da
+ * tela alem das tres linhas do ⚙. A pergunta era "os dois dizem a mesma coisa?",
+ * porque este projeto ja pagou caro por DUAS CONTAS PARA A MESMA PERGUNTA — o
+ * "esta mudo?" de 01/09, as duas contas do fim do passo do treino em 28/08.
+ *
+ * Em 04/09 ele mandou tirar a fita: "gostaria de reverter o que fizemos
+ * incluindo a segunda linha com hebraico traducao e transcricao, mantendo
+ * exatamente igual estava antes, inclusive fontes". Com uma conta so, a pergunta
+ * das duas contas deixou de existir — e a checagem NAO foi apagada por isso:
+ * mudou de pergunta, e ficou mais exigente numa coisa nova (que a fita nao volte
+ * sozinha).
  *
  * Reprova quando:
- *   - a fita nao esta na tela, ou nao tem as tres etiquetas;
- *   - numa tela CURTA (<=700px de altura) ela nao sai — ali ela nao cabe junto
- *     com a dedicatoria, e a escolha e explicita: fica a reza, sai o ajuste;
- *   - numa tela curta o ⚙ nao continua com as tres linhas (o ajuste nao pode
- *     sumir, so mudar de lugar);
+ *   - a fita do alto VOLTAR (ele mandou tirar; se alguem a repuser sem ele
+ *     pedir, isto fica vermelho antes de chegar ao aparelho dele);
+ *   - o ⚙ nao tem as tres linhas, em qualquer tela;
  *   - o rotulo de uma lingua e igual ao do portugues (regra 6);
- *   - o ciclo nao e Normal → Destaque → Ocultar → Normal;
- *   - o corpo da pagina nao acompanha (heb-hidden / focus-heb);
- *   - o ⚙ discorda da fita depois de um toque, ou a fita discorda do ⚙;
+ *   - tocar no ⚙ nao muda o texto (heb-hidden / focus-heb no corpo da pagina);
  *   - duas camadas ficam em destaque ao mesmo tempo;
  *   - a escolha nao sobrevive a recarregar a pagina;
  *   - um aparelho novo nao abre com as tres em Normal.
@@ -27,6 +31,7 @@
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
 const { chromium } = pw.default || pw;
 const BASE = process.argv[2] || 'http://127.0.0.1:8896/tefila-kadish';
+const CAMADAS = ['heb', 'tr', 'pt'];
 
 const navegador = await chromium.launch(
   process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {}
@@ -38,23 +43,26 @@ const linha = (ok, texto, detalhe) => {
 };
 
 const ler = (p) => p.evaluate(() => {
-  const fita = document.getElementById('camadasSwitch');
-  const est = {};
-  const rot = {};
-  const seg = {};
+  const est = {}, rot = {}, corpo = {};
   for (const l of ['heb', 'tr', 'pt']) {
-    const e = fita && fita.querySelector(`.camada-op[data-camada="${l}"]`);
-    est[l] = e ? e.dataset.estado : null;
-    rot[l] = e ? e.textContent.trim() : null;
     const s = document.querySelector(`.seg-control[data-layer="${l}"] button.active`);
-    seg[l] = s ? s.dataset.state : null;
-  }
-  const corpo = {};
-  for (const l of ['heb', 'tr', 'pt'])
+    est[l] = s ? s.dataset.state : null;
+    const r = document.querySelector(`.seg-control[data-layer="${l}"]`);
+    const rotulo = r && r.closest('.settings-row');
+    rot[l] = rotulo ? (rotulo.querySelector('.settings-row-label') || {}).textContent?.trim() : null;
     corpo[l] = document.body.classList.contains(`${l}-hidden`) ? 'hidden'
              : document.body.classList.contains(`focus-${l}`) ? 'focus' : 'normal';
-  return { existe: !!fita, est, rot, seg, corpo };
+  }
+  return { fitaNoAlto: !!document.getElementById('camadasSwitch'),
+           linhasNoAjuste: document.querySelectorAll('.seg-control[data-layer]').length, est, rot, corpo };
 });
+
+const abrirAjustes = async (p) => { await p.click('#settingsToggle'); await p.waitForTimeout(300); };
+const por = async (p, l, estado) => {
+  await p.click(`.seg-control[data-layer="${l}"] button[data-state="${estado}"]`);
+  await p.waitForTimeout(200);
+  return ler(p);
+};
 
 // ---------------------------------------------------------------- as 8 linguas
 const linguas = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
@@ -63,14 +71,16 @@ for (const lg of linguas) {
   const p = await navegador.newPage({ viewport: { width: 393, height: 852 } });
   await p.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=${lg}`, { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(1200);
+  await abrirAjustes(p);
   const r = await ler(p);
   if (lg === 'pt') rotPt = JSON.stringify(r.rot);
-  // regra 6 com dentes: fora do portugues, os rotulos TEM de ser outros.
   const emPortugues = lg !== 'pt' && JSON.stringify(r.rot) === rotPt;
-  const tresNormais = ['heb', 'tr', 'pt'].every(l => r.est[l] === 'normal');
-  linha(r.existe && !emPortugues && tresNormais,
-    `${lg}: a fita esta na tela, nos rotulos da lingua, e abre com as tres em Normal`,
-    !r.existe ? 'a fita nao existe' : emPortugues ? 'os rotulos estao em portugues'
+  const tresNormais = CAMADAS.every(l => r.est[l] === 'normal');
+  linha(r.linhasNoAjuste === 3 && !r.fitaNoAlto && !emPortugues && tresNormais,
+    `${lg}: as tres linhas estao no ⚙, nos rotulos da lingua, e abrem em Normal`,
+    r.fitaNoAlto ? 'a fita do alto VOLTOU — ele mandou tirar em 04/09'
+      : r.linhasNoAjuste !== 3 ? `so ${r.linhasNoAjuste} linha(s) no ⚙`
+      : emPortugues ? 'os rotulos estao em portugues'
       : !tresNormais ? JSON.stringify(r.est) : '');
   await p.close();
 }
@@ -79,46 +89,32 @@ for (const lg of linguas) {
 const p = await navegador.newPage({ viewport: { width: 393, height: 852 } });
 await p.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
 await p.waitForTimeout(1500);
-const tocar = async (l) => {
-  await p.click(`.camada-op[data-camada="${l}"]`);
-  await p.waitForTimeout(150);
-  return ler(p);
-};
+await abrirAjustes(p);
 
-// o ciclo pedido por ele: Normal -> Destaque -> Ocultar -> Normal
-const esperado = ['focus', 'hidden', 'normal'];
-for (const quero of esperado) {
-  const r = await tocar('heb');
-  const combina = r.est.heb === quero && r.corpo.heb === quero && r.seg.heb === quero;
-  linha(combina, `um toque leva o hebraico a "${quero}" — na fita, no texto e no ⚙`,
-    combina ? '' : `fita=${r.est.heb} texto=${r.corpo.heb} ajustes=${r.seg.heb}`);
+// cada estado do ⚙ tem de chegar ao TEXTO — e a mesma conta, nao duas
+for (const quero of ['focus', 'hidden', 'normal']) {
+  const r = await por(p, 'heb', quero);
+  const combina = r.est.heb === quero && r.corpo.heb === quero;
+  linha(combina, `o ⚙ leva o hebraico a "${quero}", e o texto acompanha`,
+    combina ? '' : `ajustes=${r.est.heb} texto=${r.corpo.heb}`);
 }
 
 // so UMA em destaque de cada vez
-await tocar('heb');                       // hebraico em destaque
-const r2 = await tocar('tr');             // transliteracao entra em destaque
+await por(p, 'heb', 'focus');
+const r2 = await por(p, 'tr', 'focus');
 linha(r2.est.tr === 'focus' && r2.est.heb === 'normal' && r2.corpo.heb === 'normal',
   'quando a transliteracao entra em destaque, o hebraico volta a Normal',
   JSON.stringify(r2.est));
 
-// o ⚙ manda na fita tambem — e a mesma conta nos dois sentidos
-await p.click('#settingsToggle');
-await p.waitForTimeout(300);
-await p.click('.seg-control[data-layer="pt"] button[data-state="hidden"]');
-await p.waitForTimeout(200);
-const r3 = await ler(p);
-linha(r3.est.pt === 'hidden' && r3.corpo.pt === 'hidden',
-  'mexer no ⚙ muda a fita do alto (uma conta so, nos dois sentidos)',
-  JSON.stringify({ fita: r3.est.pt, texto: r3.corpo.pt }));
 await p.click('#settingsClose');
 await p.waitForTimeout(200);
 
 // a escolha sobrevive a recarregar: sem isto, quem nao le hebraico teria de
 // ocultar o hebraico toda vez que abrisse o app
-const antes = (await ler(p)).est;
+const antes = (await ler(p)).corpo;
 await p.reload({ waitUntil: 'domcontentloaded' });
 await p.waitForTimeout(1500);
-const depois = (await ler(p)).est;
+const depois = (await ler(p)).corpo;
 linha(JSON.stringify(antes) === JSON.stringify(depois),
   'a escolha continua la depois de recarregar a pagina',
   `antes ${JSON.stringify(antes)} · depois ${JSON.stringify(depois)}`);
@@ -127,29 +123,22 @@ linha(JSON.stringify(antes) === JSON.stringify(depois),
 await p.evaluate(() => { try { localStorage.removeItem('tefila_camadas'); } catch (e) {} });
 await p.reload({ waitUntil: 'domcontentloaded' });
 await p.waitForTimeout(1500);
-const novo = (await ler(p)).est;
-linha(['heb', 'tr', 'pt'].every(l => novo[l] === 'normal'),
+const novo = (await ler(p)).corpo;
+linha(CAMADAS.every(l => novo[l] === 'normal'),
   'aparelho novo abre com as tres em Normal', JSON.stringify(novo));
-
 await p.close();
 
-// ---- tela curta: a fita sai, mas o ajuste continua inteiro no ⚙ ----
+// ---- tela pequena: o ajuste continua inteiro, e a fita continua fora ----
 {
   const q = await navegador.newPage({ viewport: { width: 375, height: 667 } });
   await q.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
   await q.waitForTimeout(1200);
-  const r = await q.evaluate(() => {
-    const f = document.getElementById('camadasSwitch');
-    return {
-      fitaVisivel: !!(f && getComputedStyle(f).display !== 'none'),
-      linhasNoAjuste: document.querySelectorAll('.seg-control[data-layer]').length,
-    };
-  });
-  linha(!r.fitaVisivel && r.linhasNoAjuste === 3,
-    'numa tela curta a fita sai e as tres linhas continuam no ⚙', JSON.stringify(r));
+  const r = await ler(q);
+  linha(!r.fitaNoAlto && r.linhasNoAjuste === 3,
+    'no celular a fita continua fora e as tres linhas continuam no ⚙', JSON.stringify(r.linhasNoAjuste));
   await q.close();
 }
 
 await navegador.close();
-console.log(falhas ? `\n${falhas} problema(s)` : '\nVERDE: a fita das camadas e o ⚙ dizem a mesma coisa');
+console.log(falhas ? `\n${falhas} problema(s)` : '\nVERDE: as tres camadas respondem no ⚙, e a fita nao voltou');
 process.exit(falhas ? 1 : 0);

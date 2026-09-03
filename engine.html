@@ -1048,14 +1048,13 @@
     padding-bottom: 18px;
     border-bottom: 1px solid var(--line, #ddd3c0);
   }
-  /* 03/09 — o rotulo virou uma FRASE ("Em memoria e pela elevacao da alma de:"),
-     e caixa-alta espacada segura um nome, nao uma frase: em caixa-alta ela
-     ocupava duas linhas e gritava mais que o proprio nome. Fica em Cormorant,
-     como o convite, com o nome continuando a ser o que se ve primeiro. */
+  /* 04/09 — o rotulo VOLTOU a caixa-alta espacada da v28, a pedido dele:
+     "mantendo exatamente igual estava antes, inclusive fontes". Em 03/09 eu o
+     tinha tirado dela por achar que caixa-alta segura um nome e nao uma frase;
+     ele viu na tela e preferiu como estava. Vale ele. */
   .dedicatoria .ded-rotulo {
-    display: block; font-family: 'Cormorant Garamond', serif;
-    font-size: 1.02rem; font-weight: 400; letter-spacing: normal;
-    text-transform: none; color: var(--text-faint, #8a8070); margin-bottom: 3px;
+    display: block; font-size: 0.78rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--text-faint, #8a8070); margin-bottom: 6px;
   }
   .dedicatoria .ded-nome {
     display: block; font-size: 1.35rem; line-height: 1.4; color: var(--text, #2a1f15);
@@ -1094,19 +1093,19 @@
     line-height: 1.45;
     color: var(--text-faint, #8a8070);
   }
-  /* 03/09 — DUAS LINHAS, a pedido dele: o rotulo em cima e o convite embaixo,
-     no mesmo lugar em que a dedicatoria CHEIA poe o nome. Antes era uma linha
-     so; com o rotulo novo, que e uma frase inteira, uma linha so quebraria
-     sozinha em lugar feio e diferente em cada lingua. */
-  .convite-dedicar .ded-rotulo,
-  .convite-dedicar .conv-acao {
-    display: block; letter-spacing: normal;
-    text-transform: none; color: inherit; margin: 0;
+  /* DUAS LINHAS (03/09), e o rotulo na MESMA letra da dedicatoria cheia (04/09).
+     O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, e agora tambem a
+     mesma letra — caixa-alta espacada em cima, o convite em Cormorant embaixo,
+     no lugar exato em que o nome aparece depois de preenchido. */
+  .convite-dedicar .ded-rotulo {
+    display: block; font-family: 'Lora', Georgia, serif;
+    font-size: 0.78rem; font-weight: 400; letter-spacing: .14em;
+    text-transform: uppercase; color: inherit; margin: 0 0 6px;
   }
-  .convite-dedicar .ded-rotulo { font-size: 1.02rem; font-weight: 400; }
   .convite-dedicar .conv-acao {
-    font-size: 0.95rem; font-weight: 300; font-style: italic;
-    opacity: .68; margin-top: 1px;
+    display: block; letter-spacing: normal; text-transform: none;
+    color: inherit; margin: 0;
+    font-size: 1.05rem; font-weight: 300; font-style: italic; opacity: .78;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
@@ -1438,35 +1437,6 @@
      cabem numa linha em todas.
      Ela NAO usa .modo-op.active: aqui nao ha "o aceso e onde voce esta" — ha
      TRES estados por etiqueta, e quem os conta e o data-estado. */
-  /* Linha propria do .topbar, e nao um item dentro do .brand: la dentro ela
-     obrigava um flex-wrap que reorganizava o cabecalho inteiro no celular
-     deitado (79px viravam 85px). Fora, e uma linha e so. */
-  .camadas-linha {
-    display: flex;
-    gap: 6px;
-    padding: 0 20px 6px;
-    flex-wrap: wrap;
-  }
-  .camada-op {
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    padding: 5px 10px;
-    font-size: 12px;           /* piso de texto de cabecalho do projeto */
-    min-height: 30px;          /* piso de altura de botao do projeto */
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    opacity: 1;
-  }
-  .camada-op[data-estado="hidden"] {
-    opacity: .45;
-    text-decoration: line-through;
-    text-decoration-thickness: 1px;
-  }
-  .camada-op[data-estado="focus"] {
-    background: var(--brass);
-    color: var(--bg);
-    border-color: var(--brass);
-  }
   /* a fita some no celular DEITADO, como o resto do que nao e a reza; ver a
      media query la embaixo */
   .trad-switch .modo-op.active,
@@ -1909,6 +1879,14 @@
      A pagina Aprender nao se perde: ganhou uma linha dentro do ℹ, que fica em
      toda tela. No iPad e no computador o cartao continua. */
   @media (max-width: 640px) {
+    /* 04/09 — o cartao "Por que dizemos o Kadish?" CONTINUA fora do celular na
+       reza, e a conta e que manda. Com a fita das camadas removida eu o tinha
+       devolvido; medido no iPhone SE (375x667), ele custa 36px e a sobra para o
+       Kadish caia para 50%, contra o piso de 60% do projeto. Afrouxar o piso e
+       o que a regra 3 proibe, e o pedido dele era sobre a FITA e sobre a LETRA,
+       nao sobre este cartao — que ele nao viu no celular nos ultimos dois dias
+       e nao reclamou. A pagina Aprender continua a um toque, dentro do ℹ, em
+       toda tela. Devolve-lo e apagar esta linha, se ele pedir. */
     body:not(.modo-treino) .learn-strip { display: none; }
     /* E no TREINO quem paga e a faixa do titulo ("Kadish do Enlutado · recitado
        em pe"): o cartao ja nao existe ali para pagar. Nao se perde nada — a
@@ -1936,37 +1914,33 @@
     .audio-controls { gap: 12px !important; }
   }
 
-  /* ===== TELA CURTA: quem fica e a reza, quem sai e o ajuste (02/09) =====
-     Com a dedicatoria grudada no alto, um iPhone SE (375x667) somava 201px de
-     cabecalho e a sobra para o Kadish caia para 56% — abaixo do piso de 60%.
-     Medi onde havia folga e nao havia: a fita das camadas custa 36px, a
-     dedicatoria 40px, e o resto do cabecalho ja esta no piso de 12px de texto e
-     30px de botao. Nao cabem as duas.
-     Entao a escolha e explicita: a dedicatoria FICA (e a reza, e foi o pedido
-     dele) e a fita das camadas SAI, porque e ajuste — continua inteira dentro
-     do ⚙, que e onde ela sempre esteve. E a mesma regra que ja valia no celular
-     deitado, agora escrita por ALTURA em vez de por orientacao.
-     Medido depois: 61% no iPhone SE em pe, nos dois modos. */
-  @media (max-height: 700px) {
-    .camadas-linha { display: none; }
-    /* 03/09 — o rotulo virou uma frase em DUAS linhas, a pedido dele, e o bloco
-       da dedicatoria passou de 40px para 60px. Num iPhone SE (375x667) isso
-       derrubou a sobra para o Kadish de 61% para 58%, abaixo do piso de 60%.
-       A fita das camadas ja saiu aqui em cima; nao ha mais nada no cabecalho
-       que seja ajuste em vez de reza. Entao os 18px vem de APERTAR, nao de
-       tirar: entrelinha 1.2 em vez de 1.45 e uma letra menor — 14.7px e 13.6px,
-       que continuam bem acima do piso de 12px do projeto. Em tela alta a letra
-       maior fica como ele pediu. Medido depois: 61% no iPhone SE em pe. */
-    .convite-dedicar { line-height: 1.2; }
-    .convite-dedicar .ded-rotulo { font-size: 0.92rem; }
-    .convite-dedicar .conv-acao { font-size: 0.85rem; }
-    .dedicatoria .ded-rotulo { font-size: 0.92rem; line-height: 1.2; margin-bottom: 1px; }
-    .dedicatoria .ded-nome { font-size: 1.15rem; line-height: 1.25; }
-    /* e mais 3px de respiro embaixo, para nao ficar EXATAMENTE em cima do piso
-       de 60%: parado no fio, qualquer pixel que mude em qualquer lugar do
-       cabecalho derruba a checagem. */
-    .dedicatoria-fixa { padding-bottom: 5px; }
+  /* 04/09 — A FRASE EM CAIXA-ALTA CABE NUMA LINHA SO.
+     O rotulo novo dele ("Em memoria e pela elevacao da alma de:") e uma frase,
+     e em caixa-alta com .14em de espacamento ela mede 343px onde ha 335 — quebra
+     em duas linhas, e as duas linhas mais o convite levavam o cabecalho do
+     iPhone SE a 244px, com 50% de sobra contra o piso de 60%.
+     Medido: a .06em a mesma frase mede 305px e cabe. A LETRA nao muda — mesma
+     familia, mesmo corpo de 0.78rem (12.5px, acima do piso de 12px do projeto);
+     o que aperta e so o espaco ENTRE as letras, e so no celular estreito. No
+     iPad e no computador o espacamento largo fica. */
+  @media (max-width: 430px) {
+    .dedicatoria .ded-rotulo,
+    .convite-dedicar .ded-rotulo { letter-spacing: .06em; margin-bottom: 2px; }
+    /* e mais 10px de ESPACO, nunca de letra: o corpo do rotulo (12.5px) e o do
+       convite (16.8px) ficam onde estao; o que encolhe e o respiro entre eles e
+       embaixo do bloco. Sem isto o iPhone SE fica em 58%, abaixo do piso. */
+    .convite-dedicar .conv-acao { line-height: 1.25; }
+    .convite-dedicar { padding: 0; }
+    .dedicatoria-fixa { padding-bottom: 4px; }
   }
+
+  /* ===== TELA CURTA (02/09, reescrito em 04/09) =====
+     Este bloco existia para tirar a fita das camadas na tela curta e, depois,
+     para apertar a letra da dedicatoria em duas linhas. Em 04/09 ele mandou
+     tirar a fita do alto de vez, e com ela fora o cabecalho devolveu 30px:
+     nao ha mais nada a apertar aqui. A letra da dedicatoria volta a ser a
+     mesma em toda tela, que e o "inclusive fontes" do pedido dele.
+     Medido depois: 62% no iPhone SE em pe, nos dois modos. */
 
   /* Deitado no celular sobra pouca altura: o cabecalho encolhe de proposito.
      Nada aqui reduz fonte abaixo de 12px — encolhe espaco, nunca legibilidade. */
@@ -2054,20 +2028,17 @@
       </button>
     </div>
   </div>
-  <!-- 02/09 — A TERCEIRA FITA: hebraico · transliteracao · traducao.
-       Pedido dele: "mais uma linha no topo junto com o nussach e tipo de
-       kadish, incluindo as configuracoes do hebraico, traducao e
-       transliteracao". Estavam so dentro do ⚙, e quem nunca abriu o ⚙ nunca
-       soube que da para ocultar ou destacar uma camada.
-       NAO e um botao que troca de nome. Ele descreveu "Hebraico (ocultar)" e
-       eu desaconselhei: e o mesmo defeito de linguagem do "Modo Reza" de
-       28/08 — "(ocultar)" pode ser lido como "esta oculto" ou como "aperte
-       para ocultar", e das duas leituras nao sai qual e o estado. Aqui a
-       PALAVRA nao muda; muda o DESENHO: apagada e riscada = oculta, dourada
-       e maior = em destaque, normal = normal. Zero palavra nova, zero lingua
-       nova — as tres chaves ja existiam nas 8 (layer_hebrew/translit/
-       translation), e desenho nao se traduz. -->
-  <div class="camadas-linha" id="camadasSwitch" role="group" aria-label="Camadas"><button class="modo-op camada-op" data-camada="heb" data-i18n="layer_hebrew">Hebraico</button><button class="modo-op camada-op" data-camada="tr" data-i18n="layer_translit">Transliteração</button><button class="modo-op camada-op" data-camada="pt" data-i18n="layer_translation">Tradução</button></div>
+  <!-- 04/09 — A FITA DAS CAMADAS SAIU DAQUI.
+       Ela entrou na v27 a pedido dele ("mais uma linha no topo junto com o
+       nussach e tipo de kadish") e saiu a pedido dele, em 04/09: "gostaria de
+       reverter o que fizemos incluindo a segunda linha com hebraico traducao e
+       transcricao, mantendo exatamente igual estava antes, inclusive fontes".
+       As tres camadas continuam INTEIRAS dentro do ⚙, que e onde sempre
+       estiveram — hebraico, transliteracao e traducao, com o mesmo ciclo
+       Normal -> Destaque -> Ocultar e a mesma memoria no aparelho. O que saiu
+       foi so o atalho no alto. O codigo (estadoCamada, aplicarCamada,
+       pintarCamadas) fica de pe e continua sendo UMA conta so; a pintarCamadas
+       ja era null-safe para a etiqueta que agora nao existe. -->
 
   <!-- 02/09 — A DEDICATORIA PASSA A DESCER JUNTO COM A ROLAGEM.
        Ele: "o em memoria deve descer junto com a rolagem quando o kadish rola".
@@ -2130,7 +2101,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 36';
+const VERSAO = '2026-09-04 · 37';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
