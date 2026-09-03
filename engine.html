@@ -1048,9 +1048,14 @@
     padding-bottom: 18px;
     border-bottom: 1px solid var(--line, #ddd3c0);
   }
+  /* 03/09 — o rotulo virou uma FRASE ("Em memoria e pela elevacao da alma de:"),
+     e caixa-alta espacada segura um nome, nao uma frase: em caixa-alta ela
+     ocupava duas linhas e gritava mais que o proprio nome. Fica em Cormorant,
+     como o convite, com o nome continuando a ser o que se ve primeiro. */
   .dedicatoria .ded-rotulo {
-    display: block; font-size: 0.78rem; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--text-faint, #8a8070); margin-bottom: 6px;
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.02rem; font-weight: 400; letter-spacing: normal;
+    text-transform: none; color: var(--text-faint, #8a8070); margin-bottom: 3px;
   }
   .dedicatoria .ded-nome {
     display: block; font-size: 1.35rem; line-height: 1.4; color: var(--text, #2a1f15);
@@ -1089,15 +1094,19 @@
     line-height: 1.45;
     color: var(--text-faint, #8a8070);
   }
+  /* 03/09 — DUAS LINHAS, a pedido dele: o rotulo em cima e o convite embaixo,
+     no mesmo lugar em que a dedicatoria CHEIA poe o nome. Antes era uma linha
+     so; com o rotulo novo, que e uma frase inteira, uma linha so quebraria
+     sozinha em lugar feio e diferente em cada lingua. */
   .convite-dedicar .ded-rotulo,
   .convite-dedicar .conv-acao {
-    display: inline; letter-spacing: normal;
+    display: block; letter-spacing: normal;
     text-transform: none; color: inherit; margin: 0;
   }
-  .convite-dedicar .ded-rotulo { font-size: 1.18rem; font-weight: 400; }
+  .convite-dedicar .ded-rotulo { font-size: 1.02rem; font-weight: 400; }
   .convite-dedicar .conv-acao {
-    font-size: 1.05rem; font-weight: 300; font-style: italic;
-    opacity: .68; margin-left: .4em;
+    font-size: 0.95rem; font-weight: 300; font-style: italic;
+    opacity: .68; margin-top: 1px;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
@@ -1940,6 +1949,23 @@
      Medido depois: 61% no iPhone SE em pe, nos dois modos. */
   @media (max-height: 700px) {
     .camadas-linha { display: none; }
+    /* 03/09 — o rotulo virou uma frase em DUAS linhas, a pedido dele, e o bloco
+       da dedicatoria passou de 40px para 60px. Num iPhone SE (375x667) isso
+       derrubou a sobra para o Kadish de 61% para 58%, abaixo do piso de 60%.
+       A fita das camadas ja saiu aqui em cima; nao ha mais nada no cabecalho
+       que seja ajuste em vez de reza. Entao os 18px vem de APERTAR, nao de
+       tirar: entrelinha 1.2 em vez de 1.45 e uma letra menor — 14.7px e 13.6px,
+       que continuam bem acima do piso de 12px do projeto. Em tela alta a letra
+       maior fica como ele pediu. Medido depois: 61% no iPhone SE em pe. */
+    .convite-dedicar { line-height: 1.2; }
+    .convite-dedicar .ded-rotulo { font-size: 0.92rem; }
+    .convite-dedicar .conv-acao { font-size: 0.85rem; }
+    .dedicatoria .ded-rotulo { font-size: 0.92rem; line-height: 1.2; margin-bottom: 1px; }
+    .dedicatoria .ded-nome { font-size: 1.15rem; line-height: 1.25; }
+    /* e mais 3px de respiro embaixo, para nao ficar EXATAMENTE em cima do piso
+       de 60%: parado no fio, qualquer pixel que mude em qualquer lugar do
+       cabecalho derruba a checagem. */
+    .dedicatoria-fixa { padding-bottom: 5px; }
   }
 
   /* Deitado no celular sobra pouca altura: o cabecalho encolhe de proposito.
@@ -2104,7 +2130,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-03 · 34';
+const VERSAO = '2026-09-03 · 35';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3713,9 +3739,20 @@ function normalizeVerseToSingleWords(v) {
 // deste arquivo).
 // "Em memoria de", nas 8 linguas. Sao textos de interface, nao liturgia — mas o
 // hebraico usa a formula corrente (לזכר נשמת) e vale confirmar com o rabino.
+// 03/09 — ele trocou o rotulo: "Em memoria e pela elevacao da alma de:", e o
+// nome (ou o convite) na linha de baixo. As palavras em PORTUGUES sao dele; as
+// outras sete sao traducao, como todo o resto desta tela.
+// Ele escreveu "alma de" com acento ("dê"); li como o "de" da frase, que e o que
+// a frase pede. Se ele quis outra coisa, e um caractere aqui.
 const DEDICATORIA = {
-  pt: 'Em memória de', en: 'In memory of', es: 'En memoria de', fr: 'À la mémoire de',
-  it: 'In memoria di', de: 'Zum Andenken an', ru: 'В память о', he: 'לְזֵכֶר נִשְׁמַת',
+  pt: 'Em memória e pela elevação da alma de:',
+  en: 'In memory and for the elevation of the soul of:',
+  es: 'En memoria y por la elevación del alma de:',
+  fr: 'À la mémoire et pour l’élévation de l’âme de :',
+  it: 'In memoria e per l’elevazione dell’anima di:',
+  de: 'Zum Andenken und zur Erhebung der Seele von:',
+  ru: 'В память и за возвышение души:',
+  he: 'לְזֵכֶר וּלְעִלּוּי נִשְׁמַת',
 };
 // 01/09 — o convite era uma caixa tracejada no FIM do texto dizendo "dedicar
 // este Kadish a alguem". Quem nunca rolou ate la nunca soube que existia. Ele
@@ -3725,10 +3762,10 @@ const DEDICATORIA = {
 // esta linha. Quem le entende de uma vez o que aquilo vira depois de preenchido.
 // So o que esta entre parenteses e novo — o resto ja existia.
 const CONVITE = {
-  pt: 'clique aqui para incluir', en: 'click here to add a name',
-  es: 'haga clic aquí para incluir', fr: 'cliquez ici pour ajouter',
-  it: 'clicca qui per aggiungere', de: 'hier klicken zum Hinzufügen',
-  ru: 'нажмите, чтобы добавить', he: 'לחצו כאן להוספה',
+  pt: 'clique aqui e inclua o nome', en: 'click here and add the name',
+  es: 'haga clic aquí e incluya el nombre', fr: 'cliquez ici et ajoutez le nom',
+  it: 'clicca qui e aggiungi il nome', de: 'hier klicken und den Namen eintragen',
+  ru: 'нажмите здесь и впишите имя', he: 'לחצו כאן והוסיפו את השם',
 };
 
 /**
