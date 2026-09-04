@@ -1066,13 +1066,13 @@
      Entao: Cormorant, corpo miudo, sem maiuscula e sem espacamento de letra. */
   .dedicatoria .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.85rem; font-weight: 400; font-style: italic;
+    font-size: 1rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none;
     color: var(--text-faint, #8a8070); margin-bottom: 1px;
   }
   .dedicatoria .ded-nome {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.05rem; line-height: 1.3; color: var(--text, #2a1f15);
+    font-size: 1.35rem; line-height: 1.3; color: var(--text, #2a1f15);
   }
   .dedicatoria .ded-rel {
     display: block; font-size: 0.9rem; font-style: italic;
@@ -1117,15 +1117,20 @@
      do texto, entao nao custa altura de leitura nenhuma: esta na tela quando
      ele abre o app e sobe junto quando ele comeca a rezar. */
   .nota-minyan {
-    max-width: 30em; margin: 0 auto 26px; padding: 10px 16px;
+    max-width: 40em; margin: 0 auto 26px; padding: 10px 18px;
     border: 1px solid var(--line, #c9b894);
     border-left: 4px solid var(--brass, #8b6a3e);
     border-radius: 10px;
     background: rgba(212, 162, 90, 0.10);
     text-align: center;
   }
-  .nota-minyan span { display: block; font-size: 14px; line-height: 1.5; color: var(--text-soft, #4d3d2d); }
-  .nota-minyan span + span { margin-top: 2px; color: var(--brass, #8b6a3e); }
+  /* 04/09 — as duas frases na MESMA linha, a pedido dele: "e e recitado de pe
+     pode ficar na mesma linha". Sao `inline`, entao correm como uma frase so e
+     quebram sozinhas onde a tela mandar. O espaco entre elas vem do ::before,
+     porque no HTML os dois <span> estao colados — sem isso sairia
+     "...sozinho.E e recitado". */
+  .nota-minyan span { display: inline; font-size: 14px; line-height: 1.5; color: var(--text-soft, #4d3d2d); }
+  .nota-minyan span + span::before { content: ' '; }
   [dir="rtl"] .nota-minyan { border-left: 1px solid var(--line, #c9b894); border-right: 4px solid var(--brass, #8b6a3e); }
 
   /* O rotulo CURTO so aparece na tela baixa (regra la embaixo). Aqui ele nao
@@ -1143,26 +1148,33 @@
      ganhariam por serem as ultimas. Medido: sem isso o convite continuava em
      duas linhas (65px) e a sobra do iPhone SE caia para 58%. */
   @media (max-height: 700px) {
-    .dedicatoria-fixa { padding: 4px 16px 7px; }
+    .dedicatoria-fixa { padding: 3px 16px 6px; }
     .dedicatoria-fixa .dedicatoria .ded-rotulo,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo { display: none; }
     .dedicatoria-fixa .dedicatoria .ded-rotulo-curto,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo-curto {
       display: inline; font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 12.5px; font-style: italic; color: var(--text-faint, #8a8070);
+      font-size: 13px; font-style: italic; color: var(--text-faint, #8a8070);
     }
     .dedicatoria-fixa .dedicatoria .ded-nome {
-      display: inline; font-size: 14px; margin-left: 4px;
+      display: inline; font-size: 17px; margin-left: 4px;
     }
     .dedicatoria-fixa .dedicatoria .ded-rel { display: none; }
-    /* O nome hebraico FICA. Ele chegou a sair daqui: com a linha do parentesco
-       ainda na tela, "Em memoria de Itzhak Avraham Cohen · יצחק אברהם בן יוסף"
-       ia a tres linhas num iPhone SE e a sobra caia a 59,7%, abaixo do piso.
-       Em 04/09 ele mandou tirar o parentesco ("ele com certeza lembra, ganha
-       uma linha") e a letra encolheu junto — a linha que sobrou paga o
-       hebraico. Medido com esse mesmo nome longo: 61,5% de sobra. */
+    /* O nome HEBRAICO sai na tela baixa, e este e o terceiro round da mesma
+       disputa por 50 pixels. A conta, num iPhone SE (375x667): o cabecalho da
+       reza mede 124px, a barra de baixo 92px, e o piso de 60% deixa 50px para
+       a dedicatoria. Nesses 50px cabem DUAS das tres coisas — letra maior,
+       nome hebraico, e ficar grudada no alto — nunca as tres.
+         v42  letra pequena  -> o hebraico cabia (63% de sobra)
+         v44  ele: "quero aumentar o em memoria, esta muito pequeno" -> com o
+              hebraico a 16px a linha quebrava em duas, 53px, e a sobra caia a
+              59,5%. Entre a letra que ele pediu e o hebraico, vale o pedido
+              dele: o hebraico sai AQUI, e so aqui.
+       Em toda tela maior — celular alto, iPad, computador — os dois aparecem,
+       e o hebraico continua inteiro no ⚙. */
+    .dedicatoria-fixa .dedicatoria .dn-heb { display: none; }
     .dedicatoria-fixa .convite-dedicar .conv-acao {
-      display: inline; font-size: 12.5px; margin-left: 4px;
+      display: inline; font-size: 13px; margin-left: 4px;
     }
     /* O convite e um BOTAO, e botao tem piso de 30px de altura neste projeto —
        dedo de quem reza de pe, com o sidur na outra mao. Na primeira versao
@@ -1198,13 +1210,13 @@
   /* o convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, mesma letra */
   .convite-dedicar .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.85rem; font-weight: 400; font-style: italic;
+    font-size: 1rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none; color: inherit; margin: 0 0 1px;
   }
   .convite-dedicar .conv-acao {
     display: block; letter-spacing: normal; text-transform: none;
     color: inherit; margin: 0;
-    font-size: 0.85rem; font-weight: 300; font-style: italic; opacity: .72;
+    font-size: 1rem; font-weight: 300; font-style: italic; opacity: .72;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
@@ -2185,7 +2197,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 43';
+const VERSAO = '2026-09-04 · 44';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {

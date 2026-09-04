@@ -1571,3 +1571,43 @@ mover as tabelas para o topo do script, não repetir o remendo.
 4. **O texto só fala de pais** — para cônjuge, irmão ou filho o costume é de
    trinta dias, e a dedicatória do app aceita qualquer pessoa.
 5. **O minyan não aparecia** — este foi resolvido nesta versão.
+
+
+## A briga por 50 pixels no iPhone SE (04/09, v44)
+
+Ele: *"quero aumentar o em memória, está muito pequeno, bem menor em fonte que
+o texto da necessidade de 10 (minian)"*. Tinha razão na comparação: o nome
+media 16,8px e a nota do minyan 14px — perto demais para uma ser o nome de um
+morto e a outra uma instrução.
+
+Agora o nome é o maior texto da moldura:
+
+| | rótulo | nome | nota do minyan |
+|---|---|---|---|
+| computador · iPad · celular alto | 16px | **21,6px** | 14px |
+| celular baixo | 13px | **17px** | 14px |
+
+**E aqui a conta que decide tudo, escrita de uma vez para não se refazer a cada
+rodada.** Num iPhone SE (375×667), no modo reza: o cabeçalho mede 124px, a
+barra de baixo 92px, e o piso de 60% deixa **50px** para a dedicatória. Nesses
+50px cabem **duas** destas três coisas, nunca as três:
+
+1. letra maior,
+2. o nome hebraico ao lado do nome latino,
+3. ficar grudada no alto acompanhando a leitura.
+
+- **v42** escolheu 2+3: letra pequena, hebraico visível, 63% de sobra.
+- **v44** ele pediu a letra maior. Com o hebraico a 16px a linha quebrava em
+  duas, a dedicatória ia a 53px e a sobra caía a **59,5%** — abaixo do piso, e
+  o `testar-telas.mjs` reprovou. Entre a letra que ele pediu e o hebraico, vale
+  o pedido dele: **o hebraico sai, e só naquele tamanho de tela.** Em celular
+  alto, iPad e computador os dois aparecem, e no ⚙ ele continua inteiro.
+
+Medido depois: 63% no iPhone SE em pé, 61% deitado, 64% no iPhone 15, 70% no
+computador.
+
+**A nota do minyan numa linha só**, também a pedido dele. Os dois `<span>`
+viraram `inline` e o espaço entre eles vem de um `::before` — no HTML eles
+estão colados, e sem isso sairia "…sozinho.E é recitado". A caixa foi de 30em
+para 40em para a frase caber corrida numa tela grande; num telefone ela quebra
+por largura, que é quebra de texto e não desenho.
