@@ -1110,6 +1110,24 @@
      quando era o rodape da pagina */
   .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
 
+  /* ===== A nota do minyan, antes do primeiro verso (04/09) =====
+     Ele: "isso deve aparecer em algum lugar em destaque na pagina principal".
+     Destaque aqui e o latao do app e uma caixa de contorno leve — nao letra
+     grande: quem manda no tamanho desta tela e o hebraico. Ela fica no FLUXO
+     do texto, entao nao custa altura de leitura nenhuma: esta na tela quando
+     ele abre o app e sobe junto quando ele comeca a rezar. */
+  .nota-minyan {
+    max-width: 30em; margin: 0 auto 26px; padding: 10px 16px;
+    border: 1px solid var(--line, #c9b894);
+    border-left: 4px solid var(--brass, #8b6a3e);
+    border-radius: 10px;
+    background: rgba(212, 162, 90, 0.10);
+    text-align: center;
+  }
+  .nota-minyan span { display: block; font-size: 14px; line-height: 1.5; color: var(--text-soft, #4d3d2d); }
+  .nota-minyan span + span { margin-top: 2px; color: var(--brass, #8b6a3e); }
+  [dir="rtl"] .nota-minyan { border-left: 1px solid var(--line, #c9b894); border-right: 4px solid var(--brass, #8b6a3e); }
+
   /* O rotulo CURTO so aparece na tela baixa (regra la embaixo). Aqui ele nao
      ocupa nada — e o testar-telas nem o ve, porque ignora o que tem altura 0. */
   .ded-rotulo-curto { display: none; }
@@ -2167,7 +2185,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 42';
+const VERSAO = '2026-09-04 · 43';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3939,12 +3957,54 @@ function atualizarDedicatoria() {
   desenharConvite(vaga);
 }
 
+/**
+ * "O Kadish exige minyan — dez adultos. Nao se recita sozinho. E e recitado de
+ * pe." (04/09, pedido dele: "isso deve aparecer em algum lugar em destaque na
+ * pagina principal".)
+ *
+ * ONDE: no fluxo do texto, logo antes do primeiro verso — nao no cabecalho.
+ * A razao e a de sempre neste projeto: o cabecalho e altura que o Kadish perde,
+ * e o piso e 60% da tela. Aqui a nota nao custa um pixel de leitura: ela esta
+ * na tela no instante em que ele abre o app, que e exatamente quando a
+ * informacao serve, e sobe com o texto quando ele comeca a rezar.
+ *
+ * O TEXTO vem da tabela I18N, nas 8 linguas (regra 6), e as frases sao as
+ * mesmas que ja existiam aprovadas: o paragrafo do minyan do painel da ℹ e o
+ * "recitado em pe" do prayer_source. Nada aqui foi escrito pelo modelo.
+ *
+ * Aparece nos DOIS modos. Pensei em esconde-la no Treino — quem treina esta
+ * sozinho de proposito — e desisti: e justamente quem esta aprendendo que
+ * precisa saber que a reza pede dez. E ela nao custa altura em modo nenhum.
+ */
+function desenharNotaMinyan(main) {
+  if (!main) return;
+  const el = document.createElement('div');
+  el.className = 'nota-minyan';
+  const L = (typeof state !== 'undefined' && state.lang) || 'pt';
+  if (L === 'he') el.dir = 'rtl';
+  // Leitura protegida e data-i18n, pela mesma armadilha do rotulo curto da
+  // dedicatoria: esta pintura pode acontecer ANTES de o `const I18N` ser
+  // inicializado, e ler um const nessa janela estoura. Se estourar, o span sai
+  // vazio e o applyI18n o preenche pelo data-i18n.
+  const frase = (chave) => {
+    try { return (I18N[L] || I18N.pt)[chave] || ''; } catch (e) { return ''; }
+  };
+  for (const chave of ['nota_minyan', 'nota_de_pe']) {
+    const linha = document.createElement('span');
+    linha.setAttribute('data-i18n', chave);
+    linha.textContent = frase(chave);   // textContent, nunca innerHTML
+    el.appendChild(linha);
+  }
+  main.appendChild(el);
+}
+
 function desenharVersos() {
   verses.forEach(normalizeVerseToSingleWords);
 
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
   atualizarDedicatoria();   // a vaga e a ultima linha do .topbar, nao do main
+  desenharNotaMinyan(main);
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
@@ -4882,7 +4942,13 @@ document.getElementById('infoToggle').addEventListener('click', () => infoOverla
 // O cartao "Por que dizemos o Kadish?" leva a pagina Aprender, que guarda texto,
 // audio e video. Leva a lingua escolhida junto.
 function irParaAprender() {
-  location.href = './aprender.html?lang=' + encodeURIComponent(state.lang || 'pt');
+  // A VERSAO vai no endereco, e nao e enfeite: o aprender.json e buscado com
+  // cache:'no-cache', mas o proprio aprender.html (onde moram o desenho e o
+  // bloco em destaque) e servido pelo GitHub Pages com o cache dele. Sem isto,
+  // o Erez veria o texto novo com a pagina de ontem. E a mesma licao do
+  // versao.json e do DADOS do sincronia.html.
+  location.href = './aprender.html?lang=' + encodeURIComponent(state.lang || 'pt') +
+                  '&v=' + encodeURIComponent(VERSAO.split('·').pop().trim());
 }
 // Dois caminhos, uma conta so: o cartao do alto (que some no celular) e a linha
 // dentro do ℹ (que fica em toda tela) chamam a MESMA funcao.
@@ -4963,6 +5029,7 @@ const I18N = {
     honoring_intro: 'Junto com você, neste ano,', honoring_outro: 'almas estão sendo honradas pelo mundo',
     in_memory_of: 'Em memória de',
     prayer_title: 'Kadish do Enlutado', prayer_source: 'Kadish Yatom · recitado em pé',
+    nota_minyan: 'O Kadish exige minyan — dez adultos. Não se recita sozinho.', nota_de_pe: 'E é recitado de pé.',
     learn_title: 'Por que dizemos o Kadish?', learn_sub: 'O significado, a história e quem instituiu',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
@@ -5010,6 +5077,7 @@ const I18N = {
     honoring_intro: 'Together with you, this year,', honoring_outro: 'souls are being honored worldwide',
     in_memory_of: 'In memory of',
     prayer_title: "Mourner's Kaddish", prayer_source: 'Kaddish Yatom · recited standing',
+    nota_minyan: 'The Kaddish requires a minyan — ten adults. It is not said alone.', nota_de_pe: 'And it is recited standing.',
     learn_title: 'Why do we say Kaddish?', learn_sub: 'The meaning, history, and origin',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
@@ -5057,6 +5125,7 @@ const I18N = {
     honoring_intro: 'Junto a ti, este año,', honoring_outro: 'almas están siendo honradas en el mundo',
     in_memory_of: 'En memoria de',
     prayer_title: 'Kadish del Enlutado', prayer_source: 'Kadish Yatom · recitado de pie',
+    nota_minyan: 'El Kadish exige minián — diez adultos. No se recita a solas.', nota_de_pe: 'Y se recita de pie.',
     learn_title: '¿Por qué decimos el Kadish?', learn_sub: 'El significado, la historia y el origen',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
@@ -5104,6 +5173,7 @@ const I18N = {
     honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
     in_memory_of: 'En mémoire de',
     prayer_title: "Kaddish de l'Endeuillé", prayer_source: 'Kaddish Yatom · récité debout',
+    nota_minyan: 'Le Kaddish exige un minyan — dix adultes. Il ne se dit pas seul.', nota_de_pe: 'Et il est récité debout.',
     learn_title: 'Pourquoi disons-nous le Kaddish?', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
@@ -5151,6 +5221,7 @@ const I18N = {
     honoring_intro: 'Insieme a te, quest\'anno,', honoring_outro: 'anime vengono onorate nel mondo',
     in_memory_of: 'In memoria di',
     prayer_title: 'Kaddish dei Dolenti', prayer_source: 'Kaddish Yatom · recitato in piedi',
+    nota_minyan: 'Il Kaddish richiede il minyan — dieci adulti. Non si recita da soli.', nota_de_pe: 'E si recita in piedi.',
     learn_title: 'Perché diciamo il Kaddish?', learn_sub: 'Il significato, la storia e chi lo istituì',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
@@ -5198,6 +5269,7 @@ const I18N = {
     honoring_intro: 'Gemeinsam mit Ihnen werden in diesem Jahr', honoring_outro: 'Seelen weltweit geehrt',
     in_memory_of: 'Zum Andenken an',
     prayer_title: 'Trauerkaddisch', prayer_source: 'Kaddisch Jatom · im Stehen gesprochen',
+    nota_minyan: 'Das Kaddisch verlangt einen Minjan — zehn Erwachsene. Es wird nicht allein gesprochen.', nota_de_pe: 'Und es wird im Stehen gesprochen.',
     learn_title: 'Warum sagen wir das Kaddisch?', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
@@ -5245,6 +5317,7 @@ const I18N = {
     honoring_intro: 'Вместе с вами, в этом году,', honoring_outro: 'душ почитаются по всему миру',
     in_memory_of: 'В память о',
     prayer_title: 'Кадиш сироты', prayer_source: 'Кадиш Ятом · читается стоя',
+    nota_minyan: 'Кадиш требует миньяна — десяти взрослых. Его не читают в одиночку.', nota_de_pe: 'И читается он стоя.',
     learn_title: 'Почему мы читаем Кадиш?', learn_sub: 'Значение, история и происхождение',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
@@ -5292,6 +5365,7 @@ const I18N = {
     honoring_intro: 'יחד איתך, השנה,', honoring_outro: 'נשמות זוכות לכבוד ברחבי העולם',
     in_memory_of: 'לזכר',
     prayer_title: 'קדיש יתום', prayer_source: 'קדיש יתום · נאמר בעמידה',
+    nota_minyan: 'הקדיש טעון מניין — עשרה מבוגרים. אין אומרים אותו ביחידות.', nota_de_pe: 'והוא נאמר בעמידה.',
     learn_title: 'מדוע אומרים קדיש?', learn_sub: 'המשמעות, ההיסטוריה והמקור',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',

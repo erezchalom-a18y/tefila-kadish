@@ -1505,3 +1505,69 @@ menor, cabe: **63%** de sobra, com esse mesmo nome longo.
 `desenharVersos()` limpa o `main` inteiro antes de redesenhar. A segunda troca
 de Kadish com o telefone deitado **apagava a dedicatória de vez**, sem erro
 nenhum na tela. Por isso o `vagaDaDedicatoria()` a recria quando falta.
+
+
+## O minyan e o "de pé", em destaque (04/09, v43)
+
+Ele, depois de eu apontar que a página Aprender não mencionava o minyan:
+*"devemos incluir a necessidade do minian em destaque e que seja recitado de
+pé"* — e, em seguida: *"isso deve aparecer em algum lugar em destaque na página
+principal"*. Entrou nos dois lugares.
+
+**Na página Aprender** é um bloco `tipo: "destaque"`, o PRIMEIRO da página, com
+fundo mais quente e barra de latão à esquerda. Fica antes do texto dele de
+propósito: é o que se precisa saber antes de começar, e o resto da página é o
+porquê.
+
+**Na tela principal** é uma caixa no FLUXO do texto, logo antes do primeiro
+verso — nunca no cabeçalho. A razão é a de sempre: o cabeçalho é altura que o
+Kadish perde, e o piso é 60%. Ali ela não custa um pixel de leitura: está na
+tela no instante em que ele abre o app, que é exatamente quando a informação
+serve, e sobe com o texto quando ele começa a rezar. Aparece nos dois modos —
+pensei em escondê-la no Treino, e desisti: é justamente quem está aprendendo
+que precisa saber que a reza pede dez.
+
+**Nenhuma frase é nova.** As duas saíram do que já estava aprovado nas 8
+línguas dentro do app: o parágrafo do minyan do painel da ℹ e o "recitado em
+pé" do `prayer_source`. Regra 5: o modelo não escreve texto religioso.
+
+**E a checagem do texto dele mudou de pergunta, sem afrouxar.** O
+`testar-aprender.mjs` comparava a página INTEIRA, palavra por palavra, com
+`fontes/aprender-pt-2026-09-03.txt` — era assim que ninguém podia "melhorar" o
+que é dele. Um bloco que não é dele quebraria a comparação, e havia dois
+caminhos: afrouxar a conta (que a regra 3 proíbe) ou dizer, seção a seção, de
+quem é o texto. Agora **toda seção declara `origem`**: as seis dele são
+`origem: "erez"` e continuam conferidas palavra por palavra (742 palavras); o
+bloco novo é `origem: "app"`, com uma nota dentro do próprio arquivo dizendo
+que foi a pedido dele e que espera o OK dele e do rabino. Quem acrescentar um
+bloco tem de assumi-lo por escrito; quem mexer numa palavra dele continua
+ficando vermelho.
+
+**A VERSÃO passou a ir no endereço do `aprender.html`.** O `aprender.json` é
+buscado com `cache: 'no-cache'`, mas a própria página — onde moram o desenho e
+o bloco em destaque — é servida pelo GitHub Pages com o cache dele. Sem isso ele
+veria o texto novo com a página de ontem. É a mesma lição do `versao.json` e do
+`DADOS` do `sincronia.html`.
+
+**A armadilha do `const` em TDZ apareceu pela segunda vez no mesmo dia**, agora
+na nota do minyan: a pintura pode acontecer antes de o `const I18N` existir.
+Mesmo remédio — leitura protegida e `data-i18n` no `<span>`, para o `applyI18n`
+preencher na primeira volta. Se aparecer uma terceira vez, o conserto certo é
+mover as tabelas para o topo do script, não repetir o remendo.
+
+**Cinco pontos do texto dele que ficam esperando o rabino** (analisados em
+04/09, a pedido dele):
+
+1. **"Escrito em aramaico"** — os dois últimos versos dos oito Kadishim são
+   HEBRAICO (`עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו · הוּא יַעֲשֶׂה שָׁלוֹם...`). Quem lê a explicação e
+   rola até o fim vê a contradição. "Escrito quase todo em aramaico" resolveria.
+2. **Os 11 meses e os quatro nussachim** — o texto diz "o costume tradicional"
+   sem dizer de quem. Entre sefaradim é largamente difundido recitar pelos doze
+   meses, com interrupção. É halachá, é do rabino, e é a pergunta que mais
+   importa num app que serve os quatro.
+3. **`יהי זכרו ברוך` traduzido como "que sua memória seja uma bênção"** —
+   *baruch* é "bendita"; "seja uma bênção" é a tradução de `זכרונו לברכה`. Ou
+   muda o português, ou muda o hebraico.
+4. **O texto só fala de pais** — para cônjuge, irmão ou filho o costume é de
+   trinta dias, e a dedicatória do app aceita qualquer pessoa.
+5. **O minyan não aparecia** — este foi resolvido nesta versão.

@@ -34,6 +34,15 @@
   .vazio li{margin-bottom:8px}
   .aviso{font-size:14.5px;color:#8a3a1a;background:#fdf3e6;border-left:3px solid #c0733a;
          border-radius:8px;padding:12px 14px;margin-bottom:20px}
+  /* O bloco em DESTAQUE (04/09). Ele pediu: "devemos incluir a necessidade do
+     minian em destaque e que seja recitado de pe". Destaque aqui e o latao do
+     app — fundo mais quente, uma barra grossa a esquerda e o titulo em latao —,
+     nao letra maior: o texto do Kadish e que manda no tamanho desta pagina.
+     Fica em PRIMEIRO lugar de proposito: e o que se precisa saber ANTES de
+     comecar, e o resto da pagina e o porque. */
+  section.destaque{background:#f6ecd8;border-color:#d9c49a;border-left:5px solid var(--brass)}
+  section.destaque h2{color:var(--brass)}
+  html[dir=rtl] section.destaque{border-left:1px solid #d9c49a;border-right:5px solid var(--brass)}
   footer{max-width:680px;margin:0 auto;padding:0 20px;color:var(--fraco);font-size:14px}
 </style></head>
 <body>
@@ -113,6 +122,8 @@ function bloco(s) {
   if (s.tipo === 'video')
     return `<section><h2>${titulo}</h2>${corpo}
       <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(t.assistir)}</a></section>`;
+  if (s.tipo === 'destaque')
+    return `<section class="destaque"><h2>${titulo}</h2>${corpo}</section>`;
   return `<section><h2>${titulo}</h2>${corpo}</section>`;
 }
 

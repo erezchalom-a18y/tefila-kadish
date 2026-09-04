@@ -33,9 +33,26 @@ const secoes = d.secoes || [];
 confere('o aprender.json tem secoes', secoes.length > 0, 'esta vazio');
 
 // ---------- 1. o portugues e o dele, palavra por palavra ----------
+//
+// 04/09 — toda secao passou a declarar a sua ORIGEM, e isto e o que da dentes a
+// regra 5 aqui. Ate hoje a pagina inteira era texto do Erez e a comparacao
+// pegava tudo. Nesse dia ele mandou acrescentar um bloco que NAO e dele
+// ("devemos incluir a necessidade do minian em destaque e que seja recitado de
+// pe"), e havia dois jeitos de acomodar isso: afrouxar a comparacao — que e o
+// que a regra 3 proibe — ou dizer, secao a secao, de quem e o texto.
+// Entao: a comparacao palavra por palavra cobre as secoes `origem: "erez"`, e
+// nenhuma secao pode existir sem declarar origem. Quem quiser mudar uma palavra
+// do texto dele continua ficando vermelho; quem acrescentar um bloco novo tem
+// de assumi-lo por escrito no arquivo.
+const semOrigem = [];
+secoes.forEach((s, i) => { if (!s.origem) semOrigem.push(`secao ${i + 1}`); });
+confere('toda secao declara de quem e o texto', !semOrigem.length, semOrigem.join(', '));
+
 const palavras = t => (String(t).normalize('NFC').match(/\S+/g) || []);
 const dele = palavras(readFileSync('fontes/aprender-pt-2026-09-03.txt', 'utf8'));
-const nosso = palavras(secoes.map(s => s.titulo.pt + ' ' + s.corpo.pt).join(' '));
+const doErez = secoes.filter(s => s.origem === 'erez');
+confere('as secoes dele continuam la', doErez.length === 6, `sao ${doErez.length}, e nao 6`);
+const nosso = palavras(doErez.map(s => s.titulo.pt + ' ' + s.corpo.pt).join(' '));
 let ondeDifere = '';
 if (dele.length !== nosso.length || dele.some((p, i) => p !== nosso[i])) {
   const i = dele.findIndex((p, k) => p !== nosso[k]);

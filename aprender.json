@@ -22,7 +22,33 @@
   "revisado_pelo_rabino": false,
   "secoes": [
     {
+      "tipo": "destaque",
+      "origem": "app",
+      "_nota": "Este bloco NAO e texto do Erez: foi escrito pelo app a pedido dele em 04/09 (\"devemos incluir a necessidade do minian em destaque e que seja recitado de pe\"). As frases sao as que JA existiam aprovadas nas 8 linguas dentro do engine.html — o paragrafo do minyan do painel da ℹ e o \"recitado em pe\" do prayer_source —, para nao haver texto novo escrito pelo modelo. Continua esperando o OK dele e a revisao do rabino, como todo o resto desta pagina.",
+      "titulo": {
+        "pt": "Com minyan, e de pé",
+        "en": "With a minyan, and standing",
+        "es": "Con minián, y de pie",
+        "fr": "Avec un minyan, et debout",
+        "it": "Con il minyan, e in piedi",
+        "de": "Mit Minjan, und im Stehen",
+        "ru": "С миньяном, и стоя",
+        "he": "במניין, ובעמידה"
+      },
+      "corpo": {
+        "pt": "O Kadish exige minyan — dez adultos. Não se recita sozinho.\n\nE é recitado de pé.\n\nO luto judaico não é solitário: acontece cercado de comunidade, e é a obrigação diária que traz o enlutado ao minyan todos os dias.",
+        "en": "The Kaddish requires a minyan — ten adults. It is not said alone.\n\nAnd it is recited standing.\n\nJewish mourning is not solitary: it happens surrounded by community, and it is the daily obligation that brings the mourner to the minyan every day.",
+        "es": "El Kadish exige minián — diez adultos. No se recita a solas.\n\nY se recita de pie.\n\nEl duelo judío no es solitario: ocurre rodeado de comunidad, y es la obligación diaria la que lleva al enlutado al minián todos los días.",
+        "fr": "Le Kaddish exige un minyan — dix adultes. Il ne se dit pas seul.\n\nEt il est récité debout.\n\nLe deuil juif n'est pas solitaire : il se vit entouré de la communauté, et c'est l'obligation quotidienne qui amène l'endeuillé au minyan chaque jour.",
+        "it": "Il Kaddish richiede il minyan — dieci adulti. Non si recita da soli.\n\nE si recita in piedi.\n\nIl lutto ebraico non è solitario: si vive circondati dalla comunità, ed è l'obbligo quotidiano che porta chi è in lutto al minyan ogni giorno.",
+        "de": "Das Kaddisch verlangt einen Minjan — zehn Erwachsene. Es wird nicht allein gesprochen.\n\nUnd es wird im Stehen gesprochen.\n\nJüdische Trauer ist nicht einsam: sie geschieht umgeben von Gemeinschaft, und es ist die tägliche Pflicht, die den Trauernden jeden Tag zum Minjan führt.",
+        "ru": "Кадиш требует миньяна — десяти взрослых. Его не читают в одиночку.\n\nИ читается он стоя.\n\nЕврейский траур не одинок: он проходит в кругу общины, и именно ежедневная обязанность приводит скорбящего в миньян каждый день.",
+        "he": "הקדיש טעון מניין — עשרה מבוגרים. אין אומרים אותו ביחידות.\n\nוהוא נאמר בעמידה.\n\nהאבלות היהודית אינה בדד: היא מתרחשת מוקפת קהילה, והחובה היומית היא שמביאה את האבל למניין בכל יום."
+      }
+    },
+    {
       "tipo": "texto",
+      "origem": "erez",
       "titulo": {
         "pt": "Por que recitar o Kadish por quem partiu?",
         "en": "Why recite the Kaddish for the one who has departed?",
@@ -46,6 +72,7 @@
     },
     {
       "tipo": "texto",
+      "origem": "erez",
       "titulo": {
         "pt": "Como o Kadish se tornou uma oração de luto?",
         "en": "How did the Kaddish become a prayer of mourning?",
@@ -69,6 +96,7 @@
     },
     {
       "tipo": "texto",
+      "origem": "erez",
       "titulo": {
         "pt": "Por que recitar o Kadish?",
         "en": "Why recite the Kaddish?",
@@ -92,6 +120,7 @@
     },
     {
       "tipo": "texto",
+      "origem": "erez",
       "titulo": {
         "pt": "Por que recitar durante o primeiro ano?",
         "en": "Why recite it during the first year?",
@@ -115,6 +144,7 @@
     },
     {
       "tipo": "texto",
+      "origem": "erez",
       "titulo": {
         "pt": "Em memória de quem partiu",
         "en": "In memory of the one who has departed",
@@ -138,6 +168,7 @@
     },
     {
       "tipo": "texto",
+      "origem": "erez",
       "titulo": {
         "pt": "Um Kadish de cada vez",
         "en": "One Kaddish at a time",
