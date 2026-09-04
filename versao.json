@@ -1,6 +1,6 @@
 {
   "_leia": "Duas marcas, e cada uma serve a uma pagina. NUNCA apagar uma ao mexer na outra: em 26/08 eu escrevi este arquivo so com a 'versao' e a 'marca' sumiu — o aviso de versao nova do sincronia.html ficou morto por dois commits, calado, e so o testar-sincronia.mjs pegou.",
-  "versao": "2026-09-04 · 40",
+  "versao": "2026-09-04 · 41",
   "_versao": "A versao do APP (engine.html). Ele traz a sua propria gravada dentro, na constante VERSAO; se as duas discordarem, ele recarrega sozinho num endereco novo. Existe porque o iPad do Erez ficou preso na pagina de ontem e nem ele nem eu sabiamos - tudo o que eu consertava nao chegava nele. TROCAR JUNTO com a constante VERSAO do engine.html.",
   "marca": "03/09-a",
   "_marca": "A marca dos DADOS de sincronia (sincronia.html). Muda toda vez que se mexe em sync/ ou em sinal/. A pagina compara com a constante DADOS que veio dentro dela e avisa quando esta velha. TROCAR JUNTO com o DADOS do sincronia.html."

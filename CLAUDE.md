@@ -1378,3 +1378,39 @@ os telefones maiores (393×852) mantêm as duas coisas com 66%.
 a boca não está dedicando. Ela volta sozinha ao sair do treino, e o
 `testar-dedicatoria.mjs` cobra as três coisas — continua na tela depois de rolar
 900px, some no Treino, volta na Reza.
+
+## A dedicatória DENTRO do Kadish (04/09, v41) — a metade do pedido que faltava
+
+Ele, olhando a v40: *"ainda não desceu o em memória e ainda não desce junto com
+o kadish"*.
+
+A v40 tinha atendido metade do pedido e eu tinha dado a coisa por feita. A
+dedicatória já saíra do `.topbar` e já rolava — medido, some aos 400px e volta
+ao subir. **Só que "junto com o Kadish" nunca foi sobre rolagem; era sobre
+PERTENCIMENTO**, e disso eu não tinha feito nada.
+
+O que estava na tela dele: um `<div>` irmão do `<main>`, com `padding: 14px 20px`
+e `border-bottom: 1px solid var(--rule)`. Ou seja, uma faixa da **largura
+inteira da janela** — 1440px no computador dele —, com um risco embaixo
+separando-a do texto e encostada no cabeçalho. Lia-se como uma **terceira barra
+de cabeçalho**. O Kadish, ao lado, mora numa coluna de 1040px centrada. A
+dedicatória não estava no mesmo lugar que o Kadish; estava por cima dele.
+
+Agora ela é o **primeiro filho do `<main>`**: mesma coluna dos versos, mesma
+margem, sem faixa, sem risco, sem fundo. Rola junto porque **É o começo do
+texto**, não porque alguém calculou uma rolagem. Medido no computador (1440×900,
+com nome preenchido): antes o bloco começava a 99px do alto — colado no
+cabeçalho — e media 95px com o risco; agora começa a 139px, dentro da coluna, e
+mede 68px.
+
+**A vaga deixou de estar escrita no HTML.** Quem a cria é o
+`vagaDaDedicatoria()`, que a põe como primeiro filho do `main` e a repõe ali
+toda vez — porque o `desenharVersos()` limpa o `main` inteiro antes de
+redesenhar, e uma vaga escrita no HTML dentro do `main` sumiria na primeira
+troca de Kadish. Escrita FORA do `main`, ela volta a ser faixa de cabeçalho.
+Não há terceira opção, e é por isso que ela é criada em código.
+
+**A lição, e é a mesma de 30/08:** o pedido dele tinha duas metades ("junto com
+o Kadish" e "rolaria junta") e eu tratei a segunda como se fosse as duas. Quando
+ele repete um pedido que eu já dei por atendido, a pergunta não é "será que não
+chegou?" — é **qual metade eu não fiz**.

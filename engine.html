@@ -1077,17 +1077,27 @@
     display: block; font-size: 0.9rem; font-style: italic;
     color: var(--text-faint, #8a8070); margin-top: 4px;
   }
-  /* ===== A vaga da dedicatoria, dentro do .topbar (02/09) =====
-     Ela acompanha a rolagem porque o .topbar e sticky. No MODO TREINO nao
-     aparece — pedido dele: quem esta treinando a boca nao esta dedicando. */
+  /* ===== A vaga da dedicatoria: DENTRO do Kadish (04/09) =====
+     Ela nasceu no fim da pagina (v25), subiu para dentro do .topbar (v28) e em
+     04/09 saiu do cabecalho para o fluxo do texto. Faltava a ultima metade do
+     pedido dele — "o em memoria ficaria JUNTO COM O KADISH" —, e ela nao era de
+     rolagem, era de PERTENCIMENTO: fora do <main>, a dedicatoria ocupava a
+     largura inteira da janela, com um risco embaixo separando-a do texto, e
+     colada no cabecalho. Lia-se como uma TERCEIRA barra de cabecalho, nao como
+     a dedicatoria de um livro. Agora ela e o primeiro filho do <main>: mesma
+     coluna dos versos, mesma margem, sem faixa e sem risco. Rola junto porque
+     E o comeco do texto, nao porque alguem calculou uma rolagem.
+     No MODO TREINO nao aparece — pedido dele: quem esta treinando a boca nao
+     esta dedicando. */
   .dedicatoria-fixa {
-    padding: 14px 20px 12px;
-    border-bottom: 1px solid var(--rule);
+    margin: 0 0 22px;
+    padding: 0;
+    border: 0;
   }
-  .dedicatoria-fixa:empty { display: none; padding: 0; border: 0; }
+  .dedicatoria-fixa:empty { display: none; margin: 0; }
   body.modo-treino .dedicatoria-fixa { display: none; }
   /* dentro da vaga a dedicatoria nao repete o risco de baixo nem o respiro que
-     ela tinha quando rolava junto com o texto */
+     ela tinha quando era o rodape da pagina */
   .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
 
   /* O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo.
@@ -2092,7 +2102,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 40';
+const VERSAO = '2026-09-04 · 41';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2373,8 +2383,9 @@ document.addEventListener('DOMContentLoaded', () => {
      volta quando ele sobe. Nada dela some: nome, nome em hebraico e relacao
      continuam os tres. E o cabecalho devolve os 98px ao Kadish.
      No Modo Treino continua sem aparecer, que e o pedido dele de 02/09. -->
-<div class="dedicatoria-fixa" id="dedicatoriaFixa"></div>
-
+<!-- A vaga da dedicatoria NAO esta aqui: ela e criada dentro do <main>, como
+     primeiro filho, por vagaDaDedicatoria(). Escrita aqui fora, ela ficava com
+     a largura da janela e um risco separando-a do Kadish — parecia cabecalho. -->
 <main id="main"></main>
 
 <div class="foot-note">יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא · grave, ouça, sincronize</div>
@@ -3757,7 +3768,20 @@ const CONVITE = {
  * ontem e estar de pe no minyan. Uma linha discreta que rola junto com o texto
  * nao fica entre ele e a primeira palavra; um modal ficaria.
  */
-function vagaDaDedicatoria() { return document.getElementById('dedicatoriaFixa'); }
+function vagaDaDedicatoria() {
+  const main = document.getElementById('main');
+  if (!main) return null;
+  let vaga = document.getElementById('dedicatoriaFixa');
+  if (!vaga) {
+    vaga = document.createElement('div');
+    vaga.id = 'dedicatoriaFixa';
+    vaga.className = 'dedicatoria-fixa';
+  }
+  // sempre o PRIMEIRO filho do main: o desenharVersos limpa o main inteiro
+  // antes de redesenhar, e sem isto a vaga sumiria a cada troca de Kadish.
+  if (main.firstChild !== vaga) main.prepend(vaga);
+  return vaga;
+}
 
 function desenharDedicatoria(vaga) {
   const m = (typeof loadMemorial === 'function') ? loadMemorial() : null;
@@ -3804,7 +3828,7 @@ function desenharVersos() {
 
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
-  atualizarDedicatoria();   // a vaga e do .topbar, nao do main
+  atualizarDedicatoria();   // recria a vaga como primeiro filho do main
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
