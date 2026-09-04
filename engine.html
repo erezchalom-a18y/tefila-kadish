@@ -783,17 +783,18 @@
   /* 01/09 — os tres botoes de CAMADA mostram o efeito em vez de so nomea-lo.
      Ele perguntou como explicar, ao entrar no app, que da para mostrar,
      destacar ou ocultar hebraico, traducao e transliteracao. A explicacao mais
-     curta e nenhuma palavra: "Ocultar" vem esmaecido e riscado, "Destaque" vem
-     maior e em latao, "Normal" fica como esta. Zero pixel novo, zero palavra
-     nova, zero lingua nova — e nao ha o que traduzir num desenho.
+     curta e nenhuma palavra: "Ocultar" vem esmaecido, "Destaque" vem maior e em
+     latao, "Normal" fica como esta. Zero pixel novo, zero palavra nova, zero
+     lingua nova — e nao ha o que traduzir num desenho.
+     04/09 — o RISCO saiu, a pedido dele: "tire o traco em ocultar nas
+     configuracoes". O esmaecido sozinho ja diz o que o botao faz, e o risco
+     sobre uma palavra curta lia-se como erro, nao como "some da tela".
      Vale SO para as camadas (seletor com [data-layer]); os outros seg-control
      — tema, tamanho, tradicao, lingua, som — continuam iguais. */
   .seg-control[data-layer] button[data-state="hidden"] {
     opacity: 0.5;
-    text-decoration: line-through;
-    text-decoration-thickness: 1px;
   }
-  /* aceso, ele e o estado atual: continua riscado (e o que ele faz), mas legivel */
+  /* aceso, ele e o estado atual: legivel por inteiro */
   .seg-control[data-layer] button[data-state="hidden"].active { opacity: 1; }
   .seg-control[data-layer] button.focus-state {
     font-weight: 700;
@@ -1065,40 +1066,95 @@
      Entao: Cormorant, corpo miudo, sem maiuscula e sem espacamento de letra. */
   .dedicatoria .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.95rem; font-weight: 400; font-style: italic;
+    font-size: 0.85rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none;
-    color: var(--text-faint, #8a8070); margin-bottom: 2px;
+    color: var(--text-faint, #8a8070); margin-bottom: 1px;
   }
   .dedicatoria .ded-nome {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.25rem; line-height: 1.35; color: var(--text, #2a1f15);
+    font-size: 1.05rem; line-height: 1.3; color: var(--text, #2a1f15);
   }
   .dedicatoria .ded-rel {
     display: block; font-size: 0.9rem; font-style: italic;
     color: var(--text-faint, #8a8070); margin-top: 4px;
   }
-  /* ===== A vaga da dedicatoria: DENTRO do Kadish (04/09) =====
-     Ela nasceu no fim da pagina (v25), subiu para dentro do .topbar (v28) e em
-     04/09 saiu do cabecalho para o fluxo do texto. Faltava a ultima metade do
-     pedido dele — "o em memoria ficaria JUNTO COM O KADISH" —, e ela nao era de
-     rolagem, era de PERTENCIMENTO: fora do <main>, a dedicatoria ocupava a
-     largura inteira da janela, com um risco embaixo separando-a do texto, e
-     colada no cabecalho. Lia-se como uma TERCEIRA barra de cabecalho, nao como
-     a dedicatoria de um livro. Agora ela e o primeiro filho do <main>: mesma
-     coluna dos versos, mesma margem, sem faixa e sem risco. Rola junto porque
-     E o comeco do texto, nao porque alguem calculou uma rolagem.
+  /* ===== A vaga da dedicatoria: A ULTIMA LINHA DO CABECALHO (v42) =====
+     Historia curta, porque ela mudou de casa quatro vezes e cada mudanca teve
+     um motivo dele:
+       v25  no fim da pagina — ninguem a via
+       v28  dentro do .topbar, que e sticky — "descer junto com a rolagem"
+       v41  fora do cabecalho, primeiro filho do <main> — eu li o pedido como
+            "pertencer ao Kadish" e a tirei do alto
+       v42  de volta ao .topbar, agora com a palavra dele sem ambiguidade:
+            "a dedicatoria fica parada no alto acompanhando a leitura"
+     As duas leituras de "rolar junto com o Kadish" eram OPOSTAS — acompanhar a
+     leitura ou subir com o texto e sair — e eu escolhi a errada sozinho em
+     04/09. Perguntei, e ele respondeu. Agora ela acompanha por construcao: e
+     uma linha do cabecalho sticky, sem conta de rolagem nenhuma.
+
+     Duas coisas que NAO voltaram com ela, e e de proposito:
+     - a LETRA continua a da v41, que ele aprovou hoje ("gostei da versao de
+       hoje"): Cormorant miuda, sem caixa-alta, sem espacamento de letra.
+     - nao ha risco proprio embaixo. O risco e o do proprio .topbar. Com um
+       risco so, ela e a ultima linha do cabecalho; com dois, ela volta a ser
+       a "terceira barra" de que ele reclamou na v40.
      No MODO TREINO nao aparece — pedido dele: quem esta treinando a boca nao
      esta dedicando. */
   .dedicatoria-fixa {
-    margin: 0 0 22px;
-    padding: 0;
+    padding: 6px 20px 10px;
     border: 0;
   }
-  .dedicatoria-fixa:empty { display: none; margin: 0; }
+  .dedicatoria-fixa:empty { display: none; padding: 0; }
   body.modo-treino .dedicatoria-fixa { display: none; }
-  /* dentro da vaga a dedicatoria nao repete o risco de baixo nem o respiro que
-     ela tinha quando era o rodape da pagina */
+  /* dentro da vaga a dedicatoria nao repete o risco nem o respiro que ela tinha
+     quando era o rodape da pagina */
   .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
+
+  /* O rotulo CURTO so aparece na tela baixa (regra la embaixo). Aqui ele nao
+     ocupa nada — e o testar-telas nem o ve, porque ignora o que tem altura 0. */
+  .ded-rotulo-curto { display: none; }
+
+  /* ===== TELA BAIXA: a dedicatoria encolhe para caber sem roubar o Kadish =====
+     Medido num iPhone SE (375x667) com o nome preenchido: a forma de tres
+     linhas mede 84px e derruba a sobra para 55%, contra o piso de 60%. Numa
+     linha so, com o rotulo curto, ela mede ~29px e a sobra volta a 63%.
+     Nao e outra dedicatoria: e a mesma, com o rotulo curto que ja existe nas 8
+     linguas, e sem a relacao — que continua inteira no ⚙ e na tela grande. */
+  /* Os seletores levam .dedicatoria/.convite-dedicar no meio de proposito: as
+     regras da forma cheia moram MAIS ABAIXO no arquivo e, com o mesmo peso,
+     ganhariam por serem as ultimas. Medido: sem isso o convite continuava em
+     duas linhas (65px) e a sobra do iPhone SE caia para 58%. */
+  @media (max-height: 700px) {
+    .dedicatoria-fixa { padding: 4px 16px 7px; }
+    .dedicatoria-fixa .dedicatoria .ded-rotulo,
+    .dedicatoria-fixa .convite-dedicar .ded-rotulo { display: none; }
+    .dedicatoria-fixa .dedicatoria .ded-rotulo-curto,
+    .dedicatoria-fixa .convite-dedicar .ded-rotulo-curto {
+      display: inline; font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 12.5px; font-style: italic; color: var(--text-faint, #8a8070);
+    }
+    .dedicatoria-fixa .dedicatoria .ded-nome {
+      display: inline; font-size: 14px; margin-left: 4px;
+    }
+    .dedicatoria-fixa .dedicatoria .ded-rel { display: none; }
+    /* O nome hebraico FICA. Ele chegou a sair daqui: com a linha do parentesco
+       ainda na tela, "Em memoria de Itzhak Avraham Cohen · יצחק אברהם בן יוסף"
+       ia a tres linhas num iPhone SE e a sobra caia a 59,7%, abaixo do piso.
+       Em 04/09 ele mandou tirar o parentesco ("ele com certeza lembra, ganha
+       uma linha") e a letra encolheu junto — a linha que sobrou paga o
+       hebraico. Medido com esse mesmo nome longo: 61,5% de sobra. */
+    .dedicatoria-fixa .convite-dedicar .conv-acao {
+      display: inline; font-size: 12.5px; margin-left: 4px;
+    }
+    /* O convite e um BOTAO, e botao tem piso de 30px de altura neste projeto —
+       dedo de quem reza de pe, com o sidur na outra mao. Na primeira versao
+       desta forma compacta ele mediu 23px e o testar-telas.mjs o pegou pelo
+       nome. Centrado no flex para o texto ficar no meio dos 30px. */
+    .dedicatoria-fixa .convite-dedicar {
+      line-height: 1.4; min-height: 30px;
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+    }
+  }
 
   /* O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo.
      A LETRA e Cormorant Garamond, que e a mais elegante das tres do app (as
@@ -1124,13 +1180,13 @@
   /* o convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, mesma letra */
   .convite-dedicar .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.95rem; font-weight: 400; font-style: italic;
-    letter-spacing: normal; text-transform: none; color: inherit; margin: 0 0 2px;
+    font-size: 0.85rem; font-weight: 400; font-style: italic;
+    letter-spacing: normal; text-transform: none; color: inherit; margin: 0 0 1px;
   }
   .convite-dedicar .conv-acao {
     display: block; letter-spacing: normal; text-transform: none;
     color: inherit; margin: 0;
-    font-size: 0.95rem; font-weight: 300; font-style: italic; opacity: .72;
+    font-size: 0.85rem; font-weight: 300; font-style: italic; opacity: .72;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
@@ -2084,6 +2140,15 @@
      exige minyan"), e "recitado em pe" esta na linha ao lado do titulo. Os
      dados por verso (pictograms: [...]) ficam nos versos, intactos, para o dia
      em que ele quiser a faixa de volta. -->
+  <!-- 04/09 (v42) — A DEDICATORIA FICA PARADA NO ALTO, ACOMPANHANDO A LEITURA.
+       Ele decidiu entre as duas leituras opostas de "rolar junto com o Kadish":
+       "a dedicatoria fica parada no alto acompanhando a leitura". Entao ela e a
+       ULTIMA linha do .topbar, que e sticky — nao ha conta de rolagem nenhuma,
+       ela acompanha por construcao. A LETRA e a da v41, que ele aprovou hoje
+       ("gostei da versao de hoje"): Cormorant miuda, sem caixa-alta e sem
+       espacamento. E nao ha risco proprio embaixo dela: o risco e o do proprio
+       cabecalho, senao voltariam a ser duas faixas. -->
+  <div class="dedicatoria-fixa" id="dedicatoriaFixa"></div>
 </div>
 
 <script>
@@ -2102,7 +2167,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 41';
+const VERSAO = '2026-09-04 · 42';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2383,9 +2448,6 @@ document.addEventListener('DOMContentLoaded', () => {
      volta quando ele sobe. Nada dela some: nome, nome em hebraico e relacao
      continuam os tres. E o cabecalho devolve os 98px ao Kadish.
      No Modo Treino continua sem aparecer, que e o pedido dele de 02/09. -->
-<!-- A vaga da dedicatoria NAO esta aqui: ela e criada dentro do <main>, como
-     primeiro filho, por vagaDaDedicatoria(). Escrita aqui fora, ela ficava com
-     a largura da janela e um risco separando-a do Kadish — parecia cabecalho. -->
 <main id="main"></main>
 
 <div class="foot-note">יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא · grave, ouça, sincronize</div>
@@ -3768,19 +3830,62 @@ const CONVITE = {
  * ontem e estar de pe no minyan. Uma linha discreta que rola junto com o texto
  * nao fica entre ele e a primeira palavra; um modal ficaria.
  */
+/**
+ * ONDE a dedicatoria mora, e por que isso e uma funcao e nao uma regra de CSS.
+ *
+ * Ele quer que ela "fique parada no alto acompanhando a leitura". No cabecalho
+ * sticky ela faz isso por construcao — mas o cabecalho e altura que o Kadish
+ * perde, e o piso do projeto e 60% da tela para o Kadish. Medido com o nome
+ * preenchido: num telefone DEITADO (375px de altura) o cabecalho ja come 78px e
+ * a barra de baixo 66px; nao sobra 84px para dedicatoria nenhuma — a sobra cai
+ * para 39%. Nao ha aperto de letra que resolva 39%.
+ *
+ * Entao numa tela BAIXA ela volta a ser a primeira linha do texto (que e onde
+ * ela estava na v41): aparece ao abrir, sobe com o Kadish e volta ao subir. Nao
+ * sao duas dedicatorias nem duas contas — e a MESMA, e esta funcao e o unico
+ * lugar que decide onde ela fica.
+ */
+const ALTURA_MINIMA_PARA_GRUDAR = 500;   // medido: abaixo disso o piso de 60% cai
+
 function vagaDaDedicatoria() {
-  const main = document.getElementById('main');
-  if (!main) return null;
+  // Recriar quando falta NAO e zelo: numa tela baixa a vaga vive dentro do
+  // <main>, e o desenharVersos() limpa o main inteiro antes de redesenhar. Sem
+  // isto, a segunda troca de Kadish num telefone deitado apagava a dedicatoria
+  // de vez, sem erro nenhum na tela.
   let vaga = document.getElementById('dedicatoriaFixa');
   if (!vaga) {
     vaga = document.createElement('div');
     vaga.id = 'dedicatoriaFixa';
     vaga.className = 'dedicatoria-fixa';
   }
-  // sempre o PRIMEIRO filho do main: o desenharVersos limpa o main inteiro
-  // antes de redesenhar, e sem isto a vaga sumiria a cada troca de Kadish.
-  if (main.firstChild !== vaga) main.prepend(vaga);
+  const topo = document.querySelector('.topbar');
+  const main = document.getElementById('main');
+  const cabe = window.innerHeight >= ALTURA_MINIMA_PARA_GRUDAR;
+  if (cabe && topo) {
+    if (vaga.parentElement !== topo || topo.lastElementChild !== vaga) topo.appendChild(vaga);
+  } else if (main) {
+    if (main.firstChild !== vaga) main.prepend(vaga);
+  }
   return vaga;
+}
+
+// Virar o telefone muda a altura da tela e, com ela, a resposta acima.
+window.addEventListener('resize', () => {
+  try { if (typeof atualizarDedicatoria === 'function') atualizarDedicatoria(); } catch (e) {}
+});
+
+/**
+ * O rotulo curto ("Em memoria de") vem da MESMA tabela I18N de sempre — nao ha
+ * segunda copia do texto, que e o que a regra 6 evita. A leitura e protegida
+ * por um motivo real: a primeira pintura da dedicatoria acontece ANTES de o
+ * `const I18N` ser inicializado, e ler um const nessa janela ESTOURA (foi
+ * exatamente o erro "Cannot access 'I18N' before initialization", que deixou a
+ * dedicatoria inteira em branco). Nessa primeira volta o rotulo sai vazio e
+ * quem o preenche e o applyI18n, pelo data-i18n do proprio span. Nas voltas
+ * seguintes — trocar de lingua, trocar de Kadish — a leitura direta ja vale.
+ */
+function rotuloCurto(L) {
+  try { return (I18N[L] || I18N.pt).in_memory_of || ''; } catch (e) { return ''; }
 }
 
 function desenharDedicatoria(vaga) {
@@ -3791,9 +3896,19 @@ function desenharDedicatoria(vaga) {
   el.className = 'dedicatoria';
   if (L === 'he') el.dir = 'rtl';
   const quem = [m.name, m.hebrew].filter(Boolean);
+  // DOIS rotulos, e so um deles tem altura de cada vez (quem escolhe e o CSS).
+  // Numa tela baixa a frase inteira nao cabe sem roubar o Kadish; ali vale o
+  // "Em memoria de", que ja existe nas 8 linguas desde a faixa antiga.
   el.innerHTML = `<span class="ded-rotulo">${DEDICATORIA[L] || DEDICATORIA.pt}</span>` +
-    `<span class="ded-nome">${quem.map(x => x.replace(/[&<>]/g, '')).join(' · ')}</span>` +
-    (m.relation ? `<span class="ded-rel">${String(m.relation).replace(/[&<>]/g, '')}</span>` : '');
+    `<span class="ded-rotulo-curto" data-i18n="in_memory_of">${rotuloCurto(L)}</span>` +
+    `<span class="ded-nome">` +
+      `<span class="dn-lat">${(m.name || '').replace(/[&<>]/g, '')}</span>` +
+      (m.hebrew ? `<span class="dn-heb"> · ${String(m.hebrew).replace(/[&<>]/g, '')}</span>` : '') +
+    `</span>`;
+  // A RELACAO ("meu pai") nao aparece mais, por decisao dele em 04/09: "nao
+  // precisa colocar parentesco, ele com certeza lembra, ganha uma linha". Ela
+  // continua GUARDADA no perfil — some da tela, nao dos dados —, e quem dedica
+  // continua podendo escreve-la no ⚙.
   vaga.appendChild(el);
 }
 
@@ -3805,6 +3920,7 @@ function desenharConvite(vaga) {
   b.className = 'convite-dedicar';
   if (L === 'he') b.dir = 'rtl';
   b.innerHTML = `<span class="ded-rotulo">${DEDICATORIA[L] || DEDICATORIA.pt}</span>` +
+    `<span class="ded-rotulo-curto" data-i18n="in_memory_of">${rotuloCurto(L)}</span>` +
     `<span class="conv-acao">(${CONVITE[L] || CONVITE.pt})</span>`;
   b.addEventListener('click', () => {
     const ed = document.getElementById('editMemorial');
@@ -3828,7 +3944,7 @@ function desenharVersos() {
 
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
-  atualizarDedicatoria();   // recria a vaga como primeiro filho do main
+  atualizarDedicatoria();   // a vaga e a ultima linha do .topbar, nao do main
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');

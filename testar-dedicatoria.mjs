@@ -97,19 +97,23 @@ for (const lg of linguas) {
   if (!ok) ruim++;
   console.log((ok?'OK   ':'FALHA') + ` sem nome de novo: ${JSON.stringify(r)}`);
 
-  // C — ele ROLA JUNTO com o Kadish (04/09), e esta pergunta ja mudou duas vezes.
+  // C — ela FICA PARADA NO ALTO ACOMPANHANDO A LEITURA (04/09, v42).
   //
-  // Ate 01/09 a dedicatoria saia da tela com 400px de rolagem e nao voltava
-  // mais. Em 02/09 ele pediu que ela "descesse junto com a rolagem", e a v28
-  // leu como "tem de ficar sempre a vista": foi para dentro do .topbar, que e
-  // sticky. Com o nome preenchido ela media 98px ali, e num iPhone SE a sobra
-  // para o Kadish caia para 52%, contra o piso de 60% do projeto — defeito que
-  // nenhuma checagem via, porque TODAS rodavam com a dedicatoria vazia.
-  // Em 04/09, com os numeros na mao, ele escolheu: ela sai do cabecalho e volta
-  // ao fluxo do texto, em toda tela. Entao a pergunta certa hoje sao TRES:
-  // aparece inteira ao abrir, sai de vista quando ele rola para rezar, e volta
-  // quando ele sobe. Isso e o oposto do que esta linha cobrava ate ontem — e e
-  // por isso que ela esta escrita por extenso aqui.
+  // Esta pergunta ja mudou tres vezes, e as duas ultimas sao OPOSTAS uma da
+  // outra. Vale escrever por que, senao alguem "conserta" isto de volta:
+  //   ate 01/09  ela saia da tela com 400px de rolagem e nao voltava mais
+  //   02/09      ele pediu que "descesse junto com a rolagem" e a v28 a pos
+  //              dentro do .topbar, que e sticky
+  //   04/09      medi que ali ela custava 98px e derrubava a sobra do iPhone SE
+  //              para 52%, contra o piso de 60%; ele escolheu tira-la do
+  //              cabecalho, e a v41 a devolveu ao fluxo do texto
+  //   04/09      vendo a v41 ele disse que nao era isso: "a dedicatoria fica
+  //              parada no alto acompanhando a leitura". As duas leituras de
+  //              "rolar junto com o Kadish" eram opostas e eu tinha escolhido a
+  //              errada sozinho.
+  // Entao hoje a pergunta e: ela CONTINUA na tela depois de rolar? E o piso de
+  // 60% continua de pe? O piso quem mede e o testar-telas.mjs; aqui se mede o
+  // que o olho dele ve.
   r = await ler(p);
   const aoAbrir = r.visivel;
   await p.evaluate(() => window.scrollTo(0, 900));
@@ -117,18 +121,30 @@ for (const lg of linguas) {
   const rolado = await ler(p);
   await p.evaluate(() => window.scrollTo(0, 0));
   await p.waitForTimeout(300);
-  const devolta = await ler(p);
-  ok = aoAbrir && !rolado.visivel && devolta.visivel && !rolado.naVagaDoTopo;
+  ok = aoAbrir && rolado.visivel && rolado.naVagaDoTopo;
   if (!ok) ruim++;
-  console.log((ok?'OK   ':'FALHA') + ` rola junto com o Kadish: ${JSON.stringify(
-    { aoAbrir, some_ao_rolar: !rolado.visivel, volta_ao_subir: devolta.visivel })}`);
+  console.log((ok?'OK   ':'FALHA') + ` fica parada no alto acompanhando a leitura: ${JSON.stringify(
+    { aoAbrir, continua_apos_rolar: rolado.visivel, no_alto: rolado.naVagaDoTopo })}`);
 
-  // e o cabecalho tem de ter DEVOLVIDO a altura: com a dedicatoria fora dele,
-  // nada dela pode continuar preso no alto
-  const noTopo = await p.evaluate(() =>
-    !!document.querySelector('.topbar .dedicatoria-fixa, .topbar .convite-dedicar, .topbar .dedicatoria'));
-  if (noTopo) ruim++;
-  console.log((noTopo?'FALHA':'OK   ') + ' a dedicatoria nao esta mais presa no cabecalho');
+  // E o outro lado da mesma regra, que e o que impede o piso de cair: numa tela
+  // BAIXA (telefone deitado, 375px de altura) ela NAO pode grudar no cabecalho.
+  // Ali o cabecalho ja come 78px e a barra de baixo 66px; 84px de dedicatoria
+  // levariam a sobra para 39%. Numa tela baixa ela volta a ser a primeira linha
+  // do texto — aparece ao abrir e sobe com o Kadish.
+  await p.setViewportSize({ width: 667, height: 375 });
+  await p.waitForTimeout(500);
+  const deitado = await ler(p);
+  await p.evaluate(() => window.scrollTo(0, 900));
+  await p.waitForTimeout(300);
+  const deitadoRolado = await ler(p);
+  await p.evaluate(() => window.scrollTo(0, 0));
+  await p.waitForTimeout(300);
+  ok = deitado.visivel && !deitado.naVagaDoTopo && !deitadoRolado.visivel;
+  if (!ok) ruim++;
+  console.log((ok?'OK   ':'FALHA') + ` deitado no telefone ela nao gruda no cabecalho: ${JSON.stringify(
+    { aoAbrir: deitado.visivel, no_alto: deitado.naVagaDoTopo, some_ao_rolar: !deitadoRolado.visivel })}`);
+  await p.setViewportSize({ width: 375, height: 667 });
+  await p.waitForTimeout(500);
 
   // D — e NAO aparece no Modo Treino, mas volta ao sair dele
   await p.click('#treinoToggle');
@@ -147,5 +163,5 @@ for (const lg of linguas) {
   await p.close();
 }
 await nav.close();
-console.log(ruim ? `${ruim} problema(s)` : 'VERDE: o convite ocupa a vaga da dedicatoria, desce junto com o Kadish, e sai do Treino');
+console.log(ruim ? `${ruim} problema(s)` : 'VERDE: o convite ocupa a vaga da dedicatoria, ela acompanha a leitura no alto, e sai do Treino');
 process.exit(ruim ? 1 : 0);

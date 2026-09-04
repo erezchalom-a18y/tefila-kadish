@@ -1414,3 +1414,94 @@ Não há terceira opção, e é por isso que ela é criada em código.
 o Kadish" e "rolaria junta") e eu tratei a segunda como se fosse as duas. Quando
 ele repete um pedido que eu já dei por atendido, a pergunta não é "será que não
 chegou?" — é **qual metade eu não fiz**.
+
+
+## "Rolar junto com o Kadish" tinha duas leituras opostas (04/09, v42)
+
+Em 04/09 ele olhou a v41 e disse: *"fazer rolar o em memória junto com a rolagem
+do kadish (não está indo)"*. Eu tinha acabado de fazer a v41 justamente para
+isso. Perguntei, com as duas leituras desenhadas, e ele escolheu:
+
+> **"a dedicatória fica parada no alto acompanhando a leitura"**
+
+As duas leituras da mesma frase eram **opostas** — acompanhar a leitura (ficar à
+vista) ou subir com o texto e sair — e em 04/09 eu escolhi a errada sozinho, duas
+vezes, em versões seguidas. A regra que fica: **quando um pedido admite duas
+leituras opostas, perguntar custa uma mensagem; adivinhar custou três versões.**
+
+**Onde ela mora agora, e por que isso é uma função e não uma regra de CSS.**
+No `.topbar`, que é sticky, ela acompanha por construção. Mas o cabeçalho é
+altura que o Kadish perde, e o piso do projeto é 60%. Medido com o nome
+preenchido:
+
+| tela | cabeçalho | dedicatória | sobra |
+|---|---|---|---|
+| iPhone SE em pé (375×667) | 124px | 84px na forma de três linhas | **55%** ✗ |
+| iPhone SE deitado (667×375) | 78px | 84px | **39%** ✗ |
+
+Não há aperto de letra que resolva 39%. Então `vagaDaDedicatoria()` decide, e é
+o **único** lugar que decide:
+
+- **tela de 500px de altura ou mais** → última linha do `.topbar`, grudada.
+- **tela mais baixa** (telefone deitado) → primeira linha do texto, como na v41:
+  aparece ao abrir e sobe com o Kadish.
+
+E numa tela **de até 700px de altura** ela encolhe para **uma linha só**, com o
+rótulo curto `in_memory_of` ("Em memória de"), que já existia nas 8 línguas
+desde a faixa antiga — **não é uma segunda cópia do texto**, é a mesma tabela.
+Medido depois: 84px → **31px**, e a sobra do iPhone SE em pé volta a **63%**.
+Deitado, **61%**.
+
+**A armadilha do `const` em TDZ.** A primeira pintura da dedicatória acontece
+ANTES de o `const I18N` ser inicializado, e ler um `const` nessa janela
+**estoura** — `Cannot access 'I18N' before initialization`, e a dedicatória
+inteira ficava em branco. Por isso o rótulo curto é lido por `rotuloCurto()`,
+protegida, e o `<span>` carrega o `data-i18n` para o `applyI18n` preenchê-lo na
+primeira volta. Duas rotas, as duas corretas, nenhuma cópia de texto.
+
+**E o risco embaixo dela não voltou.** O risco é o do próprio `.topbar`. Com um
+risco só ela é a última linha do cabeçalho; com dois, ela volta a ser a
+"terceira barra" de que ele reclamou na v40.
+
+**O traço do "Ocultar" saiu**, no mesmo dia e a pedido dele: *"tire o traço em
+ocultar nas configurações"*. O esmaecido sozinho já diz o que o botão faz, e o
+risco sobre uma palavra curta lia-se como erro. O "Destaque" maior e em latão
+continua.
+
+**E o ben/bat automático NÃO vai existir.** Eu tinha proposto perguntar o nome do
+pai e da mãe e montar o nome hebraico sozinho. Ele cortou, e a razão é boa:
+*"como você sabe se a pessoa é homem ou mulher para indicar ben ou bat, deixe que
+a pessoa preencha na sua língua, o lembrete é para ele"*. O campo do nome
+hebraico continua livre, escrito por quem cadastra. É a regra 5 das invioláveis
+aplicada a um nome próprio: o modelo não escreve o que é do dono.
+
+**A letra encolheu e o parentesco saiu (mesma v42).** Ele: *"pode diminuir o
+tamanho das fontes do in memorian, não precisa colocar parentesco, ele com
+certeza lembra, ganha uma linha"*. Rótulo de 0,95rem para **0,85rem**, nome de
+1,25rem para **1,05rem**, e a linha da relação ("meu pai") **não aparece mais**
+— continua guardada no perfil, some da tela e não dos dados. No computador a
+dedicatória foi de 84px para **55px**, de três linhas para duas.
+
+E a linha que ele deu de presente pagou uma coisa: **o nome hebraico voltou para
+a tela do telefone**. Ele tinha saído da forma compacta porque, com o parentesco
+ainda ali, "Em memória de Itzhak Avraham Cohen · יצחק אברהם בן יוסף" ia a três
+linhas num iPhone SE e a sobra caía a 59,7%. Sem o parentesco e com a letra
+menor, cabe: **63%** de sobra, com esse mesmo nome longo.
+
+**Duas falhas que a checagem pegou nesta rodada, e as duas eram reais:**
+
+1. **O convite virou um botão de 23px**, contra o piso de 30px do projeto — dedo
+   de quem reza de pé, com o sidur na outra mão. O `testar-telas.mjs` o acusou
+   pelo nome. Agora ele é `flex` com `min-height: 30px`.
+2. **A forma compacta não pegava no convite.** As regras da forma cheia
+   (`.convite-dedicar .ded-rotulo`) moram MAIS ABAIXO no arquivo e, com o mesmo
+   peso de seletor, ganhavam por serem as últimas. O convite continuava em duas
+   linhas (65px) e a sobra do iPhone SE caía a 58%. Os seletores da tela baixa
+   passaram a levar `.dedicatoria-fixa .convite-dedicar` no meio. É a mesma
+   lição de 02/09, quando as regras de tela grande não pegavam pelo mesmo
+   motivo: **neste arquivo, quem vem depois ganha.**
+
+**E uma armadilha nova:** numa tela baixa a vaga vive dentro do `<main>`, e o
+`desenharVersos()` limpa o `main` inteiro antes de redesenhar. A segunda troca
+de Kadish com o telefone deitado **apagava a dedicatória de vez**, sem erro
+nenhum na tela. Por isso o `vagaDaDedicatoria()` a recria quando falta.
