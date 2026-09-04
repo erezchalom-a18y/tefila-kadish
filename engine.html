@@ -1064,11 +1064,20 @@
                  mais elegante" das tres do app e a Cormorant Garamond, e e
                  nela que ele reconheceu "a que estava perfeita".
      Entao: Cormorant, corpo miudo, sem maiuscula e sem espacamento de letra. */
+  /* A COR do rotulo, e por que ela nao e mais o bege claro (04/09, v45).
+     Ele: "o texto do em memoria ficou muito pequeno e apagado". Media contra o
+     fundo de pergaminho: o rotulo em #8a7860 dava 3,65:1 — abaixo do minimo de
+     4,5:1 para texto corrido, e um TERCO do contraste da nota do minyan (8,92).
+     Somado ao italico, que ja afina as letras, era o "apagado" que ele viu.
+     O conserto e de COR, nao de tamanho: #4d3d2d da 8,92:1, o mesmo da nota, e
+     o rotulo continua sendo legenda — menor, italico, discreto ao lado do nome.
+     Este projeto tem piso de TAMANHO (12px) e nao tinha piso de CONTRASTE; era
+     por ai que a tela podia ficar ilegivel sem nenhuma checagem acusar. */
   .dedicatoria .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 1rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none;
-    color: var(--text-faint, #8a8070); margin-bottom: 1px;
+    color: var(--text-soft, #4d3d2d); margin-bottom: 1px;
   }
   .dedicatoria .ded-nome {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
@@ -1154,7 +1163,7 @@
     .dedicatoria-fixa .dedicatoria .ded-rotulo-curto,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo-curto {
       display: inline; font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 13px; font-style: italic; color: var(--text-faint, #8a8070);
+      font-size: 14px; font-style: italic; color: var(--text-soft, #4d3d2d);
     }
     .dedicatoria-fixa .dedicatoria .ded-nome {
       display: inline; font-size: 17px; margin-left: 4px;
@@ -1201,7 +1210,7 @@
     background: none; border: 0; cursor: pointer;
     font-family: 'Cormorant Garamond', serif;
     line-height: 1.45;
-    color: var(--text-faint, #8a8070);
+    color: var(--text-soft, #4d3d2d);
   }
   /* DUAS LINHAS (03/09), e o rotulo na MESMA letra da dedicatoria cheia (04/09).
      O convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, e agora tambem a
@@ -1216,7 +1225,7 @@
   .convite-dedicar .conv-acao {
     display: block; letter-spacing: normal; text-transform: none;
     color: inherit; margin: 0;
-    font-size: 1rem; font-weight: 300; font-style: italic; opacity: .72;
+    font-size: 1rem; font-weight: 300; font-style: italic; opacity: .85;
   }
   .convite-dedicar:hover { color: var(--brass, #8b6a3e); }
   /* ===== Modo Reza (o normal): so o Kadish =====
@@ -2197,7 +2206,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 44';
+const VERSAO = '2026-09-04 · 45';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {

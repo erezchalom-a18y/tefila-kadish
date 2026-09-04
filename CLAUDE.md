@@ -1611,3 +1611,36 @@ viraram `inline` e o espaço entre eles vem de um `::before` — no HTML eles
 estão colados, e sem isso sairia "…sozinho.E é recitado". A caixa foi de 30em
 para 40em para a frase caber corrida numa tela grande; num telefone ela quebra
 por largura, que é quebra de texto e não desenho.
+
+
+## O piso que faltava: CONTRASTE (04/09, v45)
+
+Ele: *"o texto do em memória ficou muito pequeno e apagado, o que sugere"*.
+Medido contra o fundo de pergaminho, e ele estava certo com folga:
+
+| | tamanho | contraste |
+|---|---|---|
+| "Em memória e pela elevação da alma de:" | 16px itálico | **3,65 : 1** |
+| a nota do minyan | 14px | 8,92 : 1 |
+| o nome | 21,6px | 13,82 : 1 |
+
+O rótulo estava a **um terço** do contraste da nota, e abaixo de 4,5:1, que é o
+mínimo para texto corrido. Somado ao itálico, que afina as letras, dava
+exatamente o "apagado" que ele viu. E com o memorial VAZIO era pior: o convite
+inteiro estava nesse 3,65 — a linha que a pessoa precisa **achar** para
+cadastrar era a mais apagada da tela.
+
+**O conserto foi de COR, não de tamanho:** o rótulo saiu de `--text-faint`
+(#8a7860) para `--text-soft` (#4d3d2d) — 8,92:1, o mesmo da nota do minyan.
+Continua sendo legenda (menor, itálico, discreta ao lado do nome). O convite
+foi junto, e a opacidade dele subiu de .72 para .85. No celular o rótulo curto
+foi de 13px para 14px, casando com a nota. Nenhuma altura mudou: 63% de sobra
+no iPhone SE em pé, 61% deitado, 70% no computador.
+
+**A lição, e é uma falha de projeto e não um detalhe desta tela:** este projeto
+tem piso de TAMANHO (12px de texto, 30px de botão) e **não tem piso de
+CONTRASTE**. Era por aí que a tela podia ficar ilegível sem nenhuma das
+dezessete checagens acusar — o mesmo formato dos outros buracos que já custaram
+caro aqui (o `canPlayType`, o `temState`, a página que ninguém rolava). Se um
+dia sobrar tempo, o `testar-telas.mjs` deveria medir contraste como já mede
+altura de botão.
