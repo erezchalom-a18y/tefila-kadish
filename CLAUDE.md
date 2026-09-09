@@ -1733,3 +1733,68 @@ fio existe e o `border-bottom` do topbar mede **0px**; onde ela está no texto o
 fio não existe e o risco volta a **1px**. Sobra para o Kadish: 69,1% no
 computador, 73,6% no iPad em pé, 66,1% deitado, 70,3% no iPhone 15, 62,1% no
 iPhone SE em pé, 61,3% deitado.
+
+
+## De uma pessoa para VÁRIAS (09/09, v49)
+
+Ele: *"cadastrar mais de uma pessoa… quando tiver mais de uma, o usuário poderá
+selecionar"*, e a linha que ele quer ver: *"Haim Chalom filho de Esther e Ezra"*.
+
+**O armazenamento.** Era um objeto em `tefila_memorial`. Agora é
+`{ lista: [pessoa], atual: <id> }` em `tefila_memoriais`. A pessoa `atual` é a
+que aparece na TELA; **todas** entram nos avisos de yahrzeit — quem se foi não
+deixa de ter yahrzeit porque a reza de hoje é de outro.
+
+**A chave antiga não é apagada.** Ela vira o primeiro da lista e fica onde está,
+como cópia de segurança. Migração é o tipo de código que roda uma vez na vida do
+aparelho: se falhar, falha calada e sem testemunha, e o que se perde é o nome do
+pai de alguém. Provado num navegador: 1 pessoa, virou a atual, nome preservado,
+chave antiga intacta.
+
+**As três portas de sempre continuam** — `loadMemorial`, `saveMemorial`,
+`clearMemorial`. Mudou o que está por baixo, não o nome da porta, e por isso o
+resto do app (e o `testar-telas.mjs`, que escreve na chave antiga) continua
+funcionando sem uma linha de mudança.
+
+**"filho de Esther e Ezra" e o botão Filho | Filha.** Para escrever *filho* ou
+*filha* o app teria de saber o sexo, e ele mesmo cortou essa adivinhação em
+04/09. Então quem cadastra escolhe, num toque. **Sem escolha, a linha da
+filiação não aparece** — nunca sai um "filho" chutado. O padrão da frase vem da
+tabela I18N, um por língua: isto é gramática, e não se monta com pedaços
+("filho" + "de" + nome) sem quebrar em metade das línguas. O hebraico precisa do
+*vav* colado (`{a} ו{b}`), e é por isso que até o "e" é um padrão de tabela.
+
+**Duas línguas ficam devendo revisão humana, e está anotado:**
+- **Russo** — "сын Эстер и Эзра" pediria genitivo nos nomes próprios, que não se
+  declina automaticamente. Usei um travessão (`сын — {a}`), que não é erro, mas
+  um falante deveria ver.
+- **Francês** — "fils de Esther" é erro; diante de vogal a preposição elide
+  (`d'`). É a **única regra de gramática que o app aplica sozinho**, escrita em
+  código no `textoFiliacao`.
+
+**A pergunta do pôr do sol.** Quem faleceu depois do pôr do sol já entrou no dia
+judaico seguinte. Sem essa pergunta o yahrzeit cai um dia errado **todos os
+anos**, e ninguém tem como desconfiar. Entra em branco de propósito: não há
+padrão seguro, e sem resposta vale a data como foi digitada, que é o
+comportamento de antes.
+
+**O `.ics` leva todas as pessoas, num arquivo só.** Dois calendários colados não
+valem — um `.ics` tem um cabeçalho só —, então os eventos de cada pessoa são
+extraídos e embrulhados juntos. **O UID leva o id da pessoa**: sem isso, duas
+pessoas com yahrzeit no mesmo dia viram UM evento no calendário do telefone e um
+dos nomes some sem aviso. Medido: 40 eventos (20 anos × 2 pessoas), um cabeçalho,
+os dois nomes.
+
+**No telefone a filiação não aparece**, e é a briga dos 50px de novo: com ela a
+dedicatória vai a duas linhas e o Kadish cai abaixo do piso. Está inteira no
+iPad, no computador e dentro do ⚙.
+
+**Uma checagem ficou vermelha, e o conserto foi para MAIS forte.** A
+`testar-dedicatoria.mjs` apagava a chave `tefila_memorial` por fora e esperava o
+convite voltar. Com o cadastro na chave nova, ela passou a olhar o lugar de
+ontem. O conserto **não** foi apontar para a chave nova: foi passar a apagar
+pelo **caminho do app** (o `removerPessoa`, que é o ✕ da lista). Assim ela prova
+o que interessa — quem tira a pessoa vê o convite voltar — e continua valendo se
+o armazenamento mudar outra vez. E ganhou uma linha que faltava: **cadastrar
+outra pessoa e provar que o convite some**, senão um defeito que nunca mostrasse
+a dedicatória passaria verde nas duas linhas anteriores.

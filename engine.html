@@ -1225,6 +1225,10 @@
        Em toda tela maior — celular alto, iPad, computador — os dois aparecem,
        e o hebraico continua inteiro no ⚙. */
     .dedicatoria-fixa .dedicatoria .dn-heb { display: none; }
+    /* a filiacao tambem sai aqui, pelo mesmo motivo dos 50px: com ela a linha
+       vai a duas e a sobra para o Kadish fura o piso. Ela continua inteira no
+       iPad, no computador e no ⚙. */
+    .dedicatoria-fixa .dedicatoria .ded-filiacao { display: none; }
     .dedicatoria-fixa .convite-dedicar .conv-acao {
       display: inline; font-size: 13px; margin-left: 4px;
     }
@@ -1781,6 +1785,48 @@
   }
   .setup-skip a { color: var(--brass); cursor: pointer; text-decoration: underline; }
 
+  /* ===== A lista de pessoas, dentro do ⚙ (09/09) =====
+     O ponto preenchido diz por quem o Kadish esta sendo dito AGORA. Os botoes
+     tem 34px de altura: dedo de quem esta de pe, que e o piso de 30px do
+     projeto com folga. */
+  .mem-lista { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+  .mem-item {
+    display: flex; align-items: center; gap: 4px;
+    border: 1px solid var(--rule); border-radius: 8px; padding: 2px 4px 2px 2px;
+  }
+  .mem-item.atual { border-color: var(--brass); background: rgba(212, 162, 90, 0.10); }
+  .mem-escolher {
+    flex: 1; display: flex; align-items: center; gap: 9px; min-height: 34px;
+    background: transparent; border: 0; cursor: pointer; text-align: left;
+    padding: 4px 8px; font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; color: var(--text);
+  }
+  .mem-ponto {
+    width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto;
+    border: 1px solid var(--brass); background: transparent;
+  }
+  .mem-item.atual .mem-ponto { background: var(--brass); }
+  .mem-nome { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mem-acao {
+    min-width: 34px; min-height: 34px; background: transparent; border: 0;
+    cursor: pointer; color: var(--text-faint); font-size: 14px; border-radius: 6px;
+  }
+  .mem-acao:hover { color: var(--brass); background: rgba(212, 162, 90, 0.12); }
+  .mem-add {
+    display: block; width: 100%; padding: 11px; border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif; font-size: 13.5px; font-weight: 500;
+    letter-spacing: 0.06em; cursor: pointer;
+    border: 1px dashed var(--brass); background: transparent; color: var(--brass);
+  }
+
+  /* A filiacao ("filho de Esther e Ezra") vem abaixo do nome, menor: ela diz de
+     QUEM e o nome, nao e o nome. */
+  .dedicatoria .ded-filiacao {
+    display: block; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.95rem; font-style: italic; line-height: 1.3;
+    color: var(--text-soft, #4d3d2d); margin-top: 1px;
+  }
+
   /* Yahrzeit info card (in settings) */
   .yahrzeit-card {
     background: var(--tip-bg);
@@ -2249,7 +2295,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-09 · 48';
+const VERSAO = '2026-09-09 · 49';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2408,7 +2454,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="settings-eyebrow" style="margin-top:24px;" data-i18n="dedication_title">Dedicação</div>
 
     <div class="settings-row">
-      <button class="setup-actions" id="editMemorial" style="display:block;width:100%;padding:11px;border-radius:6px;font-family:'Cormorant Garamond',serif;font-size:13.5px;font-weight:500;letter-spacing:0.06em;cursor:pointer;border:1px solid var(--brass);background:transparent;color:var(--brass);" data-i18n="edit_memorial">Editar perfil "Em memória de"</button>
+      <!-- 09/09 — a lista de pessoas. Era um botao so ("Editar perfil"), e cabia
+           UMA pessoa. Ele: "cadastrar mais de uma pessoa... quando tiver mais
+           de uma, o usuario podera selecionar". O ponto preenchido diz por quem
+           o Kadish esta sendo dito AGORA; todas continuam recebendo os avisos
+           de yahrzeit. -->
+      <div class="mem-lista" id="memLista"></div>
+      <button class="mem-add" id="memAdd" data-i18n="mem_add">+ Acrescentar pessoa</button>
     </div>
 
     <div class="yahrzeit-card" id="yahrzeitCard" style="display:none;">
@@ -2443,6 +2495,27 @@ document.addEventListener('DOMContentLoaded', () => {
       <label data-i18n="setup_hebrew_name">Nome hebraico (opcional)</label>
       <input type="text" id="setupHebrew" class="hebrew-input" placeholder="יִצְחָק אַבְרָהָם בֶּן יוֹסֵף" dir="rtl">
     </div>
+    <!-- 09/09 — FILHO | FILHA, e por que isto e um botao e nao um palpite.
+         Ele quer a linha "Haim Chalom filho de Esther e Ezra". Para escrever
+         filho ou filha o app teria de saber o sexo, e ele mesmo ja tinha
+         cortado essa adivinhacao em 04/09: "como voce sabe se a pessoa e homem
+         ou mulher... deixe que a pessoa preencha". Entao quem preenche escolhe,
+         num toque. Sem escolha, a linha da filiacao simplesmente nao aparece —
+         nunca sai um "filho" chutado. -->
+    <div class="setup-field">
+      <div class="seg-control" id="setupSexo">
+        <button type="button" data-value="filho" data-i18n="setup_child_m">Filho</button>
+        <button type="button" data-value="filha" data-i18n="setup_child_f">Filha</button>
+      </div>
+    </div>
+    <div class="setup-field">
+      <label data-i18n="setup_mother">Nome da mãe</label>
+      <input type="text" id="setupMae">
+    </div>
+    <div class="setup-field">
+      <label data-i18n="setup_father">Nome do pai</label>
+      <input type="text" id="setupPai">
+    </div>
     <div class="setup-field">
       <label data-i18n="setup_relation">Relação</label>
       <input type="text" id="setupRelation" data-i18n="ph_relation" placeholder="Pai, mãe, avô...">
@@ -2450,6 +2523,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="setup-field">
       <label data-i18n="setup_death_date">Data de falecimento (necessária pra yahrzeit)</label>
       <input type="date" id="setupDeathDate">
+    </div>
+    <!-- 09/09 — A PERGUNTA DO POR DO SOL. E a que ninguem lembra e a que acerta
+         a data hebraica: quem faleceu DEPOIS do por do sol ja entrou no dia
+         judaico seguinte, e sem isto o yahrzeit cai um dia errado para sempre.
+         Entra em branco de proposito: nao ha padrao seguro, e o app nao deve
+         escolher por quem esta cadastrando. Sem resposta vale a data como foi
+         digitada, que e o comportamento de antes. -->
+    <div class="setup-field">
+      <label data-i18n="setup_sunset_q">O falecimento foi antes ou depois do pôr do sol?</label>
+      <div class="seg-control" id="setupPorDoSol">
+        <button type="button" data-value="antes" data-i18n="setup_before_sunset">Antes do pôr do sol</button>
+        <button type="button" data-value="depois" data-i18n="setup_after_sunset">Depois do pôr do sol</button>
+      </div>
     </div>
 
     <div class="setup-actions">
@@ -3986,7 +4072,11 @@ function desenharDedicatoria(vaga) {
     `<span class="ded-nome">` +
       `<span class="dn-lat">${(m.name || '').replace(/[&<>]/g, '')}</span>` +
       (m.hebrew ? `<span class="dn-heb"> · ${String(m.hebrew).replace(/[&<>]/g, '')}</span>` : '') +
-    `</span>`;
+    `</span>` +
+    (() => {
+      const f = textoFiliacao(m, L);
+      return f ? `<span class="ded-filiacao">${f.replace(/[&<>]/g, '')}</span>` : '';
+    })();
   // A RELACAO ("meu pai") nao aparece mais, por decisao dele em 04/09: "nao
   // precisa colocar parentesco, ele com certeza lembra, ganha uma linha". Ela
   // continua GUARDADA no perfil — some da tela, nao dos dados —, e quem dedica
@@ -4005,8 +4095,7 @@ function desenharConvite(vaga) {
     `<span class="ded-rotulo-curto" data-i18n="in_memory_of">${rotuloCurto(L)}</span>` +
     `<span class="conv-acao">(${CONVITE[L] || CONVITE.pt})</span>`;
   b.addEventListener('click', () => {
-    const ed = document.getElementById('editMemorial');
-    if (ed) ed.click();
+    if (typeof abrirCadastro === 'function') abrirCadastro(null);
     else document.getElementById('setupModal').classList.add('show');
   });
   vaga.appendChild(b);
@@ -5106,6 +5195,23 @@ const I18N = {
     setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
     setup_name: 'Nome (em português)', setup_hebrew_name: 'Nome hebraico (opcional)',
     setup_relation: 'Relação', setup_death_date: 'Data de falecimento (necessária pra yahrzeit)',
+    setup_child_m: 'Filho',
+    setup_child_f: 'Filha',
+    setup_mother: 'Nome da mãe',
+    setup_father: 'Nome do pai',
+    setup_sunset_q: 'O falecimento foi antes ou depois do pôr do sol?',
+    setup_before_sunset: 'Antes do pôr do sol',
+    setup_after_sunset: 'Depois do pôr do sol',
+    mem_lista: 'Em memória de',
+    mem_add: '+ Acrescentar pessoa',
+    mem_editar: 'Editar',
+    mem_remover: 'Remover',
+    mem_rezando: 'Rezando por',
+    filiacao_m: 'filho de {a}',
+    filiacao_f: 'filha de {a}',
+    filiacao_dois: '{a} e {b}',
+    toast_pessoa_removida: 'Pessoa removida',
+    toast_pessoa_atual: 'Rezando por',
     setup_skip_btn: 'Pular', setup_save: 'Salvar', setup_skip_link: 'Depois, no menu ⚙',
     consent_title: 'Privacidade', consent_text: 'Este app coleta dados anônimos de uso e, se você cadastrar, seu nome e data do falecimento ficam guardados localmente. Conforme LGPD/GDPR, você pode apagar tudo a qualquer momento.',
     consent_decline: 'Apenas o essencial', consent_accept: 'OK, prosseguir',
@@ -5154,6 +5260,23 @@ const I18N = {
     setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
     setup_name: 'Name (English)', setup_hebrew_name: 'Hebrew name (optional)',
     setup_relation: 'Relationship', setup_death_date: 'Date of passing (required for yahrzeit)',
+    setup_child_m: 'Son',
+    setup_child_f: 'Daughter',
+    setup_mother: 'Mother\'s name',
+    setup_father: 'Father\'s name',
+    setup_sunset_q: 'Did the passing happen before or after sunset?',
+    setup_before_sunset: 'Before sunset',
+    setup_after_sunset: 'After sunset',
+    mem_lista: 'In memory of',
+    mem_add: '+ Add a person',
+    mem_editar: 'Edit',
+    mem_remover: 'Remove',
+    mem_rezando: 'Praying for',
+    filiacao_m: 'son of {a}',
+    filiacao_f: 'daughter of {a}',
+    filiacao_dois: '{a} and {b}',
+    toast_pessoa_removida: 'Person removed',
+    toast_pessoa_atual: 'Praying for',
     setup_skip_btn: 'Skip', setup_save: 'Save', setup_skip_link: 'Later, in ⚙ menu',
     consent_title: 'Privacy', consent_text: 'This app collects anonymous usage data, and if you register, your name and date of passing are stored locally. Per GDPR/LGPD, you can delete everything at any time.',
     consent_decline: 'Essential only', consent_accept: 'OK, proceed',
@@ -5202,6 +5325,23 @@ const I18N = {
     setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
     setup_name: 'Nombre (en español)', setup_hebrew_name: 'Nombre hebreo (opcional)',
     setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (necesaria para yahrzeit)',
+    setup_child_m: 'Hijo',
+    setup_child_f: 'Hija',
+    setup_mother: 'Nombre de la madre',
+    setup_father: 'Nombre del padre',
+    setup_sunset_q: '¿El fallecimiento fue antes o después de la puesta del sol?',
+    setup_before_sunset: 'Antes de la puesta del sol',
+    setup_after_sunset: 'Después de la puesta del sol',
+    mem_lista: 'En memoria de',
+    mem_add: '+ Añadir persona',
+    mem_editar: 'Editar',
+    mem_remover: 'Quitar',
+    mem_rezando: 'Rezando por',
+    filiacao_m: 'hijo de {a}',
+    filiacao_f: 'hija de {a}',
+    filiacao_dois: '{a} y {b}',
+    toast_pessoa_removida: 'Persona eliminada',
+    toast_pessoa_atual: 'Rezando por',
     setup_skip_btn: 'Omitir', setup_save: 'Guardar', setup_skip_link: 'Después, en el menú ⚙',
     consent_title: 'Privacidad', consent_text: 'Esta app recolecta datos de uso anónimos y, si te registras, tu nombre y fecha de fallecimiento se guardan localmente. Según LGPD/GDPR, puedes borrar todo en cualquier momento.',
     consent_decline: 'Solo lo esencial', consent_accept: 'OK, continuar',
@@ -5250,6 +5390,23 @@ const I18N = {
     setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
     setup_name: 'Nom (français)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
     setup_relation: 'Relation', setup_death_date: 'Date de décès (nécessaire pour yahrzeit)',
+    setup_child_m: 'Fils',
+    setup_child_f: 'Fille',
+    setup_mother: 'Nom de la mère',
+    setup_father: 'Nom du père',
+    setup_sunset_q: 'Le décès a-t-il eu lieu avant ou après le coucher du soleil ?',
+    setup_before_sunset: 'Avant le coucher du soleil',
+    setup_after_sunset: 'Après le coucher du soleil',
+    mem_lista: 'À la mémoire de',
+    mem_add: '+ Ajouter une personne',
+    mem_editar: 'Modifier',
+    mem_remover: 'Retirer',
+    mem_rezando: 'Je prie pour',
+    filiacao_m: 'fils de {a}',
+    filiacao_f: 'fille de {a}',
+    filiacao_dois: '{a} et {b}',
+    toast_pessoa_removida: 'Personne retirée',
+    toast_pessoa_atual: 'Je prie pour',
     setup_skip_btn: 'Passer', setup_save: 'Sauvegarder', setup_skip_link: 'Plus tard, dans le menu ⚙',
     consent_title: 'Confidentialité', consent_text: "Cette app recueille des données d'usage anonymes et, si vous vous inscrivez, votre nom et date de décès sont stockés localement. Conformément au RGPD/LGPD, vous pouvez tout supprimer à tout moment.",
     consent_decline: 'Essentiel uniquement', consent_accept: 'OK, continuer',
@@ -5298,6 +5455,23 @@ const I18N = {
     setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
     setup_name: 'Nome (in italiano)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
     setup_relation: 'Relazione', setup_death_date: 'Data del decesso (necessaria per lo yahrzeit)',
+    setup_child_m: 'Figlio',
+    setup_child_f: 'Figlia',
+    setup_mother: 'Nome della madre',
+    setup_father: 'Nome del padre',
+    setup_sunset_q: 'Il decesso è avvenuto prima o dopo il tramonto?',
+    setup_before_sunset: 'Prima del tramonto',
+    setup_after_sunset: 'Dopo il tramonto',
+    mem_lista: 'In memoria di',
+    mem_add: '+ Aggiungi una persona',
+    mem_editar: 'Modifica',
+    mem_remover: 'Rimuovi',
+    mem_rezando: 'Sto pregando per',
+    filiacao_m: 'figlio di {a}',
+    filiacao_f: 'figlia di {a}',
+    filiacao_dois: '{a} e {b}',
+    toast_pessoa_removida: 'Persona rimossa',
+    toast_pessoa_atual: 'Sto pregando per',
     setup_skip_btn: 'Salta', setup_save: 'Salva', setup_skip_link: 'Più tardi, nel menu ⚙',
     consent_title: 'Privacy', consent_text: 'Questa app raccoglie dati d\'uso anonimi e, se ti registri, il tuo nome e la data del decesso restano salvati solo sul tuo dispositivo. In base al GDPR puoi cancellare tutto in qualsiasi momento.',
     consent_decline: 'Solo l\'essenziale', consent_accept: 'OK, continua',
@@ -5346,6 +5520,23 @@ const I18N = {
     setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
     setup_name: 'Name (auf Deutsch)', setup_hebrew_name: 'Hebräischer Name (optional)',
     setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (für den Jahrzeit nötig)',
+    setup_child_m: 'Sohn',
+    setup_child_f: 'Tochter',
+    setup_mother: 'Name der Mutter',
+    setup_father: 'Name des Vaters',
+    setup_sunset_q: 'Trat der Tod vor oder nach Sonnenuntergang ein?',
+    setup_before_sunset: 'Vor Sonnenuntergang',
+    setup_after_sunset: 'Nach Sonnenuntergang',
+    mem_lista: 'Zum Andenken an',
+    mem_add: '+ Person hinzufügen',
+    mem_editar: 'Bearbeiten',
+    mem_remover: 'Entfernen',
+    mem_rezando: 'Ich bete für',
+    filiacao_m: 'Sohn von {a}',
+    filiacao_f: 'Tochter von {a}',
+    filiacao_dois: '{a} und {b}',
+    toast_pessoa_removida: 'Person entfernt',
+    toast_pessoa_atual: 'Ich bete für',
     setup_skip_btn: 'Überspringen', setup_save: 'Speichern', setup_skip_link: 'Später, im Menü ⚙',
     consent_title: 'Datenschutz', consent_text: 'Diese App erfasst anonyme Nutzungsdaten. Wenn Sie sich eintragen, bleiben Name und Sterbedatum nur auf Ihrem Gerät gespeichert. Gemäß DSGVO können Sie jederzeit alles löschen.',
     consent_decline: 'Nur das Nötigste', consent_accept: 'OK, weiter',
@@ -5394,6 +5585,23 @@ const I18N = {
     setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
     setup_name: 'Имя (по-русски)', setup_hebrew_name: 'Еврейское имя (опционально)',
     setup_relation: 'Отношение', setup_death_date: 'Дата кончины (требуется для йорцайта)',
+    setup_child_m: 'Сын',
+    setup_child_f: 'Дочь',
+    setup_mother: 'Имя матери',
+    setup_father: 'Имя отца',
+    setup_sunset_q: 'Смерть наступила до или после захода солнца?',
+    setup_before_sunset: 'До захода солнца',
+    setup_after_sunset: 'После захода солнца',
+    mem_lista: 'В память о',
+    mem_add: '+ Добавить человека',
+    mem_editar: 'Изменить',
+    mem_remover: 'Удалить',
+    mem_rezando: 'Молюсь за',
+    filiacao_m: 'сын — {a}',
+    filiacao_f: 'дочь — {a}',
+    filiacao_dois: '{a} и {b}',
+    toast_pessoa_removida: 'Человек удалён',
+    toast_pessoa_atual: 'Молюсь за',
     setup_skip_btn: 'Пропустить', setup_save: 'Сохранить', setup_skip_link: 'Позже, в меню ⚙',
     consent_title: 'Конфиденциальность', consent_text: 'Приложение собирает анонимные данные использования. Если вы зарегистрируетесь, ваше имя и дата хранятся локально. По LGPD/GDPR, можно удалить всё в любой момент.',
     consent_decline: 'Только необходимое', consent_accept: 'OK, продолжить',
@@ -5442,6 +5650,23 @@ const I18N = {
     setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',
     setup_name: 'שם', setup_hebrew_name: 'שם עברי (אופציונלי)',
     setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (נדרש ליארצייט)',
+    setup_child_m: 'בן',
+    setup_child_f: 'בת',
+    setup_mother: 'שם האם',
+    setup_father: 'שם האב',
+    setup_sunset_q: 'הפטירה הייתה לפני או אחרי שקיעת החמה?',
+    setup_before_sunset: 'לפני השקיעה',
+    setup_after_sunset: 'אחרי השקיעה',
+    mem_lista: 'לזכר',
+    mem_add: '+ הוספת אדם',
+    mem_editar: 'עריכה',
+    mem_remover: 'הסרה',
+    mem_rezando: 'מתפלל עבור',
+    filiacao_m: 'בן {a}',
+    filiacao_f: 'בת {a}',
+    filiacao_dois: '{a} ו{b}',
+    toast_pessoa_removida: 'האדם הוסר',
+    toast_pessoa_atual: 'מתפלל עבור',
     setup_skip_btn: 'דלג', setup_save: 'שמור', setup_skip_link: 'מאוחר יותר, בתפריט ⚙',
     consent_title: 'פרטיות', consent_text: 'אפליקציה זו אוספת נתוני שימוש אנונימיים. אם תירשם, השם והתאריך נשמרים מקומית. ע"פ LGPD/GDPR ניתן למחוק הכל בכל זמן.',
     consent_decline: 'רק חיוני', consent_accept: 'אישור, המשך',
@@ -6055,16 +6280,124 @@ document.getElementById('velocidadeAjustes').addEventListener('click', e => {
 }
 
 // ---------- Memorial / Em memória de ----------
-function loadMemorial() {
-  try { return JSON.parse(localStorage.getItem('tefila_memorial') || 'null'); } catch (e) { return null; }
+//
+// 09/09 — DE UMA PESSOA PARA VARIAS. Ele: "cadastrar mais de uma pessoa...
+// quando tiver mais de uma, o usuario podera selecionar".
+//
+// O cadastro antigo era UM objeto em 'tefila_memorial'. Agora e
+// { lista: [pessoa], atual: <id> } em 'tefila_memoriais'. A pessoa `atual` e a
+// que aparece na tela do Kadish; TODAS continuam entrando nos avisos de
+// yahrzeit — quem se foi nao deixa de ter yahrzeit porque hoje a reza e de
+// outro.
+//
+// A chave antiga nao e apagada: ela vira o primeiro da lista e fica onde esta,
+// como copia de seguranca. Perder o nome do pai de alguem por causa de uma
+// migracao seria imperdoavel, e migracao e o tipo de codigo que so roda uma vez
+// na vida do aparelho — se falhar, falha calada e sem testemunha.
+const CHAVE_MEMORIAIS = 'tefila_memoriais';
+const CHAVE_MEMORIAL_ANTIGA = 'tefila_memorial';
+
+function novoIdPessoa() {
+  return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
-function saveMemorial(m) { localStorage.setItem('tefila_memorial', JSON.stringify(m)); }
-function clearMemorial() { localStorage.removeItem('tefila_memorial'); }
+function salvarMemoriais(d) {
+  try { localStorage.setItem(CHAVE_MEMORIAIS, JSON.stringify(d)); } catch (e) {}
+}
+function carregarMemoriais() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(CHAVE_MEMORIAIS) || 'null'); } catch (e) {}
+  if (d && Array.isArray(d.lista)) return d;
+  let antigo = null;
+  try { antigo = JSON.parse(localStorage.getItem(CHAVE_MEMORIAL_ANTIGA) || 'null'); } catch (e) {}
+  if (antigo && antigo.name) {
+    const pessoa = Object.assign({ id: novoIdPessoa() }, antigo);
+    const novo = { lista: [pessoa], atual: pessoa.id };
+    salvarMemoriais(novo);
+    return novo;
+  }
+  return { lista: [], atual: '' };
+}
+function pessoaAtual() {
+  const d = carregarMemoriais();
+  if (!d.lista.length) return null;
+  return d.lista.find(x => x.id === d.atual) || d.lista[0];
+}
+
+// As tres de sempre. O resto do app chama estas desde o comeco e continua
+// chamando: quem mudou foi o que esta por baixo, nao o nome da porta.
+function loadMemorial() { return pessoaAtual(); }
+function saveMemorial(m) {
+  const d = carregarMemoriais();
+  const i = m.id ? d.lista.findIndex(x => x.id === m.id) : -1;
+  if (i >= 0) d.lista[i] = m; else { m.id = m.id || novoIdPessoa(); d.lista.push(m); }
+  d.atual = m.id;
+  salvarMemoriais(d);
+}
+function clearMemorial() {
+  const d = carregarMemoriais();
+  const atual = pessoaAtual();
+  if (!atual) return;
+  d.lista = d.lista.filter(x => x.id !== atual.id);
+  d.atual = d.lista.length ? d.lista[0].id : '';
+  salvarMemoriais(d);
+}
+function escolherPessoa(id) {
+  const d = carregarMemoriais();
+  if (!d.lista.some(x => x.id === id)) return;
+  d.atual = id;
+  salvarMemoriais(d);
+  renderMemorial();
+  atualizarDedicatoria();
+}
+function removerPessoa(id) {
+  const d = carregarMemoriais();
+  d.lista = d.lista.filter(x => x.id !== id);
+  if (d.atual === id) d.atual = d.lista.length ? d.lista[0].id : '';
+  salvarMemoriais(d);
+  renderMemorial();
+  atualizarDedicatoria();
+  showToast(TXT('toast_pessoa_removida'));
+}
+
+/**
+ * "filho de Esther e Ezra" — a linha que ele pediu em 09/09.
+ *
+ * Ela so existe quando ele escolheu Filho ou Filha. Sem escolha nao sai nada:
+ * o app nunca escreve um "filho" chutado, que foi a regra que ele mesmo deu.
+ * O padrao da frase vem da tabela I18N, uma por lingua, porque isto e gramatica
+ * e nao se monta com pedacos ("filho" + "de" + nome) sem quebrar em metade das
+ * linguas.
+ */
+function textoFiliacao(pessoa, L) {
+  if (!pessoa || !pessoa.sexo) return '';
+  const pais = [pessoa.mae, pessoa.pai].map(x => (x || '').trim()).filter(Boolean);
+  if (!pais.length) return '';
+  let tab = null;
+  try { tab = I18N[L] || I18N.pt; } catch (e) { return ''; }
+  if (!tab) return '';
+  const juntos = pais.length === 2
+    ? String(tab.filiacao_dois || '{a} e {b}').replace('{a}', pais[0]).replace('{b}', pais[1])
+    : pais[0];
+  const padrao = pessoa.sexo === 'filha' ? tab.filiacao_f : tab.filiacao_m;
+  if (!padrao) return '';
+  let txt = String(padrao).replace('{a}', juntos);
+  // Frances: "fils de Esther" e erro de lingua — diante de vogal ou h a
+  // preposicao elide. E a unica regra de gramatica escrita em codigo aqui, e
+  // esta anotada em CLAUDE.md para um falante conferir.
+  if (L === 'fr') txt = txt.replace(/\bde ([aeiouyhàâéèêîïôöùûAEIOUYHÀÂÉÈÊÎÏÔÖÙÛ])/, "d'$1");
+  return txt;
+}
 
 function renderMemorial() {
+  pintarMemLista();
   const m = loadMemorial();
   const strip = document.getElementById('memorialStrip');
-  if (!m || !m.name) { strip.classList.remove('show'); return; }
+  const cartao = document.getElementById('yahrzeitCard');
+  if (!m || !m.name) {
+    strip.classList.remove('show');
+    if (cartao) cartao.style.display = 'none';
+    return;
+  }
   document.getElementById('memName').textContent = m.name;
   document.getElementById('memHeb').textContent = m.hebrew || '';
   const datesText = [m.relation, m.deathDate ? 'ז"ל · ' + new Date(m.deathDate).toLocaleDateString(state.lang === 'pt' ? 'pt-BR' : state.lang) : ''].filter(Boolean).join(' · ');
@@ -6072,6 +6405,51 @@ function renderMemorial() {
   strip.classList.add('show');
   // Show yahrzeit card
   if (m.deathDate) renderYahrzeit(m);
+}
+
+/**
+ * A data que vale para o calendario hebraico.
+ *
+ * Meio-dia evita que o fuso vire o dia. E se ele respondeu que o falecimento
+ * foi DEPOIS do por do sol, a data judaica ja e a do dia seguinte — e por isso
+ * que a pergunta existe no cadastro. Sem ela, o yahrzeit cairia um dia errado
+ * todos os anos, e ninguem teria como desconfiar.
+ */
+function dataDaMorte(m) {
+  const d = new Date(m.deathDate + 'T12:00:00');
+  if (m.aposPorDoSol) d.setDate(d.getDate() + 1);
+  return d;
+}
+
+/**
+ * UM arquivo de calendario com TODAS as pessoas cadastradas.
+ *
+ * Quem se foi nao deixa de ter yahrzeit porque hoje a reza e de outro: a pessoa
+ * escolhida manda na TELA, nao nos avisos. Dois arquivos .ics colados nao valem
+ * — um calendario tem um cabecalho so —, entao aqui os eventos de cada pessoa
+ * sao extraidos e embrulhados juntos. O UID leva o id da pessoa: sem isso, duas
+ * pessoas com yahrzeit no mesmo dia viram UM evento so no calendario do
+ * telefone, e um dos dois nomes some sem aviso.
+ */
+function icsDeTodos(nussach, lang) {
+  const d = carregarMemoriais();
+  const eventos = [];
+  d.lista.forEach(pes => {
+    if (!pes.deathDate) return;
+    let bruto = '';
+    try { bruto = Yahrzeit.gerarICS(dataDaMorte(pes), nussach, pes.name || '', 20, lang); }
+    catch (e) { return; }
+    const linhas = bruto.split(/\r?\n/);
+    let dentro = false;
+    linhas.forEach(l => {
+      if (l === 'BEGIN:VEVENT') dentro = true;
+      if (dentro) eventos.push(l.startsWith('UID:') ? l + '-' + pes.id : l);
+      if (l === 'END:VEVENT') dentro = false;
+    });
+  });
+  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Tefila Kadish//Yahrzeit//PT',
+          'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'].concat(eventos, ['END:VCALENDAR'])
+         .join('\r\n') + '\r\n';
 }
 
 function renderYahrzeit(m) {
@@ -6084,7 +6462,7 @@ function renderYahrzeit(m) {
   // Agora e o calendario hebraico de verdade (hebraico.js), com a regra do
   // nussach escolhido (yahrzeit.js).
   const nussach = (window.SYNC && SYNC.atual().nussach) || 'chabad';
-  const morte = new Date(m.deathDate + 'T12:00:00');   // meio-dia evita fuso virar o dia
+  const morte = dataDaMorte(m);
   let y = null;
   try { y = Yahrzeit.proximoYahrzeit(morte, nussach, null, state.lang); } catch (e) { console.error(e); }
   if (!y) { card.style.display = 'none'; return; }
@@ -6101,7 +6479,7 @@ function renderYahrzeit(m) {
   avisos.innerHTML = y.avisos.map(a => '⚠ ' + a.replace(/[<>]/g, '')).join('<br><br>');
 
   document.getElementById('yzCalendario').onclick = () => {
-    const ics = Yahrzeit.gerarICS(morte, nussach, m.name || '', 20, state.lang);
+    const ics = icsDeTodos(nussach, state.lang);
     const b = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     const u = URL.createObjectURL(b), a = document.createElement('a');
     a.href = u; a.download = 'yahrzeit.ics'; a.click(); URL.revokeObjectURL(u);
@@ -6109,28 +6487,100 @@ function renderYahrzeit(m) {
   };
 }
 
-document.getElementById('editMemorial').addEventListener('click', () => {
-  const m = loadMemorial();
-  if (m) {
-    document.getElementById('setupName').value = m.name || '';
-    document.getElementById('setupHebrew').value = m.hebrew || '';
-    document.getElementById('setupRelation').value = m.relation || '';
-    document.getElementById('setupDeathDate').value = m.deathDate || '';
-  }
-  document.getElementById('settingsOverlay').classList.remove('show');
-  document.getElementById('setupModal').classList.add('show');
+// Qual pessoa o formulario esta editando. Vazio = uma pessoa NOVA.
+let _editandoPessoa = '';
+
+function marcarSeg(id, valor) {
+  const cx = document.getElementById(id);
+  if (!cx) return;
+  cx.querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', !!valor && b.dataset.value === valor));
+}
+function lerSeg(id) {
+  const b = document.getElementById(id);
+  const a = b && b.querySelector('button.active');
+  return a ? a.dataset.value : '';
+}
+// Os dois segmentados do cadastro NAO tem data-setting, entao o ouvinte geral
+// dos Ajustes os ignora. Aqui eles so acendem o que foi tocado — e podem ficar
+// os dois apagados, que e o "nao respondeu" e tem significado proprio.
+['setupSexo', 'setupPorDoSol'].forEach(id => {
+  const cx = document.getElementById(id);
+  if (!cx) return;
+  cx.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    marcarSeg(id, b.dataset.value);
+  });
 });
+
+function abrirCadastro(id) {
+  const d = carregarMemoriais();
+  const m = id ? d.lista.find(x => x.id === id) : null;
+  _editandoPessoa = m ? m.id : '';
+  document.getElementById('setupName').value = m ? (m.name || '') : '';
+  document.getElementById('setupHebrew').value = m ? (m.hebrew || '') : '';
+  document.getElementById('setupMae').value = m ? (m.mae || '') : '';
+  document.getElementById('setupPai').value = m ? (m.pai || '') : '';
+  document.getElementById('setupRelation').value = m ? (m.relation || '') : '';
+  document.getElementById('setupDeathDate').value = m ? (m.deathDate || '') : '';
+  marcarSeg('setupSexo', m ? (m.sexo || '') : '');
+  marcarSeg('setupPorDoSol', m ? (m.aposPorDoSol ? 'depois' : (m.deathDate ? 'antes' : '')) : '');
+  const aj = document.getElementById('settingsOverlay');
+  if (aj) aj.classList.remove('show');
+  document.getElementById('setupModal').classList.add('show');
+}
+
+function pintarMemLista() {
+  const cx = document.getElementById('memLista');
+  if (!cx) return;
+  const d = carregarMemoriais();
+  const L = (typeof state !== 'undefined' && state.lang) || 'pt';
+  const frase = (k) => { try { return (I18N[L] || I18N.pt)[k] || ''; } catch (e) { return ''; } };
+  cx.innerHTML = '';
+  d.lista.forEach(pes => {
+    const linha = document.createElement('div');
+    linha.className = 'mem-item' + (pes.id === d.atual ? ' atual' : '');
+    const esc = document.createElement('button');
+    esc.type = 'button'; esc.className = 'mem-escolher';
+    esc.title = frase('mem_rezando');
+    const ponto = document.createElement('span'); ponto.className = 'mem-ponto';
+    const nome = document.createElement('span'); nome.className = 'mem-nome';
+    nome.textContent = pes.name || '';
+    esc.append(ponto, nome);
+    esc.addEventListener('click', () => escolherPessoa(pes.id));
+    const ed = document.createElement('button');
+    ed.type = 'button'; ed.className = 'mem-acao'; ed.textContent = '✎';
+    ed.title = frase('mem_editar'); ed.setAttribute('aria-label', ed.title);
+    ed.addEventListener('click', () => abrirCadastro(pes.id));
+    const rm = document.createElement('button');
+    rm.type = 'button'; rm.className = 'mem-acao'; rm.textContent = '✕';
+    rm.title = frase('mem_remover'); rm.setAttribute('aria-label', rm.title);
+    rm.addEventListener('click', () => removerPessoa(pes.id));
+    linha.append(esc, ed, rm);
+    cx.appendChild(linha);
+  });
+}
+
+document.getElementById('memAdd').addEventListener('click', () => abrirCadastro(null));
 
 document.getElementById('setupSave').addEventListener('click', () => {
   const m = {
+    id: _editandoPessoa || '',
     name: document.getElementById('setupName').value.trim(),
     hebrew: document.getElementById('setupHebrew').value.trim(),
+    sexo: lerSeg('setupSexo'),
+    mae: document.getElementById('setupMae').value.trim(),
+    pai: document.getElementById('setupPai').value.trim(),
     relation: document.getElementById('setupRelation').value.trim(),
-    deathDate: document.getElementById('setupDeathDate').value
+    deathDate: document.getElementById('setupDeathDate').value,
+    aposPorDoSol: lerSeg('setupPorDoSol') === 'depois'
   };
   if (!m.name) { showToast(TXT('toast_need_name')); return; }
   saveMemorial(m);
+  _editandoPessoa = '';
   renderMemorial();
+  atualizarDedicatoria();
   document.getElementById('setupModal').classList.remove('show');
   showToast(TXT('toast_dedication_saved') + ' · ' + m.name);
 });

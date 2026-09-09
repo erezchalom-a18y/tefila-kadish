@@ -88,14 +88,41 @@ for (const lg of linguas) {
   ok = r.convites === 0 && r.dedicatorias === 1;
   if (!ok) ruim++;
   console.log((ok?'OK   ':'FALHA') + ` depois de 3 trocas de lingua: ${JSON.stringify(r)}`);
-  // e apagando o nome, o convite volta
-  await p.evaluate(() => localStorage.removeItem('tefila_memorial'));
-  await p.reload({ waitUntil: 'domcontentloaded' });
-  await p.waitForTimeout(1200);
+  // E apagando a pessoa, o convite volta.
+  //
+  // 09/09 — esta linha mudou, e para MAIS forte. Ela apagava a chave
+  // 'tefila_memorial' por fora e recarregava. Isso deixou de valer quando o
+  // cadastro passou a caber varias pessoas ('tefila_memoriais'), e a checagem
+  // ficou vermelha — com razao: estava olhando o lugar de ontem. O conserto
+  // NAO foi apontar para a chave nova; foi passar a apagar pelo CAMINHO DO APP,
+  // que e o botao ✕ da lista dentro do ⚙. Assim ela prova o que interessa —
+  // que quem tira a pessoa ve o convite voltar — em vez de provar que uma chave
+  // de localStorage sumiu. Se amanha o armazenamento mudar de novo, esta linha
+  // continua valendo.
+  await p.evaluate(() => {
+    const d = JSON.parse(localStorage.getItem('tefila_memoriais') || '{"lista":[]}');
+    if (d.lista.length) removerPessoa(d.lista[0].id);
+  });
+  await p.waitForTimeout(600);
   r = await ler(p);
   ok = r.convites === 1 && r.dedicatorias === 0;
   if (!ok) ruim++;
-  console.log((ok?'OK   ':'FALHA') + ` sem nome de novo: ${JSON.stringify(r)}`);
+  console.log((ok?'OK   ':'FALHA') + ` sem nome de novo (apagando pelo ✕ do app): ${JSON.stringify(r)}`);
+
+  // E a prova de que a checagem sabe FALHAR: com uma pessoa cadastrada de novo,
+  // o convite tem de sumir outra vez. Sem isto, um bug que nunca mostrasse a
+  // dedicatoria passaria verde nas duas linhas acima.
+  await p.evaluate(() => saveMemorial({ name: 'Sara Levi', hebrew: '', relation: '' }));
+  await p.evaluate(() => { atualizarDedicatoria(); });
+  await p.waitForTimeout(400);
+  r = await ler(p);
+  ok = r.convites === 0 && r.dedicatorias === 1 && r.texto.includes('Sara');
+  if (!ok) ruim++;
+  console.log((ok?'OK   ':'FALHA') + ` e cadastrando outra pessoa o convite some: ${JSON.stringify(r)}`);
+  // volta ao estado sem ninguem, que e o que as proximas etapas esperam
+  await p.evaluate(() => { localStorage.removeItem('tefila_memoriais'); localStorage.removeItem('tefila_memorial'); });
+  await p.reload({ waitUntil: 'domcontentloaded' });
+  await p.waitForTimeout(1200);
 
   // C — ela FICA PARADA NO ALTO ACOMPANHANDO A LEITURA (04/09, v42).
   //
