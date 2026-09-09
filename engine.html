@@ -697,18 +697,62 @@
   body.pt-hidden .pt-merged { display: none; }
 
   /* Focus modes - one layer big, others small + faded */
-  body.focus-heb .hebrew { font-size: 36px; }
-  body.focus-heb .verse.declaration .hebrew { font-size: 40px; }
-  body.focus-heb .translit { font-size: 14px; opacity: 0.45; }
-  body.focus-heb .pt-merged { font-size: 12px; opacity: 0.45; }
+  /* ===== O DESTAQUE, medido em PROPORCAO e nao em pixel (09/09, v50) =====
+     Ele, olhando o computador: "as letras da traducao/transliteracao estao
+     pequenas". Estavam, e o motivo estava escrito aqui: estas regras usavam
+     PIXEL FIXO — `font-size: 14px` para a transliteracao esmaecida, 12px para a
+     traducao. O app cresce a letra com a tela desde 27/08 (28px no celular,
+     34px no iPad, 40px no computador), mas o Destaque nunca cresceu junto: num
+     computador de 2000px a transliteracao ficava presa em 14px, um terco do
+     hebraico ao lado. E o mesmo defeito pelo avesso no focus-tr: 26px fixos, que
+     numa tela grande e o tamanho NORMAL — ou seja, o Destaque nao destacava
+     nada ali.
+     Agora tudo e multiplicacao do tamanho base, que ja e quem sabe em que tela
+     estamos. Os fatores saem dos numeros antigos do CELULAR, onde eles foram
+     calibrados: 36/28 para o hebraico em foco, 14/19 para a transliteracao
+     apagada, e assim por diante. No celular a tela fica igual ao que ele
+     aprovou; nas outras, cresce. */
+  body.focus-heb .hebrew { font-size: calc(28px * var(--font-scale) * 1.29); }
+  body.focus-heb .verse.declaration .hebrew { font-size: calc(28px * var(--font-scale) * 1.43); }
+  body.focus-heb .translit { font-size: calc(19px * var(--font-scale) * 0.74); opacity: 0.45; }
+  body.focus-heb .pt-merged { font-size: calc(14px * var(--font-scale) * 0.86); opacity: 0.45; }
 
-  body.focus-tr .translit { font-size: 26px; font-weight: 500; color: var(--text); }
-  body.focus-tr .hebrew { font-size: 20px; opacity: 0.45; }
-  body.focus-tr .pt-merged { font-size: 12px; opacity: 0.45; }
+  body.focus-tr .translit { font-size: calc(19px * var(--font-scale) * 1.37); font-weight: 500; color: var(--text); }
+  body.focus-tr .hebrew { font-size: calc(28px * var(--font-scale) * 0.71); opacity: 0.45; }
+  body.focus-tr .pt-merged { font-size: calc(14px * var(--font-scale) * 0.86); opacity: 0.45; }
 
-  body.focus-pt .pt-merged { font-size: 19px; font-weight: 500; color: var(--text); border-left-width: 3px; }
-  body.focus-pt .hebrew { font-size: 20px; opacity: 0.45; }
-  body.focus-pt .translit { font-size: 14px; opacity: 0.45; }
+  body.focus-pt .pt-merged { font-size: calc(14px * var(--font-scale) * 1.36); font-weight: 500; color: var(--text); border-left-width: 3px; }
+  body.focus-pt .hebrew { font-size: calc(28px * var(--font-scale) * 0.71); opacity: 0.45; }
+  body.focus-pt .translit { font-size: calc(19px * var(--font-scale) * 0.74); opacity: 0.45; }
+
+  /* E nas telas grandes o Destaque acompanha as MESMAS bases das regras de
+     tamanho — 34px/23px/16px a partir de 1000px, 40px/26px/18px a partir de
+     1400px. Sem isto, o `calc` acima continuaria multiplicando o numero do
+     celular e o Destaque seguiria pequeno onde ele reclamou. */
+  @media (min-width: 1000px) {
+    body.focus-heb .hebrew { font-size: calc(34px * var(--font-scale) * 1.29); }
+    body.focus-heb .verse.declaration .hebrew { font-size: calc(34px * var(--font-scale) * 1.43); }
+    body.focus-heb .translit { font-size: calc(23px * var(--font-scale) * 0.74); }
+    body.focus-heb .pt-merged { font-size: calc(16px * var(--font-scale) * 0.86); }
+    body.focus-tr .translit { font-size: calc(23px * var(--font-scale) * 1.37); }
+    body.focus-tr .hebrew { font-size: calc(34px * var(--font-scale) * 0.71); }
+    body.focus-tr .pt-merged { font-size: calc(16px * var(--font-scale) * 0.86); }
+    body.focus-pt .pt-merged { font-size: calc(16px * var(--font-scale) * 1.36); }
+    body.focus-pt .hebrew { font-size: calc(34px * var(--font-scale) * 0.71); }
+    body.focus-pt .translit { font-size: calc(23px * var(--font-scale) * 0.74); }
+  }
+  @media (min-width: 1400px) {
+    body.focus-heb .hebrew { font-size: calc(40px * var(--font-scale) * 1.29); }
+    body.focus-heb .verse.declaration .hebrew { font-size: calc(40px * var(--font-scale) * 1.43); }
+    body.focus-heb .translit { font-size: calc(26px * var(--font-scale) * 0.74); }
+    body.focus-heb .pt-merged { font-size: calc(18px * var(--font-scale) * 0.86); }
+    body.focus-tr .translit { font-size: calc(26px * var(--font-scale) * 1.37); }
+    body.focus-tr .hebrew { font-size: calc(40px * var(--font-scale) * 0.71); }
+    body.focus-tr .pt-merged { font-size: calc(18px * var(--font-scale) * 0.86); }
+    body.focus-pt .pt-merged { font-size: calc(18px * var(--font-scale) * 1.36); }
+    body.focus-pt .hebrew { font-size: calc(40px * var(--font-scale) * 0.71); }
+    body.focus-pt .translit { font-size: calc(26px * var(--font-scale) * 0.74); }
+  }
 
   /* ============ SETTINGS PANEL ============ */
   .settings-overlay {
@@ -2295,7 +2339,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-09 · 49';
+const VERSAO = '2026-09-09 · 50';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2503,6 +2547,7 @@ document.addEventListener('DOMContentLoaded', () => {
          num toque. Sem escolha, a linha da filiacao simplesmente nao aparece —
          nunca sai um "filho" chutado. -->
     <div class="setup-field">
+      <label data-i18n="setup_child_q">O falecido era filho ou filha?</label>
       <div class="seg-control" id="setupSexo">
         <button type="button" data-value="filho" data-i18n="setup_child_m">Filho</button>
         <button type="button" data-value="filha" data-i18n="setup_child_f">Filha</button>
@@ -5015,7 +5060,17 @@ const CAMADAS = ['heb', 'tr', 'pt'];
 // comecar pelo ocultar; pular de "sumiu" direto para "esta gritando" e um
 // salto grande, e ele concordou em inverter.
 const CICLO_CAMADA = ['normal', 'focus', 'hidden'];
-const estadoCamada = { heb: 'normal', tr: 'normal', pt: 'normal' };
+// 09/09 — O PADRAO DO APP PASSA A SER A TRANSLITERACAO EM DESTAQUE.
+// Ele: "deixar como padrao do app a transliteracao em destaque". Ate aqui as
+// tres abriam em Normal, e o motivo escrito era bom: "Destaque" apaga as outras
+// duas para 45%, e ninguem deve abrir o app com uma camada meio apagada sem ter
+// pedido. Mas quem manda no padrao e o dono, e o argumento dele e mais forte que
+// o meu: a transliteracao e a linha que a BOCA le. Num app cujo trabalho e fazer
+// alguem conseguir dizer o Kadish, ela e o texto principal — o hebraico e a
+// traducao e que sao apoio.
+// Isto so vale para quem nunca escolheu; quem ja mexeu nas camadas continua com
+// o que escolheu (menos na limpeza de uma vez so, logo abaixo).
+const estadoCamada = { heb: 'normal', tr: 'focus', pt: 'normal' };
 
 function pintarCamadas() {
   for (const l of CAMADAS) {
@@ -5068,7 +5123,12 @@ function aplicarCamada(camada, estado) {
 // escolher no ⚙ e guardado como sempre foi. Isto nao e "desfazer a escolha de
 // alguem": e devolver ao padrao uma escolha feita num controle que nao existe
 // mais, e o CLAUDE.md manda escrever quando eu crio a armadilha.
-const MARCA_CAMADAS = 'tefila_camadas_limpo_0409';
+// 09/09 — a marca mudou de nome porque o PADRAO mudou. Sem trocar a marca, o
+// aparelho dele (e o de qualquer um que ja tenha aberto o app) continuaria com a
+// escolha guardada e nunca veria o padrao novo. Trocar a marca faz a limpeza
+// acontecer mais uma vez, e uma so. Custo assumido e dito a ele: quem tinha
+// escolhido outra coisa de proposito perde a escolha nesta virada.
+const MARCA_CAMADAS = 'tefila_camadas_padrao_0909';
 try {
   if (!localStorage.getItem(MARCA_CAMADAS)) {
     localStorage.removeItem('tefila_camadas');
@@ -5188,17 +5248,18 @@ const I18N = {
     honoring_intro: 'Junto com você, neste ano,', honoring_outro: 'almas estão sendo honradas pelo mundo',
     in_memory_of: 'Em memória de',
     prayer_title: 'Kadish do Enlutado', prayer_source: 'Kadish Yatom · recitado em pé',
-    nota_minyan: 'O Kadish exige minyan — dez adultos. Não se recita sozinho.', nota_de_pe: 'E é recitado de pé.',
-    learn_title: 'Por que dizemos o Kadish?', learn_sub: 'O significado, a história e quem instituiu',
+    nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Não se recita sozinho, de preferência deve ser recitado na sinagoga durante o ano do falecimento.',
+    learn_title: 'Por que dizemos o Kadish?', learn_sub: 'O que é o Kadish, o significado, a história — e onde encontrar um Beit Chabad',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
     setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
     setup_name: 'Nome (em português)', setup_hebrew_name: 'Nome hebraico (opcional)',
     setup_relation: 'Relação', setup_death_date: 'Data de falecimento (necessária pra yahrzeit)',
+    setup_child_q: 'O falecido era filho ou filha?',
     setup_child_m: 'Filho',
     setup_child_f: 'Filha',
-    setup_mother: 'Nome da mãe',
-    setup_father: 'Nome do pai',
+    setup_mother: 'Nome da mãe do falecido',
+    setup_father: 'Nome do pai do falecido',
     setup_sunset_q: 'O falecimento foi antes ou depois do pôr do sol?',
     setup_before_sunset: 'Antes do pôr do sol',
     setup_after_sunset: 'Depois do pôr do sol',
@@ -5253,17 +5314,18 @@ const I18N = {
     honoring_intro: 'Together with you, this year,', honoring_outro: 'souls are being honored worldwide',
     in_memory_of: 'In memory of',
     prayer_title: "Mourner's Kaddish", prayer_source: 'Kaddish Yatom · recited standing',
-    nota_minyan: 'The Kaddish requires a minyan — ten adults. It is not said alone.', nota_de_pe: 'And it is recited standing.',
-    learn_title: 'Why do we say Kaddish?', learn_sub: 'The meaning, history, and origin',
+    nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It is not said alone; it should preferably be recited in the synagogue during the year of the passing.',
+    learn_title: 'Why do we say Kaddish?', learn_sub: 'What the Kaddish is, its meaning and history — and where to find a Chabad House',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
     setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
     setup_name: 'Name (English)', setup_hebrew_name: 'Hebrew name (optional)',
     setup_relation: 'Relationship', setup_death_date: 'Date of passing (required for yahrzeit)',
+    setup_child_q: 'Was the deceased a son or a daughter?',
     setup_child_m: 'Son',
     setup_child_f: 'Daughter',
-    setup_mother: 'Mother\'s name',
-    setup_father: 'Father\'s name',
+    setup_mother: 'Name of the deceased\'s mother',
+    setup_father: 'Name of the deceased\'s father',
     setup_sunset_q: 'Did the passing happen before or after sunset?',
     setup_before_sunset: 'Before sunset',
     setup_after_sunset: 'After sunset',
@@ -5318,17 +5380,18 @@ const I18N = {
     honoring_intro: 'Junto a ti, este año,', honoring_outro: 'almas están siendo honradas en el mundo',
     in_memory_of: 'En memoria de',
     prayer_title: 'Kadish del Enlutado', prayer_source: 'Kadish Yatom · recitado de pie',
-    nota_minyan: 'El Kadish exige minián — diez adultos. No se recita a solas.', nota_de_pe: 'Y se recita de pie.',
-    learn_title: '¿Por qué decimos el Kadish?', learn_sub: 'El significado, la historia y el origen',
+    nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'No se recita a solas; preferentemente debe recitarse en la sinagoga durante el año del fallecimiento.',
+    learn_title: '¿Por qué decimos el Kadish?', learn_sub: 'Qué es el Kadish, su significado e historia — y dónde encontrar un Beit Jabad',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
     setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
     setup_name: 'Nombre (en español)', setup_hebrew_name: 'Nombre hebreo (opcional)',
     setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (necesaria para yahrzeit)',
+    setup_child_q: '¿El fallecido era hijo o hija?',
     setup_child_m: 'Hijo',
     setup_child_f: 'Hija',
-    setup_mother: 'Nombre de la madre',
-    setup_father: 'Nombre del padre',
+    setup_mother: 'Nombre de la madre del fallecido',
+    setup_father: 'Nombre del padre del fallecido',
     setup_sunset_q: '¿El fallecimiento fue antes o después de la puesta del sol?',
     setup_before_sunset: 'Antes de la puesta del sol',
     setup_after_sunset: 'Después de la puesta del sol',
@@ -5383,17 +5446,18 @@ const I18N = {
     honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
     in_memory_of: 'En mémoire de',
     prayer_title: "Kaddish de l'Endeuillé", prayer_source: 'Kaddish Yatom · récité debout',
-    nota_minyan: 'Le Kaddish exige un minyan — dix adultes. Il ne se dit pas seul.', nota_de_pe: 'Et il est récité debout.',
-    learn_title: 'Pourquoi disons-nous le Kaddish?', learn_sub: 'Le sens, l\'histoire et l\'origine',
+    nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il ne se dit pas seul ; il doit de préférence être récité à la synagogue pendant l\'année du décès.',
+    learn_title: 'Pourquoi disons-nous le Kaddish?', learn_sub: 'Ce qu\'est le Kaddish, son sens et son histoire — et où trouver un Beth Habad',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
     setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
     setup_name: 'Nom (français)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
     setup_relation: 'Relation', setup_death_date: 'Date de décès (nécessaire pour yahrzeit)',
+    setup_child_q: 'Le défunt était-il fils ou fille ?',
     setup_child_m: 'Fils',
     setup_child_f: 'Fille',
-    setup_mother: 'Nom de la mère',
-    setup_father: 'Nom du père',
+    setup_mother: 'Nom de la mère du défunt',
+    setup_father: 'Nom du père du défunt',
     setup_sunset_q: 'Le décès a-t-il eu lieu avant ou après le coucher du soleil ?',
     setup_before_sunset: 'Avant le coucher du soleil',
     setup_after_sunset: 'Après le coucher du soleil',
@@ -5448,17 +5512,18 @@ const I18N = {
     honoring_intro: 'Insieme a te, quest\'anno,', honoring_outro: 'anime vengono onorate nel mondo',
     in_memory_of: 'In memoria di',
     prayer_title: 'Kaddish dei Dolenti', prayer_source: 'Kaddish Yatom · recitato in piedi',
-    nota_minyan: 'Il Kaddish richiede il minyan — dieci adulti. Non si recita da soli.', nota_de_pe: 'E si recita in piedi.',
-    learn_title: 'Perché diciamo il Kaddish?', learn_sub: 'Il significato, la storia e chi lo istituì',
+    nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Non si recita da soli; è preferibile recitarlo in sinagoga durante l\'anno del decesso.',
+    learn_title: 'Perché diciamo il Kaddish?', learn_sub: 'Che cos\'è il Kaddish, il significato e la storia — e dove trovare un Beit Chabad',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
     setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
     setup_name: 'Nome (in italiano)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
     setup_relation: 'Relazione', setup_death_date: 'Data del decesso (necessaria per lo yahrzeit)',
+    setup_child_q: 'Il defunto era figlio o figlia?',
     setup_child_m: 'Figlio',
     setup_child_f: 'Figlia',
-    setup_mother: 'Nome della madre',
-    setup_father: 'Nome del padre',
+    setup_mother: 'Nome della madre del defunto',
+    setup_father: 'Nome del padre del defunto',
     setup_sunset_q: 'Il decesso è avvenuto prima o dopo il tramonto?',
     setup_before_sunset: 'Prima del tramonto',
     setup_after_sunset: 'Dopo il tramonto',
@@ -5513,17 +5578,18 @@ const I18N = {
     honoring_intro: 'Gemeinsam mit Ihnen werden in diesem Jahr', honoring_outro: 'Seelen weltweit geehrt',
     in_memory_of: 'Zum Andenken an',
     prayer_title: 'Trauerkaddisch', prayer_source: 'Kaddisch Jatom · im Stehen gesprochen',
-    nota_minyan: 'Das Kaddisch verlangt einen Minjan — zehn Erwachsene. Es wird nicht allein gesprochen.', nota_de_pe: 'Und es wird im Stehen gesprochen.',
-    learn_title: 'Warum sagen wir das Kaddisch?', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
+    nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es wird nicht allein gesprochen; vorzugsweise soll es im Trauerjahr in der Synagoge gesprochen werden.',
+    learn_title: 'Warum sagen wir das Kaddisch?', learn_sub: 'Was das Kaddisch ist, Bedeutung und Geschichte — und wo man ein Chabad-Haus findet',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
     setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
     setup_name: 'Name (auf Deutsch)', setup_hebrew_name: 'Hebräischer Name (optional)',
     setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (für den Jahrzeit nötig)',
+    setup_child_q: 'War die verstorbene Person Sohn oder Tochter?',
     setup_child_m: 'Sohn',
     setup_child_f: 'Tochter',
-    setup_mother: 'Name der Mutter',
-    setup_father: 'Name des Vaters',
+    setup_mother: 'Name der Mutter des Verstorbenen',
+    setup_father: 'Name des Vaters des Verstorbenen',
     setup_sunset_q: 'Trat der Tod vor oder nach Sonnenuntergang ein?',
     setup_before_sunset: 'Vor Sonnenuntergang',
     setup_after_sunset: 'Nach Sonnenuntergang',
@@ -5578,17 +5644,18 @@ const I18N = {
     honoring_intro: 'Вместе с вами, в этом году,', honoring_outro: 'душ почитаются по всему миру',
     in_memory_of: 'В память о',
     prayer_title: 'Кадиш сироты', prayer_source: 'Кадиш Ятом · читается стоя',
-    nota_minyan: 'Кадиш требует миньяна — десяти взрослых. Его не читают в одиночку.', nota_de_pe: 'И читается он стоя.',
-    learn_title: 'Почему мы читаем Кадиш?', learn_sub: 'Значение, история и происхождение',
+    nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Его не читают в одиночку; предпочтительно читать его в синагоге в течение года после кончины.',
+    learn_title: 'Почему мы читаем Кадиш?', learn_sub: 'Что такое кадиш, его значение и история — и где найти Бейт Хабад',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
     setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
     setup_name: 'Имя (по-русски)', setup_hebrew_name: 'Еврейское имя (опционально)',
     setup_relation: 'Отношение', setup_death_date: 'Дата кончины (требуется для йорцайта)',
+    setup_child_q: 'Покойный был сыном или дочерью?',
     setup_child_m: 'Сын',
     setup_child_f: 'Дочь',
-    setup_mother: 'Имя матери',
-    setup_father: 'Имя отца',
+    setup_mother: 'Имя матери покойного',
+    setup_father: 'Имя отца покойного',
     setup_sunset_q: 'Смерть наступила до или после захода солнца?',
     setup_before_sunset: 'До захода солнца',
     setup_after_sunset: 'После захода солнца',
@@ -5643,17 +5710,18 @@ const I18N = {
     honoring_intro: 'יחד איתך, השנה,', honoring_outro: 'נשמות זוכות לכבוד ברחבי העולם',
     in_memory_of: 'לזכר',
     prayer_title: 'קדיש יתום', prayer_source: 'קדיש יתום · נאמר בעמידה',
-    nota_minyan: 'הקדיש טעון מניין — עשרה מבוגרים. אין אומרים אותו ביחידות.', nota_de_pe: 'והוא נאמר בעמידה.',
-    learn_title: 'מדוע אומרים קדיש?', learn_sub: 'המשמעות, ההיסטוריה והמקור',
+    nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'אין אומרים אותו ביחידות, ורצוי לאומרו בבית הכנסת במשך שנת האבל.',
+    learn_title: 'מדוע אומרים קדיש?', learn_sub: 'מהו הקדיש, המשמעות וההיסטוריה — והיכן למצוא בית חב\"ד',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',
     setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',
     setup_name: 'שם', setup_hebrew_name: 'שם עברי (אופציונלי)',
     setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (נדרש ליארצייט)',
+    setup_child_q: 'הנפטר היה בן או בת?',
     setup_child_m: 'בן',
     setup_child_f: 'בת',
-    setup_mother: 'שם האם',
-    setup_father: 'שם האב',
+    setup_mother: 'שם אמו של הנפטר',
+    setup_father: 'שם אביו של הנפטר',
     setup_sunset_q: 'הפטירה הייתה לפני או אחרי שקיעת החמה?',
     setup_before_sunset: 'לפני השקיעה',
     setup_after_sunset: 'אחרי השקיעה',

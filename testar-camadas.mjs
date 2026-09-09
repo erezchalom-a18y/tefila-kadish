@@ -23,7 +23,7 @@
  *   - tocar no ⚙ nao muda o texto (heb-hidden / focus-heb no corpo da pagina);
  *   - duas camadas ficam em destaque ao mesmo tempo;
  *   - a escolha nao sobrevive a recarregar a pagina;
- *   - um aparelho novo nao abre com as tres em Normal.
+ *   - um aparelho novo nao abre com a transliteracao em Destaque.
  *
  * Uso: node testar-camadas.mjs [http://127.0.0.1:8896/tefila-kadish]
  * Sem os navegadores do Playwright baixados: CHROMIUM=/caminho/do/chrome
@@ -75,13 +75,17 @@ for (const lg of linguas) {
   const r = await ler(p);
   if (lg === 'pt') rotPt = JSON.stringify(r.rot);
   const emPortugues = lg !== 'pt' && JSON.stringify(r.rot) === rotPt;
-  const tresNormais = CAMADAS.every(l => r.est[l] === 'normal');
-  linha(r.linhasNoAjuste === 3 && !r.fitaNoAlto && !emPortugues && tresNormais,
-    `${lg}: as tres linhas estao no ⚙, nos rotulos da lingua, e abrem em Normal`,
+  // 09/09 — o PADRAO mudou por decisao dele ("deixar como padrao do app a
+  // transliteracao em destaque"), entao esta linha cobra outro estado. Ela nao
+  // afrouxou: continua exigindo os TRES valores exatos, um por um. Trocar o
+  // padrao sem ele pedir continua ficando vermelho aqui.
+  const padrao = r.est.heb === 'normal' && r.est.tr === 'focus' && r.est.pt === 'normal';
+  linha(r.linhasNoAjuste === 3 && !r.fitaNoAlto && !emPortugues && padrao,
+    `${lg}: as tres linhas estao no ⚙, nos rotulos da lingua, e a transliteracao abre em Destaque`,
     r.fitaNoAlto ? 'a fita do alto VOLTOU — ele mandou tirar em 04/09'
       : r.linhasNoAjuste !== 3 ? `so ${r.linhasNoAjuste} linha(s) no ⚙`
       : emPortugues ? 'os rotulos estao em portugues'
-      : !tresNormais ? JSON.stringify(r.est) : '');
+      : !padrao ? JSON.stringify(r.est) : '');
   await p.close();
 }
 
@@ -119,26 +123,38 @@ linha(JSON.stringify(antes) === JSON.stringify(depois),
   'a escolha continua la depois de recarregar a pagina',
   `antes ${JSON.stringify(antes)} · depois ${JSON.stringify(depois)}`);
 
-// aparelho novo: as tres em Normal
+// Aparelho novo: TRANSLITERACAO em Destaque, as outras duas em Normal.
+//
+// 09/09 — esta linha cobrava "as tres em Normal" e passou a cobrar outra coisa,
+// porque o PADRAO mudou por decisao dele: "deixar como padrao do app a
+// transliteracao em destaque". O argumento dele e mais forte que o meu: a
+// transliteracao e a linha que a BOCA le, e num app cujo trabalho e fazer
+// alguem conseguir dizer o Kadish ela e o texto principal.
+// A checagem nao afrouxou — continua exigindo um estado EXATO, e continua
+// exigindo que so uma camada esteja em destaque. Se alguem trocar o padrao sem
+// ele pedir, isto fica vermelho antes de chegar ao aparelho dele.
 await p.evaluate(() => { try { localStorage.removeItem('tefila_camadas'); } catch (e) {} });
 await p.reload({ waitUntil: 'domcontentloaded' });
 await p.waitForTimeout(1500);
 const novo = (await ler(p)).corpo;
-linha(CAMADAS.every(l => novo[l] === 'normal'),
-  'aparelho novo abre com as tres em Normal', JSON.stringify(novo));
+linha(novo.heb === 'normal' && novo.tr === 'focus' && novo.pt === 'normal',
+  'aparelho novo abre com a transliteracao em Destaque', JSON.stringify(novo));
 await p.close();
 
-// ---- a limpeza de 04/09: aparelho que ficou com Destaque preso da fita ----
-// O "Destaque" encolhe a transliteracao para 14px e a traducao para 12px, a 45%.
-// Enquanto a fita existia isso era visivel na etiqueta dourada; sem ela, o
-// aparelho ficava com a letra menor e nada na tela dizia por que. O app limpa
-// esse estado UMA vez. Se alguem tirar a limpeza, isto fica vermelho.
+// ---- a limpeza de uma vez so: o aparelho adota o PADRAO do app ----
+// Nasceu em 04/09, para o aparelho que ficou com o Destaque do hebraico preso
+// da fita antiga: a transliteracao encolhia e nada na tela dizia por que.
+// Em 09/09 a marca mudou de nome porque o PADRAO mudou (transliteracao em
+// Destaque), e sem trocar a marca o aparelho dele nunca veria o padrao novo —
+// padrao so vale para quem nunca escolheu. O alvo desta linha mudou junto: o
+// que se cobra e que o aparelho chegue ao PADRAO, e nao mais que fique tudo em
+// Normal. Se alguem tirar a limpeza, isto fica vermelho.
 {
   const q = await navegador.newPage({ viewport: { width: 393, height: 852 } });
   await q.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
   await q.waitForTimeout(800);
   await q.evaluate(() => { try {
-    localStorage.removeItem('tefila_camadas_limpo_0409');
+    localStorage.removeItem('tefila_camadas_padrao_0909');
     localStorage.setItem('tefila_camadas', JSON.stringify({ heb: 'focus', tr: 'normal', pt: 'normal' }));
   } catch (e) {} });
   await q.reload({ waitUntil: 'domcontentloaded' });
@@ -146,11 +162,18 @@ await p.close();
   const r = await q.evaluate(() => {
     const g = s => { const e = document.querySelector(s); if (!e) return null;
       const c = getComputedStyle(e); return { px: c.fontSize, op: c.opacity }; };
-    return { corpo: document.body.className.includes('focus-'), tr: g('.translit'), pt: g('.pt-merged') };
+    return { corpo: document.body.className.match(/focus-\w+/g) || [],
+             focoTr: document.body.classList.contains('focus-tr'),
+             focoHeb: document.body.classList.contains('focus-heb'),
+             tr: g('.translit'), pt: g('.pt-merged') };
   });
-  const limpou = !r.corpo && r.tr.op === '1' && r.pt.op === '1';
-  linha(limpou, 'aparelho com Destaque preso da fita volta sozinho para Normal',
-    limpou ? '' : `translit ${JSON.stringify(r.tr)} · traducao ${JSON.stringify(r.pt)}`);
+  // O aparelho entrou com o HEBRAICO em Destaque (o estado preso da fita antiga)
+  // e tem de sair com a TRANSLITERACAO em Destaque, que e o padrao de hoje: a
+  // transliteracao inteira e opaca, o hebraico esmaecido. Cobrar "nenhum foco"
+  // seria cobrar o padrao de ontem.
+  const limpou = r.focoTr && !r.focoHeb && r.tr.op === '1';
+  linha(limpou, 'aparelho com Destaque preso da fita antiga adota o padrao do app',
+    limpou ? '' : `corpo ${r.corpo} · translit ${JSON.stringify(r.tr)} · traducao ${JSON.stringify(r.pt)}`);
   // e a escolha NOVA dele continua sendo guardada
   await q.click('#settingsToggle'); await q.waitForTimeout(300);
   await q.evaluate(() => document.querySelector('.seg-control[data-layer="tr"] button[data-state="focus"]')?.click());

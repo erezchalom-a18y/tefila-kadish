@@ -1798,3 +1798,72 @@ o que interessa — quem tira a pessoa vê o convite voltar — e continua valen
 o armazenamento mudar outra vez. E ganhou uma linha que faltava: **cadastrar
 outra pessoa e provar que o convite some**, senão um defeito que nunca mostrasse
 a dedicatória passaria verde nas duas linhas anteriores.
+
+
+## O Destaque medido em pixel fixo, e o padrão que virou (09/09, v50)
+
+Quatro pedidos numa mensagem, mais dois achados numa foto do computador dele.
+
+**1. O texto do minyan é dele agora, palavra por palavra:** *"O Kadish exige
+minyan de dez homens adultos e é recitado de pé. Não se recita sozinho, de
+preferência deve ser recitado na sinagoga durante o ano do falecimento."* Nos
+dois lugares — a nota da tela principal e o bloco da página Aprender — e nas 8
+línguas. O português é dele; as outras sete são tradução, e o bloco continua
+`origem: "app"`, esperando o rabino.
+
+**2. O único link para fora de todo o app** entrou aqui: o diretório dos Beit
+Chabad, a pedido dele (*"onde encontrar um beit chabad para fazer o kadish"*).
+É um `tipo: "link"` novo no `aprender.json`, com o rótulo do botão numa língua
+por vez — é texto de conteúdo, não da moldura, então mora na seção e não na
+tabela `T` da página. Abre noutra aba, com `rel=noopener`: quem está rezando não
+perde a página do Kadish por tocar num link.
+
+**3 e 4. Ficou dito que é o falecido.** Os botões ganharam a pergunta acima
+("O falecido era filho ou filha?") e os campos viraram "Nome da mãe do falecido"
+e "Nome do pai do falecido", nas 8.
+
+**E então ele mandou uma foto do computador: "as letras da tradução e
+transliteração estão pequenas".** Estavam, e o motivo estava escrito no CSS:
+
+```css
+body.focus-heb .translit  { font-size: 14px; }   /* PIXEL FIXO */
+body.focus-heb .pt-merged { font-size: 12px; }
+```
+
+O app cresce a letra com a tela desde 27/08 — 28px no celular, 34px no iPad,
+40px no computador — mas o **Destaque nunca cresceu junto**. Num computador de
+2000px a transliteração ficava presa em 14px, um terço do hebraico ao lado. E o
+mesmo defeito pelo avesso no `focus-tr`: 26px fixos, que numa tela grande é o
+tamanho NORMAL — ou seja, ali o Destaque **não destacava nada**.
+
+Agora as nove regras são multiplicação do tamanho base, e há um bloco por faixa
+de tela. Os fatores saem dos números antigos do CELULAR, onde foram calibrados
+(36/28 para o hebraico em foco, 14/19 para a transliteração apagada), então **no
+celular a tela fica idêntica ao que ele aprovou** e nas outras cresce.
+
+**A lição, que é a terceira da mesma família neste arquivo:** um número absoluto
+escrito dentro de uma regra que convive com regras responsivas mente em toda
+tela que não seja aquela para a qual foi calibrado. Foi assim com a coluna de
+720px em 27/08, com a forma compacta que só olhava a altura em 09/09, e agora
+com o Destaque.
+
+**O PADRÃO DO APP mudou, por decisão dele:** *"deixar como padrão do app a
+transliteração em destaque"*. Estava escrito aqui que o padrão eram as três em
+Normal, e o motivo era bom — "Destaque" apaga as outras duas para 45%, e ninguém
+deve abrir o app com uma camada meio apagada sem ter pedido. **O argumento dele
+é mais forte que o meu:** a transliteração é a linha que a BOCA lê, e num app
+cujo trabalho é fazer alguém conseguir dizer o Kadish, ela é o texto principal.
+
+Isso obrigou uma **limpeza de uma vez só** com marca nova
+(`tefila_camadas_padrao_0909`): padrão só vale para quem nunca escolheu, e sem
+trocar a marca o aparelho dele nunca veria o padrão novo. Custo assumido e dito
+a ele: quem tinha escolhido outra coisa de propósito perde a escolha nesta
+virada.
+
+**Nove linhas do `testar-camadas.mjs` ficaram vermelhas, e as nove eram a mesma
+decisão dele escrita em nove lugares** — oito línguas mais a da limpeza, todas
+cobrando "abrem em Normal". Atualizadas para o padrão novo **sem afrouxar**:
+continuam exigindo os três valores exatos, um a um, e que só uma camada esteja
+em destaque. A da limpeza mudou de alvo com razão: cobrava "volta a tudo
+Normal", agora cobra "chega ao PADRÃO do app" — que é o que ela sempre quis
+dizer.

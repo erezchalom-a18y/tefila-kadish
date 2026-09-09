@@ -24,7 +24,7 @@
     {
       "tipo": "destaque",
       "origem": "app",
-      "_nota": "Este bloco NAO e texto do Erez: foi escrito pelo app a pedido dele em 04/09 (\"devemos incluir a necessidade do minian em destaque e que seja recitado de pe\"). As frases sao as que JA existiam aprovadas nas 8 linguas dentro do engine.html — o paragrafo do minyan do painel da ℹ e o \"recitado em pe\" do prayer_source —, para nao haver texto novo escrito pelo modelo. Continua esperando o OK dele e a revisao do rabino, como todo o resto desta pagina.",
+      "_nota": "Este bloco NAO e texto do Erez de 03/09, mas a FRASE PRINCIPAL e dele: em 09/09 ele a escreveu inteira — \"O Kadish exige minyan de dez homens adultos e e recitado de pe. Nao se recita sozinho, de preferencia deve ser recitado na sinagoga durante o ano do falecimento.\" O portugues e dele, verbatim; as outras 7 sao traducao. Continua esperando a revisao do rabino, como todo o resto desta pagina.",
       "titulo": {
         "pt": "Com minyan, e de pé",
         "en": "With a minyan, and standing",
@@ -36,14 +36,14 @@
         "he": "במניין, ובעמידה"
       },
       "corpo": {
-        "pt": "O Kadish exige minyan — dez adultos. Não se recita sozinho.\n\nE é recitado de pé.\n\nO luto judaico não é solitário: acontece cercado de comunidade, e é a obrigação diária que traz o enlutado ao minyan todos os dias.",
-        "en": "The Kaddish requires a minyan — ten adults. It is not said alone.\n\nAnd it is recited standing.\n\nJewish mourning is not solitary: it happens surrounded by community, and it is the daily obligation that brings the mourner to the minyan every day.",
-        "es": "El Kadish exige minián — diez adultos. No se recita a solas.\n\nY se recita de pie.\n\nEl duelo judío no es solitario: ocurre rodeado de comunidad, y es la obligación diaria la que lleva al enlutado al minián todos los días.",
-        "fr": "Le Kaddish exige un minyan — dix adultes. Il ne se dit pas seul.\n\nEt il est récité debout.\n\nLe deuil juif n'est pas solitaire : il se vit entouré de la communauté, et c'est l'obligation quotidienne qui amène l'endeuillé au minyan chaque jour.",
-        "it": "Il Kaddish richiede il minyan — dieci adulti. Non si recita da soli.\n\nE si recita in piedi.\n\nIl lutto ebraico non è solitario: si vive circondati dalla comunità, ed è l'obbligo quotidiano che porta chi è in lutto al minyan ogni giorno.",
-        "de": "Das Kaddisch verlangt einen Minjan — zehn Erwachsene. Es wird nicht allein gesprochen.\n\nUnd es wird im Stehen gesprochen.\n\nJüdische Trauer ist nicht einsam: sie geschieht umgeben von Gemeinschaft, und es ist die tägliche Pflicht, die den Trauernden jeden Tag zum Minjan führt.",
-        "ru": "Кадиш требует миньяна — десяти взрослых. Его не читают в одиночку.\n\nИ читается он стоя.\n\nЕврейский траур не одинок: он проходит в кругу общины, и именно ежедневная обязанность приводит скорбящего в миньян каждый день.",
-        "he": "הקדיש טעון מניין — עשרה מבוגרים. אין אומרים אותו ביחידות.\n\nוהוא נאמר בעמידה.\n\nהאבלות היהודית אינה בדד: היא מתרחשת מוקפת קהילה, והחובה היומית היא שמביאה את האבל למניין בכל יום."
+        "pt": "O Kadish exige minyan de dez homens adultos e é recitado de pé.\n\nNão se recita sozinho, de preferência deve ser recitado na sinagoga durante o ano do falecimento.\n\nO luto judaico não é solitário: acontece cercado de comunidade, e é a obrigação diária que traz o enlutado ao minyan todos os dias.",
+        "en": "The Kaddish requires a minyan of ten adult men and is recited standing.\n\nIt is not said alone; it should preferably be recited in the synagogue during the year of the passing.\n\nJewish mourning is not solitary: it happens surrounded by community, and it is the daily obligation that brings the mourner to the minyan every day.",
+        "es": "El Kadish exige minián de diez hombres adultos y se recita de pie.\n\nNo se recita a solas; preferentemente debe recitarse en la sinagoga durante el año del fallecimiento.\n\nEl duelo judío no es solitario: ocurre rodeado de comunidad, y es la obligación diaria la que lleva al enlutado al minián todos los días.",
+        "fr": "Le Kaddish exige un minyan de dix hommes adultes et se récite debout.\n\nIl ne se dit pas seul ; il doit de préférence être récité à la synagogue pendant l’année du décès.\n\nLe deuil juif n’est pas solitaire : il se vit entouré de la communauté, et c’est l’obligation quotidienne qui amène l’endeuillé au minyan chaque jour.",
+        "it": "Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.\n\nNon si recita da soli; è preferibile recitarlo in sinagoga durante l’anno del decesso.\n\nIl lutto ebraico non è solitario: si vive circondati dalla comunità, ed è l’obbligo quotidiano che porta chi è in lutto al minyan ogni giorno.",
+        "de": "Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.\n\nEs wird nicht allein gesprochen; vorzugsweise soll es im Trauerjahr in der Synagoge gesprochen werden.\n\nJüdische Trauer ist nicht einsam: sie geschieht umgeben von Gemeinschaft, und es ist die tägliche Pflicht, die den Trauernden jeden Tag zum Minjan führt.",
+        "ru": "Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.\n\nЕго не читают в одиночку; предпочтительно читать его в синагоге в течение года после кончины.\n\nЕврейский траур не одинок: он проходит в кругу общины, и именно ежедневная обязанность приводит скорбящего в миньян каждый день.",
+        "he": "הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.\n\nאין אומרים אותו ביחידות, ורצוי לאומרו בבית הכנסת במשך שנת האבל.\n\nהאבלות היהודית אינה בדד: היא מתרחשת מוקפת קהילה, והחובה היומית היא שמביאה את האבל למניין בכל יום."
       }
     },
     {
@@ -188,6 +188,42 @@
         "de": "Es wird Tage geben, an denen es leichtfällt. Und Tage, an denen es schwerfällt.\n\nVielleicht sind Sie müde, unterwegs oder einfach von der Sehnsucht überwältigt. Vielleicht schaffen Sie es nicht in die Synagoge. Vielleicht ist heute einer jener Tage, an denen schon das Aufstehen schwerfällt.\n\nDenken Sie nicht an all die Monate, die noch bevorstehen. Denken Sie nur an das Kaddisch von heute.\n\nEin Tag nach dem anderen. Ein Kaddisch nach dem anderen.\n\nDenn weiter Kaddisch zu sprechen ist auch eine Weise, weiter zu sagen:\n\n„Ich erinnere mich an dich.“\n\n„Dein Leben hat gezählt.“\n\n„Was du mir gegeben hast, ist noch bei mir.“\n\nDer Tod unterbricht ein Leben, doch er löscht weder das Band der Liebe noch die Erinnerung noch all das, was ein Mensch in uns hinterlassen hat.\n\nMöge jedes Kaddisch ein Augenblick des Glaubens, der Erinnerung, der Verbundenheit und der Erhebung der Seele dessen sein, der gegangen ist.\n\nיהי זכרו/זכרה ברוך\n\nMöge sein Andenken ein Segen sein.",
         "ru": "Будут дни, когда это будет легко. И будут дни, когда это будет трудно.\n\nМожет быть, вы устали, в дороге или просто охвачены тоской. Может быть, вы не сможете дойти до синагоги. Может быть, сегодня один из тех дней, когда даже встать с постели кажется трудным.\n\nНе думайте обо всех месяцах, которые ещё впереди. Думайте только о сегодняшнем кадише.\n\nПо одному дню за раз. По одному кадишу за раз.\n\nПотому что продолжать читать кадиш — это тоже способ продолжать говорить:\n\n«Я помню тебя.»\n\n«Твоя жизнь была важна.»\n\n«То, что ты мне дал, по-прежнему со мной.»\n\nСмерть прерывает жизнь, но не стирает ни узы любви, ни память, ни всё то, что человек оставил в нас.\n\nПусть каждый кадиш будет мгновением веры, памяти, связи и возвышения души ушедшего.\n\nיהי זכרו/זכרה ברוך\n\nДа будет память о нём благословенна.",
         "he": "יהיו ימים שבהם יהיה קל. ויהיו ימים שבהם יהיה קשה.\n\nאולי תהיה עייף, בנסיעה, או פשוט מוצף געגוע. אולי לא תצליח להגיע לבית הכנסת. אולי היום הוא אחד מאותם ימים שבהם אפילו לקום מהמיטה נראה קשה.\n\nאל תחשוב על כל החודשים שעוד נותרו. חשוב רק על הקדיש של היום.\n\nיום אחד בכל פעם. קדיש אחד בכל פעם.\n\nכי להמשיך לומר קדיש הוא גם דרך להמשיך לומר:\n\n״אני זוכר אותך.״\n\n״חייך היו חשובים.״\n\n״מה שנתת לי עדיין איתי.״\n\nהמוות קוטע חיים, אך אינו מוחק את קשר האהבה, את הזיכרון ואת כל מה שאדם השאיר בנו.\n\nמי ייתן וכל קדיש יהיה רגע של אמונה, של זיכרון, של חיבור ושל עילוי נשמתו של מי שהלך.\n\nיהי זכרו/זכרה ברוך\n\nיהי זכרו ברוך."
+      }
+    },
+    {
+      "tipo": "link",
+      "origem": "app",
+      "_nota": "A pedido dele em 09/09: \"onde encontrar um beit chabad para fazer o kadish\". O endereco e o diretorio oficial do Chabad, que e a lista mundial mais completa e a unica que ele citou. E o UNICO link para fora em todo o app: sai do GitHub Pages e vai para um site de terceiros, entao esta aqui declarado. Ele abre em outra aba (target=_blank, rel=noopener).",
+      "url": "https://www.chabad.org/centers",
+      "titulo": {
+        "pt": "Onde encontrar um minyan",
+        "en": "Where to find a minyan",
+        "es": "Dónde encontrar un minián",
+        "fr": "Où trouver un minyan",
+        "it": "Dove trovare un minyan",
+        "de": "Wo man einen Minjan findet",
+        "ru": "Где найти миньян",
+        "he": "היכן למצוא מניין"
+      },
+      "corpo": {
+        "pt": "Se você não tem uma sinagoga por perto, ou está viajando, os Beit Chabad existem em quase todo o mundo e recebem qualquer pessoa, de qualquer tradição.\n\nO diretório abaixo mostra o mais próximo de onde você estiver, com os horários das rezas.",
+        "en": "If you have no synagogue nearby, or you are travelling, Chabad Houses exist in almost every country and welcome anyone, from any tradition.\n\nThe directory below finds the one closest to you, with the prayer times.",
+        "es": "Si no tiene una sinagoga cerca, o está de viaje, los Beit Jabad existen en casi todo el mundo y reciben a cualquier persona, de cualquier tradición.\n\nEl directorio de abajo muestra el más cercano a donde usted esté, con los horarios de los rezos.",
+        "fr": "Si vous n’avez pas de synagogue à proximité, ou si vous êtes en voyage, les Beth Habad existent dans presque tous les pays et accueillent chacun, quelle que soit sa tradition.\n\nL’annuaire ci-dessous indique le plus proche de vous, avec les horaires des offices.",
+        "it": "Se non ha una sinagoga vicino, o è in viaggio, i Beit Chabad esistono in quasi tutto il mondo e accolgono chiunque, di qualsiasi tradizione.\n\nL’elenco qui sotto mostra quello più vicino a lei, con gli orari delle preghiere.",
+        "de": "Wenn keine Synagoge in der Nähe ist oder Sie unterwegs sind: Chabad-Häuser gibt es in fast jedem Land, und sie nehmen jeden auf, aus jeder Tradition.\n\nDas Verzeichnis unten zeigt das nächstgelegene mit den Gebetszeiten.",
+        "ru": "Если поблизости нет синагоги или вы в поездке, дома Хабада есть почти во всех странах и принимают любого человека, из любой традиции.\n\nСправочник ниже покажет ближайший к вам, с расписанием молитв.",
+        "he": "אם אין בית כנסת בקרבת מקום, או שאתם בנסיעה — בתי חב\"ד קיימים כמעט בכל העולם ומקבלים כל אדם, מכל מסורת.\n\nהמדריך שלמטה מראה את הקרוב אליכם ביותר, עם זמני התפילות."
+      },
+      "rotulo": {
+        "pt": "encontrar um Beit Chabad ▸",
+        "en": "find a Chabad House ▸",
+        "es": "encontrar un Beit Jabad ▸",
+        "fr": "trouver un Beth Habad ▸",
+        "it": "trovare un Beit Chabad ▸",
+        "de": "ein Chabad-Haus finden ▸",
+        "ru": "найти Бейт Хабад ▸",
+        "he": "למצוא בית חב\"ד ▸"
       }
     }
   ],

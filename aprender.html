@@ -124,6 +124,14 @@ function bloco(s) {
       <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(t.assistir)}</a></section>`;
   if (s.tipo === 'destaque')
     return `<section class="destaque"><h2>${titulo}</h2>${corpo}</section>`;
+  // 09/09 — o bloco com LINK PARA FORA. Hoje ha um so em todo o app: o
+  // diretorio dos Beit Chabad, a pedido dele. O rotulo do botao vem da propria
+  // secao (uma por lingua), e nao da tabela T da pagina: e texto do conteudo,
+  // nao da moldura. Abre noutra aba, com rel=noopener — quem esta rezando nao
+  // perde a pagina do Kadish por tocar num link.
+  if (s.tipo === 'link')
+    return `<section><h2>${titulo}</h2>${corpo}
+      <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(naLingua(s.rotulo))}</a></section>`;
   return `<section><h2>${titulo}</h2>${corpo}</section>`;
 }
 
