@@ -1114,9 +1114,7 @@
      Duas coisas que NAO voltaram com ela, e e de proposito:
      - a LETRA continua a da v41, que ele aprovou hoje ("gostei da versao de
        hoje"): Cormorant miuda, sem caixa-alta, sem espacamento de letra.
-     - nao ha risco proprio embaixo. O risco e o do proprio .topbar. Com um
-       risco so, ela e a ultima linha do cabecalho; com dois, ela volta a ser
-       a "terceira barra" de que ele reclamou na v40.
+     - nao ha risco proprio embaixo. Um risco so — ver o FIO CURTO abaixo.
      No MODO TREINO nao aparece — pedido dele: quem esta treinando a boca nao
      esta dedicando. */
   .dedicatoria-fixa {
@@ -1125,6 +1123,32 @@
   }
   .dedicatoria-fixa:empty { display: none; padding: 0; }
   body.modo-treino .dedicatoria-fixa { display: none; }
+
+  /* ===== O FIO CURTO (09/09, v48) =====
+     Ele: "gostei da C, fio curto". Ate a v47 o que separava a dedicatoria do
+     Kadish era o border-bottom do proprio .topbar — uma regua de canto a canto
+     que nao tem par em lugar nenhum da tela. Mostrei cinco alternativas na tela
+     dele e ele escolheu esta, que e a unica que ja existia no vocabulario do
+     app: e o MESMO desenho do `.vm-line`, o fio que abre o primeiro verso do
+     Kadish. Assim a dedicatoria fecha com o traco com que a reza comeca.
+
+     Por que a classe `com-dedicatoria` vem do JS e nao de um `:has()` no CSS:
+     o fio so vale quando a vaga esta DENTRO do cabecalho. Num telefone deitado
+     ela vive no fluxo do texto, e ali o primeiro verso ja traz o seu proprio
+     `.vm-line` — dois fios curtos empilhados. Daria para escrever
+     `.topbar:has(> .dedicatoria-fixa)`, mas num navegador sem `:has()` a regra
+     inteira e ignorada em silencio: o risco do topbar FICA e o fio aparece —
+     duas linhas, e ninguem ve o defeito aqui. E o mesmo desvio-de-caminho do
+     canPlayType. Quem decide onde a vaga mora ja e uma funcao (vagaDaDedicatoria);
+     entao e ela quem marca a classe, e ha uma conta so. */
+  .topbar.com-dedicatoria { border-bottom: 0; }
+  .topbar.com-dedicatoria .dedicatoria-fixa { position: relative; padding-bottom: 16px; }
+  .topbar.com-dedicatoria .dedicatoria-fixa::after {
+    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+    bottom: 5px; width: 46%; height: 1px;
+    background: linear-gradient(to right, transparent, var(--brass, #8b6a3e), transparent);
+    opacity: .6;
+  }
   /* dentro da vaga a dedicatoria nao repete o risco nem o respiro que ela tinha
      quando era o rodape da pagina */
   .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
@@ -1176,6 +1200,7 @@
      arquivo ja usa para dizer "isto e um telefone". */
   @media (max-height: 700px), (max-width: 480px) {
     .dedicatoria-fixa { padding: 3px 16px 6px; }
+    .topbar.com-dedicatoria .dedicatoria-fixa { padding-bottom: 12px; }
     .dedicatoria-fixa .dedicatoria .ded-rotulo,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo { display: none; }
     .dedicatoria-fixa .dedicatoria .ded-rotulo-curto,
@@ -2224,7 +2249,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-09 · 47';
+const VERSAO = '2026-09-09 · 48';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3994,6 +4019,12 @@ function atualizarDedicatoria() {
   vaga.innerHTML = '';
   desenharDedicatoria(vaga);   // uma das duas desiste sozinha: ou ha nome, ou nao ha
   desenharConvite(vaga);
+  // O fio curto so existe quando a vaga esta DENTRO do cabecalho e tem o que
+  // mostrar. Fora dessas duas condicoes o cabecalho volta ao seu risco normal —
+  // senao ficaria sem limite nenhum, ou com dois.
+  const topo = document.querySelector('.topbar');
+  if (topo) topo.classList.toggle('com-dedicatoria',
+    vaga.parentElement === topo && vaga.children.length > 0);
 }
 
 /**

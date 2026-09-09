@@ -1700,3 +1700,36 @@ escrita sobre uma dimensão só mente na tela onde a outra dimensão é que aper
 Medido nas 14 combinações: 69,7% no computador, 74,0% no iPad em pé, 66,7% no
 iPad deitado, 70,9% no iPhone 15 em pé, 62,8% no iPhone SE em pé, 61,3%
 deitado.
+
+
+## O fio curto no lugar do risco (09/09, v48)
+
+Ele, vendo a v47: *"ficou ótimo, só queria alguma opção diferente, ao invés da
+linha separando o em memória de do texto do kadish"*. Levei cinco à tela dele,
+todas com a página já rolada — que é quando aquele risco pesa, com o Kadish
+passando por baixo: (A) como estava, (B) nada, (C) fio curto que desbota,
+(D) um ✦ em latão, (E) sombra suave. **Ele escolheu a C.**
+
+Ela era a recomendação, e não por gosto: é a **única que já existia no
+vocabulário do app** — o mesmo desenho do `.vm-line`, o fio que abre o primeiro
+verso do Kadish. A dedicatória passa a fechar com o traço com que a reza começa,
+em vez de uma régua de canto a canto que não tem par em lugar nenhum da tela.
+(O ✦ foi descartado por um motivo concreto: ele já é o ícone do cartão "Por que
+dizemos o Kadish?", e repetido deixa de significar.)
+
+**A classe `com-dedicatoria` vem do JS, e isso é o ponto desta rodada.** O fio
+só vale quando a vaga está DENTRO do cabeçalho; num telefone deitado ela vive no
+fluxo do texto e o primeiro verso já traz o seu próprio `.vm-line` — dois fios
+empilhados. Dava para escrever `.topbar:has(> .dedicatoria-fixa)`, e foi a
+primeira coisa que me ocorreu. **Num navegador sem `:has()` a regra inteira é
+ignorada em silêncio: o risco do topbar FICA e o fio aparece — duas linhas, e
+nenhuma checagem daqui veria.** É literalmente o desvio-de-caminho do
+`canPlayType`, que já custou dias do iPad dele. Quem decide onde a vaga mora já
+é uma função (`vagaDaDedicatoria`), então é ela quem marca a classe: uma conta
+só, sem depender do que o navegador *talvez* suporte.
+
+Medido nas 14 combinações, e a troca é limpa: onde a vaga está no cabeçalho o
+fio existe e o `border-bottom` do topbar mede **0px**; onde ela está no texto o
+fio não existe e o risco volta a **1px**. Sobra para o Kadish: 69,1% no
+computador, 73,6% no iPad em pé, 66,1% deitado, 70,3% no iPhone 15, 62,1% no
+iPhone SE em pé, 61,3% deitado.
