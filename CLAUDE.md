@@ -1670,3 +1670,33 @@ iPhone 15, 62,8% no iPhone SE em pé e 61,3% deitado.
 sugere?" num assunto de aparência, a resposta útil não é um parágrafo — é a
 tela dele com as opções lado a lado e uma recomendação junto. Ele decidiu numa
 mensagem.
+
+
+## O rótulo empata com o nome, por decisão dele (09/09, v47)
+
+Vendo a v46 na tela, ele: *"ainda está pequeno, pode fazer pelo D — igual ao
+nome, 21,6px"*. Feito. Eu disse o porém as duas vezes — a 21,6px o rótulo empata
+com o nome e, como a frase é longa e o nome é curto, a frase passa a ocupar mais
+tela que o nome de quem partiu — e ele reafirmou. É decisão dele; fica assim.
+Se um dia voltar atrás, o caminho é 1,2rem no computador e 15px no celular, que
+foi a v46.
+
+**E o pedido dele descobriu um defeito de regra que era meu.** A forma compacta
+da dedicatória era escolhida **só pela altura** da tela (`max-height: 700px`).
+Com o rótulo a 21,6px, um **iPhone 15 EM PÉ** (393×852) continuava na forma
+cheia — e ali a frase quebra em duas linhas, a dedicatória vai a **123px** e a
+sobra cai a **60,1%**. Passava por um décimo, e um nome um pouco mais longo
+derrubaria.
+
+Um telefone em pé é **estreito mesmo sendo alto**: nenhuma tela de 393px segura
+"Em memória e pela elevação da alma de:" a 21,6px numa linha. A regra passou a
+ser `(max-height: 700px), (max-width: 480px)` — 480px é a mesma fronteira que o
+resto do arquivo já usa para dizer "isto é um telefone". Medido depois, o
+iPhone 15 em pé foi de **60,1% para 70,9%**.
+
+A lição, que é a mesma que já aparece três vezes neste arquivo: **uma regra
+escrita sobre uma dimensão só mente na tela onde a outra dimensão é que aperta.**
+
+Medido nas 14 combinações: 69,7% no computador, 74,0% no iPad em pé, 66,7% no
+iPad deitado, 70,9% no iPhone 15 em pé, 62,8% no iPhone SE em pé, 61,3%
+deitado.

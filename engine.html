@@ -1066,11 +1066,14 @@
      Entao: Cormorant, corpo miudo, sem maiuscula e sem espacamento de letra. */
   /* O TAMANHO do rotulo (09/09, v46). Ele pediu para aumentar e eu levei quatro
      tamanhos a tela, com o nome fixo em 21,6px nas quatro para so o rotulo
-     variar. Sugeri 17,6px; ele escolheu 19,2px, e a escolha e dele.
-     O limite de cima e 21,6px, que e o tamanho do NOME: ali os dois empatam e,
-     como a frase e longa e o nome e curto, a frase passa a pesar mais na tela
-     que o nome do falecido — o contrario do que uma dedicatoria quer dizer.
-     A 19,2px a proporcao rotulo/nome e 0,89, ainda abaixo de 1.
+     variar. Sugeri 17,6px; ele escolheu 19,2px (v46) e, vendo na tela, subiu
+     para 21,6px (v47): "ainda esta pequeno, pode fazer pelo D, igual ao nome".
+     A escolha e dele, e eu disse o porem as duas vezes: a 21,6px o rotulo
+     EMPATA com o nome e, como a frase e longa e o nome e curto, a frase passa a
+     ocupar mais tela que o nome do falecido. Ele reafirmou; fica assim.
+     No celular vale a mesma regra: o nome ali e 17px, entao o rotulo curto
+     tambem. Se um dia isto voltar atras, o caminho e 1.2rem no computador e
+     15px no celular, que foi a v46.
   /* A COR do rotulo, e por que ela nao e mais o bege claro (04/09, v45).
      Ele: "o texto do em memoria ficou muito pequeno e apagado". Media contra o
      fundo de pergaminho: o rotulo em #8a7860 dava 3,65:1 — abaixo do minimo de
@@ -1082,7 +1085,7 @@
      por ai que a tela podia ficar ilegivel sem nenhuma checagem acusar. */
   .dedicatoria .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.2rem; font-weight: 400; font-style: italic;
+    font-size: 1.35rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none;
     color: var(--text-soft, #4d3d2d); margin-bottom: 1px;
   }
@@ -1163,14 +1166,22 @@
      regras da forma cheia moram MAIS ABAIXO no arquivo e, com o mesmo peso,
      ganhariam por serem as ultimas. Medido: sem isso o convite continuava em
      duas linhas (65px) e a sobra do iPhone SE caia para 58%. */
-  @media (max-height: 700px) {
+  /* 09/09 — a forma compacta passou a valer tambem por LARGURA, e nao so por
+     altura. A regra antiga (so max-height) deixava um iPhone 15 EM PE (393x852)
+     na forma cheia: com o rotulo a 21,6px a frase quebrava em duas linhas, a
+     dedicatoria ia a 123px e a sobra caia a 60,1% — passava por um decimo, e um
+     nome um pouco mais longo derrubaria. Um telefone em pe e estreito mesmo
+     sendo alto: nenhuma tela de 393px segura "Em memoria e pela elevacao da
+     alma de:" a 21,6px numa linha. 480px e a mesma fronteira que o resto do
+     arquivo ja usa para dizer "isto e um telefone". */
+  @media (max-height: 700px), (max-width: 480px) {
     .dedicatoria-fixa { padding: 3px 16px 6px; }
     .dedicatoria-fixa .dedicatoria .ded-rotulo,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo { display: none; }
     .dedicatoria-fixa .dedicatoria .ded-rotulo-curto,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo-curto {
       display: inline; font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 15px; font-style: italic; color: var(--text-soft, #4d3d2d);
+      font-size: 17px; font-style: italic; color: var(--text-soft, #4d3d2d);
     }
     .dedicatoria-fixa .dedicatoria .ded-nome {
       display: inline; font-size: 17px; margin-left: 4px;
@@ -1226,7 +1237,7 @@
   /* o convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, mesma letra */
   .convite-dedicar .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.2rem; font-weight: 400; font-style: italic;
+    font-size: 1.35rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none; color: inherit; margin: 0 0 1px;
   }
   .convite-dedicar .conv-acao {
@@ -2213,7 +2224,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-09 · 46';
+const VERSAO = '2026-09-09 · 47';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
