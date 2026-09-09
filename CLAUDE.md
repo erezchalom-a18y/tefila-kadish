@@ -1644,3 +1644,29 @@ dezessete checagens acusar — o mesmo formato dos outros buracos que já custar
 caro aqui (o `canPlayType`, o `temState`, a página que ninguém rolava). Se um
 dia sobrar tempo, o `testar-telas.mjs` deveria medir contraste como já mede
 altura de botão.
+
+
+## O tamanho do rótulo, escolhido por ele olhando (09/09, v46)
+
+Ele: *"gostaria de aumentar a fonte em 'em memória e pela elevação da alma de',
+o que sugere?"*. Levei **quatro tamanhos à tela dele**, com o nome fixo em
+21,6px nas quatro para só o rótulo variar: 16px (como estava), 17,6px, 19,2px e
+21,6px. Sugeri 17,6px; **ele escolheu 19,2px**, e a escolha é dele.
+
+O limite de cima é 21,6px, que é o tamanho do NOME: ali os dois empatam e, como
+a frase é longa e o nome é curto, a frase passa a pesar mais na tela que o nome
+do falecido — o contrário do que uma dedicatória quer dizer. A 19,2px a
+proporção rótulo/nome é **0,89**, ainda abaixo de 1.
+
+No celular pequeno quem aparece é o rótulo curto ("Em memória de"), que foi de
+14px para **15px** — a mesma proporção. Continua numa linha só e o bloco
+continua medindo 31px.
+
+Medido nas 14 combinações (7 telas × com e sem nome), todas acima do piso de
+60%: 70,0% no computador, 74,2% no iPad em pé, 67,1% no iPad deitado, 63,4% no
+iPhone 15, 62,8% no iPhone SE em pé e 61,3% deitado.
+
+**A prática que funcionou, e vale repetir:** quando ele pergunta "o que
+sugere?" num assunto de aparência, a resposta útil não é um parágrafo — é a
+tela dele com as opções lado a lado e uma recomendação junto. Ele decidiu numa
+mensagem.

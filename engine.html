@@ -1064,6 +1064,13 @@
                  mais elegante" das tres do app e a Cormorant Garamond, e e
                  nela que ele reconheceu "a que estava perfeita".
      Entao: Cormorant, corpo miudo, sem maiuscula e sem espacamento de letra. */
+  /* O TAMANHO do rotulo (09/09, v46). Ele pediu para aumentar e eu levei quatro
+     tamanhos a tela, com o nome fixo em 21,6px nas quatro para so o rotulo
+     variar. Sugeri 17,6px; ele escolheu 19,2px, e a escolha e dele.
+     O limite de cima e 21,6px, que e o tamanho do NOME: ali os dois empatam e,
+     como a frase e longa e o nome e curto, a frase passa a pesar mais na tela
+     que o nome do falecido — o contrario do que uma dedicatoria quer dizer.
+     A 19,2px a proporcao rotulo/nome e 0,89, ainda abaixo de 1.
   /* A COR do rotulo, e por que ela nao e mais o bege claro (04/09, v45).
      Ele: "o texto do em memoria ficou muito pequeno e apagado". Media contra o
      fundo de pergaminho: o rotulo em #8a7860 dava 3,65:1 — abaixo do minimo de
@@ -1075,7 +1082,7 @@
      por ai que a tela podia ficar ilegivel sem nenhuma checagem acusar. */
   .dedicatoria .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1rem; font-weight: 400; font-style: italic;
+    font-size: 1.2rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none;
     color: var(--text-soft, #4d3d2d); margin-bottom: 1px;
   }
@@ -1163,7 +1170,7 @@
     .dedicatoria-fixa .dedicatoria .ded-rotulo-curto,
     .dedicatoria-fixa .convite-dedicar .ded-rotulo-curto {
       display: inline; font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 14px; font-style: italic; color: var(--text-soft, #4d3d2d);
+      font-size: 15px; font-style: italic; color: var(--text-soft, #4d3d2d);
     }
     .dedicatoria-fixa .dedicatoria .ded-nome {
       display: inline; font-size: 17px; margin-left: 4px;
@@ -1219,7 +1226,7 @@
   /* o convite e a dedicatoria VAZIA: mesma vaga, mesmo rotulo, mesma letra */
   .convite-dedicar .ded-rotulo {
     display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1rem; font-weight: 400; font-style: italic;
+    font-size: 1.2rem; font-weight: 400; font-style: italic;
     letter-spacing: normal; text-transform: none; color: inherit; margin: 0 0 1px;
   }
   .convite-dedicar .conv-acao {
@@ -2206,7 +2213,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-04 · 45';
+const VERSAO = '2026-09-09 · 46';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
