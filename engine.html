@@ -213,10 +213,18 @@
   .mudo-toggle[aria-pressed="true"] .onda-longe { display: none; }
 
   /* Prominent labeled entry to the educational panel */
+  /* 10/09 — as tres portas dividem UMA linha. Cada uma toma um terco; num
+     espaco estreito elas quebram para baixo sozinhas (flex-wrap), e no celular
+     a linha inteira ja nao aparece — a porta de la e o ℹ. */
+  .learn-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 4px 20px 0;
+  }
+  .learn-row .learn-strip { flex: 1 1 220px; width: auto; margin: 0; }
   .learn-strip {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     width: calc(100% - 40px);
     margin: 4px 20px 0;
     padding: 13px 16px;
@@ -1334,6 +1342,7 @@
      nenhum verso — e instrucao de como rezar, nao enfeite. Quem nunca disse
      Kadish precisa saber que se diz de pe, que precisa de dez, e em voz alta. */
   body:not(.modo-treino) .learn-strip { padding: 7px 12px; }
+  body:not(.modo-treino) .learn-row { gap: 6px; }
   body:not(.modo-treino) .learn-strip small { display: none; }
   /* 28/08 — no TREINO o cartao "Por que dizemos o Kadish?" sai inteiro. Ele
      sugeriu, e faz sentido: quem esta treinando esta praticando a boca, nao lendo
@@ -1341,7 +1350,8 @@
      36px na reza, porque no treino ela mostra tambem a linha de baixo). Sai ela
      e o cabecalho do treino cai de 167px para ~102px. Na REZA o cartao fica: e
      ali que quem chega pela primeira vez descobre que ha o que ler. */
-  body.modo-treino .learn-strip { display: none; }
+  body.modo-treino .learn-strip,
+  body.modo-treino .learn-row { display: none; }
   /* barra de baixo mais magra: o ▶ continua grande (quem reza de pe precisa
      acertar pausar sem olhar), o resto e que encolhe.
      28/08 — vale nos DOIS modos. Estava so na reza, e por isso a barra do treino
@@ -2140,7 +2150,8 @@
        nao sobre este cartao — que ele nao viu no celular nos ultimos dois dias
        e nao reclamou. A pagina Aprender continua a um toque, dentro do ℹ, em
        toda tela. Devolve-lo e apagar esta linha, se ele pedir. */
-    body:not(.modo-treino) .learn-strip { display: none; }
+    body:not(.modo-treino) .learn-strip,
+    body:not(.modo-treino) .learn-row { display: none; }
     /* E no TREINO quem paga e a faixa do titulo ("Kadish do Enlutado · recitado
        em pe"): o cartao ja nao existe ali para pagar. Nao se perde nada — a
        REZA esconde essa faixa em TODA tela desde 27/08, o nome do Kadish esta
@@ -2192,7 +2203,7 @@
        o cartao "Por que dizemos o Kadish?" (leitura, nao reza) e o sufixo
        "· pequeno / · grande" do tipo, que so repete o que o nome ja diz.
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
-    .learn-strip { display: none; }
+    .learn-strip, .learn-row { display: none; }
     .kt-size { display: none; }
     /* 04/09 — deitado no celular ela VOLTOU. Ela saia daqui porque custava 40px
        do cabecalho e derrubava a sobra para 51%; agora ela nao esta no
@@ -2289,11 +2300,31 @@
     <div class="prayer-title" data-i18n="prayer_title">Kadish do Enlutado</div>
     <div class="prayer-source" data-i18n="prayer_source">Kadish Yatom · recitado em pé</div>
   </div>
-  <button class="learn-strip" id="learnStrip">
-    <span class="ls-icon">✦</span>
-    <span class="ls-text" data-i18n-html="learn_title"><span data-i18n="learn_title">Por que dizemos o Kadish?</span><small data-i18n="learn_sub">O significado, a história e quem instituiu</small></span>
-    <span class="ls-arrow">→</span>
-  </button>
+  <!-- 10/09 — TRES portas, na mesma linha. Ele: "incluir na linha onde esta
+       ✦Por que dizemos o Kadish? mais dois links". Uma por baixo da outra
+       custaria 3x a altura do cabecalho, e altura de cabecalho e Kadish a
+       menos; lado a lado a linha continua medindo o mesmo.
+       O subtitulo saiu daqui: com tres titulos na mesma linha nao ha espaco, e
+       ele dizia justamente o que as duas portas novas agora dizem sozinhas.
+       Para onde cada uma leva:
+         "Por que dizemos"  -> a pagina Aprender, no texto dele
+         "O que e o Kadish" -> o painel da ℹ, que ja tem "O que e" nas 8 linguas
+                               desde sempre — zero texto novo
+         "Beit Chabad"      -> a pagina Aprender, na secao do diretorio -->
+  <div class="learn-row">
+    <button class="learn-strip" id="learnStrip">
+      <span class="ls-icon">✦</span>
+      <span class="ls-text" data-i18n="learn_title">Por que dizemos o Kadish?</span>
+    </button>
+    <button class="learn-strip" id="learnOque">
+      <span class="ls-icon">✦</span>
+      <span class="ls-text" data-i18n="learn_oque">O que é o Kadish?</span>
+    </button>
+    <button class="learn-strip" id="learnChabad">
+      <span class="ls-icon">✦</span>
+      <span class="ls-text" data-i18n="learn_chabad">Onde encontrar um Beit Chabad?</span>
+    </button>
+  </div>
   <!-- A faixa "MODO TREINO - PAUSA APOS CADA VERSO" saiu em 27/08, a pedido do
      Erez: "desnecessario na minha opiniao". Ele tem razao — quem apertou o
      botao acabou de ler o que ele diz, e o botao fica aceso enquanto o modo
@@ -2339,7 +2370,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-09 · 50';
+const VERSAO = '2026-09-10 · 51';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -5160,18 +5191,39 @@ const infoOverlay = document.getElementById('infoOverlay');
 document.getElementById('infoToggle').addEventListener('click', () => infoOverlay.classList.add('show'));
 // O cartao "Por que dizemos o Kadish?" leva a pagina Aprender, que guarda texto,
 // audio e video. Leva a lingua escolhida junto.
-function irParaAprender() {
+// 10/09 — as duas portas novas da linha do alto.
+//   "O que e o Kadish?"  -> o painel da ℹ, que ja tem a secao "O que e" nas 8
+//      linguas desde sempre. Zero texto novo, e a resposta esta a um toque sem
+//      sair da tela do Kadish.
+//   "Onde encontrar um Beit Chabad?" -> a pagina Aprender, direto na secao do
+//      diretorio (a ancora #chabad). Nao mando direto para o site de fora: a
+//      secao explica o que e antes de tirar a pessoa do app.
+document.getElementById('learnOque')?.addEventListener('click', () => {
+  const ov = document.getElementById('infoOverlay');
+  if (ov) ov.classList.add('show');
+});
+document.getElementById('learnChabad')?.addEventListener('click', () => {
+  irParaAprender('chabad');
+});
+
+function irParaAprender(ancora) {
   // A VERSAO vai no endereco, e nao e enfeite: o aprender.json e buscado com
   // cache:'no-cache', mas o proprio aprender.html (onde moram o desenho e o
   // bloco em destaque) e servido pelo GitHub Pages com o cache dele. Sem isto,
   // o Erez veria o texto novo com a pagina de ontem. E a mesma licao do
   // versao.json e do DADOS do sincronia.html.
   location.href = './aprender.html?lang=' + encodeURIComponent(state.lang || 'pt') +
-                  '&v=' + encodeURIComponent(VERSAO.split('·').pop().trim());
+                  '&v=' + encodeURIComponent(VERSAO.split('·').pop().trim()) +
+                  (ancora ? '#' + ancora : '');
 }
 // Dois caminhos, uma conta so: o cartao do alto (que some no celular) e a linha
 // dentro do ℹ (que fica em toda tela) chamam a MESMA funcao.
-document.getElementById('learnStrip').addEventListener('click', irParaAprender);
+// O parenteses vazio NAO e enfeite. Passada direto como ouvinte
+// (`addEventListener('click', irParaAprender)`), a funcao recebe o EVENTO do
+// clique no lugar da ancora — e desde que ela ganhou esse parametro, em 10/09,
+// isso montaria um endereco com "#[object PointerEvent]" no fim. Ninguem veria
+// aqui: a pagina abriria igual, so nao rolaria para lugar nenhum.
+document.getElementById('learnStrip').addEventListener('click', () => irParaAprender());
 document.getElementById('infoAprender')?.addEventListener('click', (e) => {
   e.preventDefault();
   irParaAprender();
@@ -5248,16 +5300,18 @@ const I18N = {
     honoring_intro: 'Junto com você, neste ano,', honoring_outro: 'almas estão sendo honradas pelo mundo',
     in_memory_of: 'Em memória de',
     prayer_title: 'Kadish do Enlutado', prayer_source: 'Kadish Yatom · recitado em pé',
-    nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Não se recita sozinho, de preferência deve ser recitado na sinagoga durante o ano do falecimento.',
-    learn_title: 'Por que dizemos o Kadish?', learn_sub: 'O que é o Kadish, o significado, a história — e onde encontrar um Beit Chabad',
+    nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Não se recita sozinho, após a shivá (7 dias de luto) deve ser recitado na sinagoga durante o ano do falecimento.',
+    learn_title: 'Por que dizemos o Kadish?',
+    learn_oque: 'O que é o Kadish?',
+    learn_chabad: 'Onde encontrar um Beit Chabad?', learn_sub: 'O significado, a história e quem instituiu',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
     setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
     setup_name: 'Nome (em português)', setup_hebrew_name: 'Nome hebraico (opcional)',
     setup_relation: 'Relação', setup_death_date: 'Data de falecimento (necessária pra yahrzeit)',
-    setup_child_q: 'O falecido era filho ou filha?',
-    setup_child_m: 'Filho',
-    setup_child_f: 'Filha',
+    setup_child_q: 'O(a) falecido(a) era homem ou mulher?',
+    setup_child_m: 'Homem',
+    setup_child_f: 'Mulher',
     setup_mother: 'Nome da mãe do falecido',
     setup_father: 'Nome do pai do falecido',
     setup_sunset_q: 'O falecimento foi antes ou depois do pôr do sol?',
@@ -5314,16 +5368,18 @@ const I18N = {
     honoring_intro: 'Together with you, this year,', honoring_outro: 'souls are being honored worldwide',
     in_memory_of: 'In memory of',
     prayer_title: "Mourner's Kaddish", prayer_source: 'Kaddish Yatom · recited standing',
-    nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It is not said alone; it should preferably be recited in the synagogue during the year of the passing.',
-    learn_title: 'Why do we say Kaddish?', learn_sub: 'What the Kaddish is, its meaning and history — and where to find a Chabad House',
+    nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It is not said alone; after the shiva (seven days of mourning) it should be recited in the synagogue during the year of the passing.',
+    learn_title: 'Why do we say Kaddish?',
+    learn_oque: 'What is the Kaddish?',
+    learn_chabad: 'Where to find a Chabad House?', learn_sub: 'The meaning, history, and origin',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
     setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
     setup_name: 'Name (English)', setup_hebrew_name: 'Hebrew name (optional)',
     setup_relation: 'Relationship', setup_death_date: 'Date of passing (required for yahrzeit)',
-    setup_child_q: 'Was the deceased a son or a daughter?',
-    setup_child_m: 'Son',
-    setup_child_f: 'Daughter',
+    setup_child_q: 'Was the deceased a man or a woman?',
+    setup_child_m: 'Man',
+    setup_child_f: 'Woman',
     setup_mother: 'Name of the deceased\'s mother',
     setup_father: 'Name of the deceased\'s father',
     setup_sunset_q: 'Did the passing happen before or after sunset?',
@@ -5380,16 +5436,18 @@ const I18N = {
     honoring_intro: 'Junto a ti, este año,', honoring_outro: 'almas están siendo honradas en el mundo',
     in_memory_of: 'En memoria de',
     prayer_title: 'Kadish del Enlutado', prayer_source: 'Kadish Yatom · recitado de pie',
-    nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'No se recita a solas; preferentemente debe recitarse en la sinagoga durante el año del fallecimiento.',
-    learn_title: '¿Por qué decimos el Kadish?', learn_sub: 'Qué es el Kadish, su significado e historia — y dónde encontrar un Beit Jabad',
+    nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'No se recita a solas; después de la shivá (siete días de duelo) debe recitarse en la sinagoga durante el año del fallecimiento.',
+    learn_title: '¿Por qué decimos el Kadish?',
+    learn_oque: '¿Qué es el Kadish?',
+    learn_chabad: '¿Dónde encontrar un Beit Jabad?', learn_sub: 'El significado, la historia y el origen',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
     setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
     setup_name: 'Nombre (en español)', setup_hebrew_name: 'Nombre hebreo (opcional)',
     setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (necesaria para yahrzeit)',
-    setup_child_q: '¿El fallecido era hijo o hija?',
-    setup_child_m: 'Hijo',
-    setup_child_f: 'Hija',
+    setup_child_q: '¿El/La fallecido(a) era hombre o mujer?',
+    setup_child_m: 'Hombre',
+    setup_child_f: 'Mujer',
     setup_mother: 'Nombre de la madre del fallecido',
     setup_father: 'Nombre del padre del fallecido',
     setup_sunset_q: '¿El fallecimiento fue antes o después de la puesta del sol?',
@@ -5446,16 +5504,18 @@ const I18N = {
     honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
     in_memory_of: 'En mémoire de',
     prayer_title: "Kaddish de l'Endeuillé", prayer_source: 'Kaddish Yatom · récité debout',
-    nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il ne se dit pas seul ; il doit de préférence être récité à la synagogue pendant l\'année du décès.',
-    learn_title: 'Pourquoi disons-nous le Kaddish?', learn_sub: 'Ce qu\'est le Kaddish, son sens et son histoire — et où trouver un Beth Habad',
+    nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il ne se dit pas seul ; après la chiva (sept jours de deuil), il doit être récité à la synagogue pendant l\'année du décès.',
+    learn_title: 'Pourquoi disons-nous le Kaddish?',
+    learn_oque: 'Qu\'est-ce que le Kaddish ?',
+    learn_chabad: 'Où trouver un Beth Habad ?', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
     setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
     setup_name: 'Nom (français)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
     setup_relation: 'Relation', setup_death_date: 'Date de décès (nécessaire pour yahrzeit)',
-    setup_child_q: 'Le défunt était-il fils ou fille ?',
-    setup_child_m: 'Fils',
-    setup_child_f: 'Fille',
+    setup_child_q: 'La personne défunte était-elle un homme ou une femme ?',
+    setup_child_m: 'Homme',
+    setup_child_f: 'Femme',
     setup_mother: 'Nom de la mère du défunt',
     setup_father: 'Nom du père du défunt',
     setup_sunset_q: 'Le décès a-t-il eu lieu avant ou après le coucher du soleil ?',
@@ -5512,16 +5572,18 @@ const I18N = {
     honoring_intro: 'Insieme a te, quest\'anno,', honoring_outro: 'anime vengono onorate nel mondo',
     in_memory_of: 'In memoria di',
     prayer_title: 'Kaddish dei Dolenti', prayer_source: 'Kaddish Yatom · recitato in piedi',
-    nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Non si recita da soli; è preferibile recitarlo in sinagoga durante l\'anno del decesso.',
-    learn_title: 'Perché diciamo il Kaddish?', learn_sub: 'Che cos\'è il Kaddish, il significato e la storia — e dove trovare un Beit Chabad',
+    nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Non si recita da soli; dopo la shivà (sette giorni di lutto) deve essere recitato in sinagoga durante l\'anno del decesso.',
+    learn_title: 'Perché diciamo il Kaddish?',
+    learn_oque: 'Che cos\'è il Kaddish?',
+    learn_chabad: 'Dove trovare un Beit Chabad?', learn_sub: 'Il significato, la storia e chi lo istituì',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
     setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
     setup_name: 'Nome (in italiano)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
     setup_relation: 'Relazione', setup_death_date: 'Data del decesso (necessaria per lo yahrzeit)',
-    setup_child_q: 'Il defunto era figlio o figlia?',
-    setup_child_m: 'Figlio',
-    setup_child_f: 'Figlia',
+    setup_child_q: 'Il/La defunto(a) era uomo o donna?',
+    setup_child_m: 'Uomo',
+    setup_child_f: 'Donna',
     setup_mother: 'Nome della madre del defunto',
     setup_father: 'Nome del padre del defunto',
     setup_sunset_q: 'Il decesso è avvenuto prima o dopo il tramonto?',
@@ -5578,16 +5640,18 @@ const I18N = {
     honoring_intro: 'Gemeinsam mit Ihnen werden in diesem Jahr', honoring_outro: 'Seelen weltweit geehrt',
     in_memory_of: 'Zum Andenken an',
     prayer_title: 'Trauerkaddisch', prayer_source: 'Kaddisch Jatom · im Stehen gesprochen',
-    nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es wird nicht allein gesprochen; vorzugsweise soll es im Trauerjahr in der Synagoge gesprochen werden.',
-    learn_title: 'Warum sagen wir das Kaddisch?', learn_sub: 'Was das Kaddisch ist, Bedeutung und Geschichte — und wo man ein Chabad-Haus findet',
+    nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es wird nicht allein gesprochen; nach der Schiwa (sieben Trauertage) soll es im Trauerjahr in der Synagoge gesprochen werden.',
+    learn_title: 'Warum sagen wir das Kaddisch?',
+    learn_oque: 'Was ist das Kaddisch?',
+    learn_chabad: 'Wo findet man ein Chabad-Haus?', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
     setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
     setup_name: 'Name (auf Deutsch)', setup_hebrew_name: 'Hebräischer Name (optional)',
     setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (für den Jahrzeit nötig)',
-    setup_child_q: 'War die verstorbene Person Sohn oder Tochter?',
-    setup_child_m: 'Sohn',
-    setup_child_f: 'Tochter',
+    setup_child_q: 'War die verstorbene Person ein Mann oder eine Frau?',
+    setup_child_m: 'Mann',
+    setup_child_f: 'Frau',
     setup_mother: 'Name der Mutter des Verstorbenen',
     setup_father: 'Name des Vaters des Verstorbenen',
     setup_sunset_q: 'Trat der Tod vor oder nach Sonnenuntergang ein?',
@@ -5644,16 +5708,18 @@ const I18N = {
     honoring_intro: 'Вместе с вами, в этом году,', honoring_outro: 'душ почитаются по всему миру',
     in_memory_of: 'В память о',
     prayer_title: 'Кадиш сироты', prayer_source: 'Кадиш Ятом · читается стоя',
-    nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Его не читают в одиночку; предпочтительно читать его в синагоге в течение года после кончины.',
-    learn_title: 'Почему мы читаем Кадиш?', learn_sub: 'Что такое кадиш, его значение и история — и где найти Бейт Хабад',
+    nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Его не читают в одиночку; после шивы (семи дней траура) его следует читать в синагоге в течение года после кончины.',
+    learn_title: 'Почему мы читаем Кадиш?',
+    learn_oque: 'Что такое кадиш?',
+    learn_chabad: 'Где найти Бейт Хабад?', learn_sub: 'Значение, история и происхождение',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
     setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
     setup_name: 'Имя (по-русски)', setup_hebrew_name: 'Еврейское имя (опционально)',
     setup_relation: 'Отношение', setup_death_date: 'Дата кончины (требуется для йорцайта)',
-    setup_child_q: 'Покойный был сыном или дочерью?',
-    setup_child_m: 'Сын',
-    setup_child_f: 'Дочь',
+    setup_child_q: 'Покойный был мужчиной или женщиной?',
+    setup_child_m: 'Мужчина',
+    setup_child_f: 'Женщина',
     setup_mother: 'Имя матери покойного',
     setup_father: 'Имя отца покойного',
     setup_sunset_q: 'Смерть наступила до или после захода солнца?',
@@ -5710,16 +5776,18 @@ const I18N = {
     honoring_intro: 'יחד איתך, השנה,', honoring_outro: 'נשמות זוכות לכבוד ברחבי העולם',
     in_memory_of: 'לזכר',
     prayer_title: 'קדיש יתום', prayer_source: 'קדיש יתום · נאמר בעמידה',
-    nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'אין אומרים אותו ביחידות, ורצוי לאומרו בבית הכנסת במשך שנת האבל.',
-    learn_title: 'מדוע אומרים קדיש?', learn_sub: 'מהו הקדיש, המשמעות וההיסטוריה — והיכן למצוא בית חב\"ד',
+    nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'אין אומרים אותו ביחידות; לאחר השבעה (שבעת ימי האבל) יש לאומרו בבית הכנסת במשך שנת האבל.',
+    learn_title: 'מדוע אומרים קדיש?',
+    learn_oque: 'מהו הקדיש?',
+    learn_chabad: 'היכן למצוא בית חב"ד?', learn_sub: 'המשמעות, ההיסטוריה והמקור',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',
     setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',
     setup_name: 'שם', setup_hebrew_name: 'שם עברי (אופציונלי)',
     setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (נדרש ליארצייט)',
-    setup_child_q: 'הנפטר היה בן או בת?',
-    setup_child_m: 'בן',
-    setup_child_f: 'בת',
+    setup_child_q: 'הנפטר היה גבר או אישה?',
+    setup_child_m: 'גבר',
+    setup_child_f: 'אישה',
     setup_mother: 'שם אמו של הנפטר',
     setup_father: 'שם אביו של הנפטר',
     setup_sunset_q: 'הפטירה הייתה לפני או אחרי שקיעת החמה?',

@@ -1867,3 +1867,62 @@ continuam exigindo os três valores exatos, um a um, e que só uma camada esteja
 em destaque. A da limpeza mudou de alvo com razão: cobrava "volta a tudo
 Normal", agora cobra "chega ao PADRÃO do app" — que é o que ela sempre quis
 dizer.
+
+
+## Três portas na mesma linha, e um defeito que eu inventei (10/09, v51)
+
+**1. Três portas onde havia uma**, a pedido dele: *"incluir na linha onde está
+✦Por que dizemos o Kadish? mais dois links"* — "na linha", e é literal. Uma
+embaixo da outra custaria três vezes a altura do cabeçalho, e altura de
+cabeçalho é Kadish a menos. Lado a lado, a linha continua medindo **36px**:
+mesmo cabeçalho, três caminhos.
+
+| | leva para |
+|---|---|
+| Por que dizemos o Kadish? | a página Aprender, no texto dele |
+| O que é o Kadish? | o painel da ℹ, que já tinha "O que é" nas 8 línguas — **zero texto novo** |
+| Onde encontrar um Beit Chabad? | a página Aprender, na âncora `#chabad` |
+
+O subtítulo saiu da primeira porta: com três títulos na mesma linha não há
+espaço, e ele dizia justamente o que as duas portas novas agora dizem sozinhas.
+
+**2. A pergunta do cadastro é dele.** Eu tinha escrito "O falecido era filho ou
+filha?", ele achou confusa — e estava: toda pessoa é filho ou filha de alguém.
+Ofereci três redações e ele escreveu a quarta: **"O(a) falecido(a) era homem ou
+mulher?"**, com os botões passando a dizer **Homem | Mulher**, para pergunta e
+resposta falarem a mesma língua. O valor guardado continua sendo filho/filha,
+que é o que monta a frase.
+
+**3. A frase do minyan mudou outra vez, e continua sendo dele:** *"…Não se
+recita sozinho, após a shivá (7 dias de luto) deve ser recitado na sinagoga
+durante o ano do falecimento."*
+
+**4. Um defeito de verdade, que eu criei nesta rodada.** O botão antigo chamava
+`irParaAprender` **direto** como ouvinte. Quando a função ganhou o parâmetro da
+âncora, ela passou a receber o EVENTO do clique no lugar dele — e montaria
+`…#[object PointerEvent]`. Ninguém veria: a página abriria igual, só não rolaria
+para lugar nenhum. Agora é `() => irParaAprender()`, com o porquê escrito ao
+lado.
+
+**5. E um defeito que eu INVENTEI, o que é pior.** Medi a âncora e vi a seção
+parando a **475px** do alto da janela. Tomei por defeito e escrevi duas
+correções — uma rolagem repetida e um `document.fonts.ready` —, **as duas com
+comentários afirmando um defeito medido**. O número não mudou nenhuma das duas
+vezes. Só então medi a coisa certa:
+
+| | |
+|---|---|
+| rolagem | 2910 |
+| rolagem **máxima** da página | 2910 |
+| seção inteira na tela | sim (topo 475, fim 749, janela 900) |
+
+A seção do Beit Chabad é a **última**: chegando ao fim do documento não há mais
+para onde rolar, e ela não encosta no alto porque não existe conteúdo abaixo
+dela. **Nunca houve defeito.** As duas correções saíram e o achado verdadeiro
+ficou escrito no `aprender.html`.
+
+A lição, e ela é sobre mim: **escrever no código que um defeito foi medido, sem
+ter medido a coisa certa, é pior que código inútil — é uma mentira deixada para
+quem ler depois.** Duas correções entraram antes de eu conferir se havia o que
+corrigir. A regra que já existia aqui — medir antes, e medir a pergunta certa —
+vale também quando o número parece obviamente errado.

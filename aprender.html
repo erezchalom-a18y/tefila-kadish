@@ -130,7 +130,7 @@ function bloco(s) {
   // nao da moldura. Abre noutra aba, com rel=noopener — quem esta rezando nao
   // perde a pagina do Kadish por tocar num link.
   if (s.tipo === 'link')
-    return `<section><h2>${titulo}</h2>${corpo}
+    return `<section${s.ancora ? ` id="${esc(s.ancora)}"` : ''}><h2>${titulo}</h2>${corpo}
       <a class="assistir" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(naLingua(s.rotulo))}</a></section>`;
   return `<section><h2>${titulo}</h2>${corpo}</section>`;
 }
@@ -161,6 +161,24 @@ fetch('./aprender.json', { cache: 'no-cache' })
       `<div class="aviso">${esc(t.rascunho)}</div>`;
     document.getElementById('conteudo').innerHTML =
       (secoes.length ? aviso + secoes.map(bloco).join('') : vazio);
+    // A ancora (#chabad) so existe depois que o JSON chega e as secoes sao
+    // desenhadas — quando a pagina carrega, o navegador ja tentou rolar e nao
+    // achou nada. Entao a rolagem e feita aqui, depois de montar.
+    //
+    // UMA vez basta, e vale dizer por que: ao medir, a secao parava a 475px do
+    // alto da janela e eu tomei isso por defeito. Escrevi duas correcoes — uma
+    // rolagem repetida e um document.fonts.ready — e o numero nao mudou. So
+    // entao medi a coisa certa: a rolagem era 2910 e a rolagem MAXIMA da pagina
+    // tambem era 2910. A secao do Beit Chabad e a ULTIMA; chegando ao fim do
+    // documento nao ha mais para onde rolar, e ela nao encosta no alto porque
+    // nao existe conteudo abaixo dela. Estava inteira na tela o tempo todo
+    // (topo 475, fim 749, janela 900). Nao havia defeito, e as duas correcoes
+    // sairam. Se um dia alguem achar que "a ancora nao funciona", meca a
+    // rolagem maxima antes de consertar.
+    if (location.hash) {
+      const alvo = document.getElementById(location.hash.slice(1));
+      if (alvo) setTimeout(() => alvo.scrollIntoView({ block: 'start' }), 60);
+    }
     document.getElementById('rodape').innerHTML = secoes.length
       ? `<p>${secoes.length} ${secoes.length === 1 ? esc(t.secao) : esc(t.secoes)}.` +
         (lingua === 'pt' ? ' Para acrescentar ou corrigir, edite <code>aprender.json</code>.' : '') + '</p>'
