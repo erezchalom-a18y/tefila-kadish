@@ -17,7 +17,11 @@
   2. O QR e o SVG, nao o PNG. Numa folha impressa o SVG nao perde nitidez em
      tamanho nenhum, e um QR borrado nao le.
 
-  3. NADA DE TEXTO NOVO onde ja havia texto. Os titulos das tres portas, a nota
+  3. O ENDERECO ESCRITO saiu em 10/09, a pedido dele. Fica so o codigo. Quem
+     nao conseguir apontar a camera nao tem por onde digitar — foi decisao
+     dele, e esta escrita aqui para nao ser "consertada" por engano depois.
+
+  4. NADA DE TEXTO NOVO onde ja havia texto. Os titulos das tres portas, a nota
      do minyan e o "Em memoria de" saem das MESMAS palavras que estao na tela do
      app, copiadas aqui por lingua. O que e proprio do panfleto — os tres passos
      de "como usar" e a linha do endereco — esta marcado como tal.
@@ -53,8 +57,6 @@
                 border:1px solid var(--linha);border-radius:8px;background:#fff}
   .qr-legenda{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--soft);
               margin-top:9px;line-height:1.35}
-  .qr-endereco{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--fraco);
-               margin-top:5px;word-break:break-all}
   .miolo{display:flex;gap:11mm;margin-top:9mm;align-items:flex-start}
   .coluna{flex:1}
   h2{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;
@@ -90,7 +92,6 @@
   <div class="qr-caixa">
     <img src="./qr/kadish.svg" alt="QR">
     <div class="qr-legenda" id="qrLegenda"></div>
-    <div class="qr-endereco">erezchalom-a18y.github.io/tefila-kadish</div>
   </div>
 
   <div class="miolo">
@@ -113,67 +114,67 @@
 // Tudo o que aparece aqui existe nas 8 linguas (regra 6). As frases marcadas
 // (=app) sao as MESMAS que estao na tela do app — copiadas, nao reescritas.
 const T = {
-  pt:{dir:'ltr',sub:'Um app para acompanhar o Kadish palavra por palavra, com a voz do rabino.',
+  pt:{dir:'ltr',sub:'Um app para ensinar a falar o Kadish palavra por palavra, com a voz do rabino.',
       hComo:'Como usar',
       passos:['Aponte a câmera do telefone para o código ao lado.','Escolha a sua tradição e o tipo de Kadish. O áudio começa no ▶.','Acompanhe: a palavra que está soando fica acesa no texto.'],
       hOque:'O que o app faz',
-      oque:['Áudio do rabino sincronizado palavra por palavra.','Hebraico, transliteração e tradução, em 8 línguas.','Modo Treino, que pausa em cada verso para você repetir.','Dedicar o Kadish a alguém, e lembrete do yahrzeit.'],
+      oque:['Áudio do rabino sincronizado palavra por palavra.','Hebraico, transliteração e tradução, em 8 línguas.','Modo Treino, que pausa em cada verso para você repetir.','Dedicar o Kadish a alguém, e lembrete do yahrzeit.','Botão de mudo, para acompanhar o texto em silêncio.'],
       qr:'Aponte a câmera. Funciona no iPhone e no Android, sem instalar nada.',
       nota:'O Kadish exige minyan de dez homens adultos e é recitado de pé. Deve ser recitado normalmente numa sinagoga durante o período de luto.',
       rodape:'Gratuito · sem cadastro · sem anúncios'},
-  en:{dir:'ltr',sub:'An app to follow the Kaddish word by word, with the rabbi’s voice.',
+  en:{dir:'ltr',sub:'An app to teach you to say the Kaddish word by word, with the rabbi’s voice.',
       hComo:'How to use it',
       passos:['Point your phone’s camera at the code beside this text.','Choose your tradition and the kind of Kaddish. The audio starts on ▶.','Follow along: the word being said lights up in the text.'],
       hOque:'What the app does',
-      oque:['The rabbi’s recording synchronised word by word.','Hebrew, transliteration and translation, in 8 languages.','Practice Mode, which pauses at every verse so you can repeat it.','Dedicate the Kaddish to someone, and a yahrzeit reminder.'],
+      oque:['The rabbi’s recording synchronised word by word.','Hebrew, transliteration and translation, in 8 languages.','Practice Mode, which pauses at every verse so you can repeat it.','Dedicate the Kaddish to someone, and a yahrzeit reminder.','A mute button, to follow the text in silence.'],
       qr:'Point your camera. Works on iPhone and Android, nothing to install.',
       nota:'The Kaddish requires a minyan of ten adult men and is recited standing. It should normally be recited in a synagogue during the period of mourning.',
       rodape:'Free · no sign-up · no advertising'},
-  es:{dir:'ltr',sub:'Una app para seguir el Kadish palabra por palabra, con la voz del rabino.',
+  es:{dir:'ltr',sub:'Una app para enseñar a decir el Kadish palabra por palabra, con la voz del rabino.',
       hComo:'Cómo usarla',
       passos:['Apunte la cámara del teléfono al código de al lado.','Elija su tradición y el tipo de Kadish. El audio empieza en ▶.','Siga la lectura: la palabra que suena se enciende en el texto.'],
       hOque:'Qué hace la app',
-      oque:['Audio del rabino sincronizado palabra por palabra.','Hebreo, transliteración y traducción, en 8 idiomas.','Modo Práctica, que hace una pausa en cada versículo para repetir.','Dedicar el Kadish a alguien, y recordatorio del yahrzeit.'],
+      oque:['Audio del rabino sincronizado palabra por palabra.','Hebreo, transliteración y traducción, en 8 idiomas.','Modo Práctica, que hace una pausa en cada versículo para repetir.','Dedicar el Kadish a alguien, y recordatorio del yahrzeit.','Botón de silencio, para seguir el texto sin sonido.'],
       qr:'Apunte la cámara. Funciona en iPhone y Android, sin instalar nada.',
       nota:'El Kadish exige minián de diez hombres adultos y se recita de pie. Debe recitarse normalmente en una sinagoga durante el período de duelo.',
       rodape:'Gratis · sin registro · sin publicidad'},
-  fr:{dir:'ltr',sub:'Une application pour suivre le Kaddish mot à mot, avec la voix du rabbin.',
+  fr:{dir:'ltr',sub:'Une application pour apprendre à dire le Kaddish mot à mot, avec la voix du rabbin.',
       hComo:'Comment l’utiliser',
       passos:['Dirigez l’appareil photo du téléphone vers le code ci-contre.','Choisissez votre tradition et le type de Kaddish. L’audio démarre sur ▶.','Suivez : le mot prononcé s’allume dans le texte.'],
       hOque:'Ce que fait l’application',
-      oque:['L’enregistrement du rabbin synchronisé mot à mot.','Hébreu, translittération et traduction, en 8 langues.','Mode Entraînement, qui marque une pause à chaque verset.','Dédier le Kaddish à quelqu’un, et un rappel du yahrzeit.'],
+      oque:['L’enregistrement du rabbin synchronisé mot à mot.','Hébreu, translittération et traduction, en 8 langues.','Mode Entraînement, qui marque une pause à chaque verset.','Dédier le Kaddish à quelqu’un, et un rappel du yahrzeit.','Un bouton muet, pour suivre le texte en silence.'],
       qr:'Dirigez la caméra. Fonctionne sur iPhone et Android, rien à installer.',
       nota:'Le Kaddish exige un minyan de dix hommes adultes et se récite debout. Il doit normalement être récité dans une synagogue pendant la période de deuil.',
       rodape:'Gratuit · sans inscription · sans publicité'},
-  it:{dir:'ltr',sub:'Un’app per seguire il Kaddish parola per parola, con la voce del rabbino.',
+  it:{dir:'ltr',sub:'Un’app per imparare a dire il Kaddish parola per parola, con la voce del rabbino.',
       hComo:'Come si usa',
       passos:['Inquadri con la fotocamera il codice qui accanto.','Scelga la sua tradizione e il tipo di Kaddish. L’audio parte con ▶.','Segua: la parola pronunciata si illumina nel testo.'],
       hOque:'Che cosa fa l’app',
-      oque:['La registrazione del rabbino sincronizzata parola per parola.','Ebraico, traslitterazione e traduzione, in 8 lingue.','Modalità Allenamento, che si ferma a ogni versetto.','Dedicare il Kaddish a qualcuno, e il promemoria dello yahrzeit.'],
+      oque:['La registrazione del rabbino sincronizzata parola per parola.','Ebraico, traslitterazione e traduzione, in 8 lingue.','Modalità Allenamento, che si ferma a ogni versetto.','Dedicare il Kaddish a qualcuno, e il promemoria dello yahrzeit.','Pulsante muto, per seguire il testo in silenzio.'],
       qr:'Inquadri con la fotocamera. Funziona su iPhone e Android, senza installare nulla.',
       nota:'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi. Deve essere recitato normalmente in sinagoga durante il periodo di lutto.',
       rodape:'Gratuita · senza registrazione · senza pubblicità'},
-  de:{dir:'ltr',sub:'Eine App, um dem Kaddisch Wort für Wort zu folgen, mit der Stimme des Rabbiners.',
+  de:{dir:'ltr',sub:'Eine App, um das Kaddisch Wort für Wort sprechen zu lernen, mit der Stimme des Rabbiners.',
       hComo:'So benutzt man sie',
       passos:['Richten Sie die Kamera des Telefons auf den Code nebenan.','Wählen Sie Ihren Ritus und die Art des Kaddisch. Der Ton startet mit ▶.','Folgen Sie mit: das gesprochene Wort leuchtet im Text auf.'],
       hOque:'Was die App tut',
-      oque:['Die Aufnahme des Rabbiners, Wort für Wort synchronisiert.','Hebräisch, Umschrift und Übersetzung, in 8 Sprachen.','Übungsmodus, der bei jedem Vers anhält.','Das Kaddisch jemandem widmen, mit Jahrzeit-Erinnerung.'],
+      oque:['Die Aufnahme des Rabbiners, Wort für Wort synchronisiert.','Hebräisch, Umschrift und Übersetzung, in 8 Sprachen.','Übungsmodus, der bei jedem Vers anhält.','Das Kaddisch jemandem widmen, mit Jahrzeit-Erinnerung.','Stummschalt-Taste, um dem Text in Stille zu folgen.'],
       qr:'Kamera darauf richten. Funktioniert auf iPhone und Android, ohne Installation.',
       nota:'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen. Es soll in der Regel während der Trauerzeit in einer Synagoge gesprochen werden.',
       rodape:'Kostenlos · ohne Anmeldung · ohne Werbung'},
-  ru:{dir:'ltr',sub:'Приложение, чтобы следить за кадишем слово за словом, с голосом раввина.',
+  ru:{dir:'ltr',sub:'Приложение, чтобы научиться произносить кадиш слово за словом, с голосом раввина.',
       hComo:'Как пользоваться',
       passos:['Наведите камеру телефона на код рядом.','Выберите свою традицию и вид кадиша. Звук начинается по ▶.','Следите: произносимое слово подсвечивается в тексте.'],
       hOque:'Что умеет приложение',
-      oque:['Запись раввина, синхронизированная слово за словом.','Иврит, транслитерация и перевод, на 8 языках.','Режим обучения — пауза после каждого стиха.','Посвятить кадиш человеку и напоминание о йорцайте.'],
+      oque:['Запись раввина, синхронизированная слово за словом.','Иврит, транслитерация и перевод, на 8 языках.','Режим обучения — пауза после каждого стиха.','Посвятить кадиш человеку и напоминание о йорцайте.','Кнопка отключения звука, чтобы следить за текстом в тишине.'],
       qr:'Наведите камеру. Работает на iPhone и Android, ничего устанавливать не нужно.',
       nota:'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя. Обычно его следует читать в синагоге в течение траурного периода.',
       rodape:'Бесплатно · без регистрации · без рекламы'},
-  he:{dir:'rtl',sub:'אפליקציה ללוות את הקדיש מילה במילה, בקולו של הרב.',
+  he:{dir:'rtl',sub:'אפליקציה ללמוד לומר את הקדיש מילה במילה, בקולו של הרב.',
       hComo:'איך משתמשים',
       passos:['כוונו את מצלמת הטלפון אל הקוד שבצד.','בחרו את הנוסח ואת סוג הקדיש. השמע מתחיל ב- ▶.','עקבו: המילה הנאמרת נדלקת בטקסט.'],
       hOque:'מה האפליקציה עושה',
-      oque:['הקלטת הרב מסונכרנת מילה במילה.','עברית, תעתיק ותרגום, בשמונה שפות.','מצב אימון, שעוצר בכל פסוק כדי לחזור עליו.','להקדיש את הקדיש לאדם, ותזכורת ליארצייט.'],
+      oque:['הקלטת הרב מסונכרנת מילה במילה.','עברית, תעתיק ותרגום, בשמונה שפות.','מצב אימון, שעוצר בכל פסוק כדי לחזור עליו.','להקדיש את הקדיש לאדם, ותזכורת ליארצייט.','כפתור השתקה, כדי לעקוב אחר הטקסט בשקט.'],
       qr:'כוונו את המצלמה. עובד באייפון ובאנדרואיד, בלי להתקין דבר.',
       nota:'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה. רגילים לאומרו בבית הכנסת במשך תקופת האבלות.',
       rodape:'חינם · ללא הרשמה · ללא פרסומות'},
