@@ -86,6 +86,13 @@ jobs:
       - name: A pagina Aprender, e o texto que e dele
         run: node testar-aprender.mjs http://127.0.0.1:8896/tefila-kadish
 
+      # Um QR nao instala nada; quem faz o icone aparecer na tela do telefone e
+      # o manifesto mais o convite. Ate 10/09 o manifesto era um `data:` com
+      # icone SVG, que o Android NAO aceita — o "Instalar" nunca podia aparecer
+      # e nada dava erro. Esta checagem existe para isso nao voltar calado.
+      - name: testar-instalar.mjs (o app pode virar um icone no telefone)
+        run: node testar-instalar.mjs http://127.0.0.1:8896/tefila-kadish
+
       - name: checar-sincronia.mjs (a sincronia dos 8, sem navegador)
         run: node checar-sincronia.mjs
 

@@ -6,11 +6,23 @@
 <meta name="theme-color" content="#f4ede0">
 <title>Tefilá · Kadish do Enlutado · v3</title>
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<!-- O iOS ignora o manifesto para o icone e le SO esta etiqueta. Ela aponta
+     para icones/, que e o que o gerar-icones.py escreve; o apple-touch-icon.png
+     da raiz fica onde esta, sem uso, para nao quebrar link antigo de ninguem. -->
+<link rel="apple-touch-icon" href="./icones/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kadish">
 <script src="./hebraico.js"></script>
 <script src="./yahrzeit.js"></script>
 <script src="./contador.js"></script>
-<link rel="manifest" href='data:application/manifest+json,{"name":"Tefil%C3%A1 · Kadish","short_name":"Tefil%C3%A1","start_url":"./","display":"standalone","theme_color":"%238b6a3e","background_color":"%23f4ede0","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 192 192%22%3E%3Crect width%3D%22192%22 height%3D%22192%22 fill%3D%22%23f4ede0%22%2F%3E%3Ctext x%3D%2296%22 y%3D%22120%22 font-size%3D%22100%22 text-anchor%3D%22middle%22 fill%3D%22%238b6a3e%22%3E%E2%9C%A1%3C%2Ftext%3E%3C%2Fsvg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+<!-- 10/09 — O MANIFESTO SAIU DE DENTRO DO HTML. Ele era um `data:` com UM
+     icone em SVG, e o Android NAO INSTALA com icone SVG: pede PNG de 192 e de
+     512. Ou seja, o "Instalar app" nunca podia aparecer, e ninguem via porque
+     nada dava erro — o mesmo formato do canPlayType e do temState.
+     O start_url tambem estava em "./", que e o index.html; agora aponta para
+     o engine.html, que e o app. Quem instalasse caia na porta errada. -->
+<link rel="manifest" href="./manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -1078,6 +1090,44 @@
     font: inherit; font-size: 15px; cursor: pointer;
   }
   .popup-comecar:active { opacity: .8; }
+  /* O convite para deixar o app na tela do telefone (10/09). Ele fica NO PE da
+     tela, e nao no meio: quem abriu este app pode ter enterrado o pai ontem, e
+     uma caixa por cima do Kadish e a mesma coisa que um formulario antes da
+     reza — que este projeto ja decidiu, por escrito, que nao faz. */
+  .convite-instalar {
+    /* O `bottom` e escrito pelo JS a partir da ALTURA MEDIDA da barra do audio.
+       Na primeira tentativa ele era `12px + safe-area` e a barra ficava POR
+       CIMA: o botao aparecia na tela e nao respondia ao toque — a checagem
+       acusou "audio-controls intercepts pointer events". Um numero fixo aqui
+       mentiria de novo, porque a barra muda de altura (92px em pe, 66px
+       deitado). Este valor e so o piso, para o caso de o JS nao rodar. */
+    position: fixed; left: 12px; right: 12px; z-index: 60;
+    bottom: calc(104px + env(safe-area-inset-bottom));
+    display: none; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 12px;
+    background: var(--bg, #f4ede0); border: 1px solid var(--brass, #8b6a3e);
+    box-shadow: 0 6px 24px rgba(42, 31, 21, 0.22);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .convite-instalar.aparece { display: flex; }
+  .convite-instalar img { width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0; }
+  .convite-instalar .ci-texto { flex: 1; min-width: 0; }
+  .convite-instalar .ci-titulo {
+    display: block; font-size: 14px; font-weight: 600; color: var(--text, #2a1f15);
+  }
+  .convite-instalar .ci-como {
+    display: block; font-size: 12.5px; font-style: italic;
+    color: var(--text-soft, #4d3d2d); line-height: 1.35;
+  }
+  .convite-instalar button {
+    min-height: 30px; padding: 6px 12px; border-radius: 9px; cursor: pointer;
+    font: inherit; font-size: 13px; flex-shrink: 0;
+  }
+  .convite-instalar .ci-sim { background: var(--brass, #8b6a3e); color: #fff; border: 0; }
+  .convite-instalar .ci-nao {
+    background: transparent; color: var(--text-soft, #4d3d2d);
+    border: 1px solid var(--rule, #c9b894);
+  }
   .toast {
     position: fixed;
     bottom: 140px; left: 50%;
@@ -2400,7 +2450,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-10 · 53';
+const VERSAO = '2026-09-10 · 54';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2734,6 +2784,15 @@ document.addEventListener('DOMContentLoaded', () => {
   <button class="popup-comecar" id="popupComecar" data-i18n="comecar_aqui">▶ Começar aqui</button>
 </div>
 
+<div class="convite-instalar" id="conviteInstalar">
+  <img src="./icones/icone-192.png" alt="">
+  <span class="ci-texto">
+    <span class="ci-titulo" data-i18n="instalar_titulo">Deixar o Kadish na tela do telefone</span>
+    <span class="ci-como" id="ciComo"></span>
+  </span>
+  <button class="ci-sim" id="ciInstalar" data-i18n="instalar_android">Instalar</button>
+  <button class="ci-nao" id="ciAgoraNao" data-i18n="instalar_agora_nao">Agora não</button>
+</div>
 <div class="toast" id="toast"></div>
 
 <div class="audio-bar">
@@ -5434,6 +5493,7 @@ const I18N = {
     // 10/09 — os tres titulos inteiros nao cabem numa linha de telefone (o
     // terceiro ficava cortado na borda). Estes curtos aparecem SO ate 640px;
     // o titulo do pop-up continua sendo o inteiro acima.
+    instalar_titulo: 'Deixar o Kadish na tela do telefone', instalar_ios: 'Toque em Compartilhar e depois em "Adicionar à Tela de Início".', instalar_android: 'Instalar', instalar_agora_nao: 'Agora não',
     learn_title_curto: 'Por que dizemos?', learn_oque_curto: 'O que é?', learn_chabad_curto: 'Beit Chabad',
     ler_mais: 'Ler o texto completo →', learn_sub: 'O significado, a história e quem instituiu',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
@@ -5503,6 +5563,7 @@ const I18N = {
     learn_title: 'Why do we say Kaddish?',
     learn_oque: 'What is the Kaddish?',
     learn_chabad: 'Where to find a Chabad House?',
+    instalar_titulo: 'Keep the Kaddish on your phone screen', instalar_ios: 'Tap Share, then "Add to Home Screen".', instalar_android: 'Install', instalar_agora_nao: 'Not now',
     learn_title_curto: 'Why we say it', learn_oque_curto: 'What it is', learn_chabad_curto: 'Chabad House',
     ler_mais: 'Read the full text →', learn_sub: 'The meaning, history, and origin',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
@@ -5572,6 +5633,7 @@ const I18N = {
     learn_title: '¿Por qué decimos el Kadish?',
     learn_oque: '¿Qué es el Kadish?',
     learn_chabad: '¿Dónde encontrar un Beit Jabad?',
+    instalar_titulo: 'Dejar el Kadish en la pantalla del teléfono', instalar_ios: 'Toque Compartir y luego "Añadir a pantalla de inicio".', instalar_android: 'Instalar', instalar_agora_nao: 'Ahora no',
     learn_title_curto: '¿Por qué se dice?', learn_oque_curto: '¿Qué es?', learn_chabad_curto: 'Beit Jabad',
     ler_mais: 'Leer el texto completo →', learn_sub: 'El significado, la historia y el origen',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
@@ -5641,6 +5703,7 @@ const I18N = {
     learn_title: 'Pourquoi disons-nous le Kaddish?',
     learn_oque: 'Qu\'est-ce que le Kaddish ?',
     learn_chabad: 'Où trouver un Beth Habad ?',
+    instalar_titulo: 'Garder le Kaddish sur l’écran du téléphone', instalar_ios: 'Touchez Partager, puis « Sur l’écran d’accueil ».', instalar_android: 'Installer', instalar_agora_nao: 'Pas maintenant',
     learn_title_curto: 'Pourquoi ?', learn_oque_curto: 'Qu’est-ce ?', learn_chabad_curto: 'Beth Habad',
     ler_mais: 'Lire le texte complet →', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
@@ -5710,6 +5773,7 @@ const I18N = {
     learn_title: 'Perché diciamo il Kaddish?',
     learn_oque: 'Che cos\'è il Kaddish?',
     learn_chabad: 'Dove trovare un Beit Chabad?',
+    instalar_titulo: 'Tenere il Kaddish sullo schermo del telefono', instalar_ios: 'Tocchi Condividi e poi "Aggiungi a Home".', instalar_android: 'Installa', instalar_agora_nao: 'Non ora',
     learn_title_curto: 'Perché si dice', learn_oque_curto: 'Che cos’è', learn_chabad_curto: 'Beit Chabad',
     ler_mais: 'Leggi il testo completo →', learn_sub: 'Il significato, la storia e chi lo istituì',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
@@ -5779,6 +5843,7 @@ const I18N = {
     learn_title: 'Warum sagen wir das Kaddisch?',
     learn_oque: 'Was ist das Kaddisch?',
     learn_chabad: 'Wo findet man ein Chabad-Haus?',
+    instalar_titulo: 'Das Kaddisch auf dem Telefon behalten', instalar_ios: 'Tippen Sie auf Teilen und dann "Zum Home-Bildschirm".', instalar_android: 'Installieren', instalar_agora_nao: 'Jetzt nicht',
     learn_title_curto: 'Warum?', learn_oque_curto: 'Was ist es?', learn_chabad_curto: 'Chabad-Haus',
     ler_mais: 'Den vollständigen Text lesen →', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
@@ -5848,6 +5913,7 @@ const I18N = {
     learn_title: 'Почему мы читаем Кадиш?',
     learn_oque: 'Что такое кадиш?',
     learn_chabad: 'Где найти Бейт Хабад?',
+    instalar_titulo: 'Оставить кадиш на экране телефона', instalar_ios: 'Нажмите «Поделиться», затем «На экран «Домой»».', instalar_android: 'Установить', instalar_agora_nao: 'Не сейчас',
     learn_title_curto: 'Почему?', learn_oque_curto: 'Что это?', learn_chabad_curto: 'Бейт Хабад',
     ler_mais: 'Читать полный текст →', learn_sub: 'Значение, история и происхождение',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
@@ -5917,6 +5983,7 @@ const I18N = {
     learn_title: 'מדוע אומרים קדיש?',
     learn_oque: 'מהו הקדיש?',
     learn_chabad: 'היכן למצוא בית חב"ד?',
+    instalar_titulo: 'להשאיר את הקדיש במסך הטלפון', instalar_ios: 'הקישו על שיתוף ואז על "הוסף למסך הבית".', instalar_android: 'התקנה', instalar_agora_nao: 'לא עכשיו',
     learn_title_curto: 'למה אומרים', learn_oque_curto: 'מה זה', learn_chabad_curto: 'בית חב"ד',
     ler_mais: 'לקריאת הטקסט המלא →', learn_sub: 'המשמעות, ההיסטוריה והמקור',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
@@ -8240,5 +8307,149 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
   });
   </script>
 
+<script>
+/* ===================== DEIXAR O KADISH NA TELA DO TELEFONE =====================
+   Ele pediu (10/09): "queria um qr code que gerasse um icone no iphone/android".
+   Um QR so carrega um endereco — nenhum codigo instala nada. Quem instala e
+   esta pagina: o manifest.webmanifest diz o nome, a cor e o icone, e aqui fica
+   o convite de UM toque.
+
+   OS DOIS SISTEMAS NAO INSTALAM IGUAL, e por isso ha dois caminhos escritos:
+   - Android: o navegador avisa que da para instalar (`beforeinstallprompt`) e
+     entrega um pedido guardado. O botao "Instalar" dispara esse pedido, e o
+     sistema mostra a caixa dele. Um toque.
+   - iPhone: a Apple nao tem esse aviso. Ali NAO ha botao — ha a instrucao
+     ("Compartilhar -> Adicionar a Tela de Inicio"), porque prometer um botao
+     que nao instala nada seria mentir para quem esta rezando.
+
+   Regras que este convite respeita, todas ja escritas neste projeto:
+   - NUNCA por cima do Kadish: ele mora no pe da tela.
+   - Some para sempre com um toque no "Agora nao", e nao volta.
+   - Nao aparece para quem JA instalou (`display-mode: standalone`).
+   - Espera 12s antes de aparecer: quem abriu o app para rezar AGORA nao pode
+     receber uma caixa na cara. Quem so queria rezar fecha o app antes de ela
+     existir, e esta certo assim.
+   - Todo texto vem da tabela I18N (regra 6). O `applyI18n` preenche os rotulos
+     pelos data-i18n; so a linha de COMO fazer e escrita aqui, porque ela muda
+     conforme o sistema. */
+(function () {
+  var CHAVE = 'tefila_convite_instalar';   // 'nao' = ele dispensou, nao volta
+  var ESPERA = 12000;
+
+  function jaEstaInstalado() {
+    try {
+      return window.matchMedia('(display-mode: standalone)').matches ||
+             window.navigator.standalone === true;
+    } catch (e) { return false; }
+  }
+  function ehIOS() {
+    // iPad moderno se anuncia como Mac; o toque e o que o separa.
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+  function dispensado() {
+    try { return localStorage.getItem(CHAVE) === 'nao'; } catch (e) { return false; }
+  }
+  function dispensar() {
+    try { localStorage.setItem(CHAVE, 'nao'); } catch (e) {}
+  }
+  function frase(chave) {
+    // leitura protegida: a mesma armadilha de TDZ do rotulo curto da dedicatoria
+    try {
+      var L = (typeof state !== 'undefined' && state.lang) || 'pt';
+      return (I18N[L] || I18N.pt)[chave] || '';
+    } catch (e) { return ''; }
+  }
+
+  var caixa = document.getElementById('conviteInstalar');
+  var btInstalar = document.getElementById('ciInstalar');
+  var btNao = document.getElementById('ciAgoraNao');
+  var linhaComo = document.getElementById('ciComo');
+  if (!caixa) return;
+
+  var pedidoGuardado = null;   // so o Android entrega isto
+
+  function acomodar() {
+    // uma conta so para "onde e o pe da tela": a barra do audio e fixa la, e
+    // ela e quem manda. Sem isto o convite fica DEBAIXO dela e nao se toca.
+    try {
+      var barra = document.querySelector('.audio-bar');
+      var h = barra ? Math.round(barra.getBoundingClientRect().height) : 0;
+      caixa.style.bottom = 'calc(' + (h + 12) + 'px + env(safe-area-inset-bottom))';
+    } catch (e) {}
+  }
+
+  function privacidadePendente() {
+    // A PERGUNTA CERTA e "ele ja respondeu?", e nao "o aviso esta na tela
+    // AGORA?". O aviso so aparece 1,2s depois de carregar; perguntando pela
+    // tela, o convite passava no vao e o aviso caia por cima dele em seguida —
+    // a checagem mediu isso nas 8 linguas. A resposta mora no localStorage,
+    // que e a mesma conta que o proprio aviso usa. Uma conta so.
+    try { if (!localStorage.getItem('tefila_consent')) return true; } catch (e) {}
+    var c = document.getElementById('consentBanner');
+    return !!(c && c.classList.contains('show'));
+  }
+
+  function mostrar() {
+    if (!caixa || dispensado() || jaEstaInstalado()) return;
+    // O AVISO DE PRIVACIDADE VEM PRIMEIRO, e nao e so questao de ordem: ele
+    // mora no mesmo pe da tela e TAPAVA o convite — a checagem mediu quem
+    // estava no ponto do botao e achou o banner. Dois pedidos empilhados no
+    // mesmo canto e um deles inalcancavel. Aqui o convite espera a vez.
+    if (privacidadePendente()) { setTimeout(mostrar, 2000); return; }
+    acomodar();
+    if (pedidoGuardado) {
+      // Android: um botao que instala de verdade
+      btInstalar.style.display = '';
+      linhaComo.textContent = '';
+      linhaComo.removeAttribute('data-i18n');
+    } else if (ehIOS()) {
+      // iPhone: sem botao, so a instrucao — nao ha como instalar por codigo
+      btInstalar.style.display = 'none';
+      linhaComo.setAttribute('data-i18n', 'instalar_ios');
+      linhaComo.textContent = frase('instalar_ios');
+    } else {
+      return;   // computador: nao ha o que oferecer
+    }
+    caixa.classList.add('aparece');
+  }
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();          // sem isto o navegador mostra a barra dele
+    pedidoGuardado = e;
+    mostrar();
+  });
+
+  btInstalar.addEventListener('click', function () {
+    if (!pedidoGuardado) return;
+    pedidoGuardado.prompt();
+    pedidoGuardado.userChoice.then(function () {
+      pedidoGuardado = null;
+      dispensar();               // pediu uma vez, nao pergunta de novo
+      caixa.classList.remove('aparece');
+    });
+  });
+  btNao.addEventListener('click', function () {
+    dispensar();
+    caixa.classList.remove('aparece');
+  });
+  window.addEventListener('resize', function () {
+    if (caixa.classList.contains('aparece')) acomodar();
+  });
+  window.addEventListener('appinstalled', function () {
+    dispensar();
+    caixa.classList.remove('aparece');
+  });
+
+  // ?instalar=1 forca o convite, para os testes e para ele conferir no aparelho
+  try {
+    if (new URLSearchParams(location.search).get('instalar') === '1') {
+      setTimeout(mostrar, 300);
+      return;
+    }
+  } catch (e) {}
+  setTimeout(mostrar, ESPERA);
+})();
+</script>
 </body>
 </html>

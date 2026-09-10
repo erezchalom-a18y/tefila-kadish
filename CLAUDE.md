@@ -2099,3 +2099,75 @@ iPhone SE em pé, na reza). Sobe quando o pior caso subir; nunca desce.
 de 16 na primeira tela. O cabeçalho do telefone tem 204px em quatro linhas,
 contra uma linha no computador. Ele perguntou sobre isso e ficou para depois de
 testar esta versão — uma mudança de comportamento por versão.
+
+## O icone na tela do telefone (10/09, v54)
+
+Ele: *"queria um qr code que gerasse um ícone no iphone/android para acesso ao
+app"*.
+
+**A correção honesta veio primeiro, porque muda o que dá para prometer: um QR
+só carrega um endereço.** Nenhum código de barras instala coisa alguma — nem o
+da App Store. Quem faz o ícone aparecer é a PRÓPRIA PÁGINA, e ela precisava de
+duas coisas que não tinha. **O QR não mudou e não precisava mudar.**
+
+**1. O manifesto era mentira, e ninguém podia ver.** Ele existia — embutido no
+HTML como um `data:` — com **um ícone em SVG**. O Android **não instala com
+ícone SVG**: pede PNG de 192 e de 512. Ou seja, o "Instalar app" **nunca podia
+aparecer**, e nada dava erro em lugar nenhum. É exatamente o formato do
+`canPlayType` e do `temState`: um caminho que ninguém visitava. O `start_url`
+também apontava para `./` (o index.html) e não para o app — quem instalasse
+cairia na porta errada.
+
+Agora é `manifest.webmanifest`, arquivo de verdade, com os três PNG e caminhos
+**relativos** (o app é servido de subdiretório, e o endereço pode mudar — ele
+está decidindo isso).
+
+**2. `gerar-icones.py` desenha os quatro ícones**, e a folga muda por quê: o
+Android **recorta o ícone em círculo**, então o `maskable` leva 20% de margem
+em vez de 8%. O do iPhone é etiqueta separada — **o iOS ignora o manifesto para
+o ícone** e lê só o `apple-touch-icon`.
+
+**O erro que esse script me ensinou, e é dos bons.** A primeira tentativa
+desenhou o ק com a **DejaVu Serif Bold, que não tem hebraico**: saiu o
+retângulo vazio do "caractere ausente". E o meu teste disse que estava tudo
+bem — **eu medi a CAIXA do glifo, e a caixa vazia também tem caixa.** Só
+olhando o desenho é que se viu. Agora a prova compara o desenho do ק com o de
+um caractere que não existe em fonte nenhuma; se forem iguais, o script para.
+*Medir a coisa certa não é medir com cuidado — é escolher a pergunta certa.*
+
+**3. O convite de um toque, e ele é diferente em cada sistema**, porque os dois
+sistemas não instalam igual:
+- **Android** avisa (`beforeinstallprompt`) e entrega um pedido guardado; o
+  botão dispara a caixa do próprio sistema.
+- **iPhone** não tem esse aviso. Ali **não há botão** — há a instrução
+  ("Compartilhar → Adicionar à Tela de Início"). Prometer um botão que não
+  instala nada seria mentir para quem está rezando.
+
+Regras que o convite respeita: mora no **pé** da tela, nunca por cima do
+Kadish; espera **12s** (quem abriu para rezar agora não pode receber uma caixa
+na cara); some para sempre com "Agora não"; não aparece para quem já instalou;
+e todo texto vem da I18N nas 8.
+
+**Dois defeitos que a checagem nova pegou, e os dois eram reais:**
+
+1. **A barra do áudio ficava POR CIMA do convite.** O botão aparecia na tela e
+   não respondia ao toque. O `bottom` era um número fixo; agora é calculado da
+   **altura medida** da barra, que muda (92px em pé, 66px deitado). A checagem
+   não pergunta "estão sobrepostos?" e sim **"quem está no ponto do botão?"** —
+   `elementFromPoint`, que é o que o dedo encontra.
+2. **O aviso de privacidade tapava o convite**, e o meu primeiro conserto
+   perguntou a coisa errada: *"o aviso está na tela agora?"*. Ele só aparece
+   1,2s depois de carregar, então o convite passava no vão e o aviso caía por
+   cima. A pergunta certa é **"ele já respondeu?"**, e a resposta mora no
+   `localStorage` — a mesma conta que o próprio aviso usa. Uma conta só, de
+   novo.
+
+**`testar-instalar.mjs`** entrou no workflow. Ela cobra o manifesto, que todo
+ícone existe mesmo (um caminho errado ali não quebra nada visivelmente: o
+telefone só não oferece instalar), que o `start_url` abre o app, e o convite
+nas 8 — inclusive que fora do português o texto é diferente do português.
+
+**O desenho do ícone ficou com ele.** São dois: a estrela que o app já usa
+desde 21/08 e o ק de קדיש. Levei os dois à tela dele e ele preferiu **ver no
+telefone primeiro** — então **ficou a estrela**, que é o que já estava, e nada
+mudou visualmente. Trocar é `python3 gerar-icones.py letra`.

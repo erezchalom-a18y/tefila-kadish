@@ -1,0 +1,17 @@
+{
+  "_leia": "O cartao de identidade do app. E ele que faz o telefone oferecer um ICONE na tela de inicio (o Erez pediu em 10/09). Um QR nao instala nada: quem instala e a pagina, com isto aqui mais um toque de quem chega. Os caminhos sao RELATIVOS de proposito — o app e servido de subdiretorio no GitHub Pages, e se um dia o endereco mudar (ele esta decidindo isso) nada aqui precisa mudar.",
+  "name": "Kadish",
+  "short_name": "Kadish",
+  "description": "O Kadish palavra por palavra, com a voz do rabino.",
+  "start_url": "./engine.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4ede0",
+  "theme_color": "#f4ede0",
+  "icons": [
+    { "src": "./icones/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icones/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icones/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
