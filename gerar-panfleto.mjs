@@ -58,6 +58,10 @@ for (const lang of alvo) {
   const tela = await pag.evaluate(() => ({
     itens: document.querySelectorAll('#oque li').length,
     endereco: document.body.textContent.includes('erezchalom'),
+    // A instrucao do icone (10/09). Ele cobrou, com razao, que "com esse qr
+    // code nao instala o icone no iphone" — nenhum QR instala nada, e o papel
+    // tem de ensinar os dois toques que a Apple exige.
+    icone: (document.getElementById('qrIcone') || {}).textContent || '',
   }));
   await pag.close();
 
@@ -79,6 +83,8 @@ print(json.dumps({"paginas": len(d), "lido": r.text if r else None}))
   if (erros.length) problemas.push('erro de console: ' + erros[0]);
   if (tela.endereco) problemas.push('o endereco escrito VOLTOU (ele mandou tirar em 10/09)');
   if (tela.itens !== 5) problemas.push(`${tela.itens} itens na lista, esperava 5`);
+  if (!/iPhone/.test(tela.icone) || !/Android/.test(tela.icone) || tela.icone.length < 80)
+    problemas.push('falta a instrucao de como deixar o icone na tela (iPhone e Android)');
   if (prova.erro) problemas.push('nao consegui ler o PDF: ' + prova.erro +
     ' (falta pip install pypdfium2 zxing-cpp pillow?)');
   else {
