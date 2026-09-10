@@ -2005,3 +2005,70 @@ outra coisa é que teria sido afrouxar.
 A marca d'água **RASCUNHO — AGUARDANDO REVISÃO RABÍNICA dos folhetos
 imprimíveis (`gerar-pdf.mjs`) continua**: aquilo é papel que vai à mão do
 rabino, e ele não pediu para tirar de lá.
+
+## As três portas no telefone, e a conta que media a coisa errada (10/09, v53)
+
+Ele mandou a foto do iPhone ao lado da do computador: *"no app no iPhone não
+aparece a fileira com as 3 explicações… como podemos fazer o menu do app ficar
+mais friendly, mais parecido com o que temos no computador, talvez ocultando a
+frase o Kadish exige minian, que ocupa boa parte da tela"*.
+
+**Por que ela sumia, e não era gosto meu.** No computador os três cabem lado a
+lado. Num iPhone não: com os títulos inteiros e `flex: 1 1 220px`, três botões
+de 220px numa tela de 375 **empilham em três linhas — 119px** de cabeçalho, e a
+sobra caía a 42%. O que estava errado era o FORMATO, não a ideia.
+
+Agora ela cabe, e a troca é honesta: **30px de fileira, pagos pelas 27px que a
+nota do minyan devolve.** Medido no iPhone SE: o primeiro verso começava a
+304px e passou a começar a 303px — o Kadish não perdeu um pixel e o telefone
+ganhou as três portas.
+
+- **Rótulo curto só no telefone**, em `<span class="ls-curto">` ao lado do
+  inteiro. São DOIS spans e não uma troca de texto por JS: cada um leva o seu
+  `data-i18n` e o `applyI18n` preenche os dois na mesma volta, então não há
+  caminho em que um fique em português nas 8. O **título do pop-up continua o
+  inteiro** — a pergunta completa aparece ao tocar.
+- **`flex: 1 1 auto`, nunca `1 1 0`.** Com base zero os três recebem a mesma
+  largura, e as três perguntas não têm o mesmo tamanho: "Por que dizemos?" saía
+  **"Por que dize…"**. Com base `auto` cada um parte da largura do seu texto.
+- **12px e o ✦ some.** A primeira tentativa usou 11.5px e um ✦ de 9px, e o
+  `testar-telas.mjs` acusou os dois pelo nome — 12px é o piso do projeto. O ✦
+  sai em vez de encolher: ele é enfeite, quem precisa caber é a palavra.
+- **A nota do minyan mostra só a primeira metade no telefone** (`nm-inicio` /
+  `nm-resto`). Não é frase reescrita: são as palavras dele, e o telefone mostra
+  menos delas. A segunda continua inteira no ℹ e na página Aprender.
+
+**O buraco que isto descobriu, e é o mais importante da rodada.** O piso de 60%
+descontava o cabeçalho e a barra de baixo e **dava todo o resto por Kadish**.
+Não é: a caixa do minyan mora no FLUXO do texto, acima do primeiro verso, e
+comia 85px sem nada acusar. A checagem dizia 61% e o Kadish tinha **41%** da
+tela — **2 versos de 16** visíveis na primeira tela de um iPhone SE. Mesmo
+formato dos outros buracos daqui (`canPlayType`, `temState`, a página que
+ninguém rolava), com um agravante: **este estava dentro da conta que já
+existia.**
+
+Agora a pergunta é onde o **PRIMEIRO VERSO** começa, e ela achou logo um defeito
+de verdade: **no telefone DEITADO chegavam aos versos 18% da tela.** Um iPhone
+SE deitado tem 667px de LARGURA, então as regras de `max-width: 640px` nunca
+chegaram nele e ele mostrava a nota inteira. É a mesma lição de 09/09 — *uma
+regra escrita sobre uma dimensão só mente na tela onde a outra dimensão é que
+aperta*. Deitado a nota agora sai inteira, pela razão que já tira dali o cartão
+e o sufixo do tipo: quem vira o telefone de lado quer ler. Foi de 18% para
+**42–45%**.
+
+**E o MIN_LEITURA deixou de ser o juiz.** Com a fileira dentro do cabeçalho ele
+reprovava o iPhone SE (56%) numa mudança em que o Kadish ficou com a MESMA
+altura (41% antes e depois): os mesmos 30px, só que do lado de dentro de uma
+linha arbitrária. **Isto não é afrouxar.** O `MIN_KADISH` cobre tudo o que ele
+cobria — cabeçalho mais alto empurra o primeiro verso para baixo — mais o que
+ele nunca viu. E para isso não ser só uma porta aberta com placa de fechada,
+existe a **prova**: `node testar-telas.mjs <base> --provar` incha o cabeçalho
+em 200px e exige que a checagem fique VERMELHA. Roda e acusa (11%).
+
+O `MIN_KADISH = 0.40` é **catraca, não ideal**: é o pior caso medido hoje (41%,
+iPhone SE em pé, na reza). Sobe quando o pior caso subir; nunca desce.
+
+**O número que fica para ele decidir um dia:** num iPhone SE ainda são 2 versos
+de 16 na primeira tela. O cabeçalho do telefone tem 204px em quatro linhas,
+contra uma linha no computador. Ele perguntou sobre isso e ficou para depois de
+testar esta versão — uma mudança de comportamento por versão.

@@ -260,6 +260,11 @@
     color: var(--text-faint);
     margin-top: 1px;
   }
+  /* O rotulo curto so existe no telefone (ver o bloco de <=640px). Sao DOIS
+     <span> e nao uma troca de texto por JS de proposito: cada um leva o seu
+     data-i18n e o applyI18n preenche os dois na mesma volta, entao nao ha
+     caminho em que um deles fique em portugues nas 8 linguas. */
+  .learn-strip .ls-curto { display: none; }
   .learn-strip .ls-arrow {
     color: var(--brass);
     font-size: 16px;
@@ -2118,8 +2123,44 @@
        nao sobre este cartao — que ele nao viu no celular nos ultimos dois dias
        e nao reclamou. A pagina Aprender continua a um toque, dentro do ℹ, em
        toda tela. Devolve-lo e apagar esta linha, se ele pedir. */
-    body:not(.modo-treino) .learn-strip,
-    body:not(.modo-treino) .learn-row { display: none; }
+    /* 10/09 — A FILEIRA VOLTOU AO TELEFONE, a pedido dele, e agora ela CABE.
+       O que a tinha tirado daqui era o formato, nao a ideia: com os titulos
+       inteiros e `flex: 1 1 220px`, tres botoes de 220px numa tela de 375
+       empilham em TRES LINHAS — medido, 119px de cabecalho, e a sobra caia a
+       42%. Numa linha so, com o rotulo curto, ela mede 30px.
+       E as 30px sao PAGAS pela nota do minyan, que aqui mostra so a primeira
+       metade e foi de 85px para 58px. Medido no iPhone SE: o primeiro verso
+       comeca a 303px, contra 304px antes — o Kadish nao perdeu um pixel e o
+       telefone ganhou as tres portas. */
+    body:not(.modo-treino) .learn-row {
+      display: flex !important; flex-wrap: nowrap; gap: 5px; margin: 1px 12px 3px;
+    }
+    body:not(.modo-treino) .learn-strip {
+      /* `flex: 1 1 auto`, e NAO `1 1 0`. Com base zero os tres recebem a mesma
+         largura, e as tres perguntas nao tem o mesmo tamanho: "Por que
+         dizemos?" nao cabia em um terco e saia com reticencias — "Por que
+         dize…". Com base `auto` cada um parte da largura do seu proprio texto
+         e so o que sobra e repartido. */
+      display: flex !important; flex: 1 1 auto; min-width: 0;
+      padding: 6px 6px; min-height: 30px;   /* 30px e o piso de botao do projeto */
+      justify-content: center; white-space: nowrap; gap: 0;
+    }
+    /* o titulo inteiro sai e entra o curto — o do pop-up continua o inteiro */
+    body:not(.modo-treino) .learn-strip .ls-text { display: none; }
+    /* 12px e o piso de legibilidade do projeto, e o testar-telas.mjs o cobra —
+       ele acusou os 11.5px e os 9px da primeira tentativa pelo nome. O ✦ some
+       aqui em vez de encolher: ele e enfeite, e o que precisa caber e a
+       palavra. Sem ele os tres rotulos ainda cabem numa linha nas 8 linguas. */
+    body:not(.modo-treino) .learn-strip .ls-curto {
+      display: inline; color: var(--text); font-size: 12px; font-weight: 600;
+    }
+    body:not(.modo-treino) .learn-strip .ls-icon { display: none; }
+    /* no TREINO ela continua fora (regra de 27/08: quem treina nao esta lendo) */
+    body.modo-treino .learn-row, body.modo-treino .learn-strip { display: none !important; }
+    /* a nota do minyan: so a primeira metade, e mais apertada */
+    .nota-minyan { padding: 7px 12px; margin: 6px 16px 12px; }
+    .nota-minyan span { font-size: 13px; line-height: 1.35; }
+    .nota-minyan .nm-resto { display: none; }
     /* E no TREINO quem paga e a faixa do titulo ("Kadish do Enlutado · recitado
        em pe"): o cartao ja nao existe ali para pagar. Nao se perde nada — a
        REZA esconde essa faixa em TODA tela desde 27/08, o nome do Kadish esta
@@ -2171,8 +2212,26 @@
        o cartao "Por que dizemos o Kadish?" (leitura, nao reza) e o sufixo
        "· pequeno / · grande" do tipo, que so repete o que o nome ja diz.
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
-    .learn-strip, .learn-row { display: none; }
+    /* 10/09 — o !important aqui NAO e enfeite. Em pe a fileira voltou por
+       `body:not(.modo-treino) .learn-row`, que pesa mais que este seletor: sem
+       o !important esta regra perdia e a fileira aparecia DEITADA tambem, onde
+       ela nao cabe. Quem vira o telefone de lado quer ler, nao configurar. */
+    .learn-strip, .learn-row { display: none !important; }
     .kt-size { display: none; }
+    /* 10/09 — a nota do minyan encolhe AQUI TAMBEM, e este era um defeito de
+       verdade que a checagem nova achou. Um iPhone SE deitado tem 667px de
+       LARGURA: as regras de "<= 640px" nunca chegaram nele, entao ele mostrava
+       a nota inteira. Medido: o primeiro verso comecava a 240px de uma tela de
+       375, e chegavam aos versos 18% da tela. E o mesmo formato de defeito de
+       09/09 — uma regra escrita sobre uma dimensao so mente na tela onde a
+       outra dimensao e que aperta. */
+    /* Deitado ela sai INTEIRA, e pela mesma razao que ja tira daqui o cartao,
+       o sufixo do tipo e a linha da palavra tocando: quem vira o telefone de
+       lado quer LER. Medido: com ela, o primeiro verso comecava a 196px de uma
+       tela de 375 e chegavam aos versos 30%. Ela continua inteira em pe — que
+       e como se reza, de pe com o sidur na outra mao — e dentro do ℹ em toda
+       tela, alem da pagina Aprender. */
+    .nota-minyan { display: none; }
     /* 04/09 — deitado no celular ela VOLTOU. Ela saia daqui porque custava 40px
        do cabecalho e derrubava a sobra para 51%; agora ela nao esta no
        cabecalho, entao nao custa altura de leitura nenhuma. */
@@ -2283,14 +2342,17 @@
     <button class="learn-strip" id="learnStrip">
       <span class="ls-icon">✦</span>
       <span class="ls-text" data-i18n="learn_title">Por que dizemos o Kadish?</span>
+      <span class="ls-curto" data-i18n="learn_title_curto">Por que dizemos?</span>
     </button>
     <button class="learn-strip" id="learnOque">
       <span class="ls-icon">✦</span>
       <span class="ls-text" data-i18n="learn_oque">O que é o Kadish?</span>
+      <span class="ls-curto" data-i18n="learn_oque_curto">O que é?</span>
     </button>
     <button class="learn-strip" id="learnChabad">
       <span class="ls-icon">✦</span>
       <span class="ls-text" data-i18n="learn_chabad">Onde encontrar um Beit Chabad?</span>
+      <span class="ls-curto" data-i18n="learn_chabad_curto">Beit Chabad</span>
     </button>
   </div>
   <!-- A faixa "MODO TREINO - PAUSA APOS CADA VERSO" saiu em 27/08, a pedido do
@@ -2338,7 +2400,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-10 · 52';
+const VERSAO = '2026-09-10 · 53';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -4192,8 +4254,12 @@ function desenharNotaMinyan(main) {
   const frase = (chave) => {
     try { return (I18N[L] || I18N.pt)[chave] || ''; } catch (e) { return ''; }
   };
-  for (const chave of ['nota_minyan', 'nota_de_pe']) {
+  // As duas metades levam nome porque o TELEFONE mostra so a primeira (10/09).
+  // Nao e frase reescrita: sao as palavras dele, e o telefone mostra menos
+  // delas. A segunda continua inteira no painel da ℹ e na pagina Aprender.
+  for (const [chave, classe] of [['nota_minyan', 'nm-inicio'], ['nota_de_pe', 'nm-resto']]) {
     const linha = document.createElement('span');
+    linha.className = classe;
     linha.setAttribute('data-i18n', chave);
     linha.textContent = frase(chave);   // textContent, nunca innerHTML
     el.appendChild(linha);
@@ -5365,6 +5431,10 @@ const I18N = {
     learn_title: 'Por que dizemos o Kadish?',
     learn_oque: 'O que é o Kadish?',
     learn_chabad: 'Onde encontrar um Beit Chabad?',
+    // 10/09 — os tres titulos inteiros nao cabem numa linha de telefone (o
+    // terceiro ficava cortado na borda). Estes curtos aparecem SO ate 640px;
+    // o titulo do pop-up continua sendo o inteiro acima.
+    learn_title_curto: 'Por que dizemos?', learn_oque_curto: 'O que é?', learn_chabad_curto: 'Beit Chabad',
     ler_mais: 'Ler o texto completo →', learn_sub: 'O significado, a história e quem instituiu',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
@@ -5433,6 +5503,7 @@ const I18N = {
     learn_title: 'Why do we say Kaddish?',
     learn_oque: 'What is the Kaddish?',
     learn_chabad: 'Where to find a Chabad House?',
+    learn_title_curto: 'Why we say it', learn_oque_curto: 'What it is', learn_chabad_curto: 'Chabad House',
     ler_mais: 'Read the full text →', learn_sub: 'The meaning, history, and origin',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
@@ -5501,6 +5572,7 @@ const I18N = {
     learn_title: '¿Por qué decimos el Kadish?',
     learn_oque: '¿Qué es el Kadish?',
     learn_chabad: '¿Dónde encontrar un Beit Jabad?',
+    learn_title_curto: '¿Por qué se dice?', learn_oque_curto: '¿Qué es?', learn_chabad_curto: 'Beit Jabad',
     ler_mais: 'Leer el texto completo →', learn_sub: 'El significado, la historia y el origen',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
@@ -5569,6 +5641,7 @@ const I18N = {
     learn_title: 'Pourquoi disons-nous le Kaddish?',
     learn_oque: 'Qu\'est-ce que le Kaddish ?',
     learn_chabad: 'Où trouver un Beth Habad ?',
+    learn_title_curto: 'Pourquoi ?', learn_oque_curto: 'Qu’est-ce ?', learn_chabad_curto: 'Beth Habad',
     ler_mais: 'Lire le texte complet →', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
@@ -5637,6 +5710,7 @@ const I18N = {
     learn_title: 'Perché diciamo il Kaddish?',
     learn_oque: 'Che cos\'è il Kaddish?',
     learn_chabad: 'Dove trovare un Beit Chabad?',
+    learn_title_curto: 'Perché si dice', learn_oque_curto: 'Che cos’è', learn_chabad_curto: 'Beit Chabad',
     ler_mais: 'Leggi il testo completo →', learn_sub: 'Il significato, la storia e chi lo istituì',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
@@ -5705,6 +5779,7 @@ const I18N = {
     learn_title: 'Warum sagen wir das Kaddisch?',
     learn_oque: 'Was ist das Kaddisch?',
     learn_chabad: 'Wo findet man ein Chabad-Haus?',
+    learn_title_curto: 'Warum?', learn_oque_curto: 'Was ist es?', learn_chabad_curto: 'Chabad-Haus',
     ler_mais: 'Den vollständigen Text lesen →', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
@@ -5773,6 +5848,7 @@ const I18N = {
     learn_title: 'Почему мы читаем Кадиш?',
     learn_oque: 'Что такое кадиш?',
     learn_chabad: 'Где найти Бейт Хабад?',
+    learn_title_curto: 'Почему?', learn_oque_curto: 'Что это?', learn_chabad_curto: 'Бейт Хабад',
     ler_mais: 'Читать полный текст →', learn_sub: 'Значение, история и происхождение',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
@@ -5841,6 +5917,7 @@ const I18N = {
     learn_title: 'מדוע אומרים קדיש?',
     learn_oque: 'מהו הקדיש?',
     learn_chabad: 'היכן למצוא בית חב"ד?',
+    learn_title_curto: 'למה אומרים', learn_oque_curto: 'מה זה', learn_chabad_curto: 'בית חב"ד',
     ler_mais: 'לקריאת הטקסט המלא →', learn_sub: 'המשמעות, ההיסטוריה והמקור',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',

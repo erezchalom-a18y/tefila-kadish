@@ -10,7 +10,15 @@
  *   - algum texto visivel do cabecalho fica abaixo de MIN_FONTE;
  *   - algum botao do cabecalho fica com menos de MIN_TOQUE de altura;
  *   - a pagina rola de lado (nunca deve);
- *   - sobra menos de MIN_LEITURA da altura para o texto do Kadish.
+ *   - chega menos de MIN_KADISH da tela AOS VERSOS (ver abaixo, 10/09).
+ * A sobra de MIN_LEITURA continua no relatorio, mas nao reprova mais — o
+ * porque esta escrito ao lado da constante.
+ *
+ * 10/09 — passou a perguntar onde o PRIMEIRO VERSO comeca. Ate aqui a conta da
+ * sobra descontava o cabecalho e a barra e dava o resto por Kadish; a caixa do
+ * minyan, que mora no fluxo do texto, comia 85px de um iPhone SE sem nada
+ * acusar. A checagem dizia 61% e o Kadish tinha 41%. Mais um caminho que
+ * nenhuma checagem visitava — e este estava DENTRO da conta que existia.
  *
  * 02/09 — passou a ROLAR a pagina. Ate aqui nenhuma checagem rolava, e por
  * isso ninguem via que no celular a barra de cima NUNCA grudou: o
@@ -30,10 +38,37 @@
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
 const { chromium } = pw.default || pw;
 const BASE = process.argv[2] || 'http://127.0.0.1:8896/tefila-kadish';
+const PROVAR = process.argv.includes('--provar');   // ver a PROVA, mais abaixo
 
 const MIN_FONTE = 12;      // piso de legibilidade; a Apple usa 11 como minimo
 const MIN_TOQUE = 30;      // altura de botao no cabecalho
-const MIN_LEITURA = 0.60;  // fracao da altura que sobra para o Kadish
+// MIN_LEITURA e agora INFORMACAO, e nao mais o juiz. Ele descontava o
+// cabecalho e a barra e dava o resto por Kadish — um substituto, nunca a
+// medida. Em 10/09, com a fileira das portas dentro do cabecalho, ele reprovou
+// o iPhone SE (56%) numa mudanca em que o Kadish ficou com a MESMA altura de
+// antes (41% nos dois): os mesmos 30px, so que do lado de dentro de uma linha
+// arbitraria. Duas contas para a mesma pergunta e o defeito que este projeto
+// mais pagou caro; entao fica UMA, e e a que diz a verdade.
+// Isto NAO e afrouxar (regra 3). O MIN_KADISH abaixo cobre tudo o que este
+// cobria — cabecalho mais alto empurra o primeiro verso para baixo, e ele
+// acusa — MAIS o que este nunca viu: qualquer coisa entre o cabecalho e o
+// primeiro verso. Ha prova disso rodando: `node testar-telas.mjs <base> --provar`
+// incha o cabecalho em 200px e exige que a checagem fique VERMELHA.
+const MIN_LEITURA = 0.60;  // so aparece no relatorio; nao reprova mais
+// 10/09 — O PISO ACIMA MEDIA SO METADE DA VERDADE, e isto e um buraco de
+// checagem, nao um detalhe. Ele desconta o cabecalho e a barra de baixo, e da
+// por certo que TODO o resto e Kadish. Nao e: a caixa do minyan mora no fluxo
+// do texto, ACIMA do primeiro verso, e comia 85px sem nada acusar. Medido num
+// iPhone SE: a conta dizia 61% e o Kadish tinha 41% da tela — 2 versos de 16
+// visiveis na primeira tela.
+//   A pergunta certa e onde o PRIMEIRO VERSO comeca. Este piso e um catraca
+// contra o pior caso MEDIDO hoje (41% no iPhone SE), nao um ideal de projeto:
+// serve para a tela nunca mais piorar sem alguem ver. Se um dia o pior caso
+// subir, este numero sobe junto — nunca desce.
+const MIN_KADISH = 0.40;   // fracao da tela que sobra DE VERDADE para os versos
+// 0,40 e CATRACA, nao ideal: e o pior caso medido em 10/09 (41% no iPhone SE em
+// pe, na reza, com o memorial vazio). Serve para a tela nunca piorar sem
+// alguem ver. Sobe quando o pior caso subir; nunca desce.
 
 const TELAS = [
   ['iPhone SE em pe',    375,  667], ['iPhone SE deitado',  667, 375],
@@ -101,6 +136,13 @@ for (const comNome of [false, true]) {
         return getComputedStyle(b).display === 'none' ? 0 : Math.round(r.height);
       })(),
       janela: innerHeight,
+      // Onde o primeiro verso COMECA. Tudo acima dele (a nota do minyan, a
+      // fileira das portas, o que vier depois) e altura que o Kadish perdeu,
+      // esteja no cabecalho ou no meio do texto.
+      topoDoVerso: (() => {
+        const v = document.querySelector('main .verse');
+        return v ? Math.round(v.getBoundingClientRect().top) : null;
+      })(),
       rolaLado: document.documentElement.scrollWidth > innerWidth + 1,
       treino: document.body.classList.contains('modo-treino'),
     };
@@ -124,19 +166,42 @@ for (const comNome of [false, true]) {
 
   const julgar = (r) => {
     const leitura = (r.janela - r.altTopo - r.altBaixo) / r.janela;
+    const kadish = r.topoDoVerso === null ? null
+      : (r.janela - r.topoDoVerso - r.altBaixo) / r.janela;
     const problemas = [];
     if (r.pequenas.length) problemas.push('texto miudo: ' + r.pequenas.join(', '));
     if (r.baixos.length) problemas.push('botao baixo demais: ' + r.baixos.join(', '));
     if (r.rolaLado) problemas.push('a pagina rola de lado');
-    if (leitura < MIN_LEITURA) problemas.push(`so ${Math.round(leitura * 100)}% da tela sobra para o Kadish`);
+    if (kadish === null) problemas.push('nao achei o primeiro verso');
+    else if (kadish < MIN_KADISH)
+      problemas.push(`so ${Math.round(kadish * 100)}% da tela chega de verdade aos versos ` +
+                     `(o primeiro comeca a ${r.topoDoVerso}px)`);
     if (!r.hebraico) problemas.push('nao achei o texto hebraico');
-    return { leitura, problemas };
+    return { leitura, kadish, problemas };
   };
+
+  // --provar: incha o cabecalho em 200px e exige que a conta ACUSE. Sem isto,
+  // trocar o juiz de MIN_LEITURA para MIN_KADISH seria so abrir a porta e
+  // dizer que esta fechada. Roda numa tela so, para nao demorar.
+  if (PROVAR && nomeTela === TELAS[0][0] && !comNome) {
+    await pag.addStyleTag({ content: '.topbar{padding-bottom:200px !important}' });
+    await pag.waitForTimeout(300);
+    const r = await medir();
+    const j = julgar(r);
+    const acusou = j.problemas.some(p => p.includes('chega de verdade aos versos'));
+    console.log(`${acusou ? 'OK   ' : 'FALHA'}    PROVA: com 200px a mais de cabecalho ela ` +
+      `${acusou ? 'ACUSA' : 'NAO acusa — a checagem esta cega'} ` +
+      `(aos versos ${Math.round(j.kadish * 100)}%)`);
+    if (!acusou) falhas++;
+    await pag.reload();
+    await pag.waitForTimeout(2000);
+  }
 
   const linha = (rotulo, r, j) =>
     `${j.problemas.length ? 'FALHA' : 'OK   '} ${(nome + ' · ' + rotulo).padEnd(30)} ${largura}x${altura} | ` +
     `hebraico ${r.hebraico}px | cabecalho ${r.altTopo}px | barra ${r.altBaixo}px | ` +
     `sobra ${Math.round(j.leitura * 100)}%` +
+    (j.kadish === null ? '' : ` | aos versos ${Math.round(j.kadish * 100)}%`) +
     (j.problemas.length ? '\n        ' + j.problemas.join('\n        ') : '');
 
   // como o app abre
