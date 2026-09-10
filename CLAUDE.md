@@ -2171,3 +2171,62 @@ nas 8 — inclusive que fora do português o texto é diferente do português.
 desde 21/08 e o ק de קדיש. Levei os dois à tela dele e ele preferiu **ver no
 telefone primeiro** — então **ficou a estrela**, que é o que já estava, e nada
 mudou visualmente. Trocar é `python3 gerar-icones.py letra`.
+
+## "Tentei e não aparece a opção" (10/09, v55) — o navegador de dentro da câmera
+
+Ele tentou os dois toques e não achou nada: *"tentei, mas não aparece a opção:
+iPhone/iPad: abrir o app → Compartilhar → Adicionar à Tela de Início"*.
+
+**A foto respondeu.** Ele apontou a câmera para o panfleto e tocou no balão
+amarelo do endereço — e isso abre uma **janelinha por dentro do próprio
+aplicativo da câmera**, não o Safari. Nenhum navegador embutido tem "Adicionar
+à Tela de Início": nem o da câmera, nem o do WhatsApp, nem o do Instagram. A
+instrução estava certa e o caminho dele não passava por ela.
+
+E há a segunda armadilha, que pega quem chega ao Safari certo: **a opção fica
+abaixo da fileira de aplicativos**, e quem não rola a lista jura que não existe.
+
+**O que entrou:**
+
+1. **O app reconhece a janelinha embutida** (`ehEmbutido`) e, em vez de repetir
+   uma instrução que ali não funciona, diz o que fazer: *"você abriu por dentro
+   de outro aplicativo… copie o endereço e abra no Safari"*, com um botão que
+   **copia o endereço**. Se a área de transferência for negada, ele mostra o
+   endereço na tela para copiar a dedo — nunca fica sem fazer nada.
+   Como se reconhece: no iOS o Safari de verdade põe `Safari/` no nome do
+   navegador e a janelinha não põe; no Android a marca é `; wv)`; e há os nomes
+   dos aplicativos (FBAN, Instagram, WhatsApp…), que são o sinal mais certo.
+
+2. **"Como faço" abre os passos**, numerados, dentro do painel do ℹ **que já
+   existe** — um overlay só no app, não dois. Três passos no iPhone, dois no
+   Android, e o passo 2 diz em negrito o que ninguém conta: *"role a lista para
+   baixo — é aqui que quase todo mundo desiste"*.
+
+3. **O ícone de Compartilhar é DESENHADO em SVG**, nunca escrito com um
+   caractere de fonte. É a lição do ק de 10/09 aplicada antes de doer: um glifo
+   que a fonte não tenha vira retângulo vazio, e ninguém vê até olhar.
+
+4. **O panfleto passou a dizer o NAVEGADOR** — "abra o endereço no **Safari**",
+   "abra no **Chrome**" —, que era justamente a palavra que faltava.
+
+**Um defeito antigo que apareceu no caminho, e vinha da v52:** o
+`.info-note` tem fundo, borda e recheio, e os pop-ups o esvaziavam com
+`textContent = ''` — o que deixa **uma caixa em branco na tela**. Estava assim
+nos TRÊS pop-ups das portas desde a v52 e ninguém tinha visto. O conserto é uma
+regra só, `.info-note:empty { display: none }`, que resolve os quatro lugares em
+vez de cada um lembrar de escondê-la.
+
+**E a barra do convite encolheu de três botões para dois:** a linha de resumo
+dizia a mesma coisa que o botão "Como faço" ao lado dela, e num telefone de
+390px isso espremia tudo e quebrava o título em duas linhas. Medido: 88px → 56px.
+
+O `testar-instalar.mjs` cobra os dois caminhos — Safari (3 passos, com o
+Compartilhar desenhado) e janelinha embutida (aviso + botão de copiar, e
+**nenhum** passo) — e que os passos existam nas 8 línguas sem cair no português.
+
+**E ela ficou vermelha nas 8 quando a linha de resumo saiu**, porque cobrava
+justamente essa linha. **Mudou de pergunta sem afrouxar:** o que ela garantia
+era *"no iPhone a pessoa é ensinada, na língua dela"*, e essa garantia não
+encolheu — mudou de lugar. Agora ela cobra o botão **"Como faço"** (visível, com
+texto próprio da língua e nos 30px de piso), e os passos em si continuam
+conferidos um a um, nas 8, logo abaixo. É mais do que antes, não menos.

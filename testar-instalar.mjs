@@ -128,7 +128,19 @@ for (const lang of L) {
     return {
       visivel,
       titulo: (document.querySelector('#conviteInstalar .ci-titulo') || {}).textContent || '',
-      como: (document.getElementById('ciComo') || {}).textContent || '',
+      // 10/09 — a LINHA de resumo saiu (dizia o mesmo que o botao ao lado, e
+      // espremia a barra num telefone de 390px). A garantia nao mudou de
+      // tamanho, mudou de lugar: quem ensina agora e o botao "Como faço", e os
+      // passos dele sao conferidos mais abaixo, um a um, nas 8 linguas.
+      como: (document.getElementById('ciComoFaco') || {}).textContent || '',
+      comoVisivel: (() => {
+        const b = document.getElementById('ciComoFaco');
+        return !!b && getComputedStyle(b).display !== 'none';
+      })(),
+      comoAlto: (() => {
+        const b = document.getElementById('ciComoFaco');
+        return b ? Math.round(b.getBoundingClientRect().height) : 0;
+      })(),
       botaoEscondido: bt ? getComputedStyle(bt).display === 'none' : false,
       naoAlto: nao ? Math.round(nao.getBoundingClientRect().height) : 0,
       noPeDaTela: alt.bottom <= window.innerHeight + 1,
@@ -158,12 +170,12 @@ for (const lang of L) {
     };
   });
   emPortugues[lang] = r.titulo + ' | ' + r.como;
-  const ok = r.visivel && r.como.length > 10 && r.botaoEscondido &&
-             r.naoAlto >= 30 && r.noPeDaTela && !r.debaixoDaBarra &&
+  const ok = r.visivel && r.botaoEscondido && r.comoVisivel && r.como.length > 3 &&
+             r.comoAlto >= 30 && r.naoAlto >= 30 && r.noPeDaTela && !r.debaixoDaBarra &&
              r.quemEstaNoBotao === 'o proprio botao' && !errosL.length;
   console.log(`${ok ? 'OK   ' : 'FALHA'}    ${lang}: ${r.visivel ? 'aparece' : 'NAO APARECE'}` +
     `${r.botaoEscondido ? ' · sem botao (certo no iPhone)' : ' · COM BOTAO (errado no iPhone)'}` +
-    ` · "Agora nao" ${r.naoAlto}px` +
+    ` · "${r.como.trim()}" ${r.comoAlto}px · "Agora nao" ${r.naoAlto}px` +
     (r.debaixoDaBarra ? ' · DEBAIXO DA BARRA DO AUDIO' : '') +
     (r.quemEstaNoBotao === 'o proprio botao' ? '' : ` · no ponto do botao esta: ${r.quemEstaNoBotao}`) +
     `${errosL.length ? ' · ERRO: ' + errosL[0] : ''}`);
@@ -173,6 +185,72 @@ for (const lang of L) {
 // regra 6 com dentes: fora do portugues, o texto TEM de ser diferente
 const iguais = L.filter(l => l !== 'pt' && emPortugues[l] === emPortugues.pt);
 confere('o convite nao ficou em portugues nas 8', !iguais.length, iguais.join(', '));
+
+// ---------- 5. o "Como faco", passo a passo ----------
+// Ele tentou os dois toques e nao achou a opcao (10/09). A foto mostrou por
+// que: tocou no balao da CAMERA, que abre uma janelinha por dentro do proprio
+// aplicativo — e ali nao existe "Adicionar a Tela de Inicio". A checagem cobra
+// os dois casos, porque sao caminhos diferentes e o errado passaria calado.
+{
+  const CAMERA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 ' +
+                 '(KHTML, like Gecko) Mobile/15E148';   // sem "Safari/": e embutido
+  for (const [rotulo, ua, esperado] of [
+    ['Safari no iPhone', IPHONE, 'passos'],
+    ['janelinha embutida (camera, WhatsApp)', CAMERA, 'aviso'],
+  ]) {
+    const p = await nav.newPage({ userAgent: ua, viewport: { width: 390, height: 844 },
+                                  hasTouch: true, isMobile: true });
+    const errosP = [];
+    p.on('pageerror', e => errosP.push(e.message));
+    await p.goto(`${BASE}/engine.html?lang=pt&audio=mp3&instalar=1`, { waitUntil: 'networkidle' });
+    await p.waitForTimeout(700);
+    await p.click('#consentAccept');
+    await p.waitForTimeout(2600);
+    await p.click('#ciComoFaco');
+    await p.waitForTimeout(400);
+    const r = await p.evaluate(() => ({
+      aberto: document.getElementById('infoOverlay').classList.contains('show'),
+      passos: document.querySelectorAll('#infoCorpo .passo-inst').length,
+      aviso: !!document.querySelector('#infoCorpo .aviso-embutido'),
+      copiar: !!document.getElementById('btCopiarEndereco'),
+      // o icone de Compartilhar tem de ser DESENHADO (svg), nunca um caractere
+      desenhou: !!document.querySelector('#infoCorpo .pi-share'),
+      rodape: (document.getElementById('infoRodape') || {}).style?.display,
+      letras: (document.getElementById('infoCorpo') || {}).textContent.length,
+    }));
+    const ok = esperado === 'passos'
+      ? (r.aberto && r.passos === 3 && r.desenhou && !r.aviso && r.letras > 120)
+      : (r.aberto && r.aviso && r.copiar && r.passos === 0 && r.letras > 120);
+    console.log(`${ok ? 'OK   ' : 'FALHA'}    ${rotulo}: ${r.passos} passos` +
+      `${r.aviso ? ' · avisa da janelinha' : ''}${r.copiar ? ' · botao de copiar' : ''}` +
+      `${r.desenhou ? ' · o Compartilhar veio desenhado' : ''}` +
+      `${errosP.length ? ' · ERRO: ' + errosP[0] : ''}`);
+    if (!ok || errosP.length) falhas++;
+    await p.close();
+  }
+}
+
+// e os passos existem nas 8 linguas, sem cair no portugues
+{
+  const passoPt = {};
+  for (const lang of L) {
+    const p = await nav.newPage({ userAgent: IPHONE, viewport: { width: 390, height: 844 },
+                                  hasTouch: true, isMobile: true });
+    await p.goto(`${BASE}/engine.html?lang=${lang}&audio=mp3&instalar=1`, { waitUntil: 'networkidle' });
+    await p.waitForTimeout(700);
+    await p.click('#consentAccept');
+    await p.waitForTimeout(2600);
+    await p.click('#ciComoFaco');
+    await p.waitForTimeout(300);
+    passoPt[lang] = await p.evaluate(() =>
+      [...document.querySelectorAll('#infoCorpo .pi-txt')].map(x => x.textContent).join(' | '));
+    await p.close();
+  }
+  const vazias = L.filter(l => (passoPt[l] || '').length < 80);
+  confere('os tres passos existem nas 8 linguas', !vazias.length, vazias.join(', '));
+  const emPt = L.filter(l => l !== 'pt' && passoPt[l] === passoPt.pt);
+  confere('e nao ficaram em portugues nas 8', !emPt.length, emPt.join(', '));
+}
 
 // "Agora nao" some e NAO VOLTA
 {
