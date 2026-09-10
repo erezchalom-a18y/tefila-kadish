@@ -466,6 +466,19 @@ Para as que imprimem, também playwright + Chromium.
   alemão, com sufixo _de no nome. Os commitados são os de português, que são os
   que vão ao rabino.
 - gerar-escolha-rabino.mjs — ESCOLHA-RABINO.pdf/.html e escolha-rabino-itens.json.
+- gerar-panfleto.mjs — os 8 panfletos em PDF, em panfleto/kadish-<lingua>.pdf.
+  O panfleto (panfleto.html) e a folha A4 do display da sinagoga; ele imprime
+  direto do navegador, e estes PDFs existem para o Erez baixar do iPad.
+  **Prova antes de gravar, e a prova que importa e a primeira: o QR e LIDO DE
+  DENTRO DO PDF**, renderizado a 200 dpi como uma impressora caseira faria, e
+  tem de devolver exatamente o endereco do app. Um QR so se descobre quebrado
+  com a folha ja pendurada na parede — e ali ninguem avisa, as pessoas so nao
+  entram. Confere tambem uma pagina so, os 5 itens da lista e que o endereco
+  escrito nao voltou (ele mandou tirar em 10/09). Qualquer falha e ele NAO
+  grava nada: escreve em provisorios e so renomeia no fim.
+  Provado que sabe reprovar: trocando o qr/kadish.svg por um codigo de outro
+  endereco, ele acusa "o QR do PDF le ... e nao o endereco do app" e nao grava.
+  Requer, alem do Playwright: pip install pypdfium2 zxing-cpp pillow.
 - aplicar-ancoras.py — põe em sync/*.json as âncoras de ancoras.json e prova que
   nada mais mudou. Substitui o alinhar-global.py, que nunca foi commitado.
 - realinhar-por-conteudo.mjs — o realinhador que casa NOSSA palavra com A
