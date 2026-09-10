@@ -633,6 +633,20 @@ uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
   de 20/08, o sinal e o Whisper concordam. O OUVIR-PRIMEIRO.md (v1, 36 suspeitos
   em 28 versos) fica como registro do que foi medido.
 - Levar o ESCOLHA-RABINO.pdf ao rabino (170 itens, 60 páginas).
+- **O ENDEREÇO do app, e ele está pensando (10/09).** Ele: *"queria mudar o link
+  para outro nome, erez.chalom é meu nome"*. Em
+  `erezchalom-a18y.github.io/tefila-kadish` a parte antes do `.github.io` é o
+  usuário dele. Três caminhos, apresentados a ele: renomear só o repositório
+  (não resolve — o nome fica); uma organização no GitHub, grátis
+  (`kadish-app.github.io/tefila-kadish`); ou domínio próprio, US$ 10–15 por ano
+  (`kadish.app`), que é o recomendado — o endereço passa a ser dele, e se um dia
+  sairmos do GitHub os panfletos pendurados continuam funcionando. Ele pediu
+  para pensar; **nada foi mexido.**
+  **A consequência que importa: o QR e o endereço andam juntos.** Enquanto isto
+  estiver aberto, NÃO imprimir e pendurar os panfletos — papel na parede ninguém
+  troca. Refazer os 8 PDFs é `node gerar-panfleto.mjs`.
+  (Não deu para conferir daqui se os nomes estão livres: a rede deste ambiente
+  bloqueia consulta de registro de domínio — 403 no proxy.)
 
 ## A auditoria do português — RESPONDIDA E APLICADA (24/08)
 
