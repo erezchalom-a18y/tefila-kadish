@@ -1,0 +1,197 @@
+<!doctype html><html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kadish · panfleto para imprimir</title>
+<!--
+  panfleto.html — a folha para o display da sinagoga (10/09).
+
+  Ele: "gerar uma pagina tipo panfleto de impressao com o qr code e explicacoes
+  do app e de como pode ser usado. (vamos deixar em um display nas sinagogas)".
+
+  TRES decisoes que valem estar escritas:
+
+  1. UM QR SO, e nao um para iPhone e outro para Android. Nao ha app nas lojas:
+     o que existe e um endereco na web, e um endereco e um endereco. Dois
+     codigos seriam dois caminhos para o mesmo lugar — e este projeto ja pagou
+     caro por ter duas contas para a mesma pergunta.
+
+  2. O QR e o SVG, nao o PNG. Numa folha impressa o SVG nao perde nitidez em
+     tamanho nenhum, e um QR borrado nao le.
+
+  3. NADA DE TEXTO NOVO onde ja havia texto. Os titulos das tres portas, a nota
+     do minyan e o "Em memoria de" saem das MESMAS palavras que estao na tela do
+     app, copiadas aqui por lingua. O que e proprio do panfleto — os tres passos
+     de "como usar" e a linha do endereco — esta marcado como tal.
+
+  Imprimir: abrir no navegador e mandar imprimir. Sai em A4, uma folha, sem
+  cabecalho nem rodape do navegador (@page margin). ?lang=en para as outras.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 12mm; }
+  :root{--bg:#f4ede0;--txt:#2a1f15;--soft:#4d3d2d;--fraco:#8a7860;--brass:#8b6a3e;--linha:#c9b894}
+  *{box-sizing:border-box}
+  body{margin:0;background:#e9e2d4;font-family:Lora,Georgia,serif;color:var(--txt);
+       display:flex;justify-content:center;padding:18px}
+  .folha{width:210mm;min-height:297mm;background:var(--bg);padding:16mm 15mm;
+         box-shadow:0 6px 30px rgba(0,0,0,.18);display:flex;flex-direction:column}
+  .marca{font-family:'Frank Ruhl Libre',serif;font-size:30px;text-align:center;letter-spacing:.02em}
+  .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;
+       color:var(--soft);text-align:center;margin-top:4px}
+  .regua{height:1px;width:52%;margin:14px auto 0;
+         background:linear-gradient(to right,transparent,var(--brass),transparent);opacity:.65}
+  .heb{font-family:'Frank Ruhl Libre',serif;font-size:26px;text-align:center;
+       direction:rtl;margin:14px 0 2px}
+  .heb-tl{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;
+          color:var(--soft);text-align:center}
+  /* O QR e o centro da folha, e nao um enfeite de canto. Ela vai num display
+     de sinagoga: quem passa a um metro tem de ver o codigo, nao ler a pagina.
+     Medido: 62mm de lado num canto deixava 400px de folha vazia no meio. */
+  .qr-caixa{text-align:center;margin:9mm auto 0}
+  .qr-caixa img{width:88mm;height:88mm;display:block;margin:0 auto;
+                border:1px solid var(--linha);border-radius:8px;background:#fff}
+  .qr-legenda{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--soft);
+              margin-top:9px;line-height:1.35}
+  .qr-endereco{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--fraco);
+               margin-top:5px;word-break:break-all}
+  .miolo{display:flex;gap:11mm;margin-top:9mm;align-items:flex-start}
+  .coluna{flex:1}
+  h2{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;
+     margin:0 0 6px;color:var(--brass)}
+  .passo{display:flex;gap:9px;margin-bottom:9px;font-size:14.5px;line-height:1.45}
+  .passo b{font-family:'Cormorant Garamond',serif;color:var(--brass);
+           font-size:17px;flex:0 0 16px;line-height:1.25}
+  .lista{margin:0;padding-left:18px;font-size:14.5px;line-height:1.5}
+  .lista li{margin-bottom:5px}
+  .nota{margin-top:auto;padding-top:8mm}
+  .nota-caixa{border:1px solid var(--linha);border-left:4px solid var(--brass);
+              border-radius:8px;padding:11px 14px;background:rgba(212,162,90,.10);
+              font-size:14px;line-height:1.5;text-align:center;color:var(--soft)}
+  .rodape{margin-top:7mm;text-align:center;font-family:'Cormorant Garamond',serif;
+          font-size:12.5px;color:var(--fraco)}
+  .imprimir{position:fixed;top:14px;right:14px;background:var(--brass);color:#fff;
+            border:0;border-radius:8px;padding:10px 16px;font-family:Lora,serif;
+            font-size:14px;cursor:pointer}
+  @media print{ body{background:#fff;padding:0} .folha{box-shadow:none;width:auto;
+    min-height:auto;padding:0} .imprimir{display:none} }
+  html[dir=rtl] .nota-caixa{border-left:1px solid var(--linha);border-right:4px solid var(--brass)}
+  html[dir=rtl] .lista{padding-left:0;padding-right:18px}
+</style></head>
+<body>
+<button class="imprimir" id="btImprimir">imprimir</button>
+<div class="folha">
+  <div class="marca" id="marca">Kadish</div>
+  <div class="sub" id="sub"></div>
+  <div class="regua"></div>
+  <div class="heb">יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא</div>
+  <div class="heb-tl">Yitgadal veyitkadash shemê raba</div>
+
+  <div class="qr-caixa">
+    <img src="./qr/kadish.svg" alt="QR">
+    <div class="qr-legenda" id="qrLegenda"></div>
+    <div class="qr-endereco">erezchalom-a18y.github.io/tefila-kadish</div>
+  </div>
+
+  <div class="miolo">
+    <div class="coluna">
+      <h2 id="hComo"></h2>
+      <div id="passos"></div>
+    </div>
+    <div class="coluna">
+      <h2 id="hOque"></h2>
+      <ul class="lista" id="oque"></ul>
+    </div>
+  </div>
+
+  <div class="nota">
+    <div class="nota-caixa" id="notaMinyan"></div>
+    <div class="rodape" id="rodape"></div>
+  </div>
+</div>
+<script>
+// Tudo o que aparece aqui existe nas 8 linguas (regra 6). As frases marcadas
+// (=app) sao as MESMAS que estao na tela do app — copiadas, nao reescritas.
+const T = {
+  pt:{dir:'ltr',sub:'Um app para acompanhar o Kadish palavra por palavra, com a voz do rabino.',
+      hComo:'Como usar',
+      passos:['Aponte a câmera do telefone para o código ao lado.','Escolha a sua tradição e o tipo de Kadish. O áudio começa no ▶.','Acompanhe: a palavra que está soando fica acesa no texto.'],
+      hOque:'O que o app faz',
+      oque:['Áudio do rabino sincronizado palavra por palavra.','Hebraico, transliteração e tradução, em 8 línguas.','Modo Treino, que pausa em cada verso para você repetir.','Dedicar o Kadish a alguém, e lembrete do yahrzeit.'],
+      qr:'Aponte a câmera. Funciona no iPhone e no Android, sem instalar nada.',
+      nota:'O Kadish exige minyan de dez homens adultos e é recitado de pé. Deve ser recitado normalmente numa sinagoga durante o período de luto.',
+      rodape:'Gratuito · sem cadastro · sem anúncios'},
+  en:{dir:'ltr',sub:'An app to follow the Kaddish word by word, with the rabbi’s voice.',
+      hComo:'How to use it',
+      passos:['Point your phone’s camera at the code beside this text.','Choose your tradition and the kind of Kaddish. The audio starts on ▶.','Follow along: the word being said lights up in the text.'],
+      hOque:'What the app does',
+      oque:['The rabbi’s recording synchronised word by word.','Hebrew, transliteration and translation, in 8 languages.','Practice Mode, which pauses at every verse so you can repeat it.','Dedicate the Kaddish to someone, and a yahrzeit reminder.'],
+      qr:'Point your camera. Works on iPhone and Android, nothing to install.',
+      nota:'The Kaddish requires a minyan of ten adult men and is recited standing. It should normally be recited in a synagogue during the period of mourning.',
+      rodape:'Free · no sign-up · no advertising'},
+  es:{dir:'ltr',sub:'Una app para seguir el Kadish palabra por palabra, con la voz del rabino.',
+      hComo:'Cómo usarla',
+      passos:['Apunte la cámara del teléfono al código de al lado.','Elija su tradición y el tipo de Kadish. El audio empieza en ▶.','Siga la lectura: la palabra que suena se enciende en el texto.'],
+      hOque:'Qué hace la app',
+      oque:['Audio del rabino sincronizado palabra por palabra.','Hebreo, transliteración y traducción, en 8 idiomas.','Modo Práctica, que hace una pausa en cada versículo para repetir.','Dedicar el Kadish a alguien, y recordatorio del yahrzeit.'],
+      qr:'Apunte la cámara. Funciona en iPhone y Android, sin instalar nada.',
+      nota:'El Kadish exige minián de diez hombres adultos y se recita de pie. Debe recitarse normalmente en una sinagoga durante el período de duelo.',
+      rodape:'Gratis · sin registro · sin publicidad'},
+  fr:{dir:'ltr',sub:'Une application pour suivre le Kaddish mot à mot, avec la voix du rabbin.',
+      hComo:'Comment l’utiliser',
+      passos:['Dirigez l’appareil photo du téléphone vers le code ci-contre.','Choisissez votre tradition et le type de Kaddish. L’audio démarre sur ▶.','Suivez : le mot prononcé s’allume dans le texte.'],
+      hOque:'Ce que fait l’application',
+      oque:['L’enregistrement du rabbin synchronisé mot à mot.','Hébreu, translittération et traduction, en 8 langues.','Mode Entraînement, qui marque une pause à chaque verset.','Dédier le Kaddish à quelqu’un, et un rappel du yahrzeit.'],
+      qr:'Dirigez la caméra. Fonctionne sur iPhone et Android, rien à installer.',
+      nota:'Le Kaddish exige un minyan de dix hommes adultes et se récite debout. Il doit normalement être récité dans une synagogue pendant la période de deuil.',
+      rodape:'Gratuit · sans inscription · sans publicité'},
+  it:{dir:'ltr',sub:'Un’app per seguire il Kaddish parola per parola, con la voce del rabbino.',
+      hComo:'Come si usa',
+      passos:['Inquadri con la fotocamera il codice qui accanto.','Scelga la sua tradizione e il tipo di Kaddish. L’audio parte con ▶.','Segua: la parola pronunciata si illumina nel testo.'],
+      hOque:'Che cosa fa l’app',
+      oque:['La registrazione del rabbino sincronizzata parola per parola.','Ebraico, traslitterazione e traduzione, in 8 lingue.','Modalità Allenamento, che si ferma a ogni versetto.','Dedicare il Kaddish a qualcuno, e il promemoria dello yahrzeit.'],
+      qr:'Inquadri con la fotocamera. Funziona su iPhone e Android, senza installare nulla.',
+      nota:'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi. Deve essere recitato normalmente in sinagoga durante il periodo di lutto.',
+      rodape:'Gratuita · senza registrazione · senza pubblicità'},
+  de:{dir:'ltr',sub:'Eine App, um dem Kaddisch Wort für Wort zu folgen, mit der Stimme des Rabbiners.',
+      hComo:'So benutzt man sie',
+      passos:['Richten Sie die Kamera des Telefons auf den Code nebenan.','Wählen Sie Ihren Ritus und die Art des Kaddisch. Der Ton startet mit ▶.','Folgen Sie mit: das gesprochene Wort leuchtet im Text auf.'],
+      hOque:'Was die App tut',
+      oque:['Die Aufnahme des Rabbiners, Wort für Wort synchronisiert.','Hebräisch, Umschrift und Übersetzung, in 8 Sprachen.','Übungsmodus, der bei jedem Vers anhält.','Das Kaddisch jemandem widmen, mit Jahrzeit-Erinnerung.'],
+      qr:'Kamera darauf richten. Funktioniert auf iPhone und Android, ohne Installation.',
+      nota:'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen. Es soll in der Regel während der Trauerzeit in einer Synagoge gesprochen werden.',
+      rodape:'Kostenlos · ohne Anmeldung · ohne Werbung'},
+  ru:{dir:'ltr',sub:'Приложение, чтобы следить за кадишем слово за словом, с голосом раввина.',
+      hComo:'Как пользоваться',
+      passos:['Наведите камеру телефона на код рядом.','Выберите свою традицию и вид кадиша. Звук начинается по ▶.','Следите: произносимое слово подсвечивается в тексте.'],
+      hOque:'Что умеет приложение',
+      oque:['Запись раввина, синхронизированная слово за словом.','Иврит, транслитерация и перевод, на 8 языках.','Режим обучения — пауза после каждого стиха.','Посвятить кадиш человеку и напоминание о йорцайте.'],
+      qr:'Наведите камеру. Работает на iPhone и Android, ничего устанавливать не нужно.',
+      nota:'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя. Обычно его следует читать в синагоге в течение траурного периода.',
+      rodape:'Бесплатно · без регистрации · без рекламы'},
+  he:{dir:'rtl',sub:'אפליקציה ללוות את הקדיש מילה במילה, בקולו של הרב.',
+      hComo:'איך משתמשים',
+      passos:['כוונו את מצלמת הטלפון אל הקוד שבצד.','בחרו את הנוסח ואת סוג הקדיש. השמע מתחיל ב- ▶.','עקבו: המילה הנאמרת נדלקת בטקסט.'],
+      hOque:'מה האפליקציה עושה',
+      oque:['הקלטת הרב מסונכרנת מילה במילה.','עברית, תעתיק ותרגום, בשמונה שפות.','מצב אימון, שעוצר בכל פסוק כדי לחזור עליו.','להקדיש את הקדיש לאדם, ותזכורת ליארצייט.'],
+      qr:'כוונו את המצלמה. עובד באייפון ובאנדרואיד, בלי להתקין דבר.',
+      nota:'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה. רגילים לאומרו בבית הכנסת במשך תקופת האבלות.',
+      rodape:'חינם · ללא הרשמה · ללא פרסומות'},
+};
+const lingua = (new URLSearchParams(location.search).get('lang') || 'pt').toLowerCase();
+const t = T[lingua] || T.pt;
+document.documentElement.lang = lingua;
+document.documentElement.dir = t.dir;
+const esc = x => String(x).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+document.getElementById('sub').textContent = t.sub;
+document.getElementById('hComo').textContent = t.hComo;
+document.getElementById('passos').innerHTML =
+  t.passos.map((p,i)=>`<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`).join('');
+document.getElementById('hOque').textContent = t.hOque;
+document.getElementById('oque').innerHTML = t.oque.map(x=>`<li>${esc(x)}</li>`).join('');
+document.getElementById('qrLegenda').textContent = t.qr;
+document.getElementById('notaMinyan').textContent = t.nota;
+document.getElementById('rodape').textContent = t.rodape;
+document.getElementById('btImprimir').addEventListener('click', () => window.print());
+</script>
+</body></html>

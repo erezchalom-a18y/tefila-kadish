@@ -14,8 +14,13 @@
  *      (guardado em fontes/aprender-pt-2026-09-03.txt). Se alguem "melhorar" o
  *      texto dele, isto fica vermelho.
  *   2. as 8 linguas existem em toda secao, e nenhuma e o portugues disfarcado.
- *   3. a pagina monta as secoes e mostra o aviso de rascunho enquanto
- *      revisado_pelo_rabino for false.
+ *   3. a pagina monta as 8 secoes nas 8 linguas, sem erro de console e sem
+ *      rolar de lado.
+ *
+ * O aviso de rascunho na tela SAIU em 10/09, a pedido dele. A checagem nao
+ * afrouxou por isso: o que ela cobrava era que a pagina montasse o aviso, e
+ * isso deixou de existir. O campo revisado_pelo_rabino continua no arquivo e
+ * continua conferido aqui — o registro do estado nao saiu, so a legenda.
  *
  *   node testar-aprender.mjs [http://127.0.0.1:8896/tefila-kadish]
  */
@@ -75,7 +80,8 @@ secoes.forEach((s, i) => {
 confere('as 8 linguas existem em toda secao', !faltando.length, faltando.join(', '));
 confere('e nenhuma delas e o portugues disfarcado', !disfarcado.length, disfarcado.join(', '));
 
-// enquanto humano nenhum reviu as sete, a pagina TEM de avisar
+// as sete linguas continuam sem revisao humana, e o arquivo tem de dizer isso.
+// O aviso na TELA saiu a pedido dele (10/09); o registro no arquivo fica.
 confere('o arquivo continua marcado como nao revisado pelo rabino',
   d.revisado_pelo_rabino === false,
   'esta true — so um humano pode pos isso, e entao esta linha da checagem sai');
@@ -96,14 +102,14 @@ if (!BASE) {
     await pag.waitForTimeout(400);
     const r = await pag.evaluate(() => ({
       secoes: document.querySelectorAll('#conteudo section').length,
-      aviso: !!document.querySelector('#conteudo .aviso'),
+      aviso: !!document.querySelector('#conteudo .aviso'),   // saiu em 10/09: tem de ser FALSO
       vazio: !!document.querySelector('#conteudo .vazio'),
       texto: document.getElementById('conteudo').textContent.length,
       rolaDeLado: document.documentElement.scrollWidth > window.innerWidth + 1,
     }));
-    const ok = r.secoes === secoes.length && r.aviso && !r.vazio && r.texto > 2000 && !r.rolaDeLado;
+    const ok = r.secoes === secoes.length && !r.aviso && !r.vazio && r.texto > 2000 && !r.rolaDeLado;
     console.log(`${ok ? 'OK   ' : 'FALHA'}    ${l}: ${r.secoes} secoes · ${r.texto} letras` +
-      `${r.aviso ? ' · avisa que e rascunho' : ' · SEM o aviso de rascunho'}` +
+      `${r.aviso ? ' · o aviso de rascunho VOLTOU a tela' : ''}` +
       `${r.rolaDeLado ? ' · ROLA DE LADO' : ''}`);
     if (!ok) falhas++;
   }

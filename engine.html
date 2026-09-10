@@ -1925,38 +1925,6 @@
     vertical-align: middle;
   }
 
-  /* Counter sponsor (mocked) */
-  .honoring-counter {
-    text-align: center;
-    padding: 14px 20px 22px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 12.5px;
-    font-style: italic;
-    color: var(--text-faint);
-    border-top: 1px solid var(--rule);
-    margin-top: 28px;
-    line-height: 1.5;
-  }
-  .honoring-counter strong {
-    font-style: normal;
-    font-weight: 600;
-    color: var(--brass);
-    font-size: 14px;
-  }
-  .honoring-counter .mock-tag {
-    display: inline-block;
-    margin-left: 4px;
-    padding: 1px 5px;
-    background: var(--text-faint);
-    color: var(--bg);
-    border-radius: 100px;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-style: normal;
-    vertical-align: middle;
-  }
-
   /* Chabad link in info overlay */
   .chabad-link {
     display: inline-block;
@@ -2370,7 +2338,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-10 · 51';
+const VERSAO = '2026-09-10 · 52';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2547,11 +2515,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <div data-i18n="yahrzeit_reminder_note" style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da véspera (hora de acender a vela) e na manhã do dia.</div>
     </div>
 
-    <div class="honoring-counter">
-      <span data-i18n="honoring_intro">Junto com você, neste ano,</span><br>
-      <strong id="soulCount">12.847</strong> <span data-i18n="honoring_outro">almas estão sendo honradas pelo mundo</span>
-      <span class="mock-tag">mock</span>
-    </div>
   </div>
 </div>
 
@@ -2641,12 +2604,17 @@ document.addEventListener('DOMContentLoaded', () => {
          linha das camadas, e ele era o UNICO caminho para o aprender.html: sem
          esta linha, quem usa telefone ficaria sem a pagina inteira. E o lugar
          certo — o ℹ e justamente onde se explica a reza. -->
+    <!-- 10/09 — este rodape e do painel INTEIRO (o ℹ). Nos tres pop-ups das
+         portas do alto ele some: cada porta mostra so o que ela promete, e um
+         rodape com as OUTRAS portas seria justamente o contrario. -->
+    <div id="infoRodape">
     <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);text-align:center;">
       <a href="#" id="infoAprender" class="chabad-link" data-i18n="learn_title">Por que dizemos o Kadish?</a>
     </div>
 
     <div style="margin-top:14px;text-align:center;">
       <a href="https://www.chabad.org/centers/default_cdo/jewish/Centers.htm" target="_blank" rel="noopener" class="chabad-link" data-i18n="find_chabad">Encontrar Beit Chabad próximo →</a>
+    </div>
     </div>
 
     <div class="info-note" id="infoNota"></div>
@@ -5188,23 +5156,117 @@ document.querySelectorAll('.seg-control[data-layer]').forEach(seg => {
 
 // Educational overlay
 const infoOverlay = document.getElementById('infoOverlay');
-document.getElementById('infoToggle').addEventListener('click', () => infoOverlay.classList.add('show'));
+// O ℹ mostra o painel INTEIRO. O desenharSobre() e chamado aqui de proposito:
+// os pop-ups das portas escrevem por cima do mesmo corpo, e sem redesenhar o ℹ
+// abriria com o conteudo da ultima porta aberta.
+document.getElementById('infoToggle').addEventListener('click', () => {
+  if (typeof desenharSobre === 'function') desenharSobre();
+  const rodape = document.getElementById('infoRodape');
+  if (rodape) rodape.style.display = '';
+  infoOverlay.classList.add('show');
+});
 // O cartao "Por que dizemos o Kadish?" leva a pagina Aprender, que guarda texto,
 // audio e video. Leva a lingua escolhida junto.
-// 10/09 — as duas portas novas da linha do alto.
-//   "O que e o Kadish?"  -> o painel da ℹ, que ja tem a secao "O que e" nas 8
-//      linguas desde sempre. Zero texto novo, e a resposta esta a um toque sem
-//      sair da tela do Kadish.
-//   "Onde encontrar um Beit Chabad?" -> a pagina Aprender, direto na secao do
-//      diretorio (a ancora #chabad). Nao mando direto para o site de fora: a
-//      secao explica o que e antes de tirar a pessoa do app.
-document.getElementById('learnOque')?.addEventListener('click', () => {
+// ============================================================
+// AS TRES PORTAS ABREM POP-UP (10/09, v52)
+// ============================================================
+// Ele: "quando clicar nos menus, abrir pop ups so com o conteudo relevante ao
+// menu e com titulo igual ao do menu". Antes cada porta levava a um lugar
+// diferente e nenhum deles se chamava como a porta: "O que e o Kadish?" abria o
+// painel inteiro da ℹ (quatro assuntos, o titulo dizendo "O Kadish"), e o Beit
+// Chabad tirava a pessoa da tela do Kadish para outra pagina.
+//
+// Agora cada porta abre a MESMA moldura com o titulo dela e so o que ela
+// promete. Nenhum texto novo foi escrito: o conteudo sai das tabelas que ja
+// existiam nas 8 linguas.
+//   O que e o Kadish?   -> SOBRE: "O que e" + "Desde quando"
+//   Por que dizemos?    -> SOBRE: "Por que dizemos" + "Por que em comunidade",
+//                          com um caminho no fim para o texto completo dele
+//   Beit Chabad?        -> a secao do diretorio do aprender.json, buscada na
+//                          hora: uma fonte so para esse texto, e nao uma copia
+//
+// As secoes do SOBRE sao referidas por POSICAO porque o titulo delas muda de
+// lingua para lingua. A ordem esta fixa desde que a tabela existe:
+//   0 = O que e · 1 = Por que dizemos · 2 = Desde quando · 3 = Por que em comunidade
+const PORTAS = {
+  oque:   { titulo: 'learn_oque',   secoes: [0, 2] },
+  porque: { titulo: 'learn_title',  secoes: [1, 3], lerMais: true },
+};
+
+function fecharPorta() {
   const ov = document.getElementById('infoOverlay');
-  if (ov) ov.classList.add('show');
-});
-document.getElementById('learnChabad')?.addEventListener('click', () => {
-  irParaAprender('chabad');
-});
+  if (ov) ov.classList.remove('show');
+}
+
+function abrirPorta(qual) {
+  const ov = document.getElementById('infoOverlay');
+  const alvo = document.getElementById('infoCorpo');
+  const rodape = document.getElementById('infoRodape');
+  if (!ov || !alvo) return;
+  const conf = PORTAS[qual];
+  const s = SOBRE[state.lang] || SOBRE.pt;
+  let h = `<div class="info-title">${TXT(conf.titulo)}</div>`;
+  for (const i of conf.secoes) {
+    const sec = s.secoes[i];
+    if (!sec) continue;
+    h += `<div class="info-h">${sec.h}</div>`;
+    for (const p of sec.ps) h += `<div class="info-p">${p}</div>`;
+  }
+  if (conf.lerMais) {
+    h += `<div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);text-align:center;">` +
+         `<a href="#" class="chabad-link" id="portaLerMais">${TXT('ler_mais')}</a></div>`;
+  }
+  alvo.innerHTML = h;
+  if (rodape) rodape.style.display = 'none';
+  const nota = document.getElementById('infoNota');
+  if (nota) nota.textContent = '';
+  document.getElementById('portaLerMais')?.addEventListener('click', (e) => {
+    e.preventDefault(); irParaAprender();
+  });
+  ov.classList.add('show');
+}
+
+/**
+ * O pop-up do Beit Chabad busca o texto no aprender.json, na hora.
+ *
+ * Podia haver uma copia dele aqui dentro, em 8 linguas, e seria mais simples de
+ * escrever. Seria tambem uma segunda fonte para o mesmo texto — e este projeto
+ * ja pagou caro por duas contas para a mesma pergunta. Se a busca falhar (sem
+ * rede, arquivo fora do ar), o pop-up ainda abre com o botao do diretorio: o
+ * que a pessoa veio buscar nao depende do texto explicativo.
+ */
+async function abrirPortaChabad() {
+  const ov = document.getElementById('infoOverlay');
+  const alvo = document.getElementById('infoCorpo');
+  const rodape = document.getElementById('infoRodape');
+  if (!ov || !alvo) return;
+  const L = state.lang || 'pt';
+  let h = `<div class="info-title">${TXT('learn_chabad')}</div>`;
+  let url = 'https://www.chabad.org/centers';
+  let rotulo = TXT('find_chabad');
+  try {
+    const d = await (await fetch('./aprender.json', { cache: 'no-cache' })).json();
+    const sec = (d.secoes || []).find(x => x.ancora === 'chabad');
+    if (sec) {
+      url = sec.url || url;
+      rotulo = (sec.rotulo && (sec.rotulo[L] || sec.rotulo.pt)) || rotulo;
+      const corpo = (sec.corpo && (sec.corpo[L] || sec.corpo.pt)) || '';
+      for (const par of corpo.split(/\n\s*\n/).filter(Boolean)) {
+        h += `<div class="info-p">${par.replace(/[<>]/g, '')}</div>`;
+      }
+    }
+  } catch (e) { /* sem rede: fica so o botao, que e o que ela veio buscar */ }
+  h += `<div style="margin-top:18px;text-align:center;">` +
+       `<a href="${url}" target="_blank" rel="noopener" class="chabad-link">${rotulo}</a></div>`;
+  alvo.innerHTML = h;
+  if (rodape) rodape.style.display = 'none';
+  const nota = document.getElementById('infoNota');
+  if (nota) nota.textContent = '';
+  ov.classList.add('show');
+}
+
+document.getElementById('learnOque')?.addEventListener('click', () => abrirPorta('oque'));
+document.getElementById('learnChabad')?.addEventListener('click', () => abrirPortaChabad());
 
 function irParaAprender(ancora) {
   // A VERSAO vai no endereco, e nao e enfeite: o aprender.json e buscado com
@@ -5223,7 +5285,7 @@ function irParaAprender(ancora) {
 // clique no lugar da ancora — e desde que ela ganhou esse parametro, em 10/09,
 // isso montaria um endereco com "#[object PointerEvent]" no fim. Ninguem veria
 // aqui: a pagina abriria igual, so nao rolaria para lugar nenhum.
-document.getElementById('learnStrip').addEventListener('click', () => irParaAprender());
+document.getElementById('learnStrip').addEventListener('click', () => abrirPorta('porque'));
 document.getElementById('infoAprender')?.addEventListener('click', (e) => {
   e.preventDefault();
   irParaAprender();
@@ -5297,13 +5359,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'pôr no calendário do telefone',
     speed_label: 'Velocidade da leitura',
     settings_hint: 'Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem.',
-    honoring_intro: 'Junto com você, neste ano,', honoring_outro: 'almas estão sendo honradas pelo mundo',
     in_memory_of: 'Em memória de',
     prayer_title: 'Kadish do Enlutado', prayer_source: 'Kadish Yatom · recitado em pé',
-    nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Não se recita sozinho, após a shivá (7 dias de luto) deve ser recitado na sinagoga durante o ano do falecimento.',
+    nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Deve ser recitado normalmente numa sinagoga durante o período de luto.',
     learn_title: 'Por que dizemos o Kadish?',
     learn_oque: 'O que é o Kadish?',
-    learn_chabad: 'Onde encontrar um Beit Chabad?', learn_sub: 'O significado, a história e quem instituiu',
+    learn_chabad: 'Onde encontrar um Beit Chabad?',
+    ler_mais: 'Ler o texto completo →', learn_sub: 'O significado, a história e quem instituiu',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
     setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
@@ -5365,13 +5427,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'add to the phone calendar',
     speed_label: 'Reading speed',
     settings_hint: 'Activate <strong>Highlight</strong> on a layer to focus on it while others fade.',
-    honoring_intro: 'Together with you, this year,', honoring_outro: 'souls are being honored worldwide',
     in_memory_of: 'In memory of',
     prayer_title: "Mourner's Kaddish", prayer_source: 'Kaddish Yatom · recited standing',
-    nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It is not said alone; after the shiva (seven days of mourning) it should be recited in the synagogue during the year of the passing.',
+    nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It should normally be recited in a synagogue during the period of mourning.',
     learn_title: 'Why do we say Kaddish?',
     learn_oque: 'What is the Kaddish?',
-    learn_chabad: 'Where to find a Chabad House?', learn_sub: 'The meaning, history, and origin',
+    learn_chabad: 'Where to find a Chabad House?',
+    ler_mais: 'Read the full text →', learn_sub: 'The meaning, history, and origin',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
     setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
@@ -5433,13 +5495,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'poner en el calendario del teléfono',
     speed_label: 'Velocidad de lectura',
     settings_hint: 'Active <strong>Destacar</strong> en una capa para enfocarse en ella mientras las otras se atenúan.',
-    honoring_intro: 'Junto a ti, este año,', honoring_outro: 'almas están siendo honradas en el mundo',
     in_memory_of: 'En memoria de',
     prayer_title: 'Kadish del Enlutado', prayer_source: 'Kadish Yatom · recitado de pie',
-    nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'No se recita a solas; después de la shivá (siete días de duelo) debe recitarse en la sinagoga durante el año del fallecimiento.',
+    nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'Debe recitarse normalmente en una sinagoga durante el período de duelo.',
     learn_title: '¿Por qué decimos el Kadish?',
     learn_oque: '¿Qué es el Kadish?',
-    learn_chabad: '¿Dónde encontrar un Beit Jabad?', learn_sub: 'El significado, la historia y el origen',
+    learn_chabad: '¿Dónde encontrar un Beit Jabad?',
+    ler_mais: 'Leer el texto completo →', learn_sub: 'El significado, la historia y el origen',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
     setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
@@ -5501,13 +5563,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'ajouter au calendrier du téléphone',
     speed_label: 'Vitesse de lecture',
     settings_hint: 'Activez <strong>Mettre en avant</strong> sur une couche pour vous concentrer dessus pendant que les autres s\'estompent.',
-    honoring_intro: 'Avec vous, cette année,', honoring_outro: 'âmes sont honorées dans le monde',
     in_memory_of: 'En mémoire de',
     prayer_title: "Kaddish de l'Endeuillé", prayer_source: 'Kaddish Yatom · récité debout',
-    nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il ne se dit pas seul ; après la chiva (sept jours de deuil), il doit être récité à la synagogue pendant l\'année du décès.',
+    nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il doit normalement être récité dans une synagogue pendant la période de deuil.',
     learn_title: 'Pourquoi disons-nous le Kaddish?',
     learn_oque: 'Qu\'est-ce que le Kaddish ?',
-    learn_chabad: 'Où trouver un Beth Habad ?', learn_sub: 'Le sens, l\'histoire et l\'origine',
+    learn_chabad: 'Où trouver un Beth Habad ?',
+    ler_mais: 'Lire le texte complet →', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
     setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
@@ -5569,13 +5631,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'aggiungi al calendario del telefono',
     speed_label: 'Velocità della lettura',
     settings_hint: 'Attiva <strong>Evidenzia</strong> su un livello per concentrarti su di esso mentre gli altri si attenuano.',
-    honoring_intro: 'Insieme a te, quest\'anno,', honoring_outro: 'anime vengono onorate nel mondo',
     in_memory_of: 'In memoria di',
     prayer_title: 'Kaddish dei Dolenti', prayer_source: 'Kaddish Yatom · recitato in piedi',
-    nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Non si recita da soli; dopo la shivà (sette giorni di lutto) deve essere recitato in sinagoga durante l\'anno del decesso.',
+    nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Deve essere recitato normalmente in sinagoga durante il periodo di lutto.',
     learn_title: 'Perché diciamo il Kaddish?',
     learn_oque: 'Che cos\'è il Kaddish?',
-    learn_chabad: 'Dove trovare un Beit Chabad?', learn_sub: 'Il significato, la storia e chi lo istituì',
+    learn_chabad: 'Dove trovare un Beit Chabad?',
+    ler_mais: 'Leggi il testo completo →', learn_sub: 'Il significato, la storia e chi lo istituì',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
     setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
@@ -5637,13 +5699,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'in den Kalender des Telefons eintragen',
     speed_label: 'Lesegeschwindigkeit',
     settings_hint: 'Aktivieren Sie <strong>Hervorheben</strong> bei einer Ebene, um sich auf sie zu konzentrieren, während die anderen zurücktreten.',
-    honoring_intro: 'Gemeinsam mit Ihnen werden in diesem Jahr', honoring_outro: 'Seelen weltweit geehrt',
     in_memory_of: 'Zum Andenken an',
     prayer_title: 'Trauerkaddisch', prayer_source: 'Kaddisch Jatom · im Stehen gesprochen',
-    nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es wird nicht allein gesprochen; nach der Schiwa (sieben Trauertage) soll es im Trauerjahr in der Synagoge gesprochen werden.',
+    nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es soll in der Regel während der Trauerzeit in einer Synagoge gesprochen werden.',
     learn_title: 'Warum sagen wir das Kaddisch?',
     learn_oque: 'Was ist das Kaddisch?',
-    learn_chabad: 'Wo findet man ein Chabad-Haus?', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
+    learn_chabad: 'Wo findet man ein Chabad-Haus?',
+    ler_mais: 'Den vollständigen Text lesen →', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
     setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
@@ -5705,13 +5767,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'добавить в календарь телефона',
     speed_label: 'Скорость чтения',
     settings_hint: 'Активируйте <strong>Выделить</strong> на слое, чтобы сфокусироваться на нём.',
-    honoring_intro: 'Вместе с вами, в этом году,', honoring_outro: 'душ почитаются по всему миру',
     in_memory_of: 'В память о',
     prayer_title: 'Кадиш сироты', prayer_source: 'Кадиш Ятом · читается стоя',
-    nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Его не читают в одиночку; после шивы (семи дней траура) его следует читать в синагоге в течение года после кончины.',
+    nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Обычно его следует читать в синагоге в течение траурного периода.',
     learn_title: 'Почему мы читаем Кадиш?',
     learn_oque: 'Что такое кадиш?',
-    learn_chabad: 'Где найти Бейт Хабад?', learn_sub: 'Значение, история и происхождение',
+    learn_chabad: 'Где найти Бейт Хабад?',
+    ler_mais: 'Читать полный текст →', learn_sub: 'Значение, история и происхождение',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
     setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
@@ -5773,13 +5835,13 @@ const I18N = {
     yahrzeit_calendar_btn: 'להוסיף ליומן בטלפון',
     speed_label: 'מהירות הקריאה',
     settings_hint: 'הפעל <strong>הדגשה</strong> בשכבה כדי להתמקד בה.',
-    honoring_intro: 'יחד איתך, השנה,', honoring_outro: 'נשמות זוכות לכבוד ברחבי העולם',
     in_memory_of: 'לזכר',
     prayer_title: 'קדיש יתום', prayer_source: 'קדיש יתום · נאמר בעמידה',
-    nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'אין אומרים אותו ביחידות; לאחר השבעה (שבעת ימי האבל) יש לאומרו בבית הכנסת במשך שנת האבל.',
+    nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'רגילים לאומרו בבית הכנסת במשך תקופת האבלות.',
     learn_title: 'מדוע אומרים קדיש?',
     learn_oque: 'מהו הקדיש?',
-    learn_chabad: 'היכן למצוא בית חב"ד?', learn_sub: 'המשמעות, ההיסטוריה והמקור',
+    learn_chabad: 'היכן למצוא בית חב"ד?',
+    ler_mais: 'לקריאת הטקסט המלא →', learn_sub: 'המשמעות, ההיסטוריה והמקור',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',
     setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',

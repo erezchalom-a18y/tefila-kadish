@@ -24,7 +24,7 @@
     {
       "tipo": "destaque",
       "origem": "app",
-      "_nota": "Este bloco NAO e texto do Erez de 03/09, mas a FRASE PRINCIPAL e dele: em 09/09 ele a escreveu inteira — \"O Kadish exige minyan de dez homens adultos e e recitado de pe. Nao se recita sozinho, apos a shiva (7 dias de luto) deve ser recitado na sinagoga durante o ano do falecimento.\" O portugues e dele, verbatim; as outras 7 sao traducao. Continua esperando a revisao do rabino, como todo o resto desta pagina.",
+      "_nota": "Este bloco NAO e texto do Erez de 03/09, mas a FRASE PRINCIPAL e dele: em 10/09 ele a escreveu assim — \"O Kadish exige minyan de dez homens adultos e e recitado de pe. Deve ser recitado normalmente numa sinagoga durante o periodo de luto.\" O portugues e dele, verbatim; as outras 7 sao traducao. Continua esperando a revisao do rabino.",
       "titulo": {
         "pt": "Com minyan, e de pé",
         "en": "With a minyan, and standing",
@@ -36,14 +36,14 @@
         "he": "במניין, ובעמידה"
       },
       "corpo": {
-        "pt": "O Kadish exige minyan de dez homens adultos e é recitado de pé.\n\nNão se recita sozinho, após a shivá (7 dias de luto) deve ser recitado na sinagoga durante o ano do falecimento.\n\nO luto judaico não é solitário: acontece cercado de comunidade, e é a obrigação diária que traz o enlutado ao minyan todos os dias.",
-        "en": "The Kaddish requires a minyan of ten adult men and is recited standing.\n\nIt is not said alone; after the shiva (seven days of mourning) it should be recited in the synagogue during the year of the passing.\n\nJewish mourning is not solitary: it happens surrounded by community, and it is the daily obligation that brings the mourner to the minyan every day.",
-        "es": "El Kadish exige minián de diez hombres adultos y se recita de pie.\n\nNo se recita a solas; después de la shivá (siete días de duelo) debe recitarse en la sinagoga durante el año del fallecimiento.\n\nEl duelo judío no es solitario: ocurre rodeado de comunidad, y es la obligación diaria la que lleva al enlutado al minián todos los días.",
-        "fr": "Le Kaddish exige un minyan de dix hommes adultes et se récite debout.\n\nIl ne se dit pas seul ; après la chiva (sept jours de deuil), il doit être récité à la synagogue pendant l’année du décès.\n\nLe deuil juif n’est pas solitaire : il se vit entouré de la communauté, et c’est l’obligation quotidienne qui amène l’endeuillé au minyan chaque jour.",
-        "it": "Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.\n\nNon si recita da soli; dopo la shivà (sette giorni di lutto) deve essere recitato in sinagoga durante l’anno del decesso.\n\nIl lutto ebraico non è solitario: si vive circondati dalla comunità, ed è l’obbligo quotidiano che porta chi è in lutto al minyan ogni giorno.",
-        "de": "Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.\n\nEs wird nicht allein gesprochen; nach der Schiwa (sieben Trauertage) soll es im Trauerjahr in der Synagoge gesprochen werden.\n\nJüdische Trauer ist nicht einsam: sie geschieht umgeben von Gemeinschaft, und es ist die tägliche Pflicht, die den Trauernden jeden Tag zum Minjan führt.",
-        "ru": "Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.\n\nЕго не читают в одиночку; после шивы (семи дней траура) его следует читать в синагоге в течение года после кончины.\n\nЕврейский траур не одинок: он проходит в кругу общины, и именно ежедневная обязанность приводит скорбящего в миньян каждый день.",
-        "he": "הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.\n\nאין אומרים אותו ביחידות; לאחר השבעה (שבעת ימי האבל) יש לאומרו בבית הכנסת במשך שנת האבל.\n\nהאבלות היהודית אינה בדד: היא מתרחשת מוקפת קהילה, והחובה היומית היא שמביאה את האבל למניין בכל יום."
+        "pt": "O Kadish exige minyan de dez homens adultos e é recitado de pé.\n\nDeve ser recitado normalmente numa sinagoga durante o período de luto.\n\nO luto judaico não é solitário: acontece cercado de comunidade, e é a obrigação diária que traz o enlutado ao minyan todos os dias.",
+        "en": "The Kaddish requires a minyan of ten adult men and is recited standing.\n\nIt should normally be recited in a synagogue during the period of mourning.\n\nJewish mourning is not solitary: it happens surrounded by community, and it is the daily obligation that brings the mourner to the minyan every day.",
+        "es": "El Kadish exige minián de diez hombres adultos y se recita de pie.\n\nDebe recitarse normalmente en una sinagoga durante el período de duelo.\n\nEl duelo judío no es solitario: ocurre rodeado de comunidad, y es la obligación diaria la que lleva al enlutado al minián todos los días.",
+        "fr": "Le Kaddish exige un minyan de dix hommes adultes et se récite debout.\n\nIl doit normalement être récité dans une synagogue pendant la période de deuil.\n\nLe deuil juif n’est pas solitaire : il se vit entouré de la communauté, et c’est l’obligation quotidienne qui amène l’endeuillé au minyan chaque jour.",
+        "it": "Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.\n\nDeve essere recitato normalmente in sinagoga durante il periodo di lutto.\n\nIl lutto ebraico non è solitario: si vive circondati dalla comunità, ed è l’obbligo quotidiano che porta chi è in lutto al minyan ogni giorno.",
+        "de": "Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.\n\nEs soll in der Regel während der Trauerzeit in einer Synagoge gesprochen werden.\n\nJüdische Trauer ist nicht einsam: sie geschieht umgeben von Gemeinschaft, und es ist die tägliche Pflicht, die den Trauernden jeden Tag zum Minjan führt.",
+        "ru": "Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.\n\nОбычно его следует читать в синагоге в течение траурного периода.\n\nЕврейский траур не одинок: он проходит в кругу общины, и именно ежедневная обязанность приводит скорбящего в миньян каждый день.",
+        "he": "הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.\n\nרגילים לאומרו בבית הכנסת במשך תקופת האבלות.\n\nהאבלות היהודית אינה בדד: היא מתרחשת מוקפת קהילה, והחובה היומית היא שמביאה את האבל למניין בכל יום."
       }
     },
     {
@@ -228,5 +228,5 @@
       "ancora": "chabad"
     }
   ],
-  "_origem_do_texto": "O PORTUGUES destas seis secoes foi escrito pelo Erez e esta aqui palavra por palavra, como ele mandou em 03/09/2026. As outras SETE linguas sao traducao de maquina do texto dele e ainda NAO foram revistas por humano — e por isso que revisado_pelo_rabino continua false, e a pagina mostra o aviso de rascunho nas 8. Regra 5 das inviolaveis: a autoridade e o rabino e o Erez, nunca o modelo. Se uma traducao for corrigida, corrija AQUI."
+  "_origem_do_texto": "O PORTUGUES destas seis secoes foi escrito pelo Erez e esta aqui palavra por palavra, como ele mandou em 03/09/2026. As outras SETE linguas sao traducao de maquina do texto dele e ainda NAO foram revistas por humano — e por isso que revisado_pelo_rabino continua false. O AVISO DE RASCUNHO NA TELA saiu em 10/09, a pedido dele; o campo fica aqui como registro honesto do estado, e a testar-aprender.mjs continua cobrando que ele seja false. Regra 5 das inviolaveis: a autoridade e o rabino e o Erez, nunca o modelo. Se uma traducao for corrigida, corrija AQUI."
 }

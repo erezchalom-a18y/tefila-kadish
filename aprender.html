@@ -32,8 +32,6 @@
               font-family:ui-monospace,monospace}
   .vazio ol{margin:12px 0 0;padding-left:22px}
   .vazio li{margin-bottom:8px}
-  .aviso{font-size:14.5px;color:#8a3a1a;background:#fdf3e6;border-left:3px solid #c0733a;
-         border-radius:8px;padding:12px 14px;margin-bottom:20px}
   /* O bloco em DESTAQUE (04/09). Ele pediu: "devemos incluir a necessidade do
      minian em destaque e que seja recitado de pe". Destaque aqui e o latao do
      app — fundo mais quente, uma barra grossa a esquerda e o titulo em latao —,
@@ -68,42 +66,34 @@ const T = {
   pt: { titulo:'Aprender sobre o Kadish', voltar:'‹ voltar',
         vazioH:'Esta página ainda está vazia',
         vazioP:'Ela está pronta para receber o conteúdo — texto, áudio e vídeo sobre o Kadish: o que é, de onde vem, quem diz, quando se diz.',
-        rascunho:'Rascunho — este conteúdo ainda não foi revisado pelo rabino.',
         secao:'seção', secoes:'seções', erroH:'Não consegui ler o conteúdo', assistir:'assistir ▸' },
   en: { titulo:'Learning about the Kaddish', voltar:'‹ back',
         vazioH:'This page is not filled in yet',
         vazioP:'It is ready for the content — text, audio and video about the Kaddish: what it is, where it comes from, who says it, when it is said.',
-        rascunho:'Draft — this content has not yet been reviewed by the rabbi.',
         secao:'section', secoes:'sections', erroH:'Could not read the content', assistir:'watch ▸' },
   es: { titulo:'Aprender sobre el Kadish', voltar:'‹ volver',
         vazioH:'Esta página aún está vacía',
         vazioP:'Está lista para recibir el contenido — texto, audio y video sobre el Kadish: qué es, de dónde viene, quién lo dice, cuándo se dice.',
-        rascunho:'Borrador — este contenido aún no fue revisado por el rabino.',
         secao:'sección', secoes:'secciones', erroH:'No pude leer el contenido', assistir:'ver ▸' },
   fr: { titulo:'Apprendre sur le Kaddish', voltar:'‹ retour',
         vazioH:'Cette page est encore vide',
         vazioP:'Elle est prête à recevoir le contenu — texte, audio et vidéo sur le Kaddish : ce que c’est, d’où il vient, qui le dit, quand on le dit.',
-        rascunho:'Brouillon — ce contenu n’a pas encore été validé par le rabbin.',
         secao:'section', secoes:'sections', erroH:'Impossible de lire le contenu', assistir:'regarder ▸' },
   it: { titulo:'Imparare sul Kaddish', voltar:'‹ indietro',
         vazioH:'Questa pagina è ancora vuota',
         vazioP:'È pronta per accogliere i contenuti — testo, audio e video sul Kaddish: che cos’è, da dove viene, chi lo dice, quando si dice.',
-        rascunho:'Bozza — questo contenuto non è ancora stato verificato dal rabbino.',
         secao:'sezione', secoes:'sezioni', erroH:'Non sono riuscito a leggere il contenuto', assistir:'guarda ▸' },
   de: { titulo:'Über das Kaddisch lernen', voltar:'‹ zurück',
         vazioH:'Diese Seite ist noch leer',
         vazioP:'Sie ist bereit für die Inhalte — Text, Ton und Video über das Kaddisch: was es ist, woher es kommt, wer es sagt, wann es gesagt wird.',
-        rascunho:'Entwurf — dieser Inhalt wurde noch nicht vom Rabbiner geprüft.',
         secao:'Abschnitt', secoes:'Abschnitte', erroH:'Der Inhalt konnte nicht gelesen werden', assistir:'ansehen ▸' },
   ru: { titulo:'О кадише', voltar:'‹ назад',
         vazioH:'Эта страница пока пуста',
         vazioP:'Она готова принять материалы — текст, аудио и видео о кадише: что это, откуда он, кто его читает, когда его читают.',
-        rascunho:'Черновик — этот материал ещё не проверен раввином.',
         secao:'раздел', secoes:'разделов', erroH:'Не удалось прочитать материал', assistir:'смотреть ▸' },
   he: { titulo:'ללמוד על הקדיש', voltar:'‹ חזרה',
         vazioH:'הדף הזה עדיין ריק',
         vazioP:'הוא מוכן לקבל את התוכן — טקסט, שמע ווידאו על הקדיש: מהו, מניין בא, מי אומר אותו ומתי.',
-        rascunho:'טיוטה — התוכן טרם נבדק על ידי הרב.',
         secao:'פרק', secoes:'פרקים', erroH:'לא הצלחתי לקרוא את התוכן', assistir:'לצפייה ▸' }
 };
 const t = T[lingua] || T.pt;
@@ -157,10 +147,12 @@ fetch('./aprender.json', { cache: 'no-cache' })
   .then(r => r.json())
   .then(d => {
     const secoes = Array.isArray(d.secoes) ? d.secoes : [];
-    const aviso = d.revisado_pelo_rabino ? '' :
-      `<div class="aviso">${esc(t.rascunho)}</div>`;
+    // O aviso de rascunho SAIU da tela em 10/09, a pedido dele ("retirar
+    // tambem: Rascunho — este conteudo ainda nao foi revisado pelo rabino").
+    // O campo revisado_pelo_rabino continua no aprender.json como registro
+    // honesto do estado — o que mudou e que ele nao aparece mais para quem le.
     document.getElementById('conteudo').innerHTML =
-      (secoes.length ? aviso + secoes.map(bloco).join('') : vazio);
+      (secoes.length ? secoes.map(bloco).join('') : vazio);
     // A ancora (#chabad) so existe depois que o JSON chega e as secoes sao
     // desenhadas — quando a pagina carrega, o navegador ja tentou rolar e nao
     // achou nada. Entao a rolagem e feita aqui, depois de montar.

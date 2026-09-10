@@ -1926,3 +1926,82 @@ ter medido a coisa certa, é pior que código inútil — é uma mentira deixada
 quem ler depois.** Duas correções entraram antes de eu conferir se havia o que
 corrigir. A regra que já existia aqui — medir antes, e medir a pergunta certa —
 vale também quando o número parece obviamente errado.
+
+## Três portas com pop-up, o QR e o panfleto (10/09, v52)
+
+Quatro pedidos numa mensagem, mais dois que ele mandou tirar no meio da rodada.
+
+**1. As três portas abrem pop-up, com o conteúdo daquela porta e só dele.**
+Ele: *"quando clicar nos menus, abrir pop ups só com o conteúdo relevante ao
+menu e com título igual ao do menu"*. Antes, duas das três largavam a pessoa na
+página Aprender inteira e a terceira abria o painel da ℹ completo — quem
+perguntava "o que é o Kadish?" recebia tudo o que o app sabe e tinha de procurar.
+
+**Zero texto novo.** As duas primeiras portas montam o pop-up com seções da
+tabela `SOBRE`, que já existe nas 8 línguas, e a do Beit Chabad busca o
+`aprender.json` na hora e usa a seção com `ancora === 'chabad'`. O que muda é
+quais seções entram:
+
+| porta | o que o pop-up mostra |
+|---|---|
+| O que é o Kadish? | SOBRE 0 e 2 (o que é · desde quando) |
+| Por que dizemos o Kadish? | SOBRE 1 e 3 (por que · por que em comunidade) + "ler mais" |
+| Onde encontrar um Beit Chabad? | a seção do `aprender.json` + o botão para o diretório |
+| o ℹ (que continua existindo) | as quatro seções, com o rodapé |
+
+**As seções são escolhidas por POSIÇÃO, nunca pelo título.** O título muda de
+língua; o índice não. Escolher por texto funcionaria em português e falharia
+calado nas outras sete — é exatamente a família de defeito que este arquivo já
+registra três vezes.
+
+**2. A frase do minyan mudou de novo, e continua sendo dele**, palavra por
+palavra: *"O Kadish exige minyan de dez homens adultos e é recitado de pé. Deve
+ser recitado normalmente numa sinagoga durante o período de luto."* Nos dois
+lugares (a nota da tela principal e o bloco da página Aprender) e nas 8 línguas.
+
+**3. O QR: `gerar-qr.mjs` → `qr/kadish.svg` e `qr/kadish.png`.**
+**UM código, e não um para iPhone e outro para Android.** Não há app nas lojas;
+o que existe é um endereço na web, e um endereço é um endereço. Dois códigos
+seriam duas contas para a mesma pergunta — o defeito que este projeto já pagou
+caro mais de uma vez.
+
+O script **lê o código de volta** com uma câmera de software (zxing) antes de
+dar por feito, e reprova se o que sai não for o endereço que entrou. Sem isso,
+um QR quebrado só se descobre com a folha já impressa e pendurada na parede.
+Correção de erro `h` (o nível mais alto), na cor do app.
+
+**4. `panfleto.html` — a folha A4 para o display da sinagoga.**
+Nas 8 línguas (`?lang=`), uma folha só, `@page A4`. O QR é o **SVG**, nunca o
+PNG: numa folha impressa o SVG não perde nitidez em tamanho nenhum, e QR borrado
+não lê.
+
+**O primeiro desenho pôs o QR num canto de 62mm e sobrou um vazio de 400px no
+meio da folha.** Numa parede isso é o defeito inteiro: quem passa a um metro
+tem de ver o CÓDIGO, não ler a página. Agora o QR é o centro, com **88mm de
+lado**, e as duas explicações ("Como usar" · "O que o app faz") ficam embaixo em
+duas colunas. Medido nas 4 línguas conferidas: uma página no PDF, o hebraico em
+RTL com as colunas e a barra da nota espelhadas, nenhum erro de console.
+
+**5. O contador de almas SAIU, e ele estava certo.** Ele: *"retirar no menu
+configurações: Junto com você, neste ano, 12.847 almas estão sendo honradas pelo
+mundo mock"*. Aquilo era **um número inventado**, com uma etiqueta "mock" ao
+lado — escrito um dia como enfeite de maquete e nunca ligado a coisa nenhuma.
+Um app que serve enlutados não pode dizer um número que não mediu. Saíram o
+bloco, o CSS e as 8 chaves `honoring_*`. O contador de verdade continua onde
+sempre esteve (`contador.js`, por aparelho, e o Cloudflare esperando o endereço
+dele).
+
+**6. O aviso "Rascunho — este conteúdo ainda não foi revisado pelo rabino" saiu
+da página Aprender**, a pedido dele. **O registro NÃO saiu:** o
+`revisado_pelo_rabino: false` continua no `aprender.json`, e o
+`testar-aprender.mjs` continua cobrando que ele seja `false` — o que mudou é a
+legenda na tela, não a verdade no arquivo.
+
+E a checagem **mudou de pergunta sem afrouxar**: ela cobrava "a página MOSTRA o
+aviso"; agora cobra "a página NÃO mostra o aviso". Continua sabendo falhar — se
+alguém repuser o aviso, ela acusa a língua pelo nome. Deixá-la só de olho em
+outra coisa é que teria sido afrouxar.
+
+A marca d'água **RASCUNHO — AGUARDANDO REVISÃO RABÍNICA dos folhetos
+imprimíveis (`gerar-pdf.mjs`) continua**: aquilo é papel que vai à mão do
+rabino, e ele não pediu para tirar de lá.
