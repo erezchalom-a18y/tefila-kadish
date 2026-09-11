@@ -1363,10 +1363,14 @@
        Em toda tela maior — celular alto, iPad, computador — os dois aparecem,
        e o hebraico continua inteiro no ⚙. */
     .dedicatoria-fixa .dedicatoria .dn-heb { display: none; }
-    /* a filiacao tambem sai aqui, pelo mesmo motivo dos 50px: com ela a linha
-       vai a duas e a sobra para o Kadish fura o piso. Ela continua inteira no
-       iPad, no computador e no ⚙. */
-    .dedicatoria-fixa .dedicatoria .ded-filiacao { display: none; }
+    /* 11/09 — A FILIACAO ENTRA NO TELEFONE, a pedido dele. Ela saia daqui
+       desde 09/09 pela briga dos 50px, e o resultado era a tela dele dizendo
+       so "Em memoria de Haim" — que foi exatamente a queixa: "deve ser Haim
+       filho de Tera (mae) e Ezra (pai)".
+       Quem paga sao os mesmos pixels: o nome hebraico ao lado ja sai daqui
+       desde 04/09, e o rotulo ja e o curto. Se o piso furar, a conta esta no
+       testar-telas.mjs e ele reprova — nao ha aqui numero escrito no escuro. */
+    .dedicatoria-fixa .dedicatoria .ded-filiacao { display: inline; font-size: 0.82em; }
     .dedicatoria-fixa .convite-dedicar .conv-acao {
       display: inline; font-size: 13px; margin-left: 4px;
     }
@@ -1952,6 +1956,12 @@
     cursor: pointer; color: var(--text-faint); font-size: 14px; border-radius: 6px;
   }
   .mem-acao:hover { color: var(--brass); background: rgba(212, 162, 90, 0.12); }
+  /* "Editar" escrito por extenso: min-width maior e letra de texto, nao de
+     simbolo. O ✕ continua simbolo — apagar nao precisa de convite. */
+  .mem-acao.mem-editar {
+    min-width: 0; padding: 0 10px; font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; color: var(--text-soft, #4d3d2d); white-space: nowrap;
+  }
   .mem-add {
     display: block; width: 100%; padding: 11px; border-radius: 6px;
     font-family: 'Cormorant Garamond', serif; font-size: 13.5px; font-weight: 500;
@@ -1959,13 +1969,25 @@
     border: 1px dashed var(--brass); background: transparent; color: var(--brass);
   }
 
-  /* A filiacao ("filho de Esther e Ezra") vem abaixo do nome, menor: ela diz de
-     QUEM e o nome, nao e o nome. */
+  /* 11/09 — A filiacao faz parte da FRASE DO NOME ("Haim filho de Tera e
+     Ezra"), e nao um bloco embaixo. Fica um tico menor e em italico porque diz
+     de QUEM e o nome — mas na mesma linha, porque e assim que se diz o nome de
+     alguem numa reza. */
   .dedicatoria .ded-filiacao {
-    display: block; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 0.95rem; font-style: italic; line-height: 1.3;
-    color: var(--text-soft, #4d3d2d); margin-top: 1px;
+    display: inline; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.86em; font-style: italic; color: var(--text-soft, #4d3d2d);
   }
+
+  /* As caixinhas dos avisos do calendario (11/09). Cada linha e um alvo de
+     toque inteiro — o dedo acerta o rotulo, nao so o quadradinho. */
+  .avisos-lista { display: flex; flex-direction: column; gap: 2px; }
+  .avisos-lista label {
+    display: flex; align-items: center; gap: 9px; cursor: pointer;
+    min-height: 30px; padding: 3px 2px; font-size: 14px; line-height: 1.35;
+    color: var(--text, #2a1f15); font-weight: 400; letter-spacing: normal;
+    text-transform: none;
+  }
+  .avisos-lista input { width: 18px; height: 18px; accent-color: var(--brass, #8b6a3e); flex-shrink: 0; }
 
   /* Yahrzeit info card (in settings) */
   .yahrzeit-card {
@@ -2432,8 +2454,8 @@
     </button>
     <button class="learn-strip" id="learnChabad">
       <span class="ls-icon">✦</span>
-      <span class="ls-text" data-i18n="learn_chabad">Onde encontrar um Beit Chabad?</span>
-      <span class="ls-curto" data-i18n="learn_chabad_curto">Beit Chabad</span>
+      <span class="ls-text" data-i18n="learn_chabad">Onde rezar o Kadish?</span>
+      <span class="ls-curto" data-i18n="learn_chabad_curto">Onde rezar?</span>
     </button>
   </div>
   <!-- A faixa "MODO TREINO - PAUSA APOS CADA VERSO" saiu em 27/08, a pedido do
@@ -2481,7 +2503,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-10 · 55';
+const VERSAO = '2026-09-11 · 56';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2669,13 +2691,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <p class="setup-intro" data-i18n="setup_intro">O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.</p>
 
     <div class="setup-field">
-      <label data-i18n="setup_name">Nome (em português)</label>
-      <input type="text" id="setupName" placeholder="Ex: Itzhak Avraham Cohen">
+      <label data-i18n="setup_name">Nome (de preferência em hebraico)</label>
+      <input type="text" id="setupName" placeholder="חיים בן עזרא">
     </div>
-    <div class="setup-field">
-      <label data-i18n="setup_hebrew_name">Nome hebraico (opcional)</label>
-      <input type="text" id="setupHebrew" class="hebrew-input" placeholder="יִצְחָק אַבְרָהָם בֶּן יוֹסֵף" dir="rtl">
-    </div>
+    <!-- 11/09 — O CAMPO "Nome hebraico (opcional)" SAIU DA TELA, por decisao
+         dele, quando o campo do nome passou a pedir hebraico: eram duas contas
+         para a mesma pergunta, que e o defeito que este projeto mais pagou caro.
+         O <input> continua AQUI, escondido, e por um motivo que nao e zelo:
+         quem ja cadastrou um nome hebraico antes de hoje o tem guardado, e o
+         `abrirCadastro` o le e o `setupSave` o grava. Se o campo sumisse do
+         HTML, o save gravaria vazio e o nome hebraico de alguem seria apagado
+         no primeiro toque em Salvar — calado. Some da tela, nao dos dados.
+         O que estiver ali continua aparecendo ao lado do nome na dedicatoria. -->
+    <input type="hidden" id="setupHebrew">
     <!-- 09/09 — FILHO | FILHA, e por que isto e um botao e nao um palpite.
          Ele quer a linha "Haim Chalom filho de Esther e Ezra". Para escrever
          filho ou filha o app teria de saber o sexo, e ele mesmo ja tinha
@@ -2684,18 +2712,18 @@ document.addEventListener('DOMContentLoaded', () => {
          num toque. Sem escolha, a linha da filiacao simplesmente nao aparece —
          nunca sai um "filho" chutado. -->
     <div class="setup-field">
-      <label data-i18n="setup_child_q">O falecido era filho ou filha?</label>
+      <label data-i18n="setup_child_q">O(a) falecido(a) era homem ou mulher?</label>
       <div class="seg-control" id="setupSexo">
         <button type="button" data-value="filho" data-i18n="setup_child_m">Filho</button>
         <button type="button" data-value="filha" data-i18n="setup_child_f">Filha</button>
       </div>
     </div>
     <div class="setup-field">
-      <label data-i18n="setup_mother">Nome da mãe</label>
+      <label data-i18n="setup_mother">Nome da mãe do(a) falecido(a) (de preferência em hebraico)</label>
       <input type="text" id="setupMae">
     </div>
     <div class="setup-field">
-      <label data-i18n="setup_father">Nome do pai</label>
+      <label data-i18n="setup_father">Nome do pai do(a) falecido(a) (de preferência em hebraico)</label>
       <input type="text" id="setupPai">
     </div>
     <div class="setup-field">
@@ -2717,6 +2745,20 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="seg-control" id="setupPorDoSol">
         <button type="button" data-value="antes" data-i18n="setup_before_sunset">Antes do pôr do sol</button>
         <button type="button" data-value="depois" data-i18n="setup_after_sunset">Depois do pôr do sol</button>
+      </div>
+    </div>
+
+    <!-- 11/09 — QUAIS AVISOS, a pedido dele: "no adicionar ao calendario,
+         perguntar quando quer ser lembrado". As quatro entram MARCADAS: e o que
+         o app sempre fez, entao quem nao mexer em nada nao muda nada. Quem quer
+         menos aviso desmarca. Os 20 anos ficam. -->
+    <div class="setup-field">
+      <label data-i18n="setup_avisos_q">Quando você quer ser lembrado?</label>
+      <div class="avisos-lista" id="setupAvisos">
+        <label><input type="checkbox" value="semana" checked><span data-i18n="aviso_semana">Uma semana antes</span></label>
+        <label><input type="checkbox" value="tres" checked><span data-i18n="aviso_tres">Três dias antes</span></label>
+        <label><input type="checkbox" value="vespera" checked><span data-i18n="aviso_vespera">Na tarde da véspera (hora de acender a vela)</span></label>
+        <label><input type="checkbox" value="dia" checked><span data-i18n="aviso_dia">Na manhã do dia</span></label>
       </div>
     </div>
 
@@ -4269,11 +4311,16 @@ function desenharDedicatoria(vaga) {
     `<span class="ded-nome">` +
       `<span class="dn-lat">${(m.name || '').replace(/[&<>]/g, '')}</span>` +
       (m.hebrew ? `<span class="dn-heb"> · ${String(m.hebrew).replace(/[&<>]/g, '')}</span>` : '') +
-    `</span>` +
-    (() => {
-      const f = textoFiliacao(m, L);
-      return f ? `<span class="ded-filiacao">${f.replace(/[&<>]/g, '')}</span>` : '';
-    })();
+      // 11/09 — A FILIACAO ENTRA NA MESMA FRASE DO NOME, a pedido dele: "ao
+      // inves de 'em memoria de Haim' deve ser 'Haim filho de Tera (mae) e
+      // Ezra (pai)'". Ela era um bloco separado embaixo e, no telefone, nao
+      // aparecia — entao a tela dele dizia so o nome. Agora e uma frase so,
+      // que e como se diz o nome de alguem numa reza.
+      (() => {
+        const f = textoFiliacao(m, L);
+        return f ? `<span class="ded-filiacao"> ${f.replace(/[&<>]/g, '')}</span>` : '';
+      })() +
+    `</span>`;
   // A RELACAO ("meu pai") nao aparece mais, por decisao dele em 04/09: "nao
   // precisa colocar parentesco, ele com certeza lembra, ganha uma linha". Ela
   // continua GUARDADA no perfil — some da tela, nao dos dados —, e quem dedica
@@ -5521,7 +5568,7 @@ const I18N = {
     nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Deve ser recitado normalmente numa sinagoga durante o período de luto.',
     learn_title: 'Por que dizemos o Kadish?',
     learn_oque: 'O que é o Kadish?',
-    learn_chabad: 'Onde encontrar um Beit Chabad?',
+    learn_chabad: 'Onde rezar o Kadish?',
     // 10/09 — os tres titulos inteiros nao cabem numa linha de telefone (o
     // terceiro ficava cortado na borda). Estes curtos aparecem SO ate 640px;
     // o titulo do pop-up continua sendo o inteiro acima.
@@ -5536,18 +5583,23 @@ const I18N = {
     aviso_embutido_android: 'Você abriu esta página <b>por dentro de outro aplicativo</b>. Essa janelinha não sabe criar ícones. Copie o endereço, abra o <b>Chrome</b> e cole na barra de cima.',
     copiar_endereco: 'Copiar o endereço',
     endereco_copiado: 'Endereço copiado. Agora abra o Safari e cole na barra de cima.', instalar_ios: 'Toque em Compartilhar e depois em "Adicionar à Tela de Início".', instalar_android: 'Instalar', instalar_agora_nao: 'Agora não',
-    learn_title_curto: 'Por que dizemos?', learn_oque_curto: 'O que é?', learn_chabad_curto: 'Beit Chabad',
+    learn_title_curto: 'Por que dizemos?', learn_oque_curto: 'O que é?', learn_chabad_curto: 'Onde rezar?',
     ler_mais: 'Ler o texto completo →', learn_sub: 'O significado, a história e quem instituiu',
     studio_banner: 'Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)',
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
     setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
-    setup_name: 'Nome (em português)', setup_hebrew_name: 'Nome hebraico (opcional)',
+    setup_name: 'Nome (de preferência em hebraico)', setup_hebrew_name: 'Nome hebraico (opcional)',
     setup_relation: 'Relação', setup_death_date: 'Data de falecimento (necessária pra yahrzeit)',
+    setup_avisos_q: 'Quando você quer ser lembrado?',
+    aviso_semana: 'Uma semana antes',
+    aviso_tres: 'Três dias antes',
+    aviso_vespera: 'Na tarde da véspera (hora de acender a vela)',
+    aviso_dia: 'Na manhã do dia',
     setup_child_q: 'O(a) falecido(a) era homem ou mulher?',
     setup_child_m: 'Homem',
     setup_child_f: 'Mulher',
-    setup_mother: 'Nome da mãe do falecido',
-    setup_father: 'Nome do pai do falecido',
+    setup_mother: 'Nome da mãe do(a) falecido(a) (de preferência em hebraico)',
+    setup_father: 'Nome do pai do(a) falecido(a) (de preferência em hebraico)',
     setup_sunset_q: 'O falecimento foi antes ou depois do pôr do sol?',
     setup_before_sunset: 'Antes do pôr do sol',
     setup_after_sunset: 'Depois do pôr do sol',
@@ -5604,7 +5656,7 @@ const I18N = {
     nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It should normally be recited in a synagogue during the period of mourning.',
     learn_title: 'Why do we say Kaddish?',
     learn_oque: 'What is the Kaddish?',
-    learn_chabad: 'Where to find a Chabad House?',
+    learn_chabad: 'Where to pray the Kaddish?',
     instalar_titulo: 'Keep the Kaddish on your phone screen',
     instalar_como: 'Show me how',
     passo_ios_1: 'Tap the <b>Share</b> button — the square with an arrow pointing up, in the Safari bar.',
@@ -5616,18 +5668,23 @@ const I18N = {
     aviso_embutido_android: 'You opened this page <b>inside another app</b>. That little window cannot create icons. Copy the address, open <b>Chrome</b> and paste it in the top bar.',
     copiar_endereco: 'Copy the address',
     endereco_copiado: 'Address copied. Now open Safari and paste it in the top bar.', instalar_ios: 'Tap Share, then "Add to Home Screen".', instalar_android: 'Install', instalar_agora_nao: 'Not now',
-    learn_title_curto: 'Why we say it', learn_oque_curto: 'What it is', learn_chabad_curto: 'Chabad House',
+    learn_title_curto: 'Why we say it', learn_oque_curto: 'What it is', learn_chabad_curto: 'Where to pray?',
     ler_mais: 'Read the full text →', learn_sub: 'The meaning, history, and origin',
     studio_banner: 'Studio Mode · record live or upload audio from Voice Memos',
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
     setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
-    setup_name: 'Name (English)', setup_hebrew_name: 'Hebrew name (optional)',
+    setup_name: 'Name (preferably in Hebrew)', setup_hebrew_name: 'Hebrew name (optional)',
     setup_relation: 'Relationship', setup_death_date: 'Date of passing (required for yahrzeit)',
+    setup_avisos_q: 'When do you want to be reminded?',
+    aviso_semana: 'One week before',
+    aviso_tres: 'Three days before',
+    aviso_vespera: 'The afternoon before (time to light the candle)',
+    aviso_dia: 'On the morning of the day',
     setup_child_q: 'Was the deceased a man or a woman?',
     setup_child_m: 'Man',
     setup_child_f: 'Woman',
-    setup_mother: 'Name of the deceased\'s mother',
-    setup_father: 'Name of the deceased\'s father',
+    setup_mother: 'Name of the deceased\'s mother (preferably in Hebrew)',
+    setup_father: 'Name of the deceased\'s father (preferably in Hebrew)',
     setup_sunset_q: 'Did the passing happen before or after sunset?',
     setup_before_sunset: 'Before sunset',
     setup_after_sunset: 'After sunset',
@@ -5684,7 +5741,7 @@ const I18N = {
     nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'Debe recitarse normalmente en una sinagoga durante el período de duelo.',
     learn_title: '¿Por qué decimos el Kadish?',
     learn_oque: '¿Qué es el Kadish?',
-    learn_chabad: '¿Dónde encontrar un Beit Jabad?',
+    learn_chabad: '¿Dónde rezar el Kadish?',
     instalar_titulo: 'Dejar el Kadish en la pantalla del teléfono',
     instalar_como: 'Cómo se hace',
     passo_ios_1: 'Toque el botón <b>Compartir</b> — el cuadrado con una flecha hacia arriba, en la barra de Safari.',
@@ -5696,18 +5753,23 @@ const I18N = {
     aviso_embutido_android: 'Abrió esta página <b>dentro de otra aplicación</b>. Esa ventanita no sabe crear iconos. Copie la dirección, abra <b>Chrome</b> y péguela en la barra de arriba.',
     copiar_endereco: 'Copiar la dirección',
     endereco_copiado: 'Dirección copiada. Ahora abra Safari y péguela en la barra de arriba.', instalar_ios: 'Toque Compartir y luego "Añadir a pantalla de inicio".', instalar_android: 'Instalar', instalar_agora_nao: 'Ahora no',
-    learn_title_curto: '¿Por qué se dice?', learn_oque_curto: '¿Qué es?', learn_chabad_curto: 'Beit Jabad',
+    learn_title_curto: '¿Por qué se dice?', learn_oque_curto: '¿Qué es?', learn_chabad_curto: '¿Dónde rezar?',
     ler_mais: 'Leer el texto completo →', learn_sub: 'El significado, la historia y el origen',
     studio_banner: 'Modo Studio · graba en vivo o sube audio de Notas de Voz',
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
     setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
-    setup_name: 'Nombre (en español)', setup_hebrew_name: 'Nombre hebreo (opcional)',
+    setup_name: 'Nombre (preferentemente en hebreo)', setup_hebrew_name: 'Nombre hebreo (opcional)',
     setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (necesaria para yahrzeit)',
+    setup_avisos_q: '¿Cuándo quiere que le recordemos?',
+    aviso_semana: 'Una semana antes',
+    aviso_tres: 'Tres días antes',
+    aviso_vespera: 'La tarde anterior (hora de encender la vela)',
+    aviso_dia: 'En la mañana del día',
     setup_child_q: '¿El/La fallecido(a) era hombre o mujer?',
     setup_child_m: 'Hombre',
     setup_child_f: 'Mujer',
-    setup_mother: 'Nombre de la madre del fallecido',
-    setup_father: 'Nombre del padre del fallecido',
+    setup_mother: 'Nombre de la madre del/de la fallecido(a) (preferentemente en hebreo)',
+    setup_father: 'Nombre del padre del/de la fallecido(a) (preferentemente en hebreo)',
     setup_sunset_q: '¿El fallecimiento fue antes o después de la puesta del sol?',
     setup_before_sunset: 'Antes de la puesta del sol',
     setup_after_sunset: 'Después de la puesta del sol',
@@ -5764,7 +5826,7 @@ const I18N = {
     nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il doit normalement être récité dans une synagogue pendant la période de deuil.',
     learn_title: 'Pourquoi disons-nous le Kaddish?',
     learn_oque: 'Qu\'est-ce que le Kaddish ?',
-    learn_chabad: 'Où trouver un Beth Habad ?',
+    learn_chabad: 'Où prier le Kaddish ?',
     instalar_titulo: 'Garder le Kaddish sur l’écran du téléphone',
     instalar_como: 'Comment faire',
     passo_ios_1: 'Touchez le bouton <b>Partager</b> — le carré avec une flèche vers le haut, dans la barre de Safari.',
@@ -5776,18 +5838,23 @@ const I18N = {
     aviso_embutido_android: 'Vous avez ouvert cette page <b>à l’intérieur d’une autre application</b>. Cette petite fenêtre ne sait pas créer d’icônes. Copiez l’adresse, ouvrez <b>Chrome</b> et collez-la dans la barre du haut.',
     copiar_endereco: 'Copier l’adresse',
     endereco_copiado: 'Adresse copiée. Ouvrez maintenant Safari et collez-la dans la barre du haut.', instalar_ios: 'Touchez Partager, puis « Sur l’écran d’accueil ».', instalar_android: 'Installer', instalar_agora_nao: 'Pas maintenant',
-    learn_title_curto: 'Pourquoi ?', learn_oque_curto: 'Qu’est-ce ?', learn_chabad_curto: 'Beth Habad',
+    learn_title_curto: 'Pourquoi ?', learn_oque_curto: 'Qu’est-ce ?', learn_chabad_curto: 'Où prier ?',
     ler_mais: 'Lire le texte complet →', learn_sub: 'Le sens, l\'histoire et l\'origine',
     studio_banner: 'Mode Studio · enregistrez en direct ou téléchargez audio depuis Mémos Vocaux',
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
     setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
-    setup_name: 'Nom (français)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
+    setup_name: 'Nom (de préférence en hébreu)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
     setup_relation: 'Relation', setup_death_date: 'Date de décès (nécessaire pour yahrzeit)',
+    setup_avisos_q: 'Quand voulez-vous être rappelé ?',
+    aviso_semana: 'Une semaine avant',
+    aviso_tres: 'Trois jours avant',
+    aviso_vespera: 'La veille au soir (heure d’allumer la bougie)',
+    aviso_dia: 'Le matin du jour',
     setup_child_q: 'La personne défunte était-elle un homme ou une femme ?',
     setup_child_m: 'Homme',
     setup_child_f: 'Femme',
-    setup_mother: 'Nom de la mère du défunt',
-    setup_father: 'Nom du père du défunt',
+    setup_mother: 'Nom de la mère du défunt (de préférence en hébreu)',
+    setup_father: 'Nom du père du défunt (de préférence en hébreu)',
     setup_sunset_q: 'Le décès a-t-il eu lieu avant ou après le coucher du soleil ?',
     setup_before_sunset: 'Avant le coucher du soleil',
     setup_after_sunset: 'Après le coucher du soleil',
@@ -5844,7 +5911,7 @@ const I18N = {
     nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Deve essere recitato normalmente in sinagoga durante il periodo di lutto.',
     learn_title: 'Perché diciamo il Kaddish?',
     learn_oque: 'Che cos\'è il Kaddish?',
-    learn_chabad: 'Dove trovare un Beit Chabad?',
+    learn_chabad: 'Dove recitare il Kaddish?',
     instalar_titulo: 'Tenere il Kaddish sullo schermo del telefono',
     instalar_como: 'Come si fa',
     passo_ios_1: 'Tocchi il pulsante <b>Condividi</b> — il quadrato con la freccia verso l’alto, nella barra di Safari.',
@@ -5856,18 +5923,23 @@ const I18N = {
     aviso_embutido_android: 'Ha aperto questa pagina <b>dentro un’altra app</b>. Quella finestrella non sa creare icone. Copi l’indirizzo, apra <b>Chrome</b> e lo incolli nella barra in alto.',
     copiar_endereco: 'Copiare l’indirizzo',
     endereco_copiado: 'Indirizzo copiato. Ora apra Safari e lo incolli nella barra in alto.', instalar_ios: 'Tocchi Condividi e poi "Aggiungi a Home".', instalar_android: 'Installa', instalar_agora_nao: 'Non ora',
-    learn_title_curto: 'Perché si dice', learn_oque_curto: 'Che cos’è', learn_chabad_curto: 'Beit Chabad',
+    learn_title_curto: 'Perché si dice', learn_oque_curto: 'Che cos’è', learn_chabad_curto: 'Dove pregare?',
     ler_mais: 'Leggi il testo completo →', learn_sub: 'Il significato, la storia e chi lo istituì',
     studio_banner: 'Modalità Studio · registra direttamente o carica audio da Memo Vocali',
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
     setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
-    setup_name: 'Nome (in italiano)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
+    setup_name: 'Nome (preferibilmente in ebraico)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
     setup_relation: 'Relazione', setup_death_date: 'Data del decesso (necessaria per lo yahrzeit)',
+    setup_avisos_q: 'Quando vuole essere avvisato?',
+    aviso_semana: 'Una settimana prima',
+    aviso_tres: 'Tre giorni prima',
+    aviso_vespera: 'Il pomeriggio prima (ora di accendere la candela)',
+    aviso_dia: 'La mattina del giorno',
     setup_child_q: 'Il/La defunto(a) era uomo o donna?',
     setup_child_m: 'Uomo',
     setup_child_f: 'Donna',
-    setup_mother: 'Nome della madre del defunto',
-    setup_father: 'Nome del padre del defunto',
+    setup_mother: 'Nome della madre del defunto (preferibilmente in ebraico)',
+    setup_father: 'Nome del padre del defunto (preferibilmente in ebraico)',
     setup_sunset_q: 'Il decesso è avvenuto prima o dopo il tramonto?',
     setup_before_sunset: 'Prima del tramonto',
     setup_after_sunset: 'Dopo il tramonto',
@@ -5924,7 +5996,7 @@ const I18N = {
     nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es soll in der Regel während der Trauerzeit in einer Synagoge gesprochen werden.',
     learn_title: 'Warum sagen wir das Kaddisch?',
     learn_oque: 'Was ist das Kaddisch?',
-    learn_chabad: 'Wo findet man ein Chabad-Haus?',
+    learn_chabad: 'Wo das Kaddisch beten?',
     instalar_titulo: 'Das Kaddisch auf dem Telefon behalten',
     instalar_como: 'So geht es',
     passo_ios_1: 'Tippen Sie auf <b>Teilen</b> — das Quadrat mit dem Pfeil nach oben, in der Safari-Leiste.',
@@ -5936,18 +6008,23 @@ const I18N = {
     aviso_embutido_android: 'Sie haben diese Seite <b>innerhalb einer anderen App</b> geöffnet. Dieses kleine Fenster kann keine Symbole anlegen. Kopieren Sie die Adresse, öffnen Sie <b>Chrome</b> und fügen Sie sie oben in die Leiste ein.',
     copiar_endereco: 'Adresse kopieren',
     endereco_copiado: 'Adresse kopiert. Öffnen Sie nun Safari und fügen Sie sie oben in die Leiste ein.', instalar_ios: 'Tippen Sie auf Teilen und dann "Zum Home-Bildschirm".', instalar_android: 'Installieren', instalar_agora_nao: 'Jetzt nicht',
-    learn_title_curto: 'Warum?', learn_oque_curto: 'Was ist es?', learn_chabad_curto: 'Chabad-Haus',
+    learn_title_curto: 'Warum?', learn_oque_curto: 'Was ist es?', learn_chabad_curto: 'Wo beten?',
     ler_mais: 'Den vollständigen Text lesen →', learn_sub: 'Die Bedeutung, die Geschichte und wer es einsetzte',
     studio_banner: 'Studio-Modus · direkt aufnehmen oder Audio aus Sprachmemos laden',
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
     setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
-    setup_name: 'Name (auf Deutsch)', setup_hebrew_name: 'Hebräischer Name (optional)',
+    setup_name: 'Name (möglichst auf Hebräisch)', setup_hebrew_name: 'Hebräischer Name (optional)',
     setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (für den Jahrzeit nötig)',
+    setup_avisos_q: 'Wann möchten Sie erinnert werden?',
+    aviso_semana: 'Eine Woche vorher',
+    aviso_tres: 'Drei Tage vorher',
+    aviso_vespera: 'Am Nachmittag davor (Zeit, die Kerze anzuzünden)',
+    aviso_dia: 'Am Morgen des Tages',
     setup_child_q: 'War die verstorbene Person ein Mann oder eine Frau?',
     setup_child_m: 'Mann',
     setup_child_f: 'Frau',
-    setup_mother: 'Name der Mutter des Verstorbenen',
-    setup_father: 'Name des Vaters des Verstorbenen',
+    setup_mother: 'Name der Mutter des/der Verstorbenen (möglichst auf Hebräisch)',
+    setup_father: 'Name des Vaters des/der Verstorbenen (möglichst auf Hebräisch)',
     setup_sunset_q: 'Trat der Tod vor oder nach Sonnenuntergang ein?',
     setup_before_sunset: 'Vor Sonnenuntergang',
     setup_after_sunset: 'Nach Sonnenuntergang',
@@ -6004,7 +6081,7 @@ const I18N = {
     nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Обычно его следует читать в синагоге в течение траурного периода.',
     learn_title: 'Почему мы читаем Кадиш?',
     learn_oque: 'Что такое кадиш?',
-    learn_chabad: 'Где найти Бейт Хабад?',
+    learn_chabad: 'Где читать кадиш?',
     instalar_titulo: 'Оставить кадиш на экране телефона',
     instalar_como: 'Как это сделать',
     passo_ios_1: 'Нажмите кнопку <b>«Поделиться»</b> — квадрат со стрелкой вверх, в панели Safari.',
@@ -6016,18 +6093,23 @@ const I18N = {
     aviso_embutido_android: 'Вы открыли эту страницу <b>внутри другого приложения</b>. Такое окошко не умеет создавать значки. Скопируйте адрес, откройте <b>Chrome</b> и вставьте его в верхнюю строку.',
     copiar_endereco: 'Скопировать адрес',
     endereco_copiado: 'Адрес скопирован. Теперь откройте Safari и вставьте его в верхнюю строку.', instalar_ios: 'Нажмите «Поделиться», затем «На экран «Домой»».', instalar_android: 'Установить', instalar_agora_nao: 'Не сейчас',
-    learn_title_curto: 'Почему?', learn_oque_curto: 'Что это?', learn_chabad_curto: 'Бейт Хабад',
+    learn_title_curto: 'Почему?', learn_oque_curto: 'Что это?', learn_chabad_curto: 'Где молиться?',
     ler_mais: 'Читать полный текст →', learn_sub: 'Значение, история и происхождение',
     studio_banner: 'Режим Студия · записывайте или загружайте аудио из Голосовых заметок',
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
     setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
-    setup_name: 'Имя (по-русски)', setup_hebrew_name: 'Еврейское имя (опционально)',
+    setup_name: 'Имя (желательно на иврите)', setup_hebrew_name: 'Еврейское имя (опционально)',
     setup_relation: 'Отношение', setup_death_date: 'Дата кончины (требуется для йорцайта)',
+    setup_avisos_q: 'Когда вам напомнить?',
+    aviso_semana: 'За неделю',
+    aviso_tres: 'За три дня',
+    aviso_vespera: 'Накануне днём (время зажечь свечу)',
+    aviso_dia: 'Утром в этот день',
     setup_child_q: 'Покойный был мужчиной или женщиной?',
     setup_child_m: 'Мужчина',
     setup_child_f: 'Женщина',
-    setup_mother: 'Имя матери покойного',
-    setup_father: 'Имя отца покойного',
+    setup_mother: 'Имя матери покойного(ой) (желательно на иврите)',
+    setup_father: 'Имя отца покойного(ой) (желательно на иврите)',
     setup_sunset_q: 'Смерть наступила до или после захода солнца?',
     setup_before_sunset: 'До захода солнца',
     setup_after_sunset: 'После захода солнца',
@@ -6084,7 +6166,7 @@ const I18N = {
     nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'רגילים לאומרו בבית הכנסת במשך תקופת האבלות.',
     learn_title: 'מדוע אומרים קדיש?',
     learn_oque: 'מהו הקדיש?',
-    learn_chabad: 'היכן למצוא בית חב"ד?',
+    learn_chabad: 'היכן לומר את הקדיש?',
     instalar_titulo: 'להשאיר את הקדיש במסך הטלפון',
     instalar_como: 'איך עושים',
     passo_ios_1: 'הקישו על כפתור <b>שיתוף</b> — הריבוע עם החץ כלפי מעלה, בסרגל של ספארי.',
@@ -6096,18 +6178,23 @@ const I18N = {
     aviso_embutido_android: 'פתחתם את הדף הזה <b>מתוך אפליקציה אחרת</b>. החלון הקטן הזה לא יודע ליצור סמלים. העתיקו את הכתובת, פתחו את <b>כרום</b> והדביקו בשורה העליונה.',
     copiar_endereco: 'העתקת הכתובת',
     endereco_copiado: 'הכתובת הועתקה. עכשיו פתחו את ספארי והדביקו בשורה העליונה.', instalar_ios: 'הקישו על שיתוף ואז על "הוסף למסך הבית".', instalar_android: 'התקנה', instalar_agora_nao: 'לא עכשיו',
-    learn_title_curto: 'למה אומרים', learn_oque_curto: 'מה זה', learn_chabad_curto: 'בית חב"ד',
+    learn_title_curto: 'למה אומרים', learn_oque_curto: 'מה זה', learn_chabad_curto: 'היכן להתפלל?',
     ler_mais: 'לקריאת הטקסט המלא →', learn_sub: 'המשמעות, ההיסטוריה והמקור',
     studio_banner: 'מצב סטודיו · הקלט ישירות או העלה אודיו',
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',
     setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',
-    setup_name: 'שם', setup_hebrew_name: 'שם עברי (אופציונלי)',
+    setup_name: 'שם (רצוי בעברית)', setup_hebrew_name: 'שם עברי (אופציונלי)',
     setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (נדרש ליארצייט)',
+    setup_avisos_q: 'מתי להזכיר לכם?',
+    aviso_semana: 'שבוע לפני',
+    aviso_tres: 'שלושה ימים לפני',
+    aviso_vespera: 'אחר הצהריים שלפני (זמן הדלקת הנר)',
+    aviso_dia: 'בבוקר היום עצמו',
     setup_child_q: 'הנפטר היה גבר או אישה?',
     setup_child_m: 'גבר',
     setup_child_f: 'אישה',
-    setup_mother: 'שם אמו של הנפטר',
-    setup_father: 'שם אביו של הנפטר',
+    setup_mother: 'שם אמו/ה של הנפטר/ת (רצוי בעברית)',
+    setup_father: 'שם אביו/ה של הנפטר/ת (רצוי בעברית)',
     setup_sunset_q: 'הפטירה הייתה לפני או אחרי שקיעת החמה?',
     setup_before_sunset: 'לפני השקיעה',
     setup_after_sunset: 'אחרי השקיעה',
@@ -6891,7 +6978,9 @@ function icsDeTodos(nussach, lang) {
   d.lista.forEach(pes => {
     if (!pes.deathDate) return;
     let bruto = '';
-    try { bruto = Yahrzeit.gerarICS(dataDaMorte(pes), nussach, pes.name || '', 20, lang); }
+    // os avisos que ELE pediu para esta pessoa; sem lista, os quatro de sempre
+    try { bruto = Yahrzeit.gerarICS(dataDaMorte(pes), nussach, pes.name || '', 20, lang,
+                                    Array.isArray(pes.avisos) ? pes.avisos : null); }
     catch (e) { return; }
     const linhas = bruto.split(/\r?\n/);
     let dentro = false;
@@ -6968,6 +7057,28 @@ function lerSeg(id) {
   });
 });
 
+// As caixinhas dos avisos, lidas e marcadas por uma conta so (11/09).
+// Sem lista guardada valem OS QUATRO — e o que o app sempre fez, e quem
+// cadastrou antes de hoje nao pode perder aviso nenhum por causa disto.
+const AVISOS_TODOS = ['semana', 'tres', 'vespera', 'dia'];
+
+function lerAvisos() {
+  const cx = document.getElementById('setupAvisos');
+  if (!cx) return AVISOS_TODOS.slice();
+  const q = [...cx.querySelectorAll('input[type=checkbox]')]
+    .filter(x => x.checked).map(x => x.value);
+  return q;   // pode vir VAZIA: quem desmarcou tudo nao quer aviso nenhum
+}
+
+function marcarAvisos(lista) {
+  const cx = document.getElementById('setupAvisos');
+  if (!cx) return;
+  const quais = Array.isArray(lista) ? lista : AVISOS_TODOS;
+  cx.querySelectorAll('input[type=checkbox]').forEach(x => {
+    x.checked = quais.indexOf(x.value) >= 0;
+  });
+}
+
 function abrirCadastro(id) {
   const d = carregarMemoriais();
   const m = id ? d.lista.find(x => x.id === id) : null;
@@ -6980,6 +7091,7 @@ function abrirCadastro(id) {
   document.getElementById('setupDeathDate').value = m ? (m.deathDate || '') : '';
   marcarSeg('setupSexo', m ? (m.sexo || '') : '');
   marcarSeg('setupPorDoSol', m ? (m.aposPorDoSol ? 'depois' : (m.deathDate ? 'antes' : '')) : '');
+  marcarAvisos(m && Array.isArray(m.avisos) ? m.avisos : AVISOS_TODOS);
   const aj = document.getElementById('settingsOverlay');
   if (aj) aj.classList.remove('show');
   document.getElementById('setupModal').classList.add('show');
@@ -7003,8 +7115,16 @@ function pintarMemLista() {
     nome.textContent = pes.name || '';
     esc.append(ponto, nome);
     esc.addEventListener('click', () => escolherPessoa(pes.id));
+    // 11/09 — O BOTAO DIZ A PALAVRA, e nao um lapis. Ele pediu "poder clicar
+    // no nome e alterar" — e dava, pelo ✎, que ele nao achou. E o mesmo
+    // defeito de linguagem do "Modo Reza" de 28/08: um desenho que so quem ja
+    // sabe entende. A palavra "Editar" ja existia nas 8 (mem_editar); o que
+    // mudou e que ela aparece em vez de ficar so no `title`, que no telefone
+    // ninguem ve porque nao ha mouse parado em cima.
     const ed = document.createElement('button');
-    ed.type = 'button'; ed.className = 'mem-acao'; ed.textContent = '✎';
+    ed.type = 'button'; ed.className = 'mem-acao mem-editar';
+    ed.textContent = frase('mem_editar');
+    ed.setAttribute('data-i18n', 'mem_editar');
     ed.title = frase('mem_editar'); ed.setAttribute('aria-label', ed.title);
     ed.addEventListener('click', () => abrirCadastro(pes.id));
     const rm = document.createElement('button');
@@ -7028,7 +7148,8 @@ document.getElementById('setupSave').addEventListener('click', () => {
     pai: document.getElementById('setupPai').value.trim(),
     relation: document.getElementById('setupRelation').value.trim(),
     deathDate: document.getElementById('setupDeathDate').value,
-    aposPorDoSol: lerSeg('setupPorDoSol') === 'depois'
+    aposPorDoSol: lerSeg('setupPorDoSol') === 'depois',
+    avisos: lerAvisos()
   };
   if (!m.name) { showToast(TXT('toast_need_name')); return; }
   saveMemorial(m);

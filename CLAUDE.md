@@ -2230,3 +2230,58 @@ era *"no iPhone a pessoa é ensinada, na língua dela"*, e essa garantia não
 encolheu — mudou de lugar. Agora ela cobra o botão **"Como faço"** (visível, com
 texto próprio da língua e nos 30px de piso), e os passos em si continuam
 conferidos um a um, nas 8, logo abaixo. É mais do que antes, não menos.
+
+## O nome em hebraico, os lembretes escolhíveis, e "Onde rezar?" (11/09, v56)
+
+Ele mandou seis coisas num "último teste". As do app entraram aqui; o domínio
+saiu numa versão própria.
+
+**1. Os rótulos pedem hebraico**, nas 8: *"Nome (de preferência em hebraico)"*,
+*"Nome da mãe do(a) falecido(a) (de preferência em hebraico)"* e o mesmo para o
+pai. O exemplo do campo virou `חיים בן עזרא`. É a prática tradicional — o nome
+com que se reza é o hebraico.
+
+**2. "Haim Chalom filho de Tera e Ezra" virou UMA frase**, e agora aparece
+também no telefone. Ele: *"ao invés de 'em memória de Haim' deve ser 'Haim
+filho de Tera (mãe) e Ezra (pai)'"*. O motivo de ele estar vendo só o nome
+estava escrito no CSS: a filiação era um bloco separado embaixo e **saía do
+telefone** desde 09/09, pela briga dos 50px. Agora é `display: inline` dentro da
+frase do nome, a 0,86em. Medido: **43% aos versos** no iPhone SE, acima do piso
+de 40%, e a dedicatória mede 22px.
+
+**3. O botão de editar diz a PALAVRA.** Ele: *"poder clicar no nome e alterar"*
+— e dava, pelo **✎**, que ele não achou. É o mesmo defeito de linguagem do
+"Modo Reza" de 28/08: um desenho que só quem já sabe entende. A palavra
+`mem_editar` já existia nas 8; o que mudou é que ela aparece, em vez de ficar só
+no `title` — que num telefone ninguém vê, porque não há mouse parado em cima.
+
+**4. Os lembretes do calendário viraram escolha**, quatro caixinhas **todas
+marcadas**: quem não mexer em nada continua com os quatro avisos por 20 anos,
+exatamente como antes. E aqui houve um defeito meu, pego na prova:
+
+> **NÃO PEDIR é diferente de PEDIR NENHUM.** Na primeira versão, `[]` caía no
+> padrão e devolvia os quatro avisos a quem tinha desmarcado as quatro caixinhas
+> de propósito. Agora `null` (não pediu) → os quatro; `[]` (pediu nenhum) → o
+> evento entra no calendário sem despertador.
+
+Provado: 80 alarmes sem escolha · 0 com `[]` · 20 só com "no dia" · 40 com dois
+· sempre 20 eventos.
+
+**5. "Beit Chabad" virou "Onde rezar?"** (e "Onde rezar o Kadish?" nas telas
+grandes), escolha dele entre quatro. Não exclui ninguém — serve para sinagoga,
+minyan ou Beit Chabad — e o pop-up continua levando ao diretório do Chabad, que
+é o único que temos.
+
+**6. O campo "Nome hebraico (opcional)" saiu da TELA, e o dado NÃO saiu.** Com o
+campo do nome pedindo hebraico, eram duas contas para a mesma pergunta — o
+defeito que este projeto mais pagou caro. **Mas apagar o `<input>` do HTML teria
+apagado o nome hebraico de quem já cadastrou**, calado: o `setupSave` lê o campo
+e grava, então sem campo ele gravaria vazio no primeiro toque em Salvar. Ele
+virou `type="hidden"`. Provado num navegador: abrindo e salvando um cadastro
+antigo, o `חיים בן עזרא` continua guardado e continua na tela ao lado do nome.
+
+**Uma nota sobre uma checagem vermelha que NÃO era defeito:** a
+`testar-instalar` reprovou com `ERR_CONNECTION_REFUSED` porque duas rodadas
+disputaram a porta 8896 e o servidor não estava de pé. Rodada sozinha, verde.
+Isso não é motivo para confiar num vermelho — é motivo para ler o vermelho antes
+de chamá-lo de falso.

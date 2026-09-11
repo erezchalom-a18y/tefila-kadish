@@ -192,15 +192,30 @@
   const paraICS = d => `${d.getFullYear()}${doisDig(d.getMonth() + 1)}${doisDig(d.getDate())}`;
 
   /**
-   * Arquivo .ics com os proximos yahrzeits e QUATRO avisos em cada um.
+   * Arquivo .ics com os proximos yahrzeits e os avisos PEDIDOS em cada um
+   * (por padrao os quatro; ver `avisosPedidos`).
    *
    * Por que arquivo de calendario e nao aviso do navegador: aviso de navegador
    * no iPhone so funciona se a pessoa adicionar o app a tela de inicio, e para
    * de valer se ela limpar os dados. O calendario do telefone avisa sempre,
    * inclusive com o telefone no silencioso e sem internet.
    */
-  function gerarICS(falecimento, nussach, nome, quantos, lingua) {
+  function gerarICS(falecimento, nussach, nome, quantos, lingua, avisosPedidos) {
     const T = textos(lingua);
+    // 11/09 — QUAIS avisos passou a ser escolha de quem cadastra. Ele: "no
+    // adicionar ao calendario, perguntar quando quer ser lembrado". Sem lista
+    // vale o que sempre valeu — os quatro —, para quem ja tinha cadastrado e
+    // para quem nao mexer em nada nao mudar coisa nenhuma.
+    // NAO PEDIR e diferente de PEDIR NENHUM, e confundir os dois seria devolver
+    // quatro avisos a quem desmarcou as quatro caixinhas de proposito.
+    //   null / undefined  -> os quatro (quem cadastrou antes de 11/09, e quem
+    //                        nao mexeu em nada)
+    //   []                -> nenhum (ele desmarcou tudo; o evento entra no
+    //                        calendario sem despertador)
+    const TODOS = ['semana', 'tres', 'vespera', 'dia'];
+    const quais = Array.isArray(avisosPedidos)
+      ? TODOS.filter(x => avisosPedidos.indexOf(x) >= 0)
+      : TODOS;
     const lista = proximos(falecimento, nussach, quantos || 20, null, lingua);
     const l = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Tefila Kadish//Yahrzeit//PT',
                'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
@@ -213,9 +228,12 @@
       l.push(`DTEND;VALUE=DATE:${paraICS(fim)}`);
       l.push(`SUMMARY:${titulo}`);
       l.push(`DESCRIPTION:${y.rotulo}. ${T.vela}${y.avisos.length ? ' — ' + y.avisos.join(' ') : ''}`);
-      // uma semana antes, tres dias antes, tarde da vespera, manha do dia
-      [['-P7D', T.av7], ['-P3D', T.av3],
-       ['-PT8H', T.avVespera], ['PT8H', T.avHoje]].forEach(([quando, texto]) => {
+      // uma semana antes, tres dias antes, tarde da vespera, manha do dia —
+      // agora so os que ele pediu (ver `quais`, acima).
+      const ALARMES = { semana: ['-P7D', T.av7], tres: ['-P3D', T.av3],
+                        vespera: ['-PT8H', T.avVespera], dia: ['PT8H', T.avHoje] };
+      quais.forEach((k) => {
+        const [quando, texto] = ALARMES[k];
         l.push('BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:${quando}`, `DESCRIPTION:${texto}`, 'END:VALARM');
       });
       l.push('END:VEVENT');
