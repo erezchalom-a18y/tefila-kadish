@@ -22,7 +22,11 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
 
-const ENDERECO = 'https://erezchalom-a18y.github.io/tefila-kadish/';
+// 11/09 — O ENDERECO E O kadish.app, comprado por ele hoje. O antigo
+// (erezchalom-a18y.github.io/tefila-kadish) continua funcionando: o GitHub o
+// redireciona sozinho, entao quem ja tem o link ou ja pos o icone na tela nao
+// se perde. Mas o QR aponta para o NOVO, que e o que vai para a parede.
+const ENDERECO = 'https://kadish.app/';
 
 mkdirSync('qr', { recursive: true });
 execFileSync('python3', ['-c', `

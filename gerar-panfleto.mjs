@@ -27,7 +27,7 @@ import { mkdirSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
-const ENDERECO = 'https://erezchalom-a18y.github.io/tefila-kadish/';
+const ENDERECO = 'https://kadish.app/';   // 11/09 — o dominio dele
 const PORTA = 8912;
 
 const pedidas = process.argv.slice(2).filter(x => LINGUAS.includes(x));
@@ -57,7 +57,7 @@ for (const lang of alvo) {
   provisorios.push(tmp);
   const tela = await pag.evaluate(() => ({
     itens: document.querySelectorAll('#oque li').length,
-    endereco: document.body.textContent.includes('erezchalom'),
+    endereco: /erezchalom|kadish\.app/.test(document.body.textContent),
     // A instrucao do icone (10/09). Ele cobrou, com razao, que "com esse qr
     // code nao instala o icone no iphone" — nenhum QR instala nada, e o papel
     // tem de ensinar os dois toques que a Apple exige.
