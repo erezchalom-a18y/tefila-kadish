@@ -2379,3 +2379,32 @@ medição vem de um lugar que pode estar cego, a primeira pergunta é se o
 instrumento enxerga** — não o que o número diz. Neste ambiente, `403` e `000`
 em endereço externo são suspeitos de proxy até prova em contrário; quem tem a
 resposta sobre o `kadish.app` é o navegador dele.
+
+**E no dia seguinte eu quase repeti o erro com um instrumento mais sofisticado.**
+Abri um soquete direto nos quatro IPs do GitHub e pedi o certificado com SNI
+`kadish.app`, para conferir se o HTTPS estava emitido. Voltou vazio nos quatro,
+e eu escrevi "não serve · certificado vazio" — contra uma tela do GitHub que
+dizia *"Your site is live"*, DNS ✓ e Enforce HTTPS marcado.
+
+Duas coisas erradas nessa medida, e as duas são de método:
+
+1. **O `getpeercert()` do Python devolve `{}` quando `verify_mode` é
+   `CERT_NONE`.** Não era "certificado vazio"; era a biblioteca não montando o
+   dicionário. Pedindo `binary_form=True` o certificado aparece inteiro. Medi a
+   coisa errada — o mesmo formato da caixa do glifo de 10/09.
+2. **E o certificado que aparece não é do GitHub:**
+
+   ```
+   subject = CN = kadish.app
+   issuer  = O = Anthropic, CN = Egress Gateway SDS Issuing CA (production)
+   ```
+
+   Ou seja, o soquete "direto" nem sai daqui: o proxy do contêiner termina o
+   TLS e assina um certificado dele. **Não existe medida de `kadish.app` feita
+   deste ambiente** — nem por `curl`, nem por soquete cru. O que eu chamava de
+   prova era o proxy me respondendo.
+
+A regra ganha dentes: neste contêiner, antes de afirmar qualquer coisa sobre um
+endereço de fora, **olhar quem assinou o certificado**. Se for a Anthropic, a
+medida é do proxy e não vale.
+
