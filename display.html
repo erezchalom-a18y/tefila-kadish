@@ -20,6 +20,7 @@
 
   ?lang=pt|en|es|fr|it|de|ru|he    Imprimir: abrir e mandar imprimir.
 -->
+<script src="./textos-impressos.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
@@ -70,6 +71,37 @@
   .f-C .qr{width:50mm;height:50mm;margin:4mm 0 0}
   .f-C .endereco{font-size:15px;margin-top:2mm}
 
+  /* ---- D e E · as completas: tudo o que a folha A4 diz, no cartao ---- */
+  .colunas{display:flex;gap:4mm;width:100%;text-align:left;margin-top:4mm}
+  .col{flex:1;min-width:0}
+  .col h2{font-family:'Cormorant Garamond',serif;font-size:11.5px;font-weight:600;
+          color:var(--brass);margin:0 0 2px}
+  .lista{margin:0;padding-left:11px;font-size:8.6px;line-height:1.32}
+  .lista li{margin-bottom:1.6px}
+  .nota-minyan{margin-top:3mm;padding:2mm 2.5mm;border-radius:5px;
+               border:1px solid var(--linha);border-left:3px solid var(--brass);
+               background:rgba(212,162,90,.10);font-size:8.4px;line-height:1.35;
+               color:var(--soft);text-align:center}
+  html[dir=rtl] .colunas{text-align:right}
+  html[dir=rtl] .lista{padding-left:0;padding-right:11px}
+  html[dir=rtl] .nota-minyan{border-left:1px solid var(--linha);border-right:3px solid var(--brass)}
+
+  .f-D .marca{font-size:19px}
+  .f-D .sub{font-size:9.6px;margin-top:2px}
+  .f-D .qr{width:38mm;height:38mm;margin:3mm 0 0}
+  .f-D .endereco{font-size:14px;margin-top:1.5mm}
+  .f-D .passo{font-size:8.6px;line-height:1.32;margin-bottom:3px}
+  .f-D .passo b{font-size:11px;flex:0 0 9px}
+
+  .f-E .heb{font-size:15px}
+  .f-E .heb-tl{font-size:9px}
+  .f-E .regua{margin:2.5mm 0 0}
+  .f-E .marca{font-size:17px;margin-top:2.5mm}
+  .f-E .qr{width:34mm;height:34mm;margin:2.5mm 0 0}
+  .f-E .endereco{font-size:13px;margin-top:1.5mm}
+  .f-E .passo{font-size:8.4px;line-height:1.3;margin-bottom:3px}
+  .f-E .passo b{font-size:10.5px;flex:0 0 9px}
+
   .rodape{font-size:9.5px;padding-top:3mm}
   .imprimir{position:fixed;top:14px;right:14px;background:var(--brass);color:#fff;
             border:0;border-radius:8px;padding:9px 15px;font-family:Lora,serif;font-size:13px;cursor:pointer}
@@ -82,40 +114,7 @@
 <script>
 // Nas 8 linguas. As frases vem do panfleto.html — sao as MESMAS palavras, para
 // o cartao e a folha nao dizerem coisas diferentes na mesma sinagoga.
-const T = {
- pt:{dir:'ltr',sub:'Um app para ensinar a falar o Kadish palavra por palavra, com a voz do rabino.',
-     leg:'Aponte a câmera do telefone.',
-     passos:['Aponte a câmera para o código.','Escolha a sua tradição e o tipo de Kadish.','Acompanhe: a palavra que soa fica acesa.'],
-     nota:'Grátis · sem cadastro · sem anúncios · em 8 línguas'},
- en:{dir:'ltr',sub:'An app to teach you to say the Kaddish word by word, with the rabbi’s voice.',
-     leg:'Point your phone’s camera.',
-     passos:['Point the camera at the code.','Choose your tradition and the kind of Kaddish.','Follow along: the word being said lights up.'],
-     nota:'Free · no sign-up · no advertising · in 8 languages'},
- es:{dir:'ltr',sub:'Una app para enseñar a decir el Kadish palabra por palabra, con la voz del rabino.',
-     leg:'Apunte la cámara del teléfono.',
-     passos:['Apunte la cámara al código.','Elija su tradición y el tipo de Kadish.','Siga: la palabra que suena se enciende.'],
-     nota:'Gratis · sin registro · sin publicidad · en 8 idiomas'},
- fr:{dir:'ltr',sub:'Une application pour apprendre à dire le Kaddish mot à mot, avec la voix du rabbin.',
-     leg:'Dirigez la caméra du téléphone.',
-     passos:['Dirigez la caméra vers le code.','Choisissez votre tradition et le type de Kaddish.','Suivez : le mot prononcé s’allume.'],
-     nota:'Gratuit · sans inscription · sans publicité · en 8 langues'},
- it:{dir:'ltr',sub:'Un’app per imparare a dire il Kaddish parola per parola, con la voce del rabbino.',
-     leg:'Inquadri con la fotocamera.',
-     passos:['Inquadri il codice con la fotocamera.','Scelga la sua tradizione e il tipo di Kaddish.','Segua: la parola pronunciata si illumina.'],
-     nota:'Gratuita · senza registrazione · senza pubblicità · in 8 lingue'},
- de:{dir:'ltr',sub:'Eine App, um das Kaddisch Wort für Wort sprechen zu lernen, mit der Stimme des Rabbiners.',
-     leg:'Richten Sie die Kamera darauf.',
-     passos:['Die Kamera auf den Code richten.','Ritus und Art des Kaddisch wählen.','Mitlesen: das gesprochene Wort leuchtet auf.'],
-     nota:'Kostenlos · ohne Anmeldung · ohne Werbung · in 8 Sprachen'},
- ru:{dir:'ltr',sub:'Приложение, чтобы научиться произносить кадиш слово за словом, с голосом раввина.',
-     leg:'Наведите камеру телефона.',
-     passos:['Наведите камеру на код.','Выберите традицию и вид кадиша.','Следите: произносимое слово подсвечивается.'],
-     nota:'Бесплатно · без регистрации · без рекламы · на 8 языках'},
- he:{dir:'rtl',sub:'אפליקציה ללמוד לומר את הקדיש מילה במילה, בקולו של הרב.',
-     leg:'כוונו את מצלמת הטלפון.',
-     passos:['כוונו את המצלמה אל הקוד.','בחרו את הנוסח ואת סוג הקדיש.','עקבו: המילה הנאמרת נדלקת.'],
-     nota:'חינם · ללא הרשמה · ללא פרסומות · בשמונה שפות'},
-};
+const T = window.TEXTOS_IMPRESSOS;
 const q = new URLSearchParams(location.search);
 const lingua = (q.get('lang') || 'pt').toLowerCase();
 const forma = (q.get('f') || 'A').toUpperCase();
@@ -125,18 +124,40 @@ document.documentElement.dir = t.dir;
 const esc = x => String(x).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const QR = '<img class="qr" src="./qr/kadish.svg" alt="QR">';
 const ENDERECO = '<div class="endereco">kadish.app</div>';
-const RODAPE = `<div class="rodape">${esc(t.nota)}</div>`;
+// `nota` e a frase do minyan e `rodape` e o "Gratuito · sem cadastro" — sao
+// campos diferentes na tabela compartilhada. Na primeira volta eu pus `nota`
+// aqui e a frase do minyan saiu DUAS VEZES no mesmo cartao: na caixa e no
+// rodape. A medida nao viu (nada transbordava); a foto viu.
+const RODAPE = `<div class="rodape">${esc(t.rodape)}</div>`;
 const HEB = '<div class="heb">יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא</div>' +
             '<div class="heb-tl">Yitgadal veyitkadash shemê raba</div>';
+// 11/09 — "achei que ficou muito curto, favor incluir as explicacoes e mais
+// features". As formas D e E poem no cartao o MESMO conteudo do A4: os tres
+// passos, os cinco itens do que o app faz, e a nota do minyan. Cabe porque as
+// duas listas vao LADO A LADO — 100mm de largura sao 86mm uteis, e empilhar as
+// duas gastaria altura que o cartao nao tem.
+const DUAS_COLUNAS = (t) => `<div class="colunas">
+   <div class="col"><h2>${esc(t.hComo)}</h2>${t.passos.map((p,i)=>
+      `<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`).join('')}</div>
+   <div class="col"><h2>${esc(t.hOque)}</h2><ul class="lista">${t.oque.map(x=>
+      `<li>${esc(x)}</li>`).join('')}</ul></div>
+ </div>`;
+const NOTA_MINYAN = (t) => `<div class="nota-minyan">${esc(t.nota)}</div>`;
+
 const formas = {
  A: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
      <div class="regua"></div>${QR}
-     <div class="legenda">${esc(t.leg)}</div>${ENDERECO}${RODAPE}`,
+     <div class="legenda">${esc(t.qr)}</div>${ENDERECO}${RODAPE}`,
  B: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
      ${QR}${ENDERECO}
      <div class="passos">${t.passos.map((p,i)=>
         `<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`).join('')}</div>
      ${RODAPE}`,
+ D: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
+     ${QR}${ENDERECO}${DUAS_COLUNAS(t)}${NOTA_MINYAN(t)}${RODAPE}`,
+ E: `${HEB}<div class="regua"></div>
+     <div class="marca">Kadish</div>
+     ${QR}${ENDERECO}${DUAS_COLUNAS(t)}${NOTA_MINYAN(t)}${RODAPE}`,
  C: `${HEB}<div class="regua"></div>
      <div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
      ${QR}${ENDERECO}${RODAPE}`,

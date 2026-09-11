@@ -2317,3 +2317,40 @@ digita.
 **Uma pergunta que não é minha, e ficou dita a ele:** a forma **C** põe o texto
 do Kadish num cartão que fica em cima de uma mesa, e isso tem implicação de
 respeito ao texto sagrado. É do rabino. A e B não têm essa questão.
+
+### As formas COMPLETAS, e o arquivo de textos que nasceu daí (11/09)
+
+Ele, vendo as três primeiras: *"achei que ficou muito curto, favor incluir as
+explicações e mais features"*. Entraram a **D** (completa) e a **E** (completa
+com o hebraico): o MESMO conteúdo da folha A4 — os três passos, os cinco itens
+do que o app faz e a nota do minyan — num cartão de 10 × 15 cm. Cabe porque as
+duas listas vão **lado a lado**: 100mm de largura são 86mm úteis, e empilhá-las
+gastaria altura que o cartão não tem.
+
+**Daí nasceu o `textos-impressos.js`.** A saída óbvia era copiar as frases do
+panfleto para o cartão — e seriam **duas cópias das mesmas palavras em 8
+línguas**. No dia em que alguém corrigisse uma só, a folha da parede e o cartão
+da mesa passariam a dizer coisas diferentes na mesma sinagoga, sem nada acusar.
+É o defeito de sempre com outro nome. Agora os dois leem o mesmo arquivo, e as
+frases foram MOVIDAS sem uma letra mudada — o `gerar-panfleto.mjs` prova, a cada
+rodada, que o A4 continua igual.
+
+**Três defeitos apareceram, e os três são sobre medir:**
+
+1. **A minha conta de "transbordou?" estava cega.** Eu perguntava se o
+   `scrollHeight` cresceu — e o cartão tem `overflow: hidden`, onde texto
+   cortado aparece como se coubesse. Deu "sobra 0px" nas vinte medidas, idêntico,
+   que é o cheiro de uma conta que não mede nada. A pergunta certa é **"algum
+   filho passa da borda de baixo?"**.
+2. **A nota do minyan saía DUAS VEZES** no mesmo cartão, na caixa e no rodapé:
+   ao passar para a tabela compartilhada, o rodapé pegou o campo `nota` (que é a
+   frase do minyan) em vez do `rodape`. **Nenhuma medida viu; a foto viu.**
+3. **O passo 1 dizia "aponte para o código AO LADO"**, e o código virou o centro
+   da folha em 10/09 — ninguém corrigiu a frase. O cartão, que o põe em cima,
+   tornou o erro óbvio. Agora diz "acima", que é verdade nos dois papéis.
+
+**`gerar-display.mjs`** escreve os 40 PDFs (5 formas × 8 línguas) e prova, antes
+de gravar: o QR lido de dentro do PDF, uma página, o tamanho exato de 100×150mm,
+nada passando da borda, e a nota não repetida. Provado que sabe reprovar:
+inchando o QR para 78mm ele acusa *"o conteúdo passa 51px da borda de baixo"* e
+não grava nada.
