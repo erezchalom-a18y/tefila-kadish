@@ -1,0 +1,19 @@
+.nojekyll — por que este arquivo vazio existe (11/09)
+
+O GitHub Pages, ao publicar direto de um branch, passa o site inteiro por um
+programa chamado Jekyll antes de servir. Este site não precisa dele: é HTML,
+CSS, JS, JSON, áudio e PDF, tudo pronto para servir como está.
+
+O arquivo vazio `.nojekyll` diz ao GitHub "sirva os arquivos como eles são".
+Com isso somem, de uma vez, três jeitos de a página sumir sem ninguém entender:
+
+  1. um arquivo com `{{` ou `{%` no meio quebra a construção do Jekyll, e o
+     Pages passa a servir a ÚLTIMA versão que deu certo — ou seja, tudo o que
+     se sobe depois disso simplesmente não aparece, e nada avisa;
+  2. pastas ou arquivos começando com `_` são descartados em silêncio;
+  3. a construção leva tempo e pode falhar por conta própria.
+
+Foi posto no dia em que o Erez disse que o `kadish.app/panfleto/kadish-pt.pdf`
+não abria. NÃO é o diagnóstico daquele caso — eu não tinha como ver o site
+daqui, o proxy deste contêiner recusa conexão com o GitHub Pages — é uma trava
+barata contra uma causa possível, e que vale por si.
