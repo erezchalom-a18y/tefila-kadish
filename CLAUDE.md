@@ -2408,3 +2408,17 @@ A regra ganha dentes: neste contêiner, antes de afirmar qualquer coisa sobre um
 endereço de fora, **olhar quem assinou o certificado**. Se for a Anthropic, a
 medida é do proxy e não vale.
 
+**E ainda assim eu pus um VIGIA em cima da medida quebrada.** Deixei um script
+de uma hora perguntando de minuto em minuto se o certificado tinha saído,
+escrito com o mesmo `getpeercert()` sob `CERT_NONE` e o mesmo soquete que morre
+no proxy. Uma hora depois ele anunciou: *"o GitHub ainda não emitiu o
+certificado"*. **Aquele script não tinha como dizer outra coisa** — nem se o
+certificado estivesse emitido havia um dia. Era uma checagem que só sabia
+reprovar.
+
+É a regra 3 pelo avesso, e um espelho da prova do `--provar` do
+`testar-telas.mjs`: uma checagem que nunca poderia ficar verde não mede nada, do
+mesmo jeito que uma que nunca poderia ficar vermelha. **Antes de deixar uma
+checagem rodando, provar que ela sabe passar E que sabe falhar.** O script foi
+apagado para não enganar quem o achasse depois.
+
