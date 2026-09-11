@@ -2354,3 +2354,28 @@ de gravar: o QR lido de dentro do PDF, uma página, o tamanho exato de 100×150m
 nada passando da borda, e a nota não repetida. Provado que sabe reprovar:
 inchando o QR para 78mm ele acusa *"o conteúdo passa 51px da borda de baixo"* e
 não grava nada.
+
+## O título virou Kadish.app, e um erro de leitura meu (11/09, v58)
+
+Ele: *"o site já está no ar, só mudar o título de Tefilá - Kadish do enlutado -
+v3 para Kadish.app"*. Trocado no `engine.html` e no `index.html`, que são as
+duas portas do app.
+
+**O "· v3" saiu junto.** Era de uma numeração antiga que não existe mais — a
+versão de verdade é a da barra do alto, vinda da constante `VERSAO`. Dois
+números de versão no mesmo app é o tipo de coisa que passa a mentir sozinha no
+dia em que alguém esquece um deles.
+
+**E fica registrado um erro de leitura meu, porque ele agiu com base nele.**
+Durante toda a virada do domínio eu li o `403` de `http://kadish.app/` como "o
+GitHub ainda não aceitou o endereço", e mandei ele conferir o Settings → Pages.
+O `403` era do **proxy deste contêiner**, que recusa conectar em hosts fora da
+lista dele — a mesma recusa que já aparecera no `github.io` com a palavra
+`connect_rejected`. Eu **não tinha como verificar o site daqui**, e tratei uma
+limitação minha como defeito do domínio dele.
+
+A regra que fica, e é irmã da de 10/09 sobre a caixa do glifo: **quando a
+medição vem de um lugar que pode estar cego, a primeira pergunta é se o
+instrumento enxerga** — não o que o número diz. Neste ambiente, `403` e `000`
+em endereço externo são suspeitos de proxy até prova em contrário; quem tem a
+resposta sobre o `kadish.app` é o navegador dele.
