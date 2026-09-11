@@ -1,0 +1,149 @@
+<!doctype html><html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kadish · cartão do display</title>
+<!--
+  display.html — o cartão de 10 × 15 cm, para o display de mesa da sinagoga.
+
+  Ele (11/09): "quero colocar a folha num display, 15cm de altura por 10cm de
+  largura, me sugira 3 opções". O panfleto.html continua existindo e é A4, para
+  parede; este é o cartãozinho que fica em cima da mesa, perto de quem senta.
+
+  A distância de leitura MUDA TUDO. O A4 na parede é visto a um metro ou mais e
+  por isso o código lá tem 80mm. Este fica a meio braço de distância, então o
+  código pode ser menor — mas não pode ser pequeno: uma câmera de telefone pede
+  uns 3 cm para ler com folga, e papel em cima de mesa pega reflexo.
+
+  As três formas, por ?f=
+    A  o código e mais nada   — quem passa, aponta e vai embora
+    B  o código e três passos — quem senta e lê
+    C  o Kadish e o código    — o hebraico primeiro; é uma sinagoga
+
+  ?lang=pt|en|es|fr|it|de|ru|he    Imprimir: abrir e mandar imprimir.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+<style>
+  @page { size: 100mm 150mm; margin: 0; }
+  :root{--bg:#f4ede0;--txt:#2a1f15;--soft:#4d3d2d;--fraco:#8a7860;--brass:#8b6a3e;--linha:#c9b894}
+  *{box-sizing:border-box}
+  body{margin:0;background:#e9e2d4;font-family:Lora,Georgia,serif;color:var(--txt);
+       display:flex;justify-content:center;padding:16px}
+  .cartao{width:100mm;height:150mm;background:var(--bg);padding:8mm 7mm;
+          box-shadow:0 6px 26px rgba(0,0,0,.18);display:flex;flex-direction:column;
+          align-items:center;text-align:center;overflow:hidden}
+  .marca{font-family:'Frank Ruhl Libre',serif;letter-spacing:.02em}
+  .sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--soft);line-height:1.3}
+  .regua{height:1px;width:54%;background:linear-gradient(to right,transparent,var(--brass),transparent);opacity:.65}
+  .qr{border:1px solid var(--linha);border-radius:6px;background:#fff;display:block}
+  .legenda{font-family:'Cormorant Garamond',serif;color:var(--soft);line-height:1.35}
+  .endereco{font-family:'Cormorant Garamond',serif;color:var(--brass);font-weight:600;letter-spacing:.02em}
+  .passo{display:flex;gap:7px;text-align:left;font-size:11px;line-height:1.35;margin-bottom:5px}
+  .passo b{font-family:'Cormorant Garamond',serif;color:var(--brass);font-size:13px;flex:0 0 11px}
+  .heb{font-family:'Frank Ruhl Libre',serif;direction:rtl;line-height:1.5}
+  .heb-tl{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--soft)}
+  .nota{font-family:'Cormorant Garamond',serif;color:var(--fraco);line-height:1.35}
+  .rodape{margin-top:auto;font-family:'Cormorant Garamond',serif;color:var(--fraco)}
+
+  /* ---- A · o codigo e mais nada ---- */
+  .f-A .marca{font-size:25px}
+  .f-A .sub{font-size:12.5px;margin-top:3px}
+  .f-A .regua{margin:5mm 0 0}
+  .f-A .qr{width:62mm;height:62mm;margin:6mm 0 0}
+  .f-A .legenda{font-size:12.5px;margin-top:4mm}
+  .f-A .endereco{font-size:17px;margin-top:2mm}
+
+  /* ---- B · o codigo e tres passos ---- */
+  .f-B .marca{font-size:21px}
+  .f-B .sub{font-size:11px;margin-top:2px}
+  .f-B .qr{width:46mm;height:46mm;margin:4mm 0 0}
+  .f-B .endereco{font-size:14px;margin-top:2mm}
+  .f-B .passos{margin-top:4mm;width:100%}
+  .f-B .nota{font-size:10px;margin-top:3mm}
+
+  /* ---- C · o Kadish e o codigo ---- */
+  .f-C .heb{font-size:19px;margin-top:1mm}
+  .f-C .heb-tl{font-size:11.5px;margin-top:1px}
+  .f-C .regua{margin:4mm 0 0}
+  .f-C .marca{font-size:16px;margin-top:4mm}
+  .f-C .sub{font-size:11px;margin-top:2px}
+  .f-C .qr{width:50mm;height:50mm;margin:4mm 0 0}
+  .f-C .endereco{font-size:15px;margin-top:2mm}
+
+  .rodape{font-size:9.5px;padding-top:3mm}
+  .imprimir{position:fixed;top:14px;right:14px;background:var(--brass);color:#fff;
+            border:0;border-radius:8px;padding:9px 15px;font-family:Lora,serif;font-size:13px;cursor:pointer}
+  @media print{ body{background:#fff;padding:0} .cartao{box-shadow:none} .imprimir{display:none} }
+  html[dir=rtl] .passo{text-align:right}
+</style></head>
+<body>
+<button class="imprimir" id="btImprimir">imprimir</button>
+<div class="cartao" id="cartao"></div>
+<script>
+// Nas 8 linguas. As frases vem do panfleto.html — sao as MESMAS palavras, para
+// o cartao e a folha nao dizerem coisas diferentes na mesma sinagoga.
+const T = {
+ pt:{dir:'ltr',sub:'Um app para ensinar a falar o Kadish palavra por palavra, com a voz do rabino.',
+     leg:'Aponte a câmera do telefone.',
+     passos:['Aponte a câmera para o código.','Escolha a sua tradição e o tipo de Kadish.','Acompanhe: a palavra que soa fica acesa.'],
+     nota:'Grátis · sem cadastro · sem anúncios · em 8 línguas'},
+ en:{dir:'ltr',sub:'An app to teach you to say the Kaddish word by word, with the rabbi’s voice.',
+     leg:'Point your phone’s camera.',
+     passos:['Point the camera at the code.','Choose your tradition and the kind of Kaddish.','Follow along: the word being said lights up.'],
+     nota:'Free · no sign-up · no advertising · in 8 languages'},
+ es:{dir:'ltr',sub:'Una app para enseñar a decir el Kadish palabra por palabra, con la voz del rabino.',
+     leg:'Apunte la cámara del teléfono.',
+     passos:['Apunte la cámara al código.','Elija su tradición y el tipo de Kadish.','Siga: la palabra que suena se enciende.'],
+     nota:'Gratis · sin registro · sin publicidad · en 8 idiomas'},
+ fr:{dir:'ltr',sub:'Une application pour apprendre à dire le Kaddish mot à mot, avec la voix du rabbin.',
+     leg:'Dirigez la caméra du téléphone.',
+     passos:['Dirigez la caméra vers le code.','Choisissez votre tradition et le type de Kaddish.','Suivez : le mot prononcé s’allume.'],
+     nota:'Gratuit · sans inscription · sans publicité · en 8 langues'},
+ it:{dir:'ltr',sub:'Un’app per imparare a dire il Kaddish parola per parola, con la voce del rabbino.',
+     leg:'Inquadri con la fotocamera.',
+     passos:['Inquadri il codice con la fotocamera.','Scelga la sua tradizione e il tipo di Kaddish.','Segua: la parola pronunciata si illumina.'],
+     nota:'Gratuita · senza registrazione · senza pubblicità · in 8 lingue'},
+ de:{dir:'ltr',sub:'Eine App, um das Kaddisch Wort für Wort sprechen zu lernen, mit der Stimme des Rabbiners.',
+     leg:'Richten Sie die Kamera darauf.',
+     passos:['Die Kamera auf den Code richten.','Ritus und Art des Kaddisch wählen.','Mitlesen: das gesprochene Wort leuchtet auf.'],
+     nota:'Kostenlos · ohne Anmeldung · ohne Werbung · in 8 Sprachen'},
+ ru:{dir:'ltr',sub:'Приложение, чтобы научиться произносить кадиш слово за словом, с голосом раввина.',
+     leg:'Наведите камеру телефона.',
+     passos:['Наведите камеру на код.','Выберите традицию и вид кадиша.','Следите: произносимое слово подсвечивается.'],
+     nota:'Бесплатно · без регистрации · без рекламы · на 8 языках'},
+ he:{dir:'rtl',sub:'אפליקציה ללמוד לומר את הקדיש מילה במילה, בקולו של הרב.',
+     leg:'כוונו את מצלמת הטלפון.',
+     passos:['כוונו את המצלמה אל הקוד.','בחרו את הנוסח ואת סוג הקדיש.','עקבו: המילה הנאמרת נדלקת.'],
+     nota:'חינם · ללא הרשמה · ללא פרסומות · בשמונה שפות'},
+};
+const q = new URLSearchParams(location.search);
+const lingua = (q.get('lang') || 'pt').toLowerCase();
+const forma = (q.get('f') || 'A').toUpperCase();
+const t = T[lingua] || T.pt;
+document.documentElement.lang = lingua;
+document.documentElement.dir = t.dir;
+const esc = x => String(x).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const QR = '<img class="qr" src="./qr/kadish.svg" alt="QR">';
+const ENDERECO = '<div class="endereco">kadish.app</div>';
+const RODAPE = `<div class="rodape">${esc(t.nota)}</div>`;
+const HEB = '<div class="heb">יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא</div>' +
+            '<div class="heb-tl">Yitgadal veyitkadash shemê raba</div>';
+const formas = {
+ A: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
+     <div class="regua"></div>${QR}
+     <div class="legenda">${esc(t.leg)}</div>${ENDERECO}${RODAPE}`,
+ B: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
+     ${QR}${ENDERECO}
+     <div class="passos">${t.passos.map((p,i)=>
+        `<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`).join('')}</div>
+     ${RODAPE}`,
+ C: `${HEB}<div class="regua"></div>
+     <div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
+     ${QR}${ENDERECO}${RODAPE}`,
+};
+const cx = document.getElementById('cartao');
+cx.className = 'cartao f-' + (formas[forma] ? forma : 'A');
+cx.innerHTML = formas[forma] || formas.A;
+document.getElementById('btImprimir').addEventListener('click', () => window.print());
+</script>
+</body></html>

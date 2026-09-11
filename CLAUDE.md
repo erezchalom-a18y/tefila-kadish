@@ -2285,3 +2285,35 @@ antigo, o `חיים בן עזרא` continua guardado e continua na tela ao lado 
 disputaram a porta 8896 e o servidor não estava de pé. Rodada sozinha, verde.
 Isso não é motivo para confiar num vermelho — é motivo para ler o vermelho antes
 de chamá-lo de falso.
+
+## O cartão de 10 × 15 cm para o display de mesa (11/09)
+
+Ele: *"quero colocar a folha num display, 15cm de altura por 10cm de largura,
+me sugira 3 opções"*. O `panfleto.html` continua sendo o A4 de parede; o
+`display.html` é o cartãozinho de mesa. Três formas, por `?f=A|B|C`, nas 8
+línguas.
+
+**A distância de leitura é o que decide o desenho, e ela é outra.** O A4 na
+parede é visto a um metro ou mais, e por isso o código lá tem 80mm. O cartão de
+mesa é olhado de passagem, a meio braço — mas o código não pode encolher à
+vontade: uma câmera de telefone pede uns 3 cm para ler com folga, e papel em
+cima de mesa pega reflexo.
+
+| | o que tem | QR |
+|---|---|---|
+| **A** | o código e mais nada | **62mm** |
+| **B** | o código e três passos | 46mm |
+| **C** | o Kadish em hebraico, depois o código | 50mm |
+
+Recomendei a **A**, pela razão acima: num cartão de passagem, quem tem de ser
+grande é o código, não o texto.
+
+**O `kadish.app` escrito por extenso voltou ao papel**, e isso mudou de figura
+no mesmo dia: em 10/09 ele mandou tirar o endereço do panfleto, com razão —
+`erezchalom-a18y.github.io/tefila-kadish` é longo, feio e tem o nome dele. Um
+endereço curto que se decora é outra coisa: quem não conseguir apontar a câmera
+digita.
+
+**Uma pergunta que não é minha, e ficou dita a ele:** a forma **C** põe o texto
+do Kadish num cartão que fica em cima de uma mesa, e isso tem implicação de
+respeito ao texto sagrado. É do rabino. A e B não têm essa questão.
