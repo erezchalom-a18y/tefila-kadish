@@ -92,9 +92,16 @@
   /* ---- B · o codigo e tres passos ---- */
   .f-B .marca{font-size:21px}
   .f-B .sub{font-size:11px;margin-top:2px}
-  .f-B .qr{width:46mm;height:46mm;margin:4mm 0 0}
+  /* 40mm e nao 46, e a razao esta nos oito passos de 14/09: numa coluna so
+     eles nao cabiam em ingles, frances, alemao e russo — 9, 9, 24 e 9px alem
+     da borda de baixo, as quatro reprovadas e nada gravado. O alemao e sempre
+     o pior caso deste conjunto, e e por ele que o numero foi escolhido.
+     Tirei do codigo e do espaco ENTRE os passos, nao do tamanho da letra:
+     nesta ficha o texto e o conteudo, e o codigo ja e o maior elemento. */
+  .f-B .qr{width:40mm;height:40mm;margin:3.5mm 0 0}
   .f-B .endereco{font-size:14px;margin-top:2mm}
-  .f-B .passos{margin-top:4mm;width:100%}
+  .f-B .passo{margin-bottom:3.5px}
+  .f-B .passos{margin-top:3.5mm;width:100%}
   .f-B .nota{font-size:10px;margin-top:3mm}
 
   /* ---- C · o Kadish e o codigo ---- */
@@ -179,14 +186,18 @@
      pergaminho (#f4ede0), entao tirar o branco do CSS apenas deixa o codigo
      no papel em que ele foi desenhado. Medido antes de ficar: lido de dentro
      do PDF a 120, 150, 200 e 300 dpi, e devolve o endereco nas quatro. */
-  .f-S .qr{width:40mm;height:40mm;margin:4mm 0 0;border:0;background:transparent;padding:0}
+  /* 37mm e nao 40: com os oito passos, o frances, o italiano e o alemao
+     passavam 13px da borda de baixo — as tres reprovaram e o gerador nao
+     gravou nada. Tirei do CODIGO e nao da letra, porque a letra deste cartao
+     ja e a menor do conjunto e ele e para ler, nao so para apontar. */
+  .f-S .qr{width:37mm;height:37mm;margin:3.5mm 0 0;border:0;background:transparent;padding:0}
   .f-S .endereco{font-size:14px;font-weight:500;margin-top:2.5mm;opacity:.9}
   .f-S .colunas{margin-top:5mm;gap:5mm}
   .f-S .col h2{font-weight:400;font-size:10.5px;letter-spacing:.09em;
                text-transform:uppercase;color:var(--fraco);margin:0 0 3px}
   .f-S .lista{font-size:8.8px;line-height:1.45;padding-left:10px}
   .f-S .lista li{margin-bottom:2.4px}
-  .f-S .passo{font-size:8.8px;line-height:1.45;margin-bottom:3.5px;gap:6px}
+  .f-S .passo{font-size:8.8px;line-height:1.42;margin-bottom:2.5px;gap:6px}
   .f-S .passo b{font-weight:400;color:var(--fraco);font-size:10px;flex:0 0 8px}
   /* a nota do minyan sem caixa: mesma frase, sem moldura nem barra */
   .nota-calada{margin-top:4.5mm;font-family:'Cormorant Garamond',serif;font-style:italic;

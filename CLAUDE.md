@@ -2639,3 +2639,22 @@ este app tem?".
 
 A forma **B** ficou a melhor das fichas nesta virada: os oito passos numa
 coluna só, grandes, com o código em cima.
+
+**Sete fichas reprovaram nas outras línguas, e o português não avisava.** Rodar
+só em `pt` deu verde nas sete formas; nas 8 línguas caíram a **S** em francês,
+italiano e alemão (13px cada) e a **B** em inglês, francês, alemão e russo (9,
+9, **24** e 9px). O alemão é o pior caso deste conjunto — é sempre por ele que
+o número se decide. Os dois códigos encolheram (S: 40→37mm · B: 46→40mm) e o
+espaço ENTRE os passos apertou; **a letra não**, porque nestas duas fichas o
+texto é o conteúdo e o código já é o maior elemento.
+
+A lição prática: **uma medida em português não prova nada sobre as outras
+sete.** Rodar `node gerar-display.mjs <forma>` sem língua é o que vale antes de
+dar por feito.
+
+**E uma armadilha do meu jeito de trabalhar, não do projeto:** a primeira
+rodada em segundo plano foi por `| tail -8`, e o arquivo guardou só as últimas
+oito linhas. O rodapé dizia "7 cartões com problema" e eu só via dois. O total
+salvou a leitura — sem ele eu teria consertado dois e dado por feito. Um
+resumo que não bate com o detalhe é para acreditar no resumo e ir procurar o
+resto.
