@@ -38,6 +38,14 @@
 <style>
   @page { size: A4; margin: 12mm; }
   :root{--bg:#f4ede0;--txt:#2a1f15;--soft:#4d3d2d;--fraco:#8a7860;--brass:#8b6a3e;--linha:#c9b894}
+  /* 14/09 — SEM ISTO O PAPEL SAI SEM FUNDO. Todo navegador DESCARTA cores de
+     fundo ao imprimir, por padrao de fabrica, para economizar tinta. O Erez
+     imprimiu e disse "as cores de fundo ficaram um pouco apagadas" — e no
+     caminho do navegador elas nao ficaram apagadas, ficaram FORA.
+     Era mais um caminho que nenhuma checagem visitava: as provas daqui geram
+     PDF com printBackground:true, entao nunca passaram por onde quem aperta
+     Imprimir passa. Mesma familia do canPlayType e do temState. */
+  *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   *{box-sizing:border-box}
   body{margin:0;background:#e9e2d4;font-family:Lora,Georgia,serif;color:var(--txt);
        display:flex;justify-content:center;padding:18px}

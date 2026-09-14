@@ -62,6 +62,14 @@
 <style>
   @page { size: 100mm 150mm; margin: 0; }
   :root{--bg:#f4ede0;--txt:#2a1f15;--soft:#4d3d2d;--fraco:#8a7860;--brass:#8b6a3e;--linha:#c9b894}
+  /* 14/09 — SEM ISTO O PAPEL SAI SEM FUNDO. Todo navegador DESCARTA cores de
+     fundo ao imprimir, por padrao de fabrica, para economizar tinta. O Erez
+     imprimiu e disse "as cores de fundo ficaram um pouco apagadas" — e no
+     caminho do navegador elas nao ficaram apagadas, ficaram FORA.
+     Era mais um caminho que nenhuma checagem visitava: as provas daqui geram
+     PDF com printBackground:true, entao nunca passaram por onde quem aperta
+     Imprimir passa. Mesma familia do canPlayType e do temState. */
+  *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   *{box-sizing:border-box}
   body{margin:0;background:#e9e2d4;font-family:Lora,Georgia,serif;color:var(--txt);
        display:flex;justify-content:center;padding:16px}
@@ -159,6 +167,19 @@
      folga contra o reflexo do papel na mesa.
      Se um dia faltar altura, quem encolhe e o QR, nunca a letra — 12px e o
      piso do projeto. */
+  /* ---- M · para a mao do enlutado, no cemiterio ----
+     Mesma conta da R: 134mm uteis. Aqui a lista tem TRES linhas em vez de
+     quatro e nao ha o bloco dos oito Kadishim, entao sobra altura — e ela vai
+     para o CODIGO, pelo mesmo motivo da R: e ele a razao de o cartao existir.
+     55mm, lidos com o cartao na mao, de pe, num dia de vento. */
+  .f-M .marca{font-size:20px}
+  .f-M .sub{font-size:10.5px;margin-top:2px}
+  .f-M .regua{margin:3.5mm 0 0}
+  .f-M .qr{width:55mm;height:55mm;margin:4.5mm 0 0}
+  .f-M .endereco{font-size:15px;margin-top:2mm}
+  .f-M .uma-col{margin-top:5mm}
+  .f-M .nota-calada{margin-top:4.5mm}
+
   .f-R .marca{font-size:20px}
   .f-R .sub{font-size:10.5px;margin-top:2px}
   .f-R .regua{margin:3mm 0 0}
@@ -294,6 +315,30 @@ const formas = {
  // A nota do minyan e a MESMA frase da forma D; o que sai e a caixa em volta.
  S: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
      <div class="regua"></div>${QR}${ENDERECO}${DUAS_COLUNAS(t)}
+     <div class="nota-calada">${esc(t.nota)}</div>${RODAPE}`,
+ // 14/09 — O CARTAO DO ENLUTADO, o que a Chevra Kadisha poe na mao dele no
+ // cemiterio. E a outra metade da ideia dele de 13/09, e o leitor e o mais
+ // fragil de todos: uma pessoa de casaco, com a familia em volta, que acabou
+ // de enterrar alguem. Duas consequencias de desenho, e as duas sao o motivo
+ // de esta forma nao ser a D com menos linhas:
+ //
+ // 1. NAO SAO OITO PASSOS. Ninguem ali le oito. Sao TRES coisas, e a terceira
+ //    e a que decide: o lembrete do yahrzeit. Daqui a onze meses ninguem vai
+ //    lembrar de avisa-lo, e e o app que avisa. Escolhidas por POSICAO
+ //    (0, 2, 3) do `oque`, nunca pelo texto — o titulo muda de lingua, o
+ //    indice nao. Fica de fora o [1] ("em 8 linguas"), que nao diz nada a quem
+ //    esta no cemiterio em Sao Paulo, e o [4], o botao de mudo.
+ // 2. NAO LEVA O KADISH EM HEBRAICO. E a mesma questao anotada nas formas C e
+ //    E: um cartao que vai para o bolso e depois para uma gaveta, dobrado. Ali
+ //    isso e respeito ao texto sagrado, e a pergunta e do rabino, nao minha.
+ //
+ // A nota do minyan FICA, e calada (sem a caixa): e a unica das tres coisas
+ // que ele precisa saber ANTES de tentar rezar sozinho em casa.
+ // Nenhuma frase e nova: todas ja estavam aprovadas nas 8 linguas.
+ M: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
+     <div class="regua"></div>${QR}${ENDERECO}
+     <div class="uma-col"><h2>${esc(t.hOque)}</h2><ul class="lista">${
+        [0,2,3].map(i => `<li>${esc(t.oque[i])}</li>`).join('')}</ul></div>
      <div class="nota-calada">${esc(t.nota)}</div>${RODAPE}`,
  C: `${HEB}<div class="regua"></div>
      <div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>

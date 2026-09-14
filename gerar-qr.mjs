@@ -32,7 +32,15 @@ mkdirSync('qr', { recursive: true });
 execFileSync('python3', ['-c', `
 import segno
 q = segno.make(${JSON.stringify(ENDERECO)}, error='h')
-q.save('qr/kadish.svg', scale=12, border=3, dark='#2a1f15', light='#f4ede0')
+# 14/09 — O SVG SAI SEM FUNDO PROPRIO (light=None), e isso e uma conta so.
+# Ele vai colado DENTRO dos nossos papeis, e quem decide a cor do papel e o
+# papel. Enquanto o SVG carregava um #f4ede0 desenhado por dentro, mudar o
+# fundo do cartao deixava o codigo como um quadrado mais claro no meio —
+# duas contas para a mesma cor, que e o defeito que este projeto mais pagou.
+q.save('qr/kadish.svg', scale=12, border=3, dark='#2a1f15', light=None)
+# O PNG FICA COM FUNDO, e nao e incoerencia: ele e uma imagem solta, sem papel
+# nenhum por tras. Um QR transparente solto vira codigo preto sobre fundo preto
+# no primeiro visualizador de tema escuro. Cada um responde a SUA pergunta.
 q.save('qr/kadish.png', scale=14, border=3, dark='#2a1f15', light='#f4ede0')
 print('versao do QR:', q.version, '· correcao:', q.error)
 `], { stdio: 'inherit' });

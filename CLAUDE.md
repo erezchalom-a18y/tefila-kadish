@@ -2778,6 +2778,71 @@ Agora é assim, e o defeito que foi ao ar é acusado por ela.
    ser medidas em momentos diferentes:** a do alto com o painel fechado, a dos
    Ajustes com ele aberto.
 
+## O fundo que nao saiu no papel, e o cartao do cemiterio (14/09)
+
+Ele imprimiu e disse: *"as cores de fundo ficaram um pouco apagadas na
+impressao, o que sugere"*. Eram **duas causas**, e a primeira e um defeito meu.
+
+**1. As paginas nao pediam para o navegador manter a cor.** Nem o
+`panfleto.html` nem o `display.html` tinham `print-color-adjust: exact`. **Todo
+navegador DESCARTA cores de fundo ao imprimir, por padrao de fabrica**, para
+economizar tinta. Entao, no caminho de quem aperta *Imprimir*, o fundo nao saiu
+apagado — **saiu FORA**.
+
+Mais um **caminho que nenhuma checagem visitava**, e com a mesma forma de
+sempre: as provas daqui geram PDF com `printBackground: true`, entao nunca
+passaram por onde ele passa. `canPlayType`, `temState`, a pagina que ninguem
+rolava, e agora o papel que ninguem imprimiu.
+
+**2. E um limite fisico, que nenhuma linha conserta.** Medida a tinta do
+pergaminho: `#f4ede0` e **15% de tinta total** (C0 M3 Y8 K4). Na tela parece
+creme porque a tela e iluminada por tras; no papel, que so reflete, quase some —
+e impressora caseira sub-deposita tinta em area grande e chapada.
+
+Levei **quatro forcas de fundo desenhadas lado a lado** (a pratica que funciona
+aqui desde 09/09) e recomendei a 2. Ele pediu para gravar a **2** (`#ece0cb`) e a
+**4** (branco) do A4 em portugues, para testar na impressora dele. Saem por
+`node gerar-panfleto.mjs pt --fundo '#ece0cb' 2` — bandeira **so de prova**, que
+grava com sufixo ao lado do definitivo. Quando ele escolher, o numero vai para o
+CSS e a bandeira deixa de ser usada; os dois arquivos de teste saem.
+
+**O QR perdeu o fundo proprio (`light=None` no SVG).** Ele carregava um
+`#f4ede0` desenhado por dentro; com um cartao de outra cor, o codigo virava um
+quadrado mais claro no meio — **duas contas para a mesma cor**. Agora o papel
+decide. **O PNG FICA com fundo, e nao e incoerencia:** ele e imagem solta, sem
+papel nenhum por tras, e transparente viraria codigo preto sobre preto no
+primeiro visualizador de tema escuro. Cada um responde a SUA pergunta.
+O codigo foi lido de volta de dentro dos 64 cartoes e dos 8 A4 depois da
+mudanca, e devolve `https://kadish.app/` em todos.
+
+### A forma M — o cartao da mao do enlutado, no cemiterio
+
+E a outra metade da ideia dele de 13/09, que estava sem existir. O leitor e o
+mais fragil de todos: alguem de casaco, com a familia em volta, que acabou de
+enterrar uma pessoa. **Nao e a forma D com menos linhas**, e duas decisoes
+explicam:
+
+1. **TRES coisas, nao oito passos.** Ninguem ali le oito. E a terceira e a que
+   decide — **o lembrete do yahrzeit**: daqui a onze meses ninguem vai lembrar de
+   avisa-lo, e e o app que avisa. Escolhidas por POSICAO (0, 2, 3) do `oque`,
+   nunca pelo texto. Fica de fora o [1] ("em 8 linguas", que nao diz nada a quem
+   esta num cemiterio em Sao Paulo) e o [4], o botao de mudo.
+2. **NAO leva o Kadish em hebraico.** Cartao de bolso vira cartao dobrado numa
+   gaveta. E a mesma questao de respeito ao texto sagrado ja anotada nas formas
+   C e E — **do rabino, nao minha**.
+
+A nota do minyan fica, e calada (sem a caixa): e a unica das tres coisas que ele
+precisa saber ANTES de tentar rezar sozinho em casa. Nenhuma frase e nova; o que
+e meu e a ESCOLHA de quais entram, e ela espera o olho dele.
+
+**Tres provas novas no `gerar-display.mjs`**, e elas sabem reprovar — provado
+pondo o hebraico na M de proposito: ela acusou *"a forma M ganhou o Kadish em
+hebraico"*, acusou o transbordo junto, e nao gravou nada. As tres guardam as tres
+decisoes acima; sem elas, um dia alguem "unifica" as formas e a M vira a D calada.
+
+**O cartao do tefilin continua nao existindo, e o bloqueio e nele:** o QR precisa
+de um destino e o Google Form ainda nao foi criado. Ver a pendencia do tefilin.
+
 ## "O app nao esta abrindo" — e nao era o app (14/09)
 
 Ele, depois da v61: *"o app do kadish nao esta abrindo no iphone (demorou e deu

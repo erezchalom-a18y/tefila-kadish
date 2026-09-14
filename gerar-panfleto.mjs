@@ -33,6 +33,16 @@ const PORTA = 8912;
 const pedidas = process.argv.slice(2).filter(x => LINGUAS.includes(x));
 const alvo = pedidas.length ? pedidas : LINGUAS;
 
+// --fundo <cor> — SO PARA PROVA DE IMPRESSORA. O Erez imprimiu e o fundo saiu
+// apagado; medido, o pergaminho de hoje (#f4ede0) e 15% de tinta, que no papel
+// e quase nada. Isto grava um arquivo com SUFIXO, ao lado do definitivo, para
+// ele testar na impressora dele antes de a cor mudar para valer. Nada aqui
+// decide a cor do projeto: quando ele escolher, o numero vai para o CSS e esta
+// bandeira deixa de ser usada.
+const iFundo = process.argv.indexOf('--fundo');
+const FUNDO = iFundo > -1 ? process.argv[iFundo + 1] : null;
+const SUFIXO = iFundo > -1 ? '-fundo' + (process.argv[iFundo + 2] || 'x') : '';
+
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
 const { chromium } = pw.default || pw;
 
@@ -51,8 +61,9 @@ for (const lang of alvo) {
   pag.on('pageerror', e => erros.push(e.message));
   await pag.goto(`http://127.0.0.1:${PORTA}/tefila-kadish/panfleto.html?lang=${lang}`,
                  { waitUntil: 'networkidle' });
+  if (FUNDO) await pag.addStyleTag({ content: `:root{--bg:${FUNDO} !important}` });
   await pag.waitForTimeout(400);
-  const tmp = `panfleto/.${lang}.tmp.pdf`;
+  const tmp = `panfleto/.${lang}${SUFIXO}.tmp.pdf`;
   await pag.pdf({ path: tmp, format: 'A4', printBackground: true });
   provisorios.push(tmp);
   const tela = await pag.evaluate(() => ({
@@ -118,5 +129,5 @@ if (falhas) {
 }
 // so agora os provisorios viram os definitivos
 const { renameSync } = await import('node:fs');
-for (const t of provisorios) renameSync(t, t.replace(/\.(\w+)\.tmp\.pdf$/, 'kadish-$1.pdf').replace('/.', '/'));
+for (const t of provisorios) renameSync(t, t.replace(/\.([\w-]+)\.tmp\.pdf$/, 'kadish-$1.pdf').replace('/.', '/'));
 console.log(`\nVERDE: ${alvo.length} panfleto(s) em panfleto/, e o QR de cada um foi lido de dentro do PDF.`);

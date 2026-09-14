@@ -36,7 +36,7 @@
 import { spawn, execFileSync } from 'node:child_process';
 import { mkdirSync, existsSync, unlinkSync, renameSync } from 'node:fs';
 
-const FORMAS = ['A', 'B', 'C', 'D', 'E', 'R', 'S'];
+const FORMAS = ['A', 'B', 'C', 'D', 'E', 'R', 'S', 'M'];
 const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 const ENDERECO = 'https://kadish.app/';
 const PORTA = 8965;
@@ -83,6 +83,9 @@ for (const f of alvoF) {
         temEndereco: c.textContent.includes('kadish.app'),
         temRitos: !!document.querySelector('.oito .ritos'),
         temNotaMinyan: !!document.querySelector('.nota-minyan'),
+        temNotaCalada: !!document.querySelector('.nota-calada'),
+        temHebraico: !!document.querySelector('.heb'),
+        itens: document.querySelectorAll('.lista li').length,
       };
     });
     await pag.close();
@@ -109,6 +112,15 @@ print(json.dumps({"paginas": len(d), "lido": r.text if r else None,
     // nao para repetir a nota do minyan, que ele nao precisa que lhe expliquem.
     if (f === 'R' && !tela.temRitos) problemas.push('a forma R perdeu os oito Kadishim');
     if (f === 'R' && tela.temNotaMinyan) problemas.push('a forma R voltou a trazer a nota do minyan');
+    // A forma M vai para a MAO DO ENLUTADO, no cemiterio. As tres provas dela
+    // guardam as tres decisoes que a fazem ser ela, e nao a D com menos linhas.
+    // Sem isto, um dia alguem "unifica" as formas e a M vira outra coisa calada.
+    if (f === 'M' && !(tela.temNotaMinyan || tela.temNotaCalada))
+      problemas.push('a forma M perdeu a nota do minyan — e ela e para quem pode tentar rezar sozinho');
+    if (f === 'M' && tela.temHebraico)
+      problemas.push('a forma M ganhou o Kadish em hebraico — cartao de bolso e dobrado, e isso e do rabino');
+    if (f === 'M' && tela.itens !== 3)
+      problemas.push(`a forma M tem ${tela.itens} itens, e sao TRES — ninguem no cemiterio le mais`);
     if (prova.erro) problemas.push('nao consegui ler o PDF: ' + prova.erro);
     else {
       if (prova.paginas !== 1) problemas.push(`${prova.paginas} paginas, tem de ser 1`);
