@@ -2843,6 +2843,60 @@ decisoes acima; sem elas, um dia alguem "unifica" as formas e a M vira a D calad
 **O cartao do tefilin continua nao existindo, e o bloqueio e nele:** o QR precisa
 de um destino e o Google Form ainda nao foi criado. Ver a pendencia do tefilin.
 
+## O folheto do cemiterio, e por que o corpo dele e texto DELE (14/09)
+
+Ele: *"gostaria de criar um folheto para ser distribuido no cemiterio,
+incentivando a pessoa a falar o kadish pelo ente querido"*. E a outra metade da
+ideia de 13/09, finalmente feita — `cemiterio.html` + `gerar-cemiterio.mjs`.
+
+**Por que isto NAO e a forma M do `display.html`, que eu tinha acabado de
+fazer.** A M e um CARTAO: ela informa — aponte a camera, o app faz isto, o
+Kadish pede dez. Este e um FOLHETO, e o verbo que ele usou e outro:
+**INCENTIVAR**. Quem acabou de enterrar o pai nao precisa de instrucao; precisa
+de um motivo para voltar amanha.
+
+**E por isso o corpo do papel e texto DELE, e nao meu.** A regra 5 das
+invioláveis proibe o modelo de escrever texto religioso — e aqui a proibicao nem
+aperta, porque **o texto que incentiva ja existia e e dele**: as secoes da
+pagina Aprender, escritas em 03/09, com `origem: "erez"`. As duas escolhidas:
+
+- **"Em memoria de quem partiu"** (frente) — responde literalmente ao pedido:
+  falar o Kadish PELO ENTE QUERIDO. Ensina a pausa para dizer o nome e fecha com
+  *"o nome e uma ponte entre a lembranca e a oracao"*.
+- **"Um Kadish de cada vez"** (verso) — e a que fala com quem vai desistir:
+  *"Havera dias em que sera facil. E havera dias em que sera dificil."* Num
+  folheto de cemiterio, esse e o paragrafo que tem de estar ali.
+
+**O texto e LIDO do `aprender.json` em tempo de geracao, nunca copiado.** Se
+fosse copiado, no dia em que ele corrigisse uma palavra na pagina Aprender o
+papel continuaria dizendo a versao velha, calado — o mesmo defeito que obrigou o
+`textos-impressos.js` a existir em 11/09, e aqui pior, porque o texto e dele e
+ninguem notaria a divergencia. **A escolha de QUAIS secoes entram e minha, e so
+isso; espera o olho dele.**
+
+**A5 (148 x 210 mm), duas faces.** A5 e meia folha de A4: a grafica tira dois por
+folha e cabe na mao de quem esta de casaco com a familia em volta. O A4 solto foi
+justamente o que eu critiquei no folheto do ChatGPT em 13/09.
+
+### As cinco provas, e a quinta e a que importa
+
+O gerador nao grava nada se qualquer uma falhar: QR lido de dentro do PDF ·
+duas paginas · 148x210mm exatos · nada passando da borda nas DUAS faces · e
+
+> **o texto dele saiu no papel PALAVRA POR PALAVRA como esta no `aprender.json`.**
+
+E a guarda do `testar-aprender.mjs` aplicada ao papel. **Provado que sabe
+reprovar:** trocando UMA palavra do texto dele ("oracao" por "prece"), ela acusa
+a secao pelo nome e nao grava nada.
+
+**E ela pegou um erro meu antes de funcionar**, e e da familia de sempre: eu
+comparava com `textContent`, que **cola os paragrafos sem espaco nenhum**
+("…significativo.Nao e apenas…"), entao a comparacao falhava por uma diferenca
+que nao existe no papel. O certo e `innerText`, que poe a quebra onde o bloco
+termina — que e **o que o olho ve**. Medir a coisa certa, de novo.
+
+Verde nas 8 linguas.
+
 ## "O app nao esta abrindo" — e nao era o app (14/09)
 
 Ele, depois da v61: *"o app do kadish nao esta abrindo no iphone (demorou e deu

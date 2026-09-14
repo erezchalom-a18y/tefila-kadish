@@ -1,0 +1,135 @@
+<!doctype html><html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kadish · folheto do cemitério</title>
+<!--
+  cemiterio.html — O FOLHETO DA CHEVRA KADISHA (14/09).
+
+  Ele: "gostaria de criar um folheto para ser distribuido no cemiterio,
+  incentivando a pessoa a falar o kadish pelo ente querido".
+
+  POR QUE ISTO NAO E A FORMA M DO display.html. A M e um CARTAO de 10x15: ela
+  informa — aponte a camera, o app faz isto, o Kadish pede dez. Este e um
+  FOLHETO, e o verbo que ele usou e outro: INCENTIVAR. Quem acabou de enterrar
+  o pai nao precisa de instrucao, precisa de um motivo para voltar amanha.
+
+  E POR ISSO O CORPO DESTE PAPEL E TEXTO DELE, NAO MEU. A regra 5 das
+  invioláveis proibe o modelo de escrever texto religioso — e aqui a proibicao
+  nem aperta, porque o texto que incentiva ja existe e e dele: as secoes da
+  pagina Aprender, escritas em 03/09 (origem: "erez" no aprender.json).
+
+  As duas escolhidas, e o porque de cada uma:
+
+  - "Em memoria de quem partiu" (frente) — e a que responde literalmente ao
+    pedido dele: falar o Kadish PELO ENTE QUERIDO. Ela ensina a pausa para
+    dizer o nome, e termina com "o nome e uma ponte entre a lembranca e a
+    oracao". E o que faz a reza ser daquela pessoa.
+  - "Um Kadish de cada vez" (verso) — e a que fala com quem vai desistir.
+    "Havera dias em que sera facil. E havera dias em que sera dificil."
+    Num folheto de cemiterio, esse e o paragrafo que tem de estar ali.
+
+  O TEXTO E LIDO DO aprender.json EM TEMPO DE GERACAO, nunca copiado para ca.
+  Se fosse copiado, no dia em que ele corrigisse uma palavra na pagina Aprender
+  o papel continuaria dizendo a versao velha, calado — e isso e exatamente o
+  defeito que obrigou o textos-impressos.js a existir em 11/09. Aqui e pior,
+  porque o texto e dele e ninguem perceberia a divergencia.
+  O gerador PROVA, a cada rodada, que o que saiu no papel bate palavra por
+  palavra com o aprender.json.
+
+  A escolha de QUAIS secoes entram e MINHA, e so isso — espera o olho dele.
+
+  A5 (148 x 210 mm), DUAS FACES. A5 e meia folha de A4: a grafica tira dois
+  por folha, e cabe na mao de quem esta de casaco com a familia em volta. O A4
+  solto foi justamente o que eu critiquei no folheto do ChatGPT em 13/09.
+-->
+<script src="./textos-impressos.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+<style>
+  @page { size: 148mm 210mm; margin: 0; }
+  /* 14/09 — sem isto o papel sai SEM FUNDO. Todo navegador descarta cor de
+     fundo ao imprimir, por padrao de fabrica. Ver o mesmo bloco no
+     panfleto.html e no display.html. */
+  *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing:border-box }
+  :root{--bg:#f4ede0;--txt:#2a1f15;--soft:#4d3d2d;--fraco:#8a7860;--brass:#8b6a3e;--linha:#c9b894}
+  body{margin:0;background:#8a8a8a;font-family:'Lora',Georgia,serif;
+       display:flex;flex-direction:column;align-items:center;gap:10mm;padding:10mm 0}
+  .face{width:148mm;height:210mm;background:var(--bg);color:var(--txt);
+        padding:14mm 13mm;overflow:hidden;position:relative;
+        display:flex;flex-direction:column;align-items:center;text-align:center;
+        box-shadow:0 2px 14px rgba(0,0,0,.25)}
+  .marca{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;
+         letter-spacing:.03em;line-height:1}
+  .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5px;
+       color:var(--soft);margin-top:4px;max-width:104mm;line-height:1.42}
+  .regua{width:26mm;height:1px;background:var(--linha);margin:6mm 0 0}
+  h2{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;
+     color:var(--brass);margin:6mm 0 3mm;letter-spacing:.02em}
+  .corpo{font-size:10.4px;line-height:1.62;color:var(--txt);text-align:left;
+         max-width:112mm}
+  .corpo p{margin:0 0 2.4mm}
+  .corpo p:last-child{margin-bottom:0}
+  .qr{width:38mm;height:38mm;margin:5mm 0 0;display:block}
+  .endereco{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;
+            letter-spacing:.04em;margin-top:1.5mm}
+  .legenda{font-size:9.6px;color:var(--fraco);margin-top:1.5mm;max-width:100mm}
+  .lista{list-style:none;padding:0;margin:4mm 0 0;text-align:left;max-width:108mm}
+  .lista li{font-size:10.4px;line-height:1.5;margin-bottom:2mm;padding-left:5mm;position:relative}
+  .lista li::before{content:'·';position:absolute;left:1.5mm;color:var(--brass);font-weight:700}
+  .nota{font-size:9.4px;line-height:1.5;color:var(--soft);margin-top:auto;
+        padding-top:4mm;max-width:112mm;border-top:1px solid var(--linha)}
+  .rodape{font-family:'Cormorant Garamond',serif;font-size:10px;color:var(--fraco);
+          letter-spacing:.05em;margin-top:2.5mm}
+  [dir=rtl] .corpo, [dir=rtl] .lista{text-align:right}
+  [dir=rtl] .lista li{padding-left:0;padding-right:5mm}
+  [dir=rtl] .lista li::before{left:auto;right:1.5mm}
+  @media print{ body{background:#fff;padding:0;gap:0}
+                .face{box-shadow:none;page-break-after:always}
+                .face:last-child{page-break-after:auto} }
+</style>
+</head>
+<body>
+<div class="face" id="frente"></div>
+<div class="face" id="verso"></div>
+<script>
+const q = new URLSearchParams(location.search);
+const lingua = q.get('lang') || 'pt';
+const t = (window.TEXTOS_IMPRESSOS[lingua] || window.TEXTOS_IMPRESSOS.pt);
+document.documentElement.lang = lingua;
+document.documentElement.dir = t.dir;
+const esc = x => String(x).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+// Pula uma linha vazia = paragrafo novo. E a mesma regra do aprender.html.
+const paras = txt => txt.split(/\n\s*\n/).map(p => `<p>${esc(p.trim())}</p>`).join('');
+
+// AS SECOES SAO ESCOLHIDAS POR POSICAO, nunca pelo titulo — o titulo muda de
+// lingua e o indice nao. Mesma regra dos pop-ups das tres portas (10/09).
+//   [5] "Em memoria de quem partiu"  ->  a frente
+//   [6] "Um Kadish de cada vez"      ->  o verso
+const FRENTE = 5, VERSO = 6;
+
+fetch('./aprender.json', { cache: 'no-cache' }).then(r => r.json()).then(d => {
+  const sec = i => {
+    const s = d.secoes[i];
+    const tit = s.titulo[lingua] || s.titulo.pt;
+    const corp = s.corpo[lingua] || s.corpo.pt;
+    return `<h2>${esc(tit)}</h2><div class="corpo">${paras(corp)}</div>`;
+  };
+  document.getElementById('frente').innerHTML =
+    `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>` +
+    `<div class="regua"></div>` + sec(FRENTE) +
+    `<img class="qr" src="./qr/kadish.svg" alt="QR">` +
+    `<div class="endereco">kadish.app</div>` +
+    `<div class="legenda">${esc(t.qr)}</div>`;
+
+  // O verso: o texto dele que fala com quem vai desistir, e DEPOIS as tres
+  // coisas praticas. A terceira e a que decide — o lembrete do yahrzeit: daqui
+  // a onze meses ninguem vai lembrar de avisar, e e o app que avisa.
+  document.getElementById('verso').innerHTML =
+    sec(VERSO) +
+    `<ul class="lista">${[0,2,3].map(i => `<li>${esc(t.oque[i])}</li>`).join('')}</ul>` +
+    `<div class="nota">${esc(t.nota)}</div>` +
+    `<div class="rodape">${esc(t.rodape)}</div>`;
+  document.body.dataset.pronto = '1';
+});
+</script>
+</body></html>
