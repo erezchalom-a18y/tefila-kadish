@@ -2778,6 +2778,82 @@ Agora é assim, e o defeito que foi ao ar é acusado por ela.
    ser medidas em momentos diferentes:** a do alto com o painel fechado, a dos
    Ajustes com ele aberto.
 
+## "O app nao esta abrindo" — e nao era o app (14/09)
+
+Ele, depois da v61: *"o app do kadish nao esta abrindo no iphone (demorou e deu
+mensagem, essa conexao nao e segura), via chrome esta funcionando"*, e em
+seguida *"no safari nao esta abrindo tambem, **foi alguma coisa na ultima
+versao**"*, e depois *"nao esta abrindo no iphone nem no computador"*.
+
+**Nao era nenhuma versao.** Era a rede da casa dele: o provedor dela nao
+conhecia o `kadish.app`, que tem quatro dias de vida. No 3G da operadora o app
+abriu na hora.
+
+**Por que isso PARECE defeito de segurança, e nao "site nao encontrado".** Todo
+endereco terminado em `.app` e obrigado a ter HTTPS valido — a regra vem escrita
+dentro dos navegadores, e ali **nao existe o botao "continuar assim mesmo"**.
+Quando um provedor nao conhece um endereco e devolve uma pagina propria no
+lugar, essa pagina vem com o certificado DELE. O navegador recusa na hora e diz
+exatamente *"esta conexao nao e segura"*. A mensagem fala de certificado e a
+causa e DNS.
+
+E explica os dois fatos que pareciam contraditorios: a `apple.com` abria (esta na
+memoria de todo provedor ha vinte anos) e falhava no iPhone **e** no computador
+(os dois na mesma rede).
+
+### O instrumento que enxergava, e ele existia o tempo todo
+
+Neste contêiner `curl` e soquete cru sao cegos para fora — o proxy responde no
+lugar e assina um certificado da Anthropic (regra de 13/09). **Mas as
+ferramentas do GitHub (MCP) NAO passam por esse proxy.** Foram elas que deram a
+primeira medida de verdade da rodada: a publicacao do site (`pages build and
+deployment`) **com sucesso**, no commit mais novo, tres horas antes da queixa.
+Dali em diante ficou provado que o que publicamos estava inteiro.
+
+**Para qualquer pergunta sobre o repositorio ou sobre a publicacao do site,
+usar as ferramentas do GitHub — nunca `curl`.**
+
+### Dois erros de metodo meus nesta rodada, e os dois sao dos caros
+
+1. **Dei a ele um teste que nao podia dizer nada.** Mandei abrir o endereco
+   antigo (`erezchalom-a18y.github.io/tefila-kadish/`) para separar "e o codigo"
+   de "e o certificado". **Com um dominio proprio configurado, o GitHub Pages
+   REDIRECIONA o endereco antigo para o novo** — os dois terminam no mesmo
+   certificado. *"Tambem nao abre"* era a unica resposta possivel.
+   E o mesmo defeito do vigia de 13/09: **uma checagem que so sabe reprovar nao
+   mede nada.** Antes de mandar um teste, perguntar o que cada uma das duas
+   respostas provaria — se as duas levam ao mesmo lugar, o teste nao existe.
+
+2. **Mandei ele APAGAR o dominio proprio antes de ver a tela do GitHub.** A
+   ideia era pôr o app no ar de volta no endereco antigo. A foto mostrou que
+   estava tudo certo: *"Your site is live at https://kadish.app/"*, **✓ DNS check
+   successful**, e o **Enforce HTTPS marcado e ativo** — que e a prova de que o
+   certificado existe, porque sem certificado o GitHub deixa essa caixinha cinza
+   e travada. Seguir o meu conselho teria quebrado uma configuracao boa.
+   **A medida que faltava era uma foto, e eu recomendei a acao antes de pedi-la.**
+
+### A ordem certa quando ele disser "o app nao abre"
+
+1. **A foto de GitHub → Settings → Pages.** Responde de uma vez se o site esta
+   publicado, se o DNS confere e se ha certificado. Antes disso, nao mexer em
+   nada — e nunca tocar no "Remove" nem no "Unpublish site".
+2. **3G contra Wi-Fi, no mesmo telefone.** Separa a rede dele do resto do mundo
+   em dez segundos.
+3. **Alguem de outra cidade abrindo o endereco.** E a resposta definitiva para
+   "esta no ar ou nao".
+
+Só depois disso a pergunta passa a ser sobre o nosso codigo.
+
+### E o que isto diz sobre o PAPEL
+
+Se a rede da casa dele nao conhecia o `kadish.app`, a de outras pessoas tambem
+nao vai conhecer por alguns dias — e quem apontar a camera vai bater na mesma
+parede, com uma mensagem que assusta e sem botao para seguir. **E mais um motivo
+para nao imprimir e pendurar os panfletos ainda**, ao lado do que ja estava
+escrito em 10/09. Isso se resolve sozinho conforme as memorias dos provedores
+expiram; o jeito de saber e ele pedir a duas ou tres pessoas de redes diferentes
+para abrir o endereco.
+
 ## "Deixar yatom e derabanan, dando destaque para grande e pequeno" (14/09, v61)
 
 Ele viu a barra e mandou isto. É a decisão certa e vale escrever o porquê: o
