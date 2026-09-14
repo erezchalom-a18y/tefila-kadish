@@ -2728,3 +2728,41 @@ tela**. O título da reza tem texto próprio em cada uma das 8, então ele respo
 sozinho — e responde pelo caminho de quem reza, não pelo de dentro. É a mesma
 família da caixa do glifo (10/09), do `scrollHeight` (11/09), do certificado do
 proxy (13/09) e da `.folha` de 297mm (14/09, hoje de manhã).
+
+### O `hidden` que não escondeu, e foi para o ar (14/09, v60)
+
+A v59 subiu **com o botão de idioma ainda na tela**, e a minha checagem tinha
+dado VERDE. Ele viu e eu fui olhar.
+
+```
+atributo hidden : true      ← a checagem viu isto e disse "sumiu"
+display         : flex      ← .lang-toggle{display:flex} ganha do [hidden]
+altura na tela  : 38px
+elementFromPoint: langCode  ← o dedo encontrava o botão
+```
+
+**O atributo `hidden` é só a folha do navegador dizendo `display:none`, e
+QUALQUER regra do autor com `display` ganha dele.** A regra `.lang-toggle`
+estava três linhas abaixo no mesmo arquivo.
+
+O conserto é uma classe própria — `.escondido-pela-chave{display:none
+!important}` — e não o atributo.
+
+**E o erro da checagem é o de sempre, pela terceira vez no mesmo dia:** ela
+perguntou *"o atributo está posto?"* em vez de *"está na tela?"*. A pergunta
+certa já existia escrita neste projeto desde 10/09, no convite de instalar:
+**quem está no ponto?** — `elementFromPoint`, que é o que o dedo encontra.
+Agora é assim, e o defeito que foi ao ar é acusado por ela.
+
+**Duas armadilhas a mais apareceram no conserto da própria checagem:**
+
+1. **Ela passava pelo motivo errado na porta dos Ajustes.** O painel está
+   FECHADO, então a linha da língua não está na tela de qualquer jeito — ela
+   dava OK sem olhar nada. É a armadilha de 01/09 (*"o testar-linguas.mjs nunca
+   abria o painel de Ajustes"*) repetida num arquivo escrito hoje.
+2. **Abrir o painel quebrou a outra medida.** Com os Ajustes abertos, o painel
+   COBRE a barra de cima e o `elementFromPoint` devolve o painel — a prova do
+   `--provar` passou a dizer que o botão do alto não tinha voltado, quando ele
+   estava lá, embaixo. **As duas portas vivem em momentos diferentes e têm de
+   ser medidas em momentos diferentes:** a do alto com o painel fechado, a dos
+   Ajustes com ele aberto.

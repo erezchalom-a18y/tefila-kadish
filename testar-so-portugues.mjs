@@ -69,23 +69,45 @@ const TITULOS = { pt:'Kadish do Enlutado', en:"Mourner's Kaddish",
                   it:'Kaddish dei Dolenti', de:'Trauerkaddisch',
                   ru:'Кадиш сироты', he:'קדיש יתום' };
 
+const NA_TELA = `(el) => {
+  if (!el) return false;
+  const r = el.getBoundingClientRect();
+  if (r.height <= 0 || r.width <= 0) return false;
+  if (getComputedStyle(el).visibility === 'hidden') return false;
+  const no = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+  return !!(no && (no === el || el.contains(no)));
+}`;
+
+// AS DUAS PORTAS VIVEM EM MOMENTOS DIFERENTES, e por isso sao medidas em
+// momentos diferentes. A do alto so pode ser medida com o painel FECHADO: o
+// painel de Ajustes aberto cobre a barra, e o elementFromPoint devolve o
+// painel: a prova do --provar reprovava dizendo que o botao nao tinha voltado,
+// quando ele estava la e era o painel por cima. A dos Ajustes so pode ser
+// medida com o painel ABERTO, senao ela passa sem olhar nada.
 const estado = async p => {
-  const t = await p.evaluate(() => {
-    const alto = document.getElementById('langToggle');
-    const linha = document.querySelector('[data-setting="language"]');
-    const vis = el => !!(el && !el.hidden && !(el.closest('[hidden]')) &&
-                         el.getBoundingClientRect().height > 0);
-    return {
-      portaDoAlto: vis(alto),
-      portaDosAjustes: vis(linha),
-      // as chaves TEM de continuar no HTML, mesmo escondidas
-      chaveNoHtml: !!document.querySelector('[data-i18n="language_label"]'),
-      titulo: ((document.querySelector('.prayer-title') || {}).textContent || '').trim(),
-    };
-  });
+  // 1) a porta do ALTO, com o painel fechado
+  const alto = await p.evaluate(`(${NA_TELA})(document.getElementById('langToggle'))`);
+
+  // 2) a porta dos AJUSTES, com o painel aberto
+  await p.evaluate(() => { const g = document.getElementById('settingsToggle'); if (g) g.click(); });
+  await p.waitForTimeout(450);
+  const ajustes = await p.evaluate(
+    `(${NA_TELA})((document.querySelector('[data-setting="language"]')||{}).closest
+       ? document.querySelector('[data-setting="language"]').closest('.settings-row') : null)`);
+
+  const t = await p.evaluate(() => ({
+    chaveNoHtml: !!document.querySelector('[data-i18n="language_label"]'),
+    titulo: ((document.querySelector('.prayer-title') || {}).textContent || '').trim(),
+  }));
+  // fechar, para a proxima medida comecar limpa
+  await p.evaluate(() => { const g = document.getElementById('settingsToggle'); if (g) g.click(); });
+  await p.waitForTimeout(250);
+
   const achou = Object.keys(TITULOS).find(k => TITULOS[k] === t.titulo);
-  return { ...t, lingua: achou || ('?: ' + t.titulo) };
+  return { ...t, portaDoAlto: alto, portaDosAjustes: ajustes,
+           lingua: achou || ('?: ' + t.titulo) };
 };
+
 
 // ---------- 1 a 3: a chave ligada ----------
 const ctx = await nav.newContext();

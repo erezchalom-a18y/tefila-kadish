@@ -1652,6 +1652,14 @@
   }
 
   /* Topbar: language and Treino buttons */
+  /* A CHAVE SO_PORTUGUES esconde por AQUI, e nao pelo atributo `hidden`.
+     Medido em 14/09, depois de a v59 ir para o ar com o botao de idioma ainda
+     na tela: `el.hidden = true` nao esconde nada quando o proprio elemento tem
+     `display` no CSS — a regra `.lang-toggle{display:flex}`, tres linhas
+     abaixo, ganha do `[hidden]` da folha do navegador. O atributo ficava
+     posto, o botao ficava visivel com 38px, e o dedo o encontrava. */
+  .escondido-pela-chave { display: none !important; }
+
   .lang-toggle, .treino-toggle {
     background: transparent;
     border: 1px solid var(--line);
@@ -2503,7 +2511,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-14 · 59';
+const VERSAO = '2026-09-14 · 60';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -6304,16 +6312,21 @@ state.lang = (pediuLinguaNoEndereco ? langDaURL : null) ||
              (SO_PORTUGUES ? 'pt' : localStorage.getItem('tefila_lang')) || 'pt';
 if (pediuLinguaNoEndereco) localStorage.setItem('tefila_lang', langDaURL);
 
-// As DUAS portas da lingua somem juntas — a do alto e a dos Ajustes. Some com
-// `hidden`, e nao apagando do HTML, porque o applyI18n continua preenchendo os
-// rotulos e o testar-linguas.mjs continua conferindo que as chaves existem nas
-// 8 tabelas. Apagar o HTML apagaria a checagem junto, calada.
+// As DUAS portas da lingua somem juntas — a do alto e a dos Ajustes. Somem por
+// CLASSE (`display:none !important`) e nao pelo atributo `hidden`: o `hidden` e
+// so a folha do navegador dizendo `display:none`, e QUALQUER regra do autor com
+// `display` ganha dele. Foi assim que a v59 foi para o ar com o botao de idioma
+// ainda na tela, e com a minha checagem jurando que tinha sumido.
+// E nao se apaga do HTML, porque o applyI18n continua preenchendo os rotulos e
+// o testar-linguas.mjs continua conferindo que as chaves existem nas 8 tabelas.
+// Apagar o HTML apagaria a checagem junto, calada.
 function esconderEscolhaDeLingua() {
   if (!SO_PORTUGUES || pediuLinguaNoEndereco) return;
   const alto = document.getElementById('langToggle');
-  if (alto) alto.hidden = true;
+  if (alto) alto.classList.add('escondido-pela-chave');
   const linha = document.querySelector('[data-setting="language"]');
-  if (linha && linha.closest('.settings-row')) linha.closest('.settings-row').hidden = true;
+  const fileira = linha && linha.closest('.settings-row');
+  if (fileira) fileira.classList.add('escondido-pela-chave');
 }
 document.addEventListener('DOMContentLoaded', esconderEscolhaDeLingua);
 esconderEscolhaDeLingua();
