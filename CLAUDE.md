@@ -620,6 +620,17 @@ O worker guarda SÓ: país · nussach · tipo · língua · dia · quantos. Nunc
 acrescentar IP, identificador de aparelho, hora ou qualquer coisa que volte a
 uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
 
+**A lista de origens do worker ficou para trás quando o endereço mudou
+(14/09).** O `ORIGENS` do `worker.js` só tinha
+`https://erezchalom-a18y.github.io`, e um pedido vindo de outro lugar **não
+soma** — de propósito. Com o app em `kadish.app`, o dia em que ele ligasse o
+contador nada seria contado, **sem uma mensagem de erro em lugar nenhum**: o
+worker responde 204 igual. O próprio arquivo pedia isso por escrito (*"se um
+dia o endereço do app mudar, acrescente o novo aqui"*) e ninguém acrescentou.
+Agora estão os três — `kadish.app`, `www.kadish.app` e o antigo, que continua
+valendo enquanto o GitHub Pages redireciona. Mesma família do `canPlayType` e
+do `temState`: **um caminho desligado que ninguém visita não acusa nada.**
+
 ## Pendências de conteúdo (não são de código)
 
 - Revisão do rabino: glossario.json (42 entradas × 8 línguas) e as regras de

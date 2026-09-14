@@ -31,6 +31,8 @@ const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 // De onde o app e servido. Pedido que venha de outro lugar nao soma.
 // Se um dia o endereco do app mudar, acrescente o novo aqui.
 const ORIGENS = [
+  'https://kadish.app',
+  'https://www.kadish.app',
   'https://erezchalom-a18y.github.io',
 ];
 
