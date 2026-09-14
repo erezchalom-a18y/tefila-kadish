@@ -56,7 +56,16 @@ for (const lang of alvo) {
   await pag.pdf({ path: tmp, format: 'A4', printBackground: true });
   provisorios.push(tmp);
   const tela = await pag.evaluate(() => ({
-    itens: document.querySelectorAll('#oque li').length,
+    // 14/09 — ela contava os 5 itens do "O que o app faz". Ele reescreveu o
+    // miolo como UMA sequencia de oito passos, e aquela lista deixou de
+    // existir no papel. A pergunta mudou de alvo, e NAO afrouxou: continua
+    // exigindo um numero exato, e agora exige que os oito estejam TODOS na
+    // folha (antes ela nem olhava os passos) e que a numeracao va de 1 a 8 sem
+    // buraco — que e o que quebra quando alguem parte a lista em duas colunas
+    // com um numero escrito a mao.
+    passos: [...document.querySelectorAll('.miolo .passo b')].map(b => b.textContent).join(','),
+    passosTexto: [...document.querySelectorAll('.miolo .passo span')]
+                   .filter(e => e.textContent.trim()).length,
     endereco: /erezchalom|kadish\.app/.test(document.body.textContent),
     // A instrucao do icone (10/09). Ele cobrou, com razao, que "com esse qr
     // code nao instala o icone no iphone" — nenhum QR instala nada, e o papel
@@ -82,7 +91,11 @@ print(json.dumps({"paginas": len(d), "lido": r.text if r else None}))
   const problemas = [];
   if (erros.length) problemas.push('erro de console: ' + erros[0]);
   if (tela.endereco) problemas.push('o endereco escrito VOLTOU (ele mandou tirar em 10/09)');
-  if (tela.itens !== 5) problemas.push(`${tela.itens} itens na lista, esperava 5`);
+  const esperado = [...Array(8)].map((_, i) => i + 1).join(',');
+  if (tela.passos !== esperado)
+    problemas.push(`os passos sao "${tela.passos}", esperava "${esperado}"`);
+  if (tela.passosTexto !== 8)
+    problemas.push(`${tela.passosTexto} passos com texto, esperava 8`);
   if (!/iPhone/.test(tela.icone) || !/Android/.test(tela.icone) || tela.icone.length < 80)
     problemas.push('falta a instrucao de como deixar o icone na tela (iPhone e Android)');
   if (prova.erro) problemas.push('nao consegui ler o PDF: ' + prova.erro +

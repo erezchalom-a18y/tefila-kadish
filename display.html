@@ -121,6 +121,12 @@
   html[dir=rtl] .lista{padding-left:0;padding-right:11px}
   html[dir=rtl] .nota-minyan{border-left:1px solid var(--linha);border-right:3px solid var(--brass)}
 
+  .h-unico{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:600;
+           color:var(--brass);letter-spacing:.06em;text-transform:uppercase;
+           margin:4mm 0 0;text-align:center}
+  .colunas{margin-top:2mm}
+  .f-S .h-unico{font-weight:400;color:var(--fraco);letter-spacing:.09em}
+
   .f-D .marca{font-size:19px}
   .f-D .sub{font-size:9.6px;margin-top:2px}
   .f-D .qr{width:38mm;height:38mm;margin:3mm 0 0}
@@ -225,12 +231,24 @@ const HEB = '<div class="heb">יִתְגַּדַּל וְיִתְקַדַּשׁ 
 // passos, os cinco itens do que o app faz, e a nota do minyan. Cabe porque as
 // duas listas vao LADO A LADO — 100mm de largura sao 86mm uteis, e empilhar as
 // duas gastaria altura que o cartao nao tem.
-const DUAS_COLUNAS = (t) => `<div class="colunas">
-   <div class="col"><h2>${esc(t.hComo)}</h2>${t.passos.map((p,i)=>
-      `<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`).join('')}</div>
-   <div class="col"><h2>${esc(t.hOque)}</h2><ul class="lista">${t.oque.map(x=>
-      `<li>${esc(x)}</li>`).join('')}</ul></div>
+// 14/09 — eram DUAS listas: "Como usar" (3 passos) e "O que o app faz" (5
+// itens). Ele reescreveu o miolo como UMA sequencia de oito passos, e os cinco
+// recursos viraram os passos 5 a 8. Manter as duas aqui punha 13 linhas onde
+// cabiam 8: as formas D, E e S transbordaram e o gerador nao gravou nada —
+// 19px, 16px e 103px da borda de baixo. O conserto nao e apertar a letra; e
+// parar de dizer duas vezes a mesma coisa.
+// O `oque` CONTINUA na tabela porque a forma R (o cartao do rabino) o usa —
+// ali a pergunta e outra: nao "como uso?", mas "o que este app tem?".
+// A partida e pela METADE da lista, calculada. Um 4 escrito a mao mentiria no
+// dia em que entrasse ou saisse um passo.
+const DUAS_COLUNAS = (t) => {
+  const meio = Math.ceil(t.passos.length / 2);
+  const passo = (p, i) => `<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`;
+  return `<h2 class="h-unico">${esc(t.hComo)}</h2><div class="colunas">
+   <div class="col">${t.passos.slice(0, meio).map((p,i)=>passo(p,i)).join('')}</div>
+   <div class="col">${t.passos.slice(meio).map((p,i)=>passo(p,i+meio)).join('')}</div>
  </div>`;
+};
 const NOTA_MINYAN = (t) => `<div class="nota-minyan">${esc(t.nota)}</div>`;
 
 const formas = {

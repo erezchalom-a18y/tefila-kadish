@@ -34,3 +34,12 @@ build/
 
 # Python
 __pycache__/
+
+# Os provisorios dos geradores de papel (gerar-display.mjs e gerar-panfleto.mjs).
+# Eles escrevem em .<forma>-<lingua>.tmp.pdf e so renomeiam no fim, para nao
+# gravar nada quando uma prova falha. Ficam DENTRO do repositorio enquanto a
+# rodada corre, e um "git add -A" no meio de uma rodada os levaria junto — foi
+# o que quase aconteceu em 14/09, com 42 deles de uma vez.
+display/.*.tmp.pdf
+panfleto/.*.tmp.pdf
+folhetos/.*.tmp.pdf

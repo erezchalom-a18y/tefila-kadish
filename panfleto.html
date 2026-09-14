@@ -46,21 +46,28 @@
   .marca{font-family:'Frank Ruhl Libre',serif;font-size:30px;text-align:center;letter-spacing:.02em}
   .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;
        color:var(--soft);text-align:center;margin-top:4px}
-  .regua{height:1px;width:52%;margin:14px auto 0;
+  .regua{height:1px;width:52%;margin:10px auto 0;
          background:linear-gradient(to right,transparent,var(--brass),transparent);opacity:.65}
   .heb{font-family:'Frank Ruhl Libre',serif;font-size:26px;text-align:center;
-       direction:rtl;margin:14px 0 2px}
+       direction:rtl;margin:10px 0 2px}
   .heb-tl{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;
           color:var(--soft);text-align:center}
   /* O QR e o centro da folha, e nao um enfeite de canto. Ela vai num display
      de sinagoga: quem passa a um metro tem de ver o codigo, nao ler a pagina.
      Medido: 62mm de lado num canto deixava 400px de folha vazia no meio. */
-  .qr-caixa{text-align:center;margin:7mm auto 0}
-  /* 80mm, e nao 88: com a instrucao do icone o russo e o alemao passavam
-     para uma segunda folha — a checagem acusou e nao gravou nada. O QR
-     continua sendo o maior elemento da folha, que e o que importa numa
-     parede. Lido de dentro do PDF a 200 dpi, continua lendo. */
-  .qr-caixa img{width:80mm;height:80mm;display:block;margin:0 auto;
+  .qr-caixa{text-align:center;margin:5mm auto 0}
+  /* 74mm, e o numero desceu duas vezes pelo MESMO motivo, medido as duas:
+     88 -> 80 em 10/09 (a instrucao do icone empurrou o russo e o alemao para
+     uma segunda folha) e 80 -> 74 em 14/09 (os oito passos dele empurraram o
+     portugues). O QR continua sendo o maior elemento da folha, que e o que
+     importa numa parede. Lido de dentro do PDF a 200 dpi, continua lendo.
+
+     E fica registrado o meu erro de medida nesta rodada: eu media se o
+     conteudo passava da .folha, que na TELA tem 297mm. Na impressao a folha
+     perde os 24mm da margem do @page — a area util e 273mm. A minha conta
+     dizia "sobram 60px" enquanto o PDF saia com DUAS paginas. Quem estava
+     certo era o contador de paginas, que e o unico que ve o papel. */
+  .qr-caixa img{width:74mm;height:74mm;display:block;margin:0 auto;
                 border:1px solid var(--linha);border-radius:8px;background:#fff}
   .qr-legenda{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--soft);
               margin-top:9px;line-height:1.35}
@@ -72,27 +79,38 @@
             font-size:13px;line-height:1.4;color:var(--soft);text-align:left}
   .qr-icone b{color:var(--brass);font-weight:600}
   .qr-icone div{margin-top:3px}
-  .miolo{display:flex;gap:11mm;margin-top:7mm;align-items:flex-start}
+  .miolo{display:flex;gap:10mm;margin-top:2mm;align-items:flex-start}
   .coluna{flex:1}
   h2{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;
      margin:0 0 6px;color:var(--brass)}
-  .passo{display:flex;gap:9px;margin-bottom:9px;font-size:14.5px;line-height:1.45}
+  .passo{display:flex;gap:8px;margin-bottom:7px;font-size:13.5px;line-height:1.4}
   .passo b{font-family:'Cormorant Garamond',serif;color:var(--brass);
            font-size:17px;flex:0 0 16px;line-height:1.25}
   .lista{margin:0;padding-left:18px;font-size:14.5px;line-height:1.5}
   .lista li{margin-bottom:5px}
-  .nota{margin-top:auto;padding-top:6mm}
+  .nota{margin-top:auto;padding-top:4mm}
   .nota-caixa{border:1px solid var(--linha);border-left:4px solid var(--brass);
               border-radius:8px;padding:11px 14px;background:rgba(212,162,90,.10);
               font-size:14px;line-height:1.5;text-align:center;color:var(--soft)}
-  .rodape{margin-top:7mm;text-align:center;font-family:'Cormorant Garamond',serif;
+  .rodape{margin-top:4mm;text-align:center;font-family:'Cormorant Garamond',serif;
           font-size:12.5px;color:var(--fraco)}
   .imprimir{position:fixed;top:14px;right:14px;background:var(--brass);color:#fff;
             border:0;border-radius:8px;padding:10px 16px;font-family:Lora,serif;
             font-size:14px;cursor:pointer}
+  /* Na impressao a folha perde a largura fixa e a margem vem do @page (12mm).
+     Com padding 0 o texto da coluna da DIREITA encostava na borda do fundo de
+     pergaminho — 2px de folga contra os 35px da esquerda. Nao transbordava,
+     mas lia-se como corte. 4mm de cada lado resolve, e continua cabendo numa
+     pagina (conferido nas 8). */
   @media print{ body{background:#fff;padding:0} .folha{box-shadow:none;width:auto;
-    min-height:auto;padding:0} .imprimir{display:none} }
+    min-height:auto;padding:0 4mm} .imprimir{display:none} }
   html[dir=rtl] .nota-caixa{border-left:1px solid var(--linha);border-right:4px solid var(--brass)}
+  /* 14/09 — uma lista de oito, nao duas listas. O titulo passa a ser um so,
+     acima das duas colunas, porque as colunas agora sao METADES da mesma
+     sequencia e nao dois assuntos. */
+  .h-como{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;
+          color:var(--brass);letter-spacing:.04em;text-transform:uppercase;
+          margin:7mm 0 2mm;text-align:center;width:100%}
   html[dir=rtl] .lista{padding-left:0;padding-right:18px}
 </style></head>
 <body>
@@ -110,15 +128,10 @@
     <div class="qr-icone" id="qrIcone"></div>
   </div>
 
+  <h2 class="h-como" id="hComo"></h2>
   <div class="miolo">
-    <div class="coluna">
-      <h2 id="hComo"></h2>
-      <div id="passos"></div>
-    </div>
-    <div class="coluna">
-      <h2 id="hOque"></h2>
-      <ul class="lista" id="oque"></ul>
-    </div>
+    <div class="coluna" id="passosA"></div>
+    <div class="coluna" id="passosB"></div>
   </div>
 
   <div class="nota">
@@ -137,10 +150,19 @@ document.documentElement.dir = t.dir;
 const esc = x => String(x).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 document.getElementById('sub').textContent = t.sub;
 document.getElementById('hComo').textContent = t.hComo;
-document.getElementById('passos').innerHTML =
-  t.passos.map((p,i)=>`<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`).join('');
-document.getElementById('hOque').textContent = t.hOque;
-document.getElementById('oque').innerHTML = t.oque.map(x=>`<li>${esc(x)}</li>`).join('');
+// 14/09 — os oito passos dele, numa lista SO, partida em duas colunas para
+// caber. Antes eram duas listas ("Como usar" com 3 passos e "O que o app faz"
+// com 5 itens), e ele reescreveu isso como uma sequencia: os recursos viraram
+// os passos 5 a 8. Faz sentido — ninguem le uma lista de recursos, mas todo
+// mundo segue um numero depois do outro.
+// A partida e pela METADE da lista, calculada, nunca um 4 escrito a mao: se um
+// dia entrar ou sair um passo, as colunas continuam equilibradas sozinhas.
+const meio = Math.ceil(t.passos.length / 2);
+const passo = (p, i) => `<div class="passo"><b>${i+1}</b><span>${esc(p)}</span></div>`;
+document.getElementById('passosA').innerHTML =
+  t.passos.slice(0, meio).map((p,i)=>passo(p,i)).join('');
+document.getElementById('passosB').innerHTML =
+  t.passos.slice(meio).map((p,i)=>passo(p,i+meio)).join('');
 document.getElementById('qrLegenda').textContent = t.qr;
 // Os rotulos "iPhone" e "Android" nao se traduzem — sao os nomes dos aparelhos.
 // Estas duas linhas passam como HTML, e nao pelo esc(), por causa do <b> do

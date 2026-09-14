@@ -2562,3 +2562,80 @@ sagrado que já ficou anotada na forma C — e ela é do rabino, não minha.
 
 **O folheto do enlutado (Chevra Kadisha) continua não existindo.** É a outra
 metade da ideia dele de 13/09.
+
+
+## Os oito passos, escritos por ele (14/09)
+
+Ele ditou o miolo do A4: *"vamos por partes"* — título, a frase, o QR, as
+instruções de instalar, **oito passos numerados** e a nota do minyan. E fechou
+com *"pode melhorar, mas deve conter ao menos isso"*.
+
+**A mudança é estrutural e é dele.** O papel tinha DUAS listas lado a lado:
+"Como usar" (3 passos) e "O que o app faz" (5 itens). Ele reescreveu isso como
+**uma sequência só**, com os recursos virando os passos 5 a 8. Está certo:
+ninguém lê uma lista de recursos, mas todo mundo segue um número depois do
+outro. As duas colunas continuam existindo, mas agora são **metades da mesma
+lista** — e a partida é `Math.ceil(n/2)`, calculada, nunca um 4 escrito à mão.
+
+**Duas coisas do texto dele que eu mudei, e as duas estão ditas a ele:**
+
+1. **O passo 6 dizia "palavra por palavra".** O Modo Treino por PALAVRA não tem
+   botão na tela desde 26/08, por pedido dele mesmo (*"só por verso por
+   enquanto"*) — só se chega lá por `?treino=palavra` no endereço. Prometer no
+   papel o que a tela não oferece é o pior tipo de erro num papel que vai à
+   parede. Ficou **"verso a verso"**. Se ele quiser a promessa de volta, o
+   caminho por palavra está inteiro e testado: é devolver os dois botões ao
+   `treino-banner`.
+2. **O passo 2 ganhou um "se quiser".** Instalar é opcional — o app funciona no
+   navegador —, e um passo numerado sem essa palavra soa como obrigação.
+
+**A frase do minyan é dele, outra vez**, agora com a explicação entre
+parênteses: *"O Kadish exige minyan (dez homens adultos rezando juntos) e é
+recitado de pé."* Mantive a segunda frase (*"Deve ser recitado normalmente numa
+sinagoga durante o período de luto"*), porque ele disse "ao menos isso" — mas
+ela é dele e sai num toque se ele quiser.
+
+### O erro de medida desta rodada, e ele é do mesmo tipo de sempre
+
+Os oito passos empurraram o A4 para **duas páginas**. Fui medir e a minha conta
+disse que sobravam **60px**. As duas coisas não podiam ser verdade, e quem
+mentia era eu:
+
+> eu media se o conteúdo passava da `.folha`, que na TELA tem 297mm. **Na
+> impressão a folha perde os 24mm da margem do `@page` — a área útil é 273mm.**
+
+Medi contra a caixa errada. Quem estava certo era o **contador de páginas do
+PDF**, que é o único que vê o papel. É a mesma família da caixa do glifo
+(10/09), do `scrollHeight` do cartão (11/09) e do certificado do proxy (13/09):
+*medir a coisa certa não é medir com cuidado — é escolher a pergunta certa.*
+
+O conserto tirou 16mm de onde não doía, e **o QR desceu de 80 para 74mm** — o
+mesmo número já tinha descido de 88 para 80 em 10/09, pelo mesmo motivo e
+também acusado pela checagem.
+
+**E o texto encostava na borda direita do papel** (2px de folga contra 35px na
+esquerda): na impressão a `.folha` fica com `padding: 0`, então a coluna da
+direita terminava rente ao pergaminho. Não transbordava — lia-se como corte.
+Agora são 4mm de cada lado.
+
+### A checagem mudou de alvo, e ficou mais exigente
+
+O `gerar-panfleto.mjs` contava `#oque li` e exigia 5. Essa lista deixou de
+existir no papel. Agora ele cobra que os **oito passos estejam na folha** e que
+a numeração vá de **1 a 8 sem buraco** — que é exatamente o que quebra quando
+alguém parte a lista em duas colunas com um número escrito à mão. Antes ele nem
+olhava os passos; é mais do que era, não menos.
+
+### As fichas de 10 × 15 seguiram, e três reprovaram primeiro
+
+D, E e S transbordaram (19px, 16px e **103px** da borda de baixo) porque
+passaram a mostrar os 8 passos **e** os 5 itens antigos — 13 linhas onde cabiam
+8. O conserto não foi apertar a letra: foi **parar de dizer duas vezes a mesma
+coisa**. As três mostram agora a mesma lista única do A4.
+
+**O campo `oque` continua na tabela**, e não é sobra: a forma **R**, o cartão do
+rabino, é a única que ainda o usa — ali a pergunta não é "como uso?", é "o que
+este app tem?".
+
+A forma **B** ficou a melhor das fichas nesta virada: os oito passos numa
+coluna só, grandes, com o código em cima.
