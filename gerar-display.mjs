@@ -11,6 +11,7 @@
  *   C  o Kadish em hebraico, depois o codigo
  *   D  COMPLETA — tudo o que a folha A4 diz, em duas colunas
  *   E  COMPLETA com o hebraico
+ *   R  PARA O RABINO (14/09) — outro leitor, nao a D com uma linha a mais
  *
  * PROVAS antes de gravar, e sao as mesmas do panfleto mais uma:
  *   1. o QR e LIDO DE DENTRO DO PDF, a 200 dpi, e tem de devolver o endereco.
@@ -22,16 +23,19 @@
  *   4. a nota do minyan nao sai DUAS VEZES. Tambem cai nessa: o rodape pegou o
  *      campo `nota` em vez do `rodape`, e a frase do minyan saiu na caixa e no
  *      pe do mesmo cartao. Nenhuma medida viu; a foto viu.
+ *   5. na forma R, os quatro nussachim aparecem e a nota do minyan NAO — e o
+ *      que separa o cartao do rabino do cartao de quem reza. Sem esta prova,
+ *      um dia alguem "unifica" as formas e a R vira a D calada.
  *
  * Qualquer falha e ele NAO grava nada.
  *
- *   node gerar-display.mjs              → as 5 formas, nas 8 linguas
- *   node gerar-display.mjs D pt         → so a forma D em portugues
+ *   node gerar-display.mjs              → as 6 formas, nas 8 linguas
+ *   node gerar-display.mjs R pt         → so o cartao do rabino, em portugues
  */
 import { spawn, execFileSync } from 'node:child_process';
 import { mkdirSync, existsSync, unlinkSync, renameSync } from 'node:fs';
 
-const FORMAS = ['A', 'B', 'C', 'D', 'E'];
+const FORMAS = ['A', 'B', 'C', 'D', 'E', 'R'];
 const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 const ENDERECO = 'https://kadish.app/';
 const PORTA = 8965;
@@ -76,6 +80,8 @@ for (const f of alvoF) {
         folga: Math.round(cr.bottom - maisBaixo),
         repetiu: !!(nota && rodape && nota.trim().slice(0, 25) === rodape.trim().slice(0, 25)),
         temEndereco: c.textContent.includes('kadish.app'),
+        temRitos: !!document.querySelector('.oito .ritos'),
+        temNotaMinyan: !!document.querySelector('.nota-minyan'),
       };
     });
     await pag.close();
@@ -98,6 +104,10 @@ print(json.dumps({"paginas": len(d), "lido": r.text if r else None,
     if (tela.folga < 0) problemas.push(`o conteudo passa ${-tela.folga}px da borda de baixo`);
     if (tela.repetiu) problemas.push('a nota do minyan saiu DUAS VEZES (caixa e rodape)');
     if (!tela.temEndereco) problemas.push('o endereco kadish.app nao aparece');
+    // A forma R e do RABINO: ela existe para responder "tem o meu nussach?", e
+    // nao para repetir a nota do minyan, que ele nao precisa que lhe expliquem.
+    if (f === 'R' && !tela.temRitos) problemas.push('a forma R perdeu os oito Kadishim');
+    if (f === 'R' && tela.temNotaMinyan) problemas.push('a forma R voltou a trazer a nota do minyan');
     if (prova.erro) problemas.push('nao consegui ler o PDF: ' + prova.erro);
     else {
       if (prova.paginas !== 1) problemas.push(`${prova.paginas} paginas, tem de ser 1`);

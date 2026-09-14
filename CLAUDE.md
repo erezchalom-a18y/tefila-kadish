@@ -2422,3 +2422,70 @@ mesmo jeito que uma que nunca poderia ficar vermelha. **Antes de deixar uma
 checagem rodando, provar que ela sabe passar E que sabe falhar.** O script foi
 apagado para não enganar quem o achasse depois.
 
+
+## O cartão do rabino (14/09) — e o folheto do ChatGPT que o motivou
+
+Ele mandou um folheto que pediu ao ChatGPT e disse: *"achei interessante a
+ideia que veio, uma para entregar ao enlutado talvez ainda no cemitério pela
+chevra kadisha e outro para ser usado pelos rabinos na sinagoga, antes de
+fazer qualquer alteração me dê sua opinião, de forma crítica"*.
+
+**A ideia dos dois leitores é dele e é melhor que a minha.** Eu tinha um papel
+de parede (o A4) e um de mesa (o cartão), e os dois falam com QUEM REZA. Ele
+viu que há dois outros momentos — a mão do enlutado no cemitério e a mão do
+rabino na sinagoga — e que nenhum papel meu servia a eles.
+
+**O que o folheto do ChatGPT tinha de errado, medido:**
+
+1. **O QR levava para o lugar errado.** Lido de dentro do PDF, ele devolvia
+   `https://kadish.app/panfleto.html` — que é o CARTAZ, não o app. Quem
+   apontasse a câmera cairia numa página que diz "aponte a câmera para o código
+   acima". Um círculo. É o defeito que só se descobre com o papel já
+   distribuído, e é a razão de o `gerar-display.mjs` e o `gerar-panfleto.mjs`
+   lerem o código de volta antes de gravar.
+2. **O corpo inteiro era texto novo escrito por um modelo**, sobre halachá e
+   sobre o sentido do Kadish. É a regra 5 das invioláveis.
+3. **Faltava o lembrete do yahrzeit** — possivelmente a coisa mais útil do app
+   para quem acabou de enterrar alguém — e faltavam os quatro nussachim.
+4. **A4 solto, com quase metade da folha vazia**, para entregar na mão de quem
+   está com o casaco e a família em volta.
+
+Ele respondeu: *"folheto do rabino, 10X15 não a4, bem na linha do que já
+fizemos, talvez tirando excessos"* e, no meio da rodada, *"fazer só em
+português por enquanto"*.
+
+**A forma R do `display.html`, e por que ela não é a D com uma linha a mais.**
+As formas A–E falam com quem reza. O rabino não precisa que lhe expliquem o que
+é um minyan — **a nota do minyan, que nas outras é informação, na dele é
+barulho, e por isso SAI.** E ele tem uma pergunta que nenhuma das outras
+responde, e é a que decide se ele recomenda o app: **tem o nussach da minha
+casa?** Por isso os oito Kadishim ocupam o meio do cartão.
+
+**Texto novo: quatro frases, e só uma delas é minha de verdade.** A `rab_sub`
+é nova (nas 8, esperando o olho dele). O `rab_hOito` é um título. E o
+`rab_yatom`/`rab_derabanan` são **copiados verbatim** do objeto `titles` do
+`engine.html` — são as mesmas palavras que o rabino vê na tela. Os quatro nomes
+de rito também: `Ashkenazi · Chabad · Sefard · Sefaradi`, iguais aos quatro
+botões do alto do app, que não se traduzem em lugar nenhum do projeto. Quem
+puser o cartão ao lado da tela lê a mesma palavra nos dois.
+
+Os quatro itens do "o que o app faz" são escolhidos **por POSIÇÃO** (0,1,2,3),
+nunca pelo texto — o título muda de língua, o índice não. Fica de fora só o 4,
+o botão de mudo, que é o menos útil para quem conduz a reza.
+
+**E o vazio de 24 mm, que era o meu próprio defeito.** A primeira volta pôs o
+QR em 42mm e sobraram **24 milímetros de nada** no pé do cartão — exatamente o
+que eu tinha acabado de apontar no folheto do ChatGPT, meia folha vazia. Os
+24mm foram para o **código**, que é a razão de o cartão existir: **57mm**,
+lidos a meio braço e com folga contra o reflexo do papel na mesa. Sobra medida
+depois: 2mm antes do rodapé.
+
+**Duas provas novas no `gerar-display.mjs`**, e as duas sabem falhar: na forma
+R os quatro nussachim TÊM de aparecer, e a nota do minyan NÃO pode aparecer.
+Sem elas, um dia alguém "unifica" as formas e a R vira a D calada.
+
+**Só o português foi gravado**, a pedido dele. As outras 7 saem com
+`node gerar-display.mjs R` — a tabela já tem as 8, que é a regra 6.
+
+**O folheto do enlutado (Chevra Kadisha) ainda não existe.** É o outro metade
+da ideia dele, e fica para depois de ele ver este.
