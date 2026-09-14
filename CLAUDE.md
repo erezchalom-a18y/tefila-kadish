@@ -2658,3 +2658,73 @@ oito linhas. O rodapé dizia "7 cartões com problema" e eu só via dois. O tota
 salvou a leitura — sem ele eu teria consertado dois e dado por feito. Um
 resumo que não bate com o detalhe é para acreditar no resumo e ir procurar o
 resto.
+
+
+## O lançamento só no Brasil, e por que é uma CHAVE (14/09, v59)
+
+Ele: *"quero manter salvo o que já fizemos em outra pasta e criar o mesmo app
+apenas em português — decidimos lançar somente em português a 1 versão"*. E o
+motivo, que é o que decide tudo: *"finalizar as traduções e transliterações e
+testar primeiro no brasil e trazer mudanças vindas dos usuários"*.
+
+**As 7 línguas VOLTAM. Por isso não há app separado.** Copiar o projeto para
+uma pasta "só em português" custaria **284 arquivos duplicados** e **19
+checagens rodando em dois lugares** — e um dia alguém teria de juntar as duas
+metades de volta. É a lição mais repetida deste arquivo (*duas contas para a
+mesma pergunta*) no tamanho máximo possível.
+
+E o que se ganharia, medido no Kadish mais pesado:
+
+| | |
+|---|---|
+| o áudio do rabino | **1.901 KB** — igual em qualquer língua |
+| hoje, com as 8 | 2.444 KB |
+| só em português | 2.305 KB |
+| **economia** | **139 KB — 5,7%** |
+
+O peso do app é a voz do rabino. As outras sete línguas custam menos de um
+vigésimo do que a pessoa baixa.
+
+**O que fica guardado, e onde.** O ramo **`guardado-8-linguas`** no GitHub,
+congelado no estado de 14/09. (Tentei uma etiqueta primeiro — `git tag` — e o
+GitHub recusou com **403**: este acesso empurra ramos, não etiquetas. O ramo faz
+o mesmo trabalho.) **Não** se copiou nada para pasta nenhuma: uma pasta é o que
+envelhece calada.
+
+### A chave, e o que ela NÃO desliga
+
+`const SO_PORTUGUES = true` no `engine.html`. Ela faz três coisas:
+
+1. sem `?lang=`, a língua é português;
+2. **o que estava guardado no aparelho deixa de valer** — senão quem tinha
+   escolhido inglês semanas atrás abriria o "lançamento só em português" em
+   inglês, e nada acusaria;
+3. **as DUAS portas da língua somem juntas** — a do alto e a dos Ajustes. Some
+   com `hidden`, nunca apagando do HTML: o `applyI18n` continua preenchendo os
+   rótulos e o `testar-linguas.mjs` continua conferindo que as chaves existem
+   nas 8 tabelas. Apagar o HTML apagaria a checagem junto, calada.
+
+**O `?lang=` continua valendo, e isso é o coração da decisão.** É por ele que as
+checagens alcançam as 8 línguas enquanto elas estão sendo terminadas, e é por
+ele que ele confere uma tradução pronta. Quem só reza nunca vê — nunca houve
+link com `?lang=` em papel nenhum nosso. Estava escrito desde sempre que essa
+porta existia "só para testar"; hoje ela é o que mantém as sete vivas.
+
+Ligar as sete de volta é trocar uma palavra: `SO_PORTUGUES = false`.
+
+### `testar-so-portugues.mjs`, e o erro que ela cometeu antes de funcionar
+
+Cobra as cinco coisas acima e **sabe passar E sabe falhar**: com `--provar` ela
+desliga a chave pelo caminho (reescrevendo a constante na resposta do servidor,
+sem tocar no arquivo) e **exige que as duas portas VOLTEM**.
+
+**E ela acusou três falhas que não existiam.** Eu tinha perguntado a língua ao
+`document.documentElement.lang` — que é **`pt-BR` escrito fixo no HTML**, em
+qualquer língua. A prova de que o app estava certo estava na linha ao lado: o
+título vinha *"Mourner's Kaddish"*.
+
+A pergunta certa não é a um atributo nem a uma variável: é **ao que está na
+tela**. O título da reza tem texto próprio em cada uma das 8, então ele responde
+sozinho — e responde pelo caminho de quem reza, não pelo de dentro. É a mesma
+família da caixa do glifo (10/09), do `scrollHeight` (11/09), do certificado do
+proxy (13/09) e da `.folha` de 297mm (14/09, hoje de manhã).

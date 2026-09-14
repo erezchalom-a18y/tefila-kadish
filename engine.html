@@ -2503,7 +2503,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-11 · 58';
+const VERSAO = '2026-09-14 · 59';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -6276,10 +6276,47 @@ function applyFontScale(scale) {
 // para poder TESTAR: sem isso, um link nao garante a lingua, e o Erez abriria
 // os 8 kadishim na lingua que tivesse ficado no aparelho dele. Quem so reza
 // nunca ve isto — a lingua continua vindo do aparelho.
+// SO_PORTUGUES — a decisao dele de 14/09: "decidimos lancar somente em
+// portugues a 1 versao", para "finalizar as traducoes e transliteracoes e
+// testar primeiro no brasil e trazer mudancas vindas dos usuarios".
+//
+// E POR ISSO QUE ISTO E UMA CHAVE E NAO UM APP SEPARADO. As 7 linguas VOLTAM.
+// Copiar o projeto para uma pasta "so em portugues" custaria 284 arquivos
+// duplicados e 19 checagens rodando em dois lugares — e um dia alguem teria de
+// juntar as duas metades de volta. Medido, o que se ganharia: as outras 7
+// linguas sao 139 KB dos 2.444 KB que a pessoa baixa (5,7%), porque o peso do
+// app e a voz do rabino, que e a mesma em qualquer lingua.
+//
+// O ?lang= CONTINUA VALENDO, e isso nao e descuido: e por ele que as checagens
+// alcancam as 8 linguas (testar-linguas.mjs, testar-dedicatoria.mjs,
+// testar-instalar.mjs) e e por ele que o Erez confere uma traducao enquanto a
+// termina. Quem so reza nunca ve — nunca houve link com ?lang= num papel nosso.
+//
+// Ligar as 7 de volta e trocar uma palavra: SO_PORTUGUES = false.
+const SO_PORTUGUES = true;
+
 const langDaURL = new URLSearchParams(location.search).get('lang');
-state.lang = (LANG_META[langDaURL] ? langDaURL : null) ||
-             localStorage.getItem('tefila_lang') || 'pt';
-if (LANG_META[langDaURL]) localStorage.setItem('tefila_lang', langDaURL);
+const pediuLinguaNoEndereco = !!LANG_META[langDaURL];
+state.lang = (pediuLinguaNoEndereco ? langDaURL : null) ||
+             // Com a chave ligada, o que estava guardado no aparelho NAO vale:
+             // senao quem tinha escolhido ingles antes continuaria em ingles,
+             // e o lancamento "so em portugues" nao seria verdade para ele.
+             (SO_PORTUGUES ? 'pt' : localStorage.getItem('tefila_lang')) || 'pt';
+if (pediuLinguaNoEndereco) localStorage.setItem('tefila_lang', langDaURL);
+
+// As DUAS portas da lingua somem juntas — a do alto e a dos Ajustes. Some com
+// `hidden`, e nao apagando do HTML, porque o applyI18n continua preenchendo os
+// rotulos e o testar-linguas.mjs continua conferindo que as chaves existem nas
+// 8 tabelas. Apagar o HTML apagaria a checagem junto, calada.
+function esconderEscolhaDeLingua() {
+  if (!SO_PORTUGUES || pediuLinguaNoEndereco) return;
+  const alto = document.getElementById('langToggle');
+  if (alto) alto.hidden = true;
+  const linha = document.querySelector('[data-setting="language"]');
+  if (linha && linha.closest('.settings-row')) linha.closest('.settings-row').hidden = true;
+}
+document.addEventListener('DOMContentLoaded', esconderEscolhaDeLingua);
+esconderEscolhaDeLingua();
 function rerenderVerseText() {
   document.querySelectorAll('.verse').forEach((verseEl, vi) => {
     const v = verses[vi];
