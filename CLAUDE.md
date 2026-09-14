@@ -2766,3 +2766,47 @@ Agora é assim, e o defeito que foi ao ar é acusado por ela.
    estava lá, embaixo. **As duas portas vivem em momentos diferentes e têm de
    ser medidas em momentos diferentes:** a do alto com o painel fechado, a dos
    Ajustes com ele aberto.
+
+## "Deixar yatom e derabanan, dando destaque para grande e pequeno" (14/09, v61)
+
+Ele viu a barra e mandou isto. É a decisão certa e vale escrever o porquê: o
+nome hebraico **fica** — é como a comunidade chama e é o que o rabino diz em voz
+alta —, mas quem abre este app acabou de ser convidado com *"você não precisa
+saber hebraico"*, e YATOM/DERABANAN não dizem nada a ele. **"pequeno" e "grande"
+dizem.**
+
+Então a hierarquia inverteu: o tamanho ficou reto (sem itálico), opaco e em
+negrito; o nome recuou meio tom. A caixa diferente (NOME em maiúscula, tamanho
+em minúscula) já separa os dois, e o `·` saiu junto. A barra continua com 204px
+no telefone e a página não passou a rolar de lado.
+
+**E os DOIS tamanhos aparecem agora**, não só o do botão aceso. Estava escrito
+no código, por mim, que mostrar os dois punha *"duas legendas competindo"* —
+estava errado pelo motivo mais simples: **com um só não há COMPARAÇÃO**, e
+comparar é a única coisa que essa palavra serve para fazer. Quem lê "pequeno"
+sozinho não fica sabendo que o outro é maior.
+
+**Um defeito achado no caminho: a tabela dos tamanhos só tinha 6 línguas.**
+Faltavam **italiano e alemão**, e o `|| sizeLabels.pt` fazia um leitor italiano
+ver **"pequeno"** no alto da tela. É a família do *"Voz do dispositivo"* de
+01/09 — a chave que falta não dá erro, cai no português e ninguém vê. E o
+`testar-linguas.mjs` **não pegava**, porque esta tabela é uma lista solta dentro
+de uma função e **não passa pelo `applyI18n`**, que é onde aquela checagem olha.
+
+### E eu quebrei a troca de Kadish, exatamente como em 30/08
+
+Ao trocar `const size` por `tamanhos`, ficou uma linha órfã lá embaixo:
+
+```js
+showToast(title + ' · ' + size);   // size já não existia
+```
+
+**`size is not defined`**, dentro do ouvinte do botão. Morre calado, o rótulo
+troca e o Kadish não troca — **é o `temState` de 30/08 na letra**. Duas
+checagens ficaram vermelhas pelo mesmo erro: o `checar-trocas.mjs` (que nasceu
+daquele dia e existe para isto) e o `testar-linguas.mjs`, que cobra "nenhum erro
+de console".
+
+A lição não é "renomear com cuidado" — é que **um erro dentro de um ouvinte não
+aparece em lugar nenhum**, e a única defesa é uma checagem que clique no botão e
+olhe o console. Ela existe. Funcionou.

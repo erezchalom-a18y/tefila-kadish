@@ -1760,9 +1760,19 @@
      media query la embaixo */
   .trad-switch .modo-op.active,
   .tipo-switch .modo-op.active { background: var(--brass); color: var(--bg); }
+  /* 14/09 — o tamanho era um sussurro: italico, 0.85 de opacidade, colado no
+     nome como uma legenda de rodape. Ele pediu DESTAQUE para "grande" e
+     "pequeno", e a razao e boa — e a unica das duas palavras que quem nao le
+     hebraico entende. Agora ele e reto (sem italico), opaco, e o NOME e que
+     recua meio tom: os dois continuam no mesmo botao, mas quem fala mais alto
+     inverteu. A caixa continua diferente (NOME em maiuscula, tamanho em
+     minuscula), que e o que separa os dois sem precisar de pontuacao — o "·"
+     saiu junto. */
+  .tipo-switch .modo-op .kt-nome { opacity: 0.72; letter-spacing: 0.06em; }
+  .tipo-switch .modo-op.active .kt-nome { opacity: 0.8; }
   .tipo-switch .modo-op .kt-size {
-    margin-left: 4px; font-weight: 400; font-style: italic;
-    text-transform: lowercase; letter-spacing: 0.02em; opacity: 0.85;
+    margin-left: 5px; font-weight: 600; font-style: normal;
+    text-transform: lowercase; letter-spacing: 0.01em; opacity: 1;
     /* 12px tambem aqui: e texto de cabecalho como qualquer outro. */
     font-size: 12px;
   }
@@ -2511,7 +2521,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-14 · 60';
+const VERSAO = '2026-09-14 · 61';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -6611,26 +6621,45 @@ function applyKadishType(t) {
   localStorage.setItem('tefila_kadish_type', t);
   document.body.classList.toggle('kadish-derabanan', t === 'derabanan');
 
-  // Size labels per language — helps mourner quickly identify which is which
+  // Size labels per language — helps mourner quickly identify which is which.
+  // 14/09 — FALTAVAM O ITALIANO E O ALEMAO. Sem eles o `|| sizeLabels.pt` fazia
+  // um leitor italiano ver "pequeno" e um alemao ver "pequeno", em portugues, no
+  // alto da tela. E a mesma familia do "Voz do dispositivo" de 01/09: a chave
+  // que falta nao da erro, so cai no portugues e ninguem ve. O
+  // testar-linguas.mjs nao pegava porque isto nao passa pelo applyI18n.
   const sizeLabels = {
     pt: { yatom: 'pequeno', derabanan: 'grande' },
-    en: { yatom: 'short', derabanan: 'long' },
-    es: { yatom: 'corto', derabanan: 'largo' },
-    fr: { yatom: 'court', derabanan: 'long' },
-    ru: { yatom: 'малый', derabanan: 'большой' },
-    he: { yatom: 'קטן', derabanan: 'גדול' }
+    en: { yatom: 'short',   derabanan: 'long' },
+    es: { yatom: 'corto',   derabanan: 'largo' },
+    fr: { yatom: 'court',   derabanan: 'long' },
+    it: { yatom: 'corto',   derabanan: 'lungo' },
+    de: { yatom: 'kurz',    derabanan: 'lang' },
+    ru: { yatom: 'малый',   derabanan: 'большой' },
+    he: { yatom: 'קטן',     derabanan: 'גדול' }
   };
-  const size = (sizeLabels[state.lang] || sizeLabels.pt)[t];
+  const tamanhos = sizeLabels[state.lang] || sizeLabels.pt;
 
   // Dois botoes desde 28/08: cada um com o seu nome, fixo. O que muda e o aceso.
-  // O tamanho ("pequeno"/"grande") so aparece no que esta ligado — nos dois de
-  // uma vez a barra ficava com duas legendas competindo.
+  //
+  // 14/09, decisao dele: "deixar yatom e derabanan, dando destaque para grande
+  // e pequeno". O nome hebraico FICA — e como a comunidade chama, e e o que o
+  // rabino diz em voz alta. Mas quem abre este app acabou de ser convidado com
+  // "voce nao precisa saber hebraico", e YATOM/DERABANAN nao dizem nada a ele.
+  // "pequeno" e "grande" dizem.
+  //
+  // E OS DOIS TAMANHOS APARECEM AGORA, nao so o do botao aceso. Eu tinha escrito
+  // aqui que mostrar os dois punha "duas legendas competindo" — estava errado
+  // pelo motivo mais simples: com um so nao ha COMPARACAO, e comparar e a
+  // unica coisa que a palavra serve para fazer. Quem le "pequeno" sozinho nao
+  // sabe que o outro e maior.
   const btYatom = document.getElementById('kadishTypeToggle');
   const btDerab = document.getElementById('kadishDerabananToggle');
   if (btYatom && btDerab) {
     const ehDerab = (t === 'derabanan');
-    btYatom.innerHTML = 'YATOM' + (ehDerab ? '' : `<span class="kt-size">· ${size}</span>`);
-    btDerab.innerHTML = 'DERABANAN' + (ehDerab ? `<span class="kt-size">· ${size}</span>` : '');
+    btYatom.innerHTML = '<span class="kt-nome">YATOM</span>' +
+                        `<span class="kt-size">${tamanhos.yatom}</span>`;
+    btDerab.innerHTML = '<span class="kt-nome">DERABANAN</span>' +
+                        `<span class="kt-size">${tamanhos.derabanan}</span>`;
     btYatom.classList.toggle('active', !ehDerab);
     btDerab.classList.toggle('active', ehDerab);
     btYatom.setAttribute('aria-pressed', String(!ehDerab));
@@ -6670,7 +6699,12 @@ function applyKadishType(t) {
   const prayerSource = document.querySelector('.prayer-source');
   if (prayerSource) prayerSource.textContent = sourceText;
 
-  showToast(title + ' · ' + size);
+  // `size` era o tamanho do tipo ACESO, e sumiu quando a tabela passou a dar os
+  // dois de uma vez. Esta linha ficou orfa e virou um ReferenceError dentro do
+  // ouvinte do botao — ou seja, EXATAMENTE o defeito do `temState` de 30/08:
+  // morre calado num `setTimeout`, o rotulo troca e o Kadish nao troca. Foi o
+  // checar-trocas.mjs que o pegou, que e a checagem que nasceu daquele dia.
+  showToast(title + ' · ' + tamanhos[t]);
 }
 
 // ---------- Modo Treino ----------
