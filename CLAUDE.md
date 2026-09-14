@@ -2860,28 +2860,47 @@ invioláveis proibe o modelo de escrever texto religioso — e aqui a proibicao 
 aperta, porque **o texto que incentiva ja existia e e dele**: as secoes da
 pagina Aprender, escritas em 03/09, com `origem: "erez"`. As duas escolhidas:
 
-- **"Em memoria de quem partiu"** (frente) — responde literalmente ao pedido:
-  falar o Kadish PELO ENTE QUERIDO. Ensina a pausa para dizer o nome e fecha com
-  *"o nome e uma ponte entre a lembranca e a oracao"*.
-- **"Um Kadish de cada vez"** (verso) — e a que fala com quem vai desistir:
-  *"Havera dias em que sera facil. E havera dias em que sera dificil."* Num
-  folheto de cemiterio, esse e o paragrafo que tem de estar ali.
+### "Achei muito forcado" — e ele estava certo
+
+A primeira volta pos DUAS faces com as duas secoes mais emocionais dele: a do
+nome como ponte, e a dos dias dificeis (*"havera dias em que sera facil. E
+havera dias em que sera dificil"*). Ele respondeu: *"achei muito forcado, pensei
+em algo mais simples explicando o que e o kadish e o porque fazemos e o que voce
+colocou na primeira pagina"*.
+
+**A licao e sobre CONTEXTO, nao sobre o texto.** Cada uma daquelas secoes e boa
+onde ele a escreveu — na pagina Aprender, para quem ja esta rezando ha semanas e
+ESCOLHEU abrir e ler. Empilhadas num papel entregue na mao, no cemiterio, no
+dia, elas empurram. **Incentivar nao e insistir.** Quem chega ali nao precisa
+ser comovido — ja esta. Precisa saber o que e aquilo e por que se faz.
+
+**Entao e UMA face so, e o miolo e UMA secao dele: a [1]**, *"Por que recitar o
+Kadish por quem partiu?"*. Ela responde as duas perguntas dele numa so, e nessa
+ordem: abre dizendo **o que o Kadish e** (*"uma das oracoes mais importantes da
+tradicao judaica… escrito em aramaico… a palavra Kadish vem da raiz k-d-sh"*) e
+fecha dizendo **por que se faz** (*"o enlutado transforma sua dor em uma
+afirmacao de fe e de continuidade"*). E o paragrafo do meio e o que tira o peso:
+*"ele nao fala sobre a morte"*.
+
+O resto da pagina e o que ele mandou manter da primeira face: o nome, a frase do
+alto, o codigo e o endereco — mais a nota do minyan, calada, no pe.
 
 **O texto e LIDO do `aprender.json` em tempo de geracao, nunca copiado.** Se
 fosse copiado, no dia em que ele corrigisse uma palavra na pagina Aprender o
 papel continuaria dizendo a versao velha, calado — o mesmo defeito que obrigou o
 `textos-impressos.js` a existir em 11/09, e aqui pior, porque o texto e dele e
-ninguem notaria a divergencia. **A escolha de QUAIS secoes entram e minha, e so
-isso; espera o olho dele.**
+ninguem notaria a divergencia. **A escolha de QUAL secao entra e minha, e so
+isso; espera o olho dele.** As duas que sairam continuam inteiras na pagina
+Aprender, e a versao de duas faces esta a um `git revert` de distancia.
 
-**A5 (148 x 210 mm), duas faces.** A5 e meia folha de A4: a grafica tira dois por
+**A5 (148 x 210 mm), uma face.** A5 e meia folha de A4: a grafica tira dois por
 folha e cabe na mao de quem esta de casaco com a familia em volta. O A4 solto foi
 justamente o que eu critiquei no folheto do ChatGPT em 13/09.
 
 ### As cinco provas, e a quinta e a que importa
 
 O gerador nao grava nada se qualquer uma falhar: QR lido de dentro do PDF ·
-duas paginas · 148x210mm exatos · nada passando da borda nas DUAS faces · e
+uma pagina · 148x210mm exatos · nada passando da borda · e
 
 > **o texto dele saiu no papel PALAVRA POR PALAVRA como esta no `aprender.json`.**
 

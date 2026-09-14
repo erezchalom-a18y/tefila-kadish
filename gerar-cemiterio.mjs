@@ -4,7 +4,7 @@
  * Ele, em 14/09: "gostaria de criar um folheto para ser distribuido no
  * cemiterio, incentivando a pessoa a falar o kadish pelo ente querido".
  *
- * A5 (148 x 210 mm), DUAS faces. Ver o cabecalho do cemiterio.html para o
+ * A5 (148 x 210 mm), UMA face. Ver o cabecalho do cemiterio.html para o
  * porque de cada decisao — em resumo: o corpo do papel e TEXTO DELE, lido do
  * aprender.json, e nao texto meu.
  *
@@ -14,7 +14,7 @@
  *   1. O QR e LIDO DE VOLTA de dentro do PDF, a 200 dpi, como uma impressora
  *      caseira faria, e tem de devolver exatamente o endereco do app. Um QR so
  *      se descobre quebrado com o papel ja distribuido — e ali ninguem avisa.
- *   2. DUAS paginas, nem uma nem tres.
+ *   2. UMA pagina. Ele pediu simples, e duas faces ja tinham sido demais.
  *   3. O tamanho exato: 148 x 210 mm.
  *   4. Nada passando da borda de baixo, nas DUAS faces. (A pergunta certa e
  *      "algum filho passa da borda?", nunca o scrollHeight — a face tem
@@ -37,7 +37,7 @@ import { mkdirSync, unlinkSync, existsSync, renameSync, readFileSync } from 'nod
 const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 const ENDERECO = 'https://kadish.app/';
 const PORTA = 8914;
-const SECOES = [5, 6];   // as mesmas do cemiterio.html, por POSICAO
+const SECOES = [1];   // a mesma do cemiterio.html, por POSICAO
 
 const pedidas = process.argv.slice(2).filter(x => LINGUAS.includes(x));
 const alvo = pedidas.length ? pedidas : LINGUAS;
@@ -105,7 +105,7 @@ print(json.dumps({"paginas": len(d), "lido": r.text if r else None,
 
   const problemas = [];
   if (erros.length) problemas.push('erro de console: ' + erros[0]);
-  if (tela.faces !== 2) problemas.push(`${tela.faces} faces, tem de ser 2`);
+  if (tela.faces !== 1) problemas.push(`${tela.faces} faces, tem de ser 1`);
   tela.folga.forEach((f, i) => {
     if (f < 0) problemas.push(`a face ${i + 1} passa ${-f}px da borda de baixo`);
   });
@@ -124,7 +124,7 @@ print(json.dumps({"paginas": len(d), "lido": r.text if r else None,
 
   if (prova.erro) problemas.push('nao consegui ler o PDF: ' + prova.erro);
   else {
-    if (prova.paginas !== 2) problemas.push(`${prova.paginas} paginas no PDF, tem de ser 2`);
+    if (prova.paginas !== 1) problemas.push(`${prova.paginas} paginas no PDF, tem de ser 1`);
     if (prova.lido !== ENDERECO) problemas.push(`o QR do PDF le "${prova.lido}"`);
     const [l, a] = prova.mm;
     if (l !== 148 || a !== 210) problemas.push(`o PDF mede ${l}x${a}mm, e sao 148x210`);

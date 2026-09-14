@@ -7,25 +7,26 @@
   Ele: "gostaria de criar um folheto para ser distribuido no cemiterio,
   incentivando a pessoa a falar o kadish pelo ente querido".
 
-  POR QUE ISTO NAO E A FORMA M DO display.html. A M e um CARTAO de 10x15: ela
-  informa — aponte a camera, o app faz isto, o Kadish pede dez. Este e um
-  FOLHETO, e o verbo que ele usou e outro: INCENTIVAR. Quem acabou de enterrar
-  o pai nao precisa de instrucao, precisa de um motivo para voltar amanha.
+  A PRIMEIRA VOLTA ERROU, e ele disse por que: "achei muito forcado, pensei em
+  algo mais simples explicando o que e o kadish e o porque fazemos e o que voce
+  colocou na primeira pagina". Eu tinha montado DUAS faces com as duas secoes
+  mais emocionais dele — a do nome como ponte e a dos dias dificeis ("havera
+  dias em que sera facil. E havera dias em que sera dificil"). Cada uma e boa
+  onde ele a escreveu, na pagina Aprender, para quem ja esta rezando ha semanas
+  e escolheu ler. Empilhadas num papel entregue no cemiterio, no dia, elas
+  empurram. **Incentivar nao e insistir.** Quem chega ali nao precisa ser
+  comovido — ja esta. Precisa saber o que e aquilo e por que se faz.
 
-  E POR ISSO O CORPO DESTE PAPEL E TEXTO DELE, NAO MEU. A regra 5 das
-  invioláveis proibe o modelo de escrever texto religioso — e aqui a proibicao
-  nem aperta, porque o texto que incentiva ja existe e e dele: as secoes da
-  pagina Aprender, escritas em 03/09 (origem: "erez" no aprender.json).
+  ENTAO E UMA FACE SO, e o miolo e UMA secao dele: a [1], "Por que recitar o
+  Kadish por quem partiu?". Ela responde as DUAS perguntas que ele pediu, e
+  nessa ordem: abre dizendo o que o Kadish e ("uma das oracoes mais importantes
+  da tradicao judaica... escrito em aramaico... a palavra Kadish vem da raiz
+  k-d-sh") e fecha dizendo por que se faz ("ao recitar o Kadish, o enlutado
+  transforma sua dor em uma afirmacao de fe e de continuidade"). E o paragrafo
+  do meio e o que tira o peso: "ele nao fala sobre a morte".
 
-  As duas escolhidas, e o porque de cada uma:
-
-  - "Em memoria de quem partiu" (frente) — e a que responde literalmente ao
-    pedido dele: falar o Kadish PELO ENTE QUERIDO. Ela ensina a pausa para
-    dizer o nome, e termina com "o nome e uma ponte entre a lembranca e a
-    oracao". E o que faz a reza ser daquela pessoa.
-  - "Um Kadish de cada vez" (verso) — e a que fala com quem vai desistir.
-    "Havera dias em que sera facil. E havera dias em que sera dificil."
-    Num folheto de cemiterio, esse e o paragrafo que tem de estar ali.
+  O resto da pagina e o que ja estava na primeira face, que ele mandou manter:
+  o nome, a frase do alto, o codigo e o endereco.
 
   O TEXTO E LIDO DO aprender.json EM TEMPO DE GERACAO, nunca copiado para ca.
   Se fosse copiado, no dia em que ele corrigisse uma palavra na pagina Aprender
@@ -35,10 +36,12 @@
   O gerador PROVA, a cada rodada, que o que saiu no papel bate palavra por
   palavra com o aprender.json.
 
-  A escolha de QUAIS secoes entram e MINHA, e so isso — espera o olho dele.
+  A escolha de QUAL secao entra e MINHA, e so isso — espera o olho dele.
+  As duas que sairam continuam inteiras na pagina Aprender; se ele quiser a
+  versao de duas faces de volta, ela esta a um `git revert` de distancia.
 
-  A5 (148 x 210 mm), DUAS FACES. A5 e meia folha de A4: a grafica tira dois
-  por folha, e cabe na mao de quem esta de casaco com a familia em volta. O A4
+  A5 (148 x 210 mm), UMA face. A5 e meia folha de A4: a grafica tira dois por
+  folha, e cabe na mao de quem esta de casaco com a familia em volta. O A4
   solto foi justamente o que eu critiquei no folheto do ChatGPT em 13/09.
 -->
 <script src="./textos-impressos.js"></script>
@@ -90,7 +93,6 @@
 </head>
 <body>
 <div class="face" id="frente"></div>
-<div class="face" id="verso"></div>
 <script>
 const q = new URLSearchParams(location.search);
 const lingua = q.get('lang') || 'pt';
@@ -103,9 +105,10 @@ const paras = txt => txt.split(/\n\s*\n/).map(p => `<p>${esc(p.trim())}</p>`).jo
 
 // AS SECOES SAO ESCOLHIDAS POR POSICAO, nunca pelo titulo — o titulo muda de
 // lingua e o indice nao. Mesma regra dos pop-ups das tres portas (10/09).
-//   [5] "Em memoria de quem partiu"  ->  a frente
-//   [6] "Um Kadish de cada vez"      ->  o verso
-const FRENTE = 5, VERSO = 6;
+//   [1] "Por que recitar o Kadish por quem partiu?"
+// Ela responde as duas perguntas dele numa so: abre com o que o Kadish E e
+// fecha com por que se FAZ.
+const SECAO = 1;
 
 fetch('./aprender.json', { cache: 'no-cache' }).then(r => r.json()).then(d => {
   const sec = i => {
@@ -116,17 +119,12 @@ fetch('./aprender.json', { cache: 'no-cache' }).then(r => r.json()).then(d => {
   };
   document.getElementById('frente').innerHTML =
     `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>` +
-    `<div class="regua"></div>` + sec(FRENTE) +
+    `<div class="regua"></div>` + sec(SECAO) +
     `<img class="qr" src="./qr/kadish.svg" alt="QR">` +
     `<div class="endereco">kadish.app</div>` +
-    `<div class="legenda">${esc(t.qr)}</div>`;
-
-  // O verso: o texto dele que fala com quem vai desistir, e DEPOIS as tres
-  // coisas praticas. A terceira e a que decide — o lembrete do yahrzeit: daqui
-  // a onze meses ninguem vai lembrar de avisar, e e o app que avisa.
-  document.getElementById('verso').innerHTML =
-    sec(VERSO) +
-    `<ul class="lista">${[0,2,3].map(i => `<li>${esc(t.oque[i])}</li>`).join('')}</ul>` +
+    `<div class="legenda">${esc(t.qr)}</div>` +
+    // A nota do minyan fica, e calada (sem a caixa): e a unica coisa que ele
+    // precisa saber ANTES de tentar rezar sozinho em casa.
     `<div class="nota">${esc(t.nota)}</div>` +
     `<div class="rodape">${esc(t.rodape)}</div>`;
   document.body.dataset.pronto = '1';
