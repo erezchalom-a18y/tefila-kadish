@@ -12,6 +12,7 @@
  *   D  COMPLETA — tudo o que a folha A4 diz, em duas colunas
  *   E  COMPLETA com o hebraico
  *   R  PARA O RABINO (14/09) — outro leitor, nao a D com uma linha a mais
+ *   S  DISCRETA (14/09) — o conteudo do A4 num 10x15, com a voz mais baixa
  *
  * PROVAS antes de gravar, e sao as mesmas do panfleto mais uma:
  *   1. o QR e LIDO DE DENTRO DO PDF, a 200 dpi, e tem de devolver o endereco.
@@ -29,13 +30,13 @@
  *
  * Qualquer falha e ele NAO grava nada.
  *
- *   node gerar-display.mjs              → as 6 formas, nas 8 linguas
+ *   node gerar-display.mjs              → as 7 formas, nas 8 linguas
  *   node gerar-display.mjs R pt         → so o cartao do rabino, em portugues
  */
 import { spawn, execFileSync } from 'node:child_process';
 import { mkdirSync, existsSync, unlinkSync, renameSync } from 'node:fs';
 
-const FORMAS = ['A', 'B', 'C', 'D', 'E', 'R'];
+const FORMAS = ['A', 'B', 'C', 'D', 'E', 'R', 'S'];
 const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
 const ENDERECO = 'https://kadish.app/';
 const PORTA = 8965;
@@ -74,7 +75,7 @@ for (const f of alvoF) {
       const cr = c.getBoundingClientRect();
       const filhos = [...c.querySelectorAll('*')].filter(e => e.getBoundingClientRect().height > 0);
       const maisBaixo = Math.max(...filhos.map(e => e.getBoundingClientRect().bottom));
-      const nota = (document.querySelector('.nota-minyan') || {}).textContent || '';
+      const nota = (document.querySelector('.nota-minyan, .nota-calada') || {}).textContent || '';
       const rodape = (document.querySelector('.rodape') || {}).textContent || '';
       return {
         folga: Math.round(cr.bottom - maisBaixo),

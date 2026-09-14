@@ -2489,3 +2489,76 @@ Sem elas, um dia alguém "unifica" as formas e a R vira a D calada.
 
 **O folheto do enlutado (Chevra Kadisha) ainda não existe.** É o outro metade
 da ideia dele, e fica para depois de ele ver este.
+
+
+## A frase do alto, e o cartão discreto (14/09)
+
+Vendo os oito papéis lado a lado ele decidiu duas coisas: **"o melhor é o A4 de
+parede"** e **"só mudaria o texto de cima"**, propondo *"Um app que ensina a
+falar o Kadish, para quem não lê ou sabe hebraico"* — com um *"(pode
+melhorar)"* junto.
+
+**A ideia dele é a que vale, e é maior do que parece.** A frase de antes
+DESCREVIA o app ("um app para ensinar a falar o Kadish, palavra por palavra,
+com a voz do rabino"). A dele responde a pergunta de quem está parado na frente
+do cartaz: **isto é para mim?**
+
+Levei seis redações à tela dele, desenhadas no papel de verdade — a prática que
+funciona aqui desde 09/09. Ele escolheu a que fala COM a pessoa:
+
+> **"Você não precisa saber hebraico para dizer o Kadish. Este app ensina,
+> palavra por palavra."**
+
+O que trava quem não lê hebraico não é falta de informação, é **vergonha**, e
+essa é a única das seis que tira o peso na primeira palavra. Custou uma coisa,
+e fica dito: saiu o *"com a voz do rabino"*, que é o sinal de que a gravação é
+de um rabino de verdade e não voz de computador. Se um dia ele quiser de volta,
+a redação 3 era `Para quem não lê hebraico: o Kadish palavra por palavra, na
+voz do rabino.`
+
+**Na frase dele havia um tropeço de português, e apontá-lo era parte do
+trabalho:** depois de "não", o certo é "nem", não "ou". E "lê ou sabe" diz duas
+vezes a mesma coisa.
+
+**O HEBRAICO NÃO É A TRADUÇÃO LITERAL, de propósito.** "Você não precisa saber
+hebraico", dito EM hebraico a quem lê hebraico, é um absurdo. O que trava a
+pessoa ali é outra coisa e é verdadeira: ler o aramaico do Kadish, com nikud,
+em voz alta. Então a frase mudou de ALVO, não de sentido —
+`אין צורך לדעת לקרוא כדי לומר קדיש`. Isto é uma decisão de conteúdo que eu tomei
+sozinho e que **está esperando o olho dele**; se ele preferir, o hebraico volta
+à frase antiga.
+
+**A frase é compartilhada, e isso foi dito a ele antes de ele escolher:** o
+campo `sub` do `textos-impressos.js` serve o A4 E os cartões A–E. Trocar num
+lugar troca em todos — que é a razão de o arquivo existir. Os 48 cartões e os 8
+panfletos foram regravados.
+
+### A forma S — "um formato discreto em 10 × 15"
+
+Ele, em seguida: *"quero esse texto num formato discreto em 10x15"*. Mesmo
+conteúdo do A4; o que muda é o **volume da voz**.
+
+**"Discreto" não é gosto meu — é a palavra dele, e ele já a usou duas vezes
+neste projeto** (o convite da dedicatória, em 26/08 e 01/09). Das duas vezes
+significou a mesma coisa: sem caixa-alta, sem caixa em volta, sem risco, peso
+leve. Então aqui:
+
+- **a nota do minyan perde a CAIXA** (fundo, borda e barra de latão) e vira uma
+  linha calada no pé. A frase é a mesma, palavra por palavra;
+- os dois títulos das colunas perdem o negrito e ganham espaçamento;
+- **o QR perde a moldura E o quadrado branco.**
+
+**O quadrado branco era a coisa mais berrante do cartão** — o oposto exato do
+que ele pediu. Tirá-lo não foi ousadia: **o fundo do próprio `qr/kadish.svg` já
+é o pergaminho (`#f4ede0`)**, então o branco vinha só do CSS e o código estava
+sendo posto num papel que não é o dele. Medido antes de ficar: lido de dentro
+do PDF a **120, 150, 200 e 300 dpi**, e devolve o endereço nas quatro. (Isso é
+uma câmera de software num PDF; a prova final continua sendo uma folha impressa
+e um telefone de verdade.)
+
+**O verso em hebraico não entra na S.** O A4 o tem porque vai na parede; num
+cartão que fica deitado numa mesa isso é a pergunta de respeito ao texto
+sagrado que já ficou anotada na forma C — e ela é do rabino, não minha.
+
+**O folheto do enlutado (Chevra Kadisha) continua não existindo.** É a outra
+metade da ideia dele de 13/09.

@@ -20,6 +20,7 @@
     D  completa               — tudo o que a folha A4 diz, em duas colunas
     E  completa com o hebraico
     R  PARA O RABINO          — 14/09; ver a nota abaixo
+    S  DISCRETA               — 14/09; o conteudo do A4 num 10x15 calado
 
   A FORMA R E DE OUTRO LEITOR, e e por isso que ela nao e a D com uma linha a
   mais. As formas A-E falam com QUEM REZA: "aponte a camera, acompanhe". O
@@ -33,6 +34,24 @@
   igual — Ashkenazi · Chabad · Sefard · Sefaradi. Nao se traduzem em lugar
   nenhum do projeto (sao nomes proprios), entao aqui tambem nao. Quem puser o
   cartao ao lado da tela le a mesma palavra nos dois.
+
+  A FORMA S ("discreta") e o pedido dele de 14/09, depois de escolher o A4 de
+  parede: "quero esse texto num formato discreto em 10x15". Mesmo conteudo do
+  A4; o que muda e o VOLUME DA VOZ.
+
+  O que "discreto" quer dizer aqui nao e gosto meu: e a palavra dele, e ele ja
+  a usou duas vezes neste projeto (o convite da dedicatoria, em 01/09 e 26/08).
+  Das duas vezes significou a mesma coisa — sem caixa-alta, sem caixa em volta,
+  sem risco, peso leve, uma linha so. Entao aqui:
+    · a nota do minyan perde a CAIXA (fundo, borda e barra de latao) e vira
+      uma linha calada no pe. A frase e a mesma, palavra por palavra.
+    · os dois titulos das colunas perdem o negrito e ganham espacamento.
+    · o QR perde a moldura E o quadrado branco, e fica em 40mm. O branco era
+      a coisa mais berrante do cartao; e o codigo nao precisa dele, porque o
+      fundo do proprio SVG ja e a cor do papel. Provado a 120/150/200/300 dpi.
+  E o verso em hebraico NAO entra. O A4 o tem porque vai na parede; num cartao
+  que fica deitado numa mesa isso e a pergunta de respeito ao texto sagrado que
+  ja ficou anotada na forma C, e ela e do rabino, nao minha.
 
   ?lang=pt|en|es|fr|it|de|ru|he    Imprimir: abrir e mandar imprimir.
 -->
@@ -145,6 +164,30 @@
   .f-R .lista{font-size:10px;line-height:1.4}
   html[dir=rtl] .f-R .uma-col{text-align:right}
 
+  /* ---- S · discreta: o conteudo do A4, com a voz mais baixa ---- */
+  .f-S .marca{font-size:20px;font-weight:400}
+  .f-S .sub{font-size:10.2px;margin-top:3px;line-height:1.4}
+  .f-S .regua{margin:4mm 0 0;width:38%;opacity:.5}
+  /* Sem o quadrado branco: ele era a coisa MAIS berrante do cartao, o oposto
+     do pedido. Nao e ousadia — o fundo do proprio qr/kadish.svg ja e o
+     pergaminho (#f4ede0), entao tirar o branco do CSS apenas deixa o codigo
+     no papel em que ele foi desenhado. Medido antes de ficar: lido de dentro
+     do PDF a 120, 150, 200 e 300 dpi, e devolve o endereco nas quatro. */
+  .f-S .qr{width:40mm;height:40mm;margin:4mm 0 0;border:0;background:transparent;padding:0}
+  .f-S .endereco{font-size:14px;font-weight:500;margin-top:2.5mm;opacity:.9}
+  .f-S .colunas{margin-top:5mm;gap:5mm}
+  .f-S .col h2{font-weight:400;font-size:10.5px;letter-spacing:.09em;
+               text-transform:uppercase;color:var(--fraco);margin:0 0 3px}
+  .f-S .lista{font-size:8.8px;line-height:1.45;padding-left:10px}
+  .f-S .lista li{margin-bottom:2.4px}
+  .f-S .passo{font-size:8.8px;line-height:1.45;margin-bottom:3.5px;gap:6px}
+  .f-S .passo b{font-weight:400;color:var(--fraco);font-size:10px;flex:0 0 8px}
+  /* a nota do minyan sem caixa: mesma frase, sem moldura nem barra */
+  .nota-calada{margin-top:4.5mm;font-family:'Cormorant Garamond',serif;font-style:italic;
+               font-size:8.8px;line-height:1.4;color:var(--fraco);text-align:center;
+               max-width:82%}
+  html[dir=rtl] .f-S .lista{padding-left:0;padding-right:10px}
+
   .rodape{font-size:9.5px;padding-top:3mm}
   .imprimir{position:fixed;top:14px;right:14px;background:var(--brass);color:#fff;
             border:0;border-radius:8px;padding:9px 15px;font-family:Lora,serif;font-size:13px;cursor:pointer}
@@ -218,6 +261,11 @@ const formas = {
      <div class="uma-col"><h2>${esc(t.hOque)}</h2><ul class="lista">${
         [0,1,2,3].map(i => `<li>${esc(t.oque[i])}</li>`).join('')}</ul></div>
      ${RODAPE}`,
+ // 14/09 — a discreta. Mesmo conteudo da folha A4, volume mais baixo.
+ // A nota do minyan e a MESMA frase da forma D; o que sai e a caixa em volta.
+ S: `<div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
+     <div class="regua"></div>${QR}${ENDERECO}${DUAS_COLUNAS(t)}
+     <div class="nota-calada">${esc(t.nota)}</div>${RODAPE}`,
  C: `${HEB}<div class="regua"></div>
      <div class="marca">Kadish</div><div class="sub">${esc(t.sub)}</div>
      ${QR}${ENDERECO}${RODAPE}`,

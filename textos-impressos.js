@@ -19,13 +19,23 @@
  * Regra 6 das inviolaveis vale aqui como em todo lugar: tudo o que aparece
  * existe nas 8 (pt, en, es, fr, it, de, ru, he).
  *
+ * 14/09 — a frase do alto mudou, e a ideia e dele: a de antes DESCREVIA o app
+ * ("um app para ensinar a falar o Kadish"), e a nova responde a pergunta de
+ * quem esta parado na frente do cartaz — "isto e para mim?". Ele escreveu
+ * "para quem nao le ou sabe hebraico"; depois de "nao" o certo e "nem", e das
+ * seis redacoes que levei a tela dele ele escolheu a que fala COM a pessoa em
+ * vez de descrever o produto. O que trava quem nao le hebraico nao e falta de
+ * informacao, e vergonha, e a frase tira esse peso na primeira palavra.
+ * O HEBRAICO nao e a traducao literal, de proposito — ver o comentario no
+ * script que a escreveu, e a nota que ficou para ele decidir.
+ *
  * 11/09 — o passo 1 dizia "para o codigo AO LADO", e era verdade quando o QR
  * ficava num canto da folha. Ele virou o centro em 10/09 e ninguem corrigiu a
  * frase; o cartao de mesa, que poe o codigo em cima, tornou o erro obvio.
  * Agora diz "acima", que e verdade nos dois.
  */
 window.TEXTOS_IMPRESSOS = {
-  pt:{dir:'ltr',sub:'Um app para ensinar a falar o Kadish palavra por palavra, com a voz do rabino.',
+  pt:{dir:'ltr',sub:'Você não precisa saber hebraico para dizer o Kadish. Este app ensina, palavra por palavra.',
       hComo:'Como usar',
       passos:['Aponte a câmera do telefone para o código acima.','Escolha a sua tradição e o tipo de Kadish. O áudio começa no ▶.','Acompanhe: a palavra que está soando fica acesa no texto.'],
       hOque:'O que o app faz',
@@ -36,7 +46,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'Para a sinagoga — quem está de luto e não lê hebraico acompanha o Kadish palavra por palavra, no nussach da casa.',
       rab_hOito:'Os oito Kadishim', rab_yatom:'Kadish do Enlutado', rab_derabanan:'Kadish dos Sábios',
       rodape:'Gratuito · sem cadastro · sem anúncios'},
-  en:{dir:'ltr',sub:'An app to teach you to say the Kaddish word by word, with the rabbi’s voice.',
+  en:{dir:'ltr',sub:'You don’t need to know Hebrew to say the Kaddish. This app teaches you, word by word.',
       hComo:'How to use it',
       passos:['Point your phone’s camera at the code above.','Choose your tradition and the kind of Kaddish. The audio starts on ▶.','Follow along: the word being said lights up in the text.'],
       hOque:'What the app does',
@@ -47,7 +57,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'For the synagogue — a mourner who cannot read Hebrew follows the Kaddish word by word, in your own nusach.',
       rab_hOito:'The eight Kaddishim', rab_yatom:'Mourner’s Kaddish', rab_derabanan:'Rabbis’ Kaddish',
       rodape:'Free · no sign-up · no advertising'},
-  es:{dir:'ltr',sub:'Una app para enseñar a decir el Kadish palabra por palabra, con la voz del rabino.',
+  es:{dir:'ltr',sub:'No hace falta saber hebreo para decir el Kadish. Esta app enseña, palabra por palabra.',
       hComo:'Cómo usarla',
       passos:['Apunte la cámara del teléfono al código de arriba.','Elija su tradición y el tipo de Kadish. El audio empieza en ▶.','Siga la lectura: la palabra que suena se enciende en el texto.'],
       hOque:'Qué hace la app',
@@ -58,7 +68,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'Para la sinagoga — quien está de duelo y no lee hebreo sigue el Kadish palabra por palabra, en el nusaj de la casa.',
       rab_hOito:'Los ocho Kadishim', rab_yatom:'Kadish del Enlutado', rab_derabanan:'Kadish de los Sabios',
       rodape:'Gratis · sin registro · sin publicidad'},
-  fr:{dir:'ltr',sub:'Une application pour apprendre à dire le Kaddish mot à mot, avec la voix du rabbin.',
+  fr:{dir:'ltr',sub:'Pas besoin de savoir l’hébreu pour dire le Kaddish. Cette application l’apprend, mot à mot.',
       hComo:'Comment l’utiliser',
       passos:['Dirigez l’appareil photo du téléphone vers le code ci-dessus.','Choisissez votre tradition et le type de Kaddish. L’audio démarre sur ▶.','Suivez : le mot prononcé s’allume dans le texte.'],
       hOque:'Ce que fait l’application',
@@ -69,7 +79,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'Pour la synagogue — l’endeuillé qui ne lit pas l’hébreu suit le Kaddish mot à mot, dans le noussa’h de la maison.',
       rab_hOito:'Les huit Kaddishim', rab_yatom:'Kaddish de l’Endeuillé', rab_derabanan:'Kaddish des Sages',
       rodape:'Gratuit · sans inscription · sans publicité'},
-  it:{dir:'ltr',sub:'Un’app per imparare a dire il Kaddish parola per parola, con la voce del rabbino.',
+  it:{dir:'ltr',sub:'Non serve sapere l’ebraico per dire il Kaddish. Questa app insegna, parola per parola.',
       hComo:'Come si usa',
       passos:['Inquadri con la fotocamera il codice qui sopra.','Scelga la sua tradizione e il tipo di Kaddish. L’audio parte con ▶.','Segua: la parola pronunciata si illumina nel testo.'],
       hOque:'Che cosa fa l’app',
@@ -80,7 +90,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'Per la sinagoga — chi è in lutto e non legge l’ebraico segue il Kaddish parola per parola, nel nusach della casa.',
       rab_hOito:'Gli otto Kaddishim', rab_yatom:'Kaddish dei Dolenti', rab_derabanan:'Kaddish dei Maestri',
       rodape:'Gratuita · senza registrazione · senza pubblicità'},
-  de:{dir:'ltr',sub:'Eine App, um das Kaddisch Wort für Wort sprechen zu lernen, mit der Stimme des Rabbiners.',
+  de:{dir:'ltr',sub:'Man muss kein Hebräisch können, um das Kaddisch zu sprechen. Diese App lehrt es, Wort für Wort.',
       hComo:'So benutzt man sie',
       passos:['Richten Sie die Kamera des Telefons auf den Code oben.','Wählen Sie Ihren Ritus und die Art des Kaddisch. Der Ton startet mit ▶.','Folgen Sie mit: das gesprochene Wort leuchtet im Text auf.'],
       hOque:'Was die App tut',
@@ -91,7 +101,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'Für die Synagoge — wer trauert und kein Hebräisch liest, folgt dem Kaddisch Wort für Wort, im Ritus des Hauses.',
       rab_hOito:'Die acht Kaddischim', rab_yatom:'Trauerkaddisch', rab_derabanan:'Kaddisch der Gelehrten',
       rodape:'Kostenlos · ohne Anmeldung · ohne Werbung'},
-  ru:{dir:'ltr',sub:'Приложение, чтобы научиться произносить кадиш слово за словом, с голосом раввина.',
+  ru:{dir:'ltr',sub:'Чтобы произнести кадиш, не нужно знать иврит. Это приложение учит слово за словом.',
       hComo:'Как пользоваться',
       passos:['Наведите камеру телефона на код выше.','Выберите свою традицию и вид кадиша. Звук начинается по ▶.','Следите: произносимое слово подсвечивается в тексте.'],
       hOque:'Что умеет приложение',
@@ -102,7 +112,7 @@ window.TEXTOS_IMPRESSOS = {
       rab_sub:'Для синагоги — скорбящий, не читающий на иврите, следует за кадишем слово за словом, в нусахе общины.',
       rab_hOito:'Восемь кадишей', rab_yatom:'Кадиш сироты', rab_derabanan:'Кадиш мудрецов',
       rodape:'Бесплатно · без регистрации · без рекламы'},
-  he:{dir:'rtl',sub:'אפליקציה ללמוד לומר את הקדיש מילה במילה, בקולו של הרב.',
+  he:{dir:'rtl',sub:'אין צורך לדעת לקרוא כדי לומר קדיש. האפליקציה מלמדת מילה במילה.',
       hComo:'איך משתמשים',
       passos:['כוונו את מצלמת הטלפון אל הקוד שלמעלה.','בחרו את הנוסח ואת סוג הקדיש. השמע מתחיל ב- ▶.','עקבו: המילה הנאמרת נדלקת בטקסט.'],
       hOque:'מה האפליקציה עושה',
