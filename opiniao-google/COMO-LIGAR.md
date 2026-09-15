@@ -1,6 +1,20 @@
-# Como ligar o "Sua opinião" — passo a passo, pelo navegador
+# Como ligar o "Sua opinião" — passo a passo
 
-Dá para fazer tudo do iPad. São uns dez minutos, uma vez só.
+## ISTO SÓ SE FAZ NUM COMPUTADOR. Não dá pelo iPad.
+
+Está em primeiro lugar porque foi o erro da primeira versão deste arquivo, que
+dizia "dá para fazer tudo do iPad". **Não dá, e a falha é silenciosa do pior
+jeito: o menu simplesmente não existe.** Tocar num link de planilha no iPad abre
+o APLICATIVO do Google Planilhas, que não tem barra de menus nenhuma — sem
+Extensões, sem Apps Script. Pedir "site para computador" no Safari também não
+resolve; o Google devolve para o app.
+
+Ele tentou duas vezes e disse, com razão, *"não achei o menu extensões"* e
+*"não tem o menu do alto"*. Eu tinha escrito o caminho sem perguntar em que
+aparelho ele estaria — é a mesma família do teste que não podia dizer nada
+(14/09): **antes de mandar um caminho, conferir se ele existe no aparelho dele.**
+
+São uns cinco minutos, uma vez só, num computador.
 
 Enquanto isto não estiver feito, **a seção não aparece no app** — de propósito:
 um botão de enviar sem destino é um botão que engole a mensagem de alguém.
@@ -21,9 +35,20 @@ Esta é a parte que **não dá para fazer por fora**: criar e publicar um Apps
 Script exige o editor do Google, e nenhuma ferramenta de Drive alcança isso.
 São três toques.
 
-1. Abrir a planilha acima → menu **Extensões → Apps Script**.
+1. **Abrir o editor de verdade** — e não a prévia. O caminho que não falha é
+   ir a **drive.google.com**, achar **Kadish — opiniões** na lista e dar
+   **dois cliques** no nome. (Abrir pelo link direto às vezes cai no modo de
+   visualização do Drive, que é uma prévia de fundo escuro e **também não tem
+   menus** — foi a segunda pista falsa da rodada.)
+   Com o editor aberto, a barra do alto diz
+   `Arquivo · Editar · Ver · Inserir · Formatar · Dados · Ferramentas ·
+   Extensões · Ajuda` → **Extensões → Apps Script**.
+   Se a janela do navegador estiver estreita, os menus se encolhem: deixe-a
+   grande. E confira no canto de cima à direita que está na conta
+   `erezchalom@gmail.com`.
 2. Apagar o que estiver lá e colar o programinha. Ele já está pronto num
-   documento do Drive dele, para copiar no iPad sem digitar nada:
+   documento do Drive dele, para copiar sem digitar nada — abrir noutra aba do
+   MESMO computador, selecionar tudo e copiar:
 
    **Kadish — programinha para colar no Apps Script**
    https://docs.google.com/document/d/1fziZHlWqqcapYUGnP7xJns4h_6vTkBe-WlTIENgoaBU/edit

@@ -1264,6 +1264,34 @@ A pergunta "está na tela?" é feita pelo `elementFromPoint`, nunca pelo atribut
    "Normal" em inglês). Agora a pergunta é feita no título e na **frase longa**:
    uma frase inteira não colide por acaso; uma palavra de seis letras colide.
 
+### O caminho que eu mandei e que não existia no aparelho dele (15/09)
+
+A planilha **Kadish — opiniões** e o documento com o programinha já estão
+criados no Drive dele (feitos daqui, pelas ferramentas do Drive). O documento
+foi **conferido depois de criado**, e a pergunta certa era uma só: *aspa torta é
+o único jeito de isto quebrar calado* — zero aspas tortas, e o JavaScript passa
+no `node --check`. O código do repositório é **idêntico** ao do documento, linha
+por linha, para não haver duas cópias que divirjam.
+
+**O que NÃO dá para fazer daqui:** criar e publicar um Apps Script. A ferramenta
+do Drive cria e lê arquivos; não cria projeto de script nem publica app da web.
+
+**E o caminho que sobrou para ele eu mandei sem perguntar em que aparelho ele
+estaria.** Ele tentou duas vezes: *"não achei o menu extensões"*, depois *"não
+tem o menu do alto"*. Os dois estavam certos:
+
+1. **No iPad o menu não existe.** Tocar num link de planilha abre o APLICATIVO
+   do Google Planilhas, que não tem barra de menus nenhuma. "Site para
+   computador" no Safari não resolve — o Google devolve para o app.
+2. **E no computador, abrir pelo link direto pode cair no modo de VISUALIZAÇÃO
+   do Drive**, que é uma prévia e também não tem menus. O caminho que não falha
+   é `drive.google.com` → dois cliques no nome do arquivo.
+
+É a mesma família do teste que não podia dizer nada (14/09): **antes de mandar
+um caminho, conferir se ele existe no aparelho em que ele está.** Ele escolheu
+fazer no computador quando estiver nele; o `opiniao-google/COMO-LIGAR.md` abre
+dizendo isso, em primeiro lugar.
+
 ### O que falta, e é dele
 
 Criar o destino e me passar o endereço. Recomendado, nesta ordem:
