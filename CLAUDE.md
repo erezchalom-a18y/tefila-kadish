@@ -2916,6 +2916,78 @@ termina — que e **o que o olho ve**. Medir a coisa certa, de novo.
 
 Verde nas 8 linguas.
 
+## A historia de Rabi Akiva entra no "por que dizemos" (15/09)
+
+Ele mandou a historia de Rabi Akiva e o cobrador de impostos (Masechet Kala
+Rabati) para entrar na pagina Aprender, e pediu: *"favor adaptar e me mostrar
+antes de publicar"*. Entrou em **quatro secoes**, depois da primeira dele:
+*Uma historia do Rabi Akiva* · *O que essa historia nos ensina sobre o Kadish?*
+· *E por que o filho recita Kadish?* · *O Kadish e mais simples do que parece*.
+O texto dele guardado em `fontes/aprender-pt-2026-09-15.txt`.
+
+**"Adaptar" aqui foi so formato, nunca palavra.** O que eu fiz sozinho:
+partir em secoes pelos proprios subtitulos dele, e tirar as marcas de negrito —
+que ele mesmo dispensou (*"nao precisa dos negritos"*), e ainda bem: o corpo das
+secoes passa por `esc()`, entao os `**` sairiam como asterisco na tela.
+
+**As SEIS decisoes de conteudo foram todas dele**, levadas numa lista que ele
+respondeu com uma palavra ("sim") e um numero:
+
+1. **O titulo.** A primeira versao dele era *"Rabi Akiva e o homem negro como
+   carvao"*. **Em portugues do Brasil isso le como RACA, nao como carbonizado** —
+   e o homem da historia esta queimado, carregando a lenha da propria fogueira.
+   Levei tres redacoes; ele escolheu **"Uma historia do Rabi Akiva"**. No corpo,
+   "negro como carvao" virou **"queimado como carvao"**.
+2. **A transliteracao** passou a ser a do app: `Yehê shemê raba mevarách lealám
+   ul'almei almayá`, e nao a grafia inglesa `Yehei Shemei Rabbah Mevorach`.
+   Regra 7 — a portuguesa e a original. Quem le a pagina abre o Kadish a um
+   toque; duas grafias da mesma frase no mesmo app e o defeito de sempre.
+3. **A traducao** idem: *"abençoado para sempre e para toda eternidade"*, que e
+   a dos 8 sync, no lugar de *"bendito para todo o sempre"*.
+4. **D'us virou Deus**, que e como as outras secoes dele na mesma pagina escrevem.
+5. **"dez homens judeus" virou "dez homens adultos"** — a frase dele, ja aprovada
+   e impressa em todos os papeis. "Adultos" e a palavra que importa.
+6. **Saiu da secao 1 o paragrafo** *"E ha algo especialmente profundo no Kadish:
+   ele nao fala sobre a morte."*, porque a secao nova diz o mesmo com a historia
+   atras. **CUSTO REAL, e ele precisa saber:** a secao 1 e a que o folheto do
+   cemiterio imprime, entao **o folheto perdeu essa linha** (90 palavras agora,
+   em 5 paragrafos). O paragrafo saiu tambem das outras 7 linguas — senao elas
+   diriam o que o portugues nao diz mais.
+
+### As 7 linguas, e por que elas nao podiam esperar
+
+A checagem ficou **vermelha** assim que as quatro secoes entraram: elas so
+existiam em portugues. Regra 6, e a regra 3 proibe afrouxar. Entao foram
+traduzidas na mesma rodada, como as outras seis secoes dele ja eram.
+
+**As frases liturgicas dentro do texto NAO foram traduzidas por mim.** Saem dos
+nossos `sync/*.json`, lingua por lingua: a traducao dos versos (que ja existe nas
+8) e, onde ha fonte humana, a transliteracao por lingua. No **alemao** ela cai no
+portugues (nao ha fonte, como manda a regra 7) e no **hebraico** usa-se o proprio
+hebraico, que e o que faz sentido. Medido depois: 12 secoes nas 8 linguas, sem
+erro de console.
+
+### A checagem mudou de forma, e ficou mais exigente
+
+Era **um** arquivo-fonte comparado de ponta a ponta. Agora sao **dois**, e a
+ordem da PAGINA nao e a ordem dos arquivos — colar os dois e comparar acusaria
+uma diferenca que nao existe. Entao cada secao dele e casada com o SEU bloco,
+pelo titulo, e comparada palavra por palavra (1.549 palavras). Antes uma secao
+podia ser reordenada sem ninguem ver; agora nao.
+
+**E uma das linhas novas eu escrevi errada, e e o erro que este arquivo mais
+registra.** Ela perguntava se sobrava bloco sem secao — e **nunca poderia ficar
+vermelha**, porque os blocos sao recortados pelos titulos das proprias secoes:
+um bloco orfao simplesmente nao era recortado. Uma checagem que so sabe passar
+nao mede nada, do mesmo jeito que a que so sabe reprovar (o vigia de 13/09).
+Trocada pela pergunta do TOTAL: *tudo o que esta escrito nos arquivos-fonte
+aparece na pagina?* **Provado que sabe falhar** — renomeando um titulo, ela
+acusa: *"os arquivos tem 1549 palavras e a pagina cobre 1087"*.
+
+E a comparacao palavra por palavra pegou um erro meu antes de eu ver: eu tinha
+montado o portugues das secoes ANTES de consertar umas aspas tortas no
+arquivo-fonte, e ela apontou a palavra exata.
+
 ## "O app nao esta abrindo" — e nao era o app (14/09)
 
 Ele, depois da v61: *"o app do kadish nao esta abrindo no iphone (demorou e deu

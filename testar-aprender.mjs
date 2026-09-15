@@ -54,17 +54,64 @@ secoes.forEach((s, i) => { if (!s.origem) semOrigem.push(`secao ${i + 1}`); });
 confere('toda secao declara de quem e o texto', !semOrigem.length, semOrigem.join(', '));
 
 const palavras = t => (String(t).normalize('NFC').match(/\S+/g) || []);
-const dele = palavras(readFileSync('fontes/aprender-pt-2026-09-03.txt', 'utf8'));
 const doErez = secoes.filter(s => s.origem === 'erez');
-confere('as secoes dele continuam la', doErez.length === 6, `sao ${doErez.length}, e nao 6`);
-const nosso = palavras(doErez.map(s => s.titulo.pt + ' ' + s.corpo.pt).join(' '));
-let ondeDifere = '';
-if (dele.length !== nosso.length || dele.some((p, i) => p !== nosso[i])) {
-  const i = dele.findIndex((p, k) => p !== nosso[k]);
-  ondeDifere = `na palavra ${i + 1}: ele escreveu "${dele[i]}", o arquivo tem "${nosso[i]}"` +
-               ` (ele ${dele.length} palavras, arquivo ${nosso.length})`;
+confere('as secoes dele continuam la', doErez.length === 10, `sao ${doErez.length}, e nao 10`);
+
+// 15/09 — ERA UM ARQUIVO SO, E PASSARAM A SER DOIS. Ele mandou a historia de
+// Rabi Akiva (fontes/aprender-pt-2026-09-15.txt) e ela entrou como quatro
+// secoes, DEPOIS da primeira. Colar os dois arquivos e comparar de ponta a
+// ponta nao serve: a ordem da PAGINA nao e a ordem dos arquivos, e a
+// comparacao acusaria uma diferenca que nao existe.
+//
+// Entao a conta mudou de forma, e NAO afrouxou: cada secao dele e casada com o
+// SEU bloco no arquivo-fonte, pelo titulo, e comparada palavra por palavra.
+// Alem disso ninguem pode sobrar de nenhum lado — nem secao na pagina sem
+// bloco escrito, nem bloco escrito que sumiu da pagina. Antes uma secao podia
+// ser reordenada sem ninguem ver; agora nao.
+const FONTES = ['fontes/aprender-pt-2026-09-03.txt', 'fontes/aprender-pt-2026-09-15.txt'];
+const titulos = new Set(doErez.map(s => s.titulo.pt));
+const blocos = new Map();
+for (const arq of FONTES) {
+  let atual = null;
+  for (const linha of readFileSync(arq, 'utf8').split('\n')) {
+    const l = linha.trim();
+    if (titulos.has(l)) { atual = l; blocos.set(l, [l]); }
+    else if (atual && l) blocos.get(atual).push(l);
+  }
 }
-confere(`o portugues e o dele, palavra por palavra (${dele.length} palavras)`, !ondeDifere, ondeDifere);
+
+const semBloco = doErez.filter(s => !blocos.has(s.titulo.pt)).map(s => s.titulo.pt);
+confere('toda secao dele tem o texto guardado num arquivo-fonte',
+        !semBloco.length, semBloco.join(' · '));
+// 15/09 — a primeira versao desta linha perguntava se sobrava bloco sem secao,
+// e ELA NUNCA PODERIA FICAR VERMELHA: os blocos sao recortados pelos titulos das
+// proprias secoes, entao um bloco orfao simplesmente nao era recortado. Uma
+// checagem que so sabe passar nao mede nada — e a mesma licao do vigia de 13/09,
+// pelo avesso. A pergunta que SABE falhar e a do TOTAL: tudo o que esta escrito
+// nos arquivos-fonte tem de aparecer na pagina, ate a ultima palavra.
+const totalFonte = FONTES.reduce((n, a) => n + palavras(readFileSync(a, 'utf8')).length, 0);
+const totalCasado = doErez.reduce(
+  (n, s) => n + (blocos.has(s.titulo.pt) ? palavras(blocos.get(s.titulo.pt).join(' ')).length : 0), 0);
+confere('nada do que ele escreveu ficou de fora da pagina', totalFonte === totalCasado,
+        `os arquivos tem ${totalFonte} palavras e a pagina cobre ${totalCasado}`);
+
+let ondeDifere = '';
+let totalPalavras = 0;
+for (const s of doErez) {
+  const bloco = blocos.get(s.titulo.pt);
+  if (!bloco) continue;
+  const dele = palavras(bloco.join(' '));
+  const nosso = palavras(s.titulo.pt + ' ' + s.corpo.pt);
+  totalPalavras += dele.length;
+  if (ondeDifere) continue;
+  if (dele.length !== nosso.length || dele.some((p, i) => p !== nosso[i])) {
+    const i = dele.findIndex((p, k) => p !== nosso[k]);
+    ondeDifere = `em "${s.titulo.pt}", palavra ${i + 1}: ele escreveu "${dele[i]}", ` +
+                 `o arquivo tem "${nosso[i]}" (ele ${dele.length}, arquivo ${nosso.length})`;
+  }
+}
+confere(`o portugues e o dele, palavra por palavra (${totalPalavras} palavras)`,
+        !ondeDifere, ondeDifere);
 
 // ---------- 2. as 8 linguas ----------
 const faltando = [], disfarcado = [];
