@@ -97,8 +97,17 @@ Se aparecer algo como *Query executed successfully*, deu certo.
 4. **Deploy** (ele publica um "olá mundo" — é só para existir).
 5. Clique em **Edit code** (ou **</> Edit code**).
 6. **Apague tudo** o que estiver no editor.
-7. Cole o conteúdo do arquivo **`worker.js`**, que está nesta mesma pasta do
-   repositório. Abra ele no GitHub, clique em **Raw**, selecione tudo, copie.
+7. Cole o programinha. Ele já está pronto num documento do Drive dele, para
+   copiar sem procurar nada no GitHub — abra noutra aba do MESMO computador,
+   selecione tudo e copie:
+
+   **Kadish — programinha do contador (Cloudflare Worker)**
+   https://docs.google.com/document/d/1M707BHzhTv5sYOuVEGUVK3lxitxOib_W1l9mHe_Fmu0/edit
+
+   (Conferido depois de criado, contra o `worker.js` do repositório: **137
+   linhas idênticas**, as 6 crases do SQL preservadas, zero aspas tortas e o
+   JavaScript passa no `node --check`. Aspa torta e crase trocada são os dois
+   jeitos de isto quebrar calado.)
 8. Clique em **Deploy** (ou **Save and deploy**).
 
 ---

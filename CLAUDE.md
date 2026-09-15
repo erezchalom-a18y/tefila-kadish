@@ -693,6 +693,38 @@ cidade aparece com o país ao lado: **há Belém no Brasil e Belém em Israel**,
 sem o país as duas viram uma linha só aos olhos de quem lê. Quando não houver
 cidade nenhuma, a seção inteira não aparece — uma tabela vazia pareceria defeito.
 
+### "Voce consegue ajustar o cloudflare?" — NAO, e medido (15/09)
+
+Ele perguntou, e a resposta exigiu medir em vez de afirmar. **Dois bloqueios
+independentes, e os dois valem:**
+
+```
+credencial de Cloudflare neste ambiente : nenhuma
+wrangler instalado                      : nao
+
+CONNECT api.cloudflare.com:443
+  < HTTP/1.1 403 Forbidden
+  CONNECT tunnel failed, response 403
+```
+
+O 403 e o **proxy deste contêiner negando o tunel de saida** — e aqui a medida
+VALE, ao contrario do `kadish.app` em 13/09. A diferenca e a pergunta: "eu
+alcanço?" é respondida pela recusa; "o site esta no ar?" nao pode ser respondida
+por um proxy que responde no lugar do site. *A mesma recusa serve de prova numa
+pergunta e nao serve na outra.*
+
+E mesmo que ele me desse um token, nao adiantaria — o bloqueio da rede continua.
+Um token capaz de criar Worker e banco e a chave da conta dele; nao e caso de
+pedir.
+
+**O que deu para fazer daqui:** pôr o `worker.js` num documento do Drive dele,
+como o do Apps Script, para ele so copiar no computador. **Conferido depois de
+criado**, contra o arquivo do repositorio: 137 linhas identicas, **as 6 crases
+do SQL preservadas** (o Google Docs mexendo numa crase quebraria o SQL calado) e
+`node --check` valido. A primeira volta desta conferencia leu **um arquivo
+vazio** — o heredoc esperava uma entrada que eu nao mandei — e respondeu
+"VALIDO" sobre nada. Mais uma checagem que nao media nada, pega a tempo.
+
 **Continua faltando ele criar a conta do Cloudflare** (pendente desde 21/08).
 O `COMO-LIGAR.md` agora abre dizendo **faça num computador**, e diz por quê: o
 passo de colar o código num editor dentro do navegador é o que mais dá trabalho
