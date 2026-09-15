@@ -1914,6 +1914,64 @@
     text-align: right;
     font-size: 17px;
   }
+  /* 15/09 — SUA OPINIAO. O formulario usa os mesmos campos do cadastro
+     (.setup-field) de proposito: e a mesma letra, a mesma borda e o mesmo
+     foco em latao. Duas gramaticas visuais para "preencher um campo" dentro
+     do mesmo painel seria mais uma daquelas DUAS CONTAS PARA A MESMA PERGUNTA
+     que este projeto ja pagou caro. */
+  .setup-field textarea {
+    width: 100%;
+    padding: 9px 11px;
+    font-family: 'Lora', serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .setup-field textarea:focus { border-color: var(--brass); }
+  .op-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    line-height: 1.55;
+    /* --text-soft, e nao --text-faint: em 04/09 o rotulo da dedicatoria estava
+       em 3,65:1 contra o pergaminho e ele viu de longe ("muito pequeno e
+       apagado"). Este projeto tem piso de TAMANHO e nao tem piso de CONTRASTE;
+       ate ter, a legenda nao desce de --text-soft (8,92:1). */
+    color: var(--text-soft);
+    margin-bottom: 12px;
+  }
+  .op-enviar {
+    width: 100%;
+    /* 30px e o piso de botao do projeto: dedo de quem reza de pe, com o sidur
+       na outra mao. Aqui sobra, e e de proposito — este e um botao de escrever
+       sentado, nao de tocar no meio da reza. */
+    min-height: 30px;
+    padding: 11px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--brass);
+    color: var(--bg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .op-enviar[disabled] { opacity: .55; cursor: default; }
+  .op-recado {
+    margin-top: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-soft);
+  }
+  .op-recado:empty { display: none; }
+  .op-recado.erro { color: #9c3b1e; }
   .setup-actions {
     display: flex;
     gap: 8px;
@@ -2521,7 +2579,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-14 · 61';
+const VERSAO = '2026-09-15 · 62';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2696,6 +2754,45 @@ document.addEventListener('DOMContentLoaded', () => {
       <div id="yzAvisos" style="margin-top:10px;font-size:12.5px;color:#8a5a12;line-height:1.5"></div>
       <button id="yzCalendario" data-i18n="yahrzeit_calendar_btn" style="margin-top:12px;width:100%;background:var(--brass);color:#fff;border:0;border-radius:9px;padding:11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer">pôr no calendário do telefone</button>
       <div data-i18n="yahrzeit_reminder_note" style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da véspera (hora de acender a vela) e na manhã do dia.</div>
+    </div>
+
+    <!-- 15/09 — SUA OPINIAO, a pedido dele: "incluir nas configuracoes, um form
+         curto, pedindo apenas poucos dados para resposta".
+
+         POR QUE FICA AQUI, NO FIM DO PAINEL, e nao no alto da tela: cada pixel
+         de cabecalho e Kadish a menos, e essa briga ja custou versoes inteiras
+         a este projeto (o piso e 60% da tela para a reza, 40% ate o primeiro
+         verso). Ninguem abre este app para opinar; quem opina procura, e quem
+         procura acha no ⚙. Pelo mesmo motivo vem DEPOIS da Dedicacao: a ordem
+         do painel e a ordem da importancia para quem reza.
+
+         TRES CAMPOS, e so a mensagem e obrigatoria. O contato e opcional com a
+         razao escrita ao lado ("so se quiser resposta"): exigi-lo calaria quem
+         quer dizer uma coisa e ir embora, e num app de enlutados isso e a
+         maioria.
+
+         A LINHA DA VERDADE (opiniao_intro) NAO E ENFEITE. O aviso de
+         privacidade promete, nas 8 linguas, que o que se cadastra "fica
+         guardado localmente". A partir daqui existe UM caminho em que texto
+         escrito por uma pessoa SAI do aparelho — entao ele tem de estar dito no
+         lugar onde se escreve, e nao so numa politica. -->
+    <div class="settings-eyebrow" style="margin-top:24px;" id="opiniaoTitulo" data-i18n="opiniao_title">Sua opinião</div>
+    <div class="settings-row" id="opiniaoRow">
+      <div class="op-intro" data-i18n="opiniao_intro">Escreva o que achou, o que faltou ou o que está errado. O que você escrever aqui sai do aparelho e vai para quem cuida do app.</div>
+      <div class="setup-field">
+        <label for="opMsg" data-i18n="opiniao_msg">Sua mensagem</label>
+        <textarea id="opMsg" rows="4" maxlength="2000"></textarea>
+      </div>
+      <div class="setup-field">
+        <label for="opNome" data-i18n="opiniao_nome">Seu nome (opcional)</label>
+        <input type="text" id="opNome" maxlength="120">
+      </div>
+      <div class="setup-field">
+        <label for="opContato" data-i18n="opiniao_contato">E-mail ou WhatsApp — só se quiser resposta</label>
+        <input type="text" id="opContato" maxlength="120">
+      </div>
+      <button class="op-enviar" id="opEnviar" data-i18n="opiniao_enviar">Enviar</button>
+      <div class="op-recado" id="opRecado"></div>
     </div>
 
   </div>
@@ -5634,6 +5731,16 @@ const I18N = {
     setup_skip_btn: 'Pular', setup_save: 'Salvar', setup_skip_link: 'Depois, no menu ⚙',
     consent_title: 'Privacidade', consent_text: 'Este app coleta dados anônimos de uso e, se você cadastrar, seu nome e data do falecimento ficam guardados localmente. Conforme LGPD/GDPR, você pode apagar tudo a qualquer momento.',
     consent_decline: 'Apenas o essencial', consent_accept: 'OK, prosseguir',
+    opiniao_title: "Sua opinião",
+    opiniao_intro: "Escreva o que achou, o que faltou ou o que está errado. O que você escrever aqui sai do aparelho e vai para quem cuida do app.",
+    opiniao_msg: "Sua mensagem",
+    opiniao_nome: "Seu nome (opcional)",
+    opiniao_contato: "E-mail ou WhatsApp — só se quiser resposta",
+    opiniao_enviar: "Enviar",
+    opiniao_enviando: "Enviando…",
+    opiniao_ok: "Recebido. Obrigado por escrever.",
+    opiniao_erro: "Não deu para enviar agora. Sua mensagem continua aqui — tente de novo daqui a pouco.",
+    opiniao_vazio: "Escreva a sua mensagem antes de enviar.",
     find_chabad: 'Encontrar Beit Chabad próximo →'
   },
   en: {
@@ -5719,6 +5826,16 @@ const I18N = {
     setup_skip_btn: 'Skip', setup_save: 'Save', setup_skip_link: 'Later, in ⚙ menu',
     consent_title: 'Privacy', consent_text: 'This app collects anonymous usage data, and if you register, your name and date of passing are stored locally. Per GDPR/LGPD, you can delete everything at any time.',
     consent_decline: 'Essential only', consent_accept: 'OK, proceed',
+    opiniao_title: "Your feedback",
+    opiniao_intro: "Tell us what you thought, what was missing or what is wrong. What you write here leaves your device and goes to whoever looks after the app.",
+    opiniao_msg: "Your message",
+    opiniao_nome: "Your name (optional)",
+    opiniao_contato: "Email or phone — only if you want a reply",
+    opiniao_enviar: "Send",
+    opiniao_enviando: "Sending…",
+    opiniao_ok: "Received. Thank you for writing.",
+    opiniao_erro: "It could not be sent right now. Your message is still here — try again in a moment.",
+    opiniao_vazio: "Write your message before sending.",
     find_chabad: 'Find nearest Chabad House →'
   },
   es: {
@@ -5804,6 +5921,16 @@ const I18N = {
     setup_skip_btn: 'Omitir', setup_save: 'Guardar', setup_skip_link: 'Después, en el menú ⚙',
     consent_title: 'Privacidad', consent_text: 'Esta app recolecta datos de uso anónimos y, si te registras, tu nombre y fecha de fallecimiento se guardan localmente. Según LGPD/GDPR, puedes borrar todo en cualquier momento.',
     consent_decline: 'Solo lo esencial', consent_accept: 'OK, continuar',
+    opiniao_title: "Tu opinión",
+    opiniao_intro: "Escribe qué te pareció, qué faltó o qué está mal. Lo que escribas aquí sale del dispositivo y llega a quien cuida la app.",
+    opiniao_msg: "Tu mensaje",
+    opiniao_nome: "Tu nombre (opcional)",
+    opiniao_contato: "Correo o teléfono — solo si quieres respuesta",
+    opiniao_enviar: "Enviar",
+    opiniao_enviando: "Enviando…",
+    opiniao_ok: "Recibido. Gracias por escribir.",
+    opiniao_erro: "No se pudo enviar ahora. Tu mensaje sigue aquí — inténtalo de nuevo en un momento.",
+    opiniao_vazio: "Escribe tu mensaje antes de enviar.",
     find_chabad: 'Encontrar Beit Jabad cercano →'
   },
   fr: {
@@ -5889,6 +6016,16 @@ const I18N = {
     setup_skip_btn: 'Passer', setup_save: 'Sauvegarder', setup_skip_link: 'Plus tard, dans le menu ⚙',
     consent_title: 'Confidentialité', consent_text: "Cette app recueille des données d'usage anonymes et, si vous vous inscrivez, votre nom et date de décès sont stockés localement. Conformément au RGPD/LGPD, vous pouvez tout supprimer à tout moment.",
     consent_decline: 'Essentiel uniquement', consent_accept: 'OK, continuer',
+    opiniao_title: "Votre avis",
+    opiniao_intro: "Dites ce que vous en avez pensé, ce qui manquait ou ce qui ne va pas. Ce que vous écrivez ici quitte l'appareil et parvient à celui qui s'occupe de l'app.",
+    opiniao_msg: "Votre message",
+    opiniao_nome: "Votre nom (facultatif)",
+    opiniao_contato: "E-mail ou téléphone — seulement si vous voulez une réponse",
+    opiniao_enviar: "Envoyer",
+    opiniao_enviando: "Envoi…",
+    opiniao_ok: "Reçu. Merci d'avoir écrit.",
+    opiniao_erro: "L'envoi n'a pas abouti. Votre message est toujours là — réessayez dans un instant.",
+    opiniao_vazio: "Écrivez votre message avant de l'envoyer.",
     find_chabad: 'Trouver Beth Habad proche →'
   },
   it: {
@@ -5974,6 +6111,16 @@ const I18N = {
     setup_skip_btn: 'Salta', setup_save: 'Salva', setup_skip_link: 'Più tardi, nel menu ⚙',
     consent_title: 'Privacy', consent_text: 'Questa app raccoglie dati d\'uso anonimi e, se ti registri, il tuo nome e la data del decesso restano salvati solo sul tuo dispositivo. In base al GDPR puoi cancellare tutto in qualsiasi momento.',
     consent_decline: 'Solo l\'essenziale', consent_accept: 'OK, continua',
+    opiniao_title: "La tua opinione",
+    opiniao_intro: "Scrivi che cosa ne pensi, che cosa manca o che cosa non va. Quello che scrivi qui esce dal dispositivo e arriva a chi cura l'app.",
+    opiniao_msg: "Il tuo messaggio",
+    opiniao_nome: "Il tuo nome (facoltativo)",
+    opiniao_contato: "E-mail o telefono — solo se vuoi una risposta",
+    opiniao_enviar: "Invia",
+    opiniao_enviando: "Invio…",
+    opiniao_ok: "Ricevuto. Grazie per aver scritto.",
+    opiniao_erro: "Non è stato possibile inviare ora. Il tuo messaggio è ancora qui — riprova tra poco.",
+    opiniao_vazio: "Scrivi il tuo messaggio prima di inviare.",
     find_chabad: 'Trova il Beit Chabad più vicino →'
   },
   de: {
@@ -6059,6 +6206,16 @@ const I18N = {
     setup_skip_btn: 'Überspringen', setup_save: 'Speichern', setup_skip_link: 'Später, im Menü ⚙',
     consent_title: 'Datenschutz', consent_text: 'Diese App erfasst anonyme Nutzungsdaten. Wenn Sie sich eintragen, bleiben Name und Sterbedatum nur auf Ihrem Gerät gespeichert. Gemäß DSGVO können Sie jederzeit alles löschen.',
     consent_decline: 'Nur das Nötigste', consent_accept: 'OK, weiter',
+    opiniao_title: "Ihre Meinung",
+    opiniao_intro: "Schreiben Sie, was Sie denken, was fehlt oder was falsch ist. Was Sie hier schreiben, verlässt das Gerät und geht an denjenigen, der die App betreut.",
+    opiniao_msg: "Ihre Nachricht",
+    opiniao_nome: "Ihr Name (optional)",
+    opiniao_contato: "E-Mail oder Telefon — nur wenn Sie eine Antwort möchten",
+    opiniao_enviar: "Senden",
+    opiniao_enviando: "Wird gesendet…",
+    opiniao_ok: "Angekommen. Danke für Ihre Nachricht.",
+    opiniao_erro: "Das Senden hat gerade nicht geklappt. Ihre Nachricht ist noch da — versuchen Sie es gleich noch einmal.",
+    opiniao_vazio: "Schreiben Sie Ihre Nachricht, bevor Sie senden.",
     find_chabad: 'Nächstes Beit Chabad finden →'
   },
   ru: {
@@ -6144,6 +6301,16 @@ const I18N = {
     setup_skip_btn: 'Пропустить', setup_save: 'Сохранить', setup_skip_link: 'Позже, в меню ⚙',
     consent_title: 'Конфиденциальность', consent_text: 'Приложение собирает анонимные данные использования. Если вы зарегистрируетесь, ваше имя и дата хранятся локально. По LGPD/GDPR, можно удалить всё в любой момент.',
     consent_decline: 'Только необходимое', consent_accept: 'OK, продолжить',
+    opiniao_title: "Ваше мнение",
+    opiniao_intro: "Напишите, что вы думаете, чего не хватает или что не так. То, что вы напишете здесь, покидает устройство и попадает к тому, кто занимается приложением.",
+    opiniao_msg: "Ваше сообщение",
+    opiniao_nome: "Ваше имя (необязательно)",
+    opiniao_contato: "Эл. почта или телефон — только если хотите ответ",
+    opiniao_enviar: "Отправить",
+    opiniao_enviando: "Отправка…",
+    opiniao_ok: "Получено. Спасибо, что написали.",
+    opiniao_erro: "Сейчас отправить не удалось. Ваше сообщение здесь — попробуйте ещё раз чуть позже.",
+    opiniao_vazio: "Напишите сообщение перед отправкой.",
     find_chabad: 'Найти ближайший Бейт Хабад →'
   },
   he: {
@@ -6229,6 +6396,16 @@ const I18N = {
     setup_skip_btn: 'דלג', setup_save: 'שמור', setup_skip_link: 'מאוחר יותר, בתפריט ⚙',
     consent_title: 'פרטיות', consent_text: 'אפליקציה זו אוספת נתוני שימוש אנונימיים. אם תירשם, השם והתאריך נשמרים מקומית. ע"פ LGPD/GDPR ניתן למחוק הכל בכל זמן.',
     consent_decline: 'רק חיוני', consent_accept: 'אישור, המשך',
+    opiniao_title: "דעתך",
+    opiniao_intro: "כתבו מה חשבתם, מה חסר או מה לא תקין. מה שתכתבו כאן יוצא מהמכשיר ומגיע למי שמטפל באפליקציה.",
+    opiniao_msg: "ההודעה שלך",
+    opiniao_nome: "השם שלך (לא חובה)",
+    opiniao_contato: "אימייל או טלפון — רק אם ברצונך לקבל תשובה",
+    opiniao_enviar: "שליחה",
+    opiniao_enviando: "שולח…",
+    opiniao_ok: "התקבל. תודה שכתבת.",
+    opiniao_erro: "לא ניתן היה לשלוח כעת. ההודעה שלך עדיין כאן — נסו שוב בעוד רגע.",
+    opiniao_vazio: "כתבו את ההודעה לפני השליחה.",
     find_chabad: 'מצא בית חב"ד קרוב →'
   }
 };
@@ -6340,6 +6517,103 @@ function esconderEscolhaDeLingua() {
 }
 document.addEventListener('DOMContentLoaded', esconderEscolhaDeLingua);
 esconderEscolhaDeLingua();
+
+// ---------- Sua opiniao (15/09) ----------
+// Pedido dele: "incluir nas configuracoes, um form curto, pedindo apenas
+// poucos dados para resposta".
+//
+// ENDERECO_OPINIAO VAZIO = A SECAO NAO EXISTE. E o mesmo padrao do
+// ENDERECO_GERAL do contador.js, e existe pelo motivo mais concreto possivel:
+// um botao de enviar sem destino e um botao que engole a mensagem de alguem.
+// Enquanto esta string for vazia, o titulo e o formulario nao aparecem na tela
+// — e somem por CLASSE (`display:none !important`), nunca pelo atributo
+// `hidden`. O `hidden` e so a folha do navegador dizendo `display:none`, e
+// qualquer regra do autor com `display` ganha dele: foi assim que a v59 foi ao
+// ar com o botao de idioma na tela e a minha checagem jurando que tinha sumido.
+//
+// Ligar e por o endereco aqui. Nada mais muda.
+const ENDERECO_OPINIAO = '';
+
+(function opiniao() {
+  const titulo = document.getElementById('opiniaoTitulo');
+  const fileira = document.getElementById('opiniaoRow');
+  if (!titulo || !fileira) return;
+
+  if (!ENDERECO_OPINIAO) {
+    titulo.classList.add('escondido-pela-chave');
+    fileira.classList.add('escondido-pela-chave');
+    return;
+  }
+
+  const msg = document.getElementById('opMsg');
+  const nome = document.getElementById('opNome');
+  const contato = document.getElementById('opContato');
+  const botao = document.getElementById('opEnviar');
+  const recado = document.getElementById('opRecado');
+  let enviando = false;
+
+  // O recado leva o data-i18n junto com o texto, e nao so o texto: se ele
+  // trocar de lingua com a mensagem na tela, o applyI18n a reescreve na lingua
+  // nova na mesma volta. E o mesmo remendo do rotulo curto da dedicatoria.
+  function dizer(chave, ehErro) {
+    const t = I18N[state.lang] || I18N.pt;
+    recado.dataset.i18n = chave;
+    recado.textContent = t[chave] || I18N.pt[chave] || '';
+    recado.classList.toggle('erro', !!ehErro);
+  }
+
+  botao.addEventListener('click', async () => {
+    if (enviando) return;
+    const texto = (msg.value || '').trim();
+    if (!texto) { dizer('opiniao_vazio', true); msg.focus(); return; }
+
+    enviando = true;
+    botao.disabled = true;
+    dizer('opiniao_enviando', false);
+
+    try {
+      const resposta = await fetch(ENDERECO_OPINIAO, {
+        method: 'POST',
+        // text/plain, e NAO application/json, embora o corpo seja JSON.
+        // Nao e descuido: application/json obriga o navegador a mandar ANTES um
+        // pedido OPTIONS de permissao (preflight), e um destino que nao o
+        // responda faz a mensagem morrer sem nunca chegar — mais um caminho que
+        // ninguem visita. text/plain esta na lista segura do navegador e vai
+        // direto. Quem recebe le o corpo como JSON do mesmo jeito.
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        // SO ISTO SAI DO APARELHO, e a lista e curta de proposito: a mensagem,
+        // e o nome e o contato SE ele os escreveu. Nunca identificador de
+        // aparelho, nunca hora, nunca nada que volte a uma pessoa que nao
+        // quis se identificar — e a mesma regra que fez o contador ser
+        // escolhido em vez do Google Analytics. A lingua e a versao vao porque
+        // sao o que permite entender a queixa ("na v61, em portugues").
+        body: JSON.stringify({
+          mensagem: texto.slice(0, 2000),
+          nome: (nome.value || '').trim().slice(0, 120),
+          contato: (contato.value || '').trim().slice(0, 120),
+          lingua: state.lang,
+          versao: VERSAO
+        })
+      });
+
+      // "RECEBIDO" SO DEPOIS DE UM SIM DE VERDADE. Esta linha e a regra do
+      // projeto escrita em codigo: um app que serve enlutados nao diz um numero
+      // que nao mediu, e nao diz "enviado" o que nao sabe que chegou. Se a
+      // resposta nao for 2xx, o que aparece e o recado de erro — e O TEXTO DELA
+      // CONTINUA NA TELA, porque a unica coisa pior que nao enviar e apagar o
+      // que a pessoa escreveu.
+      if (!resposta.ok) throw new Error('HTTP ' + resposta.status);
+
+      msg.value = ''; nome.value = ''; contato.value = '';
+      dizer('opiniao_ok', false);
+    } catch (e) {
+      dizer('opiniao_erro', true);
+    } finally {
+      enviando = false;
+      botao.disabled = false;
+    }
+  });
+})();
 function rerenderVerseText() {
   document.querySelectorAll('.verse').forEach((verseEl, vi) => {
     const v = verses[vi];

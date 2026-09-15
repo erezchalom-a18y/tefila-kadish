@@ -20,6 +20,11 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   caro por duas contas para a mesma pergunta. Confere também o ciclo
   Normal → Destaque → Ocultar, que só uma camada fica em destaque, que a escolha
   sobrevive a recarregar, e que aparelho novo abre com as três em Normal.
+- node testar-opiniao.mjs → o "Sua opinião" das Ajustes. Com o
+  `ENDERECO_OPINIAO` vazio a seção não pode estar na tela; com `--provar` ela
+  volta e tem de funcionar, inclusive com o destino respondendo ERRO — e ali a
+  pergunta que importa é se o app **deixa de dizer "recebido"** e **não apaga o
+  que a pessoa escreveu**.
 - node testar-dedicatoria.mjs → o "Em memória de" e o convite que o substitui
   quando está vazio: aparece nas 8 línguas (e não em português nas 8), fica
   antes do primeiro verso, nunca aparecem os dois, some ao preencher o nome e
@@ -1179,6 +1184,99 @@ falhar: tirando `som_mudo` do inglês e do alemão, ela acusa as duas pelo nome.
 
 Mesma classe de defeito do `canPlayType` e do `temState`: **um caminho que
 nenhuma checagem visitava.**
+
+## "Sua opinião" nas Ajustes (15/09, v62)
+
+Ele: *"acho que devemos incluir nas configurações, um form curto, pedindo
+apenas poucos dados para resposta"*.
+
+**Medido antes de fazer: não existia NADA de contato no app** — nenhum
+`mailto:`, nenhum "fale conosco", em nenhum arquivo. Quem quisesse dizer que o
+áudio do verso 3 está adiantado não tinha por onde.
+
+**Três campos, e só a mensagem é obrigatória.** Nome e contato são opcionais,
+com a razão escrita ao lado ("só se quiser resposta"). Exigir o contato calaria
+quem quer dizer uma coisa e ir embora — e num app de enlutados isso é a maioria.
+
+**Fica no FIM do painel, depois da Dedicação.** Não é modéstia: cada pixel de
+cabeçalho é Kadish a menos (o piso é 60% da tela para a reza e 40% até o
+primeiro verso), e essa briga já custou versões inteiras a este projeto. Ninguém
+abre este app para opinar; quem opina procura, e quem procura acha no ⚙. A ordem
+do painel é a ordem da importância para quem reza.
+
+### A linha da verdade, e por que ela não é enfeite
+
+O aviso de privacidade promete, nas 8 línguas, que o que se cadastra *"fica
+guardado localmente"*. A partir desta versão existe **um caminho em que texto
+escrito por uma pessoa SAI do aparelho** — então isso tem de estar dito no lugar
+onde se escreve, e não só numa política que ninguém lê:
+
+> *"O que você escrever aqui sai do aparelho e vai para quem cuida do app."*
+
+E sai pouco, de propósito: **mensagem · nome · contato · língua · versão.**
+Nunca identificador de aparelho, nunca hora, nunca nada que volte a uma pessoa
+que não quis se identificar. É a mesma regra que fez o contador ser escolhido em
+vez do Google Analytics. A língua e a versão vão porque são o que permite
+entender a queixa ("na v61, em português").
+
+### `ENDERECO_OPINIAO` vazio = a seção não existe
+
+Mesmo padrão do `ENDERECO_GERAL` do `contador.js`, e pela razão mais concreta
+possível: **um botão de enviar sem destino é um botão que engole a mensagem de
+alguém.** Enquanto a constante for string vazia, o título e o formulário não
+aparecem — e somem por **classe** (`display:none !important`), nunca pelo
+atributo `hidden`, que é só a folha do navegador e perde para qualquer regra do
+autor com `display`. Foi assim que a v59 foi ao ar com o botão de idioma na tela
+e a minha checagem jurando que tinha sumido.
+
+Ligar é pôr o endereço ali. Nada mais muda.
+
+**E o `Content-Type` é `text/plain`, com o corpo em JSON.** Não é descuido:
+`application/json` obriga o navegador a mandar antes um pedido OPTIONS de
+permissão, e um destino que não o responda faz a mensagem morrer sem nunca
+chegar — mais um caminho que ninguém visita. `text/plain` está na lista segura
+e vai direto; quem recebe lê o corpo como JSON do mesmo jeito.
+
+### A linha que mais importa: "recebido" só depois de um sim de verdade
+
+O app só agradece se a resposta for 2xx. Se não for, ele diz que não deu **e o
+texto dela continua na tela** — a única coisa pior que não enviar é apagar o que
+a pessoa escreveu. É a regra do projeto escrita em código: um app que serve
+enlutados não diz um número que não mediu, e não diz "enviado" o que não sabe
+que chegou.
+
+### `testar-opiniao.mjs`, e os dois erros que ela cometeu antes de funcionar
+
+Ela **sabe passar e sabe falhar**: sem endereço cobra que a seção não esteja na
+tela; com `--provar` põe um endereço no caminho e exige que ela volte e funcione
+— inclusive com o destino respondendo **500**, para provar que o app não mente.
+A pergunta "está na tela?" é feita pelo `elementFromPoint`, nunca pelo atributo.
+
+1. **Ela reprovou dizendo que a seção não tinha voltado — e a seção estava lá.**
+   O painel de Ajustes ROLA por dentro, a seção é a última dele, e o
+   `elementFromPoint` devolve nada para um ponto abaixo da dobra. Medir sem
+   rolar até ela é perguntar a coisa errada. É a família da caixa do glifo
+   (10/09) e do `scrollHeight` do cartão (11/09).
+2. **Ela acusou o espanhol de estar em português, e o espanhol estava certo:**
+   "Enviar" em espanhol **é** "Enviar". Procurar palavra portuguesa em palavra
+   curta dá falso positivo — exatamente o que aconteceu em 01/09, quando a
+   primeira tentativa acusou 5 línguas e as 5 estavam certas ("Normal" é
+   "Normal" em inglês). Agora a pergunta é feita no título e na **frase longa**:
+   uma frase inteira não colide por acaso; uma palavra de seis letras colide.
+
+### O que falta, e é dele
+
+Criar o destino e me passar o endereço. Recomendado, nesta ordem:
+
+1. **Google Apps Script ligado a uma planilha** — grátis, já é Google (ele vai
+   criar um formulário para o tefilin de qualquer jeito), as mensagens caem numa
+   planilha do Drive DELE e o script pode mandar um e-mail a cada uma. É o único
+   dos três em que a mensagem chega na caixa de entrada, que é o que ele precisa
+   para responder de um iPad.
+2. **O Cloudflare Worker** que já existe para o contador — nosso, mas ele teria
+   de ir a um painel ler as mensagens.
+3. Um serviço de formulário (Formspree e parecidos) — mais um fornecedor com
+   dado pessoal, e por isso o último.
 
 ## Nunca
 

@@ -93,6 +93,9 @@ jobs:
       - name: testar-so-portugues.mjs (o lancamento so no Brasil, e o ?lang= aberto)
         run: node testar-so-portugues.mjs http://127.0.0.1:8896/tefila-kadish --provar
 
+      - name: testar-opiniao.mjs (o "Sua opiniao" das Ajustes, e que ele nunca mente sobre o envio)
+        run: node testar-opiniao.mjs http://127.0.0.1:8896/tefila-kadish --provar
+
       - name: testar-instalar.mjs (o app pode virar um icone no telefone)
         run: node testar-instalar.mjs http://127.0.0.1:8896/tefila-kadish
 
