@@ -165,6 +165,48 @@ for (const [trad, pasta, tipo] of [['sefaradi', 'sefaradi', 'yatom'],
   if (!bate) { falhas++; console.log(`        antes de sair era ${antes.audio} com ${antes.versos} versos`); }
 }
 
+// ---------------------------------------------------------------------------
+// O CONTADOR CONTA UMA VEZ SO DEPOIS DE TROCAR? (15/09)
+//
+// Mora aqui, e nao no testar-contador.mjs, porque o cenario e ESTE: o defeito
+// so aparece depois de trocar de Kadish com o app rodando, que e justamente o
+// que este arquivo ja faz. O testar-contador.mjs prova o worker do Cloudflare
+// sem navegador nenhum e nunca viu esta metade.
+//
+// O defeito que ela pega (medido em 15/09): o `Contador.vigiar` era chamado
+// outra vez a cada `montar()` e so ACRESCENTAVA escutas. Quem olhasse tres
+// nussachim antes de rezar contava a MESMA reza tres vezes — `total: 3`.
+// Nada disso aparece na tela; o numero errado so existiria no aparelho de quem
+// usou. Nao quebra nada: MENTE.
+{
+  await pag.goto(`${BASE}/engine.html?audio=mp3`);
+  await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 25000 });
+  await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
+  await espera(1200);
+
+  const aoFim = async () => {
+    await pag.evaluate(() => { const a = document.getElementById('audioPlayer');
+                               a.currentTime = Math.max(0, a.duration - 0.5); });
+    await espera(400);
+    await pag.evaluate(() => document.getElementById('audioPlayer')
+                               .dispatchEvent(new Event('timeupdate')));
+    await espera(400);
+  };
+
+  // tres trocas pelo caminho de quem usa, e entao UMA reza chegando ao fim
+  for (const trad of ['sefard', 'sefaradi', 'ashkenazi']) {
+    await pag.click(`#traditionBadge [data-trad="${trad}"]`);
+    await espera(1800);
+  }
+  await pag.evaluate(() => Contador.zerar());
+  await aoFim();
+  const c = await pag.evaluate(() => Contador.resumo());
+  const certo = c.total === 1 && (c.porNussach[0] || [])[0] === 'ashkenaz';
+  console.log(`${certo ? 'OK   ' : 'FALHA'} depois de 3 trocas, uma reza conta UMA vez: ` +
+              `total=${c.total} ${JSON.stringify(c.porNussach)}`);
+  if (!certo) { falhas++; console.log('        cada troca estava deixando uma escuta para tras'); }
+}
+
 if (erros.length) { console.log(`FALHA erro de console: ${erros[0]}`); falhas++; }
 console.log(falhas ? `\n${falhas} problema(s) nas trocas` : '\nVERDE: as trocas nao dessincronizam');
 await nav.close();

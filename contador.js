@@ -73,8 +73,33 @@
    * Liga o contador a um elemento de audio e a lista de versos do sync.
    * Conta quando o audio passa de 90% do ultimo verso, uma vez por passagem.
    */
+  /** Conta um Kadish quando a voz passa de 90% do ultimo verso.
+   *
+   *  ESTA FUNCAO E CHAMADA OUTRA VEZ A CADA TROCA DE KADISH (o `montar()` do
+   *  engine.html a chama no fim). Ate 15/09 ela so ACRESCENTAVA escutas e nunca
+   *  tirava as de antes — entao quem olhasse tres nussachim antes de rezar
+   *  contava a MESMA reza tres vezes. Medido no navegador: tres trocas e uma
+   *  reza davam `total: 3`.
+   *
+   *  Ninguem via, e nao havia como ver: nada disso aparece na tela de quem reza,
+   *  o `testar-contador.mjs` so prova o worker do Cloudflare, e o numero errado
+   *  so existiria no aparelho de quem usou. E o mesmo formato do `temState` e do
+   *  `canPlayType` — um caminho que nenhuma checagem visitava —, com um
+   *  agravante: aqui o defeito nao quebra nada, so MENTE.
+   *
+   *  O conserto e guardar a escuta no proprio elemento de audio e tirar a
+   *  anterior antes de por a nova. Uma conta so.
+   */
   function vigiar(audio, versos, contexto) {
     if (!audio || !versos || !versos.length) return;
+
+    // Fora a de agora. O `_contadorOlhar` mora no elemento, entao sobrevive a
+    // troca de src — que e exatamente quando o defeito acontecia.
+    if (audio._contadorOlhar) {
+      audio.removeEventListener('timeupdate', audio._contadorOlhar);
+      audio.removeEventListener('ended', audio._contadorOlhar);
+    }
+
     const fim = versos[versos.length - 1].end;
     const gatilho = versos[0].start + (fim - versos[0].start) * 0.9;
     let jaContou = false;
@@ -84,6 +109,7 @@
       jaContou = true;
       registrar(contexto());
     };
+    audio._contadorOlhar = olhar;
     audio.addEventListener('timeupdate', olhar);
     audio.addEventListener('ended', olhar);
   }

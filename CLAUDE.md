@@ -621,6 +621,45 @@ guarda IP nem hora. Também confere que o SQL do COMO-LIGAR.md é o mesmo do
 schema.sql — se saírem de sincronia, o Erez monta a tabela errada e nada
 funciona, sem mensagem de erro. Não gasta nada; roda em segundos.
 
+### E ele CONTAVA DEMAIS depois de trocar de Kadish (15/09, v63)
+
+Ele perguntou *"o contador está funcionando"*, e a resposta honesta exigiu
+medir. A conta por aparelho estava ligada e contando — **mas errado**.
+
+O `Contador.vigiar` é chamado outra vez a cada `montar()` do `engine.html`, ou
+seja, **a cada troca de Kadish** — e ele só ACRESCENTAVA escutas, nunca tirava
+as de antes. Medido no navegador: três trocas e UMA reza davam **`total: 3`**.
+Quem abrisse os oito antes de rezar contaria oito.
+
+**Ninguém via, e não havia como ver.** Nada disso aparece na tela de quem reza;
+o `testar-contador.mjs` prova o worker do Cloudflare sem navegador nenhum e
+nunca viu esta metade; e o número errado só existiria no aparelho de quem usou.
+É o formato do `temState` e do `canPlayType` — um caminho que nenhuma checagem
+visitava — com um agravante: **aqui o defeito não quebra nada, só MENTE.** É a
+mesma família do contador de almas que ele mandou tirar em 10/09, e pelo mesmo
+motivo: *um app que serve enlutados não pode dizer um número que não mediu.*
+
+O conserto é guardar a escuta no próprio elemento de áudio (`_contadorOlhar`) e
+tirar a anterior antes de pôr a nova — uma conta só. O elemento sobrevive à
+troca de `src`, que é justamente quando o defeito acontecia. Medido depois: 3 →
+**1**, e no nussach certo.
+
+**A checagem entrou no `checar-trocas.mjs`**, e não no `testar-contador.mjs`,
+porque o cenário é ESTE: o defeito só aparece depois de trocar de Kadish com o
+app rodando, que é o que aquele arquivo já faz. **Provado que sabe reprovar** —
+tirando o conserto de propósito, ela acusa `total=4`.
+
+**Uma dívida achada no caminho, e não consertada:** o `hebraico.js`, o
+`yahrzeit.js` e o `contador.js` entram por `<script src="./...">` **sem marca de
+versão**. O mecanismo do `VERSAO` recarrega o `engine.html` num endereço novo,
+mas o endereço destes três não muda — então o navegador pode continuar servindo
+a cópia velha deles. Aqui não doeu (o Pages revalida em ~10 minutos e o conserto
+é invisível para quem reza), mas um dia um conserto no `yahrzeit.js` vai
+depender disso. Pôr o número à mão no `<script>` é o que o próprio arquivo já
+proíbe — *é o jeito de a tela mentir no dia em que alguém esquecer de trocá-lo* —,
+então o conserto certo é fazê-los sair da mesma constante, e isso é uma mudança
+de carregamento que não cabia nesta rodada.
+
 O worker guarda SÓ: país · nussach · tipo · língua · dia · quantos. Nunca
 acrescentar IP, identificador de aparelho, hora ou qualquer coisa que volte a
 uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
