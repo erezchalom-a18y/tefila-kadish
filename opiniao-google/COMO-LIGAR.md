@@ -7,19 +7,30 @@ um botão de enviar sem destino é um botão que engole a mensagem de alguém.
 
 ---
 
-## 1. Criar a planilha
+## 1. Criar a planilha — JÁ ESTÁ FEITA
 
-1. Abra **drive.google.com** e crie uma **Planilha** nova.
-2. Dê o nome de **Kadish — opiniões**.
-3. Na primeira linha, escreva estes seis títulos, um por coluna:
+A planilha **Kadish — opiniões** já está no Drive dele, com os seis títulos na
+primeira linha (`quando` · `mensagem` · `nome` · `contato` · `língua` ·
+`versão`). Não precisa criar outra.
 
-   `quando` · `mensagem` · `nome` · `contato` · `língua` · `versão`
+https://docs.google.com/spreadsheets/d/17mzeNyce-u13oUOJz_4BNLHIxQp5OtSYTPiw_8US5IM/edit
 
-## 2. Colar o programinha
+## 2. Colar o programinha — E AQUI PRECISA DELE
 
-1. Na planilha, menu **Extensões → Apps Script**.
-2. Apague o que estiver lá e **cole o conteúdo do arquivo `Codigo.gs`** desta pasta.
-3. Salve (o disquete).
+Esta é a parte que **não dá para fazer por fora**: criar e publicar um Apps
+Script exige o editor do Google, e nenhuma ferramenta de Drive alcança isso.
+São três toques.
+
+1. Abrir a planilha acima → menu **Extensões → Apps Script**.
+2. Apagar o que estiver lá e colar o programinha. Ele já está pronto num
+   documento do Drive dele, para copiar no iPad sem digitar nada:
+
+   **Kadish — programinha para colar no Apps Script**
+   https://docs.google.com/document/d/1fziZHlWqqcapYUGnP7xJns4h_6vTkBe-WlTIENgoaBU/edit
+
+   (Conferido depois de criado: 28 linhas, JavaScript válido e **zero aspas
+   tortas** — aspa torta é o único jeito de isto quebrar calado.)
+3. Salvar (o disquete).
 
 ## 3. Publicar
 
