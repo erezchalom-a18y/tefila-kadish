@@ -1,0 +1,57 @@
+{
+  "_leia": "PROPOSTA, NAO APLICADA. As quatro secoes novas da pagina Aprender, com o texto que o Erez mandou em 15/09. Entram DEPOIS da secao 1 (\"Por que recitar o Kadish por quem partiu?\"), e por isso o folheto do cemiterio NAO muda — ele imprime so a secao 1. So vai para o aprender.json com o OK dele, e so em portugues por enquanto (as outras 7 ficam devendo).",
+  "_pendencias": [
+    "a transliteracao \"Yehei Shemei Rabbah Mevorach\" contra a do app: \"Yehê shemê raba mevarách\"",
+    "a traducao \"bendito para todo o sempre\" contra a dos 8: \"abençoado para sempre e para toda eternidade\"",
+    "D'us no texto novo contra Deus nas secoes 1 e 2 dele",
+    "\"dez homens judeus\" contra a frase dele \"dez homens adultos\"",
+    "o \"o Kadish nao fala sobre a morte\" repete a secao 1",
+    "o titulo \"o homem negro como carvao\" — ver a nota levada a ele"
+  ],
+  "secoes": [
+    {
+      "tipo": "texto",
+      "origem": "erez",
+      "_nota": "Texto dele, 15/09. A historia de Rabi Akiva e o cobrador de impostos (Masechet Kala Rabati). Copiado VERBATIM do que ele mandou, so sem as marcas de negrito — ele: \"nao precisa dos negritos\". Guardado em fontes/aprender-pt-2026-09-15.txt, que e o que a checagem confere.",
+      "titulo": {
+        "pt": "Rabi Akiva e o homem negro como carvão"
+      },
+      "corpo": {
+        "pt": "Conta-se que certa vez Rabi Akiva caminhava por um cemitério quando viu algo muito estranho.\n\nUm homem, negro como carvão, carregava sobre a cabeça uma enorme quantidade de madeira e corria com grande velocidade, como um cavalo.\n\nRabi Akiva pensou que fosse um homem vivo submetido a algum trabalho muito pesado. Parou-o e perguntou:\n\n— Meu filho, por que você está fazendo um trabalho tão difícil?\n\nO homem respondeu:\n\n— Por favor, não me atrase. Se eu me atrasar, aqueles que estão encarregados de mim ficarão zangados.\n\nRabi Akiva insistiu:\n\n— Quem é você? E qual é o seu trabalho?\n\nEntão o homem respondeu:\n\n— Eu estou morto. Todos os dias sou enviado para cortar madeira. Essa madeira é usada para uma fogueira na qual sou queimado.\n\nRabi Akiva perguntou:\n\n— E o que você fazia quando estava vivo?\n\nO homem respondeu:\n\n— Eu era coletor de impostos. Favorecia os ricos e oprimia os pobres.\n\nRabi Akiva então perguntou:\n\n— Você nunca ouviu daqueles que estão encarregados do seu castigo se existe alguma maneira de se livrar dele?\n\nO homem respondeu:\n\n— Ouvi falar de uma possibilidade, mas ela parece impossível.\n\n— Qual?\n\n— Disseram que, se eu tivesse um filho que pudesse ficar diante da congregação e conduzir o público nas palavras de louvor a D'us, e depois recitar o Kadish, com a congregação respondendo “Yehei Shemei Rabbah Mevorach\" — \"Que Seu grande Nome seja bendito\" —, eu poderia ser libertado do meu sofrimento.\n\nMas havia um problema.\n\n— Quando eu morri — continuou o homem — minha esposa estava grávida. Não sei se nasceu um menino. E, mesmo que tenha nascido, quem poderia ensiná-lo? Eu não tenho ninguém no mundo que se importe comigo.\n\nRabi Akiva não deixou o homem partir sem tentar ajudá-lo.\n\nPerguntou seu nome, o nome de sua esposa e onde ela morava. Depois foi procurar aquela mulher.\n\nQuando chegou à cidade, Rabi Akiva perguntou pelos dois.\n\nAs pessoas conheciam aquele homem e falavam dele com grande desprezo. Ele havia sido um cobrador de impostos corrupto, que favorecia os ricos e prejudicava os pobres.\n\nMas Rabi Akiva descobriu algo importante:\n\na mulher realmente havia dado à luz um menino.\n\nRabi Akiva encontrou a criança e começou a ensiná-la.\n\nPouco a pouco, ensinou-lhe a rezar e a participar da vida da comunidade. Quando o menino cresceu o suficiente, Rabi Akiva o levou à congregação.\n\nO menino ficou diante do público e recitou as palavras que Rabi Akiva lhe havia ensinado.\n\nA congregação respondeu.\n\nE então ele recitou o Kadish.\n\nA comunidade respondeu:\n\n“Yehei Shemei Rabbah Mevorach Le'alam u-le'almei almaya”\n\n“Que Seu grande Nome seja bendito para todo o sempre.”\n\nSegundo a tradição dessa história, naquele momento o sofrimento do pai terminou."
+      }
+    },
+    {
+      "tipo": "texto",
+      "origem": "erez",
+      "_nota": "Texto dele, 15/09. A historia de Rabi Akiva e o cobrador de impostos (Masechet Kala Rabati). Copiado VERBATIM do que ele mandou, so sem as marcas de negrito — ele: \"nao precisa dos negritos\". Guardado em fontes/aprender-pt-2026-09-15.txt, que e o que a checagem confere.",
+      "titulo": {
+        "pt": "O que essa história nos ensina sobre o Kadish?"
+      },
+      "corpo": {
+        "pt": "O Kadish é uma oração de santificação e louvor a D'us.\n\nÉ importante perceber algo: o Kadish não fala sobre a morte.\n\nNão pede que D'us ressuscite o falecido, não fala sobre o sofrimento e não menciona o luto.\n\nAo contrário.\n\nQuem está de luto se coloca diante da comunidade e proclama:\n\n“Que o grande Nome de D'us seja engrandecido e santificado.”\n\nMesmo diante da perda, continuamos reconhecendo a grandeza de D'us.\n\nÉ por isso que o Kadish se tornou uma das principais expressões do luto judaico."
+      }
+    },
+    {
+      "tipo": "texto",
+      "origem": "erez",
+      "_nota": "Texto dele, 15/09. A historia de Rabi Akiva e o cobrador de impostos (Masechet Kala Rabati). Copiado VERBATIM do que ele mandou, so sem as marcas de negrito — ele: \"nao precisa dos negritos\". Guardado em fontes/aprender-pt-2026-09-15.txt, que e o que a checagem confere.",
+      "titulo": {
+        "pt": "E por que o filho recita Kadish?"
+      },
+      "corpo": {
+        "pt": "A história de Rabi Akiva expressa uma ideia muito profunda da tradição judaica:\n\na relação entre pais e filhos não termina com a morte.\n\nO filho pode continuar fazendo mitzvot, rezando, estudando Torá e praticando boas ações em mérito da alma de seu pai ou de sua mãe.\n\nNa história, o homem não podia mais fazer nada por si mesmo. Mas seu filho, com a ajuda de Rabi Akiva, podia fazer algo por ele.\n\nE não foi necessário que o filho fizesse algo extraordinário.\n\nEle simplesmente ficou diante da comunidade e disse palavras de louvor a D'us.\n\nA comunidade respondeu.\n\nE isso teve, segundo a tradição, um efeito enorme sobre a alma de seu pai."
+      }
+    },
+    {
+      "tipo": "texto",
+      "origem": "erez",
+      "_nota": "Texto dele, 15/09. A historia de Rabi Akiva e o cobrador de impostos (Masechet Kala Rabati). Copiado VERBATIM do que ele mandou, so sem as marcas de negrito — ele: \"nao precisa dos negritos\". Guardado em fontes/aprender-pt-2026-09-15.txt, que e o que a checagem confere.",
+      "titulo": {
+        "pt": "O Kadish é mais simples do que parece"
+      },
+      "corpo": {
+        "pt": "Para recitar Kadish, não é necessário saber toda a oração judaica.\n\nNão é necessário ser um grande conhecedor de hebraico.\n\nAs palavras podem ser aprendidas.\n\nE, principalmente, ninguém precisa começar sabendo tudo.\n\nÉ possível aprender o Kadish pouco a pouco, acompanhando alguém que já o conhece.\n\nÉ necessário apenas estar diante de um minian, uma congregação de pelo menos dez homens judeus, quando o Kadish é recitado.\n\nAssim, uma das mais antigas tradições de nosso povo continua acontecendo até hoje:\n\num filho se levanta, pronuncia algumas palavras de louvor a D'us, e a comunidade responde.\n\nE nessas poucas palavras existe uma das formas mais bonitas de manter viva a ligação entre uma pessoa e seus pais.\n\nYehei Shemei Rabbah Mevorach\n\nQue Seu grande Nome seja bendito para todo o sempre."
+      }
+    }
+  ]
+}
