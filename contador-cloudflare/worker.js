@@ -6,6 +6,7 @@
  *
  * O QUE ELE GUARDA, e so isso:
  *   pais · nussach · tipo · lingua · dia · quantos
+ *   e, numa tabela separada, pais · cidade · quantos — SEM DIA
  *
  * O que ele NAO guarda, de proposito: endereco de IP, identificador de
  * aparelho, nome, horario exato, nada que volte a uma pessoa. Duas pessoas do
@@ -16,8 +17,18 @@
  * O pais vem do proprio Cloudflare (request.cf.country), que ja sabe de onde
  * veio o pedido. Nao precisamos perguntar nada a ninguem nem instalar rastreador.
  *
+ * A CIDADE (15/09) tambem vem do Cloudflare, e mora numa tabela propria SEM O
+ * DIA. Nao e arrumacao, e privacidade: "cidade X, dia 15/09, 1 Kadish" e quase
+ * um nome numa cidade pequena — quem sabe que alguem daquela comunidade esta de
+ * luto fecha a conta sozinho. Sem o dia, a linha diz apenas "ja rezaram daqui".
+ * Pelo mesmo motivo nao ha nussach nem lingua ali: cruzar tres coisas numa
+ * cidade pequena volta a apontar para uma pessoa.
+ *
+ * Quando o Cloudflare nao souber a cidade, a linha simplesmente nao entra — e
+ * isso e visivel (a lista fica vazia), nunca um erro calado.
+ *
  * DOIS CAMINHOS:
- *   POST /  {nussach, tipo, lingua}  -> soma 1. Devolve 204, sem corpo.
+ *   POST /  {nussach, tipo, lingua}  -> soma 1 (e 1 na cidade). Devolve 204.
  *   GET  /                           -> devolve os totais, para a pagina mostrar.
  *
  * Ver COMO-LIGAR.md ao lado deste arquivo para o passo a passo.
@@ -49,7 +60,7 @@ function cabecalhos(origem) {
 /** Data no formato AAAA-MM-DD, em UTC. Sem hora: hora identificaria demais. */
 const hoje = () => new Date().toISOString().slice(0, 10);
 
-async function somar(env, dados, pais) {
+async function somar(env, dados, pais, cidade) {
   const { nussach, tipo, lingua } = dados || {};
   if (!NUSSACHIM.includes(nussach)) return false;
   if (!TIPOS.includes(tipo)) return false;
@@ -63,6 +74,15 @@ async function somar(env, dados, pais) {
      ON CONFLICT (pais, nussach, tipo, lingua, dia)
      DO UPDATE SET n = n + 1`
   ).bind(pais || 'XX', nussach, tipo, lingua, hoje()).run();
+
+  // A cidade e opcional de proposito: sem ela o Kadish continua contando no
+  // total e no pais. Uma linha a menos aqui nunca pode custar a contagem.
+  if (cidade) {
+    await env.DB.prepare(
+      `INSERT INTO cidades (pais, cidade, n) VALUES (?, ?, 1)
+       ON CONFLICT (pais, cidade) DO UPDATE SET n = n + 1`
+    ).bind(pais || 'XX', cidade).run();
+  }
   return true;
 }
 
@@ -78,9 +98,15 @@ async function totais(env) {
     'SELECT SUM(n) AS n, MIN(dia) AS desde FROM contagem'
   ).first();
 
+  // As cidades saem da tabela propria. Vem so o nome e quantos — nunca o dia.
+  const cid = await env.DB.prepare(
+    'SELECT pais, cidade, n FROM cidades ORDER BY n DESC, cidade ASC'
+  ).all();
+
   return {
     total: (geral && geral.n) || 0,
     desde: (geral && geral.desde) || null,
+    porCidade: (cid.results || []).map(l => [l.cidade, l.pais, l.n]),
     porPais: await soma('pais'),
     porLingua: await soma('lingua'),
     porNussach: await soma('nussach'),
@@ -114,7 +140,9 @@ export default {
       let dados = null;
       try { dados = await pedido.json(); } catch (e) { dados = null; }
       const pais = (pedido.cf && pedido.cf.country) || 'XX';
-      try { await somar(env, dados, pais); } catch (e) { /* nunca atrapalhar quem reza */ }
+      // A cidade pode nao vir; quando nao vier, nao se inventa nada.
+      const cidade = (pedido.cf && pedido.cf.city) || '';
+      try { await somar(env, dados, pais, cidade); } catch (e) { /* nunca atrapalhar quem reza */ }
       // 204 sempre: nao contamos para quem envia se somou ou nao
       return new Response(null, { status: 204, headers: cab });
     }

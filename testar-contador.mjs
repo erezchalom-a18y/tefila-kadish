@@ -11,7 +11,8 @@
  *   - o pais vem do Cloudflare e e guardado;
  *   - lixo e recusado (nussach inventado, lingua inventada, corpo torto);
  *   - pedido de fora do app nao soma;
- *   - os totais saem certos, por pais, lingua, nussach e tipo;
+ *   - os totais saem certos, por pais, cidade, lingua, nussach e tipo;
+ *   - a tabela das cidades nao tem dia (ver o porque no schema.sql);
  *   - o banco NAO guarda IP, aparelho nem hora.
  *
  * Uso: node testar-contador.mjs
@@ -42,13 +43,15 @@ function bancoDeMentira() {
   };
 }
 
-const pedido = (metodo, corpo, { origem = APP, pais = 'BR' } = {}) => {
+const pedido = (metodo, corpo, { origem = APP, pais = 'BR', cidade = '' } = {}) => {
   const r = new Request('https://contador.exemplo/', {
     method: metodo,
     headers: origem ? { Origin: origem, 'Content-Type': 'application/json' } : {},
     body: corpo === undefined ? undefined : JSON.stringify(corpo),
   });
-  Object.defineProperty(r, 'cf', { value: { country: pais } });
+  // O `cf` e o que o Cloudflare poe em todo pedido. A cidade pode nao vir —
+  // e esse caso e testado de proposito mais abaixo.
+  Object.defineProperty(r, 'cf', { value: { country: pais, city: cidade } });
   return r;
 };
 
@@ -59,7 +62,8 @@ const confere = (nome, condicao, detalhe = '') => {
 };
 
 const env = { DB: bancoDeMentira() };
-const kadish = (n, t, l, pais) => worker.fetch(pedido('POST', { nussach: n, tipo: t, lingua: l }, { pais }), env);
+const kadish = (n, t, l, pais, cidade) =>
+  worker.fetch(pedido('POST', { nussach: n, tipo: t, lingua: l }, { pais, cidade }), env);
 const ler = async () => (await (await worker.fetch(pedido('GET'), env)).json());
 
 // --- soma simples
@@ -95,6 +99,35 @@ await Promise.all(Array.from({ length: 100 }, () =>
   worker.fetch(pedido('POST', { nussach: 'sefard', tipo: 'yatom', lingua: 'fr' }, { pais: 'FR' }), env2)));
 const t2 = await (await worker.fetch(pedido('GET'), env2)).json();
 confere('100 ao mesmo tempo dao 100', t2.total === 100, 'deu ' + t2.total);
+
+// --- POR CIDADE (15/09), e a promessa de privacidade que vem junto
+// Ele pediu os dois numeros: o do aparelho dele e o do mundo, "por cidade ou
+// pais". A cidade entrou numa tabela SEM DIA, e estas linhas existem para que
+// isso continue verdade no dia em que alguem mexer no schema.
+{
+  const env3 = { DB: bancoDeMentira() };
+  const k3 = (pais, cidade) => worker.fetch(
+    pedido('POST', { nussach: 'chabad', tipo: 'yatom', lingua: 'pt' }, { pais, cidade }), env3);
+  await k3('BR', 'Sao Paulo');
+  await k3('BR', 'Sao Paulo');
+  await k3('IL', 'Jerusalem');
+  await k3('BR', '');            // o Cloudflare nao soube a cidade
+  const t3 = await (await worker.fetch(pedido('GET'), env3)).json();
+
+  confere('conta por cidade',
+    JSON.stringify(t3.porCidade) === '[["Sao Paulo","BR",2],["Jerusalem","IL",1]]',
+    JSON.stringify(t3.porCidade));
+  confere('sem cidade o Kadish continua contando no total e no pais',
+    t3.total === 4 && JSON.stringify(t3.porPais) === '[["BR",3],["IL",1]]',
+    `total=${t3.total} pais=${JSON.stringify(t3.porPais)}`);
+
+  const colCid = env3.DB.db.prepare("SELECT name FROM pragma_table_info('cidades')")
+    .all().map(c => c.name);
+  // A LINHA QUE MAIS IMPORTA DESTE BLOCO. "cidade X, dia 15/09, 1 Kadish" e
+  // quase um nome numa cidade pequena. Sem o dia, e so "ja rezaram daqui".
+  confere('a tabela das cidades NAO tem dia, nem nussach, nem lingua',
+    JSON.stringify(colCid) === '["pais","cidade","n"]', colCid.join(', '));
+}
 
 // --- o que o banco guarda
 const colunas = env.DB.db.prepare("SELECT name FROM pragma_table_info('contagem')").all().map(c => c.name);

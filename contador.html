@@ -120,6 +120,21 @@ async function desenharGeral() {
   const linhas = (titulo, pares, nomeDe) => pares.length ? `<section><h2>${esc(titulo)}</h2><table>` +
     pares.map(([k, n]) => `<tr><td>${esc(nomeDe(k))}</td><td class="n">${n}</td></tr>`).join('') +
     '</table></section>' : '';
+
+  // POR CIDADE. Vem em trios [cidade, pais, quantos] — o pais vai junto porque
+  // ha Belem no Brasil e Belem em Israel, e sem ele as duas viram uma linha so
+  // aos olhos de quem le. A lista NAO tem dia, e isso e decisao de privacidade
+  // escrita no schema.sql: "cidade X, dia tal, 1 Kadish" e quase um nome numa
+  // cidade pequena.
+  // Quando o Cloudflare nao souber a cidade, a secao inteira nao aparece — em
+  // vez de uma tabela vazia, que pareceria defeito.
+  const cidades = (trios) => (trios && trios.length)
+    ? `<section><h2>por cidade</h2><table>` +
+      trios.map(([cidade, pais, n]) =>
+        `<tr><td>${esc(cidade)}<span style="color:var(--fraco)"> · ${esc(paisNome(pais))}</span></td>` +
+        `<td class="n">${n}</td></tr>`).join('') +
+      '</table></section>'
+    : '';
   alvo.innerHTML =
     `<h2 style="text-align:center;color:var(--fraco);font-size:15px;letter-spacing:.1em;
                 text-transform:uppercase;margin:34px 0 0">de todo mundo</h2>
@@ -127,13 +142,17 @@ async function desenharGeral() {
      <div class="legenda">${g.total === 1 ? 'Kadish dito' : 'Kadishim ditos'}` +
        (g.desde ? ` desde ${esc(new Date(g.desde + 'T12:00:00').toLocaleDateString('pt-BR'))}` : '') +
      `</div>` +
+     cidades(g.porCidade) +
      linhas('por país', g.porPais, paisNome) +
      linhas('por língua', g.porLingua, nome) +
      linhas('por nussach', g.porNussach, nome) +
      linhas('por tipo', g.porTipo, nome) +
-     `<div class="nota"><p style="margin-bottom:0">Estes números são só contagem: país,
-        nussach, tipo, língua e dia. Não há endereço de internet, aparelho nem nome —
-        não existe o que voltar a uma pessoa.</p></div>`;
+     `<div class="nota"><p>Estes números são só contagem: país, nussach, tipo, língua
+        e dia. Não há endereço de internet, aparelho nem nome — não existe o que
+        voltar a uma pessoa.</p>
+      <p style="margin-bottom:0">A lista de cidades é guardada <b>sem o dia</b>, de
+        propósito: “cidade X, no dia tal, 1 Kadish” é quase um nome numa cidade
+        pequena. Sem o dia, ela diz apenas que já rezaram dali.</p></div>`;
 }
 desenharGeral();
 

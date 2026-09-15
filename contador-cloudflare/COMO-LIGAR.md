@@ -1,7 +1,13 @@
 # Como ligar o contador geral — passo a passo
 
-Dá para fazer tudo do iPad, pelo navegador. Não precisa instalar nada.
-São **cinco passos** e uns **quinze minutos**. Só faz sentido fazer uma vez.
+**Faça num computador.** Os passos 1, 2, 4 e 5 provavelmente funcionam no iPad,
+mas o passo 3 é colar código num editor dentro do navegador — num tablet isso é
+brigar com a tela, e **eu não tenho como testar daqui** (a rede deste ambiente
+não alcança o Cloudflare). Depois do que aconteceu com o Apps Script em 15/09,
+não vou escrever "dá para fazer do iPad" sem ter visto.
+
+São **cinco passos** e uns **quinze minutos**. Só faz sentido fazer uma vez —
+e dá para fazer na mesma sentada do Apps Script do "Sua opinião".
 
 Se em algum ponto a tela não estiver como está escrito aqui, pare e me avise —
 é melhor eu ajustar o texto do que você adivinhar.
@@ -18,10 +24,23 @@ O Cloudflare vai ser esse lugar que guarda. Ele recebe um aviso a cada Kadish
 dito e soma. Guarda **só isto**:
 
 > país · nussach · tipo · língua · dia · quantos
+>
+> e, numa tabela separada: **cidade · país · quantos** — sem o dia
 
 Não guarda endereço de internet, aparelho, nome nem hora. Duas pessoas do mesmo
 país, no mesmo dia, no mesmo nussach, viram o número 2 — e não há como
 separá-las depois. Não existe o que vazar.
+
+**Por que a cidade fica sem o dia.** "Cidade X, dia 15/09, 1 Kadish" é quase um
+nome numa cidade pequena: quem sabe que alguém daquela comunidade está de luto
+fecha a conta sozinho. Sem o dia, a mesma linha diz só "já rezaram daqui" — que
+é o que você quis ver, e nada mais. Pelo mesmo motivo a tabela das cidades não
+tem nussach nem língua: cruzar três coisas numa cidade pequena volta a apontar
+para uma pessoa. Há checagem cobrando isso, e ela sabe reprovar.
+
+A cidade vem do próprio Cloudflare, junto com o país. Quando ele não souber, a
+linha simplesmente não entra e o Kadish continua contando no total e no país —
+a lista de cidades fica mais curta, nunca some um Kadish.
 
 **É de graça** nesta escala. O plano gratuito do Cloudflare dá 100 mil pedidos
 por dia. Se o app tiver mil pessoas rezando duas vezes por dia, são 2 mil.
@@ -55,6 +74,13 @@ CREATE TABLE IF NOT EXISTS contagem (
   dia     TEXT    NOT NULL,
   n       INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (pais, nussach, tipo, lingua, dia)
+);
+
+CREATE TABLE IF NOT EXISTS cidades (
+  pais   TEXT    NOT NULL,
+  cidade TEXT    NOT NULL,
+  n      INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (pais, cidade)
 );
 ```
 
@@ -125,6 +151,9 @@ Depois **Commit changes**. Pronto — a partir daí o total geral aparece em
 1. Abra o app, escolha um Kadish e deixe o áudio **até o fim**.
 2. Abra `contador.html`. A conta de cima (deste aparelho) sobe na hora.
 3. O total de todo mundo, mais abaixo, deve mostrar 1 e o país **Brasil**.
+4. E, logo acima do país, a sua cidade. **Se a lista de cidades não aparecer** e
+   o resto estiver certo, não é defeito nosso: é o Cloudflare não tendo mandado
+   a cidade naquele pedido. O país continua valendo.
 
 Se o total geral disser "não consegui falar com o contador geral", quase sempre
 é o passo 4 (o nome da variável tem que ser `DB`) ou o passo 3 (o código não foi
@@ -151,6 +180,10 @@ SQLite que o Cloudflare usa, e prova que:
 - lixo é recusado: nussach inventado, língua inventada, corpo torto — nada soma;
 - pedido que não vem do app não soma;
 - o banco **não tem** coluna de IP, de aparelho nem de hora;
+- a tabela das cidades **não tem coluna de dia** — e, para isso não ser só uma
+  promessa, a checagem foi provada ao contrário: pondo o dia ali de propósito,
+  ela acusa `pais, cidade, dia, n` e reprova;
+- conta certo por cidade, e um Kadish sem cidade continua entrando no total;
 - se o banco cair, quem está rezando não percebe nada.
 
 Isso não substitui o teste de verdade do passo "Como saber que funcionou" — mas

@@ -660,9 +660,44 @@ proíbe — *é o jeito de a tela mentir no dia em que alguém esquecer de troc�
 então o conserto certo é fazê-los sair da mesma constante, e isso é uma mudança
 de carregamento que não cabia nesta rodada.
 
-O worker guarda SÓ: país · nussach · tipo · língua · dia · quantos. Nunca
-acrescentar IP, identificador de aparelho, hora ou qualquer coisa que volte a
-uma pessoa — é a razão de ter sido escolhido em vez do Google Analytics.
+O worker guarda SÓ: país · nussach · tipo · língua · dia · quantos — e, numa
+tabela separada, cidade · país · quantos. Nunca acrescentar IP, identificador de
+aparelho, hora ou qualquer coisa que volte a uma pessoa — é a razão de ter sido
+escolhido em vez do Google Analytics.
+
+### A cidade, e por que ela fica SEM O DIA (15/09)
+
+Ele: *"quero ter os dois números: quantos Kadishim você disse no seu aparelho
+(sem identificar) e quantos Kadishim o mundo disse (por cidade ou país)"*.
+
+A cidade vem do próprio Cloudflare (`request.cf.city`), como o país já vinha —
+nada de rastreador, nada a perguntar a quem reza. **Mas ela mora numa tabela
+própria, sem o dia, e isso é privacidade e não arrumação:**
+
+> *"cidade X, dia 15/09, 1 Kadish"* é quase um nome numa cidade pequena — quem
+> sabe que alguém daquela comunidade está de luto fecha a conta sozinho. Sem o
+> dia, a mesma linha diz apenas "já rezaram daqui".
+
+Pelo mesmo motivo a tabela das cidades não tem nussach nem língua: cruzar três
+coisas numa cidade pequena volta a apontar para uma pessoa. E quando o Cloudflare
+não souber a cidade, **a linha não entra e o Kadish continua contando** no total
+e no país — a lista fica mais curta, nunca some um Kadish.
+
+**A checagem foi provada ao contrário**, que é o que vale: pondo o `dia` na
+tabela das cidades de propósito, o `testar-contador.mjs` acusa
+`pais, cidade, dia, n` e reprova. Sem isso seria só uma promessa escrita.
+
+E o `contador.html` passou a mostrar as duas contas na mesma tela — a do
+aparelho em cima, a de todo mundo embaixo, com as cidades acima dos países. A
+cidade aparece com o país ao lado: **há Belém no Brasil e Belém em Israel**, e
+sem o país as duas viram uma linha só aos olhos de quem lê. Quando não houver
+cidade nenhuma, a seção inteira não aparece — uma tabela vazia pareceria defeito.
+
+**Continua faltando ele criar a conta do Cloudflare** (pendente desde 21/08).
+O `COMO-LIGAR.md` agora abre dizendo **faça num computador**, e diz por quê: o
+passo de colar o código num editor dentro do navegador é o que mais dá trabalho
+num tablet, e **eu não tenho como testar isso daqui**. Depois do Apps Script de
+15/09, não escrevo mais "dá para fazer do iPad" sem ter visto.
 
 **A lista de origens do worker ficou para trás quando o endereço mudou
 (14/09).** O `ORIGENS` do `worker.js` só tinha
