@@ -60,14 +60,16 @@
          border:1px solid var(--linha);border-radius:10px;padding:11px;background:#fff}
   .fim{text-align:center;color:var(--fraco);padding:34px 16px}
   .fim b{display:block;font-size:21px;color:var(--ok);margin-bottom:6px}
+  /* ver o comentario do TRAVADA no script: classe, nunca o atributo hidden */
+  .escondido-pela-chave{display:none !important}
 </style></head>
 <body>
 <header>
   <div class="topo">
-    <a class="voltar" href="./">‹ voltar</a>
-    <h1>Revisar</h1>
+    <a class="voltar" href="./" id="btVoltar">‹ voltar</a>
+    <h1 id="titulo">Revisar</h1>
     <select id="lingua"></select>
-    <label class="filtro"><input type="checkbox" id="sofalta" checked> só o que falta</label>
+    <label class="filtro"><input type="checkbox" id="sofalta" checked> <span id="rotSoFalta">só o que falta</span></label>
   </div>
   <div class="barra"><i id="barra"></i></div>
   <div class="andamento" id="andamento"></div>
@@ -96,6 +98,278 @@ const LINGUAS = { pt:'português', en:'inglês', es:'espanhol', fr:'francês',
 // Alemao nao entra porque ele mandou tirar a transliteracao de la; hebraico nao
 // precisa (quem le hebraico le o hebraico).
 const SEM_TRANSLITERACAO = ['de', 'he'];
+
+// ---------------------------------------------------------------------------
+// A TELA NA LINGUA DE QUEM REVISA (23/09)
+//
+// Ele: "cada lingua em separado, serao pessoas diferentes checando". Perguntei
+// se essas pessoas leem portugues e ele respondeu que nao: cada revisor ve a
+// tela na PROPRIA lingua. Quem revisa russo nao vai ler instrucoes em
+// portugues — e se nao entender o que os botoes fazem, nao revisa.
+//
+// O MIOLO DO RECADO CONTINUA EM PORTUGUES, e isso NAO e desleixo. O recado e
+// lido por maquina: o `aplicar-revisao.mjs` e o `testar-portugues.mjs` casam
+// pelos rotulos "tradução do verso — … está: … deveria ser: …". Traduzir o
+// miolo obrigaria a escrever SEIS analisadores, cada um capaz de quebrar
+// calado. Entao a divisao e: o que a PESSOA le vai na lingua dela; o que a
+// MAQUINA le tem um formato so, estavel. As instrucoes em volta do recado
+// explicam, na lingua dela, que aquilo e para copiar e devolver.
+// ---------------------------------------------------------------------------
+const T = {
+  "pt": {
+    "eu": "português",
+    "h1": "Revisar",
+    "voltar": "‹ voltar",
+    "sofalta": "só o que falta",
+    "gerar": "Gerar o recado",
+    "carregando": "carregando os 8 kadishim…",
+    "andamento": "{p} de {t} conferidos · {c} para corrigir",
+    "faltam": "faltam {n}",
+    "terminou": "terminou",
+    "nota1": "Cada palavra aparece <b>uma vez só</b>, mesmo estando nos 8 kadishim — o que você marcar aqui vale para todos eles. São {n} itens.",
+    "nota2": "Onde estiver escrito <b>falta fonte</b>, a palavra não existe nesta língua em documento nenhum. Se você souber como se escreve, digite ali — o que você escrever é fonte humana.",
+    "nota3": "Quando você escrever uma correção e sair da caixa, o item sai da lista e o contador anda. <b>A palavra no app continua a mesma:</b> ela só muda depois que o recado for aplicado, porque texto de reza não se altera sem decisão humana.",
+    "nota4": "Suas respostas ficam neste aparelho: pode fechar e voltar depois.",
+    "nota5": "versão {v} — se aqui aparecer outra data, o aparelho guardou a página velha: recarregue.",
+    "falta_fonte": "falta fonte",
+    "nao_existe": "Não existe em {l}. Se você souber como se escreve, digite — vira fonte sua, não da máquina.",
+    "bt_escrever": "Escrever",
+    "bt_portugues": "Deixar em português",
+    "bt_certo": "Está certo",
+    "bt_corrigir": "Corrigir",
+    "ph_escreva": "como se escreve em {l}",
+    "ph_deveria": "como deveria ser em {l}",
+    "anotado": "✓ anotado — vale para os 8 kadishim.",
+    "rot_trad": "tradução do verso",
+    "rot_glosa": "tradução da palavra",
+    "rot_tl": "transliteração",
+    "fim_nada": "Nada faltando.",
+    "fim_gerar": "Toque em «Gerar o recado» para enviar o resultado.",
+    "fim_desmarque": "Desmarque “só o que falta” para rever o que já conferiu.",
+    "rec_instr": "Copie tudo abaixo e mande de volta. Depois toque em «Voltar» — nada se perdeu.",
+    "bt_copiar": "Copiar",
+    "bt_copiado": "Copiado ✓",
+    "bt_voltar": "Voltar",
+    "erro": "Não consegui abrir os textos:"
+  },
+  "en": {
+    "eu": "English",
+    "h1": "Review",
+    "voltar": "‹ back",
+    "sofalta": "only what is left",
+    "gerar": "Create the report",
+    "carregando": "loading the 8 kaddishim…",
+    "andamento": "{p} of {t} checked · {c} to fix",
+    "faltam": "{n} left",
+    "terminou": "finished",
+    "nota1": "Each word appears <b>only once</b>, even though it occurs in all 8 kaddishim — what you mark here applies to all of them. There are {n} items.",
+    "nota2": "Where it says <b>no source</b>, the word does not exist in this language in any document. If you know how it is written, type it there — what you write becomes a human source.",
+    "nota3": "When you write a correction and leave the box, the item leaves the list and the counter moves. <b>The word in the app stays the same:</b> it only changes after the report is applied, because prayer text is never altered without a human decision.",
+    "nota4": "Your answers stay on this device: you can close the page and come back later.",
+    "nota5": "version {v} — if another date appears here, your device kept the old page: reload it.",
+    "falta_fonte": "no source",
+    "nao_existe": "It does not exist in {l}. If you know how it is written, type it — it becomes your source, not a machine’s.",
+    "bt_escrever": "Write it",
+    "bt_portugues": "Leave the Portuguese",
+    "bt_certo": "It is correct",
+    "bt_corrigir": "Fix it",
+    "ph_escreva": "how it is written in {l}",
+    "ph_deveria": "how it should read in {l}",
+    "anotado": "✓ noted — applies to all 8 kaddishim.",
+    "rot_trad": "verse translation",
+    "rot_glosa": "word translation",
+    "rot_tl": "transliteration",
+    "fim_nada": "Nothing left.",
+    "fim_gerar": "Tap «Create the report» to send the result.",
+    "fim_desmarque": "Untick “only what is left” to review what you already checked.",
+    "rec_instr": "Copy everything below and send it back. Then tap «Back» — nothing is lost.",
+    "bt_copiar": "Copy",
+    "bt_copiado": "Copied ✓",
+    "bt_voltar": "Back",
+    "erro": "I could not open the texts:"
+  },
+  "es": {
+    "eu": "español",
+    "h1": "Revisar",
+    "voltar": "‹ volver",
+    "sofalta": "solo lo que falta",
+    "gerar": "Generar el informe",
+    "carregando": "cargando los 8 kadishim…",
+    "andamento": "{p} de {t} revisados · {c} para corregir",
+    "faltam": "faltan {n}",
+    "terminou": "terminado",
+    "nota1": "Cada palabra aparece <b>una sola vez</b>, aunque esté en los 8 kadishim — lo que marques aquí vale para todos. Son {n} elementos.",
+    "nota2": "Donde diga <b>sin fuente</b>, la palabra no existe en este idioma en ningún documento. Si sabes cómo se escribe, escríbela ahí — lo que escribas es fuente humana.",
+    "nota3": "Cuando escribas una corrección y salgas del campo, el elemento sale de la lista y el contador avanza. <b>La palabra en la app sigue igual:</b> solo cambia después de que se aplique el informe, porque un texto de oración no se altera sin decisión humana.",
+    "nota4": "Tus respuestas quedan en este dispositivo: puedes cerrar y volver después.",
+    "nota5": "versión {v} — si aquí aparece otra fecha, el dispositivo guardó la página vieja: recárgala.",
+    "falta_fonte": "sin fuente",
+    "nao_existe": "No existe en {l}. Si sabes cómo se escribe, escríbelo — será tu fuente, no la de una máquina.",
+    "bt_escrever": "Escribir",
+    "bt_portugues": "Dejar el portugués",
+    "bt_certo": "Está bien",
+    "bt_corrigir": "Corregir",
+    "ph_escreva": "cómo se escribe en {l}",
+    "ph_deveria": "cómo debería ser en {l}",
+    "anotado": "✓ anotado — vale para los 8 kadishim.",
+    "rot_trad": "traducción del versículo",
+    "rot_glosa": "traducción de la palabra",
+    "rot_tl": "transliteración",
+    "fim_nada": "No falta nada.",
+    "fim_gerar": "Toca «Generar el informe» para enviar el resultado.",
+    "fim_desmarque": "Desmarca “solo lo que falta” para repasar lo ya revisado.",
+    "rec_instr": "Copia todo lo de abajo y envíalo de vuelta. Luego toca «Volver» — no se pierde nada.",
+    "bt_copiar": "Copiar",
+    "bt_copiado": "Copiado ✓",
+    "bt_voltar": "Volver",
+    "erro": "No pude abrir los textos:"
+  },
+  "fr": {
+    "eu": "français",
+    "h1": "Réviser",
+    "voltar": "‹ retour",
+    "sofalta": "seulement ce qui reste",
+    "gerar": "Générer le compte rendu",
+    "carregando": "chargement des 8 kaddish…",
+    "andamento": "{p} sur {t} vérifiés · {c} à corriger",
+    "faltam": "{n} restants",
+    "terminou": "terminé",
+    "nota1": "Chaque mot apparaît <b>une seule fois</b>, même s’il figure dans les 8 kaddish — ce que vous marquez ici vaut pour tous. Il y a {n} éléments.",
+    "nota2": "Là où il est écrit <b>pas de source</b>, le mot n’existe dans aucun document en cette langue. Si vous savez comment il s’écrit, écrivez-le — ce que vous écrivez devient une source humaine.",
+    "nota3": "Quand vous écrivez une correction et quittez le champ, l’élément sort de la liste et le compteur avance. <b>Le mot dans l’application ne change pas :</b> il ne changera qu’après l’application du compte rendu, car un texte de prière ne se modifie pas sans décision humaine.",
+    "nota4": "Vos réponses restent sur cet appareil : vous pouvez fermer et revenir plus tard.",
+    "nota5": "version {v} — si une autre date apparaît ici, l’appareil a gardé l’ancienne page : rechargez-la.",
+    "falta_fonte": "pas de source",
+    "nao_existe": "N’existe pas en {l}. Si vous savez comment cela s’écrit, écrivez-le — ce sera votre source, pas celle d’une machine.",
+    "bt_escrever": "Écrire",
+    "bt_portugues": "Garder le portugais",
+    "bt_certo": "C’est correct",
+    "bt_corrigir": "Corriger",
+    "ph_escreva": "comment cela s’écrit en {l}",
+    "ph_deveria": "comment cela devrait être en {l}",
+    "anotado": "✓ noté — vaut pour les 8 kaddish.",
+    "rot_trad": "traduction du verset",
+    "rot_glosa": "traduction du mot",
+    "rot_tl": "translittération",
+    "fim_nada": "Plus rien à faire.",
+    "fim_gerar": "Touchez «Générer le compte rendu» pour envoyer le résultat.",
+    "fim_desmarque": "Décochez « seulement ce qui reste » pour revoir ce qui est déjà vérifié.",
+    "rec_instr": "Copiez tout ce qui suit et renvoyez-le. Puis touchez «Retour» — rien n’est perdu.",
+    "bt_copiar": "Copier",
+    "bt_copiado": "Copié ✓",
+    "bt_voltar": "Retour",
+    "erro": "Je n’ai pas pu ouvrir les textes :"
+  },
+  "it": {
+    "eu": "italiano",
+    "h1": "Rivedere",
+    "voltar": "‹ indietro",
+    "sofalta": "solo ciò che manca",
+    "gerar": "Genera il resoconto",
+    "carregando": "caricamento degli 8 kaddish…",
+    "andamento": "{p} di {t} controllati · {c} da correggere",
+    "faltam": "ne mancano {n}",
+    "terminou": "finito",
+    "nota1": "Ogni parola compare <b>una volta sola</b>, anche se si trova in tutti gli 8 kaddish — quello che segni qui vale per tutti. Sono {n} voci.",
+    "nota2": "Dove c’è scritto <b>senza fonte</b>, la parola non esiste in questa lingua in nessun documento. Se sai come si scrive, scrivila lì — ciò che scrivi diventa fonte umana.",
+    "nota3": "Quando scrivi una correzione ed esci dal campo, la voce esce dalla lista e il contatore avanza. <b>La parola nell’app resta la stessa:</b> cambia solo dopo che il resoconto sarà applicato, perché un testo di preghiera non si modifica senza una decisione umana.",
+    "nota4": "Le tue risposte restano su questo dispositivo: puoi chiudere e tornare più tardi.",
+    "nota5": "versione {v} — se qui compare un’altra data, il dispositivo ha tenuto la pagina vecchia: ricaricala.",
+    "falta_fonte": "senza fonte",
+    "nao_existe": "Non esiste in {l}. Se sai come si scrive, scrivilo — diventa la tua fonte, non quella di una macchina.",
+    "bt_escrever": "Scrivere",
+    "bt_portugues": "Lasciare il portoghese",
+    "bt_certo": "È corretto",
+    "bt_corrigir": "Correggere",
+    "ph_escreva": "come si scrive in {l}",
+    "ph_deveria": "come dovrebbe essere in {l}",
+    "anotado": "✓ annotato — vale per tutti gli 8 kaddish.",
+    "rot_trad": "traduzione del versetto",
+    "rot_glosa": "traduzione della parola",
+    "rot_tl": "traslitterazione",
+    "fim_nada": "Non manca nulla.",
+    "fim_gerar": "Tocca «Genera il resoconto» per inviare il risultato.",
+    "fim_desmarque": "Togli la spunta da “solo ciò che manca” per rivedere quanto già controllato.",
+    "rec_instr": "Copia tutto qui sotto e rimandalo. Poi tocca «Indietro» — non si perde nulla.",
+    "bt_copiar": "Copia",
+    "bt_copiado": "Copiato ✓",
+    "bt_voltar": "Indietro",
+    "erro": "Non sono riuscito ad aprire i testi:"
+  },
+  "de": {
+    "eu": "Deutsch",
+    "h1": "Prüfen",
+    "voltar": "‹ zurück",
+    "sofalta": "nur was noch fehlt",
+    "gerar": "Bericht erstellen",
+    "carregando": "die 8 Kaddischim werden geladen…",
+    "andamento": "{p} von {t} geprüft · {c} zu korrigieren",
+    "faltam": "noch {n}",
+    "terminou": "fertig",
+    "nota1": "Jedes Wort erscheint <b>nur einmal</b>, auch wenn es in allen 8 Kaddischim vorkommt — was Sie hier markieren, gilt für alle. Es sind {n} Einträge.",
+    "nota2": "Wo <b>keine Quelle</b> steht, gibt es das Wort in dieser Sprache in keinem Dokument. Wenn Sie wissen, wie es geschrieben wird, schreiben Sie es dort hinein — was Sie schreiben, ist eine menschliche Quelle.",
+    "nota3": "Wenn Sie eine Korrektur schreiben und das Feld verlassen, verschwindet der Eintrag aus der Liste und der Zähler läuft weiter. <b>Das Wort in der App bleibt gleich:</b> es ändert sich erst, wenn der Bericht angewendet wird — Gebetstext wird nie ohne menschliche Entscheidung geändert.",
+    "nota4": "Ihre Antworten bleiben auf diesem Gerät: Sie können schließen und später zurückkommen.",
+    "nota5": "Version {v} — steht hier ein anderes Datum, hat das Gerät die alte Seite behalten: neu laden.",
+    "falta_fonte": "keine Quelle",
+    "nao_existe": "Existiert nicht auf {l}. Wenn Sie wissen, wie es geschrieben wird, schreiben Sie es — es wird Ihre Quelle, nicht die einer Maschine.",
+    "bt_escrever": "Schreiben",
+    "bt_portugues": "Portugiesisch lassen",
+    "bt_certo": "Ist richtig",
+    "bt_corrigir": "Korrigieren",
+    "ph_escreva": "wie es auf {l} geschrieben wird",
+    "ph_deveria": "wie es auf {l} heißen sollte",
+    "anotado": "✓ notiert — gilt für alle 8 Kaddischim.",
+    "rot_trad": "Übersetzung des Verses",
+    "rot_glosa": "Übersetzung des Wortes",
+    "rot_tl": "Transliteration",
+    "fim_nada": "Es fehlt nichts mehr.",
+    "fim_gerar": "Tippen Sie auf «Bericht erstellen», um das Ergebnis zu senden.",
+    "fim_desmarque": "Haken bei „nur was noch fehlt“ entfernen, um das Geprüfte noch einmal anzusehen.",
+    "rec_instr": "Kopieren Sie alles unten und senden Sie es zurück. Dann auf «Zurück» tippen — nichts geht verloren.",
+    "bt_copiar": "Kopieren",
+    "bt_copiado": "Kopiert ✓",
+    "bt_voltar": "Zurück",
+    "erro": "Ich konnte die Texte nicht öffnen:"
+  },
+  "ru": {
+    "eu": "русский",
+    "h1": "Проверка",
+    "voltar": "‹ назад",
+    "sofalta": "только оставшееся",
+    "gerar": "Составить отчёт",
+    "carregando": "загружаются 8 кадишей…",
+    "andamento": "{p} из {t} проверено · {c} исправить",
+    "faltam": "осталось {n}",
+    "terminou": "готово",
+    "nota1": "Каждое слово появляется <b>только один раз</b>, хотя встречается во всех 8 кадишах — то, что вы отметите здесь, относится ко всем. Всего {n} пунктов.",
+    "nota2": "Там, где написано <b>нет источника</b>, слова нет ни в одном документе на этом языке. Если вы знаете, как оно пишется, впишите его — то, что вы напишете, становится человеческим источником.",
+    "nota3": "Когда вы впишете исправление и выйдете из поля, пункт уйдёт из списка и счётчик сдвинется. <b>Слово в приложении останется прежним:</b> оно изменится только после применения отчёта, потому что молитвенный текст не меняют без решения человека.",
+    "nota4": "Ваши ответы остаются на этом устройстве: можно закрыть и вернуться позже.",
+    "nota5": "версия {v} — если здесь другая дата, устройство сохранило старую страницу: перезагрузите её.",
+    "falta_fonte": "нет источника",
+    "nao_existe": "Отсутствует на языке {l}. Если вы знаете, как это пишется, впишите — это станет вашим источником, а не машинным.",
+    "bt_escrever": "Вписать",
+    "bt_portugues": "Оставить португальский",
+    "bt_certo": "Верно",
+    "bt_corrigir": "Исправить",
+    "ph_escreva": "как это пишется на языке {l}",
+    "ph_deveria": "как должно быть на языке {l}",
+    "anotado": "✓ записано — относится ко всем 8 кадишам.",
+    "rot_trad": "перевод стиха",
+    "rot_glosa": "перевод слова",
+    "rot_tl": "транслитерация",
+    "fim_nada": "Ничего не осталось.",
+    "fim_gerar": "Нажмите «Составить отчёт», чтобы отправить результат.",
+    "fim_desmarque": "Снимите галочку «только оставшееся», чтобы просмотреть проверенное.",
+    "rec_instr": "Скопируйте всё, что ниже, и отправьте обратно. Затем нажмите «Назад» — ничего не потеряется.",
+    "bt_copiar": "Копировать",
+    "bt_copiado": "Скопировано ✓",
+    "bt_voltar": "Назад",
+    "erro": "Не удалось открыть тексты:"
+  }
+};
+
 // Ordem de leitura: o mesmo item aparece uma vez só, no primeiro lugar em que
 // surge. Como as palavras se repetem entre os 8, isso encolhe 6.520 palavras
 // para ~113 distintas por língua.
@@ -106,7 +380,7 @@ const NOMES = { chabad:'Chabad', ashkenaz:'Ashkenaz', sefard:'Sefard', sefaradi:
 // Marca da versao, so para saber se o aparelho esta com a pagina velha. O
 // Safari do iPad guarda o HTML; ja aconteceu de o Erez estar vendo uma versao
 // anterior e o defeito ja estar consertado aqui.
-const VERSAO = '23/08';
+const VERSAO = '23/09';
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const semNikud = s => (s || '').normalize('NFD').replace(/[֑-ׇ̀-ͯ]/g, '')
@@ -121,9 +395,36 @@ for (const [k, n] of Object.entries(LINGUAS)) lingua.add(new Option(n, k));
 // conferencia o seletor ficava VAZIO, e com lingua vazia nenhuma palavra tinha
 // transliteracao — a pagina dizia "falta fonte" nas 113, inclusive no Yitgadal,
 // que tem fonte. Foi o que o Erez viu.
+// O ?lang= no endereco MANDA e TRAVA. Cada revisor recebe um link so — quem
+// revisa frances nao tem como cair no russo por engano e mandar um recado com
+// o rotulo trocado. Sem ?lang=, a pagina continua como sempre foi, com o menu:
+// e assim que o Erez a usa.
+const pedida = new URLSearchParams(location.search).get('lang');
+const TRAVADA = Object.keys(LINGUAS).includes(pedida) && pedida !== 'he';
 const guardada = localStorage.getItem('revisar_lingua');
-lingua.value = Object.keys(LINGUAS).includes(guardada) ? guardada : 'es';
+lingua.value = TRAVADA ? pedida
+             : (Object.keys(LINGUAS).includes(guardada) ? guardada : 'es');
 if (!lingua.value) lingua.value = 'es';
+// Some por CLASSE, nunca pelo atributo `hidden`: o `hidden` e so a folha do
+// navegador dizendo display:none, e qualquer regra do autor com `display`
+// ganha dele. Foi assim que a v59 do app foi ao ar com o botao de idioma na
+// tela e a checagem jurando que tinha sumido.
+if (TRAVADA) lingua.classList.add('escondido-pela-chave');
+
+// A interface na lingua de quem revisa. Cai no portugues so se faltar chave —
+// e a checagem cobra que nao falte nenhuma.
+const t = () => T[lingua.value] || T.pt;
+const nomeLingua = () => (t().eu) || LINGUAS[lingua.value];
+const comp = (txt, vals) => String(txt).replace(/\{(\w+)\}/g,
+                                   (_, k) => vals[k] !== undefined ? vals[k] : '{' + k + '}');
+
+// AS LINHAS DE REFERENCIA. Quem revisa italiano precisa saber o que o hebraico
+// QUER DIZER para julgar — e, se nao le portugues, a referencia portuguesa nao
+// lhe serve de nada. Entao aparecem as duas que o projeto tem: o portugues, que
+// e o original aprovado pelo Erez (regra 7), e o ingles, que e a ponte mais
+// provavel. Para quem revisa uma dessas duas, aparece a outra; para o Erez, em
+// portugues, a tela continua exatamente como ele a aprovou — sem linha nenhuma.
+const REFS = () => lingua.value === 'pt' ? [] : ['pt', 'en'].filter(x => x !== lingua.value);
 soFalta.checked = localStorage.getItem('revisar_sofalta') !== 'nao';
 
 let arquivos = {}, blocos = [], marcas = {};
@@ -154,8 +455,10 @@ function montar() {
       if (trad) {
         const ch = `trad|${semNikud(v.hebrew)}|${lg}|${trad}`;
         if (!vistos.has(ch)) { vistos.add(ch);
-          itens.push({ ch, tipo: 'trad', rot: 'tradução do verso',
-                       heb: v.hebrew, pt: v.translation_pt || '', alvo: trad }); }
+          itens.push({ ch, tipo: 'trad', rot: 'trad',
+                       heb: v.hebrew, pt: v.translation_pt || '',
+                       refs: { pt: v.translation_pt || '', en: (v.translations || {}).en || '' },
+                       alvo: trad }); }
       }
 
       for (const p of (v.palavras || [])) {
@@ -168,13 +471,19 @@ function montar() {
           if (propria) {
             const ch = `tl|${hp}|${lg}|${propria}`;
             if (!vistos.has(ch)) { vistos.add(ch);
-              itens.push({ ch, tipo: 'tl', rot: 'transliteração',
-                           heb: p.hebrew, pt: p.transliteration_pt || '', alvo: propria }); }
+              itens.push({ ch, tipo: 'tl', rot: 'tl',
+                           heb: p.hebrew, pt: p.transliteration_pt || '',
+                           refs: { pt: p.transliteration_pt || '',
+                                   en: (p.transliteracoes || {}).en || '' },
+                           alvo: propria }); }
           } else {
             const ch = `tl-falta|${hp}|${lg}`;
             if (!vistos.has(ch)) { vistos.add(ch);
-              itens.push({ ch, tipo: 'tl-falta', rot: 'transliteração',
-                           heb: p.hebrew, pt: p.transliteration_pt || '', alvo: null }); }
+              itens.push({ ch, tipo: 'tl-falta', rot: 'tl',
+                           heb: p.hebrew, pt: p.transliteration_pt || '',
+                           refs: { pt: p.transliteration_pt || '',
+                                   en: (p.transliteracoes || {}).en || '' },
+                           alvo: null }); }
           }
         }
         const g = lg === 'pt' ? ((p.glosas || {}).pt || p.glosa_pt || '')
@@ -182,8 +491,11 @@ function montar() {
         if (g) {
           const ch = `glosa|${hp}|${lg}|${g}`;
           if (!vistos.has(ch)) { vistos.add(ch);
-            itens.push({ ch, tipo: 'glosa', rot: 'tradução da palavra',
-                         heb: p.hebrew, pt: (p.glosas || {}).pt || p.glosa_pt || '', alvo: g }); }
+            itens.push({ ch, tipo: 'glosa', rot: 'glosa',
+                         heb: p.hebrew, pt: (p.glosas || {}).pt || p.glosa_pt || '',
+                         refs: { pt: (p.glosas || {}).pt || p.glosa_pt || '',
+                                 en: (p.glosas || {}).en || '' },
+                         alvo: g }); }
         }
       }
 
@@ -218,17 +530,33 @@ const resolvido = i => {
          (['corrigir', 'escrever'].includes(m.estado) && temTexto(m));
 };
 
+/** As linhas de referencia (pt e/ou en). Ver o comentario do REFS. */
+function linhasRef(i) {
+  return REFS().map(r => {
+    const txt = (i.refs || {})[r] || '';
+    if (!txt) return '';
+    return `<div class="linha"><span class="lado">${r}</span>` +
+           `<span class="txt ${i.tipo.startsWith('tl') ? 'tl' : ''}">${esc(txt)}</span></div>`;
+  }).join('');
+}
+
 function desenhar() {
-  const lg = lingua.value, nome = LINGUAS[lg] || lg;
+  const lg = lingua.value, nome = nomeLingua(), tx = t();
+  document.documentElement.lang = lg;
+  document.title = tx.h1 + ' · Kadish';
+  document.getElementById('titulo').textContent = tx.h1;
+  document.getElementById('btVoltar').textContent = tx.voltar;
+  document.getElementById('rotSoFalta').textContent = tx.sofalta;
+  document.getElementById('gerar').textContent = tx.gerar;
   const todos = revisaveis();
   const prontos = todos.filter(feito).length;
   const pct = todos.length ? Math.round(prontos / todos.length * 100) : 0;
   document.getElementById('barra').style.width = pct + '%';
-  document.getElementById('andamento').textContent =
-    `${prontos} de ${todos.length} conferidos em ${nome} · ` +
-    `${todos.filter(i => (marcas[i.ch] || {}).estado === 'corrigir').length} para corrigir`;
+  document.getElementById('andamento').textContent = comp(tx.andamento, {
+    p: prontos, t: todos.length,
+    c: todos.filter(i => (marcas[i.ch] || {}).estado === 'corrigir').length });
   document.getElementById('contagem').textContent =
-    prontos === todos.length ? 'terminou esta língua' : `faltam ${todos.length - prontos}`;
+    prontos === todos.length ? tx.terminou : comp(tx.faltam, { n: todos.length - prontos });
 
   const mostrar = blocos
     .map(b => ({ ...b, itens: soFalta.checked
@@ -236,26 +564,17 @@ function desenhar() {
     .filter(b => b.itens.length);
 
   let h = `<div class="nota">
-    Cada palavra aparece <b>uma vez só</b>, mesmo estando nos 8 kadishim — o que
-    você marcar aqui vale para todos eles. São ${todos.length} itens em ${esc(nome)}.
+    ${comp(tx.nota1, { n: todos.length })}
     ${lg === 'pt' ? '<br><br>Em português entra também a <b>transliteração</b>, ' +
       'que é a original — ela serve de apoio nas línguas que não têm a sua.' : ''}
-    <br><br>Onde estiver escrito <b>falta fonte</b>, a palavra não existe nesta língua
-    em documento nenhum. Se você souber como se escreve, digite ali — o que você
-    escrever é fonte humana, e é assim que essas palavras entram.
-    <br><br>Quando você escrever uma correção e sair da caixa, o item sai da
-    lista e o contador anda — está anotado. <b>A palavra no app continua a
-    mesma:</b> ela só muda depois que eu aplicar o seu recado, porque texto de
-    reza não se altera sem decisão sua.
-    <br><br>Suas respostas ficam neste aparelho: pode fechar e voltar depois.
-    <br><br><small style="color:var(--fraco)">versão ${VERSAO} — se aqui aparecer
-    outra data, o iPad guardou a página velha: puxe a tela para baixo para
-    recarregar.</small></div>`;
+    <br><br>${tx.nota2}
+    <br><br>${tx.nota3}
+    <br><br>${tx.nota4}
+    <br><br><small style="color:var(--fraco)">${comp(tx.nota5, { v: VERSAO })}</small></div>`;
 
   if (!mostrar.length) {
-    h += `<div class="fim"><b>Nada faltando em ${esc(nome)}.</b>
-      ${prontos ? 'Toque em <i>Gerar o recado</i> para me mandar o resultado.' :
-                  'Desmarque “só o que falta” para rever o que já conferiu.'}</div>`;
+    h += `<div class="fim"><b>${esc(tx.fim_nada)}</b>
+      ${esc(prontos ? tx.fim_gerar : tx.fim_desmarque)}</div>`;
     document.getElementById('corpo').innerHTML = h;
     return;
   }
@@ -269,41 +588,36 @@ function desenhar() {
       if (i.tipo === 'tl-falta') {
         h += `<div class="item ${m.estado === 'portugues' ? 'certo' : m.estado === 'escrever' ? 'corrigir' : ''}"
             data-ch="${esc(i.ch)}">
-          <div class="rot">${esc(i.rot)} — falta fonte</div>
+          <div class="rot">${esc(tx['rot_' + i.tipo.replace('-falta','')])} — ${esc(tx.falta_fonte)}</div>
           <div class="hebp">${esc(i.heb)}</div>
-          <div class="linha"><span class="lado">pt</span>
-            <span class="txt tl">${esc(i.pt)}</span></div>
-          <div class="txt falta">Não existe em ${esc(nome)}. Se você souber como se
-            escreve, digite — vira fonte sua, não da máquina.</div>
+          ${linhasRef(i)}
+          <div class="txt falta">${esc(comp(tx.nao_existe, { l: nome }))}</div>
           <div class="acoes">
-            <button class="nao ${m.estado === 'escrever' ? 'ativo' : ''}" data-e="escrever">Escrever</button>
-            <button class="sim ${m.estado === 'portugues' ? 'ativo' : ''}" data-e="portugues">Deixar em português</button>
+            <button class="nao ${m.estado === 'escrever' ? 'ativo' : ''}" data-e="escrever">${esc(tx.bt_escrever)}</button>
+            <button class="sim ${m.estado === 'portugues' ? 'ativo' : ''}" data-e="portugues">${esc(tx.bt_portugues)}</button>
           </div>
           ${m.estado === 'escrever'
             ? `<input class="corr" value="${esc(m.texto ?? '')}"
-                 placeholder="como se escreve em ${esc(nome)}">
-               ${temTexto(m) ? '<div class="anotado">✓ anotado — vale para os 8 kadishim. ' +
-                 'O texto do app só muda depois que eu aplicar.</div>' : ''}` : ''}
+                 placeholder="${esc(comp(tx.ph_escreva, { l: nome }))}">
+               ${temTexto(m) ? `<div class="anotado">${esc(tx.anotado)}</div>` : ''}` : ''}
         </div>`;
         continue;
       }
       const rtl = (lg === 'he' && i.tipo !== 'tl');
       h += `<div class="item ${m.estado || ''}" data-ch="${esc(i.ch)}">
-        <div class="rot">${esc(i.rot)}</div>
+        <div class="rot">${esc(tx['rot_' + i.tipo])}</div>
         ${i.tipo === 'trad' ? '' : `<div class="hebp">${esc(i.heb)}</div>`}
-        ${lg === 'pt' ? '' : `<div class="linha"><span class="lado">pt</span>
-          <span class="txt ${i.tipo === 'tl' ? 'tl' : ''}">${esc(i.pt)}</span></div>`}
+        ${linhasRef(i)}
         <div class="linha"><span class="lado">${esc(lg)}</span>
           <span class="txt ${i.tipo === 'tl' ? 'tl' : ''} ${rtl ? 'rtl' : ''}">${esc(i.alvo)}</span></div>
         <div class="acoes">
-          <button class="sim ${m.estado === 'certo' ? 'ativo' : ''}" data-e="certo">Está certo</button>
-          <button class="nao ${m.estado === 'corrigir' ? 'ativo' : ''}" data-e="corrigir">Corrigir</button>
+          <button class="sim ${m.estado === 'certo' ? 'ativo' : ''}" data-e="certo">${esc(tx.bt_certo)}</button>
+          <button class="nao ${m.estado === 'corrigir' ? 'ativo' : ''}" data-e="corrigir">${esc(tx.bt_corrigir)}</button>
         </div>
         ${m.estado === 'corrigir'
           ? `<input class="corr" value="${esc(m.texto ?? i.alvo)}"
-               placeholder="como deveria ser em ${esc(nome)}">
-             ${temTexto(m) ? '<div class="anotado">✓ anotado — vale para os 8 kadishim. ' +
-               'O texto do app só muda depois que eu aplicar.</div>' : ''}` : ''}
+               placeholder="${esc(comp(tx.ph_deveria, { l: nome }))}">
+             ${temTexto(m) ? `<div class="anotado">${esc(tx.anotado)}</div>` : ''}` : ''}
       </div>`;
     }
     h += `</div>`;
@@ -356,7 +670,7 @@ soFalta.addEventListener('change', () => {
 });
 
 document.getElementById('gerar').addEventListener('click', () => {
-  const lg = lingua.value, nome = LINGUAS[lg];
+  const lg = lingua.value;
   const todos = revisaveis();
   const ruins = todos.filter(i => (marcas[i.ch] || {}).estado === 'corrigir');
   const novas = todos.filter(i => (marcas[i.ch] || {}).estado === 'escrever'
@@ -369,10 +683,16 @@ document.getElementById('gerar').addEventListener('click', () => {
            `${(m.texto ?? '').trim() || '(não escrevi, mas está errado)'}`;
   });
   const linhasNovas = novas.map(i =>
-    `${i.heb} (pt: ${i.pt})\n   ${nome}: ${marcas[i.ch].texto.trim()}`);
+    `${i.heb} (pt: ${i.pt})\n   ${LINGUAS[lg]}: ${marcas[i.ch].texto.trim()}`);
   const prontos = todos.filter(feito).length;
+  // O CABECALHO DO RECADO CONTINUA EM PORTUGUES, com o nome da lingua em
+  // portugues, porque e por ele que o aplicador sabe de que lingua e o recado.
+  // Antes isto era a UNICA pista, e frageil; agora vai tambem a etiqueta
+  // `lang=xx` na primeira linha, que e o que a maquina le. Os recados antigos
+  // (revisoes/pt-*.txt) nao a tem, e o aplicador continua entendendo os dois.
   const recado =
-    `Revisão de ${nome} — ${prontos} de ${todos.length} itens conferidos.\n` +
+    `#kadish-revisao lang=${lg}\n` +
+    `Revisão de ${LINGUAS[lg]} — ${prontos} de ${todos.length} itens conferidos.\n` +
     `${ruins.length} para corrigir · ${novas.length} transliterações escritas por mim` +
     (emPt.length ? ` · ${emPt.length} deixadas em português` : '') + `\n` +
     `(cada item vale para os 8 kadishim)\n\n` +
@@ -382,18 +702,18 @@ document.getElementById('gerar').addEventListener('click', () => {
         linhasNovas.join('\n\n') + '\n'
       : '') +
     (!linhas.length && !linhasNovas.length ? 'Nada a mudar.' : '');
+  const tx = t();
   document.getElementById('corpo').innerHTML =
-    `<div class="nota">Copie tudo abaixo e mande para o Claude. Depois toque em
-      <i>Voltar à revisão</i> — nada se perdeu.</div>
+    `<div class="nota">${esc(tx.rec_instr)}</div>
      <textarea class="saida" id="saida" readonly></textarea>
-     <div class="acoes"><button id="copiar">Copiar</button>
-       <button id="continuar">Voltar à revisão</button></div>`;
+     <div class="acoes"><button id="copiar">${esc(tx.bt_copiar)}</button>
+       <button id="continuar">${esc(tx.bt_voltar)}</button></div>`;
   document.getElementById('saida').value = recado;
   document.getElementById('copiar').onclick = () => {
     const t = document.getElementById('saida');
     t.select(); try { document.execCommand('copy'); } catch (e) {}
     if (navigator.clipboard) navigator.clipboard.writeText(t.value).catch(() => {});
-    document.getElementById('copiar').textContent = 'Copiado ✓';
+    document.getElementById('copiar').textContent = tx.bt_copiado;
   };
   document.getElementById('continuar').onclick = () => { desenhar(); scrollTo(0, 0); };
   scrollTo(0, 0);
@@ -406,7 +726,7 @@ Promise.all(ARQUIVOS.map(n =>
     marcas = ler(); montar(); desenhar();
   })
   .catch(e => { document.getElementById('corpo').innerHTML =
-    `<div class="nota">Não consegui abrir os textos: ${esc(e.message)}</div>`; });
+    `<div class="nota">${esc(t().erro)} ${esc(e.message)}</div>`; });
 
 if (localStorage.getItem('tefila_theme') === 'claro') document.body.style.background = '#fff';
 </script>

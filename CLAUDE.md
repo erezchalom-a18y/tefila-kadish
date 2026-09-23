@@ -563,6 +563,91 @@ pode cobrir duas ou mais palavras. "uvizmán" fica "e em" e "kariv" fica
 "breve", que juntas dão "e em breve". Nunca criar checagem que cobre 1:1 ali —
 eu tentei uma como pista e ela acusou 45 falsos.
 
+### Uma língua por pessoa, e a tela na língua dela (23/09)
+
+Ele: *"gostaria de criar um conferidor do texto da transliteração e tradução do
+kadish nas outras línguas (menos hebraico)… cada língua em separado, serão
+pessoas diferentes checando"*.
+
+**O modelo é o mesmo `revisar.html` que ele usou no português** — não há página
+nova. O que mudou:
+
+- **`?lang=xx` no endereço MANDA e TRAVA.** Cada revisor recebe um link só, e o
+  menu das línguas some — por CLASSE, nunca pelo atributo `hidden` (a lição da
+  v59). Quem revisa francês não tem como cair no russo por engano e mandar um
+  recado com o rótulo trocado. **Sem `?lang=` a página continua como sempre
+  foi**, com o menu: é assim que o Erez a usa, e há checagem cobrando isso.
+- **A tela vem na língua de quem revisa**, nas 6 (en, es, fr, it, de, ru) —
+  34 chaves de interface por língua. Perguntei antes de escrever, porque isso
+  muda o tamanho do trabalho, e ele respondeu que as pessoas **não leem
+  português**: uma tela em português seria uma tela que elas não usam.
+- **Duas linhas de referência, `pt` e `en`.** Quem revisa italiano precisa saber
+  o que o hebraico quer dizer para julgar, e a referência portuguesa não lhe
+  serve se ela não lê português. Então aparecem as duas que o projeto tem: o
+  português, que é o original aprovado por ele (regra 7), e o inglês, que é a
+  ponte mais provável. **Em português a tela dele não mudou** — continua sem
+  linha de referência nenhuma.
+
+**O MIOLO DO RECADO CONTINUA EM PORTUGUÊS, e isso não é desleixo.** O recado é
+lido por máquina: o `aplicar-revisao.mjs` e o `testar-portugues.mjs` casam pelos
+rótulos `tradução do verso — … está: … deveria ser:`. Traduzir o miolo obrigaria
+a escrever **seis analisadores**, cada um capaz de quebrar calado. A divisão é:
+o que a PESSOA lê vai na língua dela; o que a MÁQUINA lê tem um formato só.
+
+O recado ganhou uma primeira linha, `#kadish-revisao lang=xx`, que é por onde o
+aplicador sabe de que língua ele é. Os recados antigos não a têm, e o nome em
+português do cabeçalho continua valendo de reserva — apagar essa leitura
+quebraria os `revisoes/pt-*.txt` já commitados.
+
+### O bloqueio que ninguém tinha visto
+
+```
+aplicar-revisao.mjs, linha 57 (antes de 23/09):
+  if (lingua !== 'português') { console.error('so sabe portugues por enquanto') }
+```
+
+**A volta não existia para as outras línguas.** A página já sabia montar um
+recado em espanhol desde 23/08, e o que voltasse não teria como entrar em
+arquivo nenhum — ia parar numa mensagem de erro. Agora ele escreve em
+`translations[lg]`, `glosas[lg]` e `transliteracoes[lg]`, e a prova de que
+**nenhuma outra língua mudou** deixou de ser `lg === 'pt'` fixo e passou a ser a
+língua DO RECADO: sem isso, um recado espanhol passaria por cima do francês sem
+nada acusar. Provado aplicando um recado espanhol de verdade: mudaram **2 linhas
+por arquivo, todas em `"es"`**, e mais nada.
+
+O tamanho do trabalho de cada pessoa, medido:
+
+| língua | trad. do verso | trad. da palavra | transliteração | sem fonte | total |
+|---|---|---|---|---|---|
+| inglês | 42 | 125 | 97 | 20 | **284** |
+| espanhol | 42 | 134 | 97 | 20 | **293** |
+| francês | 42 | 134 | 97 | 20 | **293** |
+| italiano | 42 | 138 | 97 | 20 | **297** |
+| russo | 42 | 126 | 97 | 20 | **285** |
+| alemão | 42 | 128 | **0** | 0 | **170** |
+
+O alemão é menor porque ele mandou tirar a transliteração dele em 21/08 — não há
+documento alemão. O aplicador agora **recusa** um recado alemão que traga
+transliteração dentro: só pode ser engano.
+
+### Duas coisas achadas pela prova, e as duas são reais
+
+1. **Oito discordâncias que já estavam nos dados.** Em cada um dos 8 arquivos, um
+   verso tem `translation_pt` = *"abençoado louvado glorificado"* e
+   `translations.pt` = *"Seja abençoado, louvado e glorificado"*. **Duas contas
+   para a mesma frase.** O app mostra a primeira; a segunda ninguém lê, mas o
+   `aplicar-glossario.mjs` pode trazê-la de volta um dia. Não foram consertadas
+   aqui — **texto português é decisão dele, nunca do script** —, e o aplicador
+   passou a gritá-las no fim, com arquivo e verso. Antes ninguém as via: a prova
+   só rodava quando havia o que aplicar.
+2. **A minha própria checagem passaria por uma tela quebrada.** Eu perguntava se
+   a nota em francês era DIFERENTE da portuguesa — e a nota traz o número de
+   itens (293 contra 297), então as duas nunca são iguais, *nem quando o francês
+   cai inteiro no português*. Foi o `--provar` que mostrou. A pergunta certa não
+   é "são diferentes?" e sim **"sobrou uma frase que só existe em português?"**,
+   numa frase sem número dentro. É a família de sempre — *medir a coisa certa é
+   escolher a pergunta certa*.
+
 O que ele manda de volta entra por **aplicar-revisao.mjs**:
   node aplicar-revisao.mjs revisoes/pt-2026-08-23.txt              → ensaio
   node aplicar-revisao.mjs revisoes/pt-2026-08-23.txt --confirmar  → aplica

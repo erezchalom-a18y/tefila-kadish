@@ -236,6 +236,118 @@ const rolaLado = await pag.evaluate(() => document.documentElement.scrollWidth >
 confere('nao rola de lado no celular', !rolaLado);
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 
+// ===========================================================================
+// UMA LINGUA POR PESSOA, E A TELA NA LINGUA DELA (23/09)
+//
+// Ele: "cada lingua em separado, serao pessoas diferentes checando", e as
+// pessoas nao leem portugues. Cada revisor recebe um link com ?lang=xx.
+//
+// O QUE ESTAS LINHAS GUARDAM:
+//  1. a tela vem na lingua do link (e nao em portugues);
+//  2. o MENU de lingua nao esta na tela — quem revisa frances nao pode cair no
+//     russo por engano e mandar um recado com o rotulo trocado;
+//  3. o recado leva a etiqueta `lang=xx`, que e por onde o aplicador sabe de
+//     que lingua ele e;
+//  4. as linhas de referencia (pt e en) aparecem — sem elas o revisor nao tem
+//     como saber o que o hebraico quer dizer.
+//
+// A pergunta "esta na tela?" e feita pelo elementFromPoint, nunca pelo
+// atributo: o `hidden` e so a folha do navegador e perde para qualquer regra
+// do autor com `display`. Foi assim que a v59 do app foi ao ar com o botao de
+// idioma na tela e a checagem jurando que tinha sumido.
+//
+// E a COMPARACAO COM O PORTUGUES e feita numa FRASE LONGA, nunca num botao:
+// "Revisar" em espanhol E "Revisar". Procurar palavra portuguesa em palavra
+// curta da falso positivo — ja aconteceu em 01/09 e outra vez em 15/09.
+// ===========================================================================
+const PROVAR = process.argv.includes('--provar');
+const NA_TELA = `(el)=>{ if(!el) return false; const r=el.getBoundingClientRect();
+  if(r.height<=0||r.width<=0) return false;
+  if(getComputedStyle(el).visibility==='hidden') return false;
+  const n=document.elementFromPoint(r.x+r.width/2, r.y+r.height/2);
+  return !!(n && (n===el||el.contains(n))); }`;
+
+async function abrir(ctx, lg, estragar) {
+  const q = await ctx.newPage({ viewport: { width: 393, height: 852 } });
+  if (estragar) {
+    // Estraga POR FORA, sem tocar no arquivo: tira a tabela da lingua pedida,
+    // que e o unico jeito de a tela cair no portugues.
+    await q.route('**/revisar.html*', async rota => {
+      const r = await rota.fetch();
+      const html = (await r.text()).replace(new RegExp('"' + estragar + '": \\{'), '"xx-morta": {');
+      await rota.fulfill({ response: r, body: html });
+    });
+  }
+  await q.goto(`${BASE}/revisar.html${lg ? '?lang=' + lg : ''}`, { waitUntil: 'networkidle' });
+  await q.waitForTimeout(700);
+  return q;
+}
+
+// A MARCA DO PORTUGUES, e a primeira versao desta linha estava errada.
+// Eu comparava a nota inteira com a nota portuguesa e exigia que fossem
+// DIFERENTES — mas a nota traz o NUMERO de itens (293 em frances, 297 em
+// portugues), entao as duas nunca sao iguais, nem quando a tela em frances cai
+// inteira no portugues. A checagem passaria por cima de uma tela quebrada, e a
+// prova do --provar foi quem mostrou isso.
+//
+// A pergunta certa nao e "sao diferentes?" e sim **"sobrou uma frase que so
+// existe em portugues?"** — e a frase escolhida nao tem numero nenhum dentro.
+const medir = q => q.evaluate(`(${NA_TELA}) && ({
+  titulo: document.getElementById('titulo').textContent.trim(),
+  nota  : (document.querySelector('.nota') || {}).textContent || '',
+  temPt : ((document.querySelector('.nota') || {}).textContent || '')
+            .includes(T.pt.nota4),
+  menu  : (${NA_TELA})(document.getElementById('lingua')),
+  lados : [...document.querySelectorAll('.item .lado')].map(e => e.textContent),
+  itens : document.querySelectorAll('.item[data-ch]').length,
+})`);
+
+const ctx = await navegador.newContext();
+const emPt = await (async () => { const q = await abrir(ctx, 'pt'); const m = await medir(q);
+                                  await q.close(); return m; })();
+
+for (const lg of ['en', 'es', 'fr', 'it', 'de', 'ru']) {
+  const q = await abrir(ctx, lg);
+  const m = await medir(q);
+  const recado = await q.evaluate(() => {
+    document.getElementById('gerar').click();
+    return (document.getElementById('saida') || {}).value || '';
+  });
+  await q.close();
+
+  confere(`${lg}: a tela vem na lingua do link, sem portugues sobrando`,
+    m.titulo && m.nota.length > 80 && !m.temPt,
+    `titulo "${m.titulo}"${m.temPt ? ' — a nota caiu no portugues' : ''}`);
+  confere(`${lg}: o menu de lingua NAO esta na tela`, !m.menu);
+  confere(`${lg}: ha itens para revisar`, m.itens > 0, `${m.itens} itens`);
+  confere(`${lg}: o recado leva a etiqueta da lingua`,
+    new RegExp(`^#kadish-revisao\\s+lang=${lg}$`, 'm').test(recado),
+    recado.split('\n')[0] || '(vazio)');
+  const refs = new Set(m.lados);
+  confere(`${lg}: as referencias pt e en aparecem`,
+    refs.has(lg) && (lg === 'en' ? refs.has('pt') : refs.has('pt') && refs.has('en')),
+    [...refs].join(','));
+}
+
+// Sem ?lang= o menu VOLTA — e o que prova que e a trava, e nao outra coisa,
+// que o esconde.
+const semLink = await abrir(ctx, '');
+confere('sem ?lang= o menu de lingua CONTINUA na tela (e a porta do Erez)',
+  (await medir(semLink)).menu);
+await semLink.close();
+
+// ---------- a prova: ela sabe reprovar? ----------
+if (PROVAR) {
+  console.log('\n--- prova: sem a tabela do frances, a tela cai no portugues ---');
+  const q = await abrir(ctx, 'fr', 'fr');
+  const m = await medir(q);
+  await q.close();
+  const caiu = m.temPt;
+  console.log((caiu ? 'OK    ' : 'FALHA ') +
+    'a checagem acusaria: a tela em fr ficou igual a portuguesa');
+  if (!caiu) falhas++;
+}
+
 await navegador.close();
 console.log(falhas ? `\n${falhas} problema(s) na pagina de revisao`
                    : '\nVERDE: a pagina de revisao passou');
