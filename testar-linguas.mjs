@@ -109,7 +109,7 @@ console.log('\nToda chave data-i18n existe nas 8 tabelas:\n');
   const r = await pag.evaluate((linguas) => {
     const m = document.getElementById('setupModal'); if (m) m.classList.remove('show');
     // abre tudo o que esconde texto, senao as chaves de dentro nao sao vistas
-    ['settingsToggle', 'infoToggle'].forEach(id => { const b = document.getElementById(id); if (b) b.click(); });
+    ['mpAjustes', 'mpKadish'].forEach(id => { const b = document.getElementById(id); if (b) b.click(); });
     const chaves = [...new Set([...document.querySelectorAll('[data-i18n]')].map(e => e.dataset.i18n))];
     const falta = {};
     for (const lg of linguas) {

@@ -310,8 +310,16 @@ const comecou = await pag.evaluate(async () => {
   const w = document.querySelector('.word[data-vi="1"][data-wi="0"]');
   w.click();
   document.getElementById('popupComecar').click();
-  await espera(1200);
+  // 25/10 — ESPERA MENOS, E PARA ANTES DE LER. A pergunta e "ONDE COMECOU", e
+  // nao "onde esta um segundo e meio depois": a palavra dura 0,78s, entao
+  // esperar 1,2s media o fim dela, ou ja a seguinte. Ate a v64 isso passava
+  // por acidente — com o som ligado o navegador bloqueia o autoplay, e o audio
+  // mal andava. Com o som mudo, que e o padrao desde 25/10, ele toca de
+  // verdade e a conta antiga acusou a propria folga.
+  await espera(700);
   const a = document.getElementById('audioPlayer');
+  a.pause();
+  await espera(100);
   return { t: +a.currentTime.toFixed(2), inicio: alvo.start, fim: alvo.end,
            proxima: d.versos[1].palavras[1].start };
 });
@@ -330,7 +338,7 @@ confere('"Comecar aqui" cai DENTRO da palavra pedida, nao no zero nem na seguint
 const versao = await pag.evaluate(() => {
   const topo = document.getElementById('versaoTopo');
   const rt = topo && topo.getBoundingClientRect();
-  document.getElementById('settingsToggle').click();
+  document.getElementById('mpAjustes').click();
   const el = document.getElementById('settingsVersao');
   const r = el && el.getBoundingClientRect();
   return {
@@ -478,7 +486,7 @@ confere('os pictogramas "em pe · minyan · voz audivel" sairam da tela',
 // descobre esta parado, escolhendo. E a licao da v60: as portas vivem em
 // momentos diferentes e tem de ser medidas em momentos diferentes.
 // Quem garante que o cabecalho fecha e volta e o checar-cabecalho.mjs.
-await pag.evaluate(() => { try { abrirCabecalho(); } catch (e) {} });
+// 25/10 — o cabecalho nao fecha mais; nao ha o que abrir antes de medir
 await pag.waitForTimeout(250);
 const dois = await pag.evaluate(async () => {
   const seg = () => new Promise(r => setTimeout(r, 250));
@@ -492,38 +500,51 @@ const dois = await pag.evaluate(async () => {
     rezaAceso: !!rz && rz.classList.contains('active'),
     treinoAceso: !!tr && tr.classList.contains('active'),
     alturaTreino: tr ? Math.round(tr.getBoundingClientRect().height) : 0,
+    xVisivel: (() => {
+      const x = tr && tr.querySelector('.tb-x');
+      if (!x) return false;
+      return getComputedStyle(x).display !== 'none' && x.getBoundingClientRect().width > 0;
+    })(),
   });
-  if (state.modoTreino) { rz.click(); await seg(); }
+  if (state.modoTreino) { tr.click(); await seg(); }
   const naReza = ver();
   tr.click(); await seg();
   const noTreino = ver();
-  // tocar no que JA esta aceso nao pode fazer nada: e o toque mais provavel de
-  // todos, o de quem so quer conferir onde esta, e reiniciaria a reza.
-  const ondeEstava = document.getElementById('audioPlayer').currentTime;
-  const repAntes = state.repeatN;
+  // 25/10 — UM BOTAO SO, e toca-lo alterna. A pergunta "tocar no modo em que
+  // voce JA esta nao faz nada" era sobre o segmentado de 28/08 e deixou de ter
+  // sentido: com um botao so, tocar nele e justamente como se sai. A garantia
+  // que estava por tras dela continua cobrada, so que pelo outro lado — sair
+  // do Treino VOLTA mesmo para a reza, e nao deixa a repeticao ligada atras,
+  // que era o "esta repetindo" dele de 26/08.
   tr.click(); await seg();
-  const inerte = { aindaTreino: state.modoTreino, rep: state.repeatN === repAntes,
-                   mexeu: Math.abs(document.getElementById('audioPlayer').currentTime - ondeEstava) > 0.3 };
-  rz.click(); await seg();
-  return { naReza, noTreino, inerte };
+  const saida = { voltouAReza: !state.modoTreino, repDesligada: !state.repeatN };
+  return { naReza, noTreino, saida };
 });
-confere('os dois modos aparecem na barra ao mesmo tempo, sem apertar nada',
-  dois.naReza.rezaVisivel && dois.naReza.treinoVisivel,
-  JSON.stringify(dois.naReza));
-confere('cada um tem o seu nome, e nao um nome que troca',
-  !!dois.naReza.rezaTexto && !!dois.naReza.treinoTexto &&
-  dois.naReza.rezaTexto === dois.noTreino.rezaTexto &&
-  dois.naReza.treinoTexto === dois.noTreino.treinoTexto,
-  `reza:"${dois.naReza.rezaTexto}" treino:"${dois.naReza.treinoTexto}"`);
-confere('na reza o aceso e o Reza; no treino e o Treino',
-  dois.naReza.rezaAceso && !dois.naReza.treinoAceso &&
-  dois.noTreino.treinoAceso && !dois.noTreino.rezaAceso,
-  JSON.stringify({ naReza: dois.naReza, noTreino: dois.noTreino }));
+// 25/10 — A PERGUNTA MUDOU PORQUE O BOTAO MUDOU, e nao afrouxou.
+// A garantia de 28/08 era: "quem nunca apertou sabe que o Modo Treino existe".
+// Com dois botoes ela se media perguntando se os dois estavam na tela. Com um
+// botao so ela se mede assim: ele esta na tela DESDE SEMPRE, sem apertar nada,
+// e diz "Treino" — a palavra que nomeia o destino. O que nao pode voltar e o
+// defeito de linguagem: um botao que TROCA DE NOME, que era o "Modo Reza" de
+// agosto e nao dizia se era onde voce esta ou para onde vai.
+confere('o Treino esta na tela sem apertar nada, e diz o seu nome',
+  dois.naReza.treinoVisivel && !!dois.naReza.treinoTexto,
+  JSON.stringify({ visivel: dois.naReza.treinoVisivel, diz: dois.naReza.treinoTexto }));
+confere('a palavra NAO muda entre os dois modos (e a licao de 28/08)',
+  dois.naReza.treinoTexto.replace(/[\u2715\s]/g, '') ===
+  dois.noTreino.treinoTexto.replace(/[\u2715\s]/g, ''),
+  `reza:"${dois.naReza.treinoTexto}" treino:"${dois.noTreino.treinoTexto}"`);
+confere('na reza ele esta apagado; no treino, aceso',
+  !dois.naReza.treinoAceso && dois.noTreino.treinoAceso,
+  JSON.stringify({ naReza: dois.naReza.treinoAceso, noTreino: dois.noTreino.treinoAceso }));
+confere('aceso, ele mostra o X — que e a saida desenhada',
+  dois.noTreino.xVisivel && !dois.naReza.xVisivel,
+  JSON.stringify({ naReza: dois.naReza.xVisivel, noTreino: dois.noTreino.xVisivel }));
 confere('o botao do modo tem pelo menos 30px de altura (dedo de quem reza em pe)',
   dois.naReza.alturaTreino >= 30, `${dois.naReza.alturaTreino}px`);
-confere('tocar no modo em que ele JA esta nao faz nada',
-  dois.inerte.aindaTreino && dois.inerte.rep && !dois.inerte.mexeu,
-  JSON.stringify(dois.inerte));
+confere('toca-lo de novo sai do Treino e desliga a repeticao atras de si',
+  dois.saida.voltouAReza && dois.saida.repDesligada,
+  JSON.stringify(dois.saida));
 
 confere('nenhum erro de console', erros.length === 0, erros[0] || '');
 

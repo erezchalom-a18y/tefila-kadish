@@ -180,7 +180,7 @@ for (const lg of linguas) {
   ok = !r.visivel;
   if (!ok) ruim++;
   console.log((ok?'OK   ':'FALHA') + ` no Modo Treino nao aparece: ${JSON.stringify({visivel:r.visivel})}`);
-  await p.click('#rezaToggle');
+  await p.click('#treinoToggle')  /* 25/10: um botao so; sair do treino e toca-lo de novo */;
   await p.waitForTimeout(700);
   r = await ler(p);
   ok = r.visivel;

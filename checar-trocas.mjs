@@ -108,19 +108,29 @@ await pag.click('#playBtn'); await espera(2500);
 if (!(await medir('rezando, sem trocar nada'))) falhas++;
 
 await passo('trocou o TIPO: yatom -> derabanan', () => pag.click('#kadishDerabananToggle'));
-await passo('trocou a TRADICAO: chabad -> sefard', () => pag.click('#traditionBadge [data-trad="sefard"]'));
+
+// 25/10 — ESCOLHER O NUSSACH PASSOU A SER DOIS TOQUES: o chip abre os quatro.
+// A checagem faz o mesmo caminho da pessoa. Se o chip quebrar, ela quebra junto.
+async function escolherTradicao(pag, trad) {
+  const fita = await pag.$('#traditionBadge');
+  const fechada = fita && await fita.evaluate(el => el.classList.contains('trad-fechada'));
+  if (fechada) { await pag.click('#nussachChip'); await pag.waitForTimeout(150); }
+  await pag.click(`#traditionBadge [data-trad="${trad}"]`);
+}
+
+await passo('trocou a TRADICAO: chabad -> sefard', () => escolherTradicao(pag, 'sefard'));
 await passo('trocou o TIPO de novo: derabanan -> yatom', () => pag.click('#kadishTypeToggle'));
-await passo('trocou a TRADICAO: sefard -> ashkenazi', () => pag.click('#traditionBadge [data-trad="ashkenazi"]'));
+await passo('trocou a TRADICAO: sefard -> ashkenazi', () => escolherTradicao(pag, 'ashkenazi'));
 await passo('reza -> TREINO', () => pag.click('#treinoToggle'));
 // so aperta o play se estiver parado — apertar com o audio tocando e PAUSAR
 const tocarSeParado = async () => {
   const parado = await pag.evaluate(() => document.getElementById('audioPlayer').paused);
   if (parado) await pag.click('#playBtn');
 };
-await passo('treino -> REZA', async () => { await pag.click('#rezaToggle'); await espera(300); await tocarSeParado(); });
+await passo('treino -> REZA', async () => { await pag.click('#treinoToggle')  /* 25/10: um botao so; sair do Treino e toca-lo de novo */; await espera(300); await tocarSeParado(); });
 await passo('trocou o Kadish JA no treino', async () => {
   await pag.click('#treinoToggle'); await espera(900);
-  await pag.click('#traditionBadge [data-trad="chabad"]'); await espera(1200);
+  await escolherTradicao(pag, 'chabad'); await espera(1200);
   await tocarSeParado();
 });
 await passo('trocou o TIPO ja no treino', async () => {
@@ -134,7 +144,7 @@ await passo('trocou o TIPO ja no treino', async () => {
 // tocando); o de dentro do engrenagem chamava o SYNC.trocar cru, e por isso
 // parava o audio. Agora os dois chamam a mesma funcao, e este passo cobra isso.
 await passo('trocou a TRADICAO pelo ⚙, tocando', async () => {
-  await pag.click('#rezaToggle').catch(() => {}); await espera(400);
+  await pag.click('#treinoToggle')  /* 25/10: um botao so; sair do Treino e toca-lo de novo */.catch(() => {}); await espera(400);
   await tocarSeParado(); await espera(800);
   await pag.click('#settingsBtn').catch(() => {}); await espera(500);
   await pag.evaluate(() => document
@@ -166,7 +176,7 @@ for (const [trad, pasta, tipo] of [['sefaradi', 'sefaradi', 'yatom'],
   await pag.goto(`${BASE}/engine.html`);
   await pag.waitForFunction(() => window.SYNC && window.SYNC.ativo(), null, { timeout: 25000 });
   await pag.evaluate(() => { const m = document.getElementById('setupModal'); if (m) m.classList.remove('show'); });
-  await pag.click(`#traditionBadge [data-trad="${trad}"]`); await espera(1500);
+  await escolherTradicao(pag, trad); await espera(1500);
   await pag.click(tipo === 'derabanan' ? '#kadishDerabananToggle' : '#kadishTypeToggle'); await espera(1500);
   const antes = await olhar();
   // sai e volta PELA PORTA DA FRENTE, como ele faz
@@ -211,7 +221,7 @@ for (const [trad, pasta, tipo] of [['sefaradi', 'sefaradi', 'yatom'],
 
   // tres trocas pelo caminho de quem usa, e entao UMA reza chegando ao fim
   for (const trad of ['sefard', 'sefaradi', 'ashkenazi']) {
-    await pag.click(`#traditionBadge [data-trad="${trad}"]`);
+    await escolherTradicao(pag, trad);
     await espera(1800);
   }
   await pag.evaluate(() => Contador.zerar());

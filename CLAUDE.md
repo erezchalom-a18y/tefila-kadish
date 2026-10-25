@@ -1508,6 +1508,124 @@ Criar o destino e me passar o endereço. Recomendado, nesta ordem:
 3. Um serviço de formulário (Formspree e parecidos) — mais um fornecedor com
    dado pessoal, e por isso o último.
 
+## A v65 — o dia em que a tela de rezar foi refeita (25/10)
+
+Ele passou a tarde desenhando comigo e decidiu treze coisas na tela de rezar,
+mais duas que nao existiam. Tudo numa versao so, por decisao dele depois de eu
+propor dividir em tres — a regra de "uma mudanca de comportamento por versao"
+continua escrita acima, e ele escolheu assumir o risco.
+
+**A conta que vale, medida num iPhone antes e depois:**
+
+| | v64 | v65 |
+|---|---|---|
+| fileiras de controle no alto | 4 | **2** |
+| cabecalho | 203px | **134px** |
+| o primeiro verso comeca aos | 279px | **158px** |
+
+### O que mudou, e por que
+
+1. **O nussach mostra so o escolhido**, num chip que abre os quatro. Medido a
+   12px (o piso) e no pior caso, que e `Ashkenazi`: os quatro escritos mais os
+   dois tipos pedem **469px numa fileira de 369**. Os quatro botoes continuam
+   no DOM, escondidos por CLASSE — nunca pelo atributo `hidden`, que perde para
+   qualquer regra do autor com `display` (a licao da v59).
+2. **Os dois tipos continuam a vista**, decisao dele de 14/09 — com um so nao
+   ha comparacao. Numa linha so com os dois escritos faltavam 6,6px; por isso
+   sao duas fileiras e nao uma.
+3. **Os tres filtros de texto subiram para o cabecalho.** Estavam no fluxo do
+   texto, ENTRE a dedicatoria e o primeiro verso, partindo ao meio o bloco que
+   ele quer ver inteiro. Sao controle, nao reza.
+4. **As tres portas sairam da tela de rezar.** Nasceram em 10/09 porque o
+   cartao era o unico caminho para a pagina Aprender; hoje o menu leva la.
+5. **O Kadish comeca no "Em memoria de"**, com o fio curto marcando a
+   fronteira — a mesma forma que ele escolheu em 09/09.
+   **DUAS DECISOES DELE SE CRUZARAM AQUI**, e a saida honra as duas: em 04/09
+   ele escolheu "a dedicatoria fica parada no alto acompanhando a leitura".
+   Pô-la no fluxo do texto cumpriria o pedido de hoje e quebraria o de setembro
+   — ela sairia da tela ao rolar. Ela FICA no alto; o que mudou e o desenho.
+6. **O cabecalho nao fecha mais no play.** A v64 tinha acabado de fazer isso, a
+   pedido dele. Depois o alto encolheu a duas fileiras finas e ele viu o que eu
+   nao tinha visto: *"elimina-se assim a tela rezando"*. Medido: com o
+   cabecalho enxuto a leitura da 682px parada E tocando; com o fechamento dava
+   671 parada e 728 tocando. Melhor parada, um verso pior rezando — e em troca
+   **nao ha duas telas**. Sairam com ele o relogio de 10 segundos, a linha de
+   identidade e **a checar-cabecalho.mjs inteira**: um mecanismo que nao existe
+   nao precisa de vigia.
+7. **Um botao so, `Treino`, com ✕ quando aceso.** Ele: *"ainda nao estou
+   satisfeito do modo reza e treino juntos"*. Medido: o segmentado ocupava
+   **115,3px de uma fileira de 247,3** para dizer o que a tela ja diz. A licao
+   de 28/08 era sobre a palavra MUDAR ("Modo Reza" nao dizia se era onde voce
+   esta ou para onde vai), nao sobre haver um botao so — por isso a palavra
+   aqui **nunca muda**, e a saida e o ✕.
+8. **O Treino e o mudo desceram para a barra do play.** A regra: a barra de
+   baixo e o que se usa REZANDO e nunca fecha; o alto e o que se escolhe ANTES.
+9. **Rezando, o som vem DESLIGADO**; no Treino, ligado. Decisao dele. E o que
+   se quer no minyan. A tela do "Pronto", no fim do passo a passo, avisa.
+10. **O repetir virou a segunda linha do Treino**, com os valores a vista —
+    ideia dele, e resolveu dois problemas: a barra nao comportava cinco coisas
+    (393px numa de 343) e o botao que ciclava calado foi aposentado.
+11. **A fileira de cinco menus no pe**: Como usar · Por quem rezo · O Kadish ·
+    Onde rezar · Ajustes. O Treino NAO entra: e modo, nao destino.
+12. **"Por quem rezo" ganhou porta propria.** Era a segunda funcao do app e so
+    se chegava la tocando na dedicatoria. Nao e tela nova: e o mesmo editor,
+    aberto ja na secao certa.
+13. **Z"L depois do nome, sempre.** Nao e parte do nome: e honra, entao vem
+    menor e mais claro. A abreviatura latina serve para homem e mulher sem
+    mudar. Em hebraico seria ז״ל, e isso fica para o dia em que as 7 linguas
+    voltarem.
+
+### O passo a passo, e a forma que ele tem
+
+Ele: *"o ideal seria um passo a passo onde ele ja configura ou ja entende o que
+deve configurar"*. Sao oito telas, e **nao ha desenhos de mentira dentro do
+app**: o passo a passo ACENDE o controle de verdade e explica numa tira no pe.
+
+Isso nao e so elegancia. Um mock dentro do app seria uma segunda copia da tela
+para envelhecer calada — o defeito que este projeto mais pagou caro. E ha um
+ganho que o desenho nao tinha: quem esta no passo da tradicao escolhe a
+tradicao ali mesmo, no botao que vai usar depois.
+
+Aparece sozinho na primeira vez, **depois do aviso de privacidade** e nunca por
+cima dele: a pergunta e "ele ja respondeu?", que mora no localStorage, e nao "o
+aviso esta na tela agora?" — a licao de 10/09. Os textos estao nas 8 linguas em
+PASSOS_TXT, na mesma forma do SOBRE.
+
+### Tres defeitos que a medida pegou, e nenhum deles eu teria visto sozinho
+
+1. **O aviso de privacidade passou a cobrir o play e o menu**, que desceram
+   para onde ele fica. O `bottom: 96px` escrito a mao virou `peDaTela()`, uma
+   conta medida — a mesma que o convite de instalar ja usava desde 10/09.
+   Agora ha UMA conta para "onde comeca o pe da tela", e ela olha a barra E o
+   menu.
+2. **Com o som mudo o audio passa a tocar de verdade** — o navegador bloqueia
+   autoplay com som, nao sem ele. Isso expos uma folga antiga na checagem do
+   "Comecar aqui": ela esperava 1,2s para medir uma palavra que dura 0,78s, e
+   ate a v64 passava por acidente. A pergunta passou a ser ONDE COMECOU: espera
+   700ms, PARA o audio e so entao le.
+3. **A setinha do chip era o caractere ▾ a 9px** — texto, e o piso do projeto e
+   12px. O `testar-telas` acusou nas 28 medidas. Virou desenho em SVG, que e a
+   licao do ק de 10/09: um glifo que a fonte nao tenha vira retangulo vazio.
+
+### As checagens: quatro mudaram de pergunta, uma foi apagada
+
+Nenhuma afrouxou, e duas ficaram mais exigentes:
+
+- **testar-treino** perguntava "os dois modos aparecem na barra?" — nao ha mais
+  dois. A garantia por tras era *"quem nunca apertou sabe que o Treino
+  existe"*, e ela agora se mede assim: ele esta na tela sem apertar nada, diz o
+  seu nome, **a palavra nao muda entre os dois modos**, e aceso **mostra o ✕**.
+  Sao quatro perguntas onde havia tres.
+- **checar-trocas** e **testar-camadas**, **testar-linguas**, **testar-opiniao**
+  e **testar-so-portugues** passaram a abrir as coisas **pela porta da frente**
+  — o chip do nussach, o item do menu —, que e o caminho de quem usa. Se o chip
+  ou o menu quebrarem, elas quebram junto; antes nao quebrariam.
+- **testar-dedicatoria** sai do Treino pelo botao unico.
+- **checar-cabecalho.mjs foi APAGADA** e saiu do workflow.
+
+A **trava-sincronia.mjs fica verde**: nada disto toca no modulo SYNC, e a
+regra 0 continua de pe.
+
 ## Nunca
 
 - git push --force

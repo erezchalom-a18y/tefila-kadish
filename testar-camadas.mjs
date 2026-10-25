@@ -93,7 +93,7 @@ const ler = (p) => p.evaluate(() => {
            est, rot, corpo };
 });
 
-const abrirAjustes = async (p) => { await p.click('#settingsToggle'); await p.waitForTimeout(300); };
+const abrirAjustes = async (p) => { await p.click('#mpAjustes'); await p.waitForTimeout(300); };
 const por = async (p, l, estado) => {
   await p.click(`.seg-control[data-layer="${l}"] button[data-state="${estado}"]`);
   await p.waitForTimeout(200);
@@ -288,7 +288,7 @@ await p.close();
   linha(limpou, 'aparelho com Destaque preso da fita antiga adota o padrao do app',
     limpou ? '' : `corpo ${r.corpo} · heb oculto ${r.hebOculto} · pt oculto ${r.ptOculto} · translit ${JSON.stringify(r.tr)}`);
   // e a escolha NOVA dele continua sendo guardada
-  await q.click('#settingsToggle'); await q.waitForTimeout(300);
+  await q.click('#mpAjustes'); await q.waitForTimeout(300);
   await q.evaluate(() => document.querySelector('.seg-control[data-layer="tr"] button[data-state="focus"]')?.click());
   await q.waitForTimeout(200);
   await q.reload({ waitUntil: 'domcontentloaded' });

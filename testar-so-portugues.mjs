@@ -89,7 +89,7 @@ const estado = async p => {
   const alto = await p.evaluate(`(${NA_TELA})(document.getElementById('langToggle'))`);
 
   // 2) a porta dos AJUSTES, com o painel aberto
-  await p.evaluate(() => { const g = document.getElementById('settingsToggle'); if (g) g.click(); });
+  await p.evaluate(() => { const g = document.getElementById('mpAjustes'); if (g) g.click(); });
   await p.waitForTimeout(450);
   const ajustes = await p.evaluate(
     `(${NA_TELA})((document.querySelector('[data-setting="language"]')||{}).closest
@@ -100,7 +100,7 @@ const estado = async p => {
     titulo: ((document.querySelector('.prayer-title') || {}).textContent || '').trim(),
   }));
   // fechar, para a proxima medida comecar limpa
-  await p.evaluate(() => { const g = document.getElementById('settingsToggle'); if (g) g.click(); });
+  await p.evaluate(() => { const g = document.getElementById('mpAjustes'); if (g) g.click(); });
   await p.waitForTimeout(250);
 
   const achou = Object.keys(TITULOS).find(k => TITULOS[k] === t.titulo);

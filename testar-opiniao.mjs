@@ -64,7 +64,7 @@ const NA_TELA = `(el) => {
 // testar-linguas.mjs nunca abria o painel de Ajustes"): a checagem daria OK
 // sem olhar coisa nenhuma.
 async function abrirAjustes(p) {
-  await p.evaluate(() => { const g = document.getElementById('settingsToggle'); if (g) g.click(); });
+  await p.evaluate(() => { const g = document.getElementById('mpAjustes'); if (g) g.click(); });
   await p.waitForTimeout(450);
 }
 

@@ -1388,52 +1388,17 @@
      uma camada que a lingua nao tem seria a tela mentindo. */
   body.sem-translit .filtros-texto .filtro-op[data-filtro="tr"] { display: none; }
 
-  /* ===== O CABECALHO FECHADO (25/10, v64) =====
-     Ele: "e se quando der o play fecha o menu de cima?" — e, perguntado quando
-     ele volta: "quando pausa por mais de 10 segundos ou o kadish parar voltar
-     para tela completa".
-     Fecham os CONTROLES. Ficam a identidade (por quem se reza e qual Kadish) e
-     a dedicatoria, que sao a reza e nao ajuste.
-     Esconder e por CLASSE com display, NUNCA pelo atributo `hidden`: foi assim
-     que a v59 foi ao ar com o botao de idioma na tela e a checagem jurando que
-     tinha sumido — `[hidden]` e so a folha do navegador e perde de qualquer
-     regra do autor com `display`. */
-  .identidade-rezando { display: none; }
-  /* A CLASSE VEM REPETIDA (.cabecalho-fechado.cabecalho-fechado), e nao e
-     descuido. Com ela escrita uma vez, a regra das tres portas empatava em peso
-     com `body:not(.modo-treino) .learn-row{display:flex!important}` — que mora
-     mais abaixo no arquivo e, no empate, GANHA POR SER A ULTIMA. Resultado: no
-     play o cabecalho fechava e as tres portas continuavam na tela, e eu so vi
-     porque tirei uma foto; a checagem nao pegou porque a lista dela nao incluia
-     as portas (as duas coisas estao consertadas).
-     E a licao de 27/08 e de 09/09, pela terceira vez: NESTE ARQUIVO, QUEM VEM
-     DEPOIS GANHA. Repetir a classe sobe o peso sem depender de onde o bloco
-     esta escrito — que e o que torna a regra estavel se alguem mover o CSS. */
-  body.cabecalho-fechado.cabecalho-fechado .brand-mark .trad-switch,
-  body.cabecalho-fechado.cabecalho-fechado .brand-mark .tipo-switch,
-  body.cabecalho-fechado.cabecalho-fechado .brand-right .modo-switch,
-  body.cabecalho-fechado.cabecalho-fechado .brand-right .lang-toggle,
-  body.cabecalho-fechado.cabecalho-fechado #settingsToggle,
-  body.cabecalho-fechado.cabecalho-fechado #infoToggle,
-  body.cabecalho-fechado.cabecalho-fechado .prayer-meta,
-  body.cabecalho-fechado.cabecalho-fechado .learn-row,
-  body.cabecalho-fechado.cabecalho-fechado .learn-strip,
-  body.cabecalho-fechado.cabecalho-fechado .filtros-texto { display: none !important; }
-  body.cabecalho-fechado .identidade-rezando {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-family: 'Cormorant Garamond', serif;
-    /* dentro do .brand-mark, que e caixa-alta e espacado: aqui nao, porque isto
-       e uma frase para ler ("Chabad - Kadish Yatom") e nao um rotulo */
-    font-size: 15px; text-transform: none; letter-spacing: 0; font-weight: 400;
-    min-height: 32px; padding: 5px 11px;
-    border: 1px solid var(--line, #c9b894); border-radius: 10px;
-    background: transparent; color: var(--text-soft, #4d3d2d);
-    cursor: pointer; max-width: 100%; overflow: hidden;
-    text-overflow: ellipsis; white-space: nowrap;
-  }
-  body.cabecalho-fechado .identidade-rezando .ir-seta {
-    font-size: 10px; color: var(--text-faint); flex: 0 0 auto;
-  }
+  /* ===== 25/10 — O CABECALHO NAO FECHA MAIS NO PLAY =====
+     A v64 o fazia fechar ao dar o play, a pedido dele. Depois disso o alto foi
+     enxugado ate duas fileiras finas, e ele viu o que eu nao tinha visto:
+     "elimina-se assim a tela rezando". Medido: com o cabecalho enxuto a leitura
+     da 682px parada E tocando; com o fechamento dava 671 parada e 728 tocando.
+     Melhor parada, um verso pior rezando — e em troca NAO HA DUAS TELAS.
+     Sairam com ele o relogio de 10 segundos (que, nao desarmado no play, abria
+     o menu sozinho no meio da reza), a linha de identidade que servia de botao
+     para reabrir, e a checar-cabecalho.mjs, que so existia para vigiar aquela
+     armadilha. Um mecanismo que nao existe nao precisa de vigia. */
+  .identidade-rezando { display: none !important; }
 
   /* ===== A nota do minyan, antes do primeiro verso (04/09) =====
      25/10 — ESTA CAIXA JA NAO APARECE NA TELA DE REZAR. Ela saiu da vaga em
@@ -2640,51 +2605,199 @@
     .topbar .treino-toggle,
     .topbar .kadish-type-toggle { min-height: 32px; }
   }
+  /* ==================================================================
+     v65 — 25/10. O DESENHO NOVO DA TELA DE REZAR.
+     Este bloco vem no FIM do <style> de proposito: neste arquivo, no empate de
+     peso, QUEM VEM DEPOIS GANHA — licao de 27/08, de 09/09 e de 25/10, tres
+     vezes o mesmo tropeco. Onde o empate nao basta, a classe vem repetida.
+     ================================================================== */
+
+  /* ---- o chip do nussach: mostra o escolhido, abre os quatro ---- */
+  .nussach-chip {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; font-weight: 600; letter-spacing: .04em;
+    padding: 5px 11px; min-height: 30px;          /* 12px e 30px: os pisos */
+    border: 1px solid var(--line, #c9b894); border-radius: 999px;
+    background: var(--bg, #f4ede0); color: var(--text-soft, #4d3d2d);
+    display: inline-flex; align-items: center; gap: 5px; flex: 0 0 auto; cursor: pointer;
+  }
+  .nussach-chip .nc-seta { width: 10px; height: 10px; opacity: .75; flex: 0 0 auto; }
+  .trad-switch.trad-fechada { display: none !important; }
+  .nussach-chip[aria-expanded="true"] {
+    background: var(--brass, #d4a25a); color: #3b2a16; border-color: var(--brass, #d4a25a);
+  }
+  .brand-mark { flex-wrap: wrap; gap: 6px; }
+
+  /* ---- os tres filtros, agora no cabecalho ---- */
+  .filtros-vaga { padding: 8px 12px 9px; }
+  .filtros-vaga .filtros-texto { margin: 0 auto; padding: 0; }
+
+  /* ---- o Kadish comeca no "Em memoria de" ----
+     Ele: "diferenciar a parte do kadish que deve ir desde o em memoria de".
+     O fio curto e o mesmo que abre o primeiro verso — a forma que ele escolheu
+     entre cinco em 09/09, e de novo entre tres em 25/10. */
+  /* dali para baixo e o Kadish: o papel muda, e a dedicatoria ja esta do lado
+     de ca da fronteira mesmo continuando grudada no alto (decisao de 04/09) */
+  .topbar #fioDoKadish, .topbar .dedicatoria-fixa { background: var(--bg); }
+  .topbar #fioDoKadish { padding-top: 10px; }
+  .fio-do-kadish {
+    height: 1px; width: 38%; margin: 0 auto 12px;
+    background: linear-gradient(to right, transparent, var(--brass, #8b6a3e), transparent);
+    opacity: .5;
+  }
+
+  /* ---- as tres portas saem da tela de rezar; ficam no ℹ e no menu ----
+     A classe vem repetida porque `body:not(.modo-treino) .learn-row` e MAIS
+     especifica e ganharia mesmo vindo antes. */
+  body .learn-row.learn-row { display: none !important; }
+
+  /* ---- o botao do Treino, na barra ----
+     A PALAVRA NUNCA MUDA: diz sempre "Treino". O que muda e a cor, e o X, que e
+     a saida desenhada — num botao so, sem ele, ninguem acha a volta. */
+  .treino-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; font-weight: 600; letter-spacing: .05em;
+    padding: 4px 11px; min-height: 30px; border-radius: 999px;
+    border: 1px solid var(--line, #c9b894);
+    background: var(--bg, #f4ede0); color: var(--text-soft, #4d3d2d);
+    display: inline-flex; align-items: center; gap: 5px; flex: 0 0 auto; cursor: pointer;
+  }
+  .treino-btn .tb-x { display: none; font-size: 11px; }
+  body.modo-treino .treino-btn {
+    background: var(--brass-dark, #8b6a3e); border-color: var(--brass-dark, #8b6a3e);
+    color: var(--bg, #f4ede0);
+  }
+  body.modo-treino .treino-btn .tb-x { display: inline; }
+  .reza-oculto { display: none !important; }
+
+  /* ---- a segunda linha do Treino: quantas vezes repete ---- */
+  .treino-repeticao { display: none; align-items: center; gap: 8px; margin-top: 7px; }
+  body.modo-treino .treino-repeticao { display: flex; }
+  .repeat-toggle {
+    flex: 1 1 auto; display: flex; justify-content: center; align-items: center; gap: 1px;
+    background: rgba(42, 31, 21, 0.06); border-radius: 100px; padding: 2px;
+  }
+  .repeat-toggle button {
+    font-family: 'Cormorant Garamond', serif; font-size: 11px;
+    padding: 4px 8px; min-height: 26px; border: 0; background: transparent;
+    color: var(--text-soft, #6d5c45); border-radius: 999px; cursor: pointer;
+  }
+  .repeat-toggle button.active { background: var(--brass, #d4a25a); color: #3b2a16; font-weight: 600; }
+  .treino-repeticao .repeat-btn { flex: 0 0 auto; }
+
+  /* ---- a fileira de menus ---- */
+  .menu-pe {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
+    display: flex; align-items: stretch;
+    background: var(--bg-deep, #e6d8bd);
+    border-top: 1px solid var(--line, #c9b894);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mp-item {
+    flex: 1 1 0; min-width: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 7px 2px 8px; min-height: 50px;
+    border: 0; background: transparent; color: var(--text-soft, #4d3d2d); cursor: pointer;
+  }
+  .mp-item svg { width: 19px; height: 19px; flex: 0 0 auto; }
+  .mp-item span {
+    font-family: 'Cormorant Garamond', serif; font-size: 11px;
+    line-height: 1.15; text-align: center;
+  }
+  .mp-item:active { background: rgba(139, 106, 62, .10); }
+  body .audio-bar { bottom: 62px; }
+  body { padding-bottom: 192px; }
+  /* deitado o menu some, pela mesma razao que ja tira dali o cartao e a faixa do
+     titulo: quem vira o telefone de lado quer LER */
+  @media (max-height: 460px) and (orientation: landscape) {
+    .menu-pe { display: none; }
+    body .audio-bar { bottom: 0; }
+    body { padding-bottom: 130px; }
+  }
+
+  /* ---- o passo a passo ---- */
+  .passos {
+    position: fixed; left: 10px; right: 10px; z-index: 70;
+    bottom: 74px;                       /* o JS mede e corrige */
+    display: none; flex-direction: column; gap: 6px;
+    padding: 14px 16px 13px; border-radius: 14px;
+    background: var(--bg, #f4ede0); border: 1px solid var(--brass, #8b6a3e);
+    box-shadow: 0 8px 30px rgba(42, 31, 21, 0.26);
+  }
+  body.em-passos .passos { display: flex; }
+  .passos-conta {
+    font-family: 'Cormorant Garamond', serif; font-size: 12px;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint, #6d5c45);
+  }
+  .passos-titulo {
+    font-family: 'Cormorant Garamond', serif; font-size: 20px; line-height: 1.3;
+    color: var(--text, #2a1f15);
+  }
+  .passos-ajuda {
+    font-family: 'Lora', serif; font-size: 13px; line-height: 1.55;
+    color: var(--text-soft, #4d3d2d);
+  }
+  .passos-botoes { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .passos-botoes button {
+    font-family: 'Cormorant Garamond', serif; font-size: 14px;
+    min-height: 40px; padding: 8px 16px; border-radius: 10px; cursor: pointer;
+  }
+  .passos-pular, .passos-voltar {
+    border: 0; background: transparent; color: var(--text-faint, #6d5c45);
+  }
+  .passos-voltar { margin-left: auto; }
+  .passos-proximo {
+    border: 0; background: var(--brass, #d4a25a); color: #3b2a16; font-weight: 600;
+    letter-spacing: .03em; padding: 8px 20px;
+  }
+  /* o controle de que o passo fala fica aceso — o de verdade, nao um desenho */
+  .passo-aceso {
+    box-shadow: 0 0 0 3px var(--brass, #d4a25a), 0 0 0 7px rgba(212, 162, 90, .28) !important;
+    border-radius: 999px;
+  }
+
+  /* ---- o Z"L depois do nome: honra, nao parte do nome ---- */
+  .audio-controls .mudo-toggle {
+    width: 34px; height: 34px; flex: 0 0 auto;
+    display: grid; place-items: center; padding: 0;
+  }
+  .audio-controls .mudo-toggle svg { width: 18px; height: 18px; }
+
+  .mem-zl {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .72em; color: var(--text-faint, #6d5c45);
+    letter-spacing: .04em; margin-left: .3em;
+  }
+
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="brand">
-    <div class="brand-mark"><span class="modo-switch trad-switch" id="traditionBadge" role="group" aria-label="Tradição"><button class="modo-op" data-trad="ashkenazi">Ashkenazi</button><button class="modo-op active" data-trad="chabad">Chabad</button><button class="modo-op" data-trad="sefard">Sefard</button><button class="modo-op" data-trad="sefaradi">Sefaradi</button></span><span class="modo-switch tipo-switch" role="group" aria-label="Tipo de Kadish"><button class="modo-op active" id="kadishTypeToggle" data-tipo="yatom" title="Kadish do Enlutado">YATOM</button><button class="modo-op" id="kadishDerabananToggle" data-tipo="derabanan" title="Kadish deRabanan">DERABANAN</button></span><button type="button" class="identidade-rezando" id="identidadeRezando" title="Abrir os menus"><span class="ir-texto" id="irTexto"></span><span class="ir-seta" aria-hidden="true">▾</span></button><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
+    <div class="brand-mark"><!-- 25/10 — O NUSSACH MOSTRA SO O ESCOLHIDO, num chip que abre
+       os quatro. Pedido dele. Medido a 12px, que e o piso do projeto, e no pior
+       caso ("Ashkenazi"): os quatro escritos mais os dois tipos pedem 469px numa
+       fileira de 369. Os quatro botoes CONTINUAM no DOM, escondidos por CLASSE —
+       nunca pelo atributo hidden, que perde para qualquer regra do autor com
+       display (a licao da v59). --><button type="button" class="nussach-chip" id="nussachChip" aria-expanded="false" aria-controls="traditionBadge"><span id="nussachNome">Chabad</span><svg class="nc-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><span class="modo-switch trad-switch trad-fechada" id="traditionBadge" role="group" aria-label="Tradição"><button class="modo-op" data-trad="ashkenazi">Ashkenazi</button><button class="modo-op active" data-trad="chabad">Chabad</button><button class="modo-op" data-trad="sefard">Sefard</button><button class="modo-op" data-trad="sefaradi">Sefaradi</button></span><span class="modo-switch tipo-switch" role="group" aria-label="Tipo de Kadish"><button class="modo-op active" id="kadishTypeToggle" data-tipo="yatom" title="Kadish do Enlutado">YATOM</button><button class="modo-op" id="kadishDerabananToggle" data-tipo="derabanan" title="Kadish deRabanan">DERABANAN</button></span><!-- a identidade-rezando saiu em 25/10: sem cabecalho que fecha, nao ha o que reabrir --><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
     <div class="brand-right">
-      <!-- DOIS BOTOES, nao um que troca de nome (27/08).
-           "ele so aparece quando clicado e o usuario nao sabe de sua existencia."
-           Ele tem razao, e o defeito era de linguagem: um botao so, escrito
-           "Modo Reza", nao diz se isso e o que ESTA acontecendo ou o que VAI
-           acontecer se eu apertar — e, das duas leituras, nenhuma revela que
-           existe um Modo Treino. Quem nunca apertou nunca soube.
-           Dois botoes lado a lado nao tem essa ambiguidade: os dois caminhos
-           ficam visiveis o tempo todo, e o aceso e onde voce esta. -->
-      <div class="modo-switch" role="group" aria-label="Modo">
-        <button class="modo-op active" id="rezaToggle" data-i18n="modo_reza_curto">Reza</button>
-        <button class="modo-op" id="treinoToggle" data-i18n="modo_treino_curto">Treino</button>
-      </div>
+      <!-- 25/10 — O Reza|Treino SAIU daqui. Ele: "ainda nao estou satisfeito do
+           modo reza e treino juntos, acho que deve ter um botao treino".
+           Medido: o segmentado ocupava 115,3px de uma fileira de 247,3 — metade
+           dela — para dizer o que a tela ja diz, que voce esta rezando. Agora e
+           UM botao, na barra de baixo, e a palavra NUNCA MUDA: diz sempre
+           "Treino", e aceso ganha um X, que e a saida desenhada. A licao de
+           28/08 era sobre a palavra MUDAR, nao sobre haver um botao so. -->
       <button class="lang-toggle" id="langToggle" title="Idioma">
         <span class="lang-flag">🇧🇷</span><span id="langCode">PT</span><span class="arr">▾</span>
       </button>
-      <!-- O BOTAO DE MUDO (01/09). Pedido dele, com o desenho que ele mandou: o
-           alto-falante com o circulo vermelho cortado por cima quando esta mudo.
-           Fica no alto porque silenciar e coisa de quem esta rezando AGORA — o
-           telefone tocou, alguem entrou na sala — e nao coisa de abrir menu.
-           O risco vermelho so aparece quando esta mudo: e ele que diz o estado
-           sem precisar de legenda. -->
-      <button class="info-toggle mudo-toggle" id="mudoToggle" aria-pressed="false" title="Silenciar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 9.5h3l4-3.5v12l-4-3.5H4z" fill="currentColor" stroke="none"/>
-          <path class="onda-perto" d="M14.5 9.2a4 4 0 0 1 0 5.6"/>
-          <path class="onda-longe" d="M17.3 6.6a8 8 0 0 1 0 10.8"/>
-          <line class="risco-mudo" x1="3.5" y1="20.5" x2="20.5" y2="3.5"
-                stroke="#d93025" stroke-width="2.4"/>
-        </svg>
-      </button>
-      <button class="info-toggle" id="settingsToggle" title="Configurações">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
-      <button class="info-toggle" id="infoToggle" title="Sobre esta reza">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="12" y1="11" x2="12" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="8" r="1.1" fill="currentColor"/></svg>
-      </button>
+      <!-- 25/10 — O MUDO DESCEU para a barra de baixo, e o ⚙ e o ℹ foram para a
+           fileira de menus. A regra que decidiu: a barra de baixo e o que se usa
+           REZANDO e nao fecha nunca; o alto e o que se escolhe ANTES. O mudo era
+           a excecao que morava em cima — e e o unico botao de que alguem precisa
+           no meio da reza, quando o telefone toca. De pe, com o sidur na outra
+           mao, o canto de baixo e o que o polegar alcanca. -->
     </div>
   </div>
   <!-- 04/09 — A FITA DAS CAMADAS SAIU DAQUI.
@@ -2700,6 +2813,12 @@
        ja era null-safe para a etiqueta que agora nao existe. -->
 
 
+  <!-- 25/10 — OS TRES FILTROS SUBIRAM PARA CA. Ele: "na verdade quero os 3
+       botoes na tela sempre". Eles estavam no fluxo do texto, ENTRE a
+       dedicatoria e o primeiro verso — partindo ao meio o bloco que ele quer ver
+       inteiro, agora que o Kadish comeca no "Em memoria de". Sao controle, nao
+       reza. Quem preenche esta vaga continua sendo o desenharFiltrosTexto(). -->
+  <div class="filtros-vaga" id="filtrosVaga"></div>
   <div class="memorial-strip" id="memorialStrip">
     <div class="mem-eyebrow" data-i18n="in_memory_of">Em memória de</div>
     <div><span class="mem-name" id="memName"></span><span class="mem-heb" id="memHeb"></span></div>
@@ -2782,7 +2901,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-25 · 64';
+const VERSAO = '2026-10-25 · 65';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -2938,7 +3057,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     </div>
 
-    <div class="settings-eyebrow" style="margin-top:24px;" data-i18n="dedication_title">Dedicação</div>
+    <div class="settings-eyebrow" id="secaoDedicacao" style="margin-top:24px;" data-i18n="dedication_title">Dedicação</div>
 
     <div class="settings-row">
       <!-- 09/09 — a lista de pessoas. Era um botao so ("Editar perfil"), e cabia
@@ -3194,6 +3313,12 @@ document.addEventListener('DOMContentLoaded', () => {
     <span id="timeDisplay">0:00</span>
   </div>
   <div class="audio-controls">
+    <!-- 25/10 — O TREINO E O MUDO MORAM AQUI AGORA. O #rezaToggle continua no
+         DOM, escondido por classe: as checagens entram por ele desde agosto. -->
+    <button class="treino-btn" id="treinoToggle" aria-pressed="false">
+      <span data-i18n="modo_treino_curto">Treino</span><span class="tb-x" aria-hidden="true">✕</span>
+    </button>
+    <button class="modo-op reza-oculto" id="rezaToggle" data-i18n="modo_reza_curto" tabindex="-1" aria-hidden="true">Reza</button>
     <button class="icon-btn" id="restartBtn" aria-label="Reiniciar">
       <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6H4c0 4.4 3.6 8 8 8s8-3.6 8-8-3.6-8-8-8z"/></svg>
     </button>
@@ -3207,12 +3332,88 @@ document.addEventListener('DOMContentLoaded', () => {
       <button data-speed="1.25">1.25×</button>
       <button data-speed="1.5">1.5×</button>
     </div>
+    <button class="info-toggle mudo-toggle" id="mudoToggle" aria-pressed="false" title="Silenciar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 9.5h3l4-3.5v12l-4-3.5H4z" fill="currentColor" stroke="none"/>
+        <path class="onda-perto" d="M14.5 9.2a4 4 0 0 1 0 5.6"/>
+        <path class="onda-longe" d="M17.3 6.6a8 8 0 0 1 0 10.8"/>
+        <line class="risco-mudo" x1="3.5" y1="20.5" x2="20.5" y2="3.5"
+              stroke="#d93025" stroke-width="2.4"/>
+      </svg>
+    </button>
+  </div>
+  <!-- A SEGUNDA LINHA DO TREINO (25/10), e a ideia e dele: "no modo treino
+       poderia ter mais uma linha para colocar quantas vezes o repete, ai
+       resolve os dois". Resolveu: com o mudo descendo, o Treino teria cinco
+       coisas numa barra que segura quatro — 393px numa de 343. E aposentou o
+       botao que CICLAVA CALADO (desligado, 2x, 3x, 5x a cada toque, com um "3x"
+       minusculo que ninguem entendia). Com os valores a vista ele ganha a mesma
+       forma da velocidade. O #repeatBtn fica como icone da linha e o #repCount
+       continua no DOM porque o toggleModoTreino escreve nele. -->
+  <div class="treino-repeticao" id="treinoRepeticao">
     <button class="repeat-btn" id="repeatBtn" aria-label="Repetir verso">
       <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span class="rep-count" id="repCount" style="display:none;">2×</span>
     </button>
+    <div class="repeat-toggle" id="repeatToggle" role="group" aria-label="Repetições">
+      <button data-rep="0" data-i18n="rep_nenhuma">sem repetir</button>
+      <button data-rep="2">2×</button>
+      <button class="active" data-rep="3">3×</button>
+      <button data-rep="5">5×</button>
+    </div>
   </div>
 </div>
+
+<!-- A FILEIRA DE MENUS (25/10). Ele: "incluir 3 ou 4 menus embaixo para ir para
+     o passo a passo, configuracoes, informacoes sobre kadish e onde rezar".
+     Sao CINCO: faltava "Por quem rezo", que e a segunda funcao do app — os
+     nomes, as datas e os lembretes do yahrzeit — e so se chegava la tocando na
+     dedicatoria, o que ninguem adivinha.
+     O Treino NAO entra aqui: e um MODO da mesma tela, nao um lugar para onde se
+     vai; ao lado de "Ajustes" diria que e outra pagina.
+     Medido: custa 66px, e com 4 ou 5 itens custa o mesmo. -->
+<!-- O PASSO A PASSO (25/10). Ele: "o ideal seria um passo a passo onde ele ja
+     configura ou ja entende o que deve configurar".
+     NAO HA DESENHOS DE MENTIRA AQUI DENTRO. O passo a passo acende o controle
+     de que esta falando — o DE VERDADE, que continua funcionando — e explica
+     numa tira no pe. Assim nao existe uma segunda copia da tela para
+     envelhecer calada, que e o defeito que este projeto mais pagou caro. E tem
+     um ganho que o desenho nao tinha: quem esta no passo da tradicao pode
+     escolher a tradicao ali mesmo. -->
+<div class="passos" id="passos" role="dialog" aria-modal="false" aria-live="polite">
+  <div class="passos-conta" id="passosConta"></div>
+  <div class="passos-titulo" id="passosTitulo"></div>
+  <div class="passos-ajuda" id="passosAjuda"></div>
+  <div class="passos-botoes">
+    <button type="button" class="passos-pular" id="passosPular" data-i18n="p_pular">Pular</button>
+    <button type="button" class="passos-voltar" id="passosVoltar" data-i18n="p_voltar">Voltar</button>
+    <button type="button" class="passos-proximo" id="passosProximo" data-i18n="p_proximo">Próximo</button>
+  </div>
+</div>
+
+<nav class="menu-pe" id="menuPe" aria-label="Menu">
+  <button class="mp-item" id="mpPassos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h4v-4H4z"/><path d="M10 14h4V9h-4z"/><path d="M16 9h4V4h-4z"/></svg>
+    <span data-i18n="menu_passos">Como usar</span>
+  </button>
+  <button class="mp-item" id="mpPessoas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1.6 1.8 2.4 3.1 2.4 4.2a2.4 2.4 0 1 1-4.8 0C9.6 6.1 10.4 4.8 12 3z"/><rect x="8.5" y="11" width="7" height="10" rx="1.6"/></svg>
+    <span data-i18n="menu_pessoas">Por quem rezo</span>
+  </button>
+  <button class="mp-item" id="mpKadish">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 18.5h15"/></svg>
+    <span data-i18n="menu_kadish">O Kadish</span>
+  </button>
+  <button class="mp-item" id="mpOnde">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+    <span data-i18n="menu_onde">Onde rezar</span>
+  </button>
+  <button class="mp-item" id="mpAjustes">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1" stroke-linecap="round"/></svg>
+    <span data-i18n="menu_ajustes">Ajustes</span>
+  </button>
+</nav>
 
 <audio id="audioPlayer" preload="auto"></audio>
 
@@ -4572,6 +4773,24 @@ const CONVITE = {
  */
 const ALTURA_MINIMA_PARA_GRUDAR = 500;   // medido: abaixo disso o piso de 60% cai
 
+/* O FIO CURTO que abre a area da reza. E o mesmo desenho do .vm-line do
+   primeiro verso — a forma que ele escolheu entre cinco em 09/09 e de novo
+   entre tres em 25/10, quando pediu para "diferenciar a parte do kadish".
+   Ele e recriado quando falta porque o desenharVersos() limpa o <main>. */
+function garantirFioDoKadish(vaga) {
+  let fio = document.getElementById('fioDoKadish');
+  if (!fio) {
+    fio = document.createElement('div');
+    fio.id = 'fioDoKadish';
+    fio.className = 'fio-do-kadish';
+    fio.setAttribute('aria-hidden', 'true');
+  }
+  // recriado/reposto quando falta: o desenharVersos() limpa o <main> inteiro,
+  // e numa tela baixa a vaga mora la dentro
+  if (vaga.previousElementSibling !== fio) vaga.before(fio);
+  return fio;
+}
+
 function vagaDaDedicatoria() {
   // Recriar quando falta NAO e zelo: numa tela baixa a vaga vive dentro do
   // <main>, e o desenharVersos() limpa o main inteiro antes de redesenhar. Sem
@@ -4591,6 +4810,9 @@ function vagaDaDedicatoria() {
   } else if (main) {
     if (main.firstChild !== vaga) main.prepend(vaga);
   }
+  // 25/10 — O FIO CURTO vem SEMPRE logo antes dela, esteja ela onde estiver.
+  // Ele e a fronteira que ele pediu: dali para baixo e o Kadish.
+  garantirFioDoKadish(vaga);
   return vaga;
 }
 
@@ -4628,6 +4850,12 @@ function desenharDedicatoria(vaga) {
     `<span class="ded-rotulo-curto" data-i18n="in_memory_of">${rotuloCurto(L)}</span>` +
     `<span class="ded-nome">` +
       `<span class="dn-lat">${(m.name || '').replace(/[&<>]/g, '')}</span>` +
+      // 25/10 — O Z"L DEPOIS DO NOME, SEMPRE. Pedido dele. Nao e parte do nome:
+      // e honra, entao vem menor e mais claro. A abreviatura latina serve para
+      // homem e para mulher sem mudar, e por isso nao depende do Homem|Mulher
+      // que o cadastro ja pergunta. No dia em que o hebraico voltar a ter
+      // interface propria, ali ela e ז״ל.
+      `<span class="mem-zl">Z&quot;L</span>` +
       (m.hebrew ? `<span class="dn-heb"> · ${String(m.hebrew).replace(/[&<>]/g, '')}</span>` : '') +
       // 11/09 — A FILIACAO ENTRA NA MESMA FRASE DO NOME, a pedido dele: "ao
       // inves de 'em memoria de Haim' deve ser 'Haim filho de Tera (mae) e
@@ -4770,8 +4998,15 @@ const estadoCamada = { heb: 'hidden', tr: 'normal', pt: 'hidden' };
  * que ja existem nas 8 linguas desde a fita de 02/09: zero texto novo, e por
  * isso a regra 6 nem entra.
  */
-function desenharFiltrosTexto(main) {
-  if (!main) return;
+function desenharFiltrosTexto() {
+  // 25/10 — a vaga e o #filtrosVaga, no cabecalho. Antes era o <main>, que o
+  // desenharVersos() limpa inteiro a cada troca de Kadish — entao os filtros
+  // eram refeitos junto. Aqui a vaga sobrevive, e por isso esta funcao a esvazia
+  // antes de desenhar: senao a segunda troca empilharia um segundo jogo de
+  // botoes, calada.
+  const vaga = document.getElementById('filtrosVaga');
+  if (!vaga) return;
+  vaga.innerHTML = '';
   const el = document.createElement('div');
   el.className = 'filtros-texto';
   el.id = 'filtrosTexto';
@@ -4801,7 +5036,7 @@ function desenharFiltrosTexto(main) {
     const camada = b.dataset.filtro;
     aplicarCamada(camada, estadoCamada[camada] === 'hidden' ? 'normal' : 'hidden');
   });
-  main.appendChild(el);
+  vaga.appendChild(el);
   pintarFiltros();
 }
 
@@ -4848,7 +5083,7 @@ function desenharVersos() {
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
   atualizarDedicatoria();   // a vaga e a ultima linha do .topbar, nao do main
-  desenharFiltrosTexto(main);
+  desenharFiltrosTexto();   // a vaga dele e do cabecalho desde 25/10
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
@@ -5458,74 +5693,26 @@ function playVerse(vi, onComplete) {
   }
 }
 /* ===========================================================
- * O CABECALHO FECHA NO PLAY (25/10, v64)
+ * 25/10 — O CABECALHO NAO FECHA MAIS, e este bloco encolheu a nada
  * ===========================================================
- * Ele: "e se quando der o play fecha o menu de cima?" — e, perguntado quando
- * ele volta: "quando pausa por mais de 10 segundos ou o kadish parar voltar
- * para tela completa".
+ * Depois da v64 o alto foi enxugado ate duas fileiras finas, e ele viu o que
+ * eu nao tinha visto: "elimina-se assim a tela rezando". Nao ha mais o que
+ * fechar — e com o mecanismo foram embora o relogio dos 10 segundos (que, nao
+ * desarmado no play, abria o menu sozinho no meio da reza), a linha de
+ * identidade que servia de botao para reabrir, e a checar-cabecalho.mjs, que
+ * so existia para vigiar aquela armadilha.
  *
- * O que fecha sao os CONTROLES, nunca a identidade nem a dedicatoria: quem
- * esta rezando precisa continuar sabendo por quem reza e qual Kadish esta
- * dizendo. No lugar das duas fitas de botoes aparece UMA linha de leitura —
- * "Chabad - Kadish Yatom" — que e tambem o jeito de voltar: tocar nela reabre.
- * E ela nao traz texto novo: o nome da tradicao sai do botao aceso e o titulo
- * do .prayer-title, que ja esta traduzido nas 8. Uma conta so, de novo.
- *
- * A ARMADILHA, e e a razao de existir a `cancelarReabertura`: o relogio dos 10
- * segundos e armado na PAUSA. Se ele nao fosse desarmado no play, quem pausa,
- * pensa 3 segundos e volta a rezar veria o cabecalho abrir sozinho no meio da
- * reza, 7 segundos depois, sem nada na tela explicando por que. Ha checagem
- * disso no checar-cabecalho.mjs — pausa de 3s, play, espera 10s, o cabecalho
- * tem de ficar FECHADO — e ela sabe reprovar.
+ * As funcoes ficam como no-op porque o resto do arquivo as chama em cinco
+ * lugares; apaga-las daria "is not defined" dentro de um ouvinte, que e
+ * exatamente como o `temState` quebrou a troca de Kadish em 30/08 — calado.
  */
-const REABRE_APOS_PAUSA = 10000;
-let relogioReabertura = null;
-
-function cancelarReabertura() {
-  if (relogioReabertura) { clearTimeout(relogioReabertura); relogioReabertura = null; }
-}
-
-function pintarIdentidadeRezando() {
-  const alvo = document.getElementById('irTexto');
-  if (!alvo) return;
-  const trad = document.querySelector('.trad-switch .modo-op.active');
-  const titulo = document.querySelector('.prayer-title');
-  const partes = [];
-  if (trad && trad.textContent) partes.push(trad.textContent.trim());
-  if (titulo && titulo.textContent) partes.push(titulo.textContent.trim());
-  alvo.textContent = partes.join(' · ');
-}
-
-function fecharCabecalho() {
-  cancelarReabertura();
-  pintarIdentidadeRezando();
-  document.body.classList.add('cabecalho-fechado');
-}
-
-function abrirCabecalho() {
-  cancelarReabertura();
-  document.body.classList.remove('cabecalho-fechado');
-}
-
-// o relogio da pausa: 10 segundos parado e o cabecalho volta sozinho
-function agendarReabertura() {
-  cancelarReabertura();
-  relogioReabertura = setTimeout(() => {
-    relogioReabertura = null;
-    // se ele voltou a rezar enquanto o relogio corria, nao abre: foi para isso
-    // que o relogio e desarmado no play, e esta segunda pergunta e o cinto
-    if (!state.isPlaying) document.body.classList.remove('cabecalho-fechado');
-  }, REABRE_APOS_PAUSA);
-}
-
-(function ligarIdentidadeRezando() {
-  const bt = document.getElementById('identidadeRezando');
-  if (bt) bt.addEventListener('click', abrirCabecalho);
-})();
+function cancelarReabertura() {}
+function pintarIdentidadeRezando() {}
+function fecharCabecalho() {}
+function abrirCabecalho() {}
+function agendarReabertura() {}
 
 function play() {
-  // ele pediu, e e a primeira coisa que acontece: o menu de cima fecha
-  fecharCabecalho();
   state.isPlaying = true;
   playIcon.innerHTML = '<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
   if (state.currentVerse >= verses.length) { state.currentVerse = 0; state.elapsed = 0; }
@@ -5751,7 +5938,7 @@ document.getElementById('studioToggle')?.addEventListener('click', () => {
 
 // Settings panel — layer visibility & focus
 const settingsOverlay = document.getElementById('settingsOverlay');
-document.getElementById('settingsToggle').addEventListener('click', () => {
+document.getElementById('settingsToggle')?.addEventListener('click', () => {
   settingsOverlay.classList.add('show');
 });
 document.getElementById('settingsClose').addEventListener('click', () => {
@@ -5855,6 +6042,11 @@ function aplicarCamada(camada, estado) {
 // que ja aconteceu neste projeto. Custo assumido e dito a ele: quem tinha
 // escolhido outra coisa de proposito perde a escolha nesta virada, uma vez so.
 const MARCA_CAMADAS = 'tefila_camadas_padrao_1025';
+// A marca do PADRAO DO SOM. Padrao so vale para quem nunca escolheu, e sem uma
+// marca nova o aparelho de quem ja usou o app nunca veria o padrao novo — foi
+// por isso que a limpeza das camadas precisou da sua em 09/09. Custo assumido e
+// dito: quem tinha ligado o som de proposito o encontra desligado uma vez.
+const MARCA_SOM_PADRAO = 'tefila_som_padrao_1025';
 try {
   if (!localStorage.getItem(MARCA_CAMADAS)) {
     localStorage.removeItem('tefila_camadas');
@@ -5886,7 +6078,7 @@ const infoOverlay = document.getElementById('infoOverlay');
 // O ℹ mostra o painel INTEIRO. O desenharSobre() e chamado aqui de proposito:
 // os pop-ups das portas escrevem por cima do mesmo corpo, e sem redesenhar o ℹ
 // abriria com o conteudo da ultima porta aberta.
-document.getElementById('infoToggle').addEventListener('click', () => {
+document.getElementById('infoToggle')?.addEventListener('click', () => {
   if (typeof desenharSobre === 'function') desenharSobre();
   const rodape = document.getElementById('infoRodape');
   if (rodape) rodape.style.display = '';
@@ -6047,6 +6239,406 @@ repeatBtn.addEventListener('click', () => {
   showToast(state.repeatN ? `Cada verso vai repetir ${state.repeatN}×` : 'Repetição desligada');
 });
 
+
+// ============================================================
+// v65 — 25/10. O QUE ELE DECIDIU NESTA RODADA, NUM LUGAR SO.
+// Nada aqui toca no modulo SYNC: a trava-sincronia.mjs fica verde.
+// ============================================================
+
+/* O CHIP DO NUSSACH. Mostra o escolhido e abre os quatro ao ser tocado. Os
+   quatro botoes continuam sendo os mesmos de sempre — e por isso tudo o que ja
+   clicava em [data-trad] continua funcionando, as checagens inclusive. */
+function pintarChipNussach() {
+  const chip = document.getElementById('nussachNome');
+  const ativo = document.querySelector('.trad-switch .modo-op.active');
+  if (chip && ativo && ativo.textContent) chip.textContent = ativo.textContent.trim();
+}
+
+function fecharNussach() {
+  const fita = document.getElementById('traditionBadge');
+  const bt = document.getElementById('nussachChip');
+  if (fita) fita.classList.add('trad-fechada');
+  if (bt) bt.setAttribute('aria-expanded', 'false');
+}
+
+(function ligarChipNussach() {
+  const bt = document.getElementById('nussachChip');
+  const fita = document.getElementById('traditionBadge');
+  if (!bt || !fita) return;
+  bt.addEventListener('click', () => {
+    const abrindo = fita.classList.contains('trad-fechada');
+    fita.classList.toggle('trad-fechada', !abrindo);
+    bt.setAttribute('aria-expanded', String(abrindo));
+  });
+  // escolher um rito fecha a fita e repinta o chip. O setTimeout de 0 e porque
+  // o ouvinte que marca o botao como .active e outro, e pode correr depois
+  // deste: sem ele o chip pintaria o nussach ANTERIOR.
+  fita.addEventListener('click', (ev) => {
+    if (!ev.target.closest('[data-trad]')) return;
+    setTimeout(() => { pintarChipNussach(); fecharNussach(); }, 0);
+  });
+  pintarChipNussach();
+})();
+
+/* A LINHA DA REPETICAO, no Treino: os valores a vista, com a mesma forma da
+   velocidade. O #repeatBtn continua como icone da linha, e o #repCount continua
+   no DOM porque o toggleModoTreino escreve nele. */
+function pintarRepeticao() {
+  const cx = document.getElementById('repeatToggle');
+  if (!cx) return;
+  cx.querySelectorAll('button[data-rep]').forEach((b) => {
+    b.classList.toggle('active', Number(b.dataset.rep) === Number(state.repeatN || 0));
+  });
+}
+
+(function ligarRepeticao() {
+  const cx = document.getElementById('repeatToggle');
+  if (!cx) return;
+  cx.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-rep]');
+    if (!b) return;
+    const n = Number(b.dataset.rep) || 0;
+    state.repeatN = n;
+    state.repeatRemaining = 0; state.repeatRestante = undefined;
+    const bt = document.getElementById('repeatBtn');
+    const ct = document.getElementById('repCount');
+    if (bt) bt.classList.toggle('active', n > 0);
+    if (ct) { ct.style.display = n > 0 ? 'inline-block' : 'none'; ct.textContent = n + '\u00d7'; }
+    pintarRepeticao();
+  });
+})();
+
+/* UMA CONTA SO PARA "ONDE COMECA O PE DA TELA". Desde 25/10 o pe sao DUAS
+   coisas empilhadas — a barra do play e a fileira de menus — e quem media so a
+   barra passou a dizer um numero menor do que a verdade. Mede-se pelo TOPO da
+   mais alta delas, que e onde a tela deixa de ser livre. */
+function peDaTela() {
+  try {
+    const barra = document.querySelector('.audio-bar');
+    const menu = document.getElementById('menuPe');
+    let topo = window.innerHeight;
+    for (const el of [barra, menu]) {
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (getComputedStyle(el).display === 'none' || r.height === 0) continue;
+      topo = Math.min(topo, r.top);
+    }
+    return Math.max(0, Math.round(window.innerHeight - topo));
+  } catch (e) { return 96; }
+}
+
+/* O aviso de privacidade usa a MESMA conta, e nao um numero escrito a mao. */
+(function acomodarAviso() {
+  const por = () => {
+    const el = document.getElementById('consentBanner');
+    if (el) el.style.bottom = 'calc(' + (peDaTela() + 12) + 'px + env(safe-area-inset-bottom))';
+  };
+  por();
+  window.addEventListener('resize', por);
+  // o aviso so aparece 1,2s depois de carregar; sem este segundo calculo ele
+  // nasceria no lugar medido antes de a barra existir
+  setTimeout(por, 1500);
+})();
+
+
+/* ============================================================
+   O PASSO A PASSO (25/10)
+   ============================================================
+   Ele: "o ideal seria um passo a passo onde ele ja configura ou ja entende o
+   que deve configurar". Entao ele nao mostra DESENHOS da tela: ele acende o
+   controle de verdade e explica numa tira no pe. Quem esta no passo da
+   tradicao escolhe a tradicao ali mesmo, no botao que vai usar depois.
+
+   Nao ha segunda copia da tela aqui dentro — e o que impede que um dia o
+   passo a passo ensine uma tela que nao existe mais.
+*/
+const PASSOS = [
+  // id, o que acender na tela de verdade, e a chave do texto
+  { id: 'abertura', alvo: null, chave: 'p_abertura' },
+  { id: 'tradicao', alvo: '#nussachChip', chave: 'p_tradicao' },
+  { id: 'texto', alvo: '#filtrosTexto', chave: 'p_texto' },
+  { id: 'tipo', alvo: '.tipo-switch', chave: 'p_tipo' },
+  { id: 'velocidade', alvo: '#speedToggle', chave: 'p_velocidade' },
+  { id: 'treino', alvo: '#treinoToggle', chave: 'p_treino' },
+  { id: 'pessoas', alvo: '#mpPessoas', chave: 'p_pessoas' },
+  { id: 'pronto', alvo: null, chave: 'p_pronto' },
+];
+
+const PASSOS_TXT = {
+  pt: {
+    p_abertura: { t: 'A oração que dizemos há milênios pela elevação da alma de quem partiu.',
+      a: 'Você não precisa saber hebraico para dizer o Kadish. Este app ensina, palavra por palavra. São sete telas rápidas — dá para pular.' },
+    p_tradicao: { t: 'Qual é a tradição da sua família?',
+      a: 'É a da sinagoga onde você vai rezar. Na dúvida, pergunte ao rabino. Toque aqui para escolher — e dá para trocar depois.' },
+    p_texto: { t: 'É assim que o Kadish aparece.',
+      a: 'Abre com o Kadish escrito em letras do português: você lê mesmo sem saber ler hebraico. Estes três botões acendem e apagam cada texto.' },
+    p_tipo: { t: 'Pequeno ou grande? O rabino avisa.',
+      a: 'São dois Kadishim, e qual deles se diz muda de reza para reza. Na sinagoga o rabino diz qual será — e você troca aqui.' },
+    p_velocidade: { t: 'Se a voz estiver rápida.',
+      a: 'Toque num número e a voz do rabino fica mais devagar. O texto acompanha junto, palavra por palavra.' },
+    p_treino: { t: 'Aperte Treino para aprender.',
+      a: 'O áudio passa a parar no fim de cada frase e esperar em silêncio — é ali que a sua voz entra. O ✕ volta para a reza.' },
+    p_pessoas: { t: 'Por quem você vai rezar?',
+      a: 'Cadastre o nome aqui. Fica só no seu aparelho, pode ser mais de uma pessoa, e o app lembra você do yahrzeit todo ano.' },
+    p_pronto: { t: 'Pronto.',
+      a: 'O som vem desligado — é o que se quer no minyan: o texto acompanha a voz em silêncio. Toque no alto-falante quando quiser ouvir.' },
+  },
+  en: {
+    p_abertura: { t: 'The prayer we have said for millennia for the elevation of the soul of those who have gone.',
+      a: 'You do not need to know Hebrew to say the Kaddish. This app teaches it, word by word. Seven quick screens — you can skip.' },
+    p_tradicao: { t: 'What is your family\'s tradition?',
+      a: 'It is the one of the synagogue where you will pray. If unsure, ask the rabbi. Tap here to choose — you can change it later.' },
+    p_texto: { t: 'This is how the Kaddish appears.',
+      a: 'It opens with the Kaddish written in our letters: you can read it aloud without knowing Hebrew. These three buttons turn each text on and off.' },
+    p_tipo: { t: 'Short or long? The rabbi will say.',
+      a: 'There are two Kaddishim, and which one is said changes from service to service. At the synagogue the rabbi says which — and you switch here.' },
+    p_velocidade: { t: 'If the voice is too fast.',
+      a: 'Tap a number and the rabbi\'s voice slows down. The text follows along, word by word.' },
+    p_treino: { t: 'Press Practice to learn.',
+      a: 'The audio then stops at the end of each line and waits in silence — that is where your voice goes. The ✕ returns to prayer.' },
+    p_pessoas: { t: 'Who will you pray for?',
+      a: 'Add the name here. It stays on your device, it can be more than one person, and the app reminds you of the yahrzeit every year.' },
+    p_pronto: { t: 'Ready.',
+      a: 'The sound starts off — which is what you want in a minyan: the text follows the voice in silence. Tap the speaker when you want to hear it.' },
+  },
+  es: {
+    p_abertura: { t: 'La oración que decimos desde hace milenios por la elevación del alma de quien partió.',
+      a: 'No necesitas saber hebreo para decir el Kadish. Esta app lo enseña, palabra por palabra. Son siete pantallas rápidas — puedes saltarlas.' },
+    p_tradicao: { t: '¿Cuál es la tradición de tu familia?',
+      a: 'Es la de la sinagoga donde vas a rezar. Si tienes dudas, pregunta al rabino. Toca aquí para elegir — y puedes cambiarlo después.' },
+    p_texto: { t: 'Así aparece el Kadish.',
+      a: 'Abre con el Kadish escrito con nuestras letras: puedes leerlo en voz alta sin saber hebreo. Estos tres botones encienden y apagan cada texto.' },
+    p_tipo: { t: '¿Pequeño o grande? El rabino avisa.',
+      a: 'Son dos Kadishim, y cuál se dice cambia de rezo en rezo. En la sinagoga el rabino dice cuál será — y tú cambias aquí.' },
+    p_velocidade: { t: 'Si la voz va rápida.',
+      a: 'Toca un número y la voz del rabino va más despacio. El texto acompaña, palabra por palabra.' },
+    p_treino: { t: 'Pulsa Práctica para aprender.',
+      a: 'El audio pasa a parar al final de cada frase y esperar en silencio — ahí entra tu voz. La ✕ vuelve al rezo.' },
+    p_pessoas: { t: '¿Por quién vas a rezar?',
+      a: 'Registra el nombre aquí. Queda solo en tu dispositivo, puede ser más de una persona, y la app te recuerda el yahrzeit cada año.' },
+    p_pronto: { t: 'Listo.',
+      a: 'El sonido viene apagado — es lo que se quiere en el minyán: el texto acompaña la voz en silencio. Toca el altavoz cuando quieras oír.' },
+  },
+  fr: {
+    p_abertura: { t: 'La prière que nous disons depuis des millénaires pour l\'élévation de l\'âme de ceux qui sont partis.',
+      a: 'Vous n\'avez pas besoin de savoir l\'hébreu pour dire le Kaddish. Cette application l\'enseigne, mot à mot. Sept écrans rapides — vous pouvez passer.' },
+    p_tradicao: { t: 'Quelle est la tradition de votre famille ?',
+      a: 'C\'est celle de la synagogue où vous allez prier. En cas de doute, demandez au rabbin. Touchez ici pour choisir — vous pourrez changer plus tard.' },
+    p_texto: { t: 'Voici comment le Kaddish apparaît.',
+      a: 'Il s\'ouvre avec le Kaddish écrit avec nos lettres : vous le lisez à voix haute sans savoir l\'hébreu. Ces trois boutons allument et éteignent chaque texte.' },
+    p_tipo: { t: 'Petit ou grand ? Le rabbin l\'annonce.',
+      a: 'Il y a deux Kaddishim, et lequel on dit change d\'un office à l\'autre. À la synagogue le rabbin dit lequel — et vous changez ici.' },
+    p_velocidade: { t: 'Si la voix va trop vite.',
+      a: 'Touchez un chiffre et la voix du rabbin ralentit. Le texte suit, mot à mot.' },
+    p_treino: { t: 'Appuyez sur Pratique pour apprendre.',
+      a: 'L\'audio s\'arrête alors à la fin de chaque phrase et attend en silence — c\'est là que votre voix entre. Le ✕ revient à la prière.' },
+    p_pessoas: { t: 'Pour qui allez-vous prier ?',
+      a: 'Inscrivez le nom ici. Il reste sur votre appareil, il peut y avoir plusieurs personnes, et l\'application vous rappelle le yahrzeit chaque année.' },
+    p_pronto: { t: 'C\'est prêt.',
+      a: 'Le son est coupé au départ — c\'est ce qu\'on veut au minyan : le texte suit la voix en silence. Touchez le haut-parleur quand vous voulez entendre.' },
+  },
+  it: {
+    p_abertura: { t: 'La preghiera che diciamo da millenni per l\'elevazione dell\'anima di chi è partito.',
+      a: 'Non serve sapere l\'ebraico per dire il Kaddish. Questa app lo insegna, parola per parola. Sette schermate rapide — si possono saltare.' },
+    p_tradicao: { t: 'Qual è la tradizione della tua famiglia?',
+      a: 'È quella della sinagoga dove pregherai. Nel dubbio, chiedi al rabbino. Tocca qui per scegliere — e puoi cambiare dopo.' },
+    p_texto: { t: 'Ecco come appare il Kaddish.',
+      a: 'Si apre con il Kaddish scritto con le nostre lettere: lo leggi ad alta voce anche senza sapere l\'ebraico. Questi tre pulsanti accendono e spengono ogni testo.' },
+    p_tipo: { t: 'Piccolo o grande? Lo dice il rabbino.',
+      a: 'Ci sono due Kaddishim, e quale si dice cambia di funzione in funzione. In sinagoga il rabbino dice quale — e tu cambi qui.' },
+    p_velocidade: { t: 'Se la voce va veloce.',
+      a: 'Tocca un numero e la voce del rabbino rallenta. Il testo segue, parola per parola.' },
+    p_treino: { t: 'Premi Pratica per imparare.',
+      a: 'L\'audio si ferma alla fine di ogni frase e aspetta in silenzio — lì entra la tua voce. La ✕ torna alla preghiera.' },
+    p_pessoas: { t: 'Per chi pregherai?',
+      a: 'Inserisci il nome qui. Resta solo sul tuo dispositivo, può essere più di una persona, e l\'app ti ricorda lo yahrzeit ogni anno.' },
+    p_pronto: { t: 'Pronto.',
+      a: 'L\'audio parte spento — è quello che serve nel minyan: il testo segue la voce in silenzio. Tocca l\'altoparlante quando vuoi sentire.' },
+  },
+  de: {
+    p_abertura: { t: 'Das Gebet, das wir seit Jahrtausenden für die Erhebung der Seele der Verstorbenen sprechen.',
+      a: 'Sie müssen kein Hebräisch können, um das Kaddisch zu sagen. Diese App lehrt es, Wort für Wort. Sieben kurze Schritte — überspringbar.' },
+    p_tradicao: { t: 'Welche Tradition hat Ihre Familie?',
+      a: 'Es ist die der Synagoge, in der Sie beten werden. Im Zweifel fragen Sie den Rabbiner. Hier tippen zum Auswählen — später änderbar.' },
+    p_texto: { t: 'So erscheint das Kaddisch.',
+      a: 'Es öffnet mit dem Kaddisch in unseren Buchstaben: Sie lesen es laut, auch ohne Hebräisch. Diese drei Schaltflächen schalten jeden Text ein und aus.' },
+    p_tipo: { t: 'Kurz oder lang? Der Rabbiner sagt es an.',
+      a: 'Es gibt zwei Kaddischim, und welches gesagt wird, wechselt von Gottesdienst zu Gottesdienst. In der Synagoge sagt der Rabbiner welches — hier wechseln Sie.' },
+    p_velocidade: { t: 'Wenn die Stimme zu schnell ist.',
+      a: 'Tippen Sie eine Zahl an und die Stimme des Rabbiners wird langsamer. Der Text folgt mit, Wort für Wort.' },
+    p_treino: { t: 'Übung drücken, um zu lernen.',
+      a: 'Der Ton hält dann am Ende jedes Satzes an und wartet still — dort kommt Ihre Stimme. Das ✕ führt zum Gebet zurück.' },
+    p_pessoas: { t: 'Für wen werden Sie beten?',
+      a: 'Tragen Sie den Namen hier ein. Er bleibt auf Ihrem Gerät, es können mehrere Personen sein, und die App erinnert Sie jedes Jahr an den Jahrzeit.' },
+    p_pronto: { t: 'Fertig.',
+      a: 'Der Ton ist zunächst aus — so will man es im Minjan: der Text folgt der Stimme still. Tippen Sie auf den Lautsprecher, wenn Sie hören möchten.' },
+  },
+  ru: {
+    p_abertura: { t: 'Молитва, которую мы произносим тысячелетиями за возвышение души ушедших.',
+      a: 'Чтобы сказать кадиш, не нужно знать иврит. Это приложение учит слово за словом. Семь быстрых экранов — можно пропустить.' },
+    p_tradicao: { t: 'Какова традиция вашей семьи?',
+      a: 'Это традиция синагоги, где вы будете молиться. Если сомневаетесь, спросите раввина. Нажмите, чтобы выбрать — потом можно сменить.' },
+    p_texto: { t: 'Вот как выглядит кадиш.',
+      a: 'Он открывается кадишем, записанным нашими буквами: вы читаете вслух, не зная иврита. Эти три кнопки включают и выключают каждый текст.' },
+    p_tipo: { t: 'Малый или большой? Раввин объявит.',
+      a: 'Кадишей два, и какой из них говорят, меняется от службы к службе. В синагоге раввин скажет какой — а вы переключите здесь.' },
+    p_velocidade: { t: 'Если голос звучит быстро.',
+      a: 'Нажмите на число, и голос раввина замедлится. Текст идёт следом, слово за словом.' },
+    p_treino: { t: 'Нажмите «Практика», чтобы учиться.',
+      a: 'Звук начнёт останавливаться в конце каждой фразы и ждать в тишине — там вступает ваш голос. ✕ возвращает к молитве.' },
+    p_pessoas: { t: 'За кого вы будете молиться?',
+      a: 'Впишите имя здесь. Оно остаётся только на вашем устройстве, людей может быть несколько, и приложение каждый год напомнит о ярцайте.' },
+    p_pronto: { t: 'Готово.',
+      a: 'Звук выключен — так и нужно в миньяне: текст следует за голосом в тишине. Нажмите на динамик, когда захотите слушать.' },
+  },
+  he: {
+    p_abertura: { t: 'התפילה שאנו אומרים זה אלפי שנים לעילוי נשמתם של מי שהלכו.',
+      a: 'אין צורך לדעת עברית כדי לומר קדיש. היישום מלמד מילה אחר מילה. שבעה מסכים קצרים — אפשר לדלג.' },
+    p_tradicao: { t: 'מה המנהג של המשפחה שלך?',
+      a: 'זה המנהג של בית הכנסת שבו תתפללו. אם אינכם בטוחים, שאלו את הרב. לחצו כאן לבחור — אפשר לשנות אחר כך.' },
+    p_texto: { t: 'כך נראה הקדיש.',
+      a: 'הוא נפתח עם הקדיש באותיות שלנו: אפשר לקרוא בקול גם בלי לדעת עברית. שלושת הכפתורים האלה מדליקים ומכבים כל טקסט.' },
+    p_tipo: { t: 'קטן או גדול? הרב מודיע.',
+      a: 'יש שני קדישים, ואיזה מהם אומרים משתנה מתפילה לתפילה. בבית הכנסת הרב אומר איזה — ואתם מחליפים כאן.' },
+    p_velocidade: { t: 'אם הקול מהיר מדי.',
+      a: 'לחצו על מספר והקול של הרב יאט. הטקסט מלווה, מילה אחר מילה.' },
+    p_treino: { t: 'לחצו על תרגול כדי ללמוד.',
+      a: 'השמע יעצור בסוף כל משפט ויחכה בשקט — שם נכנס הקול שלכם. ה-✕ חוזר לתפילה.' },
+    p_pessoas: { t: 'בשביל מי תתפללו?',
+      a: 'רשמו כאן את השם. הוא נשאר רק במכשיר שלכם, אפשר יותר מאדם אחד, והיישום יזכיר לכם את היארצייט בכל שנה.' },
+    p_pronto: { t: 'מוכן.',
+      a: 'הקול מתחיל כבוי — וכך רוצים במניין: הטקסט מלווה את הקול בשקט. לחצו על הרמקול כשתרצו לשמוע.' },
+  },
+};
+
+const MARCA_PASSOS = 'tefila_passos_1025';
+let passoAtual = -1;
+
+function passosTxt(chave) {
+  const t = PASSOS_TXT[state.lang] || PASSOS_TXT.pt;
+  return t[chave] || { t: '', a: '' };
+}
+
+function apagarAceso() {
+  document.querySelectorAll('.passo-aceso').forEach(el => el.classList.remove('passo-aceso'));
+}
+
+function acomodarPassos() {
+  const cx = document.getElementById('passos');
+  if (cx) cx.style.bottom = 'calc(' + (peDaTela() + 12) + 'px + env(safe-area-inset-bottom))';
+}
+
+function pintarPasso() {
+  const cx = document.getElementById('passos');
+  if (!cx) return;
+  const passo = PASSOS[passoAtual];
+  if (!passo) return;
+  const txt = passosTxt(passo.chave);
+  document.getElementById('passosConta').textContent = (passoAtual + 1) + ' / ' + PASSOS.length;
+  document.getElementById('passosTitulo').textContent = txt.t;
+  document.getElementById('passosAjuda').textContent = txt.a;
+  const vt = document.getElementById('passosVoltar');
+  if (vt) vt.style.visibility = passoAtual === 0 ? 'hidden' : 'visible';
+  const px = document.getElementById('passosProximo');
+  if (px) px.textContent = TXT(passoAtual === PASSOS.length - 1 ? 'p_rezar' : (passoAtual === 0 ? 'p_comecar' : 'p_proximo'));
+
+  apagarAceso();
+  if (passo.alvo) {
+    const el = document.querySelector(passo.alvo);
+    // acender um controle que NAO esta na tela seria apontar para o nada: em
+    // alemao nao ha transliteracao, deitado o menu sai, e por ai vai
+    if (el && getComputedStyle(el).display !== 'none' && el.getBoundingClientRect().width > 0) {
+      el.classList.add('passo-aceso');
+      try { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) {}
+    }
+  }
+  acomodarPassos();
+}
+
+function abrirPassos(de) {
+  passoAtual = 0;
+  document.body.classList.add('em-passos');
+  pintarPasso();
+}
+
+function fecharPassos() {
+  document.body.classList.remove('em-passos');
+  apagarAceso();
+  passoAtual = -1;
+  try { localStorage.setItem(MARCA_PASSOS, '1'); } catch (e) {}
+}
+
+function passoSeguinte() {
+  if (passoAtual >= PASSOS.length - 1) { fecharPassos(); return; }
+  passoAtual++;
+  pintarPasso();
+}
+
+function passoAnterior() {
+  if (passoAtual <= 0) return;
+  passoAtual--;
+  pintarPasso();
+}
+
+(function ligarPassos() {
+  const b = (id, fn) => { const e = document.getElementById(id); if (e) e.addEventListener('click', fn); };
+  b('passosProximo', passoSeguinte);
+  b('passosVoltar', passoAnterior);
+  b('passosPular', fecharPassos);
+  b('mpPassos', () => abrirPassos('menu'));
+  window.addEventListener('resize', () => { if (passoAtual >= 0) acomodarPassos(); });
+
+  // NA PRIMEIRA VEZ ele aparece sozinho — mas DEPOIS do aviso de privacidade,
+  // nunca por cima dele: dois cartoes empilhados no pe seriam a tela brigando
+  // consigo mesma. A pergunta e "ele ja respondeu?", que mora no localStorage,
+  // e nao "o aviso esta na tela agora?" — a licao de 10/09, quando o convite
+  // de instalar passou no vao e o aviso caiu por cima dele.
+  setTimeout(function esperarAviso() {
+    let visto = null, consentiu = null;
+    try { visto = localStorage.getItem(MARCA_PASSOS); } catch (e) {}
+    try { consentiu = localStorage.getItem('tefila_consent'); } catch (e) {}
+    if (visto) return;
+    if (!consentiu) { setTimeout(esperarAviso, 900); return; }
+    abrirPassos('primeira-vez');
+  }, 1800);
+})();
+
+/* A FILEIRA DE MENUS. Cada item leva a uma coisa que JA EXISTE. */
+(function ligarMenu() {
+  const ir = (id, fn) => { const b = document.getElementById(id); if (b) b.addEventListener('click', fn); };
+  ir('mpKadish', () => {
+    if (typeof desenharSobre === 'function') desenharSobre();
+    const rodape = document.getElementById('infoRodape');
+    if (rodape) rodape.style.display = '';
+    const ov = document.getElementById('infoOverlay');
+    if (ov) ov.classList.add('show');
+  });
+  ir('mpOnde', () => abrirPortaChabad());
+  ir('mpAjustes', () => {
+    const ov = document.getElementById('settingsOverlay');
+    if (ov) { ov.classList.add('show'); ov.scrollTop = 0; }
+  });
+
+  /* "POR QUEM REZO" — a segunda funcao do app ganha porta propria (25/10).
+     Os nomes, as datas e os lembretes do yahrzeit estavam dentro dos Ajustes,
+     e so se chegava la tocando na dedicatoria — o que ninguem adivinha. E
+     coisa que se usa todo mes: quem acrescenta outra pessoa, quem corrige uma
+     data, quem quer saber quando cai o yahrzeit.
+     Nao e tela nova: e o MESMO editor, aberto ja na secao certa. Duas telas
+     para o mesmo cadastro seriam duas contas para a mesma pergunta. */
+  ir('mpPessoas', () => {
+    const ov = document.getElementById('settingsOverlay');
+    if (!ov) return;
+    ov.classList.add('show');
+    const alvo = document.getElementById('secaoDedicacao');
+    if (!alvo) return;
+    // rolar DEPOIS de o painel aparecer: antes disso ele nao tem altura, e o
+    // scrollIntoView num elemento sem caixa nao vai a lugar nenhum — e a mesma
+    // armadilha que a testar-opiniao pegou em 15/09.
+    setTimeout(() => { try { alvo.scrollIntoView({ block: 'start' }); } catch (e) {} }, 60);
+  });
+})();
+
 // ============================================================
 // V3 — I18N, THEMES, MEMORIAL, MODO TREINO, YAHRZEIT, LGPD
 // ============================================================
@@ -6066,6 +6658,13 @@ const I18N = {
     toast_audio_failed: "O áudio não tocou",
     ph_relation: "Pai, mãe, avô...",
     modo_reza_curto: 'Reza', modo_treino_curto: 'Treino',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'Como usar', menu_pessoas: 'Por quem rezo',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Começar', p_proximo: 'Próximo', p_voltar: 'Voltar',
+    p_pular: 'Pular', p_rezar: 'Dizer o Kadish',
+    menu_kadish: 'O Kadish', menu_onde: 'Onde rezar', menu_ajustes: 'Ajustes',
+    rep_nenhuma: 'sem repetir',
     modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
     comecar_aqui: '▶ Começar aqui',
     treino_active: '⊙ Modo Treino · pausa após cada verso',
@@ -6164,6 +6763,13 @@ const I18N = {
     toast_audio_failed: "The audio did not play",
     ph_relation: "Father, mother, grandfather...",
     modo_reza_curto: 'Prayer', modo_treino_curto: 'Practice',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'How to use', menu_pessoas: 'Who I pray for',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Start', p_proximo: 'Next', p_voltar: 'Back',
+    p_pular: 'Skip', p_rezar: 'Say the Kaddish',
+    menu_kadish: 'The Kaddish', menu_onde: 'Where to pray', menu_ajustes: 'Settings',
+    rep_nenhuma: 'no repeat',
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
     comecar_aqui: '▶ Start here',
     treino_active: '⊙ Practice Mode · pauses after each verse',
@@ -6259,6 +6865,13 @@ const I18N = {
     toast_audio_failed: "El audio no sonó",
     ph_relation: "Padre, madre, abuelo...",
     modo_reza_curto: 'Rezo', modo_treino_curto: 'Práctica',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'Cómo usar', menu_pessoas: 'Por quién rezo',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Empezar', p_proximo: 'Siguiente', p_voltar: 'Atrás',
+    p_pular: 'Saltar', p_rezar: 'Decir el Kadish',
+    menu_kadish: 'El Kadish', menu_onde: 'Dónde rezar', menu_ajustes: 'Ajustes',
+    rep_nenhuma: 'sin repetir',
     modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
     comecar_aqui: '▶ Empezar aquí',
     treino_active: '⊙ Modo Práctica · pausa después de cada verso',
@@ -6354,6 +6967,13 @@ const I18N = {
     toast_audio_failed: "L’audio n’a pas démarré",
     ph_relation: "Père, mère, grand-père...",
     modo_reza_curto: 'Prière', modo_treino_curto: 'Pratique',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'Comment faire', menu_pessoas: 'Pour qui je prie',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Commencer', p_proximo: 'Suivant', p_voltar: 'Retour',
+    p_pular: 'Passer', p_rezar: 'Dire le Kaddish',
+    menu_kadish: 'Le Kaddish', menu_onde: 'Où prier', menu_ajustes: 'Réglages',
+    rep_nenhuma: 'sans répéter',
     modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
     comecar_aqui: '▶ Commencer ici',
     treino_active: '⊙ Mode Pratique · pause après chaque verset',
@@ -6449,6 +7069,13 @@ const I18N = {
     toast_audio_failed: "L’audio non è partito",
     ph_relation: "Padre, madre, nonno...",
     modo_reza_curto: 'Preghiera', modo_treino_curto: 'Pratica',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'Come usare', menu_pessoas: 'Per chi prego',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Iniziare', p_proximo: 'Avanti', p_voltar: 'Indietro',
+    p_pular: 'Salta', p_rezar: 'Dire il Kaddish',
+    menu_kadish: 'Il Kaddish', menu_onde: 'Dove pregare', menu_ajustes: 'Impostazioni',
+    rep_nenhuma: 'senza ripetere',
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
     comecar_aqui: '▶ Inizia qui',
     treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
@@ -6544,6 +7171,13 @@ const I18N = {
     toast_audio_failed: "Der Ton wurde nicht abgespielt",
     ph_relation: "Vater, Mutter, Großvater...",
     modo_reza_curto: 'Gebet', modo_treino_curto: 'Übung',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'So geht’s', menu_pessoas: 'Für wen ich bete',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Beginnen', p_proximo: 'Weiter', p_voltar: 'Zurück',
+    p_pular: 'Überspringen', p_rezar: 'Kaddisch sagen',
+    menu_kadish: 'Das Kaddisch', menu_onde: 'Wo beten', menu_ajustes: 'Einstellungen',
+    rep_nenhuma: 'ohne Wiederholung',
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
     comecar_aqui: '▶ Hier beginnen',
     treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
@@ -6639,6 +7273,13 @@ const I18N = {
     toast_audio_failed: "Звук не воспроизвёлся",
     ph_relation: "Отец, мать, дед...",
     modo_reza_curto: 'Молитва', modo_treino_curto: 'Практика',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'Как пользоваться', menu_pessoas: 'За кого молюсь',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'Начать', p_proximo: 'Далее', p_voltar: 'Назад',
+    p_pular: 'Пропустить', p_rezar: 'Сказать кадиш',
+    menu_kadish: 'Кадиш', menu_onde: 'Где молиться', menu_ajustes: 'Настройки',
+    rep_nenhuma: 'без повтора',
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     comecar_aqui: '▶ Начать отсюда',
     treino_active: '⊙ Режим Практики · пауза после каждого стиха',
@@ -6734,6 +7375,13 @@ const I18N = {
     toast_audio_failed: "השמע לא התנגן",
     ph_relation: "אבא, אמא, סבא...",
     modo_reza_curto: 'תפילה', modo_treino_curto: 'תרגול',
+    // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
+    menu_passos: 'איך משתמשים', menu_pessoas: 'בשביל מי אני מתפלל',
+    // os botoes do passo a passo (25/10)
+    p_comecar: 'להתחיל', p_proximo: 'הבא', p_voltar: 'חזרה',
+    p_pular: 'דילוג', p_rezar: 'לומר קדיש',
+    menu_kadish: 'הקדיש', menu_onde: 'איפה להתפלל', menu_ajustes: 'הגדרות',
+    rep_nenhuma: 'בלי חזרה',
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
     comecar_aqui: '▶ להתחיל כאן',
     treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
@@ -7408,6 +8056,9 @@ function updateTreinoLabel() {
   if (treino) treino.classList.toggle('active', !!state.modoTreino);
   if (reza) reza.setAttribute('aria-pressed', String(!state.modoTreino));
   if (treino) treino.setAttribute('aria-pressed', String(!!state.modoTreino));
+  // a linha da repeticao acompanha: entrar no treino poe 3x, e os valores a
+  // vista tem de dizer isso sem que ninguem os pinte por fora
+  if (typeof pintarRepeticao === 'function') pintarRepeticao();
 }
 // irParaModo(true) = treino, irParaModo(false) = reza. Chamar com o modo em que
 // ja se esta nao faz nada: com dois botoes, tocar no que ja esta aceso nao pode
@@ -7484,8 +8135,15 @@ function toggleModoTreino() {
   }
   updateTreinoLabel();
 }
-document.getElementById('treinoToggle').addEventListener('click', () => irParaModo(true));
-document.getElementById('rezaToggle').addEventListener('click', () => irParaModo(false));
+// 25/10 — UM BOTAO SO: toca-lo alterna. A `irParaModo(querTreino)` continua
+// existindo e continua saindo cedo quando ja se esta no modo pedido — era ela
+// que impedia que "tocar no modo em que voce JA esta" reiniciasse a reza, o
+// defeito consertado em 28/08. Aqui o querTreino passou a ser o CONTRARIO do
+// estado de agora, que e o que um botao unico quer dizer.
+// O #rezaToggle continua ouvindo: esta fora da tela, mas ha checagens que o
+// chamam por codigo, e tirar o ouvinte quebraria o que ele testa.
+document.getElementById('treinoToggle')?.addEventListener('click', () => irParaModo(!state.modoTreino));
+document.getElementById('rezaToggle')?.addEventListener('click', () => irParaModo(false));
 updateTreinoLabel();      // acende o Reza na carga
 
 // ---------- Treino por verso ou por palavra ----------
@@ -8053,9 +8711,21 @@ document.getElementById('consentDecline').addEventListener('click', () => {
 
   // O som: guardado no aparelho, e o botao do alto e a linha dos Ajustes leem a
   // MESMA conta. Nada de estado duplicado — ver aplicarSom().
-  let somGuardado = 'tts';
-  try { somGuardado = localStorage.getItem('tefila_audio_src') || 'tts'; } catch (e) {}
-  aplicarSom(somGuardado === 'silent');
+  //
+  // 25/10 — REZANDO, O SOM VEM DESLIGADO. Decisao dele: "sempre que estiver em
+  // modo reza o audio fica off, mas pode clicar; no modo treino sempre on". E o
+  // que se quer no minyan: o texto acompanha a voz do rabino em silencio e o
+  // telefone nao soa no meio da sinagoga. Quem quiser ouvir toca no alto-falante
+  // — e a tela do "Pronto", no fim do passo a passo, avisa que ele vem assim.
+  let somGuardado = null;
+  try { somGuardado = localStorage.getItem('tefila_audio_src'); } catch (e) {}
+  let marcaSom = null;
+  try { marcaSom = localStorage.getItem('tefila_som_padrao'); } catch (e) {}
+  if (marcaSom !== MARCA_SOM_PADRAO) {
+    somGuardado = 'silent';
+    try { localStorage.setItem('tefila_som_padrao', MARCA_SOM_PADRAO); } catch (e) {}
+  }
+  aplicarSom((somGuardado || 'silent') === 'silent');
   const btMudo = document.getElementById('mudoToggle');
   if (btMudo) btMudo.addEventListener('click', () => {
     aplicarSom(!state.mudo);
@@ -9396,12 +10066,8 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
   var pedidoGuardado = null;   // so o Android entrega isto
 
   function acomodar() {
-    // uma conta so para "onde e o pe da tela": a barra do audio e fixa la, e
-    // ela e quem manda. Sem isto o convite fica DEBAIXO dela e nao se toca.
     try {
-      var barra = document.querySelector('.audio-bar');
-      var h = barra ? Math.round(barra.getBoundingClientRect().height) : 0;
-      caixa.style.bottom = 'calc(' + (h + 12) + 'px + env(safe-area-inset-bottom))';
+      caixa.style.bottom = 'calc(' + (peDaTela() + 12) + 'px + env(safe-area-inset-bottom))';
     } catch (e) {}
   }
 
