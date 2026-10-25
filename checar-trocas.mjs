@@ -86,7 +86,23 @@ const medir = async (rotulo) => {
 
 const espera = ms => pag.waitForTimeout(ms);
 let falhas = 0;
-const passo = async (rotulo, fn) => { await fn(); await espera(1500); if (!(await medir(rotulo))) falhas++; };
+// 25/10 — ABRE O CABECALHO ANTES DE CADA TROCA. Desde a v64 o cabecalho FECHA
+// ao dar play, a pedido dele, e esta checagem troca de Kadish COM O AUDIO
+// TOCANDO — os botoes nao estao na tela, e os cliques davam TimeoutError.
+// Isto nao e contornar o fechamento: e o que a PESSOA faz. Quem quer trocar de
+// Kadish no meio da reza toca na linha da identidade (que existe para isso),
+// o cabecalho volta, e aí ela troca. A checagem passa pelo mesmo caminho.
+// Quem garante que o cabecalho fecha e volta sozinho e o checar-cabecalho.mjs;
+// aqui a pergunta continua sendo a de 30/08: depois da troca, a palavra acesa
+// e a que esta soando?
+const abrirMenu = async () => {
+  await pag.evaluate(() => {
+    const bt = document.getElementById('identidadeRezando');
+    if (bt && document.body.classList.contains('cabecalho-fechado')) bt.click();
+  });
+  await espera(250);
+};
+const passo = async (rotulo, fn) => { await abrirMenu(); await fn(); await espera(1500); if (!(await medir(rotulo))) falhas++; };
 
 await pag.click('#playBtn'); await espera(2500);
 if (!(await medir('rezando, sem trocar nada'))) falhas++;

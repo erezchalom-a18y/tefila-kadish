@@ -71,8 +71,11 @@ jobs:
       - name: testar-dedicatoria.mjs (o convite "em memoria de" nas 8 linguas)
         run: node testar-dedicatoria.mjs http://127.0.0.1:8896/tefila-kadish
 
-      - name: testar-camadas.mjs (a fita das camadas e o ⚙ dizem a mesma coisa)
+      - name: testar-camadas.mjs (os tres filtros e o ⚙ dizem a mesma coisa)
         run: node testar-camadas.mjs http://127.0.0.1:8896/tefila-kadish
+
+      - name: checar-cabecalho.mjs (o cabecalho fecha no play e nao abre sozinho)
+        run: node checar-cabecalho.mjs http://127.0.0.1:8896/tefila-kadish --provar
 
       - name: testar-treino.mjs (Modo Treino e repeticao)
         run: node testar-treino.mjs http://127.0.0.1:8896/tefila-kadish

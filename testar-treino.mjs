@@ -416,22 +416,42 @@ const camadas = await pag.evaluate(async () => {
   const btReza = document.getElementById('rezaToggle');
   if (!state.modoTreino) { btTreino.click(); await seg(); }
   const olhar = () => ({ heb: visivel('.hebrew'), tr: visivel('.translit'), pt: visivel('.pt-merged') });
-  aplicarCamadasDoTreino('heb-tr');     await seg(); const padrao = olhar();
-  aplicarCamadasDoTreino('so-translit');await seg(); const so = olhar();
-  aplicarCamadasDoTreino('tudo');       await seg(); const tudo = olhar();
-  aplicarCamadasDoTreino('heb-tr');     await seg();
-  btReza.click(); await seg();          // sai do treino
+  aplicarCamadasDoTreino('so-translit'); await seg(); const padrao2 = olhar();
+  aplicarCamadasDoTreino('heb-tr');      await seg(); const hebTr = olhar();
+  aplicarCamadasDoTreino('tudo');        await seg(); const tudo = olhar();
+  // sai do treino com o "Tudo" LIGADO de proposito: e assim que se descobre se
+  // o ajuste do treino vaza para a reza
+  btReza.click(); await seg();
   const naReza = olhar();
-  return { padrao, so, tudo, naReza };
+  aplicarCamadasDoTreino('so-translit'); await seg();
+  return { padrao2, hebTr, tudo, naReza };
 });
-confere('no Modo Treino a traducao sai e o hebraico fica (padrao)',
-  camadas.padrao.heb && camadas.padrao.tr && !camadas.padrao.pt, JSON.stringify(camadas.padrao));
-confere('"So transliteracao" tira tambem o hebraico',
-  !camadas.so.heb && camadas.so.tr && !camadas.so.pt, JSON.stringify(camadas.so));
+// 25/10 — ESTAS QUATRO LINHAS MUDARAM DE ALVO, e foi porque elas acharam um
+// defeito de verdade. Com o padrao novo do app (so o transliterado), as tres
+// opcoes deste ajuste deixaram de mudar um pixel: o `heb-hidden` global ja
+// tinha escondido tudo, e estas regras do treino so sabiam ESCONDER. Tres
+// botoes na tela que nao fazem nada e a tela mentindo.
+// O conserto foi no app (dentro do treino este ajuste manda sozinho, e o
+// padrao dele acompanhou o do app), e aqui as perguntas ficaram MAIS exigentes,
+// nao menos: antes se cobrava um estado por opcao; agora se cobra isso E que as
+// tres opcoes sejam DIFERENTES entre si — que e o que pega o dia em que elas
+// voltarem a nao fazer nada.
+confere('no Modo Treino o padrao e so a transliteracao',
+  !camadas.padrao2.heb && camadas.padrao2.tr && !camadas.padrao2.pt, JSON.stringify(camadas.padrao2));
+confere('"Hebraico + transliteracao" traz o hebraico e deixa a traducao fora',
+  camadas.hebTr.heb && camadas.hebTr.tr && !camadas.hebTr.pt, JSON.stringify(camadas.hebTr));
 confere('"Tudo" traz a traducao de volta',
   camadas.tudo.heb && camadas.tudo.tr && camadas.tudo.pt, JSON.stringify(camadas.tudo));
-confere('e a REZA nao muda por causa desse ajuste',
-  camadas.naReza.heb && camadas.naReza.tr && camadas.naReza.pt, JSON.stringify(camadas.naReza));
+confere('as tres opcoes do treino dao tres telas DIFERENTES',
+  new Set([camadas.padrao2, camadas.hebTr, camadas.tudo].map(o => JSON.stringify(o))).size === 3,
+  JSON.stringify([camadas.padrao2, camadas.hebTr, camadas.tudo]));
+// A REZA segue os FILTROS, nunca o ajuste do treino. Antes esta linha cobrava
+// "as tres camadas na reza", o que so era verdade enquanto o app abria com as
+// tres; agora ela cobra o que importa de verdade — que o ajuste do treino nao
+// VAZE para a reza. Saimos do treino com "Tudo" ligado: se ele vazasse, a reza
+// viria com hebraico e traducao, e nao vem.
+confere('o ajuste do treino nao vaza para a REZA (que segue os filtros)',
+  !camadas.naReza.heb && camadas.naReza.tr && !camadas.naReza.pt, JSON.stringify(camadas.naReza));
 
 // ---------- 27/08: o que ele mandou tirar da tela ----------
 // "esta escrito modo treino - pausa apos cada verso (desnecessario na minha
@@ -450,6 +470,16 @@ confere('os pictogramas "em pe · minyan · voz audivel" sairam da tela',
 // Um botao so, escrito "Modo Reza", nao dizia se aquilo era o estado ou o
 // destino — e de nenhuma das duas leituras saia que existe um Modo Treino.
 // Agora sao dois, sempre visiveis, e o aceso e onde voce esta.
+// 25/10 — O CABECALHO TEM DE ESTAR ABERTO PARA ESTA PERGUNTA, e isso nao e
+// afrouxar: desde a v64 o cabecalho FECHA no play, a pedido dele, e este
+// arquivo toca o audio varias vezes antes de chegar aqui. Perguntar "os dois
+// modos estao na tela?" com a reza correndo e perguntar outra coisa — a
+// pergunta de 27/08 e sobre DESCOBRIR que existe um Modo Treino, e quem
+// descobre esta parado, escolhendo. E a licao da v60: as portas vivem em
+// momentos diferentes e tem de ser medidas em momentos diferentes.
+// Quem garante que o cabecalho fecha e volta e o checar-cabecalho.mjs.
+await pag.evaluate(() => { try { abrirCabecalho(); } catch (e) {} });
+await pag.waitForTimeout(250);
 const dois = await pag.evaluate(async () => {
   const seg = () => new Promise(r => setTimeout(r, 250));
   const rz = document.getElementById('rezaToggle');

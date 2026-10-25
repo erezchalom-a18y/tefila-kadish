@@ -241,6 +241,19 @@ for (const n of ['ashkenaz', 'chabad', 'sefard', 'sefaradi'])
     pag.on('pageerror', e => erros.push(e.message));
     await pag.goto(`${BASE}/engine.html?n=${n}&t=${t}&lang=pt`);
     await pag.waitForTimeout(2600);
+    // 25/10 — ACENDE AS TRES CAMADAS ANTES DE LER A TELA. Desde a v64 o app
+    // abre so com a transliteracao, a pedido dele, entao a linha das glosas
+    // nao esta na tela e esta checagem lia "undefined" nos 8. Ela nao
+    // afrouxou nem mudou de alvo: a pergunta continua sendo "o que a tela
+    // mostra e o portugues que ele decidiu?", e o que mudou foi so que agora
+    // e preciso PEDIR para ver as tres — e pede-se pelo caminho de quem reza,
+    // os tres filtros, nao por dentro. Se os filtros quebrarem, isto aqui fica
+    // vermelho junto.
+    await pag.evaluate(() => {
+      for (const b of document.querySelectorAll('#filtrosTexto button[data-filtro]'))
+        if (!b.classList.contains('active')) b.click();
+    });
+    await pag.waitForTimeout(400);
     const r = await pag.evaluate(() => ({
       lang: typeof state !== 'undefined' ? state.lang : '?',
       // SO o Kadish. Os quadros de explicacao citam "yehei shmei raba" de

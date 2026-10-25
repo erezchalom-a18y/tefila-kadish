@@ -25,7 +25,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Carlito:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --font-scale: 1;
@@ -513,9 +513,21 @@
   }
 
   /* ============ TRANSLITERATION (19px - functional, what you actually pronounce) ============ */
+  /* ===== A LETRA DA TRANSLITERACAO (25/10, v64) =====
+     Ele: "de inicio sempre deve comecar como somente transliterado grande em
+     fonte bonita e FACIL DE LER". A Cormorant Garamond italica era bonita e
+     nao era facil: ela nasceu para texto corrido de livro, com hastes finas e
+     o italico inclinando tudo — e esta linha nao e para ler com o olho, e para
+     LER EM VOZ ALTA, letra a letra, por quem nao conhece a palavra.
+     Carlito, reta. E o clone livre e metricamente igual da Calibri, que foi a
+     que ele pediu por nome ("tente outras opcoes como calibri"); esta no Google
+     Fonts, entao nao depende de o aparelho ter a Calibri instalada, e cai na
+     propria Calibri e depois na Segoe UI onde houver.
+     O italico SAIU: inclinar afina as letras, e foi exatamente isso que deixou
+     o rotulo da dedicatoria "apagado" em 04/09. */
   .translit {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
+    font-family: 'Carlito', Calibri, 'Segoe UI', sans-serif;
+    font-style: normal;
     font-size: calc(19px * var(--font-scale));
     line-height: 1.4;
     color: var(--text-soft);
@@ -726,6 +738,15 @@
   body.sem-translit .translit { display: none; }
   body.pt-hidden .pt-merged { display: none; }
 
+  /* Com o hebraico fora da tela a transliteracao deixa de ser legenda de uma
+     linha em hebraico e passa a ser O TEXTO. Entao ela flui da esquerda para a
+     direita, como qualquer texto em letra latina. O `direction: rtl` dela
+     existia por UM motivo — alinhar com o hebraico de cima —, e sem o hebraico
+     esse motivo nao existe: a linha ficava encostada na direita, com o olho
+     tendo de procurar onde cada verso comeca. Com o hebraico na tela ela volta
+     para a direita, alinhada com ele. */
+  body.heb-hidden .translit { direction: ltr; text-align: left; }
+
   /* Focus modes - one layer big, others small + faded */
   /* ===== O DESTAQUE, medido em PROPORCAO e nao em pixel (09/09, v50) =====
      Ele, olhando o computador: "as letras da traducao/transliteracao estao
@@ -755,6 +776,20 @@
   body.focus-pt .hebrew { font-size: calc(28px * var(--font-scale) * 0.71); opacity: 0.45; }
   body.focus-pt .translit { font-size: calc(19px * var(--font-scale) * 0.74); opacity: 0.45; }
 
+  /* ===== "SO O TRANSLITERADO, GRANDE" (25/10, v64) =====
+     O tamanho grande vem de ESTAR SOZINHO na tela, nunca de um estado
+     "Destaque". A diferenca nao e de gosto, e de comportamento: se ele viesse
+     do focus-tr, tocar no filtro "Portugues" traria o portugues a 45% de
+     opacidade e 0.86 do tamanho — apagado, sem ninguem ter pedido isso, e o
+     transliterado continuaria grande por um motivo que a tela nao explica.
+     Escrita sobre "heb e pt ocultos", a regra responde a pergunta certa — "ha
+     mais alguma coisa na tela?" — e se desfaz sozinha no instante em que outra
+     camada entra. Os numeros sao os MESMOS do focus-tr, de proposito: e o
+     tamanho que ele aprovou. */
+  body.heb-hidden.pt-hidden .translit {
+    font-size: calc(19px * var(--font-scale) * 1.37); font-weight: 500; color: var(--text);
+  }
+
   /* E nas telas grandes o Destaque acompanha as MESMAS bases das regras de
      tamanho — 34px/23px/16px a partir de 1000px, 40px/26px/18px a partir de
      1400px. Sem isto, o `calc` acima continuaria multiplicando o numero do
@@ -770,6 +805,7 @@
     body.focus-pt .pt-merged { font-size: calc(16px * var(--font-scale) * 1.36); }
     body.focus-pt .hebrew { font-size: calc(34px * var(--font-scale) * 0.71); }
     body.focus-pt .translit { font-size: calc(23px * var(--font-scale) * 0.74); }
+    body.heb-hidden.pt-hidden .translit { font-size: calc(23px * var(--font-scale) * 1.37); }
   }
   @media (min-width: 1400px) {
     body.focus-heb .hebrew { font-size: calc(40px * var(--font-scale) * 1.29); }
@@ -782,6 +818,7 @@
     body.focus-pt .pt-merged { font-size: calc(18px * var(--font-scale) * 1.36); }
     body.focus-pt .hebrew { font-size: calc(40px * var(--font-scale) * 0.71); }
     body.focus-pt .translit { font-size: calc(26px * var(--font-scale) * 0.74); }
+    body.heb-hidden.pt-hidden .translit { font-size: calc(26px * var(--font-scale) * 1.37); }
   }
 
   /* ============ SETTINGS PANEL ============ */
@@ -1291,7 +1328,108 @@
      quando era o rodape da pagina */
   .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
 
+  /* ===== OS TRES FILTROS DE TEXTO (25/10, v64) =====
+     Eles moram na vaga que era da nota do minyan: no FLUXO do texto, antes do
+     primeiro verso. Nao no cabecalho, e a razao e a de sempre neste projeto —
+     cabecalho e altura que o Kadish perde, e o piso e o MIN_KADISH. Aqui eles
+     estao na tela no instante em que ele abre o app, que e quando a escolha
+     serve, e sobem com o texto quando ele comeca a rezar.
+     A FORMA diz o estado sem uma palavra a mais: aceso = latao cheio; apagado =
+     so o contorno. E a mesma gramatica das duas fitas do alto (.modo-op.active),
+     para a tela nao ter dois jeitos de dizer "este e o escolhido". */
+  .filtros-texto {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+    max-width: 40em; margin: 0 auto 22px; padding: 0 18px;
+  }
+  .filtros-texto .filtro-op {
+    font-family: 'Cormorant Garamond', serif;
+    /* 12px e 30px sao os pisos do projeto, e o testar-telas.mjs reprova abaixo
+       dos dois. Ja fui pego aqui tentando 11,5px para caber melhor. */
+    font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+    /* SEM CAIXA-ALTA, e isto foi medido e nao escolhido por gosto. As duas
+       fitas do alto sao maiusculas porque os rotulos delas sao curtos
+       (Chabad, YATOM). Aqui as palavras sao longas — "Transliteracao",
+       "Traslitterazione", "Transliteration" — e a caixa-alta com espacamento
+       somava 346 a 358px nas linguas latinas, contra 299px uteis de um iPhone
+       SE: a fita quebrava em DUAS linhas, 66px, e o primeiro verso descia
+       12px abaixo de onde estava na v63. Sem caixa-alta o pior caso cai para
+       257px (italiano e frances) e os 8 cabem numa linha de 30px.
+       Nao e menos legivel: 12px continua sendo o piso do projeto, e palavra
+       em caixa normal se le mais depressa que em maiuscula. */
+    padding: 5px 11px; min-height: 30px;
+    border: 1px solid var(--line, #c9b894); border-radius: 999px;
+    background: transparent;
+    /* --text-soft, nunca --text-faint: em 04/09 o rotulo da dedicatoria estava
+       em --text-faint e media 3,65:1 contra o pergaminho — ele viu e chamou de
+       "apagado", com razao. Este projeto ainda nao tem piso de contraste
+       escrito numa checagem; ate ter, a regra e nao repetir aquilo. */
+    color: var(--text-soft, #4d3d2d);
+    cursor: pointer; flex: 0 1 auto; line-height: 1.1;
+  }
+  .filtros-texto .filtro-op.active {
+    background: var(--brass); border-color: var(--brass); color: var(--bg);
+  }
+  /* O ultimo aceso nao apaga. Ele continua ACESO — e o estado em que voce esta —
+     e so deixa de responder ao toque; nada e riscado nem esmaecido, porque
+     esmaecer o unico texto da tela diria o contrario do que acontece. */
+  .filtros-texto .filtro-op[aria-disabled="true"] { cursor: default; }
+  /* Em alemao a transliteracao nao existe (SEM_TRANSLITERACAO): um botao para
+     uma camada que a lingua nao tem seria a tela mentindo. */
+  body.sem-translit .filtros-texto .filtro-op[data-filtro="tr"] { display: none; }
+
+  /* ===== O CABECALHO FECHADO (25/10, v64) =====
+     Ele: "e se quando der o play fecha o menu de cima?" — e, perguntado quando
+     ele volta: "quando pausa por mais de 10 segundos ou o kadish parar voltar
+     para tela completa".
+     Fecham os CONTROLES. Ficam a identidade (por quem se reza e qual Kadish) e
+     a dedicatoria, que sao a reza e nao ajuste.
+     Esconder e por CLASSE com display, NUNCA pelo atributo `hidden`: foi assim
+     que a v59 foi ao ar com o botao de idioma na tela e a checagem jurando que
+     tinha sumido — `[hidden]` e so a folha do navegador e perde de qualquer
+     regra do autor com `display`. */
+  .identidade-rezando { display: none; }
+  /* A CLASSE VEM REPETIDA (.cabecalho-fechado.cabecalho-fechado), e nao e
+     descuido. Com ela escrita uma vez, a regra das tres portas empatava em peso
+     com `body:not(.modo-treino) .learn-row{display:flex!important}` — que mora
+     mais abaixo no arquivo e, no empate, GANHA POR SER A ULTIMA. Resultado: no
+     play o cabecalho fechava e as tres portas continuavam na tela, e eu so vi
+     porque tirei uma foto; a checagem nao pegou porque a lista dela nao incluia
+     as portas (as duas coisas estao consertadas).
+     E a licao de 27/08 e de 09/09, pela terceira vez: NESTE ARQUIVO, QUEM VEM
+     DEPOIS GANHA. Repetir a classe sobe o peso sem depender de onde o bloco
+     esta escrito — que e o que torna a regra estavel se alguem mover o CSS. */
+  body.cabecalho-fechado.cabecalho-fechado .brand-mark .trad-switch,
+  body.cabecalho-fechado.cabecalho-fechado .brand-mark .tipo-switch,
+  body.cabecalho-fechado.cabecalho-fechado .brand-right .modo-switch,
+  body.cabecalho-fechado.cabecalho-fechado .brand-right .lang-toggle,
+  body.cabecalho-fechado.cabecalho-fechado #settingsToggle,
+  body.cabecalho-fechado.cabecalho-fechado #infoToggle,
+  body.cabecalho-fechado.cabecalho-fechado .prayer-meta,
+  body.cabecalho-fechado.cabecalho-fechado .learn-row,
+  body.cabecalho-fechado.cabecalho-fechado .learn-strip,
+  body.cabecalho-fechado.cabecalho-fechado .filtros-texto { display: none !important; }
+  body.cabecalho-fechado .identidade-rezando {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'Cormorant Garamond', serif;
+    /* dentro do .brand-mark, que e caixa-alta e espacado: aqui nao, porque isto
+       e uma frase para ler ("Chabad - Kadish Yatom") e nao um rotulo */
+    font-size: 15px; text-transform: none; letter-spacing: 0; font-weight: 400;
+    min-height: 32px; padding: 5px 11px;
+    border: 1px solid var(--line, #c9b894); border-radius: 10px;
+    background: transparent; color: var(--text-soft, #4d3d2d);
+    cursor: pointer; max-width: 100%; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap;
+  }
+  body.cabecalho-fechado .identidade-rezando .ir-seta {
+    font-size: 10px; color: var(--text-faint); flex: 0 0 auto;
+  }
+
   /* ===== A nota do minyan, antes do primeiro verso (04/09) =====
+     25/10 — ESTA CAIXA JA NAO APARECE NA TELA DE REZAR. Ela saiu da vaga em
+     25/10 a pedido dele ("Os botoes no lugar dela"), e os tres filtros ficaram
+     ali. O desenho FICA, como ficou o do .tip em 01/09: a frase e dele, continua
+     inteira no painel da ℹ e na pagina Aprender, e no dia em que ela voltar a
+     esta tela volta desenhada. O que saiu foi a copia, nao a frase.
      Ele: "isso deve aparecer em algum lugar em destaque na pagina principal".
      Destaque aqui e o latao do app e uma caixa de contorno leve — nao letra
      grande: quem manda no tamanho desta tela e o hebraico. Ela fica no FLUXO
@@ -1598,10 +1736,34 @@
      calma — no treino ela so ocupa a linha e puxa o olho para longe do que se
      esta dizendo. O hebraico e a letra verdadeira: quem ja le, le por ele; quem
      nao le ainda, ganha a tela de volta. Por isso ele escolhe, nos Ajustes.
-     Fora do Modo Treino nada disto vale — a reza continua com as tres camadas. */
+     Fora do Modo Treino nada disto vale — a reza continua com o que os filtros
+     dizem.
+
+     25/10 — DENTRO DO TREINO, ESTE AJUSTE PASSOU A MANDAR SOZINHO, e isto foi
+     um defeito achado pela checagem, nao uma ideia. Ate a v63 estas regras so
+     sabiam ESCONDER, e isso bastava porque o app abria com as tres camadas na
+     tela. Com o padrao da v64 (so o transliterado), o `body.heb-hidden .hebrew`
+     ja tinha escondido tudo — e as tres opcoes deste ajuste passaram a nao
+     mudar UM PIXEL. Tres botoes na tela que nao fazem nada e a tela mentindo, e
+     foi exatamente isso que o testar-treino.mjs acusou em tres linhas.
+     Entao aqui as regras tambem sabem MOSTRAR: dentro do treino quem decide e
+     este ajuste, e fora dele quem decide sao os filtros. Nao sao duas contas
+     para a mesma pergunta — sao duas telas, e a tela em que voce esta diz qual
+     vale, porque o botao Treino fica aceso.
+     O PADRAO deste ajuste foi para "so-translit" junto com o do app, senao
+     entrar no Treino traria o hebraico de volta para todo mundo — o contrario
+     do que ele pediu em 25/10. */
   body.modo-treino.treino-so-translit .hebrew,
   body.modo-treino.treino-heb-tr      .pt-merged,
   body.modo-treino.treino-so-translit .pt-merged { display: none; }
+  body.modo-treino.treino-heb-tr .hebrew,
+  body.modo-treino.treino-tudo   .hebrew { display: block; }
+  body.modo-treino.treino-tudo   .pt-merged { display: block; }
+  /* a transliteracao nunca sai do treino — e ela que a boca le */
+  body.modo-treino .translit { display: block; }
+  /* menos em alemao, que nao tem transliteracao propria: ali nao ha o que
+     mostrar, e forca-la seria pôr a portuguesa na boca de quem le alemao */
+  body.modo-treino.sem-translit .translit { display: none; }
   .settings-versao {
     font-size: 11px; opacity: .5; margin: -6px 0 14px;
     font-variant-numeric: tabular-nums; user-select: all;
@@ -1768,14 +1930,28 @@
      inverteu. A caixa continua diferente (NOME em maiuscula, tamanho em
      minuscula), que e o que separa os dois sem precisar de pontuacao — o "·"
      saiu junto. */
-  .tipo-switch .modo-op .kt-nome { opacity: 0.72; letter-spacing: 0.06em; }
-  .tipo-switch .modo-op.active .kt-nome { opacity: 0.8; }
+  /* 25/10 (v64) — ele mandou a forma exata, duas vezes e na segunda com a
+     correcao: "alterar pequeno/grande para PEQUENO-yatom . GRANDE-derabanan".
+     E a continuacao da inversao de 14/09, agora na ORDEM e nao so no peso: o
+     tamanho vem PRIMEIRO, em maiuscula; o nome hebraico vem depois do hifen, em
+     minuscula e meio tom atras. Quem abre este app acabou de ser convidado com
+     "voce nao precisa saber hebraico", entao a primeira palavra do botao tem de
+     ser a que ele entende.
+     O HIFEN ESTA NO HTML, nao num ::before do .kt-nome: no celular deitado o
+     .kt-nome sai da tela, e num ::before o hifen ficaria sozinho atras do
+     PEQUENO. */
   .tipo-switch .modo-op .kt-size {
-    margin-left: 5px; font-weight: 600; font-style: normal;
-    text-transform: lowercase; letter-spacing: 0.01em; opacity: 1;
+    font-weight: 600; font-style: normal;
+    text-transform: uppercase; letter-spacing: 0.06em; opacity: 1;
     /* 12px tambem aqui: e texto de cabecalho como qualquer outro. */
     font-size: 12px;
   }
+  .tipo-switch .modo-op .kt-nome {
+    font-weight: 400; font-style: normal;
+    text-transform: lowercase; letter-spacing: 0.01em; opacity: 0.72;
+    font-size: 12px;
+  }
+  .tipo-switch .modo-op.active .kt-nome { opacity: 0.85; }
 
   /* Community response indicator */
   .community-respond {
@@ -2388,15 +2564,21 @@
     /* Deitado no celular a altura e o bem mais escasso, e agora ha duas fitas no
        alto (tradicao e tipo) que podem quebrar em duas linhas. Aqui saem as duas
        coisas que menos servem a quem esta rezando de pe com o aparelho deitado:
-       o cartao "Por que dizemos o Kadish?" (leitura, nao reza) e o sufixo
-       "· pequeno / · grande" do tipo, que so repete o que o nome ja diz.
+       o cartao "Por que dizemos o Kadish?" (leitura, nao reza) e, do tipo de
+       Kadish, a palavra que menos serve a quem nao le hebraico.
+       25/10 — ISTO INVERTEU, e tinha de inverter. Ate a v63 saia daqui o
+       tamanho ("pequeno"/"grande") e ficava o nome hebraico; desde que ele
+       mandou pôr o tamanho na frente (PEQUENO-yatom), esconder o tamanho
+       deixaria na tela deitada exatamente a palavra que ele mandou recuar, e o
+       botao leria "-yatom". Agora sai o NOME e fica o tamanho. A informacao
+       nao se perde: em pe, no mesmo aparelho, o nome volta.
        Nada aqui reduz fonte nem altura de botao — 12px e 30px continuam. */
     /* 10/09 — o !important aqui NAO e enfeite. Em pe a fileira voltou por
        `body:not(.modo-treino) .learn-row`, que pesa mais que este seletor: sem
        o !important esta regra perdia e a fileira aparecia DEITADA tambem, onde
        ela nao cabe. Quem vira o telefone de lado quer ler, nao configurar. */
     .learn-strip, .learn-row { display: none !important; }
-    .kt-size { display: none; }
+    .tipo-switch .modo-op .kt-nome { display: none; }
     /* 10/09 — a nota do minyan encolhe AQUI TAMBEM, e este era um defeito de
        verdade que a checagem nova achou. Um iPhone SE deitado tem 667px de
        LARGURA: as regras de "<= 640px" nunca chegaram nele, entao ele mostrava
@@ -2411,6 +2593,16 @@
        e como se reza, de pe com o sidur na outra mao — e dentro do ℹ em toda
        tela, alem da pagina Aprender. */
     .nota-minyan { display: none; }
+    /* 25/10 — OS TRES FILTROS SAEM DAQUI, pela mesma razao e com a mesma conta.
+       Eles ocupam a vaga que era da nota, e deitado custavam 30px de botao mais
+       22px de respiro numa tela de 375 de altura: medido, chegavam aos versos
+       29% na reza (com a dedicatoria, que deitado tambem mora no fluxo) e 39%
+       no treino, contra o piso de 40% do MIN_KADISH. O testar-telas.mjs
+       reprovou as quatro medidas deitadas pelo nome.
+       Nao se perde nada: as tres camadas continuam inteiras no ⚙, em toda
+       tela, com o ciclo de sempre. Deitado e para LER — e por isso que daqui ja
+       saem o cartao, as tres portas, a faixa do titulo e a nota do minyan. */
+    .filtros-texto { display: none; }
     /* 04/09 — deitado no celular ela VOLTOU. Ela saia daqui porque custava 40px
        do cabecalho e derrubava a sobra para 51%; agora ela nao esta no
        cabecalho, entao nao custa altura de leitura nenhuma. */
@@ -2443,7 +2635,7 @@
 
 <div class="topbar">
   <div class="brand">
-    <div class="brand-mark"><span class="modo-switch trad-switch" id="traditionBadge" role="group" aria-label="Tradição"><button class="modo-op" data-trad="ashkenazi">Ashkenazi</button><button class="modo-op active" data-trad="chabad">Chabad</button><button class="modo-op" data-trad="sefard">Sefard</button><button class="modo-op" data-trad="sefaradi">Sefaradi</button></span><span class="modo-switch tipo-switch" role="group" aria-label="Tipo de Kadish"><button class="modo-op active" id="kadishTypeToggle" data-tipo="yatom" title="Kadish do Enlutado">YATOM</button><button class="modo-op" id="kadishDerabananToggle" data-tipo="derabanan" title="Kadish deRabanan">DERABANAN</button></span><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
+    <div class="brand-mark"><span class="modo-switch trad-switch" id="traditionBadge" role="group" aria-label="Tradição"><button class="modo-op" data-trad="ashkenazi">Ashkenazi</button><button class="modo-op active" data-trad="chabad">Chabad</button><button class="modo-op" data-trad="sefard">Sefard</button><button class="modo-op" data-trad="sefaradi">Sefaradi</button></span><span class="modo-switch tipo-switch" role="group" aria-label="Tipo de Kadish"><button class="modo-op active" id="kadishTypeToggle" data-tipo="yatom" title="Kadish do Enlutado">YATOM</button><button class="modo-op" id="kadishDerabananToggle" data-tipo="derabanan" title="Kadish deRabanan">DERABANAN</button></span><button type="button" class="identidade-rezando" id="identidadeRezando" title="Abrir os menus"><span class="ir-texto" id="irTexto"></span><span class="ir-seta" aria-hidden="true">▾</span></button><span class="versao-topo" id="versaoTopo"></span><!-- preenchido pela constante VERSAO; vazio de proposito: um numero escrito a mao aqui mentiria para o Erez no dia em que esquecessemos de troca-lo --></div>
     <div class="brand-right">
       <!-- DOIS BOTOES, nao um que troca de nome (27/08).
            "ele so aparece quando clicado e o usuario nao sabe de sua existencia."
@@ -2579,7 +2771,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-09-15 · 63';
+const VERSAO = '2026-10-25 · 64';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -4494,30 +4686,149 @@ function atualizarDedicatoria() {
  * sozinho de proposito — e desisti: e justamente quem esta aprendendo que
  * precisa saber que a reza pede dez. E ela nao custa altura em modo nenhum.
  */
-function desenharNotaMinyan(main) {
+/* ===========================================================
+ * AS TRES CAMADAS — e por que a DECLARACAO mora aqui em cima
+ * ===========================================================
+ * Hebraico, transliteracao e traducao. As FUNCOES que mexem nelas
+ * (pintarCamadas, aplicarCamada) continuam no seu bloco, mais abaixo; o que
+ * subiu foram as tres declaracoes, que sao dados e nao comportamento.
+ *
+ * Subiram porque o `desenharVersos()` roda ANTES daquele bloco, e desde a v64
+ * ele desenha os tres filtros — que precisam saber o estado das camadas para se
+ * pintarem. Com a declaracao la embaixo, a primeira pintura estourava:
+ * "Cannot access 'CAMADAS' before initialization", e a excecao morria dentro do
+ * desenharVersos derrubando o resto do script.
+ *
+ * E ESTA FOI A TERCEIRA VEZ da armadilha do `const` em TDZ neste arquivo — o
+ * rotulo curto da dedicatoria (04/09), a nota do minyan (04/09) e agora. O
+ * CLAUDE.md escreveu naquele dia o que fazer na terceira: "o conserto certo e
+ * mover as tabelas para o topo do script, nao repetir o remendo". E o que esta
+ * feito aqui.
+ *
+ * O estado inicial e so o PADRAO. Quem ja escolheu tem a sua escolha lida do
+ * aparelho mais abaixo, e a pintarCamadas de lá repinta os filtros — a ultima
+ * pintura e a que vale, e e a certa.
+ */
+const CAMADAS = ['heb', 'tr', 'pt'];
+// A ordem do ciclo e dele: Normal → Destaque → Ocultar. Ele tinha proposto
+// comecar pelo ocultar; pular de "sumiu" direto para "esta gritando" e um
+// salto grande, e ele concordou em inverter.
+const CICLO_CAMADA = ['normal', 'focus', 'hidden'];
+// 25/10 (v64) — O PADRAO MUDOU OUTRA VEZ, E E DELE: "de inicio sempre deve
+// comecar como somente transliterado grande em fonte bonita e facil de ler
+// (retire o hebraico e a traducao)".
+// Entao o hebraico e o portugues comecam OCULTOS, e a transliteracao fica
+// 'normal' — nao 'focus'. A diferenca importa e esta escrita no CSS: o tamanho
+// grande vem agora de `body.heb-hidden.pt-hidden`, isto e, de ESTAR SOZINHA.
+// Se viesse do 'focus', o primeiro toque no filtro "Portugues" traria o
+// portugues apagado a 45%, que nao e o que quem toca esta pedindo.
+// As tres camadas continuam inteiras no ⚙, com o ciclo de sempre, e os tres
+// filtros novos no fluxo do texto leem e escrevem este MESMO estado.
+const estadoCamada = { heb: 'hidden', tr: 'normal', pt: 'hidden' };
+
+/* ===========================================================
+ * OS TRES FILTROS DE TEXTO (25/10, v64) — NO LUGAR DA NOTA DO MINYAN
+ * ===========================================================
+ * Ele: "quero que onde esta a frase o kadish exige minyan.. incluir 3 botoes
+ * com as opcoes de texto: hebraico - transliterado - portugues". E, perguntado
+ * se os botoes entravam AO LADO da nota ou NO LUGAR dela: "Os botoes no lugar
+ * dela".
+ *
+ * A FRASE DO MINYAN NAO SE PERDEU, e isso precisa ficar escrito: ela e texto
+ * DELE, palavra por palavra (v50), e entrou na tela principal a pedido dele na
+ * v43 ("isso deve aparecer em algum lugar em destaque na pagina principal").
+ * Continua inteira nos dois lugares onde ja estava quando ele pediu a terceira
+ * copia: o painel da ℹ e a pagina Aprender. O que saiu da tela de rezar foi a
+ * copia, nao a frase — e saiu porque ele mandou pôr os filtros nessa vaga.
+ * Medido: a nota custava 85px aqui; os filtros custam cerca de 34px, entao o
+ * primeiro verso SUBIU (a conta que vale e a do MIN_KADISH).
+ *
+ * O FILTRO E UM INTERRUPTOR, NAO O CICLO DE TRES ESTADOS. No ⚙ cada camada tem
+ * Ocultar | Normal | Destaque, e aquilo continua inteiro. Aqui a pergunta e
+ * outra e mais simples — esta camada esta na tela? —, entao: aceso = qualquer
+ * coisa que nao seja 'hidden'; tocar alterna entre 'normal' e 'hidden'. Quem
+ * escolher o Destaque no ⚙ continua com o filtro aceso, porque os dois leem o
+ * MESMO estadoCamada. Uma conta so.
+ *
+ * O ULTIMO ACESO NAO APAGA. Sem isso um toque deixa a tela em branco, e quem
+ * esta rezando nao tem como desconfiar do que fez nem como desfazer — nao ha
+ * mais texto em que tocar. O botao do ultimo aceso leva aria-disabled e nao
+ * responde.
+ *
+ * Os rotulos sao as chaves layer_hebrew / layer_translit / layer_translation,
+ * que ja existem nas 8 linguas desde a fita de 02/09: zero texto novo, e por
+ * isso a regra 6 nem entra.
+ */
+function desenharFiltrosTexto(main) {
   if (!main) return;
   const el = document.createElement('div');
-  el.className = 'nota-minyan';
+  el.className = 'filtros-texto';
+  el.id = 'filtrosTexto';
+  el.setAttribute('role', 'group');
   const L = (typeof state !== 'undefined' && state.lang) || 'pt';
   if (L === 'he') el.dir = 'rtl';
+  el.setAttribute('aria-label', L === 'pt' ? 'Texto na tela' : 'Text layers');
   // Leitura protegida e data-i18n, pela mesma armadilha do rotulo curto da
   // dedicatoria: esta pintura pode acontecer ANTES de o `const I18N` ser
-  // inicializado, e ler um const nessa janela estoura. Se estourar, o span sai
+  // inicializado, e ler um const nessa janela estoura. Se estourar, o botao sai
   // vazio e o applyI18n o preenche pelo data-i18n.
-  const frase = (chave) => {
+  const rotulo = (chave) => {
     try { return (I18N[L] || I18N.pt)[chave] || ''; } catch (e) { return ''; }
   };
-  // As duas metades levam nome porque o TELEFONE mostra so a primeira (10/09).
-  // Nao e frase reescrita: sao as palavras dele, e o telefone mostra menos
-  // delas. A segunda continua inteira no painel da ℹ e na pagina Aprender.
-  for (const [chave, classe] of [['nota_minyan', 'nm-inicio'], ['nota_de_pe', 'nm-resto']]) {
-    const linha = document.createElement('span');
-    linha.className = classe;
-    linha.setAttribute('data-i18n', chave);
-    linha.textContent = frase(chave);   // textContent, nunca innerHTML
-    el.appendChild(linha);
+  for (const [camada, chave] of [['heb', 'layer_hebrew'], ['tr', 'layer_translit'], ['pt', 'layer_translation']]) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'filtro-op';
+    b.dataset.filtro = camada;
+    b.setAttribute('data-i18n', chave);
+    b.textContent = rotulo(chave);   // textContent, nunca innerHTML
+    el.appendChild(b);
   }
+  el.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-filtro]');
+    if (!b || b.getAttribute('aria-disabled') === 'true') return;
+    const camada = b.dataset.filtro;
+    aplicarCamada(camada, estadoCamada[camada] === 'hidden' ? 'normal' : 'hidden');
+  });
   main.appendChild(el);
+  pintarFiltros();
+}
+
+// Leitura protegida do SEM_TRANSLITERACAO: a pintarFiltros pode rodar na
+// primeira volta, antes de aquele `const` existir, e ler um const nessa janela
+// estoura. Mesma armadilha do I18N, mesmo remedio.
+function semTransliteracao() {
+  try { return SEM_TRANSLITERACAO.includes(state.lang); } catch (e) { return false; }
+}
+
+function pintarFiltros() {
+  const el = document.getElementById('filtrosTexto');
+  if (!el) return;
+  const semTr = semTransliteracao();
+  // o que esta REALMENTE na tela: em alemao a transliteracao nao existe, entao
+  // ela nao conta como camada acesa nem para a trava do ultimo.
+  const acesas = CAMADAS.filter(l => estadoCamada[l] !== 'hidden' && !(l === 'tr' && semTr));
+  el.querySelectorAll('button[data-filtro]').forEach(b => {
+    const aceso = estadoCamada[b.dataset.filtro] !== 'hidden';
+    b.classList.toggle('active', aceso);
+    b.setAttribute('aria-pressed', aceso ? 'true' : 'false');
+    const trava = aceso && acesas.length === 1 && !(b.dataset.filtro === 'tr' && semTr);
+    b.setAttribute('aria-disabled', trava ? 'true' : 'false');
+  });
+}
+
+// EM ALEMAO O PADRAO NOVO DARIA A TELA EM BRANCO, e esta guarda e o que impede.
+// O alemao nao tem transliteracao propria (SEM_TRANSLITERACAO, decisao dele em
+// 21/08: mostrar a portuguesa soaria outra palavra). O padrao da v64 oculta o
+// hebraico e a traducao. Juntas, as duas decisoes deixariam quem le alemao sem
+// uma linha de texto — e nada na tela acusaria, porque cada uma delas esta
+// certa sozinha. Entao: se a unica camada acesa for uma que aquela lingua nao
+// tem, o hebraico volta.
+function garantirAlgoNaTela() {
+  if (typeof estadoCamada === 'undefined' || typeof CAMADAS === 'undefined') return;
+  const semTr = semTransliteracao();
+  const visiveis = CAMADAS.filter(l => estadoCamada[l] !== 'hidden' && !(l === 'tr' && semTr));
+  if (visiveis.length === 0) aplicarCamada('heb', 'normal');
 }
 
 function desenharVersos() {
@@ -4526,7 +4837,7 @@ function desenharVersos() {
   const main = document.getElementById('main');
   main.innerHTML = '';   // redesenhar substitui, nao empilha
   atualizarDedicatoria();   // a vaga e a ultima linha do .topbar, nao do main
-  desenharNotaMinyan(main);
+  desenharFiltrosTexto(main);
   verses.forEach((v, vi) => {
     const verseEl = document.createElement('div');
     verseEl.className = `verse ${v.classMod}` + (v.inDeRabanan ? ' verse-derabanan' : '');
@@ -5135,7 +5446,75 @@ function playVerse(vi, onComplete) {
     playWord();
   }
 }
+/* ===========================================================
+ * O CABECALHO FECHA NO PLAY (25/10, v64)
+ * ===========================================================
+ * Ele: "e se quando der o play fecha o menu de cima?" — e, perguntado quando
+ * ele volta: "quando pausa por mais de 10 segundos ou o kadish parar voltar
+ * para tela completa".
+ *
+ * O que fecha sao os CONTROLES, nunca a identidade nem a dedicatoria: quem
+ * esta rezando precisa continuar sabendo por quem reza e qual Kadish esta
+ * dizendo. No lugar das duas fitas de botoes aparece UMA linha de leitura —
+ * "Chabad - Kadish Yatom" — que e tambem o jeito de voltar: tocar nela reabre.
+ * E ela nao traz texto novo: o nome da tradicao sai do botao aceso e o titulo
+ * do .prayer-title, que ja esta traduzido nas 8. Uma conta so, de novo.
+ *
+ * A ARMADILHA, e e a razao de existir a `cancelarReabertura`: o relogio dos 10
+ * segundos e armado na PAUSA. Se ele nao fosse desarmado no play, quem pausa,
+ * pensa 3 segundos e volta a rezar veria o cabecalho abrir sozinho no meio da
+ * reza, 7 segundos depois, sem nada na tela explicando por que. Ha checagem
+ * disso no checar-cabecalho.mjs — pausa de 3s, play, espera 10s, o cabecalho
+ * tem de ficar FECHADO — e ela sabe reprovar.
+ */
+const REABRE_APOS_PAUSA = 10000;
+let relogioReabertura = null;
+
+function cancelarReabertura() {
+  if (relogioReabertura) { clearTimeout(relogioReabertura); relogioReabertura = null; }
+}
+
+function pintarIdentidadeRezando() {
+  const alvo = document.getElementById('irTexto');
+  if (!alvo) return;
+  const trad = document.querySelector('.trad-switch .modo-op.active');
+  const titulo = document.querySelector('.prayer-title');
+  const partes = [];
+  if (trad && trad.textContent) partes.push(trad.textContent.trim());
+  if (titulo && titulo.textContent) partes.push(titulo.textContent.trim());
+  alvo.textContent = partes.join(' · ');
+}
+
+function fecharCabecalho() {
+  cancelarReabertura();
+  pintarIdentidadeRezando();
+  document.body.classList.add('cabecalho-fechado');
+}
+
+function abrirCabecalho() {
+  cancelarReabertura();
+  document.body.classList.remove('cabecalho-fechado');
+}
+
+// o relogio da pausa: 10 segundos parado e o cabecalho volta sozinho
+function agendarReabertura() {
+  cancelarReabertura();
+  relogioReabertura = setTimeout(() => {
+    relogioReabertura = null;
+    // se ele voltou a rezar enquanto o relogio corria, nao abre: foi para isso
+    // que o relogio e desarmado no play, e esta segunda pergunta e o cinto
+    if (!state.isPlaying) document.body.classList.remove('cabecalho-fechado');
+  }, REABRE_APOS_PAUSA);
+}
+
+(function ligarIdentidadeRezando() {
+  const bt = document.getElementById('identidadeRezando');
+  if (bt) bt.addEventListener('click', abrirCabecalho);
+})();
+
 function play() {
+  // ele pediu, e e a primeira coisa que acontece: o menu de cima fecha
+  fecharCabecalho();
   state.isPlaying = true;
   playIcon.innerHTML = '<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
   if (state.currentVerse >= verses.length) { state.currentVerse = 0; state.elapsed = 0; }
@@ -5196,6 +5575,9 @@ function play() {
 }
 function pause() {
   state.isPlaying = false;
+  // 10 segundos parado e o cabecalho volta. Menos que isso e so uma pausa para
+  // respirar, e abrir o menu no meio dela e piscar a tela na cara de quem reza.
+  agendarReabertura();
   playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
   clearTimeout(state.timer);
   clearWordTimers();
@@ -5259,6 +5641,7 @@ function playFullPrayer(url) {
     };
     audioPlayer.onended = () => {
       state.isPlaying = false;
+      abrirCabecalho();   // "ou o kadish parar" — acabou, o cabecalho volta
       playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
       nowReading.textContent = 'Concluído · Amen';
     };
@@ -5309,6 +5692,7 @@ function playFullPrayer(url) {
   audioPlayer.onended = () => {
     clearWordTimers();
     state.isPlaying = false;
+    abrirCabecalho();   // "ou o kadish parar" — acabou, o cabecalho volta
     playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
     nowReading.textContent = 'Concluído · Amen';
     state.currentVerse = 0;
@@ -5324,6 +5708,8 @@ function playFullPrayer(url) {
 }
 function stop() {
   pause();
+  // voltar ao inicio nao e uma pausa: a reza parou, o cabecalho volta na hora
+  abrirCabecalho();
   state.currentVerse = 0;
   state.elapsed = 0;
   progressFill.style.width = '0%';
@@ -5373,11 +5759,12 @@ settingsOverlay.addEventListener('click', (e) => {
 // caro mais de uma vez (o "esta mudo?" de 01/09, as duas contas do fim do
 // passo do treino em 28/08). Quem muda alguma coisa aqui chama aplicarCamada,
 // e quem DESENHA e a pintarCamadas, uma so.
-const CAMADAS = ['heb', 'tr', 'pt'];
-// A ordem do ciclo e dele: Normal → Destaque → Ocultar. Ele tinha proposto
-// comecar pelo ocultar; pular de "sumiu" direto para "esta gritando" e um
-// salto grande, e ele concordou em inverter.
-const CICLO_CAMADA = ['normal', 'focus', 'hidden'];
+// CAMADAS, CICLO_CAMADA e estadoCamada FORAM MOVIDOS PARA O ALTO DO SCRIPT,
+// junto do primeiro quem os le (os tres filtros de texto). Ver o bloco "AS TRES
+// CAMADAS" la em cima. O motivo esta escrito ali: era a TERCEIRA vez que a
+// armadilha do `const` em TDZ aparecia neste arquivo, e o CLAUDE.md diz, desde
+// 04/09, que na terceira o conserto certo e mover a declaracao — nao repetir o
+// remendo do try/catch.
 // 09/09 — O PADRAO DO APP PASSA A SER A TRANSLITERACAO EM DESTAQUE.
 // Ele: "deixar como padrao do app a transliteracao em destaque". Ate aqui as
 // tres abriam em Normal, e o motivo escrito era bom: "Destaque" apaga as outras
@@ -5388,7 +5775,6 @@ const CICLO_CAMADA = ['normal', 'focus', 'hidden'];
 // traducao e que sao apoio.
 // Isto so vale para quem nunca escolheu; quem ja mexeu nas camadas continua com
 // o que escolheu (menos na limpeza de uma vez so, logo abaixo).
-const estadoCamada = { heb: 'normal', tr: 'focus', pt: 'normal' };
 
 function pintarCamadas() {
   for (const l of CAMADAS) {
@@ -5405,6 +5791,11 @@ function pintarCamadas() {
   // hebraico toda vez que abrisse o app — e foi por poder ser uma vez so na
   // vida que dispensamos a pergunta na entrada.
   try { localStorage.setItem('tefila_camadas', JSON.stringify(estadoCamada)); } catch (err) {}
+  // Os tres filtros do fluxo do texto sao pintados DAQUI, e nao por conta
+  // propria: se tivessem a sua propria conta, eles e as tres linhas do ⚙ se
+  // contradiriam no primeiro toque. E o defeito que este projeto mais pagou
+  // caro — duas contas para a mesma pergunta.
+  pintarFiltros();
 }
 
 function aplicarCamada(camada, estado) {
@@ -5446,7 +5837,13 @@ function aplicarCamada(camada, estado) {
 // escolha guardada e nunca veria o padrao novo. Trocar a marca faz a limpeza
 // acontecer mais uma vez, e uma so. Custo assumido e dito a ele: quem tinha
 // escolhido outra coisa de proposito perde a escolha nesta virada.
-const MARCA_CAMADAS = 'tefila_camadas_padrao_0909';
+// 25/10 — a marca muda porque o PADRAO mudou (so a transliteracao). Sem
+// trocar a marca, o aparelho dele — e o de qualquer um que ja tenha aberto o
+// app — continuaria com a escolha guardada e nunca veria o padrao que ele
+// acabou de pedir; ele testaria, veria a tela de ontem e diria "nada mudou",
+// que ja aconteceu neste projeto. Custo assumido e dito a ele: quem tinha
+// escolhido outra coisa de proposito perde a escolha nesta virada, uma vez so.
+const MARCA_CAMADAS = 'tefila_camadas_padrao_1025';
 try {
   if (!localStorage.getItem(MARCA_CAMADAS)) {
     localStorage.removeItem('tefila_camadas');
@@ -6816,6 +7213,10 @@ const SEM_TRANSLITERACAO = ['de'];
 function applyLanguage(lang) {
   state.lang = lang;
   document.body.classList.toggle('sem-translit', SEM_TRANSLITERACAO.includes(lang));
+  // depois de saber se esta lingua tem transliteracao: nunca deixar a tela sem
+  // uma linha de texto (ver garantirAlgoNaTela)
+  if (typeof garantirAlgoNaTela === 'function') garantirAlgoNaTela();
+  if (typeof pintarFiltros === 'function') pintarFiltros();
   localStorage.setItem('tefila_lang', lang);
   applyI18n(lang);
   if (typeof atualizarDedicatoria === 'function') atualizarDedicatoria();
@@ -6930,10 +7331,13 @@ function applyKadishType(t) {
   const btDerab = document.getElementById('kadishDerabananToggle');
   if (btYatom && btDerab) {
     const ehDerab = (t === 'derabanan');
-    btYatom.innerHTML = '<span class="kt-nome">YATOM</span>' +
-                        `<span class="kt-size">${tamanhos.yatom}</span>`;
-    btDerab.innerHTML = '<span class="kt-nome">DERABANAN</span>' +
-                        `<span class="kt-size">${tamanhos.derabanan}</span>`;
+    // 25/10 (v64) — a ordem e dele: o tamanho primeiro, o nome hebraico depois
+    // do hifen. A caixa das duas palavras quem decide e o CSS; aqui o texto vai
+    // como se le, para que o DOM diga a verdade a quem o inspecionar.
+    btYatom.innerHTML = `<span class="kt-size">${tamanhos.yatom}</span>` +
+                        '<span class="kt-nome">-yatom</span>';
+    btDerab.innerHTML = `<span class="kt-size">${tamanhos.derabanan}</span>` +
+                        '<span class="kt-nome">-derabanan</span>';
     btYatom.classList.toggle('active', !ehDerab);
     btDerab.classList.toggle('active', ehDerab);
     btYatom.setAttribute('aria-pressed', String(!ehDerab));
@@ -7559,7 +7963,7 @@ document.querySelectorAll('.seg-control').forEach(seg => {
 // CSS delas esta preso a .modo-treino. A reza nao muda de aparencia por causa
 // deste ajuste, e e de proposito — quem reza escolhe camadas na secao de baixo.
 function aplicarCamadasDoTreino(qual) {
-  const valido = ['so-translit', 'heb-tr', 'tudo'].includes(qual) ? qual : 'heb-tr';
+  const valido = ['so-translit', 'heb-tr', 'tudo'].includes(qual) ? qual : 'so-translit';
   state.camadasTreino = valido;
   document.body.classList.remove('treino-so-translit', 'treino-heb-tr', 'treino-tudo');
   document.body.classList.add('treino-' + valido);
@@ -7568,9 +7972,13 @@ function aplicarCamadasDoTreino(qual) {
   if (seg) seg.querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', b.dataset.treino === valido));
 }
+// 25/10 — o padrao deste ajuste acompanhou o padrao do app ("so o
+// transliterado"). Se ficasse em 'heb-tr', entrar no Modo Treino traria o
+// hebraico de volta para quem nunca escolheu nada — o contrario do que ele
+// pediu. Quem JA escolheu continua com a sua escolha: a chave guardada manda.
 aplicarCamadasDoTreino((() => {
-  try { return localStorage.getItem('tefila_camadas_treino') || 'heb-tr'; }
-  catch (e) { return 'heb-tr'; }
+  try { return localStorage.getItem('tefila_camadas_treino') || 'so-translit'; }
+  catch (e) { return 'so-translit'; }
 })());
 
 // ---------- Language toggle in topbar cycles through languages ----------

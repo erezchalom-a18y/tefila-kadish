@@ -15,11 +15,22 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   o applyI18n ignora em silêncio a chave que falta, e o português do HTML fica
   na tela sem nada acusar. Foi assim que "Voz do dispositivo" e "Silencioso"
   ficaram em português nas 8 desde sempre.
-- node testar-camadas.mjs → a fita das camadas no alto e as três linhas do ⚙.
+- node checar-cabecalho.mjs → o cabeçalho fecha ao dar play e volta quando ele
+  para. A pergunta que importa é a quinta: **pausa de 3s, play, espera 11s — o
+  cabeçalho tem de continuar FECHADO.** O relógio dos 10 segundos é armado na
+  pausa, e se ninguém o desarmar no play o menu abre sozinho no meio da reza.
+  Com `--provar` ela planta a versão ingênua do código por fora e exige que o
+  defeito apareça — e isso é uma rodada A MAIS, não a troca do veredito.
+- node testar-camadas.mjs → os três filtros de texto e as três linhas do ⚙.
   A pergunta que importa: **os dois dizem a mesma coisa?** Este projeto já pagou
-  caro por duas contas para a mesma pergunta. Confere também o ciclo
-  Normal → Destaque → Ocultar, que só uma camada fica em destaque, que a escolha
-  sobrevive a recarregar, e que aparelho novo abre com as três em Normal.
+  caro por duas contas para a mesma pergunta — e desde 25/10 ela é cobrada nos
+  DOIS sentidos (tocar no filtro move o ⚙, tocar no ⚙ move o filtro). Confere
+  também o ciclo Normal → Destaque → Ocultar, que só uma camada fica em
+  destaque, que a escolha sobrevive a recarregar, que aparelho novo abre **só
+  com a transliteração**, que o último filtro aceso não apaga, que **nas 8
+  línguas sobra ao menos uma linha de texto na tela** (em alemão não há
+  transliteração: sem essa guarda a tela ficaria em branco) e que a
+  transliteração sozinha é maior do que quando divide a tela.
 - node testar-opiniao.mjs → o "Sua opinião" das Ajustes. Com o
   `ENDERECO_OPINIAO` vazio a seção não pode estar na tela; com `--provar` ela
   volta e tem de funcionar, inclusive com o destino respondendo ERRO — e ali a
@@ -3424,3 +3435,186 @@ de console".
 A lição não é "renomear com cuidado" — é que **um erro dentro de um ouvinte não
 aparece em lugar nenhum**, e a única defesa é uma checagem que clique no botão e
 olhe o console. Ela existe. Funcionou.
+
+## A tela de rezar virou a transliteração sozinha (25/10, v64)
+
+Ele: *"de início sempre deve começar como somente transliterado grande em fonte
+bonita e fácil de ler (retire o hebraico e a tradução) e quero que onde está a
+frase o kadish exige minyan.. incluir 3 botões com as opções de texto:
+hebraico - transliterado - português"*. E, depois de ver as telas desenhadas:
+*"alterar pequeno/grande para PEQUENO-yatom . GRANDE-derabanan"*, *"e se quando
+der o play fecha o menu de cima?"* e *"quando pausa por mais de 10 segundos ou
+o kadish parar voltar para tela completa"*.
+
+Cinco coisas numa versão. **O cabeçalho enxuto NÃO entrou** — fica para a v65,
+por decisão combinada: uma mudança de comportamento por versão é a regra de
+30/08, e aqui já são cinco.
+
+**1. A letra.** `Carlito`, reta, da esquerda para a direita. A Cormorant
+Garamond itálica era bonita e não era fácil: nasceu para texto corrido de
+livro, com hastes finas, e esta linha não é para ler com o olho — é para ler em
+voz alta, letra a letra, por quem não conhece a palavra. Carlito é o clone
+livre e metricamente igual da Calibri, que foi a que **ele** pediu por nome
+("tente outras opções como calibri"); está no Google Fonts, então não depende
+de o aparelho ter a Calibri. O `direction: rtl` da transliteração existia por
+UM motivo — alinhar com o hebraico de cima —, e sem o hebraico esse motivo não
+existe: `body.heb-hidden .translit` passa a fluir para a direita.
+
+**2. "Grande" vem de ESTAR SOZINHA, nunca de um estado "Destaque".** Esta é a
+decisão de código que mais importa da rodada. O caminho óbvio era pôr
+`tr: 'focus'` no padrão — e aí o primeiro toque no filtro "Português" traria o
+português a **45% de opacidade e 0,86 do tamanho**, apagado, sem ninguém ter
+pedido. A regra ficou escrita sobre `body.heb-hidden.pt-hidden`, que responde a
+pergunta certa — *há mais alguma coisa na tela?* — e se desfaz sozinha no
+instante em que outra camada entra. Os números são os mesmos do `focus-tr`, de
+propósito: é o tamanho que ele aprovou.
+
+**3. Os três filtros, na vaga da nota do minyan.** Ele escolheu "os botões no
+lugar dela". **A frase do minyan não se perdeu** — é texto dele (v50), continua
+inteira no painel da ℹ e na página Aprender, que são os dois lugares onde já
+estava quando ele pediu a terceira cópia. O que saiu da tela de rezar foi a
+cópia. Medido: a nota custava 85px nessa vaga, os filtros custam 30px, e o
+primeiro verso **subiu** (44% aos versos no iPhone SE em pé, contra 41% na v63).
+
+Os rótulos são as chaves `layer_hebrew` · `layer_translit` · `layer_translation`,
+que já existiam nas 8 desde a fita de 02/09: **zero texto novo**, e por isso a
+regra 6 nem entra. O filtro é um interruptor (aceso = não-oculto; tocar alterna
+entre `normal` e `hidden`) e lê o MESMO `estadoCamada` do ⚙ — uma conta só. **O
+último aceso não apaga**: sem isso um toque deixa a tela em branco e quem está
+rezando não tem mais texto em que tocar para desfazer.
+
+**Sem caixa-alta, e isso foi medido.** As duas fitas do alto são maiúsculas
+porque os rótulos delas são curtos. Aqui as palavras são longas:
+"Transliteração", "Traslitterazione", "Транслитерация". Com caixa-alta e
+espaçamento a fila somava **346 a 358px** nas línguas latinas contra **299px**
+úteis de um iPhone SE — quebrava em duas linhas e o primeiro verso descia 12px
+abaixo de onde estava na v63. Sem caixa-alta o pior caso é **255px** (italiano)
+e os 8 cabem numa linha.
+
+**4. `PEQUENO-yatom` · `GRANDE-derabanan`.** É a inversão de 14/09 levada à
+ORDEM, não só ao peso. O hífen está no HTML e não num `::before`, porque no
+celular deitado o nome hebraico sai da tela e o hífen ficaria órfão atrás do
+PEQUENO. E a regra do deitado **inverteu junto**: até a v63 saía dali o tamanho
+e ficava o nome; agora sai o nome e fica o tamanho, senão o botão leria
+"-yatom".
+
+**5. O cabeçalho fecha no play.** Fecham os CONTROLES; ficam a identidade e a
+dedicatória, que são a reza e não ajuste. No lugar das duas fitas aparece uma
+linha de leitura — "Chabad · Kadish do Enlutado" — que é também o jeito de
+voltar. **Ela não traz texto novo**: o nome da tradição sai do botão aceso e o
+título do `.prayer-title`, já traduzido nas 8. Medido num iPhone 15: **4 versos
+na primeira tela parado, 7 tocando.**
+
+> **A armadilha, e é a razão de o `checar-cabecalho.mjs` existir:** o relógio
+> dos 10 segundos é armado na PAUSA. Sem desarmá-lo no play, quem pausa, pensa
+> três segundos e volta a rezar vê o cabeçalho abrir sozinho no meio da reza,
+> sete segundos depois, sem nada na tela explicando por quê.
+
+### Cinco defeitos apareceram fazendo isto, e nenhum era do que eu estava fazendo
+
+1. **A armadilha do `const` em TDZ, pela TERCEIRA vez.** `desenharVersos()` roda
+   antes do bloco das camadas, e os filtros precisam do `CAMADAS` para se
+   pintarem: `Cannot access 'CAMADAS' before initialization`, e a exceção
+   derrubava o resto do script. O CLAUDE.md escreveu em 04/09 o que fazer na
+   terceira — *"o conserto certo é mover as tabelas para o topo do script, não
+   repetir o remendo"* — e foi o que se fez: `CAMADAS`, `CICLO_CAMADA` e
+   `estadoCamada` subiram para junto do primeiro que os lê. As funções ficaram
+   onde estavam.
+
+2. **As três portas continuavam na tela durante a reza, e a checagem dava
+   verde.** `body.cabecalho-fechado .learn-row` empatava em peso com
+   `body:not(.modo-treino) .learn-row{display:flex!important}`, que mora mais
+   abaixo — e **no empate, quem vem depois ganha** (a lição de 27/08 e de
+   09/09, agora pela terceira vez). Eu só vi numa FOTO. A checagem não pegou
+   porque a lista dela não incluía as portas: *a lista do que tem de sumir é a
+   lista inteira, não a dos que eu lembrei.* Consertados os dois — a classe vai
+   repetida (`.cabecalho-fechado.cabecalho-fechado`), que sobe o peso sem
+   depender de onde o bloco está escrito.
+
+3. **O ajuste "No Modo Treino mostrar" ficou morto, e ninguém veria.** Até a
+   v63 as regras dele só sabiam ESCONDER, e isso bastava porque o app abria com
+   as três camadas na tela. Com o padrão novo o `heb-hidden` global já tinha
+   escondido tudo, e as três opções deixaram de mudar um pixel — **três botões
+   na tela que não fazem nada é a tela mentindo**. Quem acusou foram três linhas
+   do `testar-treino.mjs`. Conserto: dentro do Treino esse ajuste manda sozinho
+   (as regras também sabem mostrar), e o padrão dele acompanhou o do app. Não
+   são duas contas para a mesma pergunta — são duas telas, e o botão aceso diz
+   qual vale. **Fica dito a ele:** hoje há dois controles para "o que aparece na
+   tela", e simplificar isso é decisão dele, não minha.
+
+4. **Deitado, o Kadish caiu para 29%.** Os filtros ocupam a vaga da nota do
+   minyan, e deitado a nota **sai** desde 10/09. O `testar-telas.mjs` reprovou
+   as quatro medidas deitadas pelo nome. Agora os filtros saem dali também,
+   pela mesma razão que já tira o cartão, as três portas e a faixa do título:
+   quem vira o telefone de lado quer LER. As três camadas continuam no ⚙.
+
+5. **Em alemão o padrão novo daria a TELA EM BRANCO.** O alemão não tem
+   transliteração própria (decisão dele, 21/08) e o padrão da v64 oculta as
+   outras duas. **Cada decisão está certa sozinha**; juntas, deixariam quem lê
+   alemão sem uma linha de texto, e nada daria erro. Existe agora a
+   `garantirAlgoNaTela()`: se a única camada acesa for uma que aquela língua não
+   tem, o hebraico volta. E o filtro da transliteração não aparece em alemão.
+
+### As checagens: duas mudaram de pergunta, e uma nasceu
+
+**`testar-camadas.mjs` voltou a ser o que nasceu sendo.** Ela nasceu em 02/09
+perguntando *"os dois dizem a mesma coisa?"* e perdeu a pergunta em 04/09,
+quando a fita do alto saiu e sobrou uma conta só. Com os filtros há dois lugares
+outra vez, e agora ela cobra **nos dois sentidos**: tocar no filtro move o ⚙,
+tocar no ⚙ move o filtro. Mais: que o último aceso não apague, que **haja ao
+menos uma linha de texto na tela nas 8 línguas**, e que a transliteração sozinha
+seja MAIOR do que quando divide a tela — se alguém reescrever isso como
+`focus-tr`, a primeira metade continua passando e esta segunda pega.
+
+**Provado que sabe reprovar**, três vezes: tirando a trava do último aceso ela
+acusa 1; tirando a guarda do alemão acusa 2 (incluindo "A TELA ESTA EM BRANCO");
+voltando o padrão de 09/09 acusa 13.
+
+**E ela cometeu o erro da v60 num arquivo escrito hoje:** lia os filtros com o
+painel de Ajustes ABERTO, e o painel cobre a tela, então o `elementFromPoint`
+devolvia o painel — as 8 línguas acusadas de não ter filtro nenhum, com os três
+filtros perfeitamente visíveis embaixo. *As duas portas vivem em momentos
+diferentes e têm de ser medidas em momentos diferentes.*
+
+**`checar-cabecalho.mjs`** é nova e está no workflow. Sete perguntas, e a que
+importa é a quinta: pausa 3s → play → espera 11s → o cabeçalho tem de continuar
+FECHADO. O `--provar` **acrescenta uma rodada**, nunca troca o veredito: planta
+a versão ingênua do código por fora (trocando o texto do engine.html no
+caminho, sem tocar no arquivo) e exige que o cabeçalho abra sozinho. *Um
+`--provar` que dispensa o resto da checagem é um `--provar` que esconde
+defeito.*
+
+**E ela também errou a medida antes de funcionar, na família de sempre:** eu
+perguntei por `window.state`. Um `const` no topo de um `<script>` clássico entra
+no escopo lexical global — dá para ler o nome, e **não** aparece como
+propriedade do `window`. Ela acusou duas falhas que não existiam: o app estava
+tocando e fechando o cabeçalho direito.
+
+**A PRIMEIRA PROVA DO DEFEITO PLANTADO FALHOU, e o app é que estava certo.** O
+`--provar` tirava só o `cancelarReabertura()` do play — e não produzia defeito
+nenhum, porque o app se defende em DOIS lugares: desarma o relógio no play *e*
+pergunta de novo, na hora de disparar, se a reza voltou. Para provar que a
+pergunta mede algo, o defeito plantado tem de ser um defeito de verdade: agora
+são duas trocas, e a prova fica vermelha.
+
+### Mais duas checagens tiveram de passar pela porta da frente
+
+Nenhuma das duas afrouxou; as duas passaram a fazer o que a PESSOA faz.
+
+- **`testar-portugues.mjs`** lia a linha das glosas direto da tela — e com o app
+  abrindo só com a transliteração ela lia `"undefined"` nos 8. Agora ela ACENDE
+  as três camadas antes de ler, e acende **pelos três filtros**, não por dentro:
+  se os filtros quebrarem, esta checagem fica vermelha junto.
+- **`checar-trocas.mjs`** troca de Kadish **com o áudio tocando** — e aí o
+  cabeçalho está fechado e os botões não estão na tela: `TimeoutError` em todos
+  os cliques. Agora ela toca na linha da identidade primeiro, que é exatamente o
+  que quem está rezando faz. **A consequência real, e ele precisa saber:** no
+  meio da reza, trocar de Kadish passou a custar **dois toques** em vez de um —
+  o primeiro abre o cabeçalho. Foi a troca que ele pediu.
+
+### O que fica para a v65
+
+O cabeçalho enxuto, que ele já viu desenhado: `Chabad ▾` abrindo na própria
+linha com `TRADIÇÃO / NUSSACH`, o `Reza|Treino` e o 🔊⚙ℹ subindo para essa
+linha, e as três portas indo para dentro do ℹ. **A tela de rezar da v64 e da
+v65 é a MESMA** — as duas versões só diferem na tela de preparação.
