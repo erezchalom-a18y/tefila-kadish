@@ -746,6 +746,17 @@
      tendo de procurar onde cada verso comeca. Com o hebraico na tela ela volta
      para a direita, alinhada com ele. */
   body.heb-hidden .translit { direction: ltr; text-align: left; }
+  /* E a traducao vai junto, pelo mesmo motivo e com a mesma conta. Ela tambem
+     era alinhada a direita so para acompanhar o hebraico — e o risco dela
+     tambem estava do lado direito, que e o lado de onde o hebraico comeca.
+     Sem o hebraico na tela, as duas linhas tem de comecar no mesmo lugar; sem
+     isto a transliteracao vinha da esquerda e a traducao da direita, cada uma
+     para o seu lado, e a primeira foto da v64 mostrou isso na hora. */
+  body.heb-hidden .pt-merged {
+    direction: ltr; text-align: left;
+    padding-right: 0; padding-left: 14px;
+    border-right: 0; border-left: 2px solid var(--line);
+  }
 
   /* Focus modes - one layer big, others small + faded */
   /* ===== O DESTAQUE, medido em PROPORCAO e nao em pixel (09/09, v50) =====
