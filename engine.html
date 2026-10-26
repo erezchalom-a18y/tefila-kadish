@@ -284,40 +284,49 @@
   }
 
   /* ============ EDUCATIONAL OVERLAY ============ */
+  /* ============ OS DESTINOS DO MENU SAO TELAS, NAO POP-UPS ============
+     Decisao dele, 25/10 a noite, vendo as fotos: "o que e nao deve ser popup.
+     deve ser direto na tela, alias tudo deve ser assim".
+     E a forma certa para o que o menu virou. Um menu de abas leva a uma TELA;
+     uma caixa flutuante por cima da reza diz "isto e um aviso, feche e volte".
+     Alem disso a caixa carregava tres coisas que agora saem: o fundo escuro
+     por cima do Kadish, a borda de cartao e a sombra. O papel e o mesmo da
+     reza, o conteudo comeca no alto, e quem navega e o menu do pe — que fica
+     POR CIMA (z-index 320 contra 300), como uma barra de abas.
+     O × continua, para quem prefere fechar e voltar exatamente onde estava. */
   .info-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(42, 31, 21, 0.55);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: var(--bg, #f4ede0);
     z-index: 300;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.22s ease;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     overflow-y: auto;
-    padding: 40px 16px;
+    padding: 0;
   }
   .info-overlay.show { opacity: 1; pointer-events: auto; }
   .info-panel {
     background: var(--bg);
     max-width: 600px;
     width: 100%;
-    border-radius: 12px;
-    /* lugar para o menu, que agora fica por cima: sem isso a ultima linha do
-       painel nasce escondida debaixo dele. A conta e UMA — a variavel
-       --pe-menu, escrita pela medida do proprio menu. */
-    padding: 32px 28px calc(36px + var(--pe-menu, 56px));
-    box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
-    border: 1px solid var(--line);
-    transform: translateY(16px);
-    transition: transform 0.3s ease;
+    min-height: 100%;
+    border-radius: 0;
+    /* lugar para o menu, que fica por cima: sem isso a ultima linha nasce
+       escondida debaixo dele. A conta e UMA — o --pe-menu, medido. */
+    padding: 26px 20px calc(36px + var(--pe-menu, 56px));
+    box-shadow: none;
+    border: 0;
+    transform: none;
   }
-  .info-overlay.show .info-panel { transform: translateY(0); }
+  /* Numa TELA o × e o canto de fechar, e nao pode rolar para fora — era assim
+     que ele sumia a -628px no painel rolado. Fixo no canto, acima do conteudo. */
   .info-close {
-    float: right;
+    position: fixed; top: 10px; right: 10px; z-index: 3;
+    float: none;
     width: 32px; height: 32px;
     border-radius: 50%;
     background: var(--bg-elevated);
@@ -836,15 +845,14 @@
   }
 
   /* ============ SETTINGS PANEL ============ */
+  /* o mesmo de cima: tela, nao pop-up */
   .settings-overlay {
     position: fixed; inset: 0;
-    background: rgba(42, 31, 21, 0.55);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: var(--bg, #f4ede0);
     z-index: 300;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s;
+    transition: opacity 0.22s;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -852,17 +860,27 @@
     padding: 40px 16px;
   }
   .settings-overlay.show { opacity: 1; pointer-events: auto; }
+  /* "POR QUEM" MOSTRA SO A DEDICACAO (25/10, a noite). Ele tocou e disse: "por
+     quem veio a configuracao". Veio mesmo — e a foto estava certa, o app e que
+     estava errado. A v65 prometia abrir "ja na secao certa" com um
+     scrollIntoView, e isso NAO PODE FUNCIONAR quando a secao e a ultima e e
+     curta: nao ha conteudo abaixo dela para empurra-la ao alto, entao o painel
+     rola ate o maximo e deixa a velocidade, o Som e as Camadas inteiras a
+     vista. Uma promessa que o layout nao tinha como cumprir.
+     Agora a porta mostra o que o seu nome diz: o MESMO painel e o MESMO
+     editor, com os outros blocos fora da tela. Nao e tela nova — seriam duas
+     contas para o mesmo cadastro, que foi o que a v65 evitou com razao. */
+  .settings-panel.so-dedicacao .bloco-fora { display: none !important; }
   .settings-panel {
     background: var(--bg);
-    max-width: 480px; width: 100%;
-    border-radius: 12px;
-    padding: 28px 26px calc(32px + var(--pe-menu, 56px));
-    box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
-    border: 1px solid var(--line);
-    transform: translateY(16px);
-    transition: transform 0.3s;
+    max-width: 520px; width: 100%;
+    min-height: 100%;
+    border-radius: 0;
+    padding: 26px 20px calc(32px + var(--pe-menu, 56px));
+    box-shadow: none;
+    border: 0;
+    transform: none;
   }
-  .settings-overlay.show .settings-panel { transform: translateY(0); }
   .settings-eyebrow {
     font-family: 'Cormorant Garamond', serif;
     font-size: 12px; letter-spacing: 0.32em; color: var(--brass);
@@ -1153,14 +1171,15 @@
      uma caixa por cima do Kadish e a mesma coisa que um formulario antes da
      reza — que este projeto ja decidiu, por escrito, que nao faz. */
   .convite-instalar {
-    /* O `bottom` e escrito pelo JS a partir da ALTURA MEDIDA da barra do audio.
-       Na primeira tentativa ele era `12px + safe-area` e a barra ficava POR
-       CIMA: o botao aparecia na tela e nao respondia ao toque — a checagem
-       acusou "audio-controls intercepts pointer events". Um numero fixo aqui
-       mentiria de novo, porque a barra muda de altura (92px em pe, 66px
-       deitado). Este valor e so o piso, para o caso de o JS nao rodar. */
+    /* O `bottom` vem do --pe-tela, que e MEDIDO (barra + menu) por
+       ResizeObserver. Na primeira tentativa ele era `12px + safe-area` e a
+       barra ficava POR CIMA: o botao aparecia na tela e nao respondia ao toque
+       — a checagem acusou "audio-controls intercepts pointer events". Um
+       numero fixo aqui mentiria de novo, porque a barra muda de altura (94px
+       em pe, 66px deitado) e o Treino acrescenta uma segunda linha. O 146px e
+       so o piso, para o caso de o JS nao rodar. */
     position: fixed; left: 12px; right: 12px; z-index: 60;
-    bottom: calc(104px + env(safe-area-inset-bottom));
+    bottom: calc(var(--pe-tela, 146px) + 12px + env(safe-area-inset-bottom));
     display: none; align-items: center; gap: 10px;
     padding: 10px 12px; border-radius: 12px;
     background: var(--bg, #f4ede0); border: 1px solid var(--brass, #8b6a3e);
@@ -1214,7 +1233,7 @@
   }
   .toast {
     position: fixed;
-    bottom: 140px; left: 50%;
+    bottom: calc(var(--pe-tela, 146px) + 14px); left: 50%;
     transform: translateX(-50%) translateY(20px);
     background: var(--bg-elevated);
     color: var(--text-soft);
@@ -1958,9 +1977,18 @@
   }
 
   /* LGPD consent banner */
+  /* O PE DA TELA E UMA CONTA SO, E ELA E CSS (25/10, a noite).
+     Ate aqui o lugar deste aviso era escrito por JS no evento `resize`. Medido:
+     virando o telefone para deitado e de volta, ele ficava com `bottom: 96px`
+     quando o certo era 158 — o `resize` dispara ANTES de a tela assentar, a
+     conta e feita com a medida do meio da virada, e nada remede depois. A
+     testar-dedicatoria pegou isso dizendo que o aviso tapava o botao Treino.
+     Agora o lugar vem do --pe-tela, que o ResizeObserver reescreve toda vez que
+     a barra, o menu ou o cabecalho mudam de tamanho — inclusive no fim da
+     virada. Uma conta, e ela acompanha. */
   .consent-banner {
     position: fixed;
-    bottom: 96px;
+    bottom: calc(var(--pe-tela, 146px) + 12px + env(safe-area-inset-bottom));
     left: 50%;
     transform: translateX(-50%);
     max-width: 440px;
@@ -2688,7 +2716,18 @@
     color: var(--text-soft, #6d5c45); border-radius: 999px; cursor: pointer;
   }
   .repeat-toggle button.active { background: var(--brass, #d4a25a); color: #3b2a16; font-weight: 600; }
-  .treino-repeticao .repeat-btn { flex: 0 0 auto; }
+  /* O BOTAO REDONDO SAI DA TELA (25/10, a noite). Ele mostrava o mesmo "3×"
+     que a fileira ao lado E ainda ciclava a repeticao quando tocado: DUAS
+     CONTAS para a mesma pergunta, lado a lado, na mesma linha. O proprio
+     comentario do HTML dizia que ele tinha sido "aposentado" na v65 — nao
+     tinha; ficou na tela. Sai por CLASSE e continua no DOM porque o
+     toggleModoTreino escreve no #repCount (a licao do temState: elemento que o
+     codigo procura nao se apaga). */
+  .treino-repeticao .repeat-btn { display: none !important; }
+  /* e a fileira passa a ocupar a linha inteira, com os quatro valores
+     distribuidos como os cinco da velocidade — antes o conteudo ficava
+     centrado e sobravam 87px de vazio de cada lado */
+  .repeat-toggle button { flex: 1 1 auto; }
 
   /* ---- a fileira de menus ---- */
   /* O MENU FICA POR CIMA DOS PAINEIS (z-index 320 contra os 300 deles), e isso
@@ -2737,7 +2776,17 @@
     content: ''; position: absolute; top: 0; left: 18%; right: 18%;
     height: 2px; background: var(--brass); border-radius: 0 0 2px 2px;
   }
-  body .audio-bar { bottom: 62px; }
+  /* A BARRA SENTA EM CIMA DO MENU, pela conta MEDIDA e nunca por um numero
+     escrito a mao. Ate aqui era `bottom: 62px`, e o menu mede 52px: sobrava um
+     VAO DE 10px entre os dois, e por ele passava a transliteracao cortada ao
+     meio. O Erez viu na primeira foto que eu mandei: "a parte de baixo parece
+     mal desenhada e com texto estranho" — e era isso, uma tira de texto picado
+     entre a barra e o menu.
+     E o mesmo erro que este arquivo ja registra tres vezes: um numero absoluto
+     escrito ao lado de uma coisa que muda. O --pe-menu e medido por
+     ResizeObserver, entao acompanha a letra que carrega, a tela que vira e a
+     lingua que muda. O 52px e so o que vale antes de o JS rodar. */
+  body .audio-bar { bottom: var(--pe-menu, 52px); }
   body { padding-bottom: 192px; }
   /* deitado o menu some, pela mesma razao que ja tira dali o cartao e a faixa do
      titulo: quem vira o telefone de lado quer LER */
@@ -2748,13 +2797,26 @@
   }
 
   /* ---- o passo a passo ---- */
+  /* O PASSO A PASSO OCUPA A TELA (25/10, a noite). Ele: "o como usar deve
+     ocupar a tela inteira". Era uma caixa de 10px de margem flutuando no meio
+     do Kadish, com sombra — lia-se como um aviso perdido.
+     OCUPA TUDO MENOS AS DUAS BARRAS, e isso nao e meia medida: o passo a passo
+     ACENDE O CONTROLE DE VERDADE (foi assim que ele pediu em 25/10 — "onde ele
+     ja configura"), e os controles moram no cabecalho e na barra de baixo.
+     Tapa-los seria explicar um botao escondendo-o. Entao a explicacao toma a
+     area de LEITURA inteira, de borda a borda, e o botao de que ela fala fica
+     aceso e a vista. As duas medidas sao MEDIDAS (--topo e --pe-tela), nunca
+     numeros escritos a mao. */
   .passos {
-    position: fixed; left: 10px; right: 10px; z-index: 70;
-    bottom: 74px;                       /* o JS mede e corrige */
-    display: none; flex-direction: column; gap: 6px;
-    padding: 14px 16px 13px; border-radius: 14px;
-    background: var(--bg, #f4ede0); border: 1px solid var(--brass, #8b6a3e);
-    box-shadow: 0 8px 30px rgba(42, 31, 21, 0.26);
+    position: fixed; left: 0; right: 0; z-index: 70;
+    top: var(--topo, 150px);
+    bottom: var(--pe-tela, 146px);
+    display: none; flex-direction: column; gap: 10px;
+    padding: 26px 22px 20px; border-radius: 0;
+    background: var(--bg, #f4ede0);
+    border: 0; border-top: 1px solid var(--rule, #d8c9ad);
+    box-shadow: none;
+    overflow-y: auto;
   }
   body.em-passos .passos { display: flex; }
   .passos-conta {
@@ -2762,14 +2824,15 @@
     letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint, #6d5c45);
   }
   .passos-titulo {
-    font-family: 'Cormorant Garamond', serif; font-size: 20px; line-height: 1.3;
+    font-family: 'Cormorant Garamond', serif; font-size: 26px; line-height: 1.26;
     color: var(--text, #2a1f15);
   }
   .passos-ajuda {
     font-family: 'Lora', serif; font-size: 13px; line-height: 1.55;
     color: var(--text-soft, #4d3d2d);
   }
-  .passos-botoes { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  /* os botoes descem para o PE do painel, que agora e alto */
+  .passos-botoes { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 14px; }
   .passos-botoes button {
     font-family: 'Cormorant Garamond', serif; font-size: 14px;
     min-height: 40px; padding: 8px 16px; border-radius: 10px; cursor: pointer;
@@ -2933,7 +2996,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-25 · 66';
+const VERSAO = '2026-10-26 · 67';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3090,6 +3153,14 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="settings-eyebrow" id="secaoDedicacao" style="margin-top:24px;" data-i18n="dedication_title">Dedicação</div>
+    <!-- A TELA PRECISA DIZER O QUE FAZER (25/10, a noite). Pedido dele: "na
+         tela Por quem voce vai rezar?, explicar o que deve ser feito. e
+         explicar o yahrzeit (data do falecimento)". Entrando por "Por quem" o
+         painel mostra so este bloco, e sem uma linha de explicacao ele ficava
+         uma pagina quase vazia com um botao tracejado. -->
+    <div class="settings-hint" data-i18n="dedication_ajuda">
+      Escreva o nome de quem partiu — de preferência em hebraico. Pode cadastrar mais de uma pessoa. Pondo também a data do falecimento, o app calcula o <strong>yahrzeit</strong>: o aniversário da morte pelo calendário judaico, que é quando se acende a vela e se diz o Kadish por ela. Ele avisa você todo ano. Tudo fica só no seu aparelho.
+    </div>
 
     <div class="settings-row">
       <!-- 09/09 — a lista de pessoas. Era um botao so ("Editar perfil"), e cabia
@@ -6370,11 +6441,15 @@ function peDaTela() {
   } catch (e) { return 96; }
 }
 
-/* O aviso de privacidade usa a MESMA conta, e nao um numero escrito a mao. */
+/* O aviso de privacidade usa a MESMA conta — e agora ela e o --pe-tela, em
+   CSS. Esta funcao passou a TIRAR o estilo em linha, nunca a escrever um:
+   escrito em linha ele GANHA da regra, e era isso que o deixava com a medida
+   do meio de uma virada de tela (96px onde o certo eram 158). O --pe-tela
+   estava certo o tempo todo; quem mentia era o estilo em linha por cima. */
 (function acomodarAviso() {
   const por = () => {
     const el = document.getElementById('consentBanner');
-    if (el) el.style.bottom = 'calc(' + (peDaTela() + 12) + 'px + env(safe-area-inset-bottom))';
+    if (el) el.style.removeProperty('bottom');
   };
   por();
   window.addEventListener('resize', por);
@@ -6410,11 +6485,11 @@ const PASSOS = [
 const PASSOS_TXT = {
   pt: {
     p_abertura: { t: 'A oração que dizemos há milênios pela elevação da alma de quem partiu.',
-      a: 'Você não precisa saber hebraico para dizer o Kadish. Este app ensina, palavra por palavra. São sete telas rápidas — dá para pular.' },
+      a: 'Você não precisa saber hebraico para dizer o Kadish. Este app ensina, palavra por palavra. São poucas telas — dá para pular.' },
     p_tradicao: { t: 'Qual é a tradição da sua família?',
       a: 'É a da sinagoga onde você vai rezar. Na dúvida, pergunte ao rabino. Toque aqui para escolher — e dá para trocar depois.' },
     p_texto: { t: 'É assim que o Kadish aparece.',
-      a: 'Abre com o Kadish escrito em letras do português: você lê mesmo sem saber ler hebraico. Estes três botões acendem e apagam cada texto.' },
+      a: 'Toque nos três botões para escolher o que fica na tela: só a transliteração — o Kadish em letras do português, que você lê sem saber hebraico —, o hebraico junto, a tradução junto, ou os três ao mesmo tempo. E conforme o áudio anda, a palavra que o rabino está dizendo acende.' },
     p_tipo: { t: 'Pequeno ou grande? O rabino avisa.',
       a: 'São dois Kadishim, e qual deles se diz muda de reza para reza. Na sinagoga o rabino diz qual será — e você troca aqui.' },
     p_velocidade: { t: 'Se a voz estiver rápida.',
@@ -6422,17 +6497,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Aperte Treino para aprender.',
       a: 'O áudio passa a parar no fim de cada frase e esperar em silêncio — é ali que a sua voz entra. O ✕ volta para a reza.' },
     p_pessoas: { t: 'Por quem você vai rezar?',
-      a: 'Cadastre o nome aqui. Fica só no seu aparelho, pode ser mais de uma pessoa, e o app lembra você do yahrzeit todo ano.' },
-    p_pronto: { t: 'Pronto.',
-      a: 'O som vem desligado — é o que se quer no minyan: o texto acompanha a voz em silêncio. Toque no alto-falante quando quiser ouvir.' },
+      a: 'Toque em "Por quem", no menu de baixo, e escreva o nome de quem partiu — de preferência em hebraico. Pode cadastrar mais de uma pessoa. Pondo também a data do falecimento, o app calcula o yahrzeit: o aniversário da morte pelo calendário judaico, que é quando se acende a vela e se diz o Kadish por ela. Ele avisa você todo ano. Tudo fica só no seu aparelho.' },
+    p_pronto: { t: 'Vamos dizer o Kadish.',
+      a: 'A reza leva cerca de um minuto e meio. Ela começa com o som desligado — é o que se quer no minyan: o texto acompanha a voz em silêncio e você lê junto. Toque no alto-falante quando quiser ouvir a voz do rabino.' },
   },
   en: {
     p_abertura: { t: 'The prayer we have said for millennia for the elevation of the soul of those who have gone.',
-      a: 'You do not need to know Hebrew to say the Kaddish. This app teaches it, word by word. Seven quick screens — you can skip.' },
+      a: 'You do not need to know Hebrew to say the Kaddish. This app teaches it, word by word. A few quick screens — you can skip.' },
     p_tradicao: { t: 'What is your family\'s tradition?',
       a: 'It is the one of the synagogue where you will pray. If unsure, ask the rabbi. Tap here to choose — you can change it later.' },
     p_texto: { t: 'This is how the Kaddish appears.',
-      a: 'It opens with the Kaddish written in our letters: you can read it aloud without knowing Hebrew. These three buttons turn each text on and off.' },
+      a: 'Tap the three buttons to choose what stays on screen: the transliteration alone — the Kaddish in our letters, which you can read without knowing Hebrew —, the Hebrew as well, the translation as well, or all three at once. And as the audio plays, the word the rabbi is saying lights up.' },
     p_tipo: { t: 'Short or long? The rabbi will say.',
       a: 'There are two Kaddishim, and which one is said changes from service to service. At the synagogue the rabbi says which — and you switch here.' },
     p_velocidade: { t: 'If the voice is too fast.',
@@ -6440,17 +6515,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Press Practice to learn.',
       a: 'The audio then stops at the end of each line and waits in silence — that is where your voice goes. The ✕ returns to prayer.' },
     p_pessoas: { t: 'Who will you pray for?',
-      a: 'Add the name here. It stays on your device, it can be more than one person, and the app reminds you of the yahrzeit every year.' },
-    p_pronto: { t: 'Ready.',
-      a: 'The sound starts off — which is what you want in a minyan: the text follows the voice in silence. Tap the speaker when you want to hear it.' },
+      a: 'Tap "Who for" in the menu below and write the name of the person who died — in Hebrew if you can. You can add more than one. If you also give the date of death, the app works out the yahrzeit: the anniversary by the Jewish calendar, when the candle is lit and the Kaddish is said for them. It reminds you every year. Everything stays on your device.' },
+    p_pronto: { t: 'Let us say the Kaddish.',
+      a: 'The prayer takes about a minute and a half. It starts with the sound off — which is what you want in a minyan: the text follows the voice in silence and you read along. Tap the speaker when you want to hear the rabbi.' },
   },
   es: {
     p_abertura: { t: 'La oración que decimos desde hace milenios por la elevación del alma de quien partió.',
-      a: 'No necesitas saber hebreo para decir el Kadish. Esta app lo enseña, palabra por palabra. Son siete pantallas rápidas — puedes saltarlas.' },
+      a: 'No necesitas saber hebreo para decir el Kadish. Esta app lo enseña, palabra por palabra. Son pocas pantallas — puedes saltarlas.' },
     p_tradicao: { t: '¿Cuál es la tradición de tu familia?',
       a: 'Es la de la sinagoga donde vas a rezar. Si tienes dudas, pregunta al rabino. Toca aquí para elegir — y puedes cambiarlo después.' },
     p_texto: { t: 'Así aparece el Kadish.',
-      a: 'Abre con el Kadish escrito con nuestras letras: puedes leerlo en voz alta sin saber hebreo. Estos tres botones encienden y apagan cada texto.' },
+      a: 'Toca los tres botones para elegir qué queda en la pantalla: solo la transliteración — el Kadish con nuestras letras, que lees sin saber hebreo —, también el hebreo, también la traducción, o los tres a la vez. Y mientras avanza el audio, se enciende la palabra que el rabino está diciendo.' },
     p_tipo: { t: '¿Pequeño o grande? El rabino avisa.',
       a: 'Son dos Kadishim, y cuál se dice cambia de rezo en rezo. En la sinagoga el rabino dice cuál será — y tú cambias aquí.' },
     p_velocidade: { t: 'Si la voz va rápida.',
@@ -6458,17 +6533,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Pulsa Práctica para aprender.',
       a: 'El audio pasa a parar al final de cada frase y esperar en silencio — ahí entra tu voz. La ✕ vuelve al rezo.' },
     p_pessoas: { t: '¿Por quién vas a rezar?',
-      a: 'Registra el nombre aquí. Queda solo en tu dispositivo, puede ser más de una persona, y la app te recuerda el yahrzeit cada año.' },
-    p_pronto: { t: 'Listo.',
-      a: 'El sonido viene apagado — es lo que se quiere en el minyán: el texto acompaña la voz en silencio. Toca el altavoz cuando quieras oír.' },
+      a: 'Toca "Por quién" en el menú de abajo y escribe el nombre de quien partió — preferentemente en hebreo. Puedes registrar más de una persona. Si pones también la fecha del fallecimiento, la app calcula el yahrzeit: el aniversario según el calendario judío, cuando se enciende la vela y se dice el Kadish por esa persona. Te avisa cada año. Todo queda solo en tu dispositivo.' },
+    p_pronto: { t: 'Vamos a decir el Kadish.',
+      a: 'La reza lleva alrededor de un minuto y medio. Empieza con el sonido apagado — es lo que se quiere en el minyán: el texto acompaña la voz en silencio y tú lees con él. Toca el altavoz cuando quieras oír la voz del rabino.' },
   },
   fr: {
     p_abertura: { t: 'La prière que nous disons depuis des millénaires pour l\'élévation de l\'âme de ceux qui sont partis.',
-      a: 'Vous n\'avez pas besoin de savoir l\'hébreu pour dire le Kaddish. Cette application l\'enseigne, mot à mot. Sept écrans rapides — vous pouvez passer.' },
+      a: 'Vous n\'avez pas besoin de savoir l\'hébreu pour dire le Kaddish. Cette application l\'enseigne, mot à mot. Quelques écrans rapides — vous pouvez passer.' },
     p_tradicao: { t: 'Quelle est la tradition de votre famille ?',
       a: 'C\'est celle de la synagogue où vous allez prier. En cas de doute, demandez au rabbin. Touchez ici pour choisir — vous pourrez changer plus tard.' },
     p_texto: { t: 'Voici comment le Kaddish apparaît.',
-      a: 'Il s\'ouvre avec le Kaddish écrit avec nos lettres : vous le lisez à voix haute sans savoir l\'hébreu. Ces trois boutons allument et éteignent chaque texte.' },
+      a: 'Touchez les trois boutons pour choisir ce qui reste à l\'écran : la translittération seule — le Kaddish avec nos lettres, que vous lisez sans savoir l\'hébreu —, l\'hébreu en plus, la traduction en plus, ou les trois à la fois. Et au fil de l\'audio, le mot que le rabbin prononce s\'allume.' },
     p_tipo: { t: 'Petit ou grand ? Le rabbin l\'annonce.',
       a: 'Il y a deux Kaddishim, et lequel on dit change d\'un office à l\'autre. À la synagogue le rabbin dit lequel — et vous changez ici.' },
     p_velocidade: { t: 'Si la voix va trop vite.',
@@ -6476,17 +6551,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Appuyez sur Pratique pour apprendre.',
       a: 'L\'audio s\'arrête alors à la fin de chaque phrase et attend en silence — c\'est là que votre voix entre. Le ✕ revient à la prière.' },
     p_pessoas: { t: 'Pour qui allez-vous prier ?',
-      a: 'Inscrivez le nom ici. Il reste sur votre appareil, il peut y avoir plusieurs personnes, et l\'application vous rappelle le yahrzeit chaque année.' },
-    p_pronto: { t: 'C\'est prêt.',
-      a: 'Le son est coupé au départ — c\'est ce qu\'on veut au minyan : le texte suit la voix en silence. Touchez le haut-parleur quand vous voulez entendre.' },
+      a: 'Touchez « Pour qui » dans le menu du bas et inscrivez le nom de la personne disparue — en hébreu de préférence. Vous pouvez en inscrire plusieurs. Si vous donnez aussi la date du décès, l\'application calcule le yahrzeit : l\'anniversaire selon le calendrier juif, quand on allume la bougie et dit le Kaddish pour elle. Elle vous prévient chaque année. Tout reste sur votre appareil.' },
+    p_pronto: { t: 'Disons le Kaddish.',
+      a: 'La prière dure environ une minute et demie. Elle commence avec le son coupé — c\'est ce qu\'on veut au minyan : le texte suit la voix en silence et vous lisez avec. Touchez le haut-parleur quand vous voulez entendre la voix du rabbin.' },
   },
   it: {
     p_abertura: { t: 'La preghiera che diciamo da millenni per l\'elevazione dell\'anima di chi è partito.',
-      a: 'Non serve sapere l\'ebraico per dire il Kaddish. Questa app lo insegna, parola per parola. Sette schermate rapide — si possono saltare.' },
+      a: 'Non serve sapere l\'ebraico per dire il Kaddish. Questa app lo insegna, parola per parola. Poche schermate rapide — si possono saltare.' },
     p_tradicao: { t: 'Qual è la tradizione della tua famiglia?',
       a: 'È quella della sinagoga dove pregherai. Nel dubbio, chiedi al rabbino. Tocca qui per scegliere — e puoi cambiare dopo.' },
     p_texto: { t: 'Ecco come appare il Kaddish.',
-      a: 'Si apre con il Kaddish scritto con le nostre lettere: lo leggi ad alta voce anche senza sapere l\'ebraico. Questi tre pulsanti accendono e spengono ogni testo.' },
+      a: 'Tocchi i tre pulsanti per scegliere che cosa resta sullo schermo: la sola traslitterazione — il Kaddish con le nostre lettere, che legge anche senza sapere l\'ebraico —, anche l\'ebraico, anche la traduzione, o tutti e tre insieme. E mentre l\'audio va avanti, si accende la parola che il rabbino sta dicendo.' },
     p_tipo: { t: 'Piccolo o grande? Lo dice il rabbino.',
       a: 'Ci sono due Kaddishim, e quale si dice cambia di funzione in funzione. In sinagoga il rabbino dice quale — e tu cambi qui.' },
     p_velocidade: { t: 'Se la voce va veloce.',
@@ -6494,17 +6569,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Premi Pratica per imparare.',
       a: 'L\'audio si ferma alla fine di ogni frase e aspetta in silenzio — lì entra la tua voce. La ✕ torna alla preghiera.' },
     p_pessoas: { t: 'Per chi pregherai?',
-      a: 'Inserisci il nome qui. Resta solo sul tuo dispositivo, può essere più di una persona, e l\'app ti ricorda lo yahrzeit ogni anno.' },
-    p_pronto: { t: 'Pronto.',
-      a: 'L\'audio parte spento — è quello che serve nel minyan: il testo segue la voce in silenzio. Tocca l\'altoparlante quando vuoi sentire.' },
+      a: 'Tocchi "Per chi" nel menu in basso e scriva il nome di chi è partito — preferibilmente in ebraico. Può inserire più di una persona. Mettendo anche la data del decesso, l\'app calcola lo yahrzeit: l\'anniversario secondo il calendario ebraico, quando si accende la candela e si dice il Kaddish per lui. La avvisa ogni anno. Tutto resta solo sul suo dispositivo.' },
+    p_pronto: { t: 'Diciamo il Kaddish.',
+      a: 'La preghiera dura circa un minuto e mezzo. Parte con l\'audio spento — è quello che serve nel minyan: il testo segue la voce in silenzio e lei legge insieme. Tocchi l\'altoparlante quando vuole sentire la voce del rabbino.' },
   },
   de: {
     p_abertura: { t: 'Das Gebet, das wir seit Jahrtausenden für die Erhebung der Seele der Verstorbenen sprechen.',
-      a: 'Sie müssen kein Hebräisch können, um das Kaddisch zu sagen. Diese App lehrt es, Wort für Wort. Sieben kurze Schritte — überspringbar.' },
+      a: 'Sie müssen kein Hebräisch können, um das Kaddisch zu sagen. Diese App lehrt es, Wort für Wort. Ein paar kurze Schritte — überspringbar.' },
     p_tradicao: { t: 'Welche Tradition hat Ihre Familie?',
       a: 'Es ist die der Synagoge, in der Sie beten werden. Im Zweifel fragen Sie den Rabbiner. Hier tippen zum Auswählen — später änderbar.' },
     p_texto: { t: 'So erscheint das Kaddisch.',
-      a: 'Es öffnet mit dem Kaddisch in unseren Buchstaben: Sie lesen es laut, auch ohne Hebräisch. Diese drei Schaltflächen schalten jeden Text ein und aus.' },
+      a: 'Tippen Sie auf die Schaltflächen, um zu wählen, was auf dem Bildschirm bleibt: das Hebräische, die Übersetzung, oder beides zugleich. Und während das Audio läuft, leuchtet das Wort auf, das der Rabbiner gerade sagt.' },
     p_tipo: { t: 'Kurz oder lang? Der Rabbiner sagt es an.',
       a: 'Es gibt zwei Kaddischim, und welches gesagt wird, wechselt von Gottesdienst zu Gottesdienst. In der Synagoge sagt der Rabbiner welches — hier wechseln Sie.' },
     p_velocidade: { t: 'Wenn die Stimme zu schnell ist.',
@@ -6512,17 +6587,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Übung drücken, um zu lernen.',
       a: 'Der Ton hält dann am Ende jedes Satzes an und wartet still — dort kommt Ihre Stimme. Das ✕ führt zum Gebet zurück.' },
     p_pessoas: { t: 'Für wen werden Sie beten?',
-      a: 'Tragen Sie den Namen hier ein. Er bleibt auf Ihrem Gerät, es können mehrere Personen sein, und die App erinnert Sie jedes Jahr an den Jahrzeit.' },
-    p_pronto: { t: 'Fertig.',
-      a: 'Der Ton ist zunächst aus — so will man es im Minjan: der Text folgt der Stimme still. Tippen Sie auf den Lautsprecher, wenn Sie hören möchten.' },
+      a: 'Tippen Sie unten im Menü auf "Für wen" und tragen Sie den Namen der verstorbenen Person ein — möglichst auf Hebräisch. Es können mehrere sein. Geben Sie auch das Sterbedatum an, so errechnet die App den Jahrzeit: den Jahrestag nach dem jüdischen Kalender, an dem die Kerze angezündet und das Kaddisch gesagt wird. Sie erinnert Sie jedes Jahr. Alles bleibt auf Ihrem Gerät.' },
+    p_pronto: { t: 'Sagen wir das Kaddisch.',
+      a: 'Das Gebet dauert etwa anderthalb Minuten. Es beginnt mit ausgeschaltetem Ton — so will man es im Minjan: der Text folgt der Stimme still und Sie lesen mit. Tippen Sie auf den Lautsprecher, wenn Sie die Stimme des Rabbiners hören möchten.' },
   },
   ru: {
     p_abertura: { t: 'Молитва, которую мы произносим тысячелетиями за возвышение души ушедших.',
-      a: 'Чтобы сказать кадиш, не нужно знать иврит. Это приложение учит слово за словом. Семь быстрых экранов — можно пропустить.' },
+      a: 'Чтобы сказать кадиш, не нужно знать иврит. Это приложение учит слово за словом. Несколько быстрых экранов — можно пропустить.' },
     p_tradicao: { t: 'Какова традиция вашей семьи?',
       a: 'Это традиция синагоги, где вы будете молиться. Если сомневаетесь, спросите раввина. Нажмите, чтобы выбрать — потом можно сменить.' },
     p_texto: { t: 'Вот как выглядит кадиш.',
-      a: 'Он открывается кадишем, записанным нашими буквами: вы читаете вслух, не зная иврита. Эти три кнопки включают и выключают каждый текст.' },
+      a: 'Нажимайте на три кнопки, чтобы выбрать, что останется на экране: только транслитерация — кадиш нашими буквами, который вы читаете, не зная иврита —, вместе с ивритом, вместе с переводом или все три сразу. И пока идёт аудио, загорается слово, которое произносит раввин.' },
     p_tipo: { t: 'Малый или большой? Раввин объявит.',
       a: 'Кадишей два, и какой из них говорят, меняется от службы к службе. В синагоге раввин скажет какой — а вы переключите здесь.' },
     p_velocidade: { t: 'Если голос звучит быстро.',
@@ -6530,17 +6605,17 @@ const PASSOS_TXT = {
     p_treino: { t: 'Нажмите «Практика», чтобы учиться.',
       a: 'Звук начнёт останавливаться в конце каждой фразы и ждать в тишине — там вступает ваш голос. ✕ возвращает к молитве.' },
     p_pessoas: { t: 'За кого вы будете молиться?',
-      a: 'Впишите имя здесь. Оно остаётся только на вашем устройстве, людей может быть несколько, и приложение каждый год напомнит о ярцайте.' },
-    p_pronto: { t: 'Готово.',
-      a: 'Звук выключен — так и нужно в миньяне: текст следует за голосом в тишине. Нажмите на динамик, когда захотите слушать.' },
+      a: 'Нажмите «За кого» в меню внизу и впишите имя ушедшего — лучше на иврите. Можно внести несколько человек. Если указать и дату смерти, приложение вычислит ярцайт: годовщину по еврейскому календарю, когда зажигают свечу и говорят кадиш. Оно напомнит вам каждый год. Всё остаётся только на вашем устройстве.' },
+    p_pronto: { t: 'Скажем кадиш.',
+      a: 'Молитва занимает около полутора минут. Она начинается с выключенным звуком — так и нужно в миньяне: текст следует за голосом в тишине, а вы читаете вместе. Нажмите на динамик, когда захотите услышать голос раввина.' },
   },
   he: {
     p_abertura: { t: 'התפילה שאנו אומרים זה אלפי שנים לעילוי נשמתם של מי שהלכו.',
-      a: 'אין צורך לדעת עברית כדי לומר קדיש. היישום מלמד מילה אחר מילה. שבעה מסכים קצרים — אפשר לדלג.' },
+      a: 'אין צורך לדעת עברית כדי לומר קדיש. היישום מלמד מילה אחר מילה. כמה מסכים קצרים — אפשר לדלג.' },
     p_tradicao: { t: 'מה המנהג של המשפחה שלך?',
       a: 'זה המנהג של בית הכנסת שבו תתפללו. אם אינכם בטוחים, שאלו את הרב. לחצו כאן לבחור — אפשר לשנות אחר כך.' },
     p_texto: { t: 'כך נראה הקדיש.',
-      a: 'הוא נפתח עם הקדיש באותיות שלנו: אפשר לקרוא בקול גם בלי לדעת עברית. שלושת הכפתורים האלה מדליקים ומכבים כל טקסט.' },
+      a: 'געו בשלושת הכפתורים כדי לבחור מה יישאר על המסך: רק התעתיק, גם העברית, גם התרגום, או שלושתם יחד. וככל שהשמע מתקדם, המילה שהרב אומר נדלקת.' },
     p_tipo: { t: 'קטן או גדול? הרב מודיע.',
       a: 'יש שני קדישים, ואיזה מהם אומרים משתנה מתפילה לתפילה. בבית הכנסת הרב אומר איזה — ואתם מחליפים כאן.' },
     p_velocidade: { t: 'אם הקול מהיר מדי.',
@@ -6548,9 +6623,9 @@ const PASSOS_TXT = {
     p_treino: { t: 'לחצו על תרגול כדי ללמוד.',
       a: 'השמע יעצור בסוף כל משפט ויחכה בשקט — שם נכנס הקול שלכם. ה-✕ חוזר לתפילה.' },
     p_pessoas: { t: 'בשביל מי תתפללו?',
-      a: 'רשמו כאן את השם. הוא נשאר רק במכשיר שלכם, אפשר יותר מאדם אחד, והיישום יזכיר לכם את היארצייט בכל שנה.' },
-    p_pronto: { t: 'מוכן.',
-      a: 'הקול מתחיל כבוי — וכך רוצים במניין: הטקסט מלווה את הקול בשקט. לחצו על הרמקול כשתרצו לשמוע.' },
+      a: 'געו ב"בשביל מי" בתפריט למטה ורשמו את שם הנפטר — עדיף בעברית. אפשר לרשום יותר מאדם אחד. אם תרשמו גם את תאריך הפטירה, היישום יחשב את היארצייט: יום השנה לפי הלוח העברי, שבו מדליקים נר ואומרים קדיש. הוא יזכיר לכם בכל שנה. הכול נשאר רק במכשיר שלכם.' },
+    p_pronto: { t: 'נאמר קדיש.',
+      a: 'התפילה אורכת כדקה וחצי. היא מתחילה עם הקול כבוי — וכך רוצים במניין: הטקסט מלווה את הקול בשקט ואתם קוראים יחד. לחצו על הרמקול כשתרצו לשמוע את קולו של הרב.' },
   },
 };
 
@@ -6567,8 +6642,14 @@ function apagarAceso() {
 }
 
 function acomodarPassos() {
+  /* O LUGAR DO PASSO A PASSO AGORA E CSS PURO (--topo e --pe-tela). Esta
+     funcao continua existindo porque e chamada de tres lugares, e o que ela
+     faz passou a ser o contrario: TIRAR qualquer estilo em linha que tenha
+     sobrado mandando no lugar dela. Duas contas para a mesma pergunta era o
+     que havia aqui — a regra do CSS dizia uma coisa e este `style.bottom`
+     dizia outra, e o estilo em linha ganha sempre. */
   const cx = document.getElementById('passos');
-  if (cx) cx.style.bottom = 'calc(' + (peDaTela() + 12) + 'px + env(safe-area-inset-bottom))';
+  if (cx) cx.style.removeProperty('bottom');
 }
 
 function pintarPasso() {
@@ -6730,6 +6811,16 @@ function voltarAoKadish() {
       const h = (!m || getComputedStyle(m).display === 'none') ? 0
         : Math.round(m.getBoundingClientRect().height);
       document.documentElement.style.setProperty('--pe-menu', h + 'px');
+      /* e o PE INTEIRO (barra + menu), que o peDaTela() ja sabia em JS e o CSS
+         nao tinha como perguntar. O aviso flutuante estava preso a um
+         `bottom: 140px` escrito a mao e caia EM CIMA do texto do Kadish — no
+         Treino o pe mede 191px. Mesma familia do vao de 10px da barra. */
+      document.documentElement.style.setProperty('--pe-tela', peDaTela() + 'px');
+      /* e o ALTO: onde o cabecalho acaba. O passo a passo precisa dele para
+         ocupar a tela inteira SEM tapar o controle que esta explicando. */
+      const tb = document.querySelector('.topbar');
+      const ht = tb ? Math.round(tb.getBoundingClientRect().bottom) : 0;
+      document.documentElement.style.setProperty('--topo', Math.max(0, ht) + 'px');
     } catch (e) {}
   };
   por();
@@ -6741,13 +6832,58 @@ function voltarAoKadish() {
      venha ela da letra que carregou, da tela que virou ou da lingua que mudou.
      Uma conta so, sem uma lista de eventos para alguem esquecer de completar. */
   try {
-    const m = document.getElementById('menuPe');
-    if (m && typeof ResizeObserver === 'function') new ResizeObserver(por).observe(m);
+    if (typeof ResizeObserver === 'function') {
+      const olho = new ResizeObserver(por);
+      /* OS DOIS: o menu e a BARRA. A barra cresce ao entrar no Treino, porque
+         ganha a segunda linha da repeticao — medido, o pe vai de 146px para
+         191px. Olhando so o menu, o --pe-tela ficaria com a conta da reza e o
+         aviso flutuante voltaria a cair em cima do texto. */
+      for (const el of [document.getElementById('menuPe'),
+                        document.querySelector('.audio-bar'),
+                        document.querySelector('.topbar')]) {
+        if (el) olho.observe(el);
+      }
+    }
   } catch (e) {}
   window.addEventListener('resize', por);
   window.addEventListener('orientationchange', por);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(por).catch(() => {});
 })();
+
+/* OS BLOCOS DO PAINEL DE AJUSTES.
+   O painel e uma lista plana: os titulos (.settings-eyebrow) e que marcam onde
+   um assunto comeca. Em vez de embrulhar tudo em <div> novos — o que congela a
+   estrutura e e uma edicao grande num arquivo de 9.800 linhas — a conta SEGUE
+   os titulos: cada filho pertence ao ultimo titulo que veio antes dele. Se
+   amanha entrar um assunto novo, ele entra sozinho.
+   O que vem ANTES do primeiro titulo (o × de fechar) nao pertence a bloco
+   nenhum e nunca some. */
+function blocosDoPainel() {
+  const painel = document.querySelector('.settings-panel');
+  if (!painel) return new Map();
+  const mapa = new Map();
+  let atual = null;
+  for (const f of painel.children) {
+    if (f.classList && f.classList.contains('settings-eyebrow')) {
+      atual = f.getAttribute('data-i18n') || atual;
+    }
+    if (!atual) continue;
+    if (!mapa.has(atual)) mapa.set(atual, []);
+    mapa.get(atual).push(f);
+  }
+  return mapa;
+}
+
+/* UMA conta para "o painel esta mostrando tudo ou so a dedicacao?" */
+function mostrarSoDedicacao(so) {
+  const painel = document.querySelector('.settings-panel');
+  if (!painel) return;
+  painel.classList.toggle('so-dedicacao', !!so);
+  for (const [chave, els] of blocosDoPainel()) {
+    const fora = so && chave !== 'dedication_title';
+    for (const e of els) e.classList.toggle('bloco-fora', fora);
+  }
+}
 
 /* A FILEIRA DE MENUS. Cada item leva a uma coisa que JA EXISTE. */
 (function ligarMenu() {
@@ -6772,7 +6908,10 @@ function voltarAoKadish() {
   if (casa) casa.addEventListener('click', () => voltarAoKadish());
   ir('mpAjustes', () => {
     const ov = document.getElementById('settingsOverlay');
-    if (ov) { ov.classList.add('show'); ov.scrollTop = 0; }
+    if (!ov) return;
+    mostrarSoDedicacao(false);          /* Ajustes mostra tudo, sempre */
+    ov.classList.add('show');
+    ov.scrollTop = 0;
   });
 
   /* "POR QUEM REZO" — a segunda funcao do app ganha porta propria (25/10).
@@ -6785,13 +6924,14 @@ function voltarAoKadish() {
   ir('mpPessoas', () => {
     const ov = document.getElementById('settingsOverlay');
     if (!ov) return;
+    /* NAO ROLA MAIS. A v65 abria o painel inteiro e tentava rolar ate a
+       Dedicacao; ele tocou e veio a configuracao, porque a Dedicacao e a
+       ULTIMA secao e e curta — nao ha conteudo abaixo para empurra-la ao alto.
+       Agora os outros blocos saem da tela e ela ja esta no alto, sem rolagem
+       nenhuma para dar errado. */
+    mostrarSoDedicacao(true);
     ov.classList.add('show');
-    const alvo = document.getElementById('secaoDedicacao');
-    if (!alvo) return;
-    // rolar DEPOIS de o painel aparecer: antes disso ele nao tem altura, e o
-    // scrollIntoView num elemento sem caixa nao vai a lugar nenhum — e a mesma
-    // armadilha que a testar-opiniao pegou em 15/09.
-    setTimeout(() => { try { alvo.scrollIntoView({ block: 'start' }); } catch (e) {} }, 60);
+    ov.scrollTop = 0;
   });
 })();
 
@@ -6841,6 +6981,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'pôr no calendário do telefone',
     speed_label: 'Velocidade da leitura',
     settings_hint: 'Ative <strong>Destaque</strong> numa camada para focar nela enquanto as outras esmaecem.',
+    dedication_ajuda: 'Escreva o nome de quem partiu — de preferência em hebraico. Pode cadastrar mais de uma pessoa. Pondo também a data do falecimento, o app calcula o <strong>yahrzeit</strong>: o aniversário da morte pelo calendário judaico, que é quando se acende a vela e se diz o Kadish por ela. Ele avisa você todo ano. Tudo fica só no seu aparelho.',
     in_memory_of: 'Em memória de',
     prayer_title: 'Kadish do Enlutado', prayer_source: 'Kadish Yatom · recitado em pé',
     nota_minyan: 'O Kadish exige minyan de dez homens adultos e é recitado de pé.', nota_de_pe: 'Deve ser recitado normalmente numa sinagoga durante o período de luto.',
@@ -6946,6 +7087,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'add to the phone calendar',
     speed_label: 'Reading speed',
     settings_hint: 'Activate <strong>Highlight</strong> on a layer to focus on it while others fade.',
+    dedication_ajuda: 'Write the name of the person who died — in Hebrew if you can. You can add more than one. If you also give the date of death, the app works out the <strong>yahrzeit</strong>: the anniversary by the Jewish calendar, when the candle is lit and the Kaddish is said for them. It reminds you every year. Everything stays on your device.',
     in_memory_of: 'In memory of',
     prayer_title: "Mourner's Kaddish", prayer_source: 'Kaddish Yatom · recited standing',
     nota_minyan: 'The Kaddish requires a minyan of ten adult men and is recited standing.', nota_de_pe: 'It should normally be recited in a synagogue during the period of mourning.',
@@ -7048,6 +7190,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'poner en el calendario del teléfono',
     speed_label: 'Velocidad de lectura',
     settings_hint: 'Active <strong>Destacar</strong> en una capa para enfocarse en ella mientras las otras se atenúan.',
+    dedication_ajuda: 'Escribe el nombre de quien partió — preferentemente en hebreo. Puedes registrar más de una persona. Si pones también la fecha del fallecimiento, la app calcula el <strong>yahrzeit</strong>: el aniversario según el calendario judío, cuando se enciende la vela y se dice el Kadish por esa persona. Te avisa cada año. Todo queda solo en tu dispositivo.',
     in_memory_of: 'En memoria de',
     prayer_title: 'Kadish del Enlutado', prayer_source: 'Kadish Yatom · recitado de pie',
     nota_minyan: 'El Kadish exige minián de diez hombres adultos y se recita de pie.', nota_de_pe: 'Debe recitarse normalmente en una sinagoga durante el período de duelo.',
@@ -7150,6 +7293,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'ajouter au calendrier du téléphone',
     speed_label: 'Vitesse de lecture',
     settings_hint: 'Activez <strong>Mettre en avant</strong> sur une couche pour vous concentrer dessus pendant que les autres s\'estompent.',
+    dedication_ajuda: 'Inscrivez le nom de la personne disparue — en hébreu de préférence. Vous pouvez en inscrire plusieurs. Si vous donnez aussi la date du décès, l\'application calcule le <strong>yahrzeit</strong> : l\'anniversaire selon le calendrier juif, quand on allume la bougie et dit le Kaddish pour elle. Elle vous prévient chaque année. Tout reste sur votre appareil.',
     in_memory_of: 'En mémoire de',
     prayer_title: "Kaddish de l'Endeuillé", prayer_source: 'Kaddish Yatom · récité debout',
     nota_minyan: 'Le Kaddish exige un minyan de dix hommes adultes et se récite debout.', nota_de_pe: 'Il doit normalement être récité dans une synagogue pendant la période de deuil.',
@@ -7252,6 +7396,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'aggiungi al calendario del telefono',
     speed_label: 'Velocità della lettura',
     settings_hint: 'Attiva <strong>Evidenzia</strong> su un livello per concentrarti su di esso mentre gli altri si attenuano.',
+    dedication_ajuda: 'Scriva il nome di chi è partito — preferibilmente in ebraico. Può inserire più di una persona. Mettendo anche la data del decesso, l\'app calcola lo <strong>yahrzeit</strong>: l\'anniversario secondo il calendario ebraico, quando si accende la candela e si dice il Kaddish per lui. La avvisa ogni anno. Tutto resta solo sul suo dispositivo.',
     in_memory_of: 'In memoria di',
     prayer_title: 'Kaddish dei Dolenti', prayer_source: 'Kaddish Yatom · recitato in piedi',
     nota_minyan: 'Il Kaddish richiede un minyan di dieci uomini adulti e si recita in piedi.', nota_de_pe: 'Deve essere recitato normalmente in sinagoga durante il periodo di lutto.',
@@ -7354,6 +7499,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'in den Kalender des Telefons eintragen',
     speed_label: 'Lesegeschwindigkeit',
     settings_hint: 'Aktivieren Sie <strong>Hervorheben</strong> bei einer Ebene, um sich auf sie zu konzentrieren, während die anderen zurücktreten.',
+    dedication_ajuda: 'Tragen Sie den Namen der verstorbenen Person ein — möglichst auf Hebräisch. Es können mehrere sein. Geben Sie auch das Sterbedatum an, so errechnet die App den <strong>Jahrzeit</strong>: den Jahrestag nach dem jüdischen Kalender, an dem die Kerze angezündet und das Kaddisch gesagt wird. Sie erinnert Sie jedes Jahr. Alles bleibt auf Ihrem Gerät.',
     in_memory_of: 'Zum Andenken an',
     prayer_title: 'Trauerkaddisch', prayer_source: 'Kaddisch Jatom · im Stehen gesprochen',
     nota_minyan: 'Das Kaddisch verlangt einen Minjan von zehn erwachsenen Männern und wird im Stehen gesprochen.', nota_de_pe: 'Es soll in der Regel während der Trauerzeit in einer Synagoge gesprochen werden.',
@@ -7456,6 +7602,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'добавить в календарь телефона',
     speed_label: 'Скорость чтения',
     settings_hint: 'Активируйте <strong>Выделить</strong> на слое, чтобы сфокусироваться на нём.',
+    dedication_ajuda: 'Впишите имя ушедшего — лучше на иврите. Можно внести несколько человек. Если указать и дату смерти, приложение вычислит <strong>ярцайт</strong>: годовщину по еврейскому календарю, когда зажигают свечу и говорят кадиш. Оно напомнит вам каждый год. Всё остаётся только на вашем устройстве.',
     in_memory_of: 'В память о',
     prayer_title: 'Кадиш сироты', prayer_source: 'Кадиш Ятом · читается стоя',
     nota_minyan: 'Кадиш требует миньяна из десяти взрослых мужчин и читается стоя.', nota_de_pe: 'Обычно его следует читать в синагоге в течение траурного периода.',
@@ -7558,6 +7705,7 @@ const I18N = {
     yahrzeit_calendar_btn: 'להוסיף ליומן בטלפון',
     speed_label: 'מהירות הקריאה',
     settings_hint: 'הפעל <strong>הדגשה</strong> בשכבה כדי להתמקד בה.',
+    dedication_ajuda: 'רשמו את שם הנפטר — עדיף בעברית. אפשר לרשום יותר מאדם אחד. אם תרשמו גם את תאריך הפטירה, היישום יחשב את ה<strong>יארצייט</strong>: יום השנה לפי הלוח העברי, שבו מדליקים נר ואומרים קדיש. הוא יזכיר לכם בכל שנה. הכול נשאר רק במכשיר שלכם.',
     in_memory_of: 'לזכר',
     prayer_title: 'קדיש יתום', prayer_source: 'קדיש יתום · נאמר בעמידה',
     nota_minyan: 'הקדיש טעון מניין של עשרה גברים בוגרים והוא נאמר בעמידה.', nota_de_pe: 'רגילים לאומרו בבית הכנסת במשך תקופת האבלות.',
@@ -10222,9 +10370,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
   var pedidoGuardado = null;   // so o Android entrega isto
 
   function acomodar() {
-    try {
-      caixa.style.bottom = 'calc(' + (peDaTela() + 12) + 'px + env(safe-area-inset-bottom))';
-    } catch (e) {}
+    /* o lugar vem do --pe-tela (CSS), pela mesma razao escrita no
+       .consent-banner: medida em linha feita no `resize` envelhece no meio de
+       uma virada de tela. Aqui so se garante que nao sobrou estilo em linha de
+       antes mandando no lugar dela. */
+    try { caixa.style.removeProperty('bottom'); } catch (e) {}
   }
 
   // QUEM MAIS MORA NO PE DA TELA — uma conta so, e ela devolve o NOME de quem

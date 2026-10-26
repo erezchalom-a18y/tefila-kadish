@@ -1776,6 +1776,113 @@ OK sem olhar nada).
 
 A **trava-sincronia.mjs fica verde**: nada disto toca no modulo SYNC.
 
+## A noite em que ele revisou tela a tela (25/10, v67)
+
+Pus no canvas 20 FOTOS DO APP RODANDO — nao desenhos — e ele foi mandando uma
+observacao por tela. Sete achados, e **cinco eram defeito de verdade.**
+
+### 1. A primeira foto mostrava uma tela que ninguem ve
+
+Ele: *"lingua nao precisa"*. O chip 🇧🇷 PT estava na foto. Medido: **sem
+`?lang=` o botao tem altura 0** — ele nunca aparece no app. Apareceu porque eu
+tirei a foto com `?lang=pt` no endereco, que e o que as CHECAGENS usam.
+
+**Uma foto de revisao tirada pelo caminho das checagens nao e a tela dele.** As
+20 foram refeitas sem `?lang=` e com navegador de iPhone — e so entao o convite
+de instalar apareceu, porque num computador ele nao aparece de proposito.
+
+### 2. O vao de 10px por onde passava o Kadish picado
+
+Ele: *"a parte de baixo parece mal desenhada e com texto estranho"*. Medido:
+
+| | |
+|---|---|
+| a barra do play | presa a `bottom: 62px`, **escrito a mao** |
+| o menu | mede **52px** |
+| entre os dois | **10px de vao**, e nele aparecia `translit` |
+
+Era a transliteracao cortada ao meio, numa tira, entre a barra e o menu. Mesma
+familia dos outros numeros absolutos deste arquivo. Virou
+`bottom: var(--pe-menu)`, que e MEDIDO.
+
+### 3. Duas contas para a repeticao, lado a lado na mesma linha
+
+No Treino havia o botao redondo com "3×" **e** a fileira "sem repetir · 2× · 3×
+· 5×" — e o redondo **ainda ciclava** quando tocado. O comentario do HTML dizia
+que ele tinha sido *"aposentado"* na v65; nao tinha, ficou na tela. Saiu, e a
+fileira passou a ocupar a linha inteira (o conteudo ficava centrado com **87px
+de vazio de cada lado**).
+
+### 4. "Por quem" levava a configuracao — e a foto estava certa
+
+Ele: *"as imagens estao erradas, por quem veio a configuracao"*. A imagem
+estava certa; **o app e que estava errado**, e a culpa era de uma promessa que
+o layout nao tinha como cumprir: a v65 abria o painel inteiro e rolava ate a
+Dedicacao com `scrollIntoView`, mas **a Dedicacao e a ULTIMA secao e e curta** —
+nao ha conteudo abaixo dela para empurra-la ao alto, entao o painel rolava ate
+o maximo e deixava a velocidade, o Som e as Camadas inteiras a vista.
+
+Agora a porta mostra o que o nome dela diz: o MESMO painel e o MESMO editor,
+com os outros blocos fora da tela (`mostrarSoDedicacao`). Nao e tela nova —
+seriam duas contas para o mesmo cadastro, que foi o que a v65 evitou com razao.
+A conta de "que filho pertence a que bloco" SEGUE os titulos
+(`.settings-eyebrow`) em vez de embrulhar tudo em `<div>` novos: assim um
+assunto novo entra sozinho.
+
+### 5. Os destinos do menu deixaram de ser pop-ups
+
+Ele: *"o que e nao deve ser popup. deve ser direto na tela, alias tudo deve ser
+assim"*, e antes disso *"o como usar deve ocupar a tela inteira"*.
+
+E a forma certa para o que o menu virou na v66. **Um menu de abas leva a uma
+TELA**; uma caixa flutuante por cima da reza diz "isto e um aviso, feche e
+volte". Sairam o fundo escuro, a borda de cartao e a sombra; o papel e o mesmo
+da reza; o × passou a ser FIXO no canto (era ele que rolava para -628px).
+
+**O passo a passo ocupa tudo MENOS AS DUAS BARRAS, e isso nao e meia medida:**
+ele ACENDE o controle de verdade — pedido dele em 25/10, *"onde ele ja
+configura"* — e os controles moram no cabecalho e na barra de baixo. Tapa-los
+seria explicar um botao escondendo-o. As duas medidas sao medidas (`--topo` e
+`--pe-tela`), nunca numeros escritos a mao.
+
+### 6. O aviso de privacidade com a medida do meio de uma virada de tela
+
+A `testar-dedicatoria` ficou vermelha dizendo que o aviso tapava o botao
+Treino. Medido: virando o telefone para deitado e de volta, ele ficava com
+`bottom: 96px` quando o certo eram 158. **O `resize` dispara ANTES de a tela
+assentar**, a conta era feita com a medida do meio da virada, e nada remedia
+depois.
+
+E o conserto mostrou outra coisa: eu ja tinha posto o `--pe-tela` em CSS, e
+**o CSS estava certo o tempo todo** — quem mentia era o `style.bottom` em linha
+que o JS ainda escrevia por cima. Estilo em linha ganha de qualquer regra. Hoje
+o aviso, o convite de instalar e o passo a passo leem o `--pe-tela`, e as suas
+funcoes JS passaram a TIRAR o estilo em linha em vez de escrever um.
+
+**O `--pe-menu`, o `--pe-tela` e o `--topo` sao escritos por um `ResizeObserver`
+que olha o menu, a barra E o cabecalho.** Tem de ser os tres: a barra cresce ao
+entrar no Treino (o pe vai de 146px para 183px), e olhando so o menu o aviso
+voltaria a cair em cima do texto.
+
+### 7. Os textos que ele mandou mudar
+
+- **O passo do TEXTO** passou a dizer o que ele ditou: da para ficar so com a
+  transliteracao, com o hebraico junto, com a traducao junto ou com os tres, e
+  **a palavra acende conforme o audio anda**.
+- **O passo do POR QUEM** explica o que fazer e o que e o yahrzeit. A mesma
+  explicacao entrou na PROPRIA tela "Por quem" (`dedication_ajuda`, nas 8), que
+  sem ela era uma pagina quase vazia com um botao tracejado.
+- **O ultimo passo virou convite**: "Vamos dizer o Kadish" no lugar de
+  "Pronto." — ele achou o texto *"meio perdido"* e disse que *"pode ser um
+  convite ao app"*. O botao ja dizia "Dizer o Kadish"; o titulo passou a
+  concordar com ele.
+- **O numero saiu da frase de abertura.** Ela dizia "sao sete telas" e o
+  contador dizia "1 / 8". Nao corrigi o numero: **tirei-o**, porque um numero
+  escrito em prosa ao lado de um contador sao duas contas para a mesma coisa.
+
+**Quinze checagens verdes**, a `trava-sincronia` entre elas, e o `--provar` do
+`checar-menu` acusando 8. Nada disto toca no modulo SYNC.
+
 ## Nunca
 
 - git push --force

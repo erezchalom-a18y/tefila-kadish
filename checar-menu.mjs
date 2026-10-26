@@ -204,6 +204,42 @@ for (const porta of PORTAS) {
   await p.close();
 }
 
+/* ---------- 3b. NAO SOBRA VAO ENTRE A BARRA DO PLAY E O MENU ----------
+   O Erez viu na primeira foto que eu mandei: "a parte de baixo parece mal
+   desenhada e com texto estranho". Era um vao de 10px entre a barra (presa a
+   um `bottom: 62px` escrito a mao) e o menu (que mede 52px), e por ele passava
+   a transliteracao CORTADA AO MEIO. Nao basta perguntar se ha vao: a pergunta
+   e QUEM aparece nele, porque um vao com o papel de fundo ninguem nota e um
+   vao com texto picado e o que ele viu. */
+for (const [rotulo, vp] of [
+  ['iPhone SE em pe', { width: 375, height: 667 }],
+  ['iPhone 15 em pe', { width: 393, height: 852 }],
+  ['iPhone deitado',  { width: 667, height: 375 }],
+  ['iPad em pe',      { width: 820, height: 1180 }],
+  ['computador',      { width: 1440, height: 900 }],
+]) {
+  const p = await abrir(nav, `${BASE}/engine.html?lang=pt&audio=mp3`, PROVAR);
+  await p.setViewportSize(vp);
+  await p.waitForTimeout(700);
+  const r = await p.evaluate(() => {
+    const bar = document.querySelector('.audio-bar');
+    const menu = document.getElementById('menuPe');
+    const rb = bar.getBoundingClientRect(), rm = menu.getBoundingClientRect();
+    const temMenu = getComputedStyle(menu).display !== 'none' && rm.height > 0;
+    /* sem menu (telefone deitado) o pe da tela e a propria janela */
+    const vao = temMenu ? Math.round(rm.top - rb.bottom) : Math.round(innerHeight - rb.bottom);
+    let noVao = '-';
+    if (vao > 0) {
+      const e = document.elementFromPoint(Math.round(innerWidth / 2), Math.round(rb.bottom + vao / 2));
+      noVao = e ? (e.id || String(e.className).split(' ')[0] || e.tagName) : 'nada';
+    }
+    return { vao, menu: temMenu ? Math.round(rm.height) : 0, noVao };
+  });
+  ok(r.vao === 0,
+    `${rotulo}: a barra do play senta no menu, sem vao (menu ${r.menu}px, vao ${r.vao}px${r.vao > 0 ? ', e nele aparece: ' + r.noVao : ''})`);
+  await p.close();
+}
+
 /* ---------- 4. o × continua valendo, e o fundo escuro tambem ---------- */
 {
   const p = await abrir(nav, `${BASE}/engine.html?lang=pt&audio=mp3`, PROVAR);
