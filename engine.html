@@ -1421,15 +1421,24 @@
      inteira e ignorada em silencio: o risco do topbar FICA e o fio aparece —
      duas linhas, e ninguem ve o defeito aqui. E o mesmo desvio-de-caminho do
      canPlayType. Quem decide onde a vaga mora ja e uma funcao (vagaDaDedicatoria);
-     entao e ela quem marca a classe, e ha uma conta so. */
+     entao e ela quem marca a classe, e ha uma conta so.
+
+     O FIO SAIU EM 26/10, e a razao e que ele ficou sem trabalho. Ele: "so uma
+     linha esta ok". Medido nos pixels da foto, num iPhone em pe: havia DOIS
+     riscos curtos entre a dedicatoria e o primeiro verso, a 30px um do outro —
+     o fio (46% de largura, opacidade .6) e o `.vm-line` do primeiro verso (55%,
+     opacidade .6). O proprio comentario acima ja temia esse par, mas so no
+     telefone deitado; ele acontecia tambem em pe, e ninguem tinha medido.
+     Ficou o `.vm-line`, e nao o fio, porque o `.vm-line` existe SEMPRE — no
+     Treino (onde a dedicatoria some), deitado, e sem ninguem cadastrado. Manter
+     o fio exigiria uma classe nova dizendo quando esconder o outro: mais uma
+     conta para a mesma pergunta.
+     E o fio podia sair porque a FRONTEIRA deixou de depender dele: desde a v68
+     o alto e o --bg e a reza e o --bg-leitura, e o degrade saiu em
+     26/10, entao o passo de cor e nitido e constante. Em 09/09 nao havia cor
+     nenhuma ali — era o fio ou uma regua de canto a canto. */
   .topbar.com-dedicatoria { border-bottom: 0; }
-  .topbar.com-dedicatoria .dedicatoria-fixa { position: relative; padding-bottom: 16px; }
-  .topbar.com-dedicatoria .dedicatoria-fixa::after {
-    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-    bottom: 5px; width: 46%; height: 1px;
-    background: linear-gradient(to right, transparent, var(--brass, #8b6a3e), transparent);
-    opacity: .6;
-  }
+  .topbar.com-dedicatoria .dedicatoria-fixa { position: relative; padding-bottom: 6px; }
   /* dentro da vaga a dedicatoria nao repete o risco nem o respiro que ela tinha
      quando era o rodape da pagina */
   .dedicatoria-fixa .dedicatoria { margin: 0; padding: 0; border-bottom: 0; }
@@ -2756,14 +2765,7 @@
      --bg-leitura existindo, a promessa passou a ser verdade. E a licao de
      sempre deste arquivo, pela enesima vez: QUEM VEM DEPOIS GANHA — esta
      regra mora no fim do arquivo e desfazia a do bloco de cima. */
-  .topbar #fioDoKadish, .topbar .dedicatoria-fixa { background: var(--bg-leitura, #e8dcc6); }
-  .topbar #fioDoKadish { padding-top: 10px; }
-  .fio-do-kadish {
-    height: 1px; width: 38%; margin: 0 auto 12px;
-    background: linear-gradient(to right, transparent, var(--brass, #8b6a3e), transparent);
-    opacity: .5;
-  }
-
+  .topbar .dedicatoria-fixa { background: var(--bg-leitura, #e8dcc6); padding-top: 10px; }
   /* ---- as tres portas saem da tela de rezar; ficam no ℹ e no menu ----
      A classe vem repetida porque `body:not(.modo-treino) .learn-row` e MAIS
      especifica e ganharia mesmo vindo antes. */
@@ -5003,22 +5005,33 @@ const CONVITE = {
  */
 const ALTURA_MINIMA_PARA_GRUDAR = 500;   // medido: abaixo disso o piso de 60% cai
 
-/* O FIO CURTO que abre a area da reza. E o mesmo desenho do .vm-line do
-   primeiro verso — a forma que ele escolheu entre cinco em 09/09 e de novo
-   entre tres em 25/10, quando pediu para "diferenciar a parte do kadish".
-   Ele e recriado quando falta porque o desenharVersos() limpa o <main>. */
+/* O FIO CURTO SAIU EM 26/10. Ele: "so uma linha esta ok".
+   Medido nos pixels de uma foto de iPhone em pe, entre o alto e o primeiro
+   verso havia TRES riscos do mesmo desenho — um gradiente de latao que desbota
+   nas pontas — empilhados em 60px:
+
+       #fioDoKadish                      38% de largura, opacidade .5
+       .dedicatoria-fixa::after          46%,            opacidade .6
+       .verse:first-child .vm-line       55%,            opacidade .6
+
+   Cada um foi posto por um motivo bom e num dia diferente (v48, v65), e
+   ninguem nunca os viu juntos. Ficou o `.vm-line`, que e o mais antigo do app e
+   o unico que existe SEMPRE: no Treino a dedicatoria some, deitada ela muda de
+   lugar, e sem ninguem cadastrado ela vira convite — em todos esses estados o
+   `.vm-line` continua abrindo o primeiro verso, sem nenhuma classe nova
+   dizendo quando esconder quem.
+
+   E os dois podiam sair porque a FRONTEIRA nao depende mais deles: desde a v68
+   o alto e o `--bg` e a reza e o `--bg-leitura`, e desde 26/10 nao ha degrade
+   por cima — o passo de cor e nitido e esta exatamente onde o fio estava. Em
+   09/09, quando o fio foi inventado, nao havia cor nenhuma ali: era ele ou uma
+   regua de canto a canto.
+
+   A funcao ficou para TIRAR o fio de telas que ainda o tenham em cache. */
 function garantirFioDoKadish(vaga) {
-  let fio = document.getElementById('fioDoKadish');
-  if (!fio) {
-    fio = document.createElement('div');
-    fio.id = 'fioDoKadish';
-    fio.className = 'fio-do-kadish';
-    fio.setAttribute('aria-hidden', 'true');
-  }
-  // recriado/reposto quando falta: o desenharVersos() limpa o <main> inteiro,
-  // e numa tela baixa a vaga mora la dentro
-  if (vaga.previousElementSibling !== fio) vaga.before(fio);
-  return fio;
+  const fio = document.getElementById('fioDoKadish');
+  if (fio) fio.remove();
+  return null;
 }
 
 function vagaDaDedicatoria() {
@@ -5040,8 +5053,7 @@ function vagaDaDedicatoria() {
   } else if (main) {
     if (main.firstChild !== vaga) main.prepend(vaga);
   }
-  // 25/10 — O FIO CURTO vem SEMPRE logo antes dela, esteja ela onde estiver.
-  // Ele e a fronteira que ele pediu: dali para baixo e o Kadish.
+  // 26/10 — o fio curto saiu (ver garantirFioDoKadish): a fronteira e a COR.
   garantirFioDoKadish(vaga);
   return vaga;
 }

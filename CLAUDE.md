@@ -2028,6 +2028,40 @@ ela acusou tres temas que estavam certos. Agora cada ponto so vale se o
 reprova se sobrarem menos de 4 pontos: **uma medida que nao conseguiu medir nada
 nao esta verde, esta cega.**
 
+### 1b. TRES fios iguais empilhados, e nenhum dia os pos juntos
+
+Ele, no mesmo recorte: *"so uma linha esta ok"*. A frase admitia duas leituras —
+"esta bom assim" e "so UMA linha e que esta certa" —, e as duas dao o mesmo
+resultado na tela, entao nao houve o que adivinhar: **medir quantas linhas ha.**
+Medido nos pixels de uma foto de iPhone em pe, entre o alto e o primeiro verso
+havia TRES riscos do mesmo desenho (um gradiente de latao que desbota nas
+pontas), empilhados em 60px:
+
+| | largura | opacidade | de quando |
+|---|---|---|---|
+| `#fioDoKadish` | 38% | .5 | v65 |
+| `.dedicatoria-fixa::after` | 46% | .6 | v48 |
+| `.verse:first-child .vm-line` | 55% | .6 | do comeco do app |
+
+Cada um entrou por um motivo bom e num dia diferente, e **ninguem nunca os viu
+juntos** — o de 09/09 ate temia esse par, mas so no telefone DEITADO, e ele
+acontecia em pe. E a familia de sempre, agora em forma de ornamento: tres contas
+para a mesma fronteira.
+
+**Ficou o `.vm-line`**, e a razao nao e gosto: e o unico que existe SEMPRE. No
+Treino a dedicatoria some; deitada ela muda de lugar; sem ninguem cadastrado ela
+vira convite — em todos esses estados o `.vm-line` continua abrindo o primeiro
+verso. Manter qualquer um dos outros exigiria uma classe nova dizendo quando
+esconder quem.
+
+**E os dois podiam sair porque a FRONTEIRA nao depende mais deles.** Desde a v68
+o alto e o `--bg` e a reza e o `--bg-leitura`, e com o degrade fora o passo de
+cor e nitido e esta exatamente onde o fio estava. Em 09/09, quando o fio foi
+inventado, nao havia cor nenhuma ali: era ele ou uma regua de canto a canto.
+
+Medido depois: **o primeiro verso subiu 15px** — 15px de Kadish que os tres
+riscos estavam cobrando.
+
 ### 2. "o treino e a repeticao e nao a pausa a cada frase, nao?"
 
 Ele perguntou olhando a tela 6 do passo a passo. Estava certo, e eu tinha
