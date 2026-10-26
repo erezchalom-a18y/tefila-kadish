@@ -41,7 +41,7 @@
        Agora o tom e uma COR, e nao um efeito: o alto fica no --bg e tudo o que
        e reza fica no --bg-leitura, a dedicatoria inclusive. A fronteira passou
        a ser onde o fio curto ja estava. */
-    --bg-leitura: #ede2cf;
+    --bg-leitura: #e8dcc6;  /* pergaminho: o tom que o degrade dava no alto da leitura */
     --bg-elevated: #ecdfc7;
     --text: #2a1f15;
     --text-soft: #4d3d2d;
@@ -58,7 +58,7 @@
   /* Theme: Claro */
   body.theme-claro {
     --bg: #ffffff;
-    --bg-leitura: #f7f5f0;
+    --bg-leitura: #f2eee5;  /* claro: idem */
     --bg-elevated: #f5f5f5;
     --text: #1a1a1a;
     --text-soft: #3a3a3a;
@@ -74,7 +74,7 @@
   /* Theme: Escuro */
   body.theme-escuro {
     --bg: #1a1612;
-    --bg-leitura: #221c15;
+    --bg-leitura: #2c241a;  /* escuro: o degrade CLAREAVA; o tom assado ja vem claro */
     --bg-elevated: #252019;
     --text: #f5ecd8;
     --text-soft: #d8c89a;
@@ -121,11 +121,21 @@
     -webkit-font-smoothing: antialiased;
     overscroll-behavior: none;
   }
+  /* A COR DA LEITURA E UMA COR, SEM DEGRADE (26/10). O body tinha o
+     --bg-leitura MAIS dois degrades quentes por cima, e a dedicatoria pintava
+     o --bg-leitura CHAPADO. Mesma cor escrita, duas cores na tela: medido na
+     foto dele, a faixa do "Em memoria de" dava rgb(237,226,207) e o Kadish
+     logo abaixo dela rgb(232,220,198) — uma faixa mais clara exatamente na
+     emenda, que e onde o olho compara. E "duas contas para a mesma cor".
+     O degrade variava de 232 a 237 ao longo da pagina, e a dedicatoria pintava
+     justamente o extremo mais claro. Agora o tom de cada tema JA E o que o
+     degrade produzia no alto da leitura, e nada se sobrepoe a ele — entao a
+     dedicatoria e o Kadish sao o mesmo pixel por construcao, nao por sorte.
+     De quebra conserta o tema de Alto contraste, que promete o branco puro
+     e vinha tingido para #f9f7f3 pelo degrade. */
   body {
-    background-color: var(--bg-leitura, #ede2cf);
-    background-image:
-      radial-gradient(at 20% 0%, rgba(184, 147, 92, 0.10) 0%, transparent 55%),
-      radial-gradient(at 80% 100%, rgba(139, 106, 62, 0.08) 0%, transparent 55%);
+    background-color: var(--bg-leitura, #e8dcc6);
+    background-image: none;
     padding-bottom: 130px;
   }
   main { background-color: transparent; }
@@ -1390,7 +1400,7 @@
        acompanhando a leitura"); o que mudou e de que lado da cor ela esta.
        O fundo e OPACO de proposito: o texto do Kadish passa por baixo dela ao
        rolar, e sem isto as duas letras se misturariam. */
-    background: var(--bg-leitura, #ede2cf);
+    background: var(--bg-leitura, #e8dcc6);
   }
   .dedicatoria-fixa:empty { display: none; padding: 0; }
   body.modo-treino .dedicatoria-fixa { display: none; }
@@ -2746,7 +2756,7 @@
      --bg-leitura existindo, a promessa passou a ser verdade. E a licao de
      sempre deste arquivo, pela enesima vez: QUEM VEM DEPOIS GANHA — esta
      regra mora no fim do arquivo e desfazia a do bloco de cima. */
-  .topbar #fioDoKadish, .topbar .dedicatoria-fixa { background: var(--bg-leitura, #ede2cf); }
+  .topbar #fioDoKadish, .topbar .dedicatoria-fixa { background: var(--bg-leitura, #e8dcc6); }
   .topbar #fioDoKadish { padding-top: 10px; }
   .fio-do-kadish {
     height: 1px; width: 38%; margin: 0 auto 12px;
@@ -3090,7 +3100,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-26 · 68';
+const VERSAO = '2026-10-26 · 69';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -6601,7 +6611,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'Se a voz estiver rápida.',
       a: 'Toque num número e a voz do rabino fica mais devagar. O texto acompanha junto, palavra por palavra.' },
     p_treino: { t: 'Aperte Treino para aprender.',
-      a: 'O áudio passa a parar no fim de cada frase e esperar em silêncio — é ali que a sua voz entra. O ✕ volta para a reza.' },
+      a: 'Cada frase toca três vezes, mais devagar, com uma respiração entre elas — é ali que a sua voz entra. Ele segue sozinho; o ✕ volta para a reza.' },
     p_pessoas: { t: 'Por quem você vai rezar?',
       a: 'Toque em "Por quem", no menu de baixo, e escreva o nome de quem partiu — de preferência em hebraico. Pode cadastrar mais de uma pessoa. Pondo também a data do falecimento, o app calcula o yahrzeit: o aniversário da morte pelo calendário judaico, que é quando se acende a vela e se diz o Kadish por ela. Ele avisa você todo ano. Tudo fica só no seu aparelho.' },
     p_pronto: { t: 'Vamos dizer o Kadish.',
@@ -6619,7 +6629,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'If the voice is too fast.',
       a: 'Tap a number and the rabbi\'s voice slows down. The text follows along, word by word.' },
     p_treino: { t: 'Press Practice to learn.',
-      a: 'The audio then stops at the end of each line and waits in silence — that is where your voice goes. The ✕ returns to prayer.' },
+      a: 'Each line plays three times, slower, with a breath in between — that is where your voice goes. It keeps going on its own; the ✕ returns to prayer.' },
     p_pessoas: { t: 'Who will you pray for?',
       a: 'Tap "Who for" in the menu below and write the name of the person who died — in Hebrew if you can. You can add more than one. If you also give the date of death, the app works out the yahrzeit: the anniversary by the Jewish calendar, when the candle is lit and the Kaddish is said for them. It reminds you every year. Everything stays on your device.' },
     p_pronto: { t: 'Let us say the Kaddish.',
@@ -6637,7 +6647,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'Si la voz va rápida.',
       a: 'Toca un número y la voz del rabino va más despacio. El texto acompaña, palabra por palabra.' },
     p_treino: { t: 'Pulsa Práctica para aprender.',
-      a: 'El audio pasa a parar al final de cada frase y esperar en silencio — ahí entra tu voz. La ✕ vuelve al rezo.' },
+      a: 'Cada frase suena tres veces, más despacio, con una respiración entre ellas — ahí entra tu voz. Sigue solo; la ✕ vuelve al rezo.' },
     p_pessoas: { t: '¿Por quién vas a rezar?',
       a: 'Toca "Por quién" en el menú de abajo y escribe el nombre de quien partió — preferentemente en hebreo. Puedes registrar más de una persona. Si pones también la fecha del fallecimiento, la app calcula el yahrzeit: el aniversario según el calendario judío, cuando se enciende la vela y se dice el Kadish por esa persona. Te avisa cada año. Todo queda solo en tu dispositivo.' },
     p_pronto: { t: 'Vamos a decir el Kadish.',
@@ -6655,7 +6665,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'Si la voix va trop vite.',
       a: 'Touchez un chiffre et la voix du rabbin ralentit. Le texte suit, mot à mot.' },
     p_treino: { t: 'Appuyez sur Pratique pour apprendre.',
-      a: 'L\'audio s\'arrête alors à la fin de chaque phrase et attend en silence — c\'est là que votre voix entre. Le ✕ revient à la prière.' },
+      a: 'Chaque phrase est jouée trois fois, plus lentement, avec une respiration entre elles — c\'est là que votre voix entre. Il continue tout seul ; le ✕ revient à la prière.' },
     p_pessoas: { t: 'Pour qui allez-vous prier ?',
       a: 'Touchez « Pour qui » dans le menu du bas et inscrivez le nom de la personne disparue — en hébreu de préférence. Vous pouvez en inscrire plusieurs. Si vous donnez aussi la date du décès, l\'application calcule le yahrzeit : l\'anniversaire selon le calendrier juif, quand on allume la bougie et dit le Kaddish pour elle. Elle vous prévient chaque année. Tout reste sur votre appareil.' },
     p_pronto: { t: 'Disons le Kaddish.',
@@ -6673,7 +6683,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'Se la voce va veloce.',
       a: 'Tocca un numero e la voce del rabbino rallenta. Il testo segue, parola per parola.' },
     p_treino: { t: 'Premi Pratica per imparare.',
-      a: 'L\'audio si ferma alla fine di ogni frase e aspetta in silenzio — lì entra la tua voce. La ✕ torna alla preghiera.' },
+      a: 'Ogni frase suona tre volte, più lentamente, con un respiro tra una e l\'altra — lì entra la tua voce. Prosegue da solo; la ✕ torna alla preghiera.' },
     p_pessoas: { t: 'Per chi pregherai?',
       a: 'Tocchi "Per chi" nel menu in basso e scriva il nome di chi è partito — preferibilmente in ebraico. Può inserire più di una persona. Mettendo anche la data del decesso, l\'app calcola lo yahrzeit: l\'anniversario secondo il calendario ebraico, quando si accende la candela e si dice il Kaddish per lui. La avvisa ogni anno. Tutto resta solo sul suo dispositivo.' },
     p_pronto: { t: 'Diciamo il Kaddish.',
@@ -6691,7 +6701,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'Wenn die Stimme zu schnell ist.',
       a: 'Tippen Sie eine Zahl an und die Stimme des Rabbiners wird langsamer. Der Text folgt mit, Wort für Wort.' },
     p_treino: { t: 'Übung drücken, um zu lernen.',
-      a: 'Der Ton hält dann am Ende jedes Satzes an und wartet still — dort kommt Ihre Stimme. Das ✕ führt zum Gebet zurück.' },
+      a: 'Jeder Satz erklingt dreimal, langsamer, mit einem Atemzug dazwischen — dort kommt Ihre Stimme. Es läuft von selbst weiter; das ✕ führt zum Gebet zurück.' },
     p_pessoas: { t: 'Für wen werden Sie beten?',
       a: 'Tippen Sie unten im Menü auf "Für wen" und tragen Sie den Namen der verstorbenen Person ein — möglichst auf Hebräisch. Es können mehrere sein. Geben Sie auch das Sterbedatum an, so errechnet die App den Jahrzeit: den Jahrestag nach dem jüdischen Kalender, an dem die Kerze angezündet und das Kaddisch gesagt wird. Sie erinnert Sie jedes Jahr. Alles bleibt auf Ihrem Gerät.' },
     p_pronto: { t: 'Sagen wir das Kaddisch.',
@@ -6709,7 +6719,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'Если голос звучит быстро.',
       a: 'Нажмите на число, и голос раввина замедлится. Текст идёт следом, слово за словом.' },
     p_treino: { t: 'Нажмите «Практика», чтобы учиться.',
-      a: 'Звук начнёт останавливаться в конце каждой фразы и ждать в тишине — там вступает ваш голос. ✕ возвращает к молитве.' },
+      a: 'Каждая фраза звучит три раза, медленнее, с паузой между ними — там вступает ваш голос. Он продолжает сам; ✕ возвращает к молитве.' },
     p_pessoas: { t: 'За кого вы будете молиться?',
       a: 'Нажмите «За кого» в меню внизу и впишите имя ушедшего — лучше на иврите. Можно внести несколько человек. Если указать и дату смерти, приложение вычислит ярцайт: годовщину по еврейскому календарю, когда зажигают свечу и говорят кадиш. Оно напомнит вам каждый год. Всё остаётся только на вашем устройстве.' },
     p_pronto: { t: 'Скажем кадиш.',
@@ -6727,7 +6737,7 @@ const PASSOS_TXT = {
     p_velocidade: { t: 'אם הקול מהיר מדי.',
       a: 'לחצו על מספר והקול של הרב יאט. הטקסט מלווה, מילה אחר מילה.' },
     p_treino: { t: 'לחצו על תרגול כדי ללמוד.',
-      a: 'השמע יעצור בסוף כל משפט ויחכה בשקט — שם נכנס הקול שלכם. ה-✕ חוזר לתפילה.' },
+      a: 'כל משפט מושמע שלוש פעמים, לאט יותר, עם נשימה ביניהן — שם נכנס הקול שלכם. הוא ממשיך לבד; ה-✕ חוזר לתפילה.' },
     p_pessoas: { t: 'בשביל מי תתפללו?',
       a: 'געו ב"בשביל מי" בתפריט למטה ורשמו את שם הנפטר — עדיף בעברית. אפשר לרשום יותר מאדם אחד. אם תרשמו גם את תאריך הפטירה, היישום יחשב את היארצייט: יום השנה לפי הלוח העברי, שבו מדליקים נר ואומרים קדיש. הוא יזכיר לכם בכל שנה. הכול נשאר רק במכשיר שלכם.' },
     p_pronto: { t: 'נאמר קדיש.',

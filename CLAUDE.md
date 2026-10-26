@@ -1972,6 +1972,98 @@ embaixo.
 **Catorze checagens verdes**, a `trava-sincronia` entre elas, e o `--provar` do
 `checar-menu` acusando 8.
 
+## A faixa que a foto dele pegou, e o Treino que eu descrevi errado (26/10, v69)
+
+Duas coisas numa versao so, as duas achadas por ele olhando a tela.
+
+### 1. "so uma linha esta ok" — a dedicatoria num tom proprio
+
+Ele mandou um recorte da faixa do "Em memoria de". Medido nos pixels da propria
+tela, na coluna da esquerda, longe do texto:
+
+| onde | cor |
+|---|---|
+| o alto (controles) | `rgb(244,237,224)` |
+| a faixa do "Em memoria de" | `rgb(237,226,207)` |
+| o Kadish, abaixo do fio | `rgb(232,220,198)` |
+
+**Tres tons, e nao dois.** A v68 pos a dedicatoria no `--bg-leitura` — e isso
+estava certo —, mas o `body` tinha o `--bg-leitura` **MAIS dois degrades quentes
+por cima**, e a dedicatoria pintava a variavel **chapada**. Mesma cor escrita,
+duas cores na tela: e "duas contas para a mesma pergunta" na forma de COR. O
+degrade variava de 232 a 237 ao longo da pagina e a dedicatoria pintava
+justamente o extremo mais claro — a faixa aparecia exatamente na emenda, que e
+onde o olho compara.
+
+**O conserto e assar o degrade dentro da cor.** Cada tema passou a ter como
+`--bg-leitura` o tom que o degrade ja produzia no alto da leitura, e o `body`
+ficou sem `background-image`. Entao a dedicatoria e o Kadish sao o mesmo pixel
+**por construcao**, e nao por sorte:
+
+| tema | era | e |
+|---|---|---|
+| pergaminho | `#ede2cf` + degrade | **`#e8dcc6`** |
+| claro | `#f7f5f0` + degrade | **`#f2eee5`** |
+| escuro | `#221c15` + degrade | **`#2c241a`** (ali o degrade CLAREAVA) |
+| alto contraste | `#ffffff` + degrade | **`#ffffff`**, e agora e verdade |
+
+**O quarto e um segundo achado.** O tema de Alto contraste promete por escrito,
+no proprio CSS, *"no tema de contraste o branco e o ponto: nao se tinge a
+leitura"* — e o degrade o tingia para `#f9f7f3`. Mais uma linha que dizia o
+contrario do que fazia, irma da `.topbar #fioDoKadish` da v68.
+
+Contraste conferido antes de escolher o tom: o texto principal fica em
+**11,78:1** e o secundario em **7,61:1** sobre o `#e8dcc6`.
+
+**A checagem entrou na `testar-dedicatoria.mjs`**, e a pergunta e no PIXEL DA
+FOTO, nunca na variavel do CSS — a variavel estava certa o tempo todo; foi o
+degrade por cima dela que mentiu. Com `--provar` ela devolve o degrade ao `body`
+por fora, sem tocar no arquivo, e **acusa 4** (um por tema).
+
+**E ela cometeu o erro de sempre antes de funcionar.** Eu escolhi os pontos de
+amostra no olho, e dois caiam onde nao deviam: um dentro da **barra do play**
+(que pinta `--bg-elevated`) e outro nos **28px de sombra** `0 -4px 24px` dela —
+ela acusou tres temas que estavam certos. Agora cada ponto so vale se o
+`elementFromPoint` disser que ali esta mesmo o fundo da leitura, e a checagem
+reprova se sobrarem menos de 4 pontos: **uma medida que nao conseguiu medir nada
+nao esta verde, esta cega.**
+
+### 2. "o treino e a repeticao e nao a pausa a cada frase, nao?"
+
+Ele perguntou olhando a tela 6 do passo a passo. Estava certo, e eu tinha
+escrito a metade errada **nas 8 linguas**.
+
+O texto dizia: *"O audio passa a parar no fim de cada frase e esperar em
+silencio"*. Medido tocando de verdade, no chabad_derabanan:
+
+```
+ao entrar no Treino: {"repeatN":3,"velocidade":0.75}
+ 5.1s  rebobinou 3.82 -> 0.21      <- a 2a vez da frase 1
+ 6.0s  ficou parado 867ms
+10.9s  rebobinou 3.81 -> 0.21      <- a 3a vez
+11.8s  ficou parado 861ms
+17.6s  ficou parado 862ms          <- e SEGUE para a frase 2
+20.8s  rebobinou 6.65 -> 4.41
+```
+
+Duas coisas erradas no meu texto: ele **nao dizia que a frase toca tres vezes**,
+que e a primeira coisa que se ouve; e **"esperar em silencio" sugere que ele
+espera por voce**, e ele nao espera — respira ~865ms e continua. Isso esta
+escrito no proprio codigo com as palavras dele, de 26/08: *"a ideia e que o modo
+teste continue enquanto nao for interrompido… quem esta rezando de pe, no
+minyan, com o sidur na mao, nao tem dedo sobrando"*.
+
+O texto novo, nas 8: *"Cada frase toca tres vezes, mais devagar, com uma
+respiracao entre elas — e ali que a sua voz entra. Ele segue sozinho; o ✕ volta
+para a reza."* As 7 linguas alem do portugues sao rascunho de IA, como as outras
+chaves de `p_*`, e esperam olho humano.
+
+**A licao:** o passo a passo ACENDE o controle de verdade justamente para nao
+envelhecer calado — mas a TIRA que explica o controle e texto, e texto envelhece
+igual. Antes de escrever o que um botao faz, **tocar nele e medir**.
+
+A `trava-sincronia.mjs` fica verde: nada disto toca no modulo SYNC.
+
 ## Nunca
 
 - git push --force

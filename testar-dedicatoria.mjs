@@ -24,7 +24,23 @@
  */
 const pw = await import(process.env.PLAYWRIGHT_PATH || 'playwright');
 const { chromium } = pw.default || pw;
-const BASE = process.argv[2] || 'http://127.0.0.1:8896/tefila-kadish';
+const BASE = process.argv.find(a => a.startsWith('http')) || 'http://127.0.0.1:8896/tefila-kadish';
+// --provar devolve ao body o degrade que estava no ar ate 26/10 e EXIGE vermelho.
+// Nao toca no arquivo: troca o texto na resposta do servidor, no caminho.
+const PROVAR = process.argv.includes('--provar');
+const DEGRADE_DE_VOLTA = `background-image:
+      radial-gradient(at 20% 0%, rgba(184, 147, 92, 0.10) 0%, transparent 55%),
+      radial-gradient(at 80% 100%, rgba(139, 106, 62, 0.08) 0%, transparent 55%);`;
+async function plantarODegrade(p) {
+  if (!PROVAR) return;
+  await p.route('**/engine.html*', async (rota) => {
+    const r = await rota.fetch();
+    let html = await r.text();
+    if (!html.includes('background-image: none;')) throw new Error('--provar: nao achei o "background-image: none" para trocar');
+    html = html.replace('background-image: none;', DEGRADE_DE_VOLTA);
+    await rota.fulfill({ response: r, body: html });
+  });
+}
 const nav = await chromium.launch(
   process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {}
 );
@@ -189,6 +205,101 @@ for (const lg of linguas) {
 
   await p.close();
 }
+
+// ---- E — A COR DA LEITURA E UMA COR SO (26/10) ----
+// A pergunta que importa: O PIXEL DA DEDICATORIA E O MESMO PIXEL DO KADISH?
+// Ela nasceu de uma foto dele. O body tinha o --bg-leitura mais dois degrades
+// quentes por cima; a dedicatoria pintava o --bg-leitura chapado. Mesma cor
+// escrita, DUAS cores na tela: a faixa do "Em memoria de" dava rgb(237,226,207)
+// e o Kadish logo abaixo dela rgb(232,220,198) — mais clara exatamente na
+// emenda, que e onde o olho compara.
+// A medida e no PIXEL da foto, nunca na variavel do CSS: a variavel estava
+// certa o tempo todo — foi o degrade por cima dela que mentiu. E a licao da
+// caixa do glifo (10/09) e do `hidden` que nao escondia (v60).
+// Duas amostras tem de ficar de fora, e as duas me enganaram antes de acertar:
+// a barra do play (que pinta --bg-elevated) e os 28px acima dela, onde cai a
+// sombra `0 -4px 24px` da propria barra.
+{
+  const p = await nav.newPage({ viewport: { width: 393, height: 852 } });
+  await plantarODegrade(p);
+  await p.goto(`${BASE}/engine.html?n=ashkenaz&t=yatom&audio=mp3&lang=pt`, { waitUntil: 'domcontentloaded' });
+  await p.evaluate(() => {
+    localStorage.setItem('tefila_consent', '1');
+    localStorage.setItem('tefila_passos_1025', '1');
+    localStorage.setItem('tefila_memorial', JSON.stringify({ name: 'Itzhak Avraham Cohen' }));
+  });
+  await p.reload({ waitUntil: 'domcontentloaded' });
+  await p.waitForTimeout(2000);
+  for (const tema of ['pergaminho', 'claro', 'escuro', 'contraste']) {
+    await p.evaluate((t) => {
+      document.body.classList.remove('theme-claro', 'theme-escuro', 'theme-contraste');
+      if (t !== 'pergaminho') document.body.classList.add('theme-' + t);
+    }, tema);
+    await p.waitForTimeout(250);
+    const png = (await p.screenshot({ type: 'png' })).toString('base64');
+    const r = await p.evaluate(async (b64) => {
+      const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+      const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+      const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+      const hex = (px, py) => { const d = x.getImageData(px, py, 1, 1).data;
+        return '#' + [d[0], d[1], d[2]].map(n => n.toString(16).padStart(2, '0')).join(''); };
+      const ded = document.querySelector('.dedicatoria, .convite-dedicar');
+      const main = document.getElementById('main');
+      const versos = [...document.querySelectorAll('#main .verse')];
+      if (!ded || !main || !versos.length) return { erro: 'nao achei a dedicatoria ou os versos' };
+      const rd = ded.getBoundingClientRect();
+      // O PONTO SO VALE SE FOR MESMO O FUNDO DA LEITURA. Escolher pontos no olho
+      // me deu dois falsos: um caiu dentro da barra do play (que pinta
+      // --bg-elevated) e outro nos 28px de sombra `0 -4px 24px` dela. Quem
+      // responde quem esta ali e o elementFromPoint, que e o que o dedo
+      // encontra — a mesma pergunta do convite de instalar (10/09) e do menu.
+      const valeONome = (el) => el && (el === main || el === document.body ||
+        el.classList.contains('verse') || el.closest('#main'));
+      const pontos = [];
+      for (const v of versos.slice(0, 6)) {
+        const r = v.getBoundingClientRect();
+        for (const px of [6, 196, 386]) {
+          const py = Math.round(r.top - 4);          // a frestinha acima do verso
+          if (py < 0 || py > innerHeight - 1) continue;
+          if (!valeONome(document.elementFromPoint(px, py))) continue;
+          pontos.push(hex(px, py));
+        }
+      }
+      return {
+        alto: hex(8, 30),
+        dedicatoria: hex(8, Math.round(rd.top + rd.height / 2)),
+        quantos: pontos.length,
+        pontos,
+      };
+    }, png);
+    if (r.erro) { ruim++; console.log('FALHA a cor da leitura em ' + tema + ': ' + r.erro); continue; }
+    // uma checagem que nao conseguiu amostrar nada nao esta verde: esta cega.
+    if (r.quantos < 4) { ruim++; console.log(`FALHA so ${r.quantos} ponto(s) de fundo em ${tema} — a medida nao diz nada`); continue; }
+    const todos = [r.dedicatoria, ...r.pontos];
+    const umaCor = todos.every(v => v === todos[0]);
+    if (!umaCor) ruim++;
+    console.log((umaCor ? 'OK   ' : 'FALHA') + ` a dedicatoria e o Kadish sao o mesmo pixel (${tema}): ` +
+      JSON.stringify({ dedicatoria: r.dedicatoria, kadish: [...new Set(r.pontos)] }));
+    // E a fronteira com os CONTROLES tem de ser VISIVEL — foi o pedido dele na
+    // v68 ("em memoria de tem que estar ja no fundo mais escuro"). O tema de
+    // Alto contraste fica de fora POR DECISAO escrita no CSS: ali o branco puro
+    // e o ponto, e a leitura nao se tinge.
+    if (tema !== 'contraste') {
+      const separa = r.alto !== r.dedicatoria;
+      if (!separa) ruim++;
+      console.log((separa ? 'OK   ' : 'FALHA') + ` o alto e a leitura sao tons diferentes (${tema}): ` +
+        JSON.stringify({ alto: r.alto, leitura: r.dedicatoria }));
+    }
+  }
+  await p.close();
+}
+
 await nav.close();
-console.log(ruim ? `${ruim} problema(s)` : 'VERDE: o convite ocupa a vaga da dedicatoria, ela acompanha a leitura no alto, e sai do Treino');
+if (PROVAR) {
+  console.log(ruim
+    ? `\nPROVA OK: com o degrade de volta ela acusa ${ruim} problema(s) — ela sabe reprovar`
+    : '\nPROVA FALHOU: o degrade voltou e ela nao viu nada');
+  process.exit(ruim ? 0 : 1);
+}
+console.log(ruim ? `${ruim} problema(s)` : 'VERDE: o convite ocupa a vaga da dedicatoria, ela acompanha a leitura no alto, sai do Treino, e a cor da leitura e UMA cor');
 process.exit(ruim ? 1 : 0);
