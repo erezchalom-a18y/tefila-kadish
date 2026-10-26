@@ -1883,6 +1883,95 @@ voltaria a cair em cima do texto.
 **Quinze checagens verdes**, a `trava-sincronia` entre elas, e o `--provar` do
 `checar-menu` acusando 8. Nada disto toca no modulo SYNC.
 
+## Os cinco achados da revisao tela a tela (25/10, v68)
+
+Ele continuou mandando uma observacao por tela. **Cinco defeitos, e os cinco
+eram reais.**
+
+### 1. O "Em memoria de" estava do lado dos CONTROLES
+
+Ele: *"em memoria de tem que estar ja no fundo mais escuro em todas as telas
+(fazendo parte do kadish)"*.
+
+O "fundo mais escuro" que ele via **nao era uma cor** — era o tingimento quente
+em degrade do `body` aparecendo abaixo da barra de cima, que o apaga com
+`backdrop-filter: blur(14px)`. E a dedicatoria pintava um fundo opaco proprio,
+entao ficava do lado claro, o dos controles, mesmo sendo — por decisao dele na
+v65 — o COMECO do Kadish.
+
+E o defeito estava escrito numa linha que prometia o contrario:
+
+```css
+/* dali para baixo e o Kadish: o papel muda */
+.topbar #fioDoKadish, .topbar .dedicatoria-fixa { background: var(--bg); }
+```
+
+O papel nao mudava, porque `--bg` era a mesma cor do corpo. Agora existe o
+**`--bg-leitura`** nos quatro temas: o alto fica no `--bg`, e tudo o que e reza
+— a dedicatoria inclusive — fica no `--bg-leitura`. A fronteira passou a ser
+onde o fio curto ja estava. **Quem vem depois ganha**, pela enesima vez: a regra
+que desfazia estava no fim do arquivo.
+
+### 2. O play era um OVAL de 22px de largura
+
+Ele: *"esses 2 botoes parecem espremidos"*. Medido: o play tinha **52px de
+altura e 22 de largura** e o voltar-ao-inicio **36 por 16** — dois ovais onde o
+CSS pedia dois circulos. A fileira pede 412px numa de 361, e sem ninguem dizer
+quem cede, o navegador espremeu justamente os dois que sao o coracao dela.
+
+Agora o play e o `.icon-btn` sao `flex: 0 0 auto`. E o que cede e a fileira das
+velocidades — mas ela **nao cabe de jeito nenhum** num telefone estreito:
+medido num iPhone SE, sobram **116px** para uma fileira que precisa de **164**,
+e a letra dali ja esta em 10px, **abaixo do piso de 12px do projeto**. Entao
+ela desce para uma linha propria ate 440px de tela (a 430 os cinco ainda cabem
+ao lado do resto), que e o mesmo formato que o Treino usa para a repeticao
+desde a v65.
+
+**E a primeira tentativa deixou o MUDO sozinho na segunda linha**, debaixo do
+play: deixando o navegador quebrar onde quisesse, quem sobra e o ultimo da
+fila. Quem desce tem de ser escolhido.
+
+### 3. "Por quem" nao mostrava os dados
+
+Ele: *"menu por quem esta faltando dados... data falecimento, etc"*. A tela
+mostrava o titulo e um botao tracejado; o nome, o pai, a mae, a data do
+falecimento e os lembretes ficavam **um toque atras dele**. Com a lista vazia
+nao ha segunda coisa a fazer ali, entao esse toque nao decide nada — so atrasa.
+Agora, vazia, a porta abre direto nos campos; com gente cadastrada a lista
+fica, porque ai ha escolha.
+
+### 4. O passo a passo passou a seguir a tela que ELE desenhou
+
+Ele: *"o passo 1 de 8 do como usar ficou ruim, nao seria melhor seguir as telas
+ja feitas?"* — e era melhor. A diferenca nao e gosto: o miolo fica **centrado**
+(o meu empilhava tudo no alto e deixava meia tela vazia), o "Pular" sobe para o
+canto e para de competir com o botao que leva adiante, e o botao ocupa a
+largura toda. Na abertura entra o nome do app acima do titulo, e so nela.
+
+### 5. O cadastro virou tela, e isso quebrou a checagem com razao
+
+Levando o cadastro a tela inteira eu o deixei em `z-index: 500` — **por cima do
+menu**. A `checar-menu` ficou vermelha, e estava certa: dali nao havia caminho
+de volta ao Kadish, que e exatamente o defeito que ela nasceu para pegar. Foi
+para 310 (acima dos paineis, abaixo do menu). *Uma tela de cadastro nao e um
+aviso modal; e mais uma tela, e toda tela deste app mantem a fileira do pe.*
+
+E ela achou um segundo, mais fino: **o item aceso apagava**. O `abrirCadastro`
+fecha o painel de Ajustes para abrir o cadastro, e o observador concluia "nao ha
+nada aberto" e acendia o Kadish — o menu dizia que voce estava na reza enquanto
+voce preenchia um nome. O observador passou a olhar os **tres** paineis.
+
+### O canvas virou uma SEQUENCIA
+
+Ele: *"coloque as telas arrumadas numa sequencia como o passo a passo para
+ajudar na checagem"*. As 21 fotos estao agora numeradas na ordem em que a
+pessoa encontra cada tela — do aviso de privacidade ao convite de instalar — e
+as fotos avulsas da rodada anterior sairam. Os desenhos de 25/10 continuam
+embaixo.
+
+**Catorze checagens verdes**, a `trava-sincronia` entre elas, e o `--provar` do
+`checar-menu` acusando 8.
+
 ## Nunca
 
 - git push --force
