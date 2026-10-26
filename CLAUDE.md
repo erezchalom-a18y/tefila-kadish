@@ -2154,6 +2154,41 @@ diferentes · **sair devolve a tela que a REZA tinha** (antes so se cobrava "nao
 vazou") · e **o Treino nao fica guardado**. **Provado que sabe reprovar:**
 tirando o conserto de proposito ela acusa 3.
 
+### 4. E o AVISO ainda dizia a frase errada — a foto pegou
+
+Refazendo as 21 fotos, a do Treino mostrou o toast:
+
+> *"Modo Treino · velocidade 0.75× · repeticao 3× · **pausa apos cada verso**"*
+
+E a mesma frase que ele tinha acabado de corrigir no passo a passo, viva num
+segundo lugar. A velocidade e a repeticao sao LIDAS do estado e sao verdade; a
+ultima clausula era texto fixo, e era a metade errada. **Saiu das 8** — o que
+muda ao entrar no Treino e a velocidade e a repeticao, e e isso que o aviso diz
+agora.
+
+E a lição exata de 27/08, quando ESTE MESMO aviso dizia "repeticao 2×" nos dois
+dias em que a repeticao estava desligada. Naquele dia o conserto foi fazer os
+numeros virem do estado; a frase que sobrou ao lado deles ficou fixa, e ninguem
+a leu de novo por dois meses.
+
+**E ao procurar por ela apareceu texto morto:** as chaves `treino_active` e
+`treino_active_palavra`, **16 frases nas 8 linguas**, as duas dizendo "pausa
+apos cada verso". O elemento que as mostrava (`#treinoTexto`) saiu junto com a
+faixa do Treino em **27/08** — e o comentario ao lado delas jurava que elas
+*"continuam nas 8 linguas e sao usadas por ele"*. Nunca chegaram a tela desde
+entao. Sairam, com o comentario corrigido.
+
+**Por que isso importa, e nao e arrumacao:** uma frase guardada que ninguem
+mostra nao incomoda ninguem — ate o dia em que alguem a procura, acha, e acredita
+nela. E a lição de 10/09 escrita ao contrario: *uma afirmacao falsa deixada no
+codigo e pior que codigo inutil*. E o `testar-linguas.mjs` nao podia pegar: ele
+pergunta se toda chave DA TELA existe nas 8 tabelas, nunca o contrario.
+
+**A pergunta que fica, e nao foi feita:** nao ha checagem que ache chave de
+texto que nenhuma tela usa. Nao inventei uma nesta rodada — ela precisa saber
+distinguir texto morto de texto montado em codigo (como o `TXT()` faz), e isso
+e desenho, nao conserto.
+
 ## Nunca
 
 - git push --force

@@ -3049,8 +3049,14 @@
      botao acabou de ler o que ele diz, e o botao fica aceso enquanto o modo
      esta ligado. A faixa repetia isso a tela inteira e custava altura.
      O aviso continua existindo, mas onde nao atrapalha: no toast de quem
-     entra no modo. As chaves treino_active/_palavra continuam nas 8 linguas
-     e sao usadas por ele. -->
+     entra no modo.
+     26/10 — e este comentario MENTIA: ele dizia que as chaves
+     treino_active/_palavra "sao usadas por ele", e o elemento que as mostrava
+     (#treinoTexto) saiu junto com a faixa em 27/08. Eram 16 frases nas 8
+     linguas que nunca chegaram a tela — e as duas diziam "pausa apos cada
+     verso", a frase que ele corrigiu em 26/10 e que o app nao faz. Sairam.
+     Uma frase guardada que ninguem mostra e uma mentira esperando quem ler
+     depois (a licao de 10/09). -->
   <div class="studio-banner" data-i18n="studio_banner">
     Modo Studio · grave direto ou carregue áudio do Gravador (Voice Memos)
   </div>
@@ -7084,7 +7090,14 @@ const I18N = {
   pt: {
     toast_repeat: "Repetição {n} de {t}",
     toast_audio_torto: "O áudio não carregou certo neste aparelho. Feche e abra o app de novo.",
-    toast_mode_training: "Modo Treino · velocidade {v}× · repetição {n}× · pausa após cada verso",
+    // 26/10 — "pausa apos cada verso" SAIU das 8. Ele perguntou, olhando a tela
+    // do passo a passo: "o treino e a repeticao e nao a pausa a cada frase,
+    // nao?" — e estava certo. Medido tocando: o Treino repete tres vezes e
+    // RESPIRA ~865ms entre as frases; nao espera por ninguem. A velocidade e a
+    // repeticao sao lidas do estado e sao verdade; aquela frase era texto fixo,
+    // e era a metade errada. E a mesma licao de 27/08, quando este mesmo aviso
+    // dizia "repeticao 2x" nos dois dias em que a repeticao estava desligada.
+    toast_mode_training: "Modo Treino · velocidade {v}× · repetição {n}×",
     toast_mode_prayer: "Modo Reza · leitura limpa, sem pausas",
     toast_calendar_saved: "Abra o arquivo baixado para pôr no calendário",
     toast_need_name: "Preencha pelo menos o nome",
@@ -7103,10 +7116,8 @@ const I18N = {
     rep_nenhuma: 'sem repetir',
     modo_reza: 'Modo Reza', modo_treino: 'Modo Treino',
     comecar_aqui: '▶ Começar aqui',
-    treino_active: '⊙ Modo Treino · pausa após cada verso',
     gran_verso: 'por verso', gran_palavra: 'por palavra',
     toast_gran: '{n} paradas nesta reza',
-    treino_active_palavra: '⊙ Modo Treino · pausa após cada palavra',
     settings_title: 'Configurações',
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Escuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamanho da fonte', font_small: 'Pequena', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muito grande',
@@ -7189,7 +7200,7 @@ const I18N = {
   en: {
     toast_repeat: "Repetition {n} of {t}",
     toast_audio_torto: "The audio did not load correctly on this device. Close and reopen the app.",
-    toast_mode_training: "Practice mode · speed {v}× · repeat {n}× · pause after each verse",
+    toast_mode_training: "Practice mode · speed {v}× · repeat {n}×",
     toast_mode_prayer: "Prayer mode · clean reading, no pauses",
     toast_calendar_saved: "Open the downloaded file to add it to your calendar",
     toast_need_name: "Please fill in at least the name",
@@ -7208,10 +7219,8 @@ const I18N = {
     rep_nenhuma: 'no repeat',
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
     comecar_aqui: '▶ Start here',
-    treino_active: '⊙ Practice Mode · pauses after each verse',
     gran_verso: 'by verse', gran_palavra: 'by word',
     toast_gran: '{n} stops in this prayer',
-    treino_active_palavra: '⊙ Practice Mode · pauses after each word',
     settings_title: 'Settings',
     theme_label: 'Theme', theme_light: 'Light', theme_dark: 'Dark', theme_contrast: 'Contrast',
     font_size_label: 'Font size', font_small: 'Small', font_normal: 'Normal', font_large: 'Large', font_xlarge: 'Extra large',
@@ -7291,7 +7300,7 @@ const I18N = {
   es: {
     toast_repeat: "Repetición {n} de {t}",
     toast_audio_torto: "El audio no cargó bien en este dispositivo. Cierre y abra la app otra vez.",
-    toast_mode_training: "Modo Práctica · velocidad {v}× · repetición {n}× · pausa tras cada versículo",
+    toast_mode_training: "Modo Práctica · velocidad {v}× · repetición {n}×",
     toast_mode_prayer: "Modo Rezo · lectura limpia, sin pausas",
     toast_calendar_saved: "Abra el archivo descargado para añadirlo al calendario",
     toast_need_name: "Complete al menos el nombre",
@@ -7310,10 +7319,8 @@ const I18N = {
     rep_nenhuma: 'sin repetir',
     modo_reza: 'Modo Rezo', modo_treino: 'Modo Práctica',
     comecar_aqui: '▶ Empezar aquí',
-    treino_active: '⊙ Modo Práctica · pausa después de cada verso',
     gran_verso: 'por verso', gran_palavra: 'por palabra',
     toast_gran: '{n} paradas en este rezo',
-    treino_active_palavra: '⊙ Modo Práctica · pausa después de cada palabra',
     settings_title: 'Ajustes',
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Oscuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamaño de fuente', font_small: 'Pequeña', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muy grande',
@@ -7393,7 +7400,7 @@ const I18N = {
   fr: {
     toast_repeat: "Répétition {n} sur {t}",
     toast_audio_torto: "L'audio ne s'est pas chargé correctement sur cet appareil. Fermez et rouvrez l'application.",
-    toast_mode_training: "Mode Entraînement · vitesse {v}× · répétition {n}× · pause après chaque verset",
+    toast_mode_training: "Mode Entraînement · vitesse {v}× · répétition {n}×",
     toast_mode_prayer: "Mode Prière · lecture continue, sans pauses",
     toast_calendar_saved: "Ouvrez le fichier téléchargé pour l’ajouter à votre agenda",
     toast_need_name: "Indiquez au moins le nom",
@@ -7412,10 +7419,8 @@ const I18N = {
     rep_nenhuma: 'sans répéter',
     modo_reza: 'Mode Prière', modo_treino: 'Mode Pratique',
     comecar_aqui: '▶ Commencer ici',
-    treino_active: '⊙ Mode Pratique · pause après chaque verset',
     gran_verso: 'par verset', gran_palavra: 'par mot',
     toast_gran: '{n} arrêts dans cette prière',
-    treino_active_palavra: '⊙ Mode Pratique · pause après chaque mot',
     settings_title: 'Paramètres',
     theme_label: 'Thème', theme_light: 'Clair', theme_dark: 'Sombre', theme_contrast: 'Contraste',
     font_size_label: 'Taille de police', font_small: 'Petite', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Très grande',
@@ -7495,7 +7500,7 @@ const I18N = {
   it: {
     toast_repeat: "Ripetizione {n} di {t}",
     toast_audio_torto: "L'audio non si è caricato bene su questo dispositivo. Chiudi e riapri l'app.",
-    toast_mode_training: "Modalità Studio · velocità {v}× · ripetizione {n}× · pausa dopo ogni versetto",
+    toast_mode_training: "Modalità Studio · velocità {v}× · ripetizione {n}×",
     toast_mode_prayer: "Modalità Preghiera · lettura continua, senza pause",
     toast_calendar_saved: "Apra il file scaricato per aggiungerlo al calendario",
     toast_need_name: "Inserisca almeno il nome",
@@ -7514,10 +7519,8 @@ const I18N = {
     rep_nenhuma: 'senza ripetere',
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
     comecar_aqui: '▶ Inizia qui',
-    treino_active: '⊙ Modalità Pratica · pausa dopo ogni versetto',
     gran_verso: 'per versetto', gran_palavra: 'per parola',
     toast_gran: '{n} soste in questa preghiera',
-    treino_active_palavra: '⊙ Modalità Pratica · pausa dopo ogni parola',
     settings_title: 'Impostazioni',
     theme_label: 'Tema', theme_light: 'Chiaro', theme_dark: 'Scuro', theme_contrast: 'Contrasto',
     font_size_label: 'Dimensione del testo', font_small: 'Piccola', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Molto grande',
@@ -7597,7 +7600,7 @@ const I18N = {
   de: {
     toast_repeat: "Wiederholung {n} von {t}",
     toast_audio_torto: "Die Audiodatei wurde auf diesem Gerät nicht richtig geladen. App schließen und neu öffnen.",
-    toast_mode_training: "Übungsmodus · Tempo {v}× · Wiederholung {n}× · Pause nach jedem Vers",
+    toast_mode_training: "Übungsmodus · Tempo {v}× · Wiederholung {n}×",
     toast_mode_prayer: "Gebetsmodus · durchgehendes Lesen, ohne Pausen",
     toast_calendar_saved: "Öffnen Sie die geladene Datei, um sie in den Kalender zu übernehmen",
     toast_need_name: "Bitte geben Sie zumindest den Namen an",
@@ -7616,10 +7619,8 @@ const I18N = {
     rep_nenhuma: 'ohne Wiederholung',
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
     comecar_aqui: '▶ Hier beginnen',
-    treino_active: '⊙ Übungsmodus · Pause nach jedem Vers',
     gran_verso: 'pro Vers', gran_palavra: 'pro Wort',
     toast_gran: '{n} Halte in diesem Gebet',
-    treino_active_palavra: '⊙ Übungsmodus · Pause nach jedem Wort',
     settings_title: 'Einstellungen',
     theme_label: 'Design', theme_light: 'Hell', theme_dark: 'Dunkel', theme_contrast: 'Kontrast',
     font_size_label: 'Schriftgröße', font_small: 'Klein', font_normal: 'Normal', font_large: 'Groß', font_xlarge: 'Sehr groß',
@@ -7699,7 +7700,7 @@ const I18N = {
   ru: {
     toast_repeat: "Повтор {n} из {t}",
     toast_audio_torto: "Аудио загрузилось на этом устройстве неверно. Закройте и снова откройте приложение.",
-    toast_mode_training: "Режим тренировки · скорость {v}× · повтор {n}× · пауза после каждого стиха",
+    toast_mode_training: "Режим тренировки · скорость {v}× · повтор {n}×",
     toast_mode_prayer: "Режим молитвы · чтение без пауз",
     toast_calendar_saved: "Откройте загруженный файл, чтобы добавить его в календарь",
     toast_need_name: "Укажите хотя бы имя",
@@ -7718,10 +7719,8 @@ const I18N = {
     rep_nenhuma: 'без повтора',
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     comecar_aqui: '▶ Начать отсюда',
-    treino_active: '⊙ Режим Практики · пауза после каждого стиха',
     gran_verso: 'по стиху', gran_palavra: 'по слову',
     toast_gran: '{n} остановок в этой молитве',
-    treino_active_palavra: '⊙ Режим Практики · пауза после каждого слова',
     settings_title: 'Настройки',
     theme_label: 'Тема', theme_light: 'Светлая', theme_dark: 'Тёмная', theme_contrast: 'Контраст',
     font_size_label: 'Размер шрифта', font_small: 'Малый', font_normal: 'Нормальный', font_large: 'Большой', font_xlarge: 'Очень большой',
@@ -7801,7 +7800,7 @@ const I18N = {
   he: {
     toast_repeat: "חזרה {n} מתוך {t}",
     toast_audio_torto: "השמע לא נטען כראוי במכשיר הזה. סגור ופתח מחדש את האפליקציה.",
-    toast_mode_training: "מצב אימון · מהירות {v}× · חזרה ×{n} · עצירה אחרי כל פסוק",
+    toast_mode_training: "מצב אימון · מהירות {v}× · חזרה ×{n}",
     toast_mode_prayer: "מצב תפילה · קריאה רצופה, ללא עצירות",
     toast_calendar_saved: "פתחו את הקובץ שהורד כדי להוסיף אותו ליומן",
     toast_need_name: "נא למלא לפחות את השם",
@@ -7820,10 +7819,8 @@ const I18N = {
     rep_nenhuma: 'בלי חזרה',
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
     comecar_aqui: '▶ להתחיל כאן',
-    treino_active: '⊙ מצב תרגול · השהיה אחרי כל פסוק',
     gran_verso: 'לפי פסוק', gran_palavra: 'לפי מילה',
     toast_gran: '{n} עצירות בתפילה זו',
-    treino_active_palavra: '⊙ מצב תרגול · השהיה אחרי כל מילה',
     settings_title: 'הגדרות',
     theme_label: 'ערכת נושא', theme_light: 'בהיר', theme_dark: 'כהה', theme_contrast: 'ניגודיות',
     font_size_label: 'גודל גופן', font_small: 'קטן', font_normal: 'רגיל', font_large: 'גדול', font_xlarge: 'גדול מאוד',
@@ -8619,12 +8616,6 @@ state.granularidadeTreino =
   new URLSearchParams(location.search).get('treino') === 'palavra' ? 'palavra' : 'verso';
 function aplicarGranularidade(g) {
   state.granularidadeTreino = (g === 'palavra') ? 'palavra' : 'verso';
-  const txt = document.getElementById('treinoTexto');
-  if (txt) {
-    const chave = state.granularidadeTreino === 'palavra' ? 'treino_active_palavra' : 'treino_active';
-    txt.dataset.i18n = chave;
-    txt.textContent = TXT(chave);
-  }
   // os passos mudam de tamanho: refazer, e re-armar o contador onde a voz esta
   const n = (window.SYNC && SYNC.refazerPassos) ? SYNC.refazerPassos() : null;
   return n;
