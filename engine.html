@@ -359,8 +359,7 @@
      contas para a mesma pergunta"; ficou faltando tirar os dois que restavam.
      O desenho fica aqui: devolver um × e repor uma linha de HTML. */
   /* ver pintarAcoesDoCadastro(): sem nada escrito nao ha o que salvar */
-  .setup-actions.sem-nada-escrito,
-  .setup-skip.sem-nada-escrito { display: none !important; }
+  .setup-actions.sem-nada-escrito { display: none !important; }
 
   .info-close {
     position: fixed; top: 10px; right: 10px; z-index: 3;
@@ -2267,16 +2266,6 @@
     color: var(--bg);
     border-color: var(--brass);
   }
-  .setup-skip {
-    text-align: center;
-    margin-top: 12px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 12.5px;
-    font-style: italic;
-    color: var(--text-faint);
-  }
-  .setup-skip a { color: var(--brass); cursor: pointer; text-decoration: underline; }
-
   /* ===== A lista de pessoas, dentro do ⚙ (09/09) =====
      O ponto preenchido diz por quem o Kadish esta sendo dito AGORA. Os botoes
      tem 34px de altura: dedo de quem esta de pe, que e o piso de 30px do
@@ -3407,7 +3396,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <button id="setupCancel" data-i18n="setup_skip_btn">Pular</button>
       <button class="primary" id="setupSave" data-i18n="setup_save">Salvar</button>
     </div>
-    <div class="setup-skip"><a id="setupSkipLink" data-i18n="setup_skip_link">Depois, no menu ⚙</a></div>
   </div>
 </div>
 
@@ -7217,7 +7205,7 @@ const I18N = {
     filiacao_dois: '{a} e {b}',
     toast_pessoa_removida: 'Pessoa removida',
     toast_pessoa_atual: 'Rezando por',
-    setup_skip_btn: 'Pular', setup_save: 'Salvar', setup_skip_link: 'Depois, no menu ⚙',
+    setup_skip_btn: 'Pular', setup_save: 'Salvar',
     consent_title: 'Privacidade', consent_text: 'Este app coleta dados anônimos de uso e, se você cadastrar, seu nome e data do falecimento ficam guardados localmente. Conforme LGPD/GDPR, você pode apagar tudo a qualquer momento.',
     consent_decline: 'Apenas o essencial', consent_accept: 'OK, prosseguir',
     opiniao_title: "Sua opinião",
@@ -7317,7 +7305,7 @@ const I18N = {
     filiacao_dois: '{a} and {b}',
     toast_pessoa_removida: 'Person removed',
     toast_pessoa_atual: 'Praying for',
-    setup_skip_btn: 'Skip', setup_save: 'Save', setup_skip_link: 'Later, in ⚙ menu',
+    setup_skip_btn: 'Skip', setup_save: 'Save',
     consent_title: 'Privacy', consent_text: 'This app collects anonymous usage data, and if you register, your name and date of passing are stored locally. Per GDPR/LGPD, you can delete everything at any time.',
     consent_decline: 'Essential only', consent_accept: 'OK, proceed',
     opiniao_title: "Your feedback",
@@ -7417,7 +7405,7 @@ const I18N = {
     filiacao_dois: '{a} y {b}',
     toast_pessoa_removida: 'Persona eliminada',
     toast_pessoa_atual: 'Rezando por',
-    setup_skip_btn: 'Omitir', setup_save: 'Guardar', setup_skip_link: 'Después, en el menú ⚙',
+    setup_skip_btn: 'Omitir', setup_save: 'Guardar',
     consent_title: 'Privacidad', consent_text: 'Esta app recolecta datos de uso anónimos y, si te registras, tu nombre y fecha de fallecimiento se guardan localmente. Según LGPD/GDPR, puedes borrar todo en cualquier momento.',
     consent_decline: 'Solo lo esencial', consent_accept: 'OK, continuar',
     opiniao_title: "Tu opinión",
@@ -7517,7 +7505,7 @@ const I18N = {
     filiacao_dois: '{a} et {b}',
     toast_pessoa_removida: 'Personne retirée',
     toast_pessoa_atual: 'Je prie pour',
-    setup_skip_btn: 'Passer', setup_save: 'Sauvegarder', setup_skip_link: 'Plus tard, dans le menu ⚙',
+    setup_skip_btn: 'Passer', setup_save: 'Sauvegarder',
     consent_title: 'Confidentialité', consent_text: "Cette app recueille des données d'usage anonymes et, si vous vous inscrivez, votre nom et date de décès sont stockés localement. Conformément au RGPD/LGPD, vous pouvez tout supprimer à tout moment.",
     consent_decline: 'Essentiel uniquement', consent_accept: 'OK, continuer',
     opiniao_title: "Votre avis",
@@ -7617,7 +7605,7 @@ const I18N = {
     filiacao_dois: '{a} e {b}',
     toast_pessoa_removida: 'Persona rimossa',
     toast_pessoa_atual: 'Sto pregando per',
-    setup_skip_btn: 'Salta', setup_save: 'Salva', setup_skip_link: 'Più tardi, nel menu ⚙',
+    setup_skip_btn: 'Salta', setup_save: 'Salva',
     consent_title: 'Privacy', consent_text: 'Questa app raccoglie dati d\'uso anonimi e, se ti registri, il tuo nome e la data del decesso restano salvati solo sul tuo dispositivo. In base al GDPR puoi cancellare tutto in qualsiasi momento.',
     consent_decline: 'Solo l\'essenziale', consent_accept: 'OK, continua',
     opiniao_title: "La tua opinione",
@@ -7717,7 +7705,7 @@ const I18N = {
     filiacao_dois: '{a} und {b}',
     toast_pessoa_removida: 'Person entfernt',
     toast_pessoa_atual: 'Ich bete für',
-    setup_skip_btn: 'Überspringen', setup_save: 'Speichern', setup_skip_link: 'Später, im Menü ⚙',
+    setup_skip_btn: 'Überspringen', setup_save: 'Speichern',
     consent_title: 'Datenschutz', consent_text: 'Diese App erfasst anonyme Nutzungsdaten. Wenn Sie sich eintragen, bleiben Name und Sterbedatum nur auf Ihrem Gerät gespeichert. Gemäß DSGVO können Sie jederzeit alles löschen.',
     consent_decline: 'Nur das Nötigste', consent_accept: 'OK, weiter',
     opiniao_title: "Ihre Meinung",
@@ -7817,7 +7805,7 @@ const I18N = {
     filiacao_dois: '{a} и {b}',
     toast_pessoa_removida: 'Человек удалён',
     toast_pessoa_atual: 'Молюсь за',
-    setup_skip_btn: 'Пропустить', setup_save: 'Сохранить', setup_skip_link: 'Позже, в меню ⚙',
+    setup_skip_btn: 'Пропустить', setup_save: 'Сохранить',
     consent_title: 'Конфиденциальность', consent_text: 'Приложение собирает анонимные данные использования. Если вы зарегистрируетесь, ваше имя и дата хранятся локально. По LGPD/GDPR, можно удалить всё в любой момент.',
     consent_decline: 'Только необходимое', consent_accept: 'OK, продолжить',
     opiniao_title: "Ваше мнение",
@@ -7917,7 +7905,7 @@ const I18N = {
     filiacao_dois: '{a} ו{b}',
     toast_pessoa_removida: 'האדם הוסר',
     toast_pessoa_atual: 'מתפלל עבור',
-    setup_skip_btn: 'דלג', setup_save: 'שמור', setup_skip_link: 'מאוחר יותר, בתפריט ⚙',
+    setup_skip_btn: 'דלג', setup_save: 'שמור',
     consent_title: 'פרטיות', consent_text: 'אפליקציה זו אוספת נתוני שימוש אנונימיים. אם תירשם, השם והתאריך נשמרים מקומית. ע"פ LGPD/GDPR ניתן למחוק הכל בכל זמן.',
     consent_decline: 'רק חיוני', consent_accept: 'אישור, המשך',
     opiniao_title: "דעתך",
@@ -9030,10 +9018,8 @@ function cadastroTemAlgo() {
 }
 function pintarAcoesDoCadastro() {
   const tem = cadastroTemAlgo();
-  for (const sel of ['.setup-actions', '.setup-skip']) {
-    const el = document.querySelector('#setupModal ' + sel);
-    if (el) el.classList.toggle('sem-nada-escrito', !tem);
-  }
+  const el = document.querySelector('#setupModal .setup-actions');
+  if (el) el.classList.toggle('sem-nada-escrito', !tem);
 }
 /* um ouvinte so, no painel inteiro: assim um campo novo entra sozinho na conta
    e ninguem precisa lembrar de o acrescentar a uma lista de listeners. */
@@ -9122,9 +9108,6 @@ document.getElementById('setupSave').addEventListener('click', () => {
 });
 
 document.getElementById('setupCancel').addEventListener('click', () => {
-  document.getElementById('setupModal').classList.remove('show');
-});
-document.getElementById('setupSkipLink').addEventListener('click', () => {
   document.getElementById('setupModal').classList.remove('show');
 });
 

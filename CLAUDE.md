@@ -2266,6 +2266,29 @@ dar veredito. *O toque que nao da para dar E o defeito* — esta escrito acima,
 de 25/10, e eu nao o li. Agora e guardado e contado como falha.
 O `--provar` acusa **12** onde acusava 8.
 
+### 4. E a placa apontando para uma porta fechada
+
+Ao esconder os botoes eu achei, e nao mexi, porque e texto da tela e texto da
+tela e dele: no pe do cadastro havia o link *"Depois, no menu ⚙"*. **O ⚙ saiu
+do alto na v65** — hoje aquilo e o "Ajustes" do menu do pe. A frase mandava
+procurar um botao que nao existe mais, **nas 8 linguas**.
+
+Escrevi isso a ele em uma linha e ele respondeu *"Nao entendi"* duas vezes. A
+terceira resposta foi uma FOTO da propria tela com dois circulos — a frase, e o
+"Ajustes" la embaixo — e ele decidiu na mesma mensagem: **"Apaga"**.
+
+*E a pratica de 09/09 outra vez, e desta vez eu demorei duas mensagens a
+lembra-la: quando ele diz que nao entendeu, a resposta util nao e um paragrafo
+melhor — e a tela dele com o dedo apontando.*
+
+E o link nao era so texto velho: tocar nele fazia **exatamente** o que o botao
+"Pular" ao lado dele faz — `classList.remove('show')`, a mesma linha. Eram
+**duas contas para a mesma pergunta** a dois centimetros uma da outra, e a
+mesma razao que tirou os dois `×` nesta mesma versao. Sairam o HTML, o CSS, o
+ouvinte (deixa-lo apontando para um id que nao existe mais derruba o resto do
+script — o `temState` de 30/08) e **as 8 chaves `setup_skip_link`**. O
+`testar-linguas.mjs` foi de 88 para **87 chaves na tela**.
+
 
 ## Nunca
 
