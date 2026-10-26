@@ -152,7 +152,7 @@ await passo('trocou a TRADICAO pelo ⚙, tocando', async () => {
   await espera(2000);
   const parou = await pag.evaluate(() => document.getElementById('audioPlayer').paused);
   if (parou) { console.log('        (o ⚙ PAROU o audio — o botao do alto nao para)'); falhas++; }
-  await pag.click('#settingsPanel .close, #settingsClose').catch(() => {});
+  await pag.click('#mpRezar').catch(() => {});   /* 26/10: o × saiu; fecha-se pelo menu */
   await espera(300);
 });
 

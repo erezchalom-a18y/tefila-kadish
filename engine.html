@@ -350,6 +350,18 @@
   }
   /* Numa TELA o × e o canto de fechar, e nao pode rolar para fora — era assim
      que ele sumia a -628px no painel rolado. Fixo no canto, acima do conteudo. */
+  /* O × SAIU DAS TELAS EM 26/10. Ele: "no menu onde rezar nao precisa sair da
+     pagina clicando no X em cima a direita". Medido: naquela tela o × estava em
+     x=351 y=10 E a fileira de menus estava inteira no pe, com o item "O Kadish"
+     respondendo ao dedo. Eram DUAS saidas para a mesma tela — e a do menu e a
+     que esta sempre la, em qualquer painel, rolado ate onde for (v66).
+     E a mesma conta de 25/10, quando cinco × foram recusados por serem "cinco
+     contas para a mesma pergunta"; ficou faltando tirar os dois que restavam.
+     O desenho fica aqui: devolver um × e repor uma linha de HTML. */
+  /* ver pintarAcoesDoCadastro(): sem nada escrito nao ha o que salvar */
+  .setup-actions.sem-nada-escrito,
+  .setup-skip.sem-nada-escrito { display: none !important; }
+
   .info-close {
     position: fixed; top: 10px; right: 10px; z-index: 3;
     float: none;
@@ -3095,7 +3107,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-26 · 69';
+const VERSAO = '2026-10-26 · 70';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3126,7 +3138,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <div class="settings-overlay" id="settingsOverlay">
   <div class="settings-panel">
-    <button class="info-close" id="settingsClose" style="float:right;">×</button>
     <div class="settings-eyebrow" data-i18n="settings_title">Configurações</div>
     <!-- VERSAO: e a resposta para "nada mudou". O iPad guarda a pagina com
          forca (o app tem display:standalone, e quem o poe na tela de inicio
@@ -3411,7 +3422,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <div class="info-overlay" id="infoOverlay">
   <div class="info-panel">
-    <button class="info-close" id="infoClose">×</button>
     <div id="infoCorpo"></div>
 
     <!-- 02/09 — a porta para o Aprender passa a existir AQUI tambem. No celular
@@ -6178,9 +6188,11 @@ const settingsOverlay = document.getElementById('settingsOverlay');
 document.getElementById('settingsToggle')?.addEventListener('click', () => {
   settingsOverlay.classList.add('show');
 });
-document.getElementById('settingsClose').addEventListener('click', () => {
-  settingsOverlay.classList.remove('show');
-});
+/* 26/10 — o × saiu da tela (ver o CSS do .info-close), entao o ouvinte dele
+   saiu junto. Deixa-lo apontando para um id que nao existe mais daria
+   `Cannot read properties of null` NESTA LINHA, e a excecao derrubaria todo o
+   resto do script — e o `temState` de 30/08 na letra. Quem fecha este painel e
+   o menu do pe, que o `voltarAoKadish()` ja trata. */
 settingsOverlay.addEventListener('click', (e) => {
   if (e.target === settingsOverlay) settingsOverlay.classList.remove('show');
 });
@@ -6402,6 +6414,19 @@ async function abrirPortaChabad() {
   let h = `<div class="info-title">${TXT('learn_chabad')}</div>`;
   let url = 'https://www.chabad.org/centers';
   let rotulo = TXT('find_chabad');
+  /* A TELA ABRE PRIMEIRO, E SO DEPOIS SE ENCHE (26/10). Ate aqui o
+     `ov.classList.add('show')` era a ULTIMA linha, depois do `await fetch`:
+     num telefone lento, tocar "Onde rezar" nao fazia nada visivel enquanto a
+     rede nao respondesse. E foi assim que a checagem achou o outro defeito —
+     entre fechar o painel anterior e abrir este havia um instante com NADA
+     aberto, o observador concluia "voltei ao Kadish" e apagava o item aceso.
+     Abrindo antes, nao ha esse instante, e nao e preciso flag nenhuma para
+     tapa-lo: o titulo ja esta aqui, e o resto entra quando chegar. */
+  alvo.innerHTML = h;
+  if (rodape) rodape.style.display = 'none';
+  const notaCedo = document.getElementById('infoNota');
+  if (notaCedo) notaCedo.textContent = '';
+  ov.classList.add('show');
   try {
     const d = await (await fetch('./aprender.json', { cache: 'no-cache' })).json();
     const sec = (d.secoes || []).find(x => x.ancora === 'chabad');
@@ -6416,11 +6441,7 @@ async function abrirPortaChabad() {
   } catch (e) { /* sem rede: fica so o botao, que e o que ela veio buscar */ }
   h += `<div style="margin-top:18px;text-align:center;">` +
        `<a href="${url}" target="_blank" rel="noopener" class="chabad-link">${rotulo}</a></div>`;
-  alvo.innerHTML = h;
-  if (rodape) rodape.style.display = 'none';
-  const nota = document.getElementById('infoNota');
-  if (nota) nota.textContent = '';
-  ov.classList.add('show');
+  alvo.innerHTML = h;   /* agora com o texto e o botao que vieram da rede */
 }
 
 document.getElementById('learnOque')?.addEventListener('click', () => abrirPorta('oque'));
@@ -6448,7 +6469,7 @@ document.getElementById('infoAprender')?.addEventListener('click', (e) => {
   e.preventDefault();
   irParaAprender();
 });
-document.getElementById('infoClose').addEventListener('click', () => infoOverlay.classList.remove('show'));
+/* o × desta tela saiu em 26/10; quem fecha e o menu do pe. */
 infoOverlay.addEventListener('click', (e) => {
   if (e.target === infoOverlay) infoOverlay.classList.remove('show');
 });
@@ -6903,13 +6924,24 @@ function pintarMenu() {
 /* Fecha tudo o que o menu abre e devolve a tela do Kadish. Nao toca no passo a
    passo: ali a pessoa esta NO Kadish, com uma tira no pe, e quem sai dele e o
    proprio passo a passo. */
-function voltarAoKadish() {
-  for (const id of ['settingsOverlay', 'infoOverlay']) {
+/* UMA CONTA SO PARA "fechar o que estiver aberto" (26/10).
+   Ela nasceu de um defeito que a checagem achou: indo de "Ajustes" DIRETO para
+   "Onde rezar" — que e o que um menu existe para fazer, e foi a promessa escrita
+   na v66 — o painel de Ajustes ficava ABERTO POR BAIXO. Nao se via, porque os
+   dois ocupam a tela inteira desde a v67; mas era estado que sobra, e estado que
+   sobra e a familia de defeito que este projeto mais pagou caro.
+   Agora todo destino do menu passa por aqui antes de abrir o seu. */
+function fecharOsPaineis() {
+  for (const id of ['settingsOverlay', 'infoOverlay', 'setupModal']) {
     const ov = document.getElementById(id);
     if (ov) ov.classList.remove('show');
   }
   const bal = document.getElementById('popup');
   if (bal) bal.classList.remove('show');
+}
+
+function voltarAoKadish() {
+  fecharOsPaineis();
   menuAberto = null;
   pintarMenu();
 }
@@ -7027,7 +7059,10 @@ function mostrarSoDedicacao(so) {
      tambem — sao dois paineis para cinco portas. */
   const ir = (id, fn) => {
     const b = document.getElementById(id);
-    if (b) b.addEventListener('click', () => { menuAberto = id; fn(); pintarMenu(); });
+    if (b) b.addEventListener('click', () => {
+      fecharOsPaineis();   /* 26/10 — ir para um destino fecha o anterior */
+      menuAberto = id; fn(); pintarMenu();
+    });
   };
   ir('mpKadish', () => {
     if (typeof desenharSobre === 'function') desenharSobre();
@@ -8288,7 +8323,20 @@ function desenharSobre() {
   const alvo = document.getElementById('infoCorpo');
   if (!alvo) return;
   const s = SOBRE[state.lang] || SOBRE.pt;
-  let h = `<div class="info-eyebrow">${s.eyebrow}</div><div class="info-title">${s.title}</div>`;
+  // 26/10 — O TITULO E O DO MENU QUE ABRE ESTA TELA, e nao o `s.title`.
+  // Ele: "quando clico no menu Kadish ja deve entrar no kadish; esta entrando
+  // na tela kadish, a oracao que dizemos ha milenios". Medido: o item do menu
+  // que leva a REZA chama-se "O Kadish" — e esta tela, que so EXPLICA, tambem
+  // se chamava "O Kadish". Duas coisas com o mesmo nome, e a que se le primeiro
+  // e o titulo grande no alto da tela.
+  // A regra e dele, de 10/09: "abrir pop ups so com o conteudo relevante ao
+  // menu e com TITULO IGUAL AO DO MENU". O menu diz "O que e?"; o titulo passa
+  // a ser `learn_oque` ("O que e o Kadish?"), que ja existe nas 8 desde a v51 —
+  // zero texto novo. O `s.title` continua na tabela SOBRE, usado por quem
+  // imprime; aqui ele era o nome repetido.
+  // Desde a v65 nao ha mais o botao ℹ do alto: a UNICA porta para esta tela e
+  // aquele item do menu, entao nao ha um segundo nome a honrar.
+  let h = `<div class="info-eyebrow">${s.eyebrow}</div><div class="info-title">${TXT('learn_oque')}</div>`;
   for (const sec of s.secoes) {
     h += `<div class="info-h">${sec.h}</div>`;
     for (const p of sec.ps) h += `<div class="info-p">${p}</div>`;
@@ -8962,6 +9010,35 @@ function marcarAvisos(lista) {
   });
 }
 
+/* SEM NADA DIGITADO, NAO HA O QUE SALVAR NEM O QUE PULAR (26/10).
+   Ele: "quando clico no menu para quem, nao deve ter a opcao pular / salvar se
+   nao digitei nada". Medido naquela tela, com ninguem cadastrado: os dois
+   botoes estavam la, e "Salvar" gravaria uma pessoa sem nome.
+   E "Pular" e pior que inutil: e palavra de passo a passo — faz sentido para
+   quem foi POSTO numa pergunta, nao para quem escolheu "Por quem" no menu.
+   Entao a fileira so aparece quando ha texto em algum campo. A saida de quem
+   nao quer preencher e a mesma de todas as telas: o menu do pe.
+   Some por CLASSE, nunca pelo atributo `hidden` — a licao da v59, em que o
+   `hidden` foi ao ar sem esconder nada porque qualquer regra do autor com
+   `display` ganha dele. */
+const CAMPOS_DO_CADASTRO = ['setupName', 'setupMae', 'setupPai', 'setupRelation', 'setupDeathDate'];
+function cadastroTemAlgo() {
+  return CAMPOS_DO_CADASTRO.some(id => {
+    const e = document.getElementById(id);
+    return e && String(e.value || '').trim() !== '';
+  });
+}
+function pintarAcoesDoCadastro() {
+  const tem = cadastroTemAlgo();
+  for (const sel of ['.setup-actions', '.setup-skip']) {
+    const el = document.querySelector('#setupModal ' + sel);
+    if (el) el.classList.toggle('sem-nada-escrito', !tem);
+  }
+}
+/* um ouvinte so, no painel inteiro: assim um campo novo entra sozinho na conta
+   e ninguem precisa lembrar de o acrescentar a uma lista de listeners. */
+document.getElementById('setupModal')?.addEventListener('input', pintarAcoesDoCadastro);
+
 function abrirCadastro(id) {
   const d = carregarMemoriais();
   const m = id ? d.lista.find(x => x.id === id) : null;
@@ -8978,6 +9055,7 @@ function abrirCadastro(id) {
   const aj = document.getElementById('settingsOverlay');
   if (aj) aj.classList.remove('show');
   document.getElementById('setupModal').classList.add('show');
+  pintarAcoesDoCadastro();   /* editando alguem os campos vem cheios: os botoes aparecem */
 }
 
 function pintarMemLista() {

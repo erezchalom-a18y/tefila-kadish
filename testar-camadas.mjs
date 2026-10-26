@@ -181,7 +181,8 @@ linha(r2.est.tr === 'focus' && r2.est.heb === 'normal' && r2.corpo.heb === 'norm
   'quando a transliteracao entra em destaque, o hebraico volta a Normal',
   JSON.stringify(r2.est));
 
-await p.click('#settingsClose');
+/* 26/10 — o × saiu das telas; quem fecha e o menu do pe, pela porta da frente */
+await p.click('#mpRezar');
 await p.waitForTimeout(200);
 
 // a escolha sobrevive a recarregar: sem isto, quem nao le hebraico teria de
@@ -230,7 +231,7 @@ linha(rDois.est.heb === 'normal' && rDois.corpo.heb === 'normal' && rDois.filtro
 // e no sentido contrario: o ⚙ move o filtro
 await abrirAjustes(p);
 const rTres = await por(p, 'heb', 'hidden');
-await p.click('#settingsClose'); await p.waitForTimeout(250);
+await p.click('#mpRezar'); await p.waitForTimeout(250);
 const rQuatro = await ler(p);
 linha(rQuatro.filtro.heb === false && rQuatro.corpo.heb === 'hidden',
   'o ⚙ move o filtro — e no sentido contrario tambem e uma conta so',

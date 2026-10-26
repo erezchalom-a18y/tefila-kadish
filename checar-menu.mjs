@@ -240,21 +240,58 @@ for (const [rotulo, vp] of [
   await p.close();
 }
 
-/* ---------- 4. o × continua valendo, e o fundo escuro tambem ---------- */
+/* ---------- 4. o menu e a UNICA saida, e o aceso segue voce ----------
+   26/10 — ESTE BLOCO MUDOU DE PERGUNTA, e ficou mais exigente. Ele: "no menu
+   onde rezar nao precisa sair da pagina clicando no X em cima a direita".
+   Medido: havia um × em x=351 y=10 E a fileira do pe inteira respondendo ao
+   dedo — duas saidas para a mesma tela. O × saiu.
+   Antes aqui se cobrava "fechando pelo × o aceso volta ao Kadish". Fechar pelo
+   PROPRIO item da casa faria a pergunta se responder sozinha, entao agora ela e
+   outra e mede mais: ir de um destino DIRETO para outro (que e o que um menu
+   existe para fazer) e cobrar que o aceso acompanhe — e so entao voltar a casa.
+   E cobra que nao exista × nenhum: senao alguem repoe um e voltam as duas
+   saidas. */
 {
   const p = await abrir(nav, `${BASE}/engine.html?lang=pt&audio=mp3`, PROVAR);
-  await p.click('#mpAjustes');
-  await p.waitForTimeout(600);
-  await p.click('#settingsClose');
-  await p.waitForTimeout(500);
-  const r = await p.evaluate(() => ({
-    fechado: !document.getElementById('settingsOverlay').classList.contains('show'),
+  const semX = async (rotulo) => {
+    const r = await p.evaluate(() => {
+      const vis = (el) => {
+        if (!el) return false;
+        const b = el.getBoundingClientRect();
+        return getComputedStyle(el).display !== 'none' && b.height > 0 && b.width > 0;
+      };
+      return [...document.querySelectorAll('.info-close, .setup-close')].filter(vis).length;
+    });
+    ok(r === 0, `${rotulo}: nao ha × na tela — a saida e o menu (achei ${r})`);
+  };
+  /* O TOQUE QUE NAO DA PARA DAR *E* O DEFEITO — a licao da v66, que eu repeti
+     aqui: com o menu debaixo do painel (que e o que o --provar planta) o
+     Playwright fica 30s dizendo "settingsOverlay intercepts pointer events" e
+     ESTOURA, e uma checagem que morre no meio nao chega a dar veredito. */
+  const tocar = async (sel, rotulo) => {
+    try { await p.click(sel, { timeout: 4000 }); return true; }
+    catch (e) { ok(false, `${rotulo}: nao deu para tocar em ${sel} — algo esta por cima do menu`); return false; }
+  };
+  await tocar('#mpAjustes', 'Ajustes'); await p.waitForTimeout(600);
+  await semX('Ajustes');
+  await tocar('#mpOnde', 'Onde rezar'); await p.waitForTimeout(900);
+  await semX('Onde rezar');
+  const meio = await p.evaluate(() => ({
+    ajustesFechou: !document.getElementById('settingsOverlay').classList.contains('show'),
+    infoAberto: document.getElementById('infoOverlay').classList.contains('show'),
     aceso: [...document.getElementById('menuPe').children].filter(c => c.hasAttribute('aria-current')).map(c => c.id),
   }));
-  /* o observador e que faz isto: fechando pelo ×, por fora do menu, o aceso
-     volta sozinho ao Kadish. Sem ele o menu mentiria sobre onde voce esta. */
-  ok(r.fechado && r.aceso.join() === 'mpRezar',
-    `fechando pelo × o aceso volta ao Kadish: ${JSON.stringify(r)}`);
+  ok(meio.ajustesFechou && meio.infoAberto && meio.aceso.join() === 'mpOnde',
+    `de um destino direto para outro, e o aceso acompanha: ${JSON.stringify(meio)}`);
+  await tocar('#mpRezar', 'voltar ao Kadish'); await p.waitForTimeout(500);
+  const fim = await p.evaluate(() => ({
+    tudoFechado: !document.getElementById('settingsOverlay').classList.contains('show')
+              && !document.getElementById('infoOverlay').classList.contains('show')
+              && !document.getElementById('setupModal').classList.contains('show'),
+    aceso: [...document.getElementById('menuPe').children].filter(c => c.hasAttribute('aria-current')).map(c => c.id),
+  }));
+  ok(fim.tudoFechado && fim.aceso.join() === 'mpRezar',
+    `o item da casa fecha tudo e volta ao Kadish: ${JSON.stringify(fim)}`);
   await p.close();
 }
 

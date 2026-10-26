@@ -2189,6 +2189,84 @@ texto que nenhuma tela usa. Nao inventei uma nesta rodada — ela precisa saber
 distinguir texto morto de texto montado em codigo (como o `TXT()` faz), e isso
 e desenho, nao conserto.
 
+## As tres do primeiro uso de verdade (26/10, v70)
+
+A v69 foi ao ar e ele usou o app. Mandou tres coisas, e **as tres eram defeito**.
+
+### 1. "O Kadish" era o nome de DUAS coisas
+
+Ele: *"quando clico no menu Kadish ja deve entrar no kadish, esta entrando na
+tela kadish, a oracao que dizemos a milenios…"*.
+
+Medido: o item `mpRezar` **leva** a reza, certinho. O que estava errado era o
+NOME: a tela que apenas EXPLICA a reza — aberta pelo item "O que e?" — tinha
+como titulo grande, no alto, **"O Kadish"**. O mesmo nome do item que leva a
+reza. Quem le o titulo conclui que chegou ao lugar errado, e tem razao.
+
+A regra para isto e dele, de 10/09: *"abrir pop ups so com o conteudo relevante
+ao menu e com TITULO IGUAL AO DO MENU"*. O titulo passou a ser `learn_oque`
+("O que e o Kadish?"), que ja existia nas 8 desde a v51 — **zero texto novo**.
+Deu para fazer sem segunda conta porque desde a v65 **nao ha mais o botao ℹ do
+alto**: a unica porta para aquela tela e o item do menu.
+
+### 2. "Salvar" numa tela onde nao se digitou nada
+
+Ele: *"quando clico no menu para quem, nao deve ter a opcao pular / salvar se
+nao digitei nada"*. Medido com ninguem cadastrado: os dois botoes estavam la, e
+o "Salvar" gravaria uma pessoa sem nome.
+
+E **"Pular" e pior que inutil**: e palavra de passo a passo — faz sentido para
+quem foi POSTO numa pergunta, nao para quem escolheu "Por quem" no menu.
+
+Agora a fileira so aparece quando ha texto em algum campo
+(`pintarAcoesDoCadastro`), e some de novo se ele apagar. Um ouvinte so, no
+painel inteiro, para que um campo novo entre sozinho na conta. Some por CLASSE,
+nunca pelo atributo `hidden` — a licao da v59.
+
+**Fica para ele decidir:** com os botoes escondidos aparece o link *"Depois, no
+menu ⚙"*, e **nao ha mais ⚙** desde a v65 — hoje aquilo e o item "Ajustes" do
+menu do pe. E texto da tela em 8 linguas; nao o reescrevi sozinho.
+
+### 3. O × era uma segunda saida para a mesma tela
+
+Ele: *"ja no menu onde rezar nao precisa sair da pagina clicando no X em cima a
+direita"*. Medido naquela tela: o × em **x=351 y=10** E a fileira do pe inteira,
+com "O Kadish" respondendo ao dedo. Duas saidas.
+
+E a mesma conta de 25/10, quando cinco × foram recusados por serem *"cinco
+contas para a mesma pergunta"* — ficou faltando tirar os dois que restavam. Os
+dois sairam (`infoClose` e `settingsClose`), **com os seus ouvintes**: deixa-los
+apontando para um id que nao existe mais daria `Cannot read properties of null`
+e a excecao derrubaria o resto do script — o `temState` de 30/08 na letra. O CSS
+do × fica, com o porque escrito: devolver um e repor uma linha de HTML.
+
+### E a checagem nova achou DOIS defeitos que ele nao tinha visto
+
+A pergunta antiga era *"fechando pelo × o aceso volta ao Kadish"*. Sem o ×, a
+tentacao era fechar pelo proprio item da casa — e **a pergunta se responderia
+sozinha**. Entao ela mudou para o que um menu existe para fazer: **ir de um
+destino DIRETO para outro**, e cobrar que o aceso acompanhe. Mais a pergunta
+nova: **nao ha × em tela nenhuma**.
+
+1. **Ajustes → Onde rezar deixava o painel de Ajustes ABERTO por baixo.** Nao se
+   via (os dois ocupam a tela inteira desde a v67), mas era estado que sobra.
+   Agora todo destino passa por `fecharOsPaineis()` — uma conta so, que o
+   `voltarAoKadish()` tambem usa.
+2. **E o conserto disso expos outro:** o "Onde rezar" so mostrava a tela DEPOIS
+   do `await fetch` do `aprender.json`. Num telefone lento, tocar nele nao fazia
+   nada visivel ate a rede responder — e, entre fechar o painel anterior e abrir
+   este, havia um instante com NADA aberto: o observador concluia "voltei ao
+   Kadish" e apagava o item aceso. **A tela passou a abrir primeiro e a encher
+   depois.** Nao foi preciso flag nenhuma para tapar o vao: nao ha vao.
+
+**E eu repeti o meu proprio erro da v66 ao escrever a checagem:** os toques
+novos iam sem `try`, e com o `--provar` (que poe o menu debaixo dos paineis) o
+Playwright estourava com *"settingsOverlay intercepts pointer events"* antes de
+dar veredito. *O toque que nao da para dar E o defeito* — esta escrito acima,
+de 25/10, e eu nao o li. Agora e guardado e contado como falha.
+O `--provar` acusa **12** onde acusava 8.
+
+
 ## Nunca
 
 - git push --force
