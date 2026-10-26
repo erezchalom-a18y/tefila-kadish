@@ -306,7 +306,10 @@
     max-width: 600px;
     width: 100%;
     border-radius: 12px;
-    padding: 32px 28px 36px;
+    /* lugar para o menu, que agora fica por cima: sem isso a ultima linha do
+       painel nasce escondida debaixo dele. A conta e UMA — a variavel
+       --pe-menu, escrita pela medida do proprio menu. */
+    padding: 32px 28px calc(36px + var(--pe-menu, 56px));
     box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
     border: 1px solid var(--line);
     transform: translateY(16px);
@@ -853,7 +856,7 @@
     background: var(--bg);
     max-width: 480px; width: 100%;
     border-radius: 12px;
-    padding: 28px 26px 32px;
+    padding: 28px 26px calc(32px + var(--pe-menu, 56px));
     box-shadow: 0 24px 64px rgba(42, 31, 21, 0.4);
     border: 1px solid var(--line);
     transform: translateY(16px);
@@ -970,6 +973,8 @@
     background: var(--brass);
     color: var(--bg);
   }
+  /* 330 porque o menu subiu a 320: o balao do "Comecar aqui" pode nascer perto
+     do pe da tela, e debaixo do menu ele ficaria inalcancavel. */
   .word-popup {
     position: fixed;
     background: var(--bg);
@@ -980,7 +985,7 @@
     border-left: 3px solid var(--brass);
     box-shadow: 0 16px 40px rgba(42, 31, 21, 0.25), 0 0 0 1px var(--rule);
     font-family: 'Cormorant Garamond', serif;
-    z-index: 100;
+    z-index: 330;
     opacity: 0;
     pointer-events: none;
     transform: translateY(8px);
@@ -2686,8 +2691,18 @@
   .treino-repeticao .repeat-btn { flex: 0 0 auto; }
 
   /* ---- a fileira de menus ---- */
+  /* O MENU FICA POR CIMA DOS PAINEIS (z-index 320 contra os 300 deles), e isso
+     e a correcao de 25/10 a noite. Ate aqui ele estava em 61: qualquer painel
+     (inset:0, z-index 300) o cobria, e o unico caminho de volta era o × do
+     canto — que e float:right no ALTO de um painel que rola por dentro. Medido
+     num iPhone SE: rolado ate o fim dos Ajustes o × fica a -628px, FORA da
+     tela. E a porta "Por quem rezo" abre o painel JA ROLADO, entao ali o ×
+     nascia fora da tela nas tres telas medidas. O Erez tocou e nao tinha volta.
+     Com o menu por cima, o caminho de volta esta SEMPRE na tela, e e um so
+     para os cinco paineis — em vez de cinco × cada um com o seu risco de
+     rolagem. Abaixo do passo a passo pronto (500) de proposito. */
   .menu-pe {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 320;
     display: flex; align-items: stretch;
     background: var(--bg-deep, #e6d8bd);
     border-top: 1px solid var(--line, #c9b894);
@@ -2700,11 +2715,28 @@
     border: 0; background: transparent; color: var(--text-soft, #4d3d2d); cursor: pointer;
   }
   .mp-item svg { width: 19px; height: 19px; flex: 0 0 auto; }
+  /* 12px e o PISO do projeto, e este rotulo estava a 11px desde a v65 — passou
+     porque o testar-telas.mjs so cobra o cabecalho. Medido nas 8 linguas: com
+     os rotulos curtos os SEIS itens cabem numa linha. */
   .mp-item span {
-    font-family: 'Cormorant Garamond', serif; font-size: 11px;
+    font-family: 'Cormorant Garamond', serif; font-size: 12px;
     line-height: 1.15; text-align: center;
   }
   .mp-item:active { background: rgba(139, 106, 62, .10); }
+  /* O item da casa e ESTREITO (flex:0 0 auto) e nao um sexto igual: "O Kadish"
+     e uma palavra curta nas 8, e dar-lhe um sexto da fileira tiraria largura
+     dos outros cinco — medido, "Por quem rezo" quebrava em duas linhas e o
+     menu subia de 51px para 66px. */
+  .mp-item { position: relative; }
+  .mp-item.mp-casa { flex: 0 0 auto; padding-left: 9px; padding-right: 9px; }
+  /* O ACESO diz onde voce esta. Sem isso, um item chamado "O Kadish" na tela
+     do Kadish e um botao que nao faz nada — e este projeto tem escrito que
+     botao que nao faz nada e a tela mentindo. */
+  .mp-item[aria-current="page"] { color: var(--brass); }
+  .mp-item[aria-current="page"]::before {
+    content: ''; position: absolute; top: 0; left: 18%; right: 18%;
+    height: 2px; background: var(--brass); border-radius: 0 0 2px 2px;
+  }
   body .audio-bar { bottom: 62px; }
   body { padding-bottom: 192px; }
   /* deitado o menu some, pela mesma razao que ja tira dali o cartao e a faixa do
@@ -2901,7 +2933,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-25 · 65';
+const VERSAO = '2026-10-25 · 66';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3393,6 +3425,17 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <nav class="menu-pe" id="menuPe" aria-label="Menu">
+  <!-- O CAMINHO DE VOLTA AO KADISH (25/10, a noite). Ele: "faltou no menu, ir
+       para a tela do kadish, nao?" — e faltava. Os cinco itens levavam a cinco
+       paineis e nenhum trazia de volta; o × de cada painel rola para fora da
+       tela, e "Por quem rezo" abre o painel JA ROLADO. O id e mpRezar; o item
+       que EXPLICA o Kadish continua com o id mpKadish de proposito, porque e
+       por ele que o testar-linguas.mjs abre o painel da info desde a v65 —
+       mesma razao do #treinoToggle, que guarda o nome antigo. -->
+  <button class="mp-item mp-casa" id="mpRezar" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.1 4.6 4.9.6-3.6 3.4.9 4.9-4.3-2.4-4.3 2.4.9-4.9L5 8.4l4.9-.6z"/><path d="M12 17.8V21"/></svg>
+    <span data-i18n="menu_kadish">O Kadish</span>
+  </button>
   <button class="mp-item" id="mpPassos">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h4v-4H4z"/><path d="M10 14h4V9h-4z"/><path d="M16 9h4V4h-4z"/></svg>
     <span data-i18n="menu_passos">Como usar</span>
@@ -3403,7 +3446,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </button>
   <button class="mp-item" id="mpKadish">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 18.5h15"/></svg>
-    <span data-i18n="menu_kadish">O Kadish</span>
+    <span data-i18n="learn_oque_curto">O que é?</span>
   </button>
   <button class="mp-item" id="mpOnde">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
@@ -6603,9 +6646,118 @@ function passoAnterior() {
   }, 1800);
 })();
 
+/* ==========================================================================
+   O CAMINHO DE VOLTA AO KADISH, E ONDE VOCE ESTA (25/10, a noite)
+   ==========================================================================
+   Ele: "faltou no menu, ir para a tela do kadish, nao?"
+
+   Faltava, e o defeito era maior do que um item a menos. Medido:
+
+     iPhone SE, Ajustes rolado ate o fim  ->  o × fica a -628px, FORA da tela
+     iPhone SE, tocando em "Por quem"     ->  o painel abre JA ROLADO (697px)
+                                              e o × nasce fora da tela
+
+   Ou seja: a porta que eu criei na v65 levava a um painel de onde o unico
+   caminho de volta visivel era acertar uma faixa fina de fundo escuro no pe.
+   Nas tres telas medidas, e tambem no computador.
+
+   O conserto NAO e um × melhor em cada painel — seriam cinco contas para a
+   mesma pergunta, cada uma com o seu risco de rolagem. O menu passou a ficar
+   POR CIMA dos paineis (z-index 320 contra 300), e com isso:
+
+     . o caminho de volta esta SEMPRE na tela, em qualquer painel, rolado ate
+       onde for;
+     . da para ir de "Ajustes" direto para "Onde rezar" sem fechar nada antes,
+       que e o que um menu existe para fazer;
+     . o item aceso diz ONDE VOCE ESTA — a fileira nao tinha isso, e e metade
+       do que ele notou que faltava.
+
+   E o item que EXPLICA o Kadish deixou de se chamar "O Kadish": o nome mentia,
+   porque lia-se como a tela e abria o painel que conta o que a reza e. Passou a
+   dizer "O que e?", com a chave learn_oque_curto, que ja existia nas 8 — zero
+   texto novo para essa metade. */
+let menuAberto = null;   /* o id do item que abriu o que esta aberto */
+
+/* UMA conta para "qual item acende". Dois paineis servem cinco portas, entao
+   quem sabe nao e o painel: e o item que foi tocado. */
+function pintarMenu() {
+  try {
+    const aceso = menuAberto || 'mpRezar';
+    for (const b of document.querySelectorAll('.mp-item')) {
+      if (b.id === aceso) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    }
+  } catch (e) {}
+}
+
+/* Fecha tudo o que o menu abre e devolve a tela do Kadish. Nao toca no passo a
+   passo: ali a pessoa esta NO Kadish, com uma tira no pe, e quem sai dele e o
+   proprio passo a passo. */
+function voltarAoKadish() {
+  for (const id of ['settingsOverlay', 'infoOverlay']) {
+    const ov = document.getElementById(id);
+    if (ov) ov.classList.remove('show');
+  }
+  const bal = document.getElementById('popup');
+  if (bal) bal.classList.remove('show');
+  menuAberto = null;
+  pintarMenu();
+}
+
+/* O menu fecha por quatro caminhos — o ×, o fundo escuro, o Escape e este item
+   aqui — e amanha pode ter um quinto. Em vez de pendurar uma pintura em cada
+   um (que e como se esquece um), quem avisa e o proprio painel: o observador
+   olha a classe .show e repinta, venha o fechamento de onde vier. */
+(function olharOsPaineis() {
+  const alvos = ['settingsOverlay', 'infoOverlay']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  if (!alvos.length || typeof MutationObserver !== 'function') return;
+  const obs = new MutationObserver(() => {
+    const algumAberto = alvos.some(ov => ov.classList.contains('show'));
+    if (!algumAberto) menuAberto = null;
+    pintarMenu();
+  });
+  for (const ov of alvos) obs.observe(ov, { attributes: true, attributeFilter: ['class'] });
+})();
+
+/* Os paineis precisam saber a altura do menu para a ultima linha deles nao
+   nascer escondida debaixo dele. A altura e MEDIDA, nunca escrita a mao — e a
+   mesma licao do peDaTela(), e muda com a tela (deitado o menu nao aparece). */
+(function medirPeDoMenu() {
+  const por = () => {
+    try {
+      const m = document.getElementById('menuPe');
+      const h = (!m || getComputedStyle(m).display === 'none') ? 0
+        : Math.round(m.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--pe-menu', h + 'px');
+    } catch (e) {}
+  };
+  por();
+  /* MEDIDA PRESA NO TEMPO, e eu caí nela aqui mesmo: a primeira volta rodou
+     antes de a Cormorant Garamond carregar, os rotulos ainda estavam em duas
+     linhas e ela gravou 63px num menu que mede 51. Um numero que nao acompanha
+     a coisa medida e um numero errado — e a familia do document.fonts.ready.
+     O ResizeObserver olha a altura DE VERDADE e repete a conta a cada mudanca,
+     venha ela da letra que carregou, da tela que virou ou da lingua que mudou.
+     Uma conta so, sem uma lista de eventos para alguem esquecer de completar. */
+  try {
+    const m = document.getElementById('menuPe');
+    if (m && typeof ResizeObserver === 'function') new ResizeObserver(por).observe(m);
+  } catch (e) {}
+  window.addEventListener('resize', por);
+  window.addEventListener('orientationchange', por);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(por).catch(() => {});
+})();
+
 /* A FILEIRA DE MENUS. Cada item leva a uma coisa que JA EXISTE. */
 (function ligarMenu() {
-  const ir = (id, fn) => { const b = document.getElementById(id); if (b) b.addEventListener('click', fn); };
+  /* O `ir` registra QUEM abriu. Sem isso o menu nao saberia qual item acender:
+     "Por quem" e "Ajustes" abrem o MESMO painel, e "O que e?" e "Onde rezar"
+     tambem — sao dois paineis para cinco portas. */
+  const ir = (id, fn) => {
+    const b = document.getElementById(id);
+    if (b) b.addEventListener('click', () => { menuAberto = id; fn(); pintarMenu(); });
+  };
   ir('mpKadish', () => {
     if (typeof desenharSobre === 'function') desenharSobre();
     const rodape = document.getElementById('infoRodape');
@@ -6614,6 +6766,10 @@ function passoAnterior() {
     if (ov) ov.classList.add('show');
   });
   ir('mpOnde', () => abrirPortaChabad());
+  /* o caminho de volta. O `ir` acenderia este item e logo a seguir o
+     voltarAoKadish o apaga — por isso ele vai por fora do `ir`. */
+  const casa = document.getElementById('mpRezar');
+  if (casa) casa.addEventListener('click', () => voltarAoKadish());
   ir('mpAjustes', () => {
     const ov = document.getElementById('settingsOverlay');
     if (ov) { ov.classList.add('show'); ov.scrollTop = 0; }
@@ -6659,7 +6815,7 @@ const I18N = {
     ph_relation: "Pai, mãe, avô...",
     modo_reza_curto: 'Reza', modo_treino_curto: 'Treino',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'Como usar', menu_pessoas: 'Por quem rezo',
+    menu_passos: 'Como usar', menu_pessoas: 'Por quem',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Começar', p_proximo: 'Próximo', p_voltar: 'Voltar',
     p_pular: 'Pular', p_rezar: 'Dizer o Kadish',
@@ -6764,11 +6920,11 @@ const I18N = {
     ph_relation: "Father, mother, grandfather...",
     modo_reza_curto: 'Prayer', modo_treino_curto: 'Practice',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'How to use', menu_pessoas: 'Who I pray for',
+    menu_passos: 'How to use', menu_pessoas: 'Who for',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Start', p_proximo: 'Next', p_voltar: 'Back',
     p_pular: 'Skip', p_rezar: 'Say the Kaddish',
-    menu_kadish: 'The Kaddish', menu_onde: 'Where to pray', menu_ajustes: 'Settings',
+    menu_kadish: 'The Kaddish', menu_onde: 'Where', menu_ajustes: 'Settings',
     rep_nenhuma: 'no repeat',
     modo_reza: 'Prayer Mode', modo_treino: 'Practice Mode',
     comecar_aqui: '▶ Start here',
@@ -6866,7 +7022,7 @@ const I18N = {
     ph_relation: "Padre, madre, abuelo...",
     modo_reza_curto: 'Rezo', modo_treino_curto: 'Práctica',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'Cómo usar', menu_pessoas: 'Por quién rezo',
+    menu_passos: 'Cómo usar', menu_pessoas: 'Por quién',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Empezar', p_proximo: 'Siguiente', p_voltar: 'Atrás',
     p_pular: 'Saltar', p_rezar: 'Decir el Kadish',
@@ -6968,7 +7124,7 @@ const I18N = {
     ph_relation: "Père, mère, grand-père...",
     modo_reza_curto: 'Prière', modo_treino_curto: 'Pratique',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'Comment faire', menu_pessoas: 'Pour qui je prie',
+    menu_passos: 'Comment', menu_pessoas: 'Pour qui',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Commencer', p_proximo: 'Suivant', p_voltar: 'Retour',
     p_pular: 'Passer', p_rezar: 'Dire le Kaddish',
@@ -7070,11 +7226,11 @@ const I18N = {
     ph_relation: "Padre, madre, nonno...",
     modo_reza_curto: 'Preghiera', modo_treino_curto: 'Pratica',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'Come usare', menu_pessoas: 'Per chi prego',
+    menu_passos: 'Come usare', menu_pessoas: 'Per chi',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Iniziare', p_proximo: 'Avanti', p_voltar: 'Indietro',
     p_pular: 'Salta', p_rezar: 'Dire il Kaddish',
-    menu_kadish: 'Il Kaddish', menu_onde: 'Dove pregare', menu_ajustes: 'Impostazioni',
+    menu_kadish: 'Il Kaddish', menu_onde: 'Dove', menu_ajustes: 'Opzioni',
     rep_nenhuma: 'senza ripetere',
     modo_reza: 'Modalità Preghiera', modo_treino: 'Modalità Pratica',
     comecar_aqui: '▶ Inizia qui',
@@ -7172,11 +7328,11 @@ const I18N = {
     ph_relation: "Vater, Mutter, Großvater...",
     modo_reza_curto: 'Gebet', modo_treino_curto: 'Übung',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'So geht’s', menu_pessoas: 'Für wen ich bete',
+    menu_passos: 'So geht’s', menu_pessoas: 'Für wen',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Beginnen', p_proximo: 'Weiter', p_voltar: 'Zurück',
     p_pular: 'Überspringen', p_rezar: 'Kaddisch sagen',
-    menu_kadish: 'Das Kaddisch', menu_onde: 'Wo beten', menu_ajustes: 'Einstellungen',
+    menu_kadish: 'Das Kaddisch', menu_onde: 'Wo beten', menu_ajustes: 'Optionen',
     rep_nenhuma: 'ohne Wiederholung',
     modo_reza: 'Gebetsmodus', modo_treino: 'Übungsmodus',
     comecar_aqui: '▶ Hier beginnen',
@@ -7274,11 +7430,11 @@ const I18N = {
     ph_relation: "Отец, мать, дед...",
     modo_reza_curto: 'Молитва', modo_treino_curto: 'Практика',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'Как пользоваться', menu_pessoas: 'За кого молюсь',
+    menu_passos: 'Как', menu_pessoas: 'За кого',
     // os botoes do passo a passo (25/10)
     p_comecar: 'Начать', p_proximo: 'Далее', p_voltar: 'Назад',
     p_pular: 'Пропустить', p_rezar: 'Сказать кадиш',
-    menu_kadish: 'Кадиш', menu_onde: 'Где молиться', menu_ajustes: 'Настройки',
+    menu_kadish: 'Кадиш', menu_onde: 'Где', menu_ajustes: 'Настройки',
     rep_nenhuma: 'без повтора',
     modo_reza: 'Режим Молитвы', modo_treino: 'Режим Практики',
     comecar_aqui: '▶ Начать отсюда',
@@ -7376,11 +7532,11 @@ const I18N = {
     ph_relation: "אבא, אמא, סבא...",
     modo_reza_curto: 'תפילה', modo_treino_curto: 'תרגול',
     // v65 — a fileira de menus e a linha da repeticao do Treino (25/10)
-    menu_passos: 'איך משתמשים', menu_pessoas: 'בשביל מי אני מתפלל',
+    menu_passos: 'איך', menu_pessoas: 'בשביל מי',
     // os botoes do passo a passo (25/10)
     p_comecar: 'להתחיל', p_proximo: 'הבא', p_voltar: 'חזרה',
     p_pular: 'דילוג', p_rezar: 'לומר קדיש',
-    menu_kadish: 'הקדיש', menu_onde: 'איפה להתפלל', menu_ajustes: 'הגדרות',
+    menu_kadish: 'הקדיש', menu_onde: 'איפה', menu_ajustes: 'הגדרות',
     rep_nenhuma: 'בלי חזרה',
     modo_reza: 'מצב תפילה', modo_treino: 'מצב תרגול',
     comecar_aqui: '▶ להתחיל כאן',
@@ -10071,24 +10227,38 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     } catch (e) {}
   }
 
-  function privacidadePendente() {
-    // A PERGUNTA CERTA e "ele ja respondeu?", e nao "o aviso esta na tela
-    // AGORA?". O aviso so aparece 1,2s depois de carregar; perguntando pela
-    // tela, o convite passava no vao e o aviso caia por cima dele em seguida —
-    // a checagem mediu isso nas 8 linguas. A resposta mora no localStorage,
-    // que e a mesma conta que o proprio aviso usa. Uma conta so.
-    try { if (!localStorage.getItem('tefila_consent')) return true; } catch (e) {}
+  // QUEM MAIS MORA NO PE DA TELA — uma conta so, e ela devolve o NOME de quem
+  // esta na frente.
+  //   A pergunta certa e "ele ja respondeu?", e nao "esta na tela AGORA?". O
+  // aviso de privacidade so aparece 1,2s depois de carregar; perguntando pela
+  // tela, o convite passava no vao e o aviso caia por cima dele em seguida — a
+  // checagem mediu isso nas 8 linguas em 10/09. A resposta mora no
+  // localStorage, que e a mesma conta que o proprio aviso usa.
+  //   EM 25/10 ISTO ACONTECEU DE NOVO, com um terceiro morador: a v65 pos o
+  // passo a passo no mesmo pe e ninguem estendeu esta porta. Medido contra a
+  // v65 nas 8 linguas: a tira do passo a passo ficava NO PONTO do botao "Como
+  // faco" e o convite era inalcancavel — e a v65 foi ao ar assim, porque eu
+  // nao rodei a testar-instalar naquela rodada. Por isso agora e UMA conta
+  // para "a vez e de outro?", em vez de duas perguntas soltas que a proxima
+  // caixa no pe vai esquecer de fazer.
+  function aVezEDeOutro() {
+    try { if (!localStorage.getItem('tefila_consent')) return 'privacidade'; } catch (e) {}
     var c = document.getElementById('consentBanner');
-    return !!(c && c.classList.contains('show'));
+    if (c && c.classList.contains('show')) return 'privacidade';
+    // o passo a passo: a marca e a MESMA constante que ele grava, nunca o texto
+    // da chave escrito outra vez aqui
+    try { if (!localStorage.getItem(MARCA_PASSOS)) return 'passo a passo'; } catch (e) {}
+    if (document.body.classList.contains('em-passos')) return 'passo a passo';
+    return null;
   }
 
   function mostrar() {
     if (!caixa || dispensado() || jaEstaInstalado()) return;
-    // O AVISO DE PRIVACIDADE VEM PRIMEIRO, e nao e so questao de ordem: ele
-    // mora no mesmo pe da tela e TAPAVA o convite — a checagem mediu quem
-    // estava no ponto do botao e achou o banner. Dois pedidos empilhados no
-    // mesmo canto e um deles inalcancavel. Aqui o convite espera a vez.
-    if (privacidadePendente()) { setTimeout(mostrar, 2000); return; }
+    // O AVISO DE PRIVACIDADE E O PASSO A PASSO VEM PRIMEIRO, e nao e so questao
+    // de ordem: os tres moram no mesmo pe da tela, e quem chega por cima deixa
+    // o de baixo INALCANCAVEL — medido duas vezes, em 10/09 e em 25/10. Aqui o
+    // convite espera a vez; quem reza nao perde nada, porque ele volta a tentar.
+    if (aVezEDeOutro()) { setTimeout(mostrar, 2000); return; }
     acomodar();
     var btComo = document.getElementById('ciComoFaco');
     if (pedidoGuardado) {

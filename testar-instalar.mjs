@@ -118,6 +118,28 @@ for (const lang of L) {
     document.getElementById('conviteInstalar').classList.contains('aparece'));
   if (comPrivacidade) { console.log(`FALHA    ${lang}: o convite apareceu POR BAIXO do aviso de privacidade`); falhas++; }
   await p.click('#consentAccept');
+  await p.waitForTimeout(900);
+  /* O PASSO A PASSO VEM ANTES DO CONVITE, e isto e uma pergunta a mais e nao
+     uma folga. A v65 pos a tira do passo a passo no MESMO pe da tela do
+     convite e foi ao ar assim: medido nas 8 linguas, a tira ficava NO PONTO do
+     botao "Como faco" e o convite era inalcancavel. A partir da v66 o convite
+     espera a vez — entao a checagem passou a andar o caminho de quem usa:
+     responde o aviso, dispensa o passo a passo e so ENTAO espera o convite.
+     Antes de dispensar, cobra o que a v65 quebrava: com o passo a passo na
+     tela, o convite NAO pode estar la. */
+  const comPassos = await p.evaluate(() => {
+    const t = document.getElementById('passos');
+    const c = document.getElementById('conviteInstalar');
+    return {
+      passosNaTela: !!(t && document.body.classList.contains('em-passos')),
+      conviteNaTela: !!(c && c.classList.contains('aparece')),
+    };
+  });
+  if (comPassos.passosNaTela && comPassos.conviteNaTela) {
+    console.log(`FALHA    ${lang}: o convite aparece COM o passo a passo na tela — os dois moram no mesmo pe`);
+    falhas++;
+  }
+  await p.click('#passosPular').catch(() => {});
   await p.waitForTimeout(2600);
   const r = await p.evaluate(() => {
     const c = document.getElementById('conviteInstalar');
@@ -205,6 +227,9 @@ confere('o convite nao ficou em portugues nas 8', !iguais.length, iguais.join(',
     await p.goto(`${BASE}/engine.html?lang=pt&audio=mp3&instalar=1`, { waitUntil: 'networkidle' });
     await p.waitForTimeout(700);
     await p.click('#consentAccept');
+    await p.waitForTimeout(900);
+    /* v66: o convite espera o passo a passo — este e o caminho de quem usa */
+    await p.click('#passosPular').catch(() => {});
     await p.waitForTimeout(2600);
     await p.click('#ciComoFaco');
     await p.waitForTimeout(400);
@@ -239,6 +264,9 @@ confere('o convite nao ficou em portugues nas 8', !iguais.length, iguais.join(',
     await p.goto(`${BASE}/engine.html?lang=${lang}&audio=mp3&instalar=1`, { waitUntil: 'networkidle' });
     await p.waitForTimeout(700);
     await p.click('#consentAccept');
+    await p.waitForTimeout(900);
+    /* v66: o convite espera o passo a passo — este e o caminho de quem usa */
+    await p.click('#passosPular').catch(() => {});
     await p.waitForTimeout(2600);
     await p.click('#ciComoFaco');
     await p.waitForTimeout(300);
@@ -259,6 +287,9 @@ confere('o convite nao ficou em portugues nas 8', !iguais.length, iguais.join(',
   await p.goto(`${BASE}/engine.html?lang=pt&audio=mp3&instalar=1`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(700);
   await p.click('#consentAccept');
+  await p.waitForTimeout(900);
+  /* v66: o convite espera o passo a passo — este e o caminho de quem usa */
+  await p.click('#passosPular').catch(() => {});
   await p.waitForTimeout(2600);
   await p.click('#ciAgoraNao');
   const sumiu = await p.evaluate(() =>
@@ -278,6 +309,13 @@ confere('o convite nao ficou em portugues nas 8', !iguais.length, iguais.join(',
   await p.goto(`${BASE}/engine.html?lang=pt&audio=mp3&instalar=1`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(700);
   await p.click('#consentAccept');
+  await p.waitForTimeout(900);
+  /* ELA PASSARIA PELO MOTIVO ERRADO sem esta linha: a partir da v66 o convite
+     espera o passo a passo, entao "nao apareceu" seria verdade por causa do
+     passo a passo e nao por ser um computador — e e sobre o computador que ela
+     pergunta. E a armadilha de 01/09 (a checagem que nunca abria os Ajustes) e
+     da v60 (a que dava OK sem olhar nada). */
+  await p.click('#passosPular').catch(() => {});
   await p.waitForTimeout(2600);
   const apareceu = await p.evaluate(() =>
     document.getElementById('conviteInstalar').classList.contains('aparece'));

@@ -31,6 +31,15 @@ O dono é o Erez, não-técnico, opera do iPad. Fale simples, em português.
   línguas sobra ao menos uma linha de texto na tela** (em alemão não há
   transliteração: sem essa guarda a tela ficaria em branco) e que a
   transliteração sozinha é maior do que quando divide a tela.
+- node checar-menu.mjs → a fileira de menus do pé e **o caminho de volta ao
+  Kadish**. A pergunta que importa é a terceira: **rolado até o fim de cada
+  painel, quem está no ponto do dedo?** — por `elementFromPoint`, nunca pelo
+  `z-index` escrito no CSS. Cobra também que dois itens não digam a mesma coisa,
+  que o rótulo não caia abaixo de 12px, que a fileira caiba numa linha nas 8
+  línguas, que o aceso diga onde você está (e volte ao Kadish quando o painel
+  fecha pelo ×) e que a última linha de conteúdo do painel não nasça debaixo do
+  menu. Com `--provar` ela devolve o menu ao `z-index: 61` da v65 e exige
+  vermelho — acusa 8.
 - node testar-opiniao.mjs → o "Sua opinião" das Ajustes. Com o
   `ENDERECO_OPINIAO` vazio a seção não pode estar na tela; com `--provar` ela
   volta e tem de funcionar, inclusive com o destino respondendo ERRO — e ali a
@@ -1625,6 +1634,147 @@ Nenhuma afrouxou, e duas ficaram mais exigentes:
 
 A **trava-sincronia.mjs fica verde**: nada disto toca no modulo SYNC, e a
 regra 0 continua de pe.
+
+## O caminho de volta ao Kadish (25/10, v66)
+
+Ele, vendo a v65: *"faltou no menu, ir para a tela do kadish, nao?"*
+
+Faltava, e o defeito era muito maior do que um item a menos. Medido antes de
+mexer, num iPhone SE:
+
+| | |
+|---|---|
+| Ajustes rolado ate o fim | o `×` do canto fica a **−628px** — FORA da tela |
+| tocando em "Por quem rezo" | o painel abre **JA ROLADO** (697px) e o `×` nasce fora da tela |
+
+Nas tres telas medidas (iPhone SE, iPhone 15, computador), e no computador
+tambem. Ou seja: **a porta que eu criei na v65 levava a um painel de onde o
+unico caminho de volta visivel era acertar uma faixa fina de fundo escuro no
+pe.** O `×` e `float: right` no ALTO de um painel que rola por dentro; o menu
+estava em `z-index: 61` e todo painel e `inset: 0; z-index: 300`.
+
+**Nenhuma das onze checagens visitava esse caminho, porque nenhuma ROLAVA um
+painel.** E a mesma familia do `canPlayType`, do `temState` e da pagina que
+ninguem rolava — com o agravante de estar no caminho que eu tinha acabado de
+abrir para ele.
+
+### O conserto nao e um × melhor; e o menu por cima
+
+Cinco `×`, um por painel, seriam cinco contas para a mesma pergunta, cada uma
+com o seu risco de rolagem. O menu passou a ficar **por cima dos paineis**
+(`z-index: 320` contra os 300 deles), e com isso:
+
+- o caminho de volta esta **sempre** na tela, em qualquer painel, rolado ate
+  onde for;
+- da para ir de "Ajustes" direto para "Onde rezar" sem fechar nada antes, que e
+  o que um menu existe para fazer;
+- **o item aceso diz ONDE VOCE ESTA** — a fileira nao tinha isso, e e a outra
+  metade do que ele notou que faltava.
+
+Fica abaixo do passo a passo (500) de proposito, e o balao do "Comecar aqui"
+subiu para 330: nascendo perto do pe da tela, debaixo do menu ele ficaria
+inalcancavel.
+
+### "O Kadish" no menu nao levava ao Kadish — o nome mentia, e era meu
+
+O item lia-se como a tela e abria o painel que EXPLICA o que a reza e. Passou a
+dizer **"O que e?"**, com a chave `learn_oque_curto`, que ja existia nas 8 desde
+a v52 — **zero texto novo** para essa metade. O id dele continua `mpKadish` de
+proposito: e por ele que o `testar-linguas.mjs` abre o painel da info desde a
+v65, mesma razao do `#treinoToggle`, que guarda o nome antigo.
+
+O item da casa e o `mpRezar`, **primeiro** e **estreito** (`flex: 0 0 auto`) —
+nao um sexto igual. Medido: dando-lhe um sexto da fileira, "Por quem rezo"
+quebrava em duas linhas e o menu subia de 51px para 66px.
+
+### A letra do menu estava abaixo do piso, e ninguem via
+
+**11px**, contra o piso de 12px do projeto. Passou porque o `testar-telas.mjs`
+so cobra o texto do CABECALHO, e o menu e do pe. Subiu para 12px, e para os
+SEIS caberem numa linha nas 8 linguas os rotulos longos encurtaram:
+
+| | antes | agora |
+|---|---|---|
+| pt | Por quem rezo | **Por quem** |
+| en | Who I pray for · Where to pray | **Who for** · **Where** |
+| fr | Comment faire · Pour qui je prie | **Comment** · **Pour qui** |
+| it | Per chi prego · Dove pregare · Impostazioni | **Per chi** · **Dove** · **Opzioni** |
+| de | Für wen ich bete · Einstellungen | **Für wen** · **Optionen** |
+| ru | Как пользоваться · За кого молюсь · Где молиться | **Как** · **За кого** · **Где** |
+
+Medido depois: **52px de menu nas 8 linguas**, uma linha, 1px mais que os 51px
+de antes — e a letra subiu ao piso. As sete linguas aqui sao rascunho de IA como
+as outras chaves de `menu_*`, e o `Opzioni`/`Optionen` esperam olho humano: sao
+sinonimos de interface, nao mudanca de sentido.
+
+### checar-menu.mjs — e os dois erros que eu cometi antes dela funcionar
+
+Nova, no workflow. A pergunta que importa e a terceira: **rolado ate o fim de
+cada painel, quem esta no ponto do dedo?** Feita por `elementFromPoint`, nunca
+pelo atributo nem pelo `z-index` escrito no CSS — a licao da v60, quando o
+`hidden` foi ao ar sem esconder nada e a minha checagem deu verde.
+
+Com `--provar` ela devolve o menu ao `z-index: 61` que estava no ar, por fora e
+sem tocar no arquivo, e exige vermelho. **Acusa 8 problemas** — ela sabe passar
+e sabe reprovar.
+
+1. **O primeiro bloco de edicoes nunca gravou o arquivo.** Fiz quatro trocas na
+   memoria e nao escrevi; o bloco seguinte releu o arquivo do disco e as
+   desfez caladas. Quem acusou foi a propria checagem nova, dizendo "rotulo a
+   11px" e "o menu nao esta no ponto" — numeros que eu tinha acabado de
+   "consertar". **Toda edicao em lote agora termina conferindo NO ARQUIVO**, com
+   um `grep`, e nao na mensagem de ok do script.
+2. **Eu medi a caixa do painel em vez da ultima linha de conteudo.** Ela acusou
+   `folga −11px` nos tres paineis — mas a caixa termina no recheio do overlay, e
+   e o recheio de baixo do painel que empurra o CONTEUDO para cima. A folga de
+   verdade e de 78 a 94px. *Medir a coisa certa nao e medir com cuidado — e
+   escolher a pergunta certa*, pela enesima vez.
+3. **O toque que nao da para dar *e* o defeito.** Com o menu debaixo do painel o
+   Playwright fica trinta segundos dizendo *"settingsOverlay intercepts pointer
+   events"* e estoura — e uma checagem que morre no meio nao chega a dar
+   veredito. Agora o toque e guardado num `try` e contado como falha.
+
+**E a altura do menu e MEDIDA, nunca escrita a mao** (`--pe-menu`), porque os
+paineis precisam dela para a ultima linha nao nascer escondida. Eu cai na
+armadilha de sempre: a primeira volta rodou antes de a Cormorant Garamond
+carregar, os rotulos ainda estavam em duas linhas, e ela gravou **63px num menu
+que mede 51**. O conserto nao foi acrescentar um `document.fonts.ready` a uma
+lista de eventos — foi um `ResizeObserver` no proprio menu, que acompanha a
+altura de verdade venha a mudanca da letra, da tela que virou ou da lingua.
+
+### O defeito da v65 que isto descobriu: TRES caixas no mesmo pe da tela
+
+Ao rodar a `testar-instalar.mjs` — que eu **nao tinha rodado na v65** — ela
+estourou. Medida contra a v65 para saber de quem era o defeito, e e dela:
+
+> o convite de instalar aparece COM a tira do passo a passo na tela, e a tira
+> fica **no ponto do botao "Como faco"**. O convite e inalcancavel. **Nas 8
+> linguas**, e a v65 foi ao ar assim.
+
+E a MESMA historia de 10/09, uma caixa depois. Naquele dia o aviso de
+privacidade tapava o convite, e o conserto ficou escrito no proprio arquivo,
+com a licao: *a pergunta certa e "ele ja respondeu?", e nao "esta na tela
+agora?"*. Em 25/10 a v65 pos um TERCEIRO morador naquele pe — o passo a passo —
+e ninguem estendeu aquela porta.
+
+Agora e **uma conta so**, `aVezEDeOutro()`, que devolve o NOME de quem esta na
+frente (privacidade · passo a passo) em vez de duas perguntas soltas que a
+proxima caixa no pe vai esquecer de fazer. O convite espera a vez e volta a
+tentar; quem reza nao perde nada.
+
+**A checagem andou o caminho de quem usa, e ficou mais exigente.** Ela aceitava
+o aviso e esperava o convite; agora responde o aviso, **cobra que o convite NAO
+esteja na tela com o passo a passo** (que e o defeito da v65), dispensa o passo
+a passo pelo "Pular" e so entao espera o convite. **Provado contra a v65: ela
+acusa 6 das 8 linguas e reprova.**
+
+E uma das linhas dela passaria pelo MOTIVO ERRADO: a que cobra que no
+computador o convite nao apareca diria a verdade por causa do passo a passo, e
+nao por ser um computador. Ela tambem dispensa o passo a passo agora. E a
+armadilha de 01/09 (a checagem que nunca abria os Ajustes) e da v60 (a que dava
+OK sem olhar nada).
+
+A **trava-sincronia.mjs fica verde**: nada disto toca no modulo SYNC.
 
 ## Nunca
 

@@ -74,6 +74,9 @@ jobs:
       - name: testar-camadas.mjs (os tres filtros e o ⚙ dizem a mesma coisa)
         run: node testar-camadas.mjs http://127.0.0.1:8896/tefila-kadish
 
+      - name: checar-menu.mjs (o caminho de volta ao Kadish, de dentro de cada painel)
+        run: node checar-menu.mjs http://127.0.0.1:8896/tefila-kadish
+
       - name: testar-treino.mjs (Modo Treino e repeticao)
         run: node testar-treino.mjs http://127.0.0.1:8896/tefila-kadish
 
