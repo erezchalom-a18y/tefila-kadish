@@ -1819,31 +1819,18 @@
      Fora do Modo Treino nada disto vale — a reza continua com o que os filtros
      dizem.
 
-     25/10 — DENTRO DO TREINO, ESTE AJUSTE PASSOU A MANDAR SOZINHO, e isto foi
-     um defeito achado pela checagem, nao uma ideia. Ate a v63 estas regras so
-     sabiam ESCONDER, e isso bastava porque o app abria com as tres camadas na
-     tela. Com o padrao da v64 (so o transliterado), o `body.heb-hidden .hebrew`
-     ja tinha escondido tudo — e as tres opcoes deste ajuste passaram a nao
-     mudar UM PIXEL. Tres botoes na tela que nao fazem nada e a tela mentindo, e
-     foi exatamente isso que o testar-treino.mjs acusou em tres linhas.
-     Entao aqui as regras tambem sabem MOSTRAR: dentro do treino quem decide e
-     este ajuste, e fora dele quem decide sao os filtros. Nao sao duas contas
-     para a mesma pergunta — sao duas telas, e a tela em que voce esta diz qual
-     vale, porque o botao Treino fica aceso.
-     O PADRAO deste ajuste foi para "so-translit" junto com o do app, senao
-     entrar no Treino traria o hebraico de volta para todo mundo — o contrario
-     do que ele pediu em 25/10. */
-  body.modo-treino.treino-so-translit .hebrew,
-  body.modo-treino.treino-heb-tr      .pt-merged,
-  body.modo-treino.treino-so-translit .pt-merged { display: none; }
-  body.modo-treino.treino-heb-tr .hebrew,
-  body.modo-treino.treino-tudo   .hebrew { display: block; }
-  body.modo-treino.treino-tudo   .pt-merged { display: block; }
-  /* a transliteracao nunca sai do treino — e ela que a boca le */
-  body.modo-treino .translit { display: block; }
-  /* menos em alemao, que nao tem transliteracao propria: ali nao ha o que
-     mostrar, e forca-la seria pôr a portuguesa na boca de quem le alemao */
-  body.modo-treino.sem-translit .translit { display: none; }
+     26/10 — ESTE AJUSTE SAIU, E COM ELE ESTAS REGRAS. Ele perguntou o que eram
+     os dois controles, eu medi e mostrei: acendendo Hebraico e Traducao nos
+     botoes do alto e apertando Treino, a tela voltava sozinha para so a
+     transliteracao — porque dentro do Treino quem mandava era esta linha,
+     escondida nos Ajustes. Eram dois lugares decidindo a mesma coisa, e quem
+     mexia no de cima nao entendia por que o Treino ignorava.
+     Ele escolheu: o Treino CONTINUA entrando limpo (so a transliteracao, o
+     pedido dele de 27/08), mas quem manda ali passaram a ser os MESMOS tres
+     filtros do alto. Uma conta so, no lugar que esta a vista. Quem decide o
+     que o Treino mostra ao entrar e o `toggleModoTreino`, que poe as camadas
+     por `aplicarCamada` — a mesma porta de sempre — e devolve ao sair as que
+     a reza tinha. */
   .settings-versao {
     font-size: 11px; opacity: .5; margin: -6px 0 14px;
     font-variant-numeric: tabular-nums; user-select: all;
@@ -3212,15 +3199,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="settings-eyebrow" style="margin-top:24px;" data-i18n="layers_title">Camadas</div>
-
-    <div class="settings-row">
-      <div class="settings-row-label" data-i18n="treino_camadas_label">No Modo Treino mostrar</div>
-      <div class="seg-control" data-setting="treinocamadas">
-        <button data-treino="so-translit" data-i18n="treino_so_translit">Só transliteração</button>
-        <button class="active" data-treino="heb-tr" data-i18n="treino_heb_tr">Hebraico + transliteração</button>
-        <button data-treino="tudo" data-i18n="treino_tudo">Tudo</button>
-      </div>
-    </div>
 
     <!-- 01/09 — a dica estava DEPOIS das tres linhas de camada e depois do
          cartao de Yahrzeit: medido num iPhone SE, as camadas comecam a 887px de
@@ -5191,6 +5169,17 @@ function atualizarDedicatoria() {
  * pintura e a que vale, e e a certa.
  */
 const CAMADAS = ['heb', 'tr', 'pt'];
+// 26/10 — as duas moram AQUI, no alto, junto do primeiro que as le. E a
+// armadilha do TDZ que este arquivo ja pagou tres vezes: um `let` declarado
+// mais abaixo estoura ao ser lido antes, e a excecao derruba o resto do script.
+//
+// camadasDaReza = o que estava na tela antes de entrar no Treino, para voltar
+//                 ao sair. A escolha do Treino e do Treino.
+// guardarCamadas = o aparelho grava a escolha? Fica FALSO dentro do Treino:
+//                 senao fechar o app treinando levaria a reza de amanha para a
+//                 tela do treino de hoje.
+let camadasDaReza = null;
+let guardarCamadas = true;
 // A ordem do ciclo e dele: Normal → Destaque → Ocultar. Ele tinha proposto
 // comecar pelo ocultar; pular de "sumiu" direto para "esta gritando" e um
 // salto grande, e ele concordou em inverter.
@@ -6230,7 +6219,9 @@ function pintarCamadas() {
   // Guardado no aparelho. Sem isto, quem nao le hebraico teria de ocultar o
   // hebraico toda vez que abrisse o app — e foi por poder ser uma vez so na
   // vida que dispensamos a pergunta na entrada.
-  try { localStorage.setItem('tefila_camadas', JSON.stringify(estadoCamada)); } catch (err) {}
+  if (guardarCamadas) {
+    try { localStorage.setItem('tefila_camadas', JSON.stringify(estadoCamada)); } catch (err) {}
+  }
   // Os tres filtros do fluxo do texto sao pintados DAQUI, e nao por conta
   // propria: se tivessem a sua propria conta, eles e as tres linhas do ⚙ se
   // contradiriam no primeiro toque. E o defeito que este projeto mais pagou
@@ -7120,7 +7111,6 @@ const I18N = {
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Escuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamanho da fonte', font_small: 'Pequena', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muito grande',
     tradition_label: 'Tradição', language_label: 'Idioma',
-    treino_camadas_label: 'No Modo Treino mostrar', treino_so_translit: 'Só transliteração', treino_heb_tr: 'Hebraico + transliteração', treino_tudo: 'Tudo',
     som_label: 'Som', som_ligado: 'Ligado', som_mudo: 'Mudo', som_silenciar: 'Silenciar', som_religar: 'Religar o som', toast_mudo: 'Som desligado', toast_som: 'Som ligado',
     layers_title: 'Camadas', layer_hebrew: 'Hebraico', layer_translit: 'Transliteração', layer_translation: 'Tradução',
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destaque',
@@ -7226,7 +7216,6 @@ const I18N = {
     theme_label: 'Theme', theme_light: 'Light', theme_dark: 'Dark', theme_contrast: 'Contrast',
     font_size_label: 'Font size', font_small: 'Small', font_normal: 'Normal', font_large: 'Large', font_xlarge: 'Extra large',
     tradition_label: 'Tradition', language_label: 'Language',
-    treino_camadas_label: 'In Practice Mode show', treino_so_translit: 'Transliteration only', treino_heb_tr: 'Hebrew + transliteration', treino_tudo: 'Everything',
     som_label: 'Sound', som_ligado: 'On', som_mudo: 'Muted', som_silenciar: 'Mute', som_religar: 'Unmute', toast_mudo: 'Sound off', toast_som: 'Sound on',
     layers_title: 'Layers', layer_hebrew: 'Hebrew', layer_translit: 'Transliteration', layer_translation: 'Translation',
     hide: 'Hide', normal: 'Normal', highlight: 'Highlight',
@@ -7329,7 +7318,6 @@ const I18N = {
     theme_label: 'Tema', theme_light: 'Claro', theme_dark: 'Oscuro', theme_contrast: 'Contraste',
     font_size_label: 'Tamaño de fuente', font_small: 'Pequeña', font_normal: 'Normal', font_large: 'Grande', font_xlarge: 'Muy grande',
     tradition_label: 'Tradición', language_label: 'Idioma',
-    treino_camadas_label: 'En Modo Práctica mostrar', treino_so_translit: 'Solo transliteración', treino_heb_tr: 'Hebreo + transliteración', treino_tudo: 'Todo',
     som_label: 'Sonido', som_ligado: 'Activado', som_mudo: 'Silencio', som_silenciar: 'Silenciar', som_religar: 'Activar el sonido', toast_mudo: 'Sonido apagado', toast_som: 'Sonido activado',
     layers_title: 'Capas', layer_hebrew: 'Hebreo', layer_translit: 'Transliteración', layer_translation: 'Traducción',
     hide: 'Ocultar', normal: 'Normal', highlight: 'Destacar',
@@ -7432,7 +7420,6 @@ const I18N = {
     theme_label: 'Thème', theme_light: 'Clair', theme_dark: 'Sombre', theme_contrast: 'Contraste',
     font_size_label: 'Taille de police', font_small: 'Petite', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Très grande',
     tradition_label: 'Tradition', language_label: 'Langue',
-    treino_camadas_label: 'En Mode Pratique afficher', treino_so_translit: 'Translittération seule', treino_heb_tr: 'Hébreu + translittération', treino_tudo: 'Tout',
     som_label: 'Son', som_ligado: 'Activé', som_mudo: 'Muet', som_silenciar: 'Couper le son', som_religar: 'Rétablir le son', toast_mudo: 'Son coupé', toast_som: 'Son rétabli',
     layers_title: 'Couches', layer_hebrew: 'Hébreu', layer_translit: 'Translittération', layer_translation: 'Traduction',
     hide: 'Masquer', normal: 'Normal', highlight: 'Mettre en avant',
@@ -7535,7 +7522,6 @@ const I18N = {
     theme_label: 'Tema', theme_light: 'Chiaro', theme_dark: 'Scuro', theme_contrast: 'Contrasto',
     font_size_label: 'Dimensione del testo', font_small: 'Piccola', font_normal: 'Normale', font_large: 'Grande', font_xlarge: 'Molto grande',
     tradition_label: 'Tradizione', language_label: 'Lingua',
-    treino_camadas_label: 'In Modalità Pratica mostrare', treino_so_translit: 'Solo traslitterazione', treino_heb_tr: 'Ebraico + traslitterazione', treino_tudo: 'Tutto',
     som_label: 'Suono', som_ligado: 'Attivo', som_mudo: 'Muto', som_silenciar: 'Silenzia', som_religar: 'Riattiva il suono', toast_mudo: 'Suono disattivato', toast_som: 'Suono attivato',
     layers_title: 'Livelli', layer_hebrew: 'Ebraico', layer_translit: 'Traslitterazione', layer_translation: 'Traduzione',
     hide: 'Nascondi', normal: 'Normale', highlight: 'Evidenzia',
@@ -7638,7 +7624,6 @@ const I18N = {
     theme_label: 'Design', theme_light: 'Hell', theme_dark: 'Dunkel', theme_contrast: 'Kontrast',
     font_size_label: 'Schriftgröße', font_small: 'Klein', font_normal: 'Normal', font_large: 'Groß', font_xlarge: 'Sehr groß',
     tradition_label: 'Tradition', language_label: 'Sprache',
-    treino_camadas_label: 'Im Übungsmodus zeigen', treino_so_translit: 'Nur Umschrift', treino_heb_tr: 'Hebräisch + Umschrift', treino_tudo: 'Alles',
     som_label: 'Ton', som_ligado: 'An', som_mudo: 'Stumm', som_silenciar: 'Stummschalten', som_religar: 'Ton einschalten', toast_mudo: 'Ton aus', toast_som: 'Ton an',
     layers_title: 'Ebenen', layer_hebrew: 'Hebräisch', layer_translit: 'Umschrift', layer_translation: 'Übersetzung',
     hide: 'Ausblenden', normal: 'Normal', highlight: 'Hervorheben',
@@ -7741,7 +7726,6 @@ const I18N = {
     theme_label: 'Тема', theme_light: 'Светлая', theme_dark: 'Тёмная', theme_contrast: 'Контраст',
     font_size_label: 'Размер шрифта', font_small: 'Малый', font_normal: 'Нормальный', font_large: 'Большой', font_xlarge: 'Очень большой',
     tradition_label: 'Традиция', language_label: 'Язык',
-    treino_camadas_label: 'В режиме практики показывать', treino_so_translit: 'Только транслитерацию', treino_heb_tr: 'Иврит + транслитерацию', treino_tudo: 'Всё',
     som_label: 'Звук', som_ligado: 'Включён', som_mudo: 'Без звука', som_silenciar: 'Выключить звук', som_religar: 'Включить звук', toast_mudo: 'Звук выключен', toast_som: 'Звук включён',
     layers_title: 'Слои', layer_hebrew: 'Иврит', layer_translit: 'Транслитерация', layer_translation: 'Перевод',
     hide: 'Скрыть', normal: 'Норма', highlight: 'Выделить',
@@ -7844,7 +7828,6 @@ const I18N = {
     theme_label: 'ערכת נושא', theme_light: 'בהיר', theme_dark: 'כהה', theme_contrast: 'ניגודיות',
     font_size_label: 'גודל גופן', font_small: 'קטן', font_normal: 'רגיל', font_large: 'גדול', font_xlarge: 'גדול מאוד',
     tradition_label: 'מסורת', language_label: 'שפה',
-    treino_camadas_label: 'במצב תרגול להציג', treino_so_translit: 'תעתיק בלבד', treino_heb_tr: 'ארמית + תעתיק', treino_tudo: 'הכול',
     som_label: 'צליל', som_ligado: 'פועל', som_mudo: 'מושתק', som_silenciar: 'השתקה', som_religar: 'הפעלת הצליל', toast_mudo: 'הצליל כבוי', toast_som: 'הצליל פועל',
     layers_title: 'שכבות', layer_hebrew: 'ארמית', layer_translit: 'תעתיק', layer_translation: 'תרגום לעברית',
     hide: 'הסתר', normal: 'רגיל', highlight: 'הדגש',
@@ -8556,6 +8539,23 @@ function toggleModoTreino() {
       repCount.style.display = 'inline-block';
       repCount.textContent = TREINO_REPETICOES + '×';
     }
+    // 26/10 — O TREINO ENTRA LIMPO, E QUEM O DEIXA ASSIM E A MESMA PORTA DOS
+    // FILTROS. Ate a v69 havia uma linha nos Ajustes ("No Modo Treino mostrar")
+    // que mandava aqui dentro, e o que ele tinha escolhido no alto era desfeito
+    // ao apertar Treino. Ele escolheu, em 26/10: o Treino continua entrando so
+    // com a transliteracao — a linha que a boca le, pedido dele de 27/08 — e
+    // dali em diante quem manda sao os TRES FILTROS DO ALTO, que funcionam aqui
+    // dentro. Uma conta so.
+    // O que a reza tinha fica guardado e volta ao sair: a escolha do Treino e
+    // do Treino. Enquanto ele durar nada e gravado no aparelho (ver
+    // `guardarCamadas`), senao fechar o app dentro do Treino levaria a reza de
+    // amanha para a tela do treino de hoje.
+    camadasDaReza = Object.assign({}, estadoCamada);
+    guardarCamadas = false;
+    aplicarCamada('heb', 'hidden');
+    aplicarCamada('pt', 'hidden');
+    aplicarCamada('tr', 'normal');
+    garantirAlgoNaTela();   // em alemao nao ha transliteracao: o hebraico volta
     // Entrar no treino recomeca do Yitgadal — pedido dele, 26/08: "quando muda
     // da reza para o treino deve comecar no Yitgadal sempre". Treinar e comecar
     // do zero; cair no meio da reza onde a leitura parou nao ensina nada.
@@ -8582,6 +8582,14 @@ function toggleModoTreino() {
       repCount.style.display = 'none';
     }
     state.treinoMexeu = { speed: false, repeat: false };
+    // as camadas da reza voltam, e so entao o aparelho volta a guardar
+    guardarCamadas = true;
+    if (camadasDaReza) {
+      for (const l of CAMADAS) aplicarCamada(l, camadasDaReza[l]);
+      camadasDaReza = null;
+    } else {
+      pintarCamadas();   // sem nada guardado, ao menos grava o que esta na tela
+    }
     if (typeof pause === 'function') pause();
     if (window.SYNC && SYNC.voltarAoInicio) SYNC.voltarAoInicio();
     showToast(TXT('toast_mode_prayer'));
@@ -9076,32 +9084,10 @@ document.querySelectorAll('.seg-control').forEach(seg => {
       trocarKadish(value, null);
     }
     else if (setting === 'audiosrc') applyAudioSource(value);
-    else if (setting === 'treinocamadas') aplicarCamadasDoTreino(btn.dataset.treino);
   });
 });
 
 // ---------- O que o Modo Treino mostra (27/08) ----------
-// Vale SO dentro do Modo Treino: as classes ficam no body o tempo todo, mas o
-// CSS delas esta preso a .modo-treino. A reza nao muda de aparencia por causa
-// deste ajuste, e e de proposito — quem reza escolhe camadas na secao de baixo.
-function aplicarCamadasDoTreino(qual) {
-  const valido = ['so-translit', 'heb-tr', 'tudo'].includes(qual) ? qual : 'so-translit';
-  state.camadasTreino = valido;
-  document.body.classList.remove('treino-so-translit', 'treino-heb-tr', 'treino-tudo');
-  document.body.classList.add('treino-' + valido);
-  try { localStorage.setItem('tefila_camadas_treino', valido); } catch (e) {}
-  const seg = document.querySelector('[data-setting="treinocamadas"]');
-  if (seg) seg.querySelectorAll('button').forEach(b =>
-    b.classList.toggle('active', b.dataset.treino === valido));
-}
-// 25/10 — o padrao deste ajuste acompanhou o padrao do app ("so o
-// transliterado"). Se ficasse em 'heb-tr', entrar no Modo Treino traria o
-// hebraico de volta para quem nunca escolheu nada — o contrario do que ele
-// pediu. Quem JA escolheu continua com a sua escolha: a chave guardada manda.
-aplicarCamadasDoTreino((() => {
-  try { return localStorage.getItem('tefila_camadas_treino') || 'so-translit'; }
-  catch (e) { return 'so-translit'; }
-})());
 
 // ---------- Language toggle in topbar cycles through languages ----------
 const LANG_ORDER = ['pt','en','es','fr','it','de','ru','he'];

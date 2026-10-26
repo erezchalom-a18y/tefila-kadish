@@ -413,53 +413,69 @@ confere('sair do Modo Treino desliga a repeticao e volta a 1x',
   rep.fora.n === 0 && !rep.fora.visivel && rep.fora.velocidade === 1 && !rep.fora.tocando,
   JSON.stringify(rep.fora));
 
-// ---------- 27/08: o que o Modo Treino MOSTRA ----------
-// "acho que nao precisa da traducao no modo treino e o hebraico e opcional (nas
-// configuracoes)". A transliteracao nunca sai: e ela que a boca le.
+// ---------- o que o Modo Treino MOSTRA (27/08, refeito em 26/10) ----------
+// "acho que nao precisa da traducao no modo treino e o hebraico e opcional".
+// A transliteracao nunca sai: e ela que a boca le.
+//
+// 26/10 — ESTAS LINHAS MUDARAM DE PORTA, e nao de exigencia. Ate a v69 elas
+// chamavam `aplicarCamadasDoTreino(...)` POR DENTRO, uma funcao ligada a uma
+// linha escondida nos Ajustes. Ele perguntou por que havia dois controles para
+// a mesma coisa, mediu-se, e ele escolheu: o Treino continua entrando limpo,
+// mas quem manda ali passaram a ser os TRES FILTROS DO ALTO.
+// Entao agora a checagem faz o que a PESSOA faz — toca nos filtros —, e cobra
+// QUATRO coisas onde cobrava quatro, cada uma mais forte:
+//   1. entrar no Treino traz so a transliteracao (o pedido de 27/08);
+//   2. os filtros FUNCIONAM la dentro, e dao telas diferentes;
+//   3. sair devolve a tela que a REZA tinha (antes so se cobrava "nao vazou");
+//   4. o que se escolhe no Treino NAO fica guardado no aparelho.
 const camadas = await pag.evaluate(async () => {
-  const seg = () => new Promise(r => setTimeout(r, 200));
+  const seg = () => new Promise(r => setTimeout(r, 250));
   const visivel = sel => { const e = document.querySelector(sel);
     return !!e && getComputedStyle(e).display !== 'none'; };
+  const olhar = () => ({ heb: visivel('.hebrew'), tr: visivel('.translit'), pt: visivel('.pt-merged') });
+  const filtro = async (c) => {
+    const b = document.querySelector(`.filtro-op[data-filtro="${c}"]`);
+    if (!b) throw new Error('nao achei o filtro ' + c);
+    b.click(); await seg();
+  };
   const btTreino = document.getElementById('treinoToggle');
   const btReza = document.getElementById('rezaToggle');
-  if (!state.modoTreino) { btTreino.click(); await seg(); }
-  const olhar = () => ({ heb: visivel('.hebrew'), tr: visivel('.translit'), pt: visivel('.pt-merged') });
-  aplicarCamadasDoTreino('so-translit'); await seg(); const padrao2 = olhar();
-  aplicarCamadasDoTreino('heb-tr');      await seg(); const hebTr = olhar();
-  aplicarCamadasDoTreino('tudo');        await seg(); const tudo = olhar();
-  // sai do treino com o "Tudo" LIGADO de proposito: e assim que se descobre se
-  // o ajuste do treino vaza para a reza
+  if (state.modoTreino) { btReza.click(); await seg(); }
+  // a REZA fica com as TRES na tela, de proposito: assim a tela da reza e
+  // diferente da do treino, e "voltou ao que era meu" passa a medir algo
+  if (!visivel('.hebrew')) await filtro('heb');
+  if (!visivel('.pt-merged')) await filtro('pt');
+  const naRezaAntes = olhar();
+  const guardadoAntes = localStorage.getItem('tefila_camadas');
+
+  btTreino.click(); await seg();
+  const aoEntrar = olhar();
+  await filtro('heb');  const comHeb = olhar();
+  await filtro('pt');   const comTudo = olhar();
+  const guardadoNoTreino = localStorage.getItem('tefila_camadas');
+
   btReza.click(); await seg();
-  const naReza = olhar();
-  aplicarCamadasDoTreino('so-translit'); await seg();
-  return { padrao2, hebTr, tudo, naReza };
+  const naRezaDepois = olhar();
+  return { naRezaAntes, aoEntrar, comHeb, comTudo, naRezaDepois,
+           guardouOTreino: guardadoNoTreino !== guardadoAntes };
 });
-// 25/10 — ESTAS QUATRO LINHAS MUDARAM DE ALVO, e foi porque elas acharam um
-// defeito de verdade. Com o padrao novo do app (so o transliterado), as tres
-// opcoes deste ajuste deixaram de mudar um pixel: o `heb-hidden` global ja
-// tinha escondido tudo, e estas regras do treino so sabiam ESCONDER. Tres
-// botoes na tela que nao fazem nada e a tela mentindo.
-// O conserto foi no app (dentro do treino este ajuste manda sozinho, e o
-// padrao dele acompanhou o do app), e aqui as perguntas ficaram MAIS exigentes,
-// nao menos: antes se cobrava um estado por opcao; agora se cobra isso E que as
-// tres opcoes sejam DIFERENTES entre si — que e o que pega o dia em que elas
-// voltarem a nao fazer nada.
-confere('no Modo Treino o padrao e so a transliteracao',
-  !camadas.padrao2.heb && camadas.padrao2.tr && !camadas.padrao2.pt, JSON.stringify(camadas.padrao2));
-confere('"Hebraico + transliteracao" traz o hebraico e deixa a traducao fora',
-  camadas.hebTr.heb && camadas.hebTr.tr && !camadas.hebTr.pt, JSON.stringify(camadas.hebTr));
-confere('"Tudo" traz a traducao de volta',
-  camadas.tudo.heb && camadas.tudo.tr && camadas.tudo.pt, JSON.stringify(camadas.tudo));
-confere('as tres opcoes do treino dao tres telas DIFERENTES',
-  new Set([camadas.padrao2, camadas.hebTr, camadas.tudo].map(o => JSON.stringify(o))).size === 3,
-  JSON.stringify([camadas.padrao2, camadas.hebTr, camadas.tudo]));
-// A REZA segue os FILTROS, nunca o ajuste do treino. Antes esta linha cobrava
-// "as tres camadas na reza", o que so era verdade enquanto o app abria com as
-// tres; agora ela cobra o que importa de verdade — que o ajuste do treino nao
-// VAZE para a reza. Saimos do treino com "Tudo" ligado: se ele vazasse, a reza
-// viria com hebraico e traducao, e nao vem.
-confere('o ajuste do treino nao vaza para a REZA (que segue os filtros)',
-  !camadas.naReza.heb && camadas.naReza.tr && !camadas.naReza.pt, JSON.stringify(camadas.naReza));
+confere('entrar no Modo Treino traz so a transliteracao',
+  !camadas.aoEntrar.heb && camadas.aoEntrar.tr && !camadas.aoEntrar.pt,
+  JSON.stringify(camadas.aoEntrar));
+confere('dentro do Treino o filtro do Hebraico funciona',
+  camadas.comHeb.heb && camadas.comHeb.tr && !camadas.comHeb.pt,
+  JSON.stringify(camadas.comHeb));
+confere('dentro do Treino o filtro da Traducao funciona',
+  camadas.comTudo.heb && camadas.comTudo.tr && camadas.comTudo.pt,
+  JSON.stringify(camadas.comTudo));
+confere('as tres telas do Treino sao DIFERENTES entre si',
+  new Set([camadas.aoEntrar, camadas.comHeb, camadas.comTudo].map(o => JSON.stringify(o))).size === 3,
+  JSON.stringify([camadas.aoEntrar, camadas.comHeb, camadas.comTudo]));
+confere('sair do Treino devolve a tela que a REZA tinha',
+  JSON.stringify(camadas.naRezaDepois) === JSON.stringify(camadas.naRezaAntes),
+  JSON.stringify({ antes: camadas.naRezaAntes, depois: camadas.naRezaDepois }));
+confere('o que se escolhe no Treino NAO fica guardado no aparelho',
+  !camadas.guardouOTreino, JSON.stringify({ guardou: camadas.guardouOTreino }));
 
 // ---------- 27/08: o que ele mandou tirar da tela ----------
 // "esta escrito modo treino - pausa apos cada verso (desnecessario na minha

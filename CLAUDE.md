@@ -2098,6 +2098,62 @@ igual. Antes de escrever o que um botao faz, **tocar nele e medir**.
 
 A `trava-sincronia.mjs` fica verde: nada disto toca no modulo SYNC.
 
+### 3. "nao entendi, me pergunte" — e os dois controles viraram um
+
+Eu tinha escrito a ele, no fim da v69, que havia **dois controles para "o que
+aparece na tela"** e que simplificar era decisao dele. Ele respondeu: *"nao
+entendi, me pergunte"*.
+
+**Entao a primeira coisa foi MEDIR para poder explicar**, em vez de descrever de
+memoria. Num iPhone, pelo caminho de quem usa:
+
+| | hebraico | transliteracao | traducao |
+|---|---|---|---|
+| como o app abre (rezando) | oculto | **na tela** | oculto |
+| acendi "Hebraico" e "Traducao" nos botoes do alto | **na tela** | **na tela** | **na tela** |
+| apertei **Treino**, sem mexer em mais nada | oculto | **na tela** | oculto |
+
+Era isto: **o que ele escolhia no alto era desfeito ao entrar no Treino**, porque
+la dentro mandava uma linha escondida nos Ajustes ("No Modo Treino mostrar").
+Nao estava quebrado — o Treino limpo foi pedido dele em 27/08 — mas eram dois
+lugares decidindo a mesma coisa, e quem mexia no de cima nao entendia por que o
+Treino ignorava.
+
+**A pratica que funcionou, e e a de 09/09:** quando ele diz "nao entendi", a
+resposta util nao e um paragrafo — e a MEDIDA na tela dele, com as opcoes lado a
+lado. Ele decidiu numa mensagem.
+
+**A escolha dele:** o Treino **continua entrando limpo** (so a transliteracao), e
+dali em diante quem manda sao **os mesmos tres filtros do alto**, que passaram a
+funcionar dentro do Treino. A linha dos Ajustes saiu, com as suas 4 chaves nas 8
+linguas e as suas regras de CSS.
+
+Tres decisoes de codigo que valem registro:
+
+1. **Quem poe o Treino limpo e o `aplicarCamada`** — a mesma porta dos filtros e
+   do ⚙, nunca um CSS paralelo. Era justamente o CSS paralelo
+   (`body.modo-treino.treino-*`) que fazia a segunda conta.
+2. **O que a reza tinha volta ao sair** (`camadasDaReza`). A escolha do Treino e
+   do Treino, igual a velocidade e a repeticao, que ja se desfaziam assim.
+3. **Dentro do Treino nada e gravado no aparelho** (`guardarCamadas`). Sem isso,
+   fechar o app treinando levaria a reza de amanha para a tela do treino de
+   hoje. As duas variaveis moram no alto do script, junto do `CAMADAS` — a
+   armadilha do TDZ que este arquivo ja pagou tres vezes.
+
+Medido depois, pelo caminho de quem usa: a reza abre so com a transliteracao ·
+acendo heb e traducao, as tres na tela · aperto Treino, **volta a so a
+transliteracao** · toco no filtro do Hebraico **ali dentro** e ele acende · o
+aparelho **nao gravou** o treino · saio e a reza **volta com as tres**. Nenhum
+erro de console.
+
+**A checagem mudou de PORTA, e nao de exigencia.** As quatro linhas do
+`testar-treino.mjs` chamavam `aplicarCamadasDoTreino(...)` por dentro; agora
+tocam nos filtros, como a pessoa, e sao **seis** perguntas: entra limpo · o
+filtro do hebraico funciona la · o da traducao tambem · as tres telas sao
+diferentes · **sair devolve a tela que a REZA tinha** (antes so se cobrava "nao
+vazou") · e **o Treino nao fica guardado**. **Provado que sabe reprovar:**
+tirando o conserto de proposito ela acusa 3.
+
 ## Nunca
 
 - git push --force
