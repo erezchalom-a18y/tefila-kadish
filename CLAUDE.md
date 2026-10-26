@@ -2290,6 +2290,105 @@ script — o `temState` de 30/08) e **as 8 chaves `setup_skip_link`**. O
 `testar-linguas.mjs` foi de 88 para **87 chaves na tela**.
 
 
+## "Que entre o kadish direto" (26/10, v71)
+
+Ele usou a v70 no iPhone e mandou a foto: o passo a passo na tela, o contador
+"1 / 8", o "Pular" no canto. *"Quando clico no kadish abre essa pagina e devo
+clicar no fechar para ver o kadish, fazer com que nao apareca mais esta tela,
+que entre o kadish direto"*.
+
+**Eram DUAS coisas, e a segunda e que explicava o "devo clicar no fechar".**
+
+### 1. O passo a passo nao abre mais sozinho — e e uma regra velha voltando
+
+Ele se abria 1,8s depois de carregar, na primeira vez, e isso foi pedido dele
+em 25/10 (*"o ideal seria um passo a passo onde ele ja configura"*). Ele mudou
+de ideia vendo-o em uso, e a decisao e dele.
+
+**E ela devolve o app a uma regra que ja estava escrita aqui**, por decisao
+dele de 02/09, sobre perguntar a lingua na entrada: *"quem abre este app pode
+ter enterrado o pai ontem, e no minyan nao ha tempo de preencher formulario"* —
+por isso o app abre DIRETO no Kadish. O passo a passo era a excecao que eu
+tinha aberto nessa regra, e ele a fechou. **Continua inteiro, a um toque, no
+"Como usar" do menu do pe.**
+
+### 2. O caminho de saida que nao gravava nada — e por isso ele voltava SEMPRE
+
+Esta e a metade que fazia dele uma queixa diaria, e nao um incomodo de uma vez:
+
+```
+fecharOsPaineis()  -> settingsOverlay · infoOverlay · setupModal
+                      ... e NAO o passo a passo
+fecharPassos()     -> o unico que gravava a marca "ja viu"
+```
+
+Tocar em **"O Kadish"** com o passo a passo aberto fechava os paineis e deixava
+a tira e o cartao na tela — **sem caminho de volta a nao ser o "Pular"**, que e
+exatamente o que ele descreveu. E como a marca so era gravada pelo `fecharPassos`,
+quem saisse pelo menu **nunca** ficava marcado como tendo visto: na abertura
+seguinte o passo a passo voltava. Para sempre.
+
+E a familia de 25/10 outra vez — *cinco × seriam cinco contas para a mesma
+pergunta* —, agora pelo avesso: havia UMA conta para "fechar o que esta aberto"
+e **o passo a passo nao estava nela**. Agora esta: `fecharOsPaineis()` o fecha
+junto com os paineis, que e o que o menu existe para fazer.
+
+### A marca saiu, porque ninguem mais a lia
+
+Sem abertura automatica, `MARCA_PASSOS` (`tefila_passos_1025`) deixou de ter
+leitor. Uma chave guardada que ninguem le e a licao da v69 escrita de novo:
+*nao incomoda ninguem ate o dia em que alguem a acha e acredita nela*. Sairam a
+constante e a escrita.
+
+**E ela tinha um segundo leitor, que precisou mudar de pergunta.** O convite de
+instalar esperava a vez perguntando ao `localStorage` *"ele ja viu o passo a
+passo?"* em vez de *"esta na tela?"* — e isso estava CERTO enquanto o passo a
+passo abria sozinho, porque entre carregar e ele abrir havia um vao por onde o
+convite passava (a licao de 10/09). **Sem abertura automatica nao ha vao**, e a
+pergunta certa passou a ser a direta: `body.classList.contains('em-passos')`.
+
+### As checagens: uma pergunta nova que sabe reprovar, e uma que ia ficar cega
+
+- **`checar-menu.mjs`** ganhou o bloco 4b, com as tres perguntas do caminho de
+  quem usa: **aparelho novo entra direto no Kadish** · o "Como usar" abre o
+  passo a passo · **tocar em "O Kadish" o fecha**. Provado plantando os dois
+  defeitos de volta por fora: ela acusa **2**.
+- **`testar-instalar.mjs`** tinha uma linha que ia ficar **cega**: ela cobrava
+  "com o passo a passo na tela o convite nao pode estar la" contando que ele
+  abrisse sozinho. Sem isso, a pergunta nunca mais poderia ficar vermelha — e
+  *uma checagem que so sabe passar nao mede nada*, que e o vigia de 13/09 ao
+  contrario. Agora ela **abre o passo a passo pela porta da frente** (o item do
+  menu), cobra que o convite nao esteja la, e **sai por "O Kadish"** — que e o
+  caminho que ele relatou quebrado.
+- O `abrir()` do `checar-menu` arrancava a tira do passo a passo do DOM e
+  escrevia a marca. Duas linhas mortas; sairam.
+
+### E a checagem mudada achou um defeito de verdade, nas 8 linguas
+
+Assim que a `testar-instalar.mjs` passou a abrir o passo a passo pela porta da
+frente, ela ficou **VERMELHA nas 8**: *"o convite aparece COM o passo a passo
+na tela — os dois moram no mesmo pe"*.
+
+E era verdade, e e novo. O convite perguntava *"a vez e de quem?"* **so antes
+de aparecer**, e isso bastava enquanto o passo a passo abria sozinho — ele
+sempre vinha primeiro. Com ele abrindo por um toque, **a ordem inverteu**: o
+convite ja pode estar na tela quando o passo a passo chega por cima. Os dois
+moram no pe da tela, e quem chega por cima deixa o de baixo inalcancavel — e a
+terceira vez que esta mesma medida aparece neste arquivo (10/09, 25/10, hoje).
+
+O conserto nao e uma segunda conta: e a **mesma** `aVezEDeOutro()`, feita
+tambem DEPOIS, por um `MutationObserver` na classe do `body`. Se a vez passou a
+ser de outro, o convite sai da tela e volta a tentar daqui a 2s — que e o que
+ele ja fazia quando a vez era de outro desde o comeco.
+
+*A licao: quando se tira um mecanismo que garantia uma ORDEM, as guardas
+escritas confiando naquela ordem passam a mentir — e nenhuma delas diz isso em
+voz alta. Esta so apareceu porque a checagem passou a andar o caminho de quem
+usa.*
+
+A `trava-sincronia.mjs` fica verde: nada disto toca no modulo SYNC.
+
+
 ## Nunca
 
 - git push --force

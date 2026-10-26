@@ -122,11 +122,16 @@ for (const lang of L) {
   /* O PASSO A PASSO VEM ANTES DO CONVITE, e isto e uma pergunta a mais e nao
      uma folga. A v65 pos a tira do passo a passo no MESMO pe da tela do
      convite e foi ao ar assim: medido nas 8 linguas, a tira ficava NO PONTO do
-     botao "Como faco" e o convite era inalcancavel. A partir da v66 o convite
-     espera a vez — entao a checagem passou a andar o caminho de quem usa:
-     responde o aviso, dispensa o passo a passo e so ENTAO espera o convite.
-     Antes de dispensar, cobra o que a v65 quebrava: com o passo a passo na
-     tela, o convite NAO pode estar la. */
+     botao "Como faco" e o convite era inalcancavel.
+
+     DESDE 26/10 ELE NAO ABRE SOZINHO (decisao dele), entao esperar que ele
+     esteja na tela seria uma pergunta que NUNCA poderia ficar vermelha — e uma
+     checagem que so sabe passar nao mede nada (a licao do vigia de 13/09).
+     Agora a checagem ABRE o passo a passo pela porta da frente, o item "Como
+     usar" do menu, exige que o convite nao esteja la, e sai por "O Kadish" —
+     que e o caminho que ele relatou quebrado em 26/10. */
+  await p.click('#mpPassos').catch(() => {});
+  await p.waitForTimeout(600);
   const comPassos = await p.evaluate(() => {
     const t = document.getElementById('passos');
     const c = document.getElementById('conviteInstalar');
@@ -135,11 +140,22 @@ for (const lang of L) {
       conviteNaTela: !!(c && c.classList.contains('aparece')),
     };
   });
+  if (!comPassos.passosNaTela) {
+    console.log(`FALHA    ${lang}: o item "Como usar" do menu nao abriu o passo a passo`);
+    falhas++;
+  }
   if (comPassos.passosNaTela && comPassos.conviteNaTela) {
     console.log(`FALHA    ${lang}: o convite aparece COM o passo a passo na tela — os dois moram no mesmo pe`);
     falhas++;
   }
-  await p.click('#passosPular').catch(() => {});
+  // a saida e o menu do pe, nao o "Pular": era por aqui que ele ficava na tela
+  await p.click('#mpRezar').catch(() => {});
+  await p.waitForTimeout(500);
+  const saiu = await p.evaluate(() => !document.body.classList.contains('em-passos'));
+  if (!saiu) {
+    console.log(`FALHA    ${lang}: tocar em "O Kadish" nao fecha o passo a passo`);
+    falhas++;
+  }
   await p.waitForTimeout(2600);
   const r = await p.evaluate(() => {
     const c = document.getElementById('conviteInstalar');

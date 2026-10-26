@@ -3096,7 +3096,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-26 · 70';
+const VERSAO = '2026-10-26 · 71';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -6763,7 +6763,6 @@ const PASSOS_TXT = {
   },
 };
 
-const MARCA_PASSOS = 'tefila_passos_1025';
 let passoAtual = -1;
 
 function passosTxt(chave) {
@@ -6827,7 +6826,6 @@ function fecharPassos() {
   document.body.classList.remove('em-passos');
   apagarAceso();
   passoAtual = -1;
-  try { localStorage.setItem(MARCA_PASSOS, '1'); } catch (e) {}
 }
 
 function passoSeguinte() {
@@ -6850,19 +6848,15 @@ function passoAnterior() {
   b('mpPassos', () => abrirPassos('menu'));
   window.addEventListener('resize', () => { if (passoAtual >= 0) acomodarPassos(); });
 
-  // NA PRIMEIRA VEZ ele aparece sozinho — mas DEPOIS do aviso de privacidade,
-  // nunca por cima dele: dois cartoes empilhados no pe seriam a tela brigando
-  // consigo mesma. A pergunta e "ele ja respondeu?", que mora no localStorage,
-  // e nao "o aviso esta na tela agora?" — a licao de 10/09, quando o convite
-  // de instalar passou no vao e o aviso caiu por cima dele.
-  setTimeout(function esperarAviso() {
-    let visto = null, consentiu = null;
-    try { visto = localStorage.getItem(MARCA_PASSOS); } catch (e) {}
-    try { consentiu = localStorage.getItem('tefila_consent'); } catch (e) {}
-    if (visto) return;
-    if (!consentiu) { setTimeout(esperarAviso, 900); return; }
-    abrirPassos('primeira-vez');
-  }, 1800);
+  /* ELE NAO APARECE MAIS SOZINHO (26/10, decisao dele vendo o app no iPhone:
+     "fazer com que nao apareca mais esta tela, que entre o kadish direto").
+
+     Ate aqui ele se abria 1,8s depois de carregar, na primeira vez. Quem abre
+     este app pode ter enterrado o pai ontem — e a razao, escrita neste arquivo
+     desde sempre, de o app abrir DIRETO no Kadish e nao numa pergunta. O passo
+     a passo era a excecao que eu tinha aberto nessa regra, e ele a fechou.
+
+     Continua inteiro, a um toque, no "Como usar" do menu do pe. */
 })();
 
 /* ==========================================================================
@@ -6920,6 +6914,11 @@ function pintarMenu() {
    sobra e a familia de defeito que este projeto mais pagou caro.
    Agora todo destino do menu passa por aqui antes de abrir o seu. */
 function fecharOsPaineis() {
+  /* O PASSO A PASSO TAMBEM E UM DESTINO, e ate 26/10 ele nao estava aqui:
+     tocar em "O Kadish" com ele aberto fechava os paineis e deixava a tira e o
+     cartao na tela, sem caminho de volta a nao ser o "Pular". Foi o que ele
+     relatou — "devo clicar no fechar para ver o kadish". */
+  if (passoAtual >= 0) fecharPassos();
   for (const id of ['settingsOverlay', 'infoOverlay', 'setupModal']) {
     const ov = document.getElementById(id);
     if (ov) ov.classList.remove('show');
@@ -10582,9 +10581,11 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     try { if (!localStorage.getItem('tefila_consent')) return 'privacidade'; } catch (e) {}
     var c = document.getElementById('consentBanner');
     if (c && c.classList.contains('show')) return 'privacidade';
-    // o passo a passo: a marca e a MESMA constante que ele grava, nunca o texto
-    // da chave escrito outra vez aqui
-    try { if (!localStorage.getItem(MARCA_PASSOS)) return 'passo a passo'; } catch (e) {}
+    /* O PASSO A PASSO. Ate 26/10 esta pergunta era "ele ja viu?", no
+       localStorage, e nao "esta na tela?" — porque ele se abria sozinho 1,8s
+       depois de carregar e o convite passava no vao (a licao de 10/09).
+       Agora ele so abre por um TOQUE no menu, entao nao ha vao nenhum a tapar
+       e a pergunta certa e a direta: esta na tela? */
     if (document.body.classList.contains('em-passos')) return 'passo a passo';
     return null;
   }
@@ -10711,6 +10712,21 @@ loadFromStorage().catch(e => console.warn('Storage init:', e));
     dispensar();
     caixa.classList.remove('aparece');
   });
+
+  /* ...E SE O OUTRO CHEGAR DEPOIS (26/10). Ate aqui o convite so perguntava
+     "a vez e de quem?" ANTES de aparecer, e isso bastava porque o passo a
+     passo abria sozinho e sempre vinha primeiro. Desde a v71 ele abre por um
+     TOQUE, a qualquer momento — entao o convite pode ja estar na tela quando
+     ele chega, e os dois moram no mesmo pe: medido nas 8 linguas pela
+     testar-instalar.mjs assim que ela passou a abrir o passo a passo pela
+     porta da frente.
+     Nao e uma segunda conta: e a MESMA aVezEDeOutro(), feita tambem depois. */
+  new MutationObserver(function () {
+    if (!caixa.classList.contains('aparece')) return;
+    if (!aVezEDeOutro()) return;
+    caixa.classList.remove('aparece');
+    setTimeout(mostrar, 2000);
+  }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
   // ?instalar=1 forca o convite, para os testes e para ele conferir no aparelho
   try {

@@ -68,16 +68,12 @@ async function abrir(ctx, url, plantarDefeito) {
   }
   await p.goto(url, { waitUntil: 'networkidle' });
   await p.waitForTimeout(1600);
-  /* o aviso de privacidade e o passo a passo cobrem o pe da tela: a pergunta
-     aqui e sobre o menu, e quem reza ja respondeu os dois uma vez na vida */
+  /* o aviso de privacidade cobre o pe da tela: a pergunta aqui e sobre o menu,
+     e quem reza ja o respondeu uma vez na vida. O passo a passo nao precisa de
+     linha nenhuma desde 26/10 — ele so abre por um toque no menu. */
   await p.evaluate(() => {
-    try {
-      localStorage.setItem('tefila_consent', '1');
-      localStorage.setItem('tefila_passos_1025', '1');
-    } catch (e) {}
+    try { localStorage.setItem('tefila_consent', '1'); } catch (e) {}
     document.getElementById('consentBanner')?.classList.remove('show');
-    document.getElementById('passosTira')?.remove();
-    document.querySelector('.passos')?.remove();
   });
   await p.waitForTimeout(300);
   return p;
@@ -292,6 +288,47 @@ for (const [rotulo, vp] of [
   }));
   ok(fim.tudoFechado && fim.aceso.join() === 'mpRezar',
     `o item da casa fecha tudo e volta ao Kadish: ${JSON.stringify(fim)}`);
+  await p.close();
+}
+
+/* ---------- 4b. O APP ENTRA DIRETO NO KADISH (26/10) ----------
+   Ele, vendo a v70 no iPhone: "quando clico no kadish abre essa pagina e devo
+   clicar no fechar para ver o kadish, fazer com que nao apareca mais esta
+   tela, que entre o kadish direto".
+
+   Eram DUAS coisas. A primeira: o passo a passo abria sozinho na primeira vez.
+   A segunda, e e a que o fazia voltar todo dia: tocar em "O Kadish" com ele
+   aberto NAO o fechava, e a marca de "ja viu" so era gravada pelo "Pular" —
+   entao quem saisse pelo menu o reencontrava na abertura seguinte, para
+   sempre. As duas perguntas estao aqui, e as duas sabem reprovar. */
+{
+  const p = await nav.newPage();
+  await p.goto(`${BASE}/engine.html?lang=pt&audio=mp3`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(700);
+  await p.click('#consentAccept').catch(() => {});
+  /* 3,5s: o passo a passo abria 1,8s depois de carregar, e o esperarAviso
+     tentava de novo a cada 900ms. Medir antes disso seria medir o vao. */
+  await p.waitForTimeout(3500);
+  const aberto = await p.evaluate(() => ({
+    naTela: document.body.classList.contains('em-passos'),
+    verso1: !!document.querySelector('.verse'),
+  }));
+  ok(!aberto.naTela && aberto.verso1,
+    `aparelho novo: o app entra DIRETO no Kadish, sem o passo a passo (${JSON.stringify(aberto)})`);
+
+  await p.click('#mpPassos');
+  await p.waitForTimeout(500);
+  const dentro = await p.evaluate(() => document.body.classList.contains('em-passos'));
+  ok(dentro, 'o "Como usar" do menu abre o passo a passo');
+
+  await p.click('#mpRezar');
+  await p.waitForTimeout(500);
+  const saiu = await p.evaluate(() => ({
+    naTela: document.body.classList.contains('em-passos'),
+    aceso: [...document.getElementById('menuPe').children].filter(c => c.hasAttribute('aria-current')).map(c => c.id),
+  }));
+  ok(!saiu.naTela && saiu.aceso.join() === 'mpRezar',
+    `tocar em "O Kadish" fecha o passo a passo e volta a reza: ${JSON.stringify(saiu)}`);
   await p.close();
 }
 
