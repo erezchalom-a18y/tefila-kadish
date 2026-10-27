@@ -705,6 +705,42 @@ A página SÓ LÊ os sync/*.json. Não escreve em lugar nenhum — mudança de t
 continua passando por decisão humana, e o glossário só muda por
 aplicar-escolhas.mjs.
 
+### O rabino altera direto, e a transliteração é por nussach (27/10)
+
+Ele: *"quero que ele possa alterar"* — e, sobre o alcance: a **tradução**
+corrigida vale nos 8 kadishim (já era assim: a chave é hebraico + texto), mas a
+**transliteração** vale só no Yatom e no DeRabanan **do mesmo nussach**. A
+pronúncia muda de nussach para nussach (yisgadal x yitgadal); a tradução não.
+
+- **A chave da transliteração ganhou o nussach** (`tl|ashkenaz|<heb>|fr|<texto>`),
+  fora do português — o pt é a original e o Erez já a revisou nos 8 de uma vez.
+  O rótulo na tela diz o nussach, e o recado também:
+  `transliteração · ashkenaz — <heb>`. Sem o ` · nussach` (os recados pt e os
+  antigos), o aplicador continua aplicando nos 8. Marcas antigas no aparelho
+  migram sozinhas para a chave nova.
+- **Custo, medido:** o rabino tem mais itens — o espanhol foi de 293 para 533,
+  e as palavras sem fonte em inglês de 20 para 24. É o preço de não deixar o
+  Ashkenaz mudar o Sefaradi sem ninguém saber; o Erez escolheu sabendo.
+- **O envio:** `&k=<chave>` no link + `ENDERECO_REVISAO` preenchido → o botão do
+  fim vira «Enviar». `revisao-cloudflare/worker.js` confere a chave DAQUELA
+  língua e grava `revisoes/<lg>-<dia>-<hora>.txt`; o workflow
+  `revisao-aplicar.yml` roda `aplicar-revisao.mjs --confirmar` + trava-sincronia
+  + checar + checar-ritos e só então empurra. Prova falhou = nada empurrado.
+  O português NUNCA vai por aí (regra das letras dos recados pt).
+- **O aplicador aprendeu duas coisas que o envio automático exigiu:** aplica as
+  transliterações ESCRITAS (onde não havia fonte — antes ficavam só no recado,
+  nunca chegavam ao app), e deixa DE FORA o "(não escrevi, mas está errado)",
+  que sem isso iria parar no app como texto.
+- **As chaves dos rabinos não estão no repositório**: ficam em
+  `revisao-cloudflare/CHAVES-E-LINKS.local.txt` (ignorado pelo git) e no segredo
+  `CHAVES` do Worker. Passo a passo: `revisao-cloudflare/COMO-LIGAR.md`.
+- Testes: `testar-aplicar-revisao.mjs` (tradução nos 8, transliteração só no
+  nussach, numa cópia dos dados), `testar-revisao-worker.mjs` (só grava com a
+  chave certa) e a parte "envio direto" do `testar-revisar.mjs`.
+- **No Windows, `trava-sincronia.mjs` fica vermelho à toa** se o git converter
+  o engine.html para CRLF (`core.autocrlf=true`): a impressão digital do módulo
+  SYNC muda pelas quebras de linha. Com LF, como no GitHub, ela bate.
+
 ## O contador de Kadishim
 
 contador.js + contador.html. A conta de cada aparelho já funciona: fica no

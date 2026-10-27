@@ -72,7 +72,9 @@ const repetidos = await pag.evaluate(() => {
 });
 confere('nenhum item repetido', repetidos === 0, `${repetidos} repetidos`);
 
-// "amen" esta em todos os 8 arquivos; na tela tem que aparecer so 2 vezes
+// "amen" esta em todos os 8 arquivos. A TRADUCAO dele aparece uma vez so (vale
+// nos 8); a TRANSLITERACAO, desde 27/10, uma vez por nussach no maximo — vale so
+// no Yatom e no DeRabanan daquele nussach (pedido do Erez: a pronuncia muda).
 const amen = await pag.evaluate(async () => {
   const semNikud = s => (s || '').normalize('NFD').replace(/[֑-ׇ̀-ͯ]/g, '').replace(/[^א-ת]/g, '');
   let nosArquivos = 0;
@@ -82,13 +84,20 @@ const amen = await pag.evaluate(async () => {
     for (const v of d.versos) for (const p of (v.palavras || []))
       if (semNikud(p.hebrew) === 'אמן') nosArquivos++;
   }
-  const naTela = [...document.querySelectorAll('.item[data-ch]')]
-    .filter(i => i.dataset.ch.includes('|אמן|')).length;
-  return { nosArquivos, naTela };
+  const chs = [...document.querySelectorAll('.item[data-ch]')].map(i => i.dataset.ch)
+    .filter(c => c.includes('|אמן|'));
+  const glosas = chs.filter(c => c.startsWith('glosa|')).length;
+  const tls = chs.filter(c => c.startsWith('tl|'));
+  const nussachim = tls.map(c => c.split('|')[1]);
+  return { nosArquivos, glosas, tls: tls.length, nussachim };
 });
-confere('a mesma palavra dos 8 kadishim aparece uma vez so',
-  amen.nosArquivos > 8 && amen.naTela === 2,
-  `"amen" esta ${amen.nosArquivos}x nos arquivos e ${amen.naTela}x na tela (esperado 2)`);
+confere('a traducao da mesma palavra dos 8 kadishim aparece uma vez so',
+  amen.nosArquivos > 8 && amen.glosas === 1,
+  `"amen" esta ${amen.nosArquivos}x nos arquivos e a traducao ${amen.glosas}x na tela (esperado 1)`);
+confere('a transliteracao aparece no maximo uma vez por nussach',
+  amen.tls >= 1 && amen.tls <= 4 && new Set(amen.nussachim).size === amen.tls &&
+  amen.nussachim.every(n => ['ashkenaz', 'chabad', 'sefard', 'sefaradi'].includes(n)),
+  `${amen.tls}x: ${amen.nussachim.join(', ')}`);
 
 // ---------- marcar certo tira da lista; marcar corrigir mantem ----------
 const antes = r.itens;
@@ -165,9 +174,23 @@ confere('e o Voltar a revisao traz os itens de volta',
 await pag.selectOption('#lingua', 'en');
 await pag.waitForTimeout(1300);
 const ingles = await contar();
-confere('as palavras sem fonte entram na conta',
-  (ingles.tipos['tl-falta'] || 0) === 20,
-  `${ingles.tipos['tl-falta'] || 0} na lista (esperado 20)`);
+// Sem fonte = palavra sem transliteracao NESTA lingua, uma vez por nussach.
+// Contado dos proprios sync/*.json, para o teste nao virar numero escrito a mao.
+const semFonteEsperado = lg => pag.evaluate(async lg => {
+  const semNikud = s => (s || '').normalize('NFD').replace(/[֑-ׇ̀-ͯ]/g, '').replace(/[^א-ת]/g, '');
+  const pares = new Set();
+  for (const n of ['chabad_yatom','chabad_derabanan','ashkenaz_yatom','ashkenaz_derabanan',
+                   'sefard_yatom','sefard_derabanan','sefaradi_yatom','sefaradi_derabanan']) {
+    const d = await (await fetch(`./sync/${n}_sync.json`)).json();
+    for (const v of d.versos) for (const p of (v.palavras || []))
+      if (!(p.transliteracoes || {})[lg]) pares.add(n.split('_')[0] + '|' + semNikud(p.hebrew));
+  }
+  return pares.size;
+}, lg);
+const esperadoEn = await semFonteEsperado('en');
+confere('as palavras sem fonte entram na conta, uma por nussach',
+  (ingles.tipos['tl-falta'] || 0) === esperadoEn && esperadoEn > 0,
+  `${ingles.tipos['tl-falta'] || 0} na lista (esperado ${esperadoEn})`);
 
 const semFonte = await pag.evaluate(() => {
   const i = [...document.querySelectorAll('.item[data-ch]')]
@@ -212,7 +235,8 @@ const recuperado = await pag.evaluate(() => ({
     .filter(i => i.dataset.ch.startsWith('tl-falta')).length,
 }));
 confere('lingua invalida guardada no aparelho nao quebra a pagina',
-  !!recuperado.valor && !/undefined/.test(recuperado.andamento) && recuperado.falta <= 20,
+  !!recuperado.valor && !/undefined/.test(recuperado.andamento) &&
+  recuperado.falta <= await semFonteEsperado(recuperado.valor),
   JSON.stringify(recuperado));
 
 // ---------- portugues ----------
@@ -335,6 +359,93 @@ const semLink = await abrir(ctx, '');
 confere('sem ?lang= o menu de lingua CONTINUA na tela (e a porta do Erez)',
   (await medir(semLink)).menu);
 await semLink.close();
+
+// ===========================================================================
+// O ENVIO DIRETO (27/10): com &k= no link, o rabino ENVIA em vez de copiar.
+//
+// O endereco do programinha e de mentira, aqui dentro: a pagina e servida com
+// ENDERECO_REVISAO preenchido, e o pedido e interceptado antes de sair.
+// Guarda: (1) o botao Enviar aparece; (2) o que chega e o recado, com a chave
+// e a lingua; (3) a transliteracao vai com o nussach no rotulo; (4) o que ja
+// foi enviado nao vai de novo; (5) sem &k= continua o copiar de sempre.
+// ===========================================================================
+{
+  const FALSO = 'https://revisao.invalido/';
+  const enviados = [];
+  const q = await ctx.newPage({ viewport: { width: 393, height: 852 } });
+  await q.route('**/revisar.html*', async rota => {
+    const r = await rota.fetch();
+    const corpo = (await r.text()).replace("const ENDERECO_REVISAO = '';", `const ENDERECO_REVISAO = '${FALSO}';`);
+    await rota.fulfill({ response: r, body: corpo });
+  });
+  await q.route(FALSO, async rota => {
+    enviados.push(JSON.parse(rota.request().postData()));
+    await rota.fulfill({ status: 200, body: 'revisoes/fr-teste.txt',
+                         headers: { 'Access-Control-Allow-Origin': '*' } });
+  });
+  await q.goto(`${BASE}/revisar.html?lang=fr&k=chave-de-teste`, { waitUntil: 'networkidle' });
+  await q.evaluate(() => localStorage.clear());
+  await q.reload({ waitUntil: 'networkidle' });
+  await q.waitForTimeout(800);
+
+  // Corrige a primeira traducao de palavra e a primeira transliteracao.
+  const corrigir = async prefixo => {
+    const ch = await q.evaluate(p => [...document.querySelectorAll('.item[data-ch]')]
+      .map(i => i.dataset.ch).find(c => c.startsWith(p)), prefixo);
+    await q.evaluate(ch => document.querySelector(`.item[data-ch="${CSS.escape(ch)}"] .nao`).click(), ch);
+    await q.waitForTimeout(200);
+    const caixa = q.locator(`.item[data-ch="${ch}"] input.corr`);
+    await caixa.fill('TESTE-' + prefixo.replace('|', ''));
+    await caixa.blur();
+    await q.waitForTimeout(200);
+    return ch;
+  };
+  await corrigir('glosa|');
+  const chTl = await corrigir('tl|');
+  confere('envio: o rotulo da transliteracao diz o nussach',
+    /· (Ashkenaz|Chabad|Sefard|Sefaradi)/.test(await q.evaluate(() =>
+      [...document.querySelectorAll('.item .rot')].map(r => r.textContent).join('\n'))) ||
+    /^tl\|(ashkenaz|chabad|sefard|sefaradi)\|/.test(chTl), chTl);
+
+  await q.click('#gerar');
+  await q.waitForTimeout(300);
+  const temEnviar = await q.locator('#enviar').count();
+  confere('envio: com &k= aparece o botao Enviar', temEnviar === 1);
+  if (temEnviar) {
+    await q.click('#enviar');
+    await q.waitForTimeout(600);
+  }
+  const e = enviados[0] || {};
+  confere('envio: chegou um pedido, com a lingua e a chave do link',
+    enviados.length === 1 && e.lang === 'fr' && e.chave === 'chave-de-teste', JSON.stringify({ n: enviados.length, lang: e.lang }));
+  confere('envio: o recado tem a etiqueta e as duas correcoes',
+    /^#kadish-revisao lang=fr\n/.test(e.recado || '') && /^2 para corrigir/m.test(e.recado || ''));
+  confere('envio: a transliteracao vai com o nussach',
+    /^transliteração · (ashkenaz|chabad|sefard|sefaradi) — /m.test(e.recado || ''));
+
+  // Voltar e gerar de novo: o que ja foi enviado nao vai outra vez.
+  await q.click('#continuar');
+  await q.waitForTimeout(300);
+  await q.click('#gerar');
+  await q.waitForTimeout(300);
+  confere('envio: o que ja foi enviado nao vai de novo',
+    (await q.locator('#enviar').count()) === 0 &&
+    /^0 para corrigir/m.test(await q.inputValue('#saida')));
+  await q.close();
+
+  // Sem &k=, a mesma pagina com endereco: o copiar de sempre, sem Enviar.
+  const s = await ctx.newPage();
+  await s.route('**/revisar.html*', async rota => {
+    const r = await rota.fetch();
+    await rota.fulfill({ response: r, body: (await r.text())
+      .replace("const ENDERECO_REVISAO = '';", `const ENDERECO_REVISAO = '${FALSO}';`) });
+  });
+  await s.goto(`${BASE}/revisar.html?lang=fr`, { waitUntil: 'networkidle' });
+  await s.waitForTimeout(500);
+  confere('sem &k= o botao continua sendo "gerar o recado"',
+    (await s.textContent('#gerar')).trim() !== 'Envoyer les corrections');
+  await s.close();
+}
 
 // ---------- a prova: ela sabe reprovar? ----------
 if (PROVAR) {

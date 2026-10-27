@@ -30,6 +30,12 @@ jobs:
         run: node checar-ritos.mjs
 
       # Nao gasta nada: roda o worker do Cloudflare sobre o SQLite do proprio Node.
+      - name: testar-aplicar-revisao.mjs (a traducao nos 8, a transliteracao so no nussach)
+        run: node testar-aplicar-revisao.mjs
+
+      - name: testar-revisao-worker.mjs (o envio dos rabinos so grava com a chave certa)
+        run: node testar-revisao-worker.mjs
+
       - name: testar-contador.mjs (o contador geral, sem sair do computador)
         run: node testar-contador.mjs
 

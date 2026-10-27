@@ -1,0 +1,90 @@
+name: Revisão do rabino
+
+# Aplica sozinho o recado que um rabino enviou pelo revisar.html (27/10).
+#
+# O caminho: o rabino toca em "Enviar" -> revisao-cloudflare/worker.js grava
+# revisoes/<lingua>-<dia>-<hora>.txt -> este workflow roda o aplicar-revisao.mjs
+# com --confirmar, as checagens, e so entao empurra os sync/*.json. O GitHub
+# Pages republica o app.
+#
+# Se o aplicador recusar (conflito, prova que falhou) ou uma checagem ficar
+# vermelha, NADA e empurrado: o app continua como estava, o recado fica em
+# revisoes/ como registro e o workflow fica vermelho — e o GitHub avisa o Erez
+# por e-mail.
+#
+# O portugues nao entra aqui: o Erez aplica os dele a mao.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'revisoes/en-*.txt'
+      - 'revisoes/es-*.txt'
+      - 'revisoes/fr-*.txt'
+      - 'revisoes/it-*.txt'
+      - 'revisoes/de-*.txt'
+      - 'revisoes/ru-*.txt'
+
+# Um de cada vez: dois rabinos enviando juntos nao podem gravar um por cima do outro.
+concurrency:
+  group: revisao-aplicar
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Achar os recados novos deste push
+        run: |
+          antes="${{ github.event.before }}"
+          if ! git cat-file -e "$antes^{commit}" 2>/dev/null; then antes="${{ github.sha }}~1"; fi
+          git diff --name-only --diff-filter=A "$antes" "${{ github.sha }}" -- revisoes \
+            | grep -E '^revisoes/(en|es|fr|it|de|ru)-[0-9-]+\.txt$' | sort > novos.txt || true
+          echo "recados novos:"; cat novos.txt
+
+      - name: Aplicar, com as provas do aplicador
+        run: |
+          set -e
+          while read -r f; do
+            echo "::group::$f"
+            node aplicar-revisao.mjs "$f" --confirmar
+            echo "::endgroup::"
+          done < novos.txt
+
+      - name: Checagens (as mesmas do Checagens.yml que nao precisam de navegador)
+        run: |
+          node trava-sincronia.mjs
+          node checar.mjs
+          node checar-ritos.mjs
+
+      - name: Empurrar o texto corrigido
+        run: |
+          if [ -z "$(git status --porcelain -- sync glossario.json)" ]; then
+            echo "nada mudou no texto (recado ja aplicado, ou so 'esta certo')"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sync glossario.json
+          git commit -m "Revisão do rabino aplicada: $(tr '\n' ' ' < novos.txt)(automatico)"
+          for tentativa in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "push recusado, tentando de novo ($tentativa/3)"
+            sleep 5
+          done
+          echo "nao consegui empurrar"
+          exit 1

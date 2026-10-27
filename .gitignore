@@ -44,3 +44,6 @@ display/.*.tmp.pdf
 panfleto/.*.tmp.pdf
 folhetos/.*.tmp.pdf
 cemiterio/.*.tmp.pdf
+
+# As chaves dos rabinos (revisao-cloudflare/COMO-LIGAR.md). Nunca no repositorio.
+*.local.txt

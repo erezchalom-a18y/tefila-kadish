@@ -31,6 +31,18 @@
  * lingua nenhuma que nao seja a revisada. Isso e PROVADO antes de gravar; se
  * qualquer prova falhar, nao grava nada.
  *
+ * A TRANSLITERACAO DE OUTRA LINGUA E POR NUSSACH (27/10). O rotulo vem como
+ * `transliteração · ashkenaz — <hebraico>`, e a correcao so entra nos dois
+ * arquivos daquele nussach (Yatom e DeRabanan). Sem o ` · nussach` — os
+ * recados portugueses e os antigos — vale nos 8, como sempre valeu. A traducao
+ * (do verso e da palavra) continua valendo nos 8. Pedido do Erez: a pronuncia
+ * muda de nussach para nussach, a traducao nao.
+ *
+ * Desde 27/10 este aplicador roda SOZINHO, no GitHub Actions
+ * (.github/workflows/revisao-aplicar.yml), quando o rabino envia o recado pelo
+ * revisar.html. Por isso tudo o que nao e texto pronto — o "(não escrevi, mas
+ * está errado)" — fica de fora e e dito, em vez de ir parar no app.
+ *
  * Uma observacao do Erez que vale como regra (23/08): a glosa de uma palavra
  * pode cobrir DUAS OU MAIS palavras da frase — "uvizman" fica "e em" e "kariv"
  * fica "breve", que juntas dao "e em breve". Entao NAO existe conferencia de
@@ -96,14 +108,45 @@ if (LG === 'de') {
 }
 console.log(`lingua do recado: ${lingua} (${LG})` + (etiqueta ? '' : '  [pela reserva, sem etiqueta]'));
 
+const NUSSACHIM = ['ashkenaz', 'chabad', 'sefard', 'sefaradi'];
+const nussachValido = (nu, onde) => {
+  if (!nu || NUSSACHIM.includes(nu)) return nu || null;
+  console.error(`PAREI: nussach desconhecido "${nu}" em ${onde}.`);
+  process.exit(2);
+};
+
 const itens = [];
-const blocos = texto.split(/\n(?=tradução do verso —|tradução da palavra —|transliteração —)/);
+const blocos = texto.split(/\n(?=tradução do verso —|tradução da palavra —|transliteração(?: · [a-z]+)? —)/);
 for (const b of blocos) {
-  const m = b.match(/^(tradução do verso|tradução da palavra|transliteração) — (.+)\n\s*está: (.*)\n\s*deveria ser: (.*)$/m);
+  const m = b.match(/^(tradução do verso|tradução da palavra|transliteração)(?: · ([a-z]+))? — (.+)\n\s*está: (.*)\n\s*deveria ser: (.*)$/m);
   if (!m) continue;
-  const [, rot, heb, de, para] = m;
-  itens.push({ tipo: TIPOS[rot], rot, heb, chave: semNikud(heb), de: de.trim(), para: para.trim() });
+  const [, rot, nu, heb, de, para] = m;
+  itens.push({ tipo: TIPOS[rot], rot, nussach: nussachValido(nu, heb), heb,
+               chave: semNikud(heb), de: de.trim(), para: para.trim() });
 }
+
+// AS TRANSLITERACOES ESCRITAS PELO REVISOR (onde nao havia fonte). Ate 27/10
+// ficavam so no recado: este aplicador nao as lia, e elas nunca chegavam ao
+// app. Agora entram — so onde a palavra NAO tem transliteracao nesta lingua;
+// onde ja tem, nao e "escrever", e corrigir, e vem pelo outro rotulo.
+const novas = [];
+const secaoNovas = texto.split(/^— TRANSLITERAÇÕES QUE EU ESCREVI.*$/m)[1] || '';
+for (const m of secaoNovas.matchAll(/^([^\n(·]+?)(?: · ([a-z]+))? \(pt: .*\)\n\s+[^:\n]+: (.*)$/gm)) {
+  const [, heb, nu, para] = m;
+  if (!para.trim()) continue;
+  novas.push({ tipo: 'nova', rot: 'transliteração escrita', nussach: nussachValido(nu, heb),
+               heb: heb.trim(), chave: semNikud(heb), de: '', para: para.trim() });
+}
+if (novas.length && (LG === 'de' || LG === 'pt')) {
+  console.error(`PAREI: recado de ${lingua} com transliteracao escrita — ${lingua} nao tem essa linha.`);
+  process.exit(1);
+}
+const declaradasNovas = Number((texto.match(/· (\d+) transliterações escritas/) || [])[1] ?? -1);
+if (declaradasNovas >= 0 && declaradasNovas !== novas.length) {
+  console.error(`\nPAREI: o recado diz ${declaradasNovas} transliteracoes escritas e eu li ${novas.length}.`);
+  process.exit(1);
+}
+if (novas.length) console.log(`${novas.length} transliteracoes escritas pelo revisor`);
 console.log(`recado: ${ARQ}`);
 console.log(`${itens.length} correcoes lidas` +
   (itens.length === Number((texto.match(/^(\d+) para corrigir/m) || [])[1] || itens.length)
@@ -130,7 +173,12 @@ try {
 
 // ---------- conflitos: a mesma palavra com dois destinos ----------
 for (const i of itens) i.adiado = adiados.get(`${i.tipo}|${i.chave}|${i.de}`) || null;
-const aplicaveis = itens.filter(i => !i.adiado);
+// "(não escrevi, mas está errado)" e o que a pagina escreve quando o revisor
+// marcou Corrigir e apagou a caixa. Nao e texto: aplicar isso poria a frase no
+// app. Fica de fora, dita em voz alta, esperando alguem escrever a forma certa.
+const semTexto = itens.filter(i => !i.adiado && /^\(não escrevi/.test(i.para));
+for (const i of semTexto) i.adiado = 'o revisor marcou como errado, mas nao escreveu a forma certa';
+const aplicaveis = [...itens.filter(i => !i.adiado), ...novas];
 const foraDeUso = [...adiados.keys()]
   .filter(k => !itens.some(i => `${i.tipo}|${i.chave}|${i.de}` === k));
 if (foraDeUso.length) {
@@ -145,7 +193,7 @@ if (foraDeUso.length) {
 // e nao ha conflito nenhum ali.)
 const porPalavra = new Map();
 for (const i of aplicaveis) {
-  const k = `${i.tipo}|${i.chave}`;
+  const k = `${i.tipo}|${i.nussach || '*'}|${i.chave}`;
   if (!porPalavra.has(k)) porPalavra.set(k, new Map());
   porPalavra.get(k).set(i.de, i.para);
 }
@@ -166,15 +214,23 @@ const gloss = JSON.parse(readFileSync('glossario.json', 'utf8'));
 const glossAntes = JSON.parse(JSON.stringify(gloss));
 
 // indice das correcoes
-const idx = { trad: new Map(), glosa: new Map(), tl: new Map() };
-for (const i of aplicaveis) idx[i.tipo].set(`${i.chave}|${i.de}`, i);
+// A transliteracao (e a escrita) tem o nussach na frente da chave: '*' quando
+// o recado nao disse nussach nenhum, e entao vale nos 8.
+const idx = { trad: new Map(), glosa: new Map(), tl: new Map(), nova: new Map() };
+for (const i of aplicaveis) {
+  if (i.tipo === 'tl') idx.tl.set(`${i.nussach || '*'}|${i.chave}|${i.de}`, i);
+  else if (i.tipo === 'nova') idx.nova.set(`${i.nussach || '*'}|${i.chave}`, i);
+  else idx[i.tipo].set(`${i.chave}|${i.de}`, i);
+}
+const nussachDoArquivo = f => f.split('_')[0];
 
 // ---------- aplicar ----------
 const usados = new Set();
-let nVersos = 0, nGlosas = 0, nTl = 0;
+let nVersos = 0, nGlosas = 0, nTl = 0, nNovas = 0;
 
 for (const f of ARQUIVOS) {
   const d = sync[f];
+  const nuF = nussachDoArquivo(f);
   for (const v of d.versos) {
     const kv = semNikud(v.hebrew);
 
@@ -205,12 +261,20 @@ for (const f of ARQUIVOS) {
 
       const tlAtual = LG === 'pt' ? p.transliteration_pt
                                   : (p.transliteracoes || {})[LG];
-      const il = idx.tl.get(`${kp}|${tlAtual}`);
+      const il = idx.tl.get(`${nuF}|${kp}|${tlAtual}`) || idx.tl.get(`*|${kp}|${tlAtual}`);
       if (il) {
         usados.add(il);
         if (LG === 'pt') p.transliteration_pt = il.para;
         else { p.transliteracoes = p.transliteracoes || {}; p.transliteracoes[LG] = il.para; }
         nTl++;
+      }
+      if (!tlAtual && LG !== 'pt') {
+        const inova = idx.nova.get(`${nuF}|${kp}`) || idx.nova.get(`*|${kp}`);
+        if (inova) {
+          usados.add(inova);
+          p.transliteracoes = p.transliteracoes || {}; p.transliteracoes[LG] = inova.para;
+          nNovas++;
+        }
       }
     }
 
@@ -252,6 +316,10 @@ const falhas = [];
 // gravacao — ver o comentario adiante — mas sao ditas em voz alta.
 const herdadas = [];
 const naoUsados = aplicaveis.filter(i => !usados.has(i));
+// Onde a transliteracao desta lingua PODIA mudar: so nos nussachim que o recado
+// nomeou ('*' = todos). Prova de que a correcao do Ashkenaz nao vazou.
+const tlPermitida = new Set(aplicaveis.filter(i => i.tipo === 'tl' || i.tipo === 'nova')
+  .map(i => `${i.nussach || '*'}|${i.chave}`));
 
 for (const f of ARQUIVOS) {
   const a = antes[f], d = sync[f];
@@ -282,6 +350,10 @@ for (const f of ARQUIVOS) {
         if (lg === LG) continue;
         if (pa.transliteracoes[lg] !== pd.transliteracoes[lg]) falhas.push(`${f} §${va.n}: mexeu na transliteracao ${lg}`);
       }
+      const kp = semNikud(pa.hebrew);
+      if ((pa.transliteracoes || {})[LG] !== (pd.transliteracoes || {})[LG] &&
+          !tlPermitida.has(`*|${kp}`) && !tlPermitida.has(`${nussachDoArquivo(f)}|${kp}`))
+        falhas.push(`${f} §${va.n}: mudou a transliteracao ${LG} fora do nussach do recado`);
       if (LG !== 'pt') {
         if (pa.glosa_pt !== pd.glosa_pt) falhas.push(`${f} §${va.n}: mexeu na glosa portuguesa`);
         if (pa.transliteration_pt !== pd.transliteration_pt)
@@ -334,7 +406,12 @@ if (herdadas.length) {
 }
 
 // ---------- relatorio ----------
-console.log(`\naplicadas: ${nVersos} traducoes de verso · ${nGlosas} glosas · ${nTl} transliteracoes`);
+console.log(`\naplicadas: ${nVersos} traducoes de verso · ${nGlosas} glosas · ${nTl} transliteracoes` +
+  (nNovas ? ` · ${nNovas} transliteracoes escritas` : ''));
+if (semTexto.length) {
+  console.log(`\n${semTexto.length} marcada(s) como errada(s) SEM a forma certa — ficaram de fora:`);
+  for (const i of semTexto) console.log(`  ${i.rot}${i.nussach ? ' · ' + i.nussach : ''} — ${i.heb}: "${i.de}"`);
+}
 console.log(`(sao ocorrencias nos 8 arquivos; ${usados.size} das ${aplicaveis.length} correcoes aplicaveis acharam onde entrar)`);
 
 if (conflitos.length) {
