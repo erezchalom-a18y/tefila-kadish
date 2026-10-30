@@ -1,0 +1,190 @@
+#kadish-revisao lang=pt
+Revisão de português — 297 de 297 itens conferidos.
+46 para corrigir · 0 transliterações escritas por mim
+(cada item vale para os 8 kadishim)
+
+— PARA CORRIGIR —
+
+transliteração — וְיִתְקַדַּשׁ
+   está: veyitkadash
+   deveria ser: veyitkadásh
+
+transliteração — שְׁמֵהּ
+   está: shemê
+   deveria ser: shemêh
+
+transliteração — רַבָּא
+   está: raba
+   deveria ser: rabá
+
+transliteração — וְיַמְלִיךְ
+   está: veyamlich
+   deveria ser: veyamlích
+
+transliteração — וִיקָרֵב
+   está: vikarev
+   deveria ser: vikarêv
+
+transliteração — בֵּית
+   está: beit
+   deveria ser: bêt
+
+transliteração — וְאִמְרוּ
+   está: veimrú
+   deveria ser: ve'imrú
+
+transliteração — אָמֵן
+   está: Amen
+   deveria ser: Amên
+
+transliteração — וּלְעָלְמֵי
+   está: ul'almei
+   deveria ser: ul'alme
+
+transliteração — וְיִשְׁתַּבַּח
+   está: veyishtabach
+   deveria ser: veyishtabách
+
+transliteração — וְיִתְרוֹמָם
+   está: veyitromam
+   deveria ser: veyitromám
+
+transliteração — וְיִתְנַשֵּׂא
+   está: veyitnasse
+   deveria ser: veyitnassê
+
+transliteração — וְיִתְהַדָּר
+   está: veyithadar
+   deveria ser: veyit'hadár
+
+transliteração — וְיִתְעַלֶּה
+   está: veyitaleh
+   deveria ser: veyit'alé
+
+transliteração — וְיִתְהַלָּל
+   está: veyithalal
+   deveria ser: veyit'halal
+
+transliteração — דְּקֻדְשָׁא
+   está: decudshá
+   deveria ser: de'cudshá
+
+transliteração — בְּרִיךְ
+   está: berich
+   deveria ser: berích
+
+transliteração — הוּא
+   está: hu
+   deveria ser: Hu
+
+transliteração — לְעֵלָּא
+   está: leela
+   deveria ser: Leela
+
+transliteração — תֻּשְׁבְּחָתָא
+   está: tushbechata
+   deveria ser: tushbechatá
+
+transliteração — וְנֶחָמָתָא
+   está: venechemata
+   deveria ser: venechematá
+
+transliteração — דַּאֲמִירָן
+   está: dáamiran
+   deveria ser: daamirán
+
+transliteração — וְחַיִּים
+   está: vechayim
+   deveria ser: vechayím
+
+transliteração — טוֹבִים
+   está: tovim
+   deveria ser: tovím
+
+transliteração — עָלֵינוּ
+   está: aleinu
+   deveria ser: alêinu
+
+transliteração — בִּמְרוֹמָיו
+   está: bimromav
+   deveria ser: bimro'máv
+
+transliteração — רַבָּנָן
+   está: rabanan
+   deveria ser: rabanán
+
+transliteração — תַּלְמִידֵיהוֹן
+   está: talmidehon
+   deveria ser: talmidehôn
+
+transliteração — דְּעָסְקִין
+   está: daaskin
+   deveria ser: deassekín
+
+transliteração — הָדֵין
+   está: haden
+   deveria ser: hadên
+
+transliteração — וּלְכוֹן
+   está: ulechon
+   deveria ser: ulchôn
+
+transliteração — וְרַחֲמִין
+   está: verachamin
+   deveria ser: verachamín
+
+transliteração — וְחַיִּין
+   está: vechayin
+   deveria ser: vechayín
+
+transliteração — אֲרִיכִין
+   está: arichin
+   deveria ser: arichín
+
+transliteração — וּמְזוֹנָא
+   está: umezona
+   deveria ser: umezoná
+
+transliteração — רְוִיחָא
+   está: revicha
+   deveria ser: revichá
+
+transliteração — קֳדָם
+   está: kodam
+   deveria ser: kodám
+
+transliteração — דְּבִשְׁמַיָּא
+   está: di-vishmayá
+   deveria ser: divishmayá
+
+transliteração — בְרַחֲמָיו
+   está: verachamav
+   deveria ser: verachamáv
+
+transliteração — יִתְבָּרַךְ
+   está: Yitbarach
+   deveria ser: Yitbarách
+
+transliteração — וְנֶחֱמָתָא
+   está: venechamata
+   deveria ser: venechamatá
+
+transliteração — בְּרַחֲמָיו
+   está: berachamav
+   deveria ser: berachamáv
+
+transliteração — וּמְזוֹנֵי
+   está: umezonei
+   deveria ser: umezonêi
+
+transliteração — שִׁירָתָא
+   está: shirata
+   deveria ser: shiratá
+
+transliteração — חַיִּים
+   está: chayim
+   deveria ser: chayím
+
+transliteração — לָנוּ
+   está: lanu
+   deveria ser: lánu

@@ -8,12 +8,19 @@
       "_porque_nos_quatro": "O defeito nasceu na decisao dele de 25/08 (decisoes-2026-08-25.json, id 1). Ali ele mandou por TSERE no ashkenaz e no chabad e deixar o PATACH no sefard e no sefaradi. O hebraico foi trocado nos dois lados, e a transliteracao do veyitpaar acompanhou o patach — mas a do Yitbarech ficou com o E do ashkenaz nos quatro do patach. Ele apontou no sefaradi_yatom; os outros tres tem o MESMO hebraico com o mesmo patach, entao ficariam contradizendo o proprio nikud. Isto nao amplia a decisao dele: aplica onde a condicao que ele mesmo fixou em 25/08 vale. Se ele quiser so no sefaradi_yatom, e tirar dois nomes desta lista.",
       "tipo": "verso_por_nussach",
       "chave": "יתברךוישתבחויתפאר",
-      "nussachim": ["sefard", "sefaradi"],
+      "nussachim": [
+        "sefard",
+        "sefaradi"
+      ],
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
+      "transliteration_pt": "Yitbarách veyishtabách veyitpaár",
       "palavras": [
-        { "i": 0, "transliteration_pt": "Yitbarach" }
-      ]
+        {
+          "i": 0,
+          "transliteration_pt": "Yitbarách"
+        }
+      ],
+      "_grafia_29_10": "A grafia acima foi atualizada em 29/10 pelos recados revisoes/pt-2026-10-29-a.txt e -b.txt (acentos). A decisao nao mudou: o hebraico e a letra que ela fixa (tsere/patach) continuam os mesmos. Antes: \"Yitbarach veyishtabach veyitpaar\"."
     }
   ]
 }

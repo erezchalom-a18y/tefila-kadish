@@ -213,6 +213,34 @@ const antes = JSON.parse(JSON.stringify(sync));
 const gloss = JSON.parse(readFileSync('glossario.json', 'utf8'));
 const glossAntes = JSON.parse(JSON.stringify(gloss));
 
+// DUAS GRAFIAS QUE NUNCA SE ENCONTRAM NAO SAO CONFLITO (29/10). A mesma
+// palavra pode ser dita diferente em nussachim diferentes — venechamata no
+// Sefaradi e no Sefard, venechemata no Ashkenaz e no Chabad — e o Erez
+// corrigiu as duas, cada uma para a sua forma ("mantenha a grafia"). O que a
+// trava protege e a mesma palavra escrita de dois jeitos DENTRO do mesmo
+// Kadish. Entao: so e conflito se algum arquivo tiver duas das origens.
+{
+  const campo = (p, tipo) => tipo === 'tl'
+    ? (LG === 'pt' ? p.transliteration_pt : (p.transliteracoes || {})[LG])
+    : (LG === 'pt' ? p.glosa_pt : (p.glosas || {})[LG]);
+  for (let i = conflitos.length - 1; i >= 0; i--) {
+    const [tipo, , chave] = conflitos[i].k.split('|');
+    if (tipo === 'trad') continue;
+    const origens = new Set(conflitos[i].destinos.map(([de]) => de));
+    const juntas = ARQUIVOS.some(f => {
+      const achadas = new Set();
+      for (const v of sync[f].versos) for (const p of v.palavras)
+        if (semNikud(p.hebrew) === chave && origens.has(campo(p, tipo))) achadas.add(campo(p, tipo));
+      return achadas.size > 1;
+    });
+    if (!juntas) {
+      console.log(`grafias por nussach (nao e conflito): ${conflitos[i].k} — ` +
+        conflitos[i].destinos.map(([de, para]) => `${de} -> ${para}`).join(' · '));
+      conflitos.splice(i, 1);
+    }
+  }
+}
+
 // indice das correcoes
 // A transliteracao (e a escrita) tem o nussach na frente da chave: '*' quando
 // o recado nao disse nussach nenhum, e entao vale nos 8.

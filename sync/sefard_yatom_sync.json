@@ -9,7 +9,7 @@
       "start": 0.54,
       "end": 5.64,
       "hebrew": "יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא",
-      "transliteration_pt": "Yitgadal veyitkadash shemê raba",
+      "transliteration_pt": "Yitgadal veyitkadásh shemêh rabá",
       "translation_pt": "Exaltado e santificado seja o Seu grande Nome",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -41,7 +41,7 @@
         {
           "i": 1,
           "hebrew": "וְיִתְקַדַּשׁ",
-          "transliteration_pt": "veyitkadash",
+          "transliteration_pt": "veyitkadásh",
           "start": 1.72,
           "end": 3.42,
           "glosa_pt": "e santificado",
@@ -66,7 +66,7 @@
         {
           "i": 2,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shemê",
+          "transliteration_pt": "shemêh",
           "start": 3.42,
           "end": 4.26,
           "glosa_pt": "seja o Seu grande Nome",
@@ -91,7 +91,7 @@
         {
           "i": 3,
           "hebrew": "רַבָּא",
-          "transliteration_pt": "raba",
+          "transliteration_pt": "rabá",
           "start": 4.26,
           "end": 5.64,
           "glosa_pt": "",
@@ -251,14 +251,14 @@
       "start": 8.82,
       "end": 11.38,
       "hebrew": "וְיַמְלִיךְ מַלְכוּתֵהּ",
-      "transliteration_pt": "veyamlich malchutêh",
+      "transliteration_pt": "veyamlích malchutêh",
       "translation_pt": "e que nele estabeleça o Seu reinado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיַמְלִיךְ",
-          "transliteration_pt": "veyamlich",
+          "transliteration_pt": "veyamlích",
           "start": 8.82,
           "end": 9.86,
           "glosa_pt": "e que nele estabeleça o",
@@ -322,7 +322,7 @@
       "start": 11.38,
       "end": 17.06,
       "hebrew": "וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ",
-      "transliteration_pt": "veyatsmách purkanêh vikarev meshichêh",
+      "transliteration_pt": "veyatsmách purkanêh vikarêv meshichêh",
       "translation_pt": "e que faça brotar Sua redenção e apresse a vinda de seu Mashiach",
       "origem_texto": "claude",
       "palavras": [
@@ -379,7 +379,7 @@
         {
           "i": 2,
           "hebrew": "וִיקָרֵב",
-          "transliteration_pt": "vikarev",
+          "transliteration_pt": "vikarêv",
           "start": 14.08,
           "end": 15.16,
           "glosa_pt": "e apresse",
@@ -514,7 +514,7 @@
       "start": 20.28,
       "end": 24.46,
       "hebrew": "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל",
-      "transliteration_pt": "uvechayê dechol beit Israel",
+      "transliteration_pt": "uvechayê dechol bêt Israel",
       "translation_pt": "e durante a vida de toda a casa de Israel",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -571,7 +571,7 @@
         {
           "i": 2,
           "hebrew": "בֵּית",
-          "transliteration_pt": "beit",
+          "transliteration_pt": "bêt",
           "start": 22.46,
           "end": 23.16,
           "glosa_pt": "a casa",
@@ -635,7 +635,7 @@
       "start": 24.46,
       "end": 30.38,
       "hebrew": "בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "baagalá uvizmán carív veimrú Amen",
+      "transliteration_pt": "baagalá uvizmán carív ve'imrú Amên",
       "translation_pt": "rapidamente e em breve — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -717,7 +717,7 @@
         {
           "i": 3,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimrú",
+          "transliteration_pt": "ve'imrú",
           "start": 27.7,
           "end": 28.88,
           "glosa_pt": "e digam",
@@ -742,7 +742,7 @@
         {
           "i": 4,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "Amen",
+          "transliteration_pt": "Amên",
           "start": 28.88,
           "end": 30.38,
           "glosa_pt": "Amen",
@@ -781,7 +781,7 @@
       "start": 30.38,
       "end": 36.9,
       "hebrew": "יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא",
-      "transliteration_pt": "Yehê shemê raba mevarách lealám ul'almei almayá",
+      "transliteration_pt": "Yehê shemêh rabá mevarách lealám ul'alme almayá",
       "translation_pt": "Que Seu grande Nome seja abençoado para sempre e para toda eternidade",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -813,7 +813,7 @@
         {
           "i": 1,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shemê",
+          "transliteration_pt": "shemêh",
           "start": 31.02,
           "end": 32.08,
           "glosa_pt": "Seu grande Nome",
@@ -838,7 +838,7 @@
         {
           "i": 2,
           "hebrew": "רַבָּא",
-          "transliteration_pt": "raba",
+          "transliteration_pt": "rabá",
           "start": 32.08,
           "end": 32.74,
           "glosa_pt": "",
@@ -913,7 +913,7 @@
         {
           "i": 5,
           "hebrew": "וּלְעָלְמֵי",
-          "transliteration_pt": "ul'almei",
+          "transliteration_pt": "ul'alme",
           "start": 34.88,
           "end": 35.64,
           "glosa_pt": "e para toda",
@@ -977,14 +977,14 @@
       "start": 36.9,
       "end": 41,
       "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-      "transliteration_pt": "Yitbarach veyishtabach veyitpaar",
+      "transliteration_pt": "Yitbarách veyishtabách veyitpaár",
       "translation_pt": "abençoado louvado glorificado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "יִתְבָּרַךְ",
-          "transliteration_pt": "Yitbarach",
+          "transliteration_pt": "Yitbarách",
           "start": 36.9,
           "end": 38.14,
           "glosa_pt": "abençoado",
@@ -1009,7 +1009,7 @@
         {
           "i": 1,
           "hebrew": "וְיִשְׁתַּבַּח",
-          "transliteration_pt": "veyishtabach",
+          "transliteration_pt": "veyishtabách",
           "start": 38.14,
           "end": 39.62,
           "glosa_pt": "louvado",
@@ -1034,7 +1034,7 @@
         {
           "i": 2,
           "hebrew": "וְיִתְפָּאַר",
-          "transliteration_pt": "veyitpaar",
+          "transliteration_pt": "veyitpaár",
           "start": 39.62,
           "end": 41,
           "glosa_pt": "glorificado",
@@ -1073,14 +1073,14 @@
       "start": 41,
       "end": 45.42,
       "hebrew": "וְיִתְרוֹמַם וְיִתְנַשֵּׂא וְיִתְהַדָּר",
-      "transliteration_pt": "veyitromam veyitnasse veyithadar",
+      "transliteration_pt": "veyitromám veyitnassê veyit'hadár",
       "translation_pt": "elevado, enaltecido e honrado",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיִתְרוֹמַם",
-          "transliteration_pt": "veyitromam",
+          "transliteration_pt": "veyitromám",
           "start": 41,
           "end": 42.54,
           "glosa_pt": "elevado",
@@ -1105,7 +1105,7 @@
         {
           "i": 1,
           "hebrew": "וְיִתְנַשֵּׂא",
-          "transliteration_pt": "veyitnasse",
+          "transliteration_pt": "veyitnassê",
           "start": 42.54,
           "end": 44.06,
           "glosa_pt": "enaltecido",
@@ -1130,7 +1130,7 @@
         {
           "i": 2,
           "hebrew": "וְיִתְהַדָּר",
-          "transliteration_pt": "veyithadar",
+          "transliteration_pt": "veyit'hadár",
           "start": 44.06,
           "end": 45.42,
           "glosa_pt": "e honrado",
@@ -1169,14 +1169,14 @@
       "start": 45.42,
       "end": 52.4,
       "hebrew": "וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא",
-      "transliteration_pt": "veyitaleh veyithalal shemê decudshá berich hu",
+      "transliteration_pt": "veyit'alé veyit'halál shemêh de'cudshá berích Hu",
       "translation_pt": "exaltado e louvado seja o Nome do Santo, bendito seja Ele",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "וְיִתְעַלֶּה",
-          "transliteration_pt": "veyitaleh",
+          "transliteration_pt": "veyit'alé",
           "start": 45.42,
           "end": 46.84,
           "glosa_pt": "exaltado",
@@ -1201,7 +1201,7 @@
         {
           "i": 1,
           "hebrew": "וְיִתְהַלָּל",
-          "transliteration_pt": "veyithalal",
+          "transliteration_pt": "veyit'halál",
           "start": 46.84,
           "end": 48,
           "glosa_pt": "e louvado",
@@ -1226,7 +1226,7 @@
         {
           "i": 2,
           "hebrew": "שְׁמֵהּ",
-          "transliteration_pt": "shemê",
+          "transliteration_pt": "shemêh",
           "start": 48,
           "end": 49.04,
           "glosa_pt": "seja o Nome",
@@ -1251,7 +1251,7 @@
         {
           "i": 3,
           "hebrew": "דְּקֻדְשָׁא",
-          "transliteration_pt": "decudshá",
+          "transliteration_pt": "de'cudshá",
           "start": 49.04,
           "end": 50.16,
           "glosa_pt": "do Santo",
@@ -1276,7 +1276,7 @@
         {
           "i": 4,
           "hebrew": "בְּרִיךְ",
-          "transliteration_pt": "berich",
+          "transliteration_pt": "berích",
           "start": 50.16,
           "end": 51,
           "glosa_pt": "bendito",
@@ -1301,7 +1301,7 @@
         {
           "i": 5,
           "hebrew": "הוּא",
-          "transliteration_pt": "hu",
+          "transliteration_pt": "Hu",
           "start": 51,
           "end": 52.4,
           "glosa_pt": "seja Ele",
@@ -1340,14 +1340,14 @@
       "start": 52.4,
       "end": 57.7,
       "hebrew": "לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא",
-      "transliteration_pt": "leela min kol birchatá veshiratá",
+      "transliteration_pt": "Leela min kol birchatá veshiratá",
       "translation_pt": "acima de todas as bênçãos, cânticos",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "לְעֵלָּא",
-          "transliteration_pt": "leela",
+          "transliteration_pt": "Leela",
           "start": 52.4,
           "end": 53.56,
           "glosa_pt": "acima",
@@ -1486,14 +1486,14 @@
       "start": 57.7,
       "end": 65.66,
       "hebrew": "תֻּשְׁבְּחָתָא וְנֶחֱמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "tushbechata venechamata dáamiran bealma veimrú Amen",
+      "transliteration_pt": "tushbechatá venechamatá daamirán bealma ve'imrú Amên",
       "translation_pt": "louvores e consolos que são proferidos no mundo — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
         {
           "i": 0,
           "hebrew": "תֻּשְׁבְּחָתָא",
-          "transliteration_pt": "tushbechata",
+          "transliteration_pt": "tushbechatá",
           "start": 57.7,
           "end": 59.34,
           "glosa_pt": "louvores",
@@ -1518,7 +1518,7 @@
         {
           "i": 1,
           "hebrew": "וְנֶחֱמָתָא",
-          "transliteration_pt": "venechamata",
+          "transliteration_pt": "venechamatá",
           "start": 59.34,
           "end": 61.02,
           "glosa_pt": "e consolos",
@@ -1543,7 +1543,7 @@
         {
           "i": 2,
           "hebrew": "דַּאֲמִירָן",
-          "transliteration_pt": "dáamiran",
+          "transliteration_pt": "daamirán",
           "start": 61.02,
           "end": 61.94,
           "glosa_pt": "que são proferidos",
@@ -1593,7 +1593,7 @@
         {
           "i": 4,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimrú",
+          "transliteration_pt": "ve'imrú",
           "start": 63.14,
           "end": 64.24,
           "glosa_pt": "e digam",
@@ -1618,7 +1618,7 @@
         {
           "i": 5,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "Amen",
+          "transliteration_pt": "Amên",
           "start": 64.24,
           "end": 65.66,
           "glosa_pt": "Amen",
@@ -1657,7 +1657,7 @@
       "start": 65.66,
       "end": 78.5,
       "hebrew": "יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen",
+      "transliteration_pt": "Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên",
       "translation_pt": "Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -1714,7 +1714,7 @@
         {
           "i": 2,
           "hebrew": "רַבָּא",
-          "transliteration_pt": "raba",
+          "transliteration_pt": "rabá",
           "start": 67.38,
           "end": 68.48,
           "glosa_pt": "em abundância",
@@ -1789,7 +1789,7 @@
         {
           "i": 5,
           "hebrew": "וְחַיִּים",
-          "transliteration_pt": "vechayim",
+          "transliteration_pt": "vechayím",
           "start": 70.28,
           "end": 71.24,
           "glosa_pt": "e uma vida",
@@ -1814,7 +1814,7 @@
         {
           "i": 6,
           "hebrew": "טוֹבִים",
-          "transliteration_pt": "tovim",
+          "transliteration_pt": "tovím",
           "start": 71.24,
           "end": 72.1,
           "glosa_pt": "boa",
@@ -1839,7 +1839,7 @@
         {
           "i": 7,
           "hebrew": "עָלֵינוּ",
-          "transliteration_pt": "aleinu",
+          "transliteration_pt": "alêinu",
           "start": 72.1,
           "end": 73.2,
           "glosa_pt": "para nós",
@@ -1939,7 +1939,7 @@
         {
           "i": 11,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimrú",
+          "transliteration_pt": "ve'imrú",
           "start": 76.16,
           "end": 77.34,
           "glosa_pt": "e digam",
@@ -1964,7 +1964,7 @@
         {
           "i": 12,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "Amen",
+          "transliteration_pt": "Amên",
           "start": 77.34,
           "end": 78.5,
           "glosa_pt": "Amen",
@@ -2003,7 +2003,7 @@
       "start": 78.5,
       "end": 82.16,
       "hebrew": "עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו",
-      "transliteration_pt": "Ossê shalom bimromav",
+      "transliteration_pt": "Ossê shalom bimro'máv",
       "translation_pt": "Aquele que faz paz em Suas alturas celestiais",
       "origem_texto": "tehilat_hashem",
       "palavras": [
@@ -2060,7 +2060,7 @@
         {
           "i": 2,
           "hebrew": "בִּמְרוֹמָיו",
-          "transliteration_pt": "bimromav",
+          "transliteration_pt": "bimro'máv",
           "start": 80.86,
           "end": 82.16,
           "glosa_pt": "em Suas alturas celestiais",
@@ -2099,14 +2099,14 @@
       "start": 82.16,
       "end": 92.99,
       "hebrew": "הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן",
-      "transliteration_pt": "hu berachamav yaassê shalom aleinu veal kol Israel veimrú Amen",
+      "transliteration_pt": "Hu berachamáv yaassê shalom alêinu veal kol Israel ve'imrú Amên",
       "translation_pt": "que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen",
       "origem_texto": "claude",
       "palavras": [
         {
           "i": 0,
           "hebrew": "הוּא",
-          "transliteration_pt": "hu",
+          "transliteration_pt": "Hu",
           "start": 82.16,
           "end": 83.04,
           "glosa_pt": "que Ele",
@@ -2131,7 +2131,7 @@
         {
           "i": 1,
           "hebrew": "בְּרַחֲמָיו",
-          "transliteration_pt": "berachamav",
+          "transliteration_pt": "berachamáv",
           "start": 83.04,
           "end": 84.74,
           "glosa_pt": "em Sua misericórdia",
@@ -2199,7 +2199,7 @@
         {
           "i": 4,
           "hebrew": "עָלֵינוּ",
-          "transliteration_pt": "aleinu",
+          "transliteration_pt": "alêinu",
           "start": 86.9,
           "end": 88.16,
           "glosa_pt": "sobre nós",
@@ -2299,7 +2299,7 @@
         {
           "i": 8,
           "hebrew": "וְאִמְרוּ",
-          "transliteration_pt": "veimrú",
+          "transliteration_pt": "ve'imrú",
           "start": 91.1,
           "end": 92.44,
           "glosa_pt": "e digam",
@@ -2324,7 +2324,7 @@
         {
           "i": 9,
           "hebrew": "אָמֵן",
-          "transliteration_pt": "Amen",
+          "transliteration_pt": "Amên",
           "start": 92.44,
           "end": 92.99,
           "glosa_pt": "Amen",

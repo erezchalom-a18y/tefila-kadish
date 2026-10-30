@@ -84,11 +84,32 @@ for (const [k, mapa] of setas) {
   finais.set(k, pontas);
   velhos.set(k, [...origens]);
 }
-confere('nenhuma palavra ficou com duas grafias decididas', duplos.length === 0, duplos.join('\n        '));
-
 // ---------- 1 e 2: nos arquivos ----------
 const ARQUIVOS = readdirSync('sync').filter(f => f.endsWith('_sync.json')).sort();
 const sync = Object.fromEntries(ARQUIVOS.map(f => [f, JSON.parse(readFileSync(`sync/${f}`, 'utf8'))]));
+
+// DUAS GRAFIAS POR NUSSACH NAO SAO DUAS GRAFIAS (29/10). O Erez corrigiu as
+// duas formas de palavras que se dizem diferente em nussachim diferentes
+// (venechamatá no Sefaradi e no Sefard, venechematá no Ashkenaz e no Chabad) e
+// disse "mantenha a grafia". O que nao pode e a mesma palavra escrita de dois
+// jeitos DENTRO do mesmo Kadish — e e isso que se cobra aqui.
+{
+  const campo = { tl: 'transliteration_pt', glosa: 'glosa_pt' };
+  const reais = duplos.filter(linha => {
+    const [k] = linha.split(': ');
+    const [tipo, chave] = k.split('|');
+    if (!campo[tipo]) return true;
+    const pontas = new Set((finais.get(k) || []).map(x => x.toLowerCase()));
+    return ARQUIVOS.some(f => {
+      const achadas = new Set();
+      for (const v of sync[f].versos) for (const p of v.palavras)
+        if (semNikud(p.hebrew) === chave && pontas.has(String(p[campo[tipo]]).toLowerCase()))
+          achadas.add(String(p[campo[tipo]]).toLowerCase());
+      return achadas.size > 1;
+    });
+  });
+  confere('nenhuma palavra ficou com duas grafias decididas no mesmo Kadish', reais.length === 0, reais.join('\n        '));
+}
 
 // ---------- as decisoes ESCAPADAS (25/08) ----------
 // Nem toda decisao dele vale nos 8. O hebraico do "Yitbarech ... veyitpaer" com

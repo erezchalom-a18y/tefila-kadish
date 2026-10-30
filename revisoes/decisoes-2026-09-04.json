@@ -9,9 +9,12 @@
       "_o_que_conferir_com_ele": "O frances do veyitpaêr foi o unico em que o documento dele nao tinha caso igual (tsere seguido de consoante). Pus 'véyitpa'ér', marcando o é como ele marca em ch'mé, yéhé, ossé e pourkané.",
       "tipo": "verso_por_nussach",
       "chave": "יתברךוישתבחויתפאר",
-      "nussachim": ["ashkenaz", "chabad"],
+      "nussachim": [
+        "ashkenaz",
+        "chabad"
+      ],
       "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
-      "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr",
+      "transliteration_pt": "Yitbarêch veyishtabách veyitpaêr",
       "palavras": [
         {
           "i": 0,
@@ -33,7 +36,8 @@
             "ru": "вэйитпаэр"
           }
         }
-      ]
+      ],
+      "_grafia_29_10": "A grafia acima foi atualizada em 29/10 pelos recados revisoes/pt-2026-10-29-a.txt e -b.txt (acentos). A decisao nao mudou: o hebraico e a letra que ela fixa (tsere/patach) continuam os mesmos. Antes: \"Yitbarêch veyishtabach veyitpaêr\"."
     }
   ]
 }

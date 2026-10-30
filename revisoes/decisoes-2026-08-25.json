@@ -12,7 +12,7 @@
         "chabad"
       ],
       "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
-      "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr",
+      "transliteration_pt": "Yitbarêch veyishtabách veyitpaêr",
       "palavras": [
         {
           "i": 0,
@@ -23,7 +23,8 @@
           "hebrew": "וְיִתְפָּאֵר",
           "transliteration_pt": "veyitpaêr"
         }
-      ]
+      ],
+      "_grafia_29_10": "A grafia acima foi atualizada em 29/10 pelos recados revisoes/pt-2026-10-29-a.txt e -b.txt (acentos). A decisao nao mudou: o hebraico e a letra que ela fixa (tsere/patach) continuam os mesmos. Antes: \"Yitbarêch veyishtabach veyitpaêr\"."
     },
     {
       "id": "1b",
@@ -43,13 +44,14 @@
         "ashkenaz",
         "chabad"
       ],
-      "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen",
+      "transliteration_pt": "tushbechatá venechematá daamirán bealma ve'imrú Amên",
       "palavras": [
         {
           "i": 1,
-          "transliteration_pt": "venechemata"
+          "transliteration_pt": "venechematá"
         }
-      ]
+      ],
+      "_grafia_29_10": "A grafia acima foi atualizada em 29/10 pelos recados revisoes/pt-2026-10-29-a.txt e -b.txt (acentos). A decisao nao mudou: o hebraico e a letra que ela fixa (tsere/patach) continuam os mesmos. Antes: \"tushbechata venechemata dáamiran bealma veimrú Amen\"."
     },
     {
       "id": 3,
