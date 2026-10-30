@@ -126,6 +126,43 @@ const antigo = await pag.evaluate(() => {
 });
 confere('   e, sem salvar de novo, o yahrzeit dele segue a conta de antes', antigo === '2020-03-16', antigo);
 
+// 9. o cartao do yahrzeit (29/10, com o rabino)
+const cartao = await pag.evaluate(() => {
+  const d = carregarMemoriais();
+  const ler = () => ({
+    alto: document.getElementById('yzDate').textContent,
+    periodo: document.getElementById('yzHebrew').textContent,
+    vela: document.getElementById('yzVela').textContent,
+    avisos: document.getElementById('yzAvisos').textContent,
+  });
+  renderYahrzeit({ deathDate: '2020-03-15' });                           // sem resposta
+  const duvida = ler();
+  renderYahrzeit({ deathDate: '2020-03-15', porDoSol: 'antes' });        // respondeu
+  const certo = ler();
+  renderYahrzeit(d.lista.find(x => x.name === 'Teste'));                  // deu a hebraica
+  const hebraica = ler();
+  return { duvida, certo, hebraica };
+});
+confere('9. o cartao: a data hebraica no alto, e o periodo da noite da vespera ate o dia',
+  /Tevet/.test(cartao.hebraica.alto) && /^da noite de .+, até .+\d{4}$/.test(cartao.hebraica.periodo),
+  `${cartao.hebraica.alto} | ${cartao.hebraica.periodo}`);
+confere('   a vela, sem hora nem lugar', /🕯/.test(cartao.hebraica.vela) && !/\d{1,2}h\d{2}/.test(cartao.hebraica.vela),
+  cartao.hebraica.vela);
+confere('   "não temos certeza da data hebraica" so quando o cadastro nao responde',
+  /certeza da data hebraica/.test(cartao.duvida.avisos) &&
+  !/certeza da data hebraica/.test(cartao.certo.avisos) && !/certeza da data hebraica/.test(cartao.hebraica.avisos));
+
+// 10. o exemplo do nome (29/10): em portugues, pelo costume do nussach
+const exemplo = async n => {
+  await pag.goto(`${BASE}/engine.html?n=${n}&t=yatom`);
+  await pag.waitForFunction(() => window.SYNC && SYNC.ativo && SYNC.ativo(), null, { timeout: 15000 });
+  await pag.evaluate(() => abrirCadastro(null));
+  return pag.getAttribute('#setupName', 'placeholder');
+};
+const exSef = await exemplo('sefaradi'), exCha = await exemplo('chabad');
+confere('10. o exemplo do nome: Sefaradi pela mae, os outros pelo pai, em portugues',
+  exSef === 'Haim filho de Esther' && exCha === 'Haim filho de Ezra', `${exSef} · ${exCha}`);
+
 confere('8. sem erro na pagina', erros.length === 0, erros.join(' | '));
 await navegador.close();
 console.log(falhas ? `\nVERMELHO: ${falhas} falha(s)` : '\nVERDE: as duas datas andam juntas, e o yahrzeit sai da hebraica');

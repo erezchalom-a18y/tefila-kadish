@@ -118,8 +118,52 @@ confere('quem morreu no dia 30 de um mes que noutro ano so tem 29 e puxado para 
 // tem de estar escrita na tela. E a regra deste projeto: a maquina calcula, o
 // rabino decide, e o que e duvida aparece como duvida.
 const semHora = Y.proximoYahrzeit(new Date(2026, 11, 10), 'sefaradi', new Date(2027, 0, 1), 'pt');
-confere('o aviso do anoitecer aparece sempre, porque ninguem perguntou a hora',
-  semHora.avisos.some(a => /anoitecer/i.test(a)));
+// 29/10: o texto virou "Nao temos certeza da data hebraica..." (o rabino), e
+// e o CARTAO que o tira quando o cadastro ja respondeu o por do sol ou deu a
+// data hebraica. Aqui, sem cadastro nenhum, ele continua sempre presente.
+confere('o aviso da data hebraica incerta aparece sempre aqui, porque ninguem perguntou a hora',
+  semHora.avisos.some(a => a === Y.avisoIncerteza('pt') && /certeza da data hebraica/.test(a)));
+
+// ---------- 5b. a vela: Shabat e Yom Tov (29/10, com o rabino) ----------
+// Procura nos proximos anos uma data de cada caso e confere o que a vela diz.
+{
+  const H = globalThis.Hebraico;
+  const hoje = new Date(2026, 9, 29);
+  const casos = {};
+  for (let k = 0; k < 900; k++) {
+    const y = Y.proximoYahrzeit(new Date(2024, 0, 1 + k), 'chabad', hoje, 'pt');
+    const i = Y.instrucoes(y, 'pt');
+    const vesp = new Date(y.data); vesp.setDate(vesp.getDate() - 1);
+    const sag = d => d.getDay() === 6 || Y.ehYomTov(H.deData(d));
+    casos[i.caso] = casos[i.caso] || { y, i, sagDia: sag(y.data), sagVesp: sag(vesp), vesp };
+  }
+  const n = casos.normal, a = casos.antes, d = casos.depois;
+  confere('vela normal: ao por do sol da vespera, sem hora nem lugar',
+    n && !n.sagDia && !n.sagVesp && /ao pôr do sol de/.test(n.i.vela) && !/\d{1,2}h\d{2}|\d{1,2}:\d{2}/.test(n.i.vela));
+  confere('yahrzeit que comeca no Shabat/Yom Tov: acender ANTES, nao no Shabat',
+    a && a.sagDia && /antes do pôr do sol/.test(a.i.vela) && /não se acende/.test(a.i.vela));
+  confere('yahrzeit que comeca na saida do Shabat/Yom Tov: acender DEPOIS',
+    d && !d.sagDia && d.sagVesp && /só depois que/.test(d.i.vela));
+  // 15 de Nisan (1o dia de Pessach) e Yom Tov; 17 de Nisan (Chol HaMoed) nao
+  confere('o Yom Tov da diaspora: 15 de Nisan sim, 17 de Nisan nao',
+    Y.ehYomTov({ mes: 1, dia: 15 }) && !Y.ehYomTov({ mes: 1, dia: 17 }));
+  confere('o periodo vai da noite da vespera ate o dia',
+    /^da noite de .+, até .+\d{4}$/.test(n.i.periodo), n.i.periodo);
+  const linguas = ['en', 'es', 'fr', 'it', 'de', 'ru', 'he'];
+  const sobra = linguas.filter(l => { const i = Y.instrucoes(a.y, l);
+    return /Acenda|pôr do sol|Kadish é dito/.test(i.vela + i.kadish + i.periodo); });
+  confere('a vela e o Kadish saem nas 8 linguas, sem portugues sobrando', !sobra.length, sobra.join(','));
+}
+
+// ---------- 5c. o primeiro yahrzeit, por nussach (29/10) ----------
+// Sefaradi e Chabad: data do falecimento, sem duvida. Ashkenaz e Sefard: avisa.
+{
+  const morte = new Date(2026, 0, 15), hoje = new Date(2026, 1, 1);
+  const tem = nu => Y.proximoYahrzeit(morte, nu, hoje, 'pt').avisos.some(x => /primeiro yahrzeit/.test(x));
+  confere('primeiro yahrzeit: avisa no Ashkenaz e no Sefard, nao no Sefaradi nem no Chabad',
+    tem('ashkenaz') && tem('sefard') && !tem('sefaradi') && !tem('chabad'),
+    `ashkenaz ${tem('ashkenaz')} sefard ${tem('sefard')} sefaradi ${tem('sefaradi')} chabad ${tem('chabad')}`);
+}
 
 // ---------- 6. o arquivo de calendario ----------
 const ics = Y.gerarICS(new Date(2026, 11, 10), 'sefaradi', 'Itzhak ben Yosef', 20, 'pt');

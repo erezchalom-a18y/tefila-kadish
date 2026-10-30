@@ -3279,8 +3279,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div class="yahrzeit-card" id="yahrzeitCard" style="display:none;">
       <div class="yz-label" data-i18n="next_yahrzeit">Próximo Yahrzeit</div>
+      <!-- 29/10 — com o rabino: a data HEBRAICA em destaque (e por ela que se
+           conta), o periodo da noite da vespera ate o dia, a vela (ao por do
+           sol, sem hora nem lugar; Shabat e Yom Tov: antes ou depois) e o
+           Kadish. Ver Yahrzeit.instrucoes em yahrzeit.js. -->
       <div class="yz-date" id="yzDate">—</div>
       <div class="yz-hebrew" id="yzHebrew">—</div>
+      <div id="yzVela" style="margin-top:10px;font-size:13.5px;color:var(--text);line-height:1.5"></div>
+      <div id="yzKadish" style="margin-top:6px;font-size:13px;color:var(--text-soft);line-height:1.5"></div>
       <div id="yzAvisos" style="margin-top:10px;font-size:12.5px;color:#8a5a12;line-height:1.5"></div>
       <button id="yzCalendario" data-i18n="yahrzeit_calendar_btn" style="margin-top:12px;width:100%;background:var(--brass);color:#fff;border:0;border-radius:9px;padding:11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer">pôr no calendário do telefone</button>
       <div data-i18n="yahrzeit_reminder_note" style="margin-top:8px;font-size:12px;color:var(--text-faint);line-height:1.5">Quatro avisos em cada ano: uma semana antes, três dias antes, na tarde da véspera (hora de acender a vela) e na manhã do dia.</div>
@@ -3337,7 +3343,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div class="setup-field">
       <label data-i18n="setup_name">Nome (de preferência em hebraico)</label>
-      <input type="text" id="setupName" placeholder="חיים בן עזרא">
+      <input type="text" id="setupName" placeholder="Haim filho de Ezra">
     </div>
     <!-- 11/09 — O CAMPO "Nome hebraico (opcional)" SAIU DA TELA, por decisao
          dele, quando o campo do nome passou a pedir hebraico: eram duas contas
@@ -7219,6 +7225,7 @@ const I18N = {
     setup_name: 'Nome (de preferência em hebraico)', setup_hebrew_name: 'Nome hebraico (opcional)',
     setup_relation: 'Relação', setup_death_date: 'Data de falecimento (calendário civil)', setup_heb_date: 'Data hebraica do falecimento',
     setup_heb_nota: 'O yahrzeit é contado pela data hebraica. Preencha uma das duas — a outra se preenche sozinha.', heb_dia: 'dia', heb_mes: 'mês', heb_ano: 'ano',
+    ex_nome_mae: 'Haim filho de Esther', ex_nome_pai: 'Haim filho de Ezra',
     setup_avisos_q: 'Quando você quer ser lembrado?',
     aviso_semana: 'Uma semana antes',
     aviso_tres: 'Três dias antes',
@@ -7320,6 +7327,7 @@ const I18N = {
     setup_name: 'Name (preferably in Hebrew)', setup_hebrew_name: 'Hebrew name (optional)',
     setup_relation: 'Relationship', setup_death_date: 'Date of passing (civil calendar)', setup_heb_date: 'Hebrew date of passing',
     setup_heb_nota: 'The yahrzeit follows the Hebrew date. Fill in either one — the other fills itself in.', heb_dia: 'day', heb_mes: 'month', heb_ano: 'year',
+    ex_nome_mae: 'Haim son of Esther', ex_nome_pai: 'Haim son of Ezra',
     setup_avisos_q: 'When do you want to be reminded?',
     aviso_semana: 'One week before',
     aviso_tres: 'Three days before',
@@ -7421,6 +7429,7 @@ const I18N = {
     setup_name: 'Nombre (preferentemente en hebreo)', setup_hebrew_name: 'Nombre hebreo (opcional)',
     setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (calendario civil)', setup_heb_date: 'Fecha hebrea del fallecimiento',
     setup_heb_nota: 'El yahrzeit se cuenta por la fecha hebrea. Complete una de las dos — la otra se completa sola.', heb_dia: 'día', heb_mes: 'mes', heb_ano: 'año',
+    ex_nome_mae: 'Haim hijo de Esther', ex_nome_pai: 'Haim hijo de Ezra',
     setup_avisos_q: '¿Cuándo quiere que le recordemos?',
     aviso_semana: 'Una semana antes',
     aviso_tres: 'Tres días antes',
@@ -7522,6 +7531,7 @@ const I18N = {
     setup_name: 'Nom (de préférence en hébreu)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
     setup_relation: 'Relation', setup_death_date: 'Date de décès (calendrier civil)', setup_heb_date: 'Date hébraïque du décès',
     setup_heb_nota: 'Le yahrzeit suit la date hébraïque. Remplissez l’une des deux — l’autre se remplit seule.', heb_dia: 'jour', heb_mes: 'mois', heb_ano: 'année',
+    ex_nome_mae: 'Haïm fils d’Esther', ex_nome_pai: 'Haïm fils d’Ezra',
     setup_avisos_q: 'Quand voulez-vous être rappelé ?',
     aviso_semana: 'Une semaine avant',
     aviso_tres: 'Trois jours avant',
@@ -7623,6 +7633,7 @@ const I18N = {
     setup_name: 'Nome (preferibilmente in ebraico)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
     setup_relation: 'Relazione', setup_death_date: 'Data del decesso (calendario civile)', setup_heb_date: 'Data ebraica del decesso',
     setup_heb_nota: 'Lo yahrzeit segue la data ebraica. Compili una delle due — l’altra si compila da sola.', heb_dia: 'giorno', heb_mes: 'mese', heb_ano: 'anno',
+    ex_nome_mae: 'Haim figlio di Esther', ex_nome_pai: 'Haim figlio di Ezra',
     setup_avisos_q: 'Quando vuole essere avvisato?',
     aviso_semana: 'Una settimana prima',
     aviso_tres: 'Tre giorni prima',
@@ -7724,6 +7735,7 @@ const I18N = {
     setup_name: 'Name (möglichst auf Hebräisch)', setup_hebrew_name: 'Hebräischer Name (optional)',
     setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (bürgerlicher Kalender)', setup_heb_date: 'Hebräisches Sterbedatum',
     setup_heb_nota: 'Der Jahrzeit richtet sich nach dem hebräischen Datum. Füllen Sie eines der beiden aus — das andere ergänzt sich von selbst.', heb_dia: 'Tag', heb_mes: 'Monat', heb_ano: 'Jahr',
+    ex_nome_mae: 'Chaim Sohn von Esther', ex_nome_pai: 'Chaim Sohn von Esra',
     setup_avisos_q: 'Wann möchten Sie erinnert werden?',
     aviso_semana: 'Eine Woche vorher',
     aviso_tres: 'Drei Tage vorher',
@@ -7825,6 +7837,7 @@ const I18N = {
     setup_name: 'Имя (желательно на иврите)', setup_hebrew_name: 'Еврейское имя (опционально)',
     setup_relation: 'Отношение', setup_death_date: 'Дата кончины (гражданский календарь)', setup_heb_date: 'Дата кончины по еврейскому календарю',
     setup_heb_nota: 'Йорцайт отмечают по еврейской дате. Заполните одну из дат — вторая заполнится сама.', heb_dia: 'день', heb_mes: 'месяц', heb_ano: 'год',
+    ex_nome_mae: 'Хаим, сын Эстер', ex_nome_pai: 'Хаим, сын Эзры',
     setup_avisos_q: 'Когда вам напомнить?',
     aviso_semana: 'За неделю',
     aviso_tres: 'За три дня',
@@ -7926,6 +7939,7 @@ const I18N = {
     setup_name: 'שם (רצוי בעברית)', setup_hebrew_name: 'שם עברי (אופציונלי)',
     setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (לועזי)', setup_heb_date: 'תאריך פטירה עברי',
     setup_heb_nota: 'היארצייט נקבע לפי התאריך העברי. מלאו אחד מהשניים — השני יתמלא לבד.', heb_dia: 'יום', heb_mes: 'חודש', heb_ano: 'שנה',
+    ex_nome_mae: 'חיים בן אסתר', ex_nome_pai: 'חיים בן עזרא',
     setup_avisos_q: 'מתי להזכיר לכם?',
     aviso_semana: 'שבוע לפני',
     aviso_tres: 'שלושה ימים לפני',
@@ -8984,16 +8998,24 @@ function renderYahrzeit(m) {
   try { y = Yahrzeit.proximoYahrzeit(morte, nussach, null, state.lang); } catch (e) { console.error(e); }
   if (!y) { card.style.display = 'none'; return; }
 
-  const locais = { pt:'pt-BR', en:'en-US', es:'es-ES', fr:'fr-FR', it:'it-IT',
-                   de:'de-DE', ru:'ru-RU', he:'he-IL' };
-  document.getElementById('yzDate').textContent =
-    y.data.toLocaleDateString(locais[state.lang] || 'pt-BR',
-      { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  document.getElementById('yzHebrew').textContent = y.rotulo;
+  // 29/10 — "quando aparece a data do Yortseid, tem que estar igual a que a
+  // Hebra Kadisha te coloca": a data hebraica no alto, e embaixo da noite da
+  // vespera ate o dia ("tem que escrever 23 e 24 de dezembro").
+  const ins = Yahrzeit.instrucoes(y, state.lang);
+  document.getElementById('yzDate').textContent = y.rotulo;
+  document.getElementById('yzHebrew').textContent = ins.periodo;
+  document.getElementById('yzVela').textContent = ins.vela;
+  document.getElementById('yzKadish').textContent = ins.kadish;
 
   // Todo caso duvidoso aparece escrito. A maquina calcula; o rabino decide.
+  // O da data hebraica so quando ELA e duvida: quem respondeu o por do sol, ou
+  // deu a data hebraica, ja tirou a duvida no cadastro — o rabino: "isso ja
+  // nao tem que estar nessa mensagem".
+  const certa = !!m.hebDate || m.porDoSol === 'antes' || m.porDoSol === 'depois';
+  const incerteza = Yahrzeit.avisoIncerteza(state.lang);
   const avisos = document.getElementById('yzAvisos');
-  avisos.innerHTML = y.avisos.map(a => '⚠ ' + a.replace(/[<>]/g, '')).join('<br><br>');
+  avisos.innerHTML = y.avisos.filter(a => !(certa && a === incerteza))
+    .map(a => '⚠ ' + a.replace(/[<>]/g, '')).join('<br><br>');
 
   document.getElementById('yzCalendario').onclick = () => {
     const ics = icsDeTodos(nussach, state.lang);
@@ -9154,7 +9176,17 @@ function pintarAcoesDoCadastro() {
    e ninguem precisa lembrar de o acrescentar a uma lista de listeners. */
 document.getElementById('setupModal')?.addEventListener('input', pintarAcoesDoCadastro);
 
+// 29/10 — O EXEMPLO DO NOME, em portugues e pelo costume do nussach: o
+// sefaradi diz o nome com o da MAE (Haim filho de Esther), os outros com o do
+// PAI (Haim filho de Ezra). Antes era "חיים בן עזרא", em hebraico, para todos.
+function exemploDoNome() {
+  const nu = (window.SYNC && SYNC.atual && SYNC.atual().nussach) || '';
+  const el = document.getElementById('setupName');
+  if (el) el.placeholder = TXT(nu === 'sefaradi' ? 'ex_nome_mae' : 'ex_nome_pai');
+}
+
 function abrirCadastro(id) {
+  exemploDoNome();
   const d = carregarMemoriais();
   const m = id ? d.lista.find(x => x.id === id) : null;
   _editandoPessoa = m ? m.id : '';
@@ -9165,7 +9197,8 @@ function abrirCadastro(id) {
   document.getElementById('setupRelation').value = m ? (m.relation || '') : '';
   document.getElementById('setupDeathDate').value = m ? (m.deathDate || '') : '';
   marcarSeg('setupSexo', m ? (m.sexo || '') : '');
-  marcarSeg('setupPorDoSol', m ? (m.aposPorDoSol ? 'depois' : (m.deathDate ? 'antes' : '')) : '');
+  marcarSeg('setupPorDoSol', m ? (m.porDoSol !== undefined ? m.porDoSol
+                                   : (m.aposPorDoSol ? 'depois' : (m.deathDate ? 'antes' : ''))) : '');
   // a data hebraica: a guardada; num cadastro de antes de 29/10, a calculada
   _fonteDaData = (m && m.dataFonte) || 'civil';
   pintarSelectsHeb(m && m.hebDate ? m.hebDate : null);
@@ -9229,6 +9262,9 @@ document.getElementById('setupSave').addEventListener('click', () => {
     relation: document.getElementById('setupRelation').value.trim(),
     deathDate: document.getElementById('setupDeathDate').value,
     aposPorDoSol: lerSeg('setupPorDoSol') === 'depois',
+    // a resposta em si: '' e "nao respondeu", que o cartao do yahrzeit trata
+    // como duvida (o aposPorDoSol sozinho nao separa "antes" de "nao sei")
+    porDoSol: lerSeg('setupPorDoSol'),
     hebDate: lerSelectsHeb(),
     dataFonte: _fonteDaData,
     avisos: lerAvisos()
