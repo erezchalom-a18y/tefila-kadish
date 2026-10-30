@@ -1,6 +1,6 @@
 # Relatório da revisão cega do glossário
 
-Gerado em 2026-09-03 00:39 UTC por ChatGPT (`gpt-4o-mini`), sobre o commit `5489671`.
+Gerado em 2026-10-30 02:21 UTC por ChatGPT (`gpt-4o-mini`), sobre o commit `4ddbba1`.
 
 > **Isto é uma opinião automática, não uma decisão.** O ChatGPT não alterou
 > nenhum arquivo e não tem autoridade sobre o texto. Toda mudança é decisão
@@ -24,1148 +24,993 @@ em nenhum dos dois foi descartada automaticamente.
 
 | Língua | Entradas com apontamento | Entradas ok |
 | --- | ---: | ---: |
-| português | 20 | 22 |
-| inglês | 16 | 26 |
-| espanhol | 14 | 28 |
-| francês | 16 | 26 |
-| italiano | 22 | 20 |
-| alemão | 32 | 10 |
+| português | 15 | 27 |
+| inglês | 15 | 27 |
+| espanhol | 13 | 29 |
+| francês | 15 | 27 |
+| italiano | 21 | 21 |
+| alemão | 34 | 8 |
 | russo | 26 | 16 |
 | hebraico moderno | 28 | 14 |
-| **total** | **174** | **162** |
+| **total** | **167** | **169** |
 
 ## Apontamentos, língua por língua
 
-### português — 20 entrada(s)
+### português — 15 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em português: **Exaltado e santificado seja o Seu grande Nome**
 
 - **traducao** · *sentido*
   - trecho citado: `seja o Seu grande Nome`
-  - problema: A expressão 'seja o Seu grande Nome' não reflete o sentido mais comum da palavra 'רַבָּא', que frequentemente significa 'grandioso' ou 'majestoso' em termos de grandeza, mas não necessariamente implica uma estrutura de 'seja'.
-  - sugestão do revisor: 'seu grande nome' ou 'o Seu nome que é grande'.
+  - problema: A glosa não reflete corretamente o significado da palavra hebraica שְׁמֵהּ, que especificamente significa 'Nome' e não 'seja o Seu grande Nome'.
+  - sugestão do revisor: A tradução correta seria 'Seu Nome' ou 'o Seu grande Nome'.
 
 #### וְיַמְלִיךְ מַלְכוּתֵהּ
 
-*veyamlich malchutêh*
+*veyamlích malchutêh*
 
 Texto em português: **e que nele estabeleça o Seu reinado**
 
 - **traducao** · *sentido*
-  - trecho citado: `estabeleça o Seu reinado`
-  - problema: A tradução não captura com precisão o sentido do verbo 'ימליך' que é 'fazer reinar' ou 'fazer a realeza', em vez de 'estabelecer'.
-  - sugestão do revisor: e que Ele faça reinar o Seu reinado
-
-#### וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
-
-*veyatsmách purkanêh vikarev meshichêh*
-
-Texto em português: **e que faça brotar Sua redenção e apresse a vinda de seu Mashiach**
-
-- **glosa 2** · *palavra*
-  - trecho citado: `פּוּרְקָנֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'redenção' não capta o significado específico de 'purkan', que se refere mais diretamente ao conceito de 'libertação' ou 'salvação' no contexto litúrgico.
-  - sugestão do revisor: 'Sua libertação' ou 'Seu resgate'.
+  - trecho citado: `e que nele estabeleça o Seu reinado`
+  - problema: A tradução sugere que a ação de estabelecer o reinado é feita 'nele', enquanto a construção hebraica indica um reforço do reinado de Deus, sem a preposição 'nele'.
+  - sugestão do revisor: 'E que Ele estabeleça o Seu reinado'.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em português: **rapidamente e em breve — e digam Amen**
 
 - **traducao** · *sentido*
-  - trecho citado: `rapidamente`
-  - problema: A tradução 'rapidamente' não expressa corretamente o significado do termo בַּעֲגָלָא que se refere a algo que acontece logo ou em breve, em vez de rapidamente.
-  - sugestão do revisor: 'logo' ou 'de forma rápida' seria mais adequado para refletir o sentido do hebraico.
-- **glosa 1** · *palavra*
-  - trecho citado: `rapidamente`
-  - problema: A palavra 'rapidamente' é imprópria para o registro litúrgico e não é a melhor tradução para בַּעֲגָלָא.
-  - sugestão do revisor: 'de forma rápida' ou 'imediatamente' poderiam ser mais apropriadas.
-- **glosa 3** · *palavra*
-  - trecho citado: `breve`
-  - problema: A palavra 'breve' não é adequada e não reflete o sentido de 'próximo' ou 'perto' que está mais relacionado ao termo קָרִיב.
-  - sugestão do revisor: 'próximo' ou 'em breve' seriam traduções mais precisas.
+  - trecho citado: `"rapidamente"`
+  - problema: A tradução da palavra בַּעֲגָלָא não é 'rapidamente', mas sim 'na rapidez' ou 'com rapidez', que é mais adequado ao contexto litúrgico.
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em português: **Que Seu grande Nome seja abençoado para sempre e para toda eternidade**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'Seu grande Nome' é inadequada, pois a palavra 'רַבָּא' significa 'grande' e deveria ser inclusa na glosa.
-  - sugestão do revisor: 'Seu grande Nome' poderia ser melhor traduzido como 'Seu Nome grande' ou 'Seu Nome glorioso'.
-- **traducao** · *sentido*
-  - trecho citado: `"Que Seu grande Nome seja abençoado para sempre e para toda eternidade"`
-  - problema: A tradução 'seu grande Nome' na frase não corresponde à glosa, pois a palavra 'רַבָּא' (grande) não foi incorporada.
-  - sugestão do revisor: A tradução correta seria: 'Que Seu Nome grande seja abençoado para sempre e para toda eternidade'.
+  - problema: A glosa proposta "Seu grande Nome" não está correta, pois a palavra hebraica refere-se simplesmente ao "Nome" e não a um "grande Nome".
+  - sugestão do revisor: A glosa correta deveria ser apenas "Seu Nome".
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em português: **Que haja paz em abundância vinda dos céus e uma boa vida para nós e para todo o povo de Israel — e digam Amen**
 
-- **glosa 6** · *palavra*
-  - trecho citado: `וְחַיִּים` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'vida' está no plural ('vidas') em hebraico e deve ser tratada de forma adequada na tradução.
-  - sugestão do revisor: Substituir 'uma vida' por 'vidas'.
+- **glosa 3** · *palavra*
+  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'em abundância' não é a escolha mais precisa para 'רַבָּא', que geralmente significa 'grande' ou 'muito'.
+- **glosa 10** · *palavra*
+  - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
+  - problema: A expressão 'todo o povo' pode ser melhor interpretada como 'todo Israel', refletindo a estrutura do hebraico.
 
 #### הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em português: **que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen**
 
-- **glosa 6** · *palavra*
-  - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'todo o povo' não reflete diretamente o significado da palavra hebraica; ela se refere simplesmente a 'todo' ou 'todas as pessoas' sem especificar 'povo'.
+- **traducao** · *palavra*
+  - trecho citado: `todo seu povo de Israel`
+  - problema: A expressão 'seu povo' não reflete com precisão o termo hebraico 'כָּל יִשׂרָאֵל', que significa 'todo Israel', sem a conotação possessiva.
+  - sugestão do revisor: Usar 'todo Israel' em vez de 'todo seu povo de Israel'.
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
-*veal talmidehon veal kol talmidei talmidehon*
+*veal talmidehôn veal kol talmidei talmidehôn*
 
 Texto em português: **e sobre seus discípulos e sobre todos os discípulos de seus discípulos**
 
-- **glosa 2** · *palavra*
-  - trecho citado: `תַּלְמִידֵיהוֹן` *(citou a palavra hebraica de origem)*
-  - problema: 'discípulos' no plural pode ser confuso, pois 'talmidehon' refere-se diretamente a 'seus discípulos' no possessivo.
-  - sugestão do revisor: usar 'seus discípulos' para manter a clareza e fidelidade ao original.
 - **glosa 5** · *palavra*
   - trecho citado: `תַּלְמִידֵי` *(citou a palavra hebraica de origem)*
-  - problema: a palavra 'discípulos de' não reflete corretamente a estrutura possessiva e a relação de 'talmidei', que deve ser entendida como 'discípulos' no sentido de pertencente aos discípulos.
-  - sugestão do revisor: usar 'discípulos dos' para refletir corretamente a relação do hebraico.
-
-#### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
-
-*daaskin beoraytá kadishtá*
-
-Texto em português: **que se dedicam ao estudo da Torá sagrada**
-
-- **glosa 2** · *palavra*
-  - trecho citado: `בְּאוֹרַיְתָא` *(citou a palavra hebraica de origem)*
-  - problema: A expressão 'ao estudo da Torá' omite a ideia de 'Torá' como um conceito mais amplo e não apenas estudo.
-  - sugestão do revisor: 'da Torá' ou 'da Lei' para melhor refletir o significado abrangente.
+  - problema: A glosa 'discípulos de' não traduz corretamente a estrutura do hebraico, onde deve ficar claro que é 'discípulos'.
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
 
-*di veatrá haden vedi vechol atar vaatár*
+*di veatrá hadên vedi vechol atar vaatár*
 
 Texto em português: **neste lugar e em todo e qualquer lugar**
 
 - **glosa 1** · *palavra*
   - trecho citado: `דִּי` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'דִּי' não se traduz como 'neste', mas sim como 'este' ou 'que'.
-  - sugestão do revisor: Considerar 'este'.
+  - problema: A palavra 'dí' significa 'que' ou 'onde', não 'neste'.
+  - sugestão do revisor: A glosa correta seria 'que' ou 'onde'.
 - **glosa 3** · *palavra*
   - trecho citado: `הָדֵין` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'הָדֵין' não significa 'e', mas sim 'este' ou 'este aqui'.
-  - sugestão do revisor: Remover 'e' ou considerar 'este'.
+  - problema: A palavra 'hadên' significa 'este' ou 'este aqui', não 'e'.
+  - sugestão do revisor: A glosa correta seria 'este'.
 - **glosa 6** · *palavra*
   - trecho citado: `אֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'אֲתַר' significa 'lugar' e não deve ser traduzida como 'e qualquer'.
-  - sugestão do revisor: Considerar 'qualquer' para a tradução mais apropriada.
-- **glosa 7** · *palavra*
-  - trecho citado: `וַאֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A expressão 'וַאֲתַר' não é 'lugar', mas deve ser reconhecida como 'lugar também' ou 'outra lugar'.
-  - sugestão do revisor: Ajustar para 'lugar' dependendo da necessidade na frase.
+  - problema: A palavra 'atar' significa 'lugar', não 'e qualquer'.
+  - sugestão do revisor: A glosa correta seria apenas 'lugar'.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá ve'imrú Amên*
 
 Texto em português: **e redenção vinda do seu Pai que está nos céus — e digam Amen**
 
-- **glosa 2** · *palavra*
-  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'vinda' não traduz adequadamente a preposição 'מִן', que significa 'de'.
-  - sugestão do revisor: 'de'.
-- **glosa 3** · *palavra*
-  - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'do' não traduz corretamente o termo 'קֳדָם', que significa 'diante de' ou 'na presença de'.
-  - sugestão do revisor: 'diante de' ou 'na presença de'.
 - **traducao** · *sentido*
-  - trecho citado: `"e redenção vinda do seu Pai que está nos céus — e digam Amen"`
-  - problema: A tradução 'redenção vinda do seu Pai' não reflete o sentido correto da frase em hebraico.
-  - sugestão do revisor: "e redenção diante de seu Pai que está nos céus — e digam Amen".
+  - trecho citado: `vinda`
+  - problema: A palavra 'vinda' não corresponde ao significado da palavra hebraica 'מִן', que significa 'de'.
+  - sugestão do revisor: substituir 'vinda' por 'de'.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá vear-á ve'imrú Amên*
 
 Texto em português: **e redenção vinda do seu Pai que está nos céus e na terra — e digam Amen**
 
+- **traducao** · *sentido*
+  - trecho citado: `redenção vinda do seu Pai que está nos céus`
+  - problema: A expressão 'redenção vinda' não reflete corretamente a construção da frase original em hebraico, que se refere à 'redenção' diretamente como uma ação que se provém 'do seu Pai' e não como um evento de 'vinda'.
+  - sugestão do revisor: sugiro usar 'e a redenção que vem do seu Pai que está nos céus'.
 - **glosa 2** · *palavra*
-  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'vinda' não é uma tradução apropriada para a preposição 'מִן'.
-  - sugestão do revisor: A tradução correta seria 'de'.
+  - trecho citado: `vinda`
+  - problema: A palavra 'vinda' não é a melhor escolha para o contexto, uma vez que o termo 'min' no hebraico significa 'de' ou 'do', e não expressa a ideia de movimento ou chegada que 'vinda' sugere.
+  - sugestão do revisor: sugiro usar 'que vem'.
+- **glosa 4** · *gramatica*
+  - trecho citado: `seu Pai`
+  - problema: A construção 'seu Pai' pode ser considerada ambígua, pois não está clara a que ou quem se refere. O hebraico usa especificamente 'Abuhon', indicando que se refere diretamente ao Pai que está nos céus.
+  - sugestão do revisor: sugiro usar 'do Pai'.
 
 #### וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon di vishmayá vear-á ve'imrú Amên*
 
 Texto em português: **e redenção vinda do seu Pai que está nos céus e na terra — e digam Amen**
 
 - **traducao** · *sentido*
   - trecho citado: `vinda`
-  - problema: A palavra 'vinda' não reflete o significado do termo hebraico 'מִן', que é 'de'.
-  - sugestão do revisor: A tradução correta seria 'e redenção de seu Pai que está nos céus e na terra — e digam Amen'.
+  - problema: A palavra 'vinda' não reflete corretamente o sentido da palavra hebraica 'פֻרְקָנָא', que se refere a 'redenção'.
+  - sugestão do revisor: Recomendo usar 'vinda da redenção' ou 'redenção vinda' dependendo do contexto.
+- **glosa 3** · *palavra*
+  - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
+  - problema: A tradução 'do' não é adequada aqui, uma vez que 'קֳדָם' refere-se a 'diante de' ou 'perante'.
+  - sugestão do revisor: Utilize a tradução como 'diante de' ou 'perante'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em português: **Que haja paz em abundância vinda dos céus**
 
 - **glosa 3** · *palavra*
   - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'em abundância' não é a melhor escolha para 'רַבָּא', que traduzido diretamente significa 'grande' ou 'muito'.
-  - sugestão do revisor: 'grande' ou 'muito'.
+  - problema: A palavra 'em abundância' não é uma tradução precisa de 'רַבָּא', que indica mais o sentido de 'grande' ou 'muito'.
+  - sugestão do revisor: Usar 'grande' ou 'abundante' em vez de 'em abundância'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em português: **Que haja paz em abundância vinda dos céus, e vida para nós e para todo o povo de Israel — e digam Amen**
 
-- **glosa 3** · *palavra*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'em abundância' não é uma tradução precisa do termo hebraico, que se refere a 'grande' ou 'maior'.
-  - sugestão do revisor: 'grande'
+- **traducao** · *sentido*
+  - trecho citado: `e para todo o povo`
+  - problema: A palavra 'povo' não está presente no texto hebraico, que se refere a 'todo Israel'.
+  - sugestão do revisor: Substituir por 'para todo Israel'.
 
 #### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*verêvach vehatsalá lanu ulechol amô Israel veimrú Amen*
+*verêvach vehatsalá lánu ulechol amô Israel ve'imrú Amên*
 
 Texto em português: **alívio e salvação, para nós e para todo o Seu povo Israel — e digam Amen**
 
 - **traducao** · *palavra*
   - trecho citado: `o Seu povo`
-  - problema: A expressão 'o Seu povo' não representa corretamente o hebraico, que se refere ao povo de Israel de maneira mais direta.
-  - sugestão do revisor: deve ser traduzido como 'para todo o povo de Israel'.
-
-#### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
-
-*hu berachamav yaassê shalom aleinu veal kol Israel veimrú Amen*
-
-Texto em português: **que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen**
-
-- **glosa 7** · *palavra*
-  - trecho citado: `"todo o povo"`
-  - problema: A expressão "todo o povo" não reflete corretamente a palavra hebraica, que se refere a "todo Israel".
-  - sugestão do revisor: "todo Israel"
-
-#### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
-
-*hu yaassê verachamav shalom aleinu veal kol Israel veimrú Amen*
-
-Texto em português: **que Ele, em Sua misericórdia, faça paz sobre nós e sobre todo o povo de Israel — e digam Amen**
-
-- **glosa 7** · *palavra*
-  - trecho citado: `todo o povo`
-  - problema: A interpretação da palavra 'כָּל' (kol) deve se referir a 'toda a Israel' e não 'todo o povo'.
-  - sugestão do revisor: 'toda Israel'
+  - problema: A expressão 'o Seu povo' sugere que se refere a apenas uma pessoa em vez de um grupo. O termo hebraico 'עַמּוֹ' se refere ao povo de forma mais geral, sem posse pessoal.
+  - sugestão do revisor: pode ser traduzido simplesmente como 'todo o povo' ou 'Seu povo'.
 
 #### עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Ossê shalom bimromav hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Ossê shalom bimro'máv Hu yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em português: **Aquele que faz paz em Suas alturas celestiais, que Ele faça a paz para nós e para todo seu povo de Israel — e digam Amen**
 
 - **glosa 9** · *palavra*
-  - trecho citado: `todo seu povo`
-  - problema: A expressão correta é 'todo o seu povo', pois requer o artigo definido 'o' antes de 'seu povo'.
-  - sugestão do revisor: 'todo o seu povo'
+  - trecho citado: `"todo seu povo"`
+  - problema: A expressão 'todo seu povo' não reflete a forma do hebraico.
+  - sugestão do revisor: deveria ser 'todo Israel'.
 
-#### וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
-
-*veyatsmách purkanêh vikarev meshichêh*
-
-Texto em português: **e que faça brotar Sua redenção e apresse a vinda de seu Mashiach**
-
-- **glosa 2** · *palavra*
-  - trecho citado: `פֻּרְקָנֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'Sua redenção' não está correta, pois 'פֻּרְקָנֵהּ' refere-se a 'sua salvação' ou 'sua libertação', que são conceitos mais precisos em contexto litúrgico.
-  - sugestão do revisor: 'sua salvação' ou 'sua libertação'
-
-### inglês — 16 entrada(s)
+### inglês — 15 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em inglês: **Exalted and sanctified be His great Name**
 
-- **glosa 3** · *sentido*
+- **glosa N** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A glosa não está completa e não reflete adequadamente a frase em hebraico.
-  - sugestão do revisor: 'His Name'
-
-#### וְיַמְלִיךְ מַלְכוּתֵהּ
-
-*veyamlich malchutêh*
-
-Texto em inglês: **and may He establish His kingdom**
-
-- **traducao** · *sentido*
-  - trecho citado: `"and may He establish His kingdom"`
-  - problema: A tradução de 'וְיַמְלִיךְ' como 'and may He establish' é uma interpretação imprópria, pois o verbo pode ser melhor traduzido como 'and may He reign' ou 'and may He make [His sovereignty] prevail'.
-
-#### וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
-
-*veyatsmách purkanêh vikarev meshichêh*
-
-Texto em inglês: **and may His redemption sprout and His Mashiach draw near**
-
-- **traducao** · *sentido*
-  - trecho citado: `His redemption sprout`
-  - problema: A palavra 'redemption' não está correta neste contexto, pois 'פּוּרְקָנֵהּ' se refere a 'liberação' ou 'salvação' em vez de 'redenção'.
-  - sugestão do revisor: um termo mais apropriado seria 'his salvation' ou 'his deliverance'.
+  - problema: A glosa 'be His great Name' não é correta, pois não está representando com precisão o significado de 'His name'.
+  - sugestão do revisor: 'His great Name' seria mais apropriado.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em inglês: **speedily and soon — and say amen**
 
-- **glosa 3** · *palavra*
-  - trecho citado: `קָרִיב` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'soon' não é a melhor tradução para 'קָרִיב', que tem um sentido mais imediato e urgente em contextos litúrgicos. 'Close' ou 'forthcoming' poderia capturar melhor o significado.
-  - sugestão do revisor: 'soon' poderia ser substituído por 'quickly' ou 'imminently'.
+- **traducao** · *sentido*
+  - trecho citado: `soon —`
+  - problema: A palavra 'soon' não traduz adequadamente a ideia do termo hebraico 'קָרִיב', que é mais precisamente 'próximo' ou 'em breve', se referindo a uma proximidade temporal.
+  - sugestão do revisor: 'in the near future' ou 'in a timely manner'
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em inglês: **May His great Name be blessed forever and for all eternity**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'His great Name' não é precisa; o significado literal é apenas 'Name', sem a conotação de 'grande'.
+  - problema: A glosa "His great Name" não é a tradução mais precisa. O termo "שֵׁם" geralmente significa apenas "nome", e "גָּדוֹל" é a palavra para "grande".
+- **glosa 6** · *palavra*
+  - trecho citado: `וּלְעָלְמֵי` *(citou a palavra hebraica de origem)*
+  - problema: A glosa "and for all" não representa completamente o significado de 'עָלְמֵי עָלְמַיָּא', que se refere a uma ideia de eternidade, e não apenas a uma generalidade de 'todos'.
+
+#### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
+
+*Yitbarêch veyishtabách veyitpaêr*
+
+Texto em inglês: **Blessed, praised and glorified be He**
+
+- **glosa 3** · *gramatica*
+  - trecho citado: `וְיִתְפָּאַר` *(citou a palavra hebraica de origem)*
+  - problema: A estrutura 'and glorified be He' não segue a construção correta em inglês.
+  - sugestão do revisor: A forma correta seria 'and glorified is He' ou 'and let Him be glorified'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em inglês: **May abundant peace from heaven, and good life, come upon us and upon all Israel — and say amen**
 
-- **glosa 3** · *sentido*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta não reflete o significado correto da palavra hebraica, que significa 'abundante' ou 'grande', referindo-se à paz.
-  - sugestão do revisor: 'abundant' ou 'great'
+- **glosa 2** · *palavra*
+  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra "abundant" não é uma tradução precisa de "שְׁלָמָא", que se refere à paz em um sentido geral e não à quantidade.
+  - sugestão do revisor: "peace"
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
-*veal talmidehon veal kol talmidei talmidehon*
+*veal talmidehôn veal kol talmidei talmidehôn*
 
 Texto em inglês: **and upon their disciples and all the disciples of their disciples**
 
 - **glosa 5** · *palavra*
   - trecho citado: `תַּלְמִידֵי` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'the disciples of' não corresponde corretamente à forma plural em hebraico.
-  - sugestão do revisor: Deve ser traduzido como 'disciples' sem o artigo definido, para refletir o sentido apropriado.
+  - problema: A palavra escolhida 'the disciples of' não reflete a construção correta do hebraico.
+  - sugestão do revisor: 'disciples' seria mais apropriado para manter a fluência e o sentido desejado da expressão.
+
+#### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
+
+*de'askín beoraytá kadishtá*
+
+Texto em inglês: **who engage in the holy Torah**
+
+- **glosa 2** · *palavra*
+  - trecho citado: `בְּאוֹרַיְתָא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta está incorreta, pois 'in the holy Torah' não captura o significado direto de 'בְּאוֹרַיְתָא', que é 'Torah'.
+  - sugestão do revisor: A glosa correta seria simplemente 'Torah'.
+- **glosa 3** · *palavra*
+  - trecho citado: `קַדִּשְׁתָּא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa está vazia e não traduz a palavra hebraica, que significa 'holy' ou 'sagrado'.
+  - sugestão do revisor: A glosa correta seria 'holy'.
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
 
-*di veatrá haden vedi vechol atar vaatár*
+*di veatrá hadên vedi vechol atar vaatár*
 
 Texto em inglês: **in this place and in every place**
 
 - **glosa 3** · *sentido*
   - trecho citado: `הָדֵין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia e não corresponde ao termo hebraico, que significa 'this' ou 'this one'.
-  - sugestão do revisor: Adicionar 'this' como glosa correspondente.
+  - problema: A glosa proposta não tem tradução.
+  - sugestão do revisor: "the present" ou "this".
 - **glosa 6** · *sentido*
   - trecho citado: `אֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia e não corresponde ao termo hebraico, que significa 'place'.
-  - sugestão do revisor: Adicionar 'place' como glosa correspondente.
+  - problema: A glosa proposta não tem tradução.
+  - sugestão do revisor: "place".
 
 #### יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
 
-*yehê lehon ulechon shelamá raba*
+*yehê lehôn ulchôn shelamá rabá*
 
 Texto em inglês: **may there be for them and for you abundant peace**
 
-- **glosa 4** · *palavra*
-  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'abundant' não reflete a simplicidade do termo hebraico 'שְׁלָמָא'.
+- **traduçao** · *palavra*
+  - trecho citado: `"abundant peace"`
+  - problema: A palavra 'abundant' não é uma tradução precisa para 'שְׁלָמָא' que se refere mais diretamente ao conceito de paz, sem conotações de abundância.
+  - sugestão do revisor: 'great peace' ou simplesmente 'peace'.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
 
-*vechayin arichin umezona revicha*
+*vechayín arichín umezoná revichá*
 
 Texto em inglês: **long life and abundant sustenance**
 
 - **glosa 2** · *palavra*
   - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa '"'"'" está ausente e necessita ser preenchida para refletir o sentido da palavra hebraica 'אֲרִיכִין'.
-  - sugestão do revisor: Uma glosa possível para 'אֲרִיכִין' seria 'long' ou 'lengthy'.
-- **glosa 4** · *palavra*
-  - trecho citado: `רְוִיחָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está ausente e precisa ser fornecida para expressar o significado de 'רְוִיחָא'.
-  - sugestão do revisor: Uma glosa possível para 'רְוִיחָא' seria 'abundance' ou 'wealth'.
+  - problema: A glosa para esta palavra está vazia e não apresenta a tradução correta.
+  - sugestão do revisor: "long"
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
 
-*vechayin arichin umezonei revichei*
+*vechayín arichín umezonêi revichei*
 
 Texto em inglês: **long life and abundant sustenance**
 
+- **glosa 1** · *palavra*
+  - trecho citado: `וְחַיִּין` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta não corresponde corretamente ao significado da palavra hebraica, que se refere a 'vida' no sentido de 'vida longa' ou saúde.
 - **glosa 2** · *palavra*
   - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta para 'אֲרִיכִין' está em falta.
-  - sugestão do revisor: Uma possível glosa seria 'long'.
+  - problema: A glosa proposta está vazia; não há uma correspondência fornecida para esta palavra.
 - **glosa 4** · *palavra*
   - trecho citado: `רְוִיחֵי` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta para 'רְוִיחֵי' está em falta.
-  - sugestão do revisor: Uma possível glosa seria 'profits' ou 'gain'.
+  - problema: A glosa proposta está vazia; não há uma correspondência fornecida para esta palavra.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em inglês: **May abundant peace come from heaven**
 
-- **glosa 3** · *palavra*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está ausente, não apresenta o significado da palavra.
-  - sugestão do revisor: O correto seria incluir 'abundant' como a tradução, já que 'רַבָּא' significa 'abundante'.
+- **glosa 2** · *palavra*
+  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'abundant' não é apropriada para a interpretação litúrgica, pois a tradução direta de 'שְׁלָמָא' é simplesmente 'peace'.
+  - sugestão do revisor: Ajustar a glosa para 'peace'.
+- **traducao** · *palavra*
+  - trecho citado: `"May abundant peace come from heaven"`
+  - problema: A palavra 'abundant' não é necessária e pode distorcer o significado pretendido.
+  - sugestão do revisor: Substitua por 'May peace come from heaven'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em inglês: **May abundant peace from heaven, and life, come upon us and upon all Israel — and say amen**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'abundant' não traduz corretamente 'שְׁלָמָא', que se refere a 'paz' de forma geral, sem implicar uma abundância específica.
-  - sugestão do revisor: 'peace' seria uma tradução mais precisa.
-- **glosa 6** · *palavra*
-  - trecho citado: `וְחַיִּים` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'life' não capta plenamente o significado contextual de 'חַיִּים', que é plural e pode significar 'vidas' ou 'vitalidade'.
-  - sugestão do revisor: 'lives' ou 'vitality' seria mais adequada.
-- **traducao** · *sentido*
-  - trecho citado: `may abundant peace from heaven, and life, come upon us and upon all Israel — and say amen`
-  - problema: A estrutura da frase é confusa, o que pode levar a um entendimento impreciso da intenção litúrgica. A frase deve enfatizar que a paz e a vida 'venham sobre nós' em um sentido mais direto.
-  - sugestão do revisor: Uma possível reestruturação seria: 'May abundant peace from heaven and life come upon us and all Israel — and let them say amen.'
+  - problema: A palavra 'abundant' não reflete o sentido correto do hebraico, que é simplesmente 'peace.'
+  - sugestão do revisor: 'peace'
 
 #### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
 
-*chayim vessavá vishuá venechamá veshezavá*
+*chayím vessavá vishuá venechamá veshezavá*
 
 Texto em inglês: **life, plenty, salvation, comfort and rescue**
 
 - **glosa 5** · *palavra*
   - trecho citado: `וְשֵׁיזָבָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'rescue' não é a melhor tradução no contexto litúrgico do hebraico 'שֵׁיזָבָא'.
-  - sugestão do revisor: A tradução mais apropriada seria 'abundance' ou 'sustenance'.
-
-#### וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
-
-*veyatsmách purkanêh vikarev meshichêh*
-
-Texto em inglês: **and may His redemption sprout and His Mashiach draw near**
-
-- **traducao** · *sentido*
-  - trecho citado: `His redemption sprout`
-  - problema: A palavra 'redemption' não é uma tradução adequada para 'פֻּרְקָנֵהּ', que se refere mais especificamente a 'liberação' ou 'salvação' em um contexto messiânico.
-  - sugestão do revisor: 'and may His liberation sprout' ou 'and may His salvation sprout'.
+  - problema: A tradução 'rescue' não é apropriada aqui; a palavra hebraica refere-se a 'abundância' ou 'prosperidade', não a 'resgate'.
+  - sugestão do revisor: Utilizar 'abundance' ou 'prosperity'.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
-*leela min kol birchatá shirata*
+*Leela min kol birchatá shiratá*
 
 Texto em inglês: **above all blessings and songs**
 
 - **traducao** · *palavra*
-  - trecho citado: `and songs`
-  - problema: A conjunção 'and' está incorreta, pois não está presente no hebraico.
-  - sugestão do revisor: A tradução correta deve ser apenas 'blessings and songs', sem 'and' antes de 'songs'.
+  - trecho citado: `songs`
+  - problema: O termo 'songs' não é adequado pois a palavra hebraica שִׁירָתָא se refere a 'canções' em um contexto mais específico de louvor ou liturgia.
+  - sugestão do revisor: Utilizar 'praises' ao invés de 'songs'.
 
-### espanhol — 14 entrada(s)
+### espanhol — 13 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em espanhol: **Exaltado y santificado sea Su gran Nombre**
 
-- **traducao** · *sentido*
-  - trecho citado: `"sea Su gran Nombre"`
-  - problema: A tradução não reflete corretamente o significado literal da frase em hebraico, que enfatiza a grandeza do Nome.
-  - sugestão do revisor: "que Su Nombre sea grande"
+- **glosa 3** · *palavra*
+  - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta não representa corretamente a palavra hebraica, pois 'sea Su gran Nombre' é uma tradução errônea.
+- **tradução** · *sentido*
+  - trecho citado: `Exaltado y santificado sea Su gran Nombre`
+  - problema: A tradução não reflete corretamente o sentido do hebraico, que indica uma benção ou invocação, e não uma simples menção.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em espanhol: **pronto y en breve — y decid amén**
 
-- **traducao** · *sentido*
-  - trecho citado: `pronto y en breve —`
-  - problema: A expressão 'pronto y en breve' não captura adequadamente o significado do hebraico, que implica uma expectativa de um tempo comum ou anunciado, mais do que apenas 'pronto'.
-  - sugestão do revisor: Uma tradução mais fiel pode ser 'na hora certa e em breve'.
 - **glosa 1** · *palavra*
   - trecho citado: `בַּעֲגָלָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'pronto' não reflete bem a conotação do original que está mais próximo de 'de forma rápida' ou 'rapidamente'.
-  - sugestão do revisor: Considerar 'rapidamente' como uma alternativa.
+  - problema: A glosa 'pronto' não corresponde de forma adequada ao sentido de 'בַּעֲגָלָא', que é mais precisamente traduzido como 'rapidamente' ou 'de forma acelerada'.
+  - sugestão do revisor: Utilizar 'rapidamente'.
 - **glosa 3** · *palavra*
   - trecho citado: `קָרִיב` *(citou a palavra hebraica de origem)*
-  - problema: A expressão 'en breve' é uma interpretação válida, mas não é a única forma de traduzir. 'Próximo' é mais literal e pode se encaixar melhor no contexto.
-  - sugestão do revisor: Usar 'próximo' como alternativa.
+  - problema: A glosa 'en breve —' não capta completamente o sentido de 'קָרִיב', que é mais diretamente traduzido como 'próximo' ou 'imediatamente'.
+  - sugestão do revisor: Utilizar 'próximo'.
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em espanhol: **Que Su gran Nombre sea bendecido por siempre y para toda la eternidad**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'Su gran Nombre' não é a mais adequada para o sentido litúrgico, pois 'שְׁמֵהּ' se refere mais diretamente a 'Seu Nome'.
-  - sugestão do revisor: 'Su Nombre'
+  - problema: A glosa proposta 'Su gran Nombre' não é precisa, já que a palavra hebraica refere-se apenas a 'Nome' e não contém o sentido de 'gran'.
 
 #### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
 
-*Yitbarêch veyishtabach veyitpaar*
+*Yitbarêch veyishtabách veyitpaêr*
 
 Texto em espanhol: **Bendito, alabado y glorificado sea**
 
-- **glosa 3** · *palavra*
+- **traducao** · *gramatica*
   - trecho citado: `y glorificado sea`
-  - problema: A expressão "y glorificado sea" é desnecessária e não corresponde à estrutura da frase hebraica, que deve ser mais direta.
-  - sugestão do revisor: "y glorificado" ou simplesmente "sea glorificado" em vez de "y glorificado sea".
+  - problema: A construção "y glorificado sea" não é gramaticalmente correta em espanhol, pois a frase não segue as normas de concordância em relação ao sujeito que a precede.
+
+#### וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
+
+*veyitromám veyitnassê veyit'hadár*
+
+Texto em espanhol: **exaltado, elevado y honrado sea**
+
+- **glosa 3** · *palavra*
+  - trecho citado: `וְיִתְהַדָּר` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'honrado' não capta completamente o sentido do hebraico, que implica em 'glorificado' ou 'esplendoroso'.
+  - sugestão do revisor: Considerar usar 'glorificado' ou 'esplendoroso'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em espanhol: **Que gran paz del cielo y buena vida vengan sobre nosotros y sobre todo Israel — y decid amén**
 
-- **traducao** · *sentido*
-  - trecho citado: `"gran paz"`
-  - problema: A palavra 'gran' não captura o sentido da palavra hebraica 'רַבָּא', que significa 'grande' ou 'maior'.
-  - sugestão do revisor: Substituir 'gran' por 'grande' para melhor refletir o sentido.
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'paz' utilizada no lugar de 'שְׁלָמָא' está correta, mas o adjetivo 'gran' é inadequado ao contexto litúrgico.
-  - sugestão do revisor: Considerar 'grande paz' ou 'paz abundante'.
-- **traducao** · *gramatica*
-  - trecho citado: `"decid amén"`
-  - problema: A construção "decid amén" não segue a construção adequada em espanhol para um convite ou instrução. A forma correta respeitando o contexto litúrgico seria 'digan amén'.
-  - sugestão do revisor: Modificar para 'y digan amén'.
+  - problema: A palavra 'paz' geralmente é entendida como 'shalom'. A tradução 'gran paz' é inusitada para esse contexto.
+- **glosa 6** · *palavra*
+  - trecho citado: `חַיִּים` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'vida' no contexto litúrgico hebraico geralmente é traduzida como 'vida' ou 'existência'. Além disso, o adjetivo 'buena' pode não ser a melhor escolha para um contexto litúrgico.
+- **traducao** · *sentido*
+  - trecho citado: ` — y decid amén`
+  - problema: A expressão de convocação pode ser mais precisa em português. 'Y decid' sugere um comando, mas no contexto litúrgico, é uma expressão de participação.
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
-*veal talmidehon veal kol talmidei talmidehon*
+*veal talmidehôn veal kol talmidei talmidehôn*
 
 Texto em espanhol: **y sobre sus discípulos y sobre todos los discípulos de sus discípulos**
 
 - **glosa 5** · *palavra*
   - trecho citado: `תַּלְמִידֵי` *(citou a palavra hebraica de origem)*
-  - problema: A tradução "los discípulos de" não reflete corretamente a estrutura do hebraico, que seria melhor traduzido como "discípulos" apenas, sem o "de".
-  - sugestão do revisor: "los discípulos"
+  - problema: A glosa não reflete corretamente a construção de 'talmidei talmidehôn' que indica 'discípulos de seus discípulos', em vez de 'los discípulos de'.
+  - sugestão do revisor: sugerir 'los discípulos de sus discípulos'
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
 
-*di veatrá haden vedi vechol atar vaatár*
+*di veatrá hadên vedi vechol atar vaatár*
 
 Texto em espanhol: **en este lugar y en todo lugar**
 
 - **glosa 2** · *palavra*
   - trecho citado: `בְאַתְרָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa escolhida 'este lugar' está incorreta. 'בְאַתְרָא' deve ser traduzido como 'lugar' ou 'naquele lugar', sem a expressão 'este'.
-  - sugestão do revisor: 'lugar' ou 'en el lugar'.
-- **glosa 6** · *palavra*
-  - trecho citado: `אֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia. 'אֲתַר' se refere a 'lugar', e uma glosa correspondente é necessária.
-  - sugestão do revisor: 'lugar'.
+  - problema: A glosa "este lugar" não é correta, pois o termo significa 'lugar' em geral e não é específico. A glosa deve ser mais abrangente.
+  - sugestão do revisor: "lugar" ou "lugar específico"
 
 #### יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
 
-*yehê lehon ulechon shelamá raba*
+*yehê lehôn ulchôn shelamá rabá*
 
 Texto em espanhol: **que haya para ellos y para vosotros gran paz**
 
 - **glosa 4** · *palavra*
   - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'gran paz' não é a interpretação mais adequada no contexto litúrgico; a palavra 'שְׁלָמָא' é mais frequentemente traduzida como 'paz' ou 'shalom'.
-  - sugestão do revisor: Considerar utilizar apenas 'paz'.
-- **glosa 5** · *palavra*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia e não oferece uma tradução apropriada para a palavra 'רַבָּא', que significa 'grande'.
-  - sugestão do revisor: Adicionar 'grande' como glosa.
-
-#### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
-
-*vechayin arichin umezonei revichei*
-
-Texto em espanhol: **vida larga y sustento abundante**
-
-- **glosa 3** · *palavra*
-  - trecho citado: `וּמְזוֹנֵי` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'y sustento' é uma combinação inadequada, pois a conjunção 'y' não deve ser incluída na glosa.
-  - sugestão do revisor: A glosa correta seria apenas 'sustento'.
-- **traducao** · *palavra*
-  - trecho citado: `"y sustento"`
-  - problema: A expressão no contexto litúrgico deve ser sem a conjunção, refletindo mais a estrutura do hebraico.
-  - sugestão do revisor: A tradução correta seria 'sustento' ou apenas 'y sustento' sem unir a mesmas.
-
-#### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
-
-*ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen*
-
-Texto em espanhol: **y redención de ante su Padre que está en los cielos y en la tierra — y decid amén**
-
-- **traducao** · *sentido*
-  - trecho citado: `y redención de ante su Padre que está en los cielos y en la tierra —`
-  - problema: A expressão 'de ante su Padre' é ambígua e pode não refletir a conexão direta indicada em 'min kodam avuhon'.
-  - sugestão do revisor: Considere 'y redención delante de su Padre' para maior clareza.
-- **glosa 6** · *palavra*
-  - trecho citado: `y en la tierra —`
-  - problema: A palavra 'en' pode ser considerada inadequada para um contexto litúrgico, onde 'sobre' pode ser mais apropriada.
-  - sugestão do revisor: Use 'y sobre la tierra'.
+  - problema: A palavra 'gran' não é a melhor escolha para expressar a ideia de paz no contexto litúrgico.
+  - sugestão do revisor: Uma opção melhor poderia ser 'paz' ou 'paz abundante', considerando o sentido maior que a palavra שְׁלָמָא pode transmitir.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em espanhol: **Que venga gran paz del cielo**
 
-- **tradução** · *palavra*
-  - trecho citado: `"Que venga"`
-  - problema: A expressão "Que venga" não captura corretamente o sentido do verbo hebraico que sugere uma invocação ou desejo, algo que deve ser traduzido de forma mais apropriada.
-  - sugestão do revisor: "Que haya" seria uma opção mais adequada para transmitir corretamente o sentido da frase.
-- **glosa 2** · *palavra*
-  - trecho citado: `"gran paz"`
-  - problema: A expressão "gran paz" não é a mais adequada para o registro litúrgico e pode ser considerada um pouco informal. A tradução mais precisa de "שְׁלָמָא" nesse contexto é 'paz'.
-  - sugestão do revisor: "paz".
+- **traducao** · *sentido*
+  - trecho citado: `Que venga gran paz del cielo`
+  - problema: A tradução sugere que a paz vem 'del cielo', mas o hebraico expressa que a paz deve ser 'de' ou 'vindoura do céu', o que confere um sentido diferente.
+  - sugestão do revisor: 'Que venha grande paz dos céus'
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em espanhol: **Que vengan gran paz del cielo, y vida, sobre nosotros y sobre todo Israel — y decid amén**
 
-- **glosa 2** · *palavra*
-  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'gran' não é uma tradução apropriada para 'שְׁלָמָא', que deveria ser traduzida como 'paz'.
-  - sugestão do revisor: 'paz'
+- **traducao** · *sentido*
+  - trecho citado: `"Que vengan gran paz del cielo, y vida, sobre nosotros y sobre todo Israel — y decid amén"`
+  - problema: A frase 'Que vengan gran paz' não corresponde corretamente ao sentido da expressão hebraica 'יְהֵא שְׁלָמָא רַבָּא', que implica um desejo ou uma invocação, não um comando.
+  - sugestão do revisor: 'Que haya gran paz' ou 'Que se dé gran paz'.
+- **glosa 3** · *sentido*
+  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa ' ' (vazia) para a palavra 'רַבָּא' não está adequada, pois ela significa 'grande' ou 'muito' e deve ser traduzida.
+  - sugestão do revisor: 'grande'.
+- **glosa 4** · *sentido*
+  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
+  - problema: A glosa para a preposição 'מִן' está ausente e, portanto, não traduz o sentido do hebraico. A palavra 'מִן' significa 'de'.
+  - sugestão do revisor: 'de'.
 
 #### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
 
-*chayim vessavá vishuá venechamá veshezavá*
+*chayím vessavá vishuá venechamá veshezavá*
 
 Texto em espanhol: **vida, abundancia, salvación, consuelo y rescate**
 
 - **glosa 5** · *palavra*
   - trecho citado: `וְשֵׁיזָבָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'rescate' não é uma tradução precisa para 'שֵׁיזָבָא', que se relaciona mais com 'salvação' ou 'redenção' em um contexto litúrgico.
+  - problema: A palavra 'rescate' não é a tradução mais apropriada para o termo hebraico 'שֵׁיזָבָא', que conota mais um sentido de 'redempção' ou 'libertação'.
 
 #### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*verêvach vehatsalá lanu ulechol amô Israel veimrú Amen*
+*verêvach vehatsalá lánu ulechol amô Israel ve'imrú Amên*
 
 Texto em espanhol: **alivio y salvación, para nosotros y para todo Su pueblo Israel — y decid amén**
 
-- **traducao** · *palavra*
-  - trecho citado: `alivio`
-  - problema: A palavra 'alivio' não captura completamente o sentido de 'רֶוַח', que está mais relacionado a 'espaço' ou 'vazão' no sentido de uma libertação ou alívio amplo.
-  - sugestão do revisor: Considerar usar 'liberación' ou 'alivio amplio' para refletir melhor o significado.
+- **traducao** · *sentido*
+  - trecho citado: `Su pueblo`
+  - problema: A palavra 'Su' não é uma tradução apropriada para עַמּוֹ, que significa 'Seu povo' em vez de 'Su povo'.
+  - sugestão do revisor: Deveria ser 'para todo Su pueblo' ou 'para todo o povo dele'.
+- **glosa 5** · *palavra*
+  - trecho citado: `עַמּוֹ` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta não reflete a possessão implícita de Deus sobre o povo, sendo mais adequada uma referência mais explícita como 'Deus' ao invés de um pronome possessivo.
+  - sugestão do revisor: 'pueblo de Dios' ou 'Su pueblo'.
 
-### francês — 16 entrada(s)
+### francês — 15 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em francês: **Exalté et sanctifié soit Son grand Nom**
 
 - **traducao** · *sentido*
   - trecho citado: `soit Son grand Nom`
-  - problema: A expressão não reflete corretamente o significado do hebraico, que enfatiza a grandiosidade do Nome em vez de ser uma construção de 'seu grandioso Nome'.
-  - sugestão do revisor: 'Son grand Nom' poderia ser simplesmente traduzido como 'Son Nom est grand' para refletir melhor a intenção original.
+  - problema: A tradução sugere que 'Son' refere-se a 'grande Nome', quando na verdade 'grand' refere-se a 'Rabá', não a 'Son'.
+  - sugestão do revisor: 'soit Son grand Nom' deveria ser 'soit le grand Nom'.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em francês: **rapidement et bientôt — et dites amen**
 
+- **traducao** · *sentido*
+  - trecho citado: `rapidement et bientôt —`
+  - problema: A expressão 'rapidement et bientôt' não captura o significado de 'בַּעֲגָלָא' que se refere a algo que acontecerá de forma imediata e com um sentido de urgência, não apenas rapidamente e logo.
+  - sugestão do revisor: Considerar uma tradução como 'immédiatement et bientôt' para melhor refletir o sentido.
 - **glosa 1** · *palavra*
   - trecho citado: `בַּעֲגָלָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'rapidement' não capta o sentido de 'בַּעֲגָלָא', que significa 'com rapidez' ou 'rapidamente' em um sentido mais abrangente.
-  - sugestão do revisor: 'avec rapidité' ou 'rapidement' poderiam ser mais apropriadas.
+  - problema: A palavra 'rapidement' não é uma tradução precisa de 'בַּעֲגָלָא'.
+  - sugestão do revisor: Utilizar 'immédiatement' para uma melhor adequação ao contexto.
 - **glosa 3** · *palavra*
   - trecho citado: `קָרִיב` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'bientôt —' sugere um sentido de 'em breve', mas 'קָרִיב' pode ser interpretado mais como 'imediatamente' ou 'rapidamente'.
-  - sugestão do revisor: 'immédiatement' ou simplesmente 'près'.
+  - problema: A palavra 'bientôt' expressa uma ideia de proximidade no tempo, mas 'קרוב' (karov) poderia ser mais apropriado a 'bientôt', enquanto 'הקרוב' (ha'karov) está mais relacionado a 'próximo'. A expressão não é fiel ao sentido.
+  - sugestão do revisor: Optar por 'bientôt' ou reavaliar a escolha linguística para melhor referência.
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em francês: **Que Son grand Nom soit béni à jamais et pour toute l'éternité**
 
-- **traducao** · *palavra*
-  - trecho citado: `Son grand Nom`
-  - problema: A expressão 'Son grand Nom' não reflete o sentido literal de 'שְׁמֵהּ', que significa 'Seu Nome'. O adjetivo 'grand' não é apropriado em um contexto litúrgico ou para traduzir a reverência que envolve o Nome de Deus.
-  - sugestão do revisor: A tradução correta deveria ser 'Son Nom'.
+- **glosa 2** · *palavra*
+  - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
+  - problema: A tradução correta de 'שְׁמֵהּ' é 'Son Nom', não 'Son grand Nom'.
+  - sugestão do revisor: Que Son Nom soit béni à jamais et pour toute l'éternité.
 
 #### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
 
-*Yitbarêch veyishtabach veyitpaar*
+*Yitbarêch veyishtabách veyitpaêr*
 
 Texto em francês: **Béni, loué et glorifié soit-Il**
 
-- **glosa 3** · *sentido*
+- **traducao** · *palavra*
   - trecho citado: `et glorifié soit-Il`
-  - problema: A expressão 'soit-Il' não é apropriada neste contexto litúrgico e não reflete o significado correto da palavra hebraica.
-  - sugestão do revisor: Deve ser 'et glorifié'.
+  - problema: A expressão não é uma tradução fiel do hebraico, que indica uma invocação e não uma afirmação de sujeito.
+  - sugestão do revisor: devia ser 'et qu'Il soit glorifié'.
 
 #### וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
 
-*veyitromam veyitnasse veyithadar*
+*veyitromám veyitnassê veyit'hadár*
 
 Texto em francês: **exalté, élevé et honoré soit-Il**
 
 - **glosa 3** · *gramatica*
   - trecho citado: `et honoré soit-Il`
-  - problema: A expressão "soit-Il" não está corretamente estruturada em francês litúrgico, onde normalmente se usa uma construção diferente para expressar essa ideia.
-  - sugestão do revisor: Substituir por "et honoré" ou "et qu'Il soit honoré".
+  - problema: A estrutura da frase não está correta em francês, pois a ordem das palavras não é apropriada para um registro litúrgico.
+  - sugestão do revisor: Honoré soit-Il, et élevé.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
 
-*leela min kol birchatá veshiratá*
+*Leela min kol birchatá veshiratá*
 
 Texto em francês: **au-dessus de toutes les bénédictions et de tous les chants**
 
 - **traducao** · *palavra*
-  - trecho citado: `chants`
-  - problema: O termo 'chants' não é apropriado no registro litúrgico e não reflete adequadamente o sentido da palavra hebraica 'שִׁירָתָא'.
-  - sugestão do revisor: Utilizar 'louanges' ou 'chants' como alternativa mais adequada.
+  - trecho citado: `au-dessus de toutes les bénédictions et de tous les chants`
+  - problema: A tradução utiliza 'chants', mas deveria manter a consistência com 'chants' onde o termo apropriado seria 'louanges' para se referir a músicas litúrgicas.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em francês: **Que du ciel viennent une paix abondante et une bonne vie, sur nous et sur tout Israël — et dites amen**
 
 - **traducao** · *palavra*
   - trecho citado: `une paix`
-  - problema: A palavra "paix" não reflete completamente o sentido de "שְׁלָמָא", que em um contexto litúrgico pode ser interpretada como "bem-estar" ou "tranquilidade".
-- **traducao** · *gramatica*
-  - trecho citado: `que du ciel viennent une paix abondante`
-  - problema: O uso do verbo no plural "viennent" está incorreto, já que o sujeito é representado por "une paix" (feminino singular).
-- **glosa 1** · *palavra*
-  - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa "Que du ciel viennent" não está correta, pois a forma correta do verbo deve garantir concordância com o sujeito, que é singular.
+  - problema: A palavra 'paix' não reflete adequadamente o significado do termo hebraico 'שְׁלָמָא', que se refere a uma paz completa, incluindo harmonia e bem-estar.
+  - sugestão do revisor: 'une paix complète' ou 'la paix'}]}  
 
 #### עַל יִשְׂרָאֵל וְעַל רַבָּנָן
 
-*Al Israel veal rabanan*
+*Al Israel veal rabanán*
 
 Texto em francês: **Sur Israël et sur les maîtres**
 
 - **traducao** · *palavra*
   - trecho citado: `les maîtres`
-  - problema: O termo 'maîtres' não é apropriado no contexto litúrgico; deveria refletir um termo que se refere a 'rabbis' de maneira mais respeitosa.
-  - sugestão do revisor: 'les rabbins' seria uma melhor escolha para se referir aos líderes religiosos.
-
-#### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
-
-*veal talmidehon veal kol talmidei talmidehon*
-
-Texto em francês: **et sur leurs disciples et sur tous les disciples de leurs disciples**
-
-- **traducao** · *palavra*
-  - trecho citado: `tous les disciples de`
-  - problema: A expressão 'les disciples de' não reflete o plural da frase original, que indica especificamente 'les disciples de leurs disciples'.
-  - sugestão do revisor: de leurs disciples
+  - problema: O termo 'les maîtres' não corresponde exatamente ao sentido da palavra hebraica 'רַבָּנָן', que se refere mais especificamente a 'rabinos' ou 'os professores', geralmente no contexto religioso.
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
 
-*di veatrá haden vedi vechol atar vaatár*
+*di veatrá hadên vedi vechol atar vaatár*
 
 Texto em francês: **en ce lieu et en tout lieu**
 
 - **glosa 2** · *palavra*
   - trecho citado: `בְאַתְרָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta 'ce lieu' não corresponde ao sentido da palavra hebraica, que se refere a 'local' de forma mais genérica.
-  - sugestão do revisor: 'un lieu' seria uma opção mais correta, já que 'ce' implica uma especificidade que não está presente no original.
-- **glosa 5** · *palavra*
-  - trecho citado: `בְכָל` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta 'en' não é apropriada, pois a tradução correta deveria refletir a noção de 'em todos os lugares' em vez de 'em'.
-  - sugestão do revisor: 'dans' seria uma correção mais adequada.
+  - problema: A glosa proposta não reflete corretamente o significado do hebraico.
 
-#### וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
+#### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
 
-*vechayin arichin umezona revicha*
+*vechayín arichín umezonêi revichei*
 
 Texto em francês: **une longue vie et une subsistance abondante**
 
 - **glosa 1** · *palavra*
   - trecho citado: `וְחַיִּין` *(citou a palavra hebraica de origem)*
-  - problema: A palavra escolhida não reflete a tradução literal do hebraico, que indica 'vidas' no plural e pode ferir a compreensão da expressão litúrgica correta.
-  - sugestão do revisor: 'des vies' para refletir o plural.
+  - problema: A glosa proposta não corresponde corretamente à palavra hebraica; 'וְחַיִּין' refere-se a 'vida' no plural, enquanto a glosa sugere 'une longue vie' que é singular.
+  - sugestão do revisor: 'des vies' ou 'une vie' dependendo do contexto desejado.
 - **glosa 4** · *palavra*
-  - trecho citado: `רְוִיחָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'abondante' pode ser trocada por um termo mais apropriado no contexto litúrgico.
-  - sugestão do revisor: 'prospérité' ou 'générosité' para melhor refletir o sentido de abundância.
-
-#### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
-
-*vechayin arichin umezonei revichei*
-
-Texto em francês: **une longue vie et une subsistance abondante**
-
-- **glosa 2** · *sentido*
-  - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta não cobre o significado da palavra hebraica, que se refere a 'longos', mas não se traduz como 'longue' de modo isolado.
-  - sugestão do revisor: A glosa poderia ser 'longs' ou 'longue vie'.
+  - trecho citado: `רְוִיחֵי` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta 'abondante' não reflete corretamente o termo hebraico, que poderia ser interpretado como 'prosperidade' ou 'abundância' em um sentido mais amplo.
+  - sugestão do revisor: 'en abondance' para refletir melhor o sentido.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em francês: **Que vienne du ciel une paix abondante**
 
 - **traducao** · *sentido*
   - trecho citado: `"Que vienne du ciel une paix abondante"`
-  - problema: A tradução expressa a ideia de que a paz vem do céu, enquanto a expressão hebraica se refere a uma paz abundante que já existe no céu, ou seja, não sugere que essa paz está chegando, mas sim que se reconhece a grandeza da paz celestial.
-  - sugestão do revisor: "Que haja uma paz abundante do céu" ou "Que a grande paz venha do céu".
+  - problema: A tradução não reflete corretamente o sentido do hebraico, que sugere uma invocação desejando que uma paz abundante venha dos céus.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em francês: **Que viennent du ciel une paix abondante, et la vie, sur nous et sur tout Israël — et dites amen**
 
 - **traducao** · *sentido*
-  - trecho citado: `"Que viennent du ciel une paix abondante, et la vie, sur nous et sur tout Israël —"`
-  - problema: O trecho "Que viennent du ciel" não reflete corretamente o hebraico, que é uma expressão de desejo, e não de um ato de origem a partir do céu.
-  - sugestão do revisor: Sugestão: "Que haja".
+  - trecho citado: `Que viennent du ciel une paix abondante`
+  - problema: A tradução sugere que a paz vem do céu, enquanto o hebraico diz 'que seja uma grande paz do céu', o que é uma invocação.
+  - sugestão do revisor: Que seja uma grande paz do céu.
+- **glosa 1** · *sentido*
+  - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa é uma interpretação inadequada, pois não expressa a invocação corretamente.
+  - sugestão do revisor: Que seja.
 
 #### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*verêvach vehatsalá lanu ulechol amô Israel veimrú Amen*
+*verêvach vehatsalá lánu ulechol amô Israel ve'imrú Amên*
 
 Texto em francês: **soulagement et délivrance, pour nous et pour tout Son peuple Israël — et dites amen**
 
 - **glosa 5** · *palavra*
   - trecho citado: `עַמּוֹ` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'Son' não é correta, pois o termo se refere ao povo de Israel de maneira geral e não é possessivo em relação a Deus nesse contexto.
-  - sugestão do revisor: Usar 'pour tout son peuple'.
+  - problema: A tradução "Son peuple" não reflete que 'עַמּוֹ' se refere ao povo de Israel especificamente, e não de forma genérica.
+  - sugestão do revisor: "peuple d'Israël"
+
+#### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+
+*Hu berachamáv yaassê shalom alêinu veal kol amô Israel ve'imrú Amên*
+
+Texto em francês: **qu'Il fasse, dans Sa miséricorde, la paix sur nous et sur tout Son peuple Israël — et dites amen**
+
+- **traducao** · *palavra*
+  - trecho citado: `qu'Il fasse, dans Sa miséricorde,`
+  - problema: A construção 'qu'Il fasse, dans Sa miséricorde,' não reflete apropriadamente o verbo 'יַעֲשֶׂה', que deve ser traduzido de maneira mais direta, sem incluir a circunstância de misericórdia nesta parte.
+  - sugestão do revisor: 'qu'Il fasse' seria mais apropriado como 'qu'Il fasse simplement' ou equivalente
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
-*leela min kol birchatá shirata*
+*Leela min kol birchatá shiratá*
 
 Texto em francês: **au-dessus de toutes les bénédictions et de tous les chants**
 
 - **traducao** · *palavra*
   - trecho citado: `et de tous les chants`
-  - problema: A palavra 'chants' não reflete corretamente o hebraico 'שִׁירָתָא', que significa 'cantos' ou 'canções'.
+  - problema: A conjunção 'et' (e) está incorreta no contexto, pois não faz parte da expressão hebraica que combina as bênçãos e os cânticos.
+  - sugestão do revisor: Substituir 'et de' por 'de' para manter a correção: 'de tous les chants'.
 
-### italiano — 22 entrada(s)
+### italiano — 21 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em italiano: **Esaltato e santificato sia il Suo grande Nome**
 
 - **traducao** · *sentido*
   - trecho citado: `sia il Suo grande Nome`
-  - problema: A tradução não preserva a estrutura do hebraico, que sugere que o Nome deve ser exaltado e santificado, e não apenas declarado.
-  - sugestão do revisor: "Esaltato e santificato sia il Suo grande Nome"
+  - problema: A tradução não reflete corretamente o significado de 'רַבָּא', que significa 'grande' ou 'maior', e não se refere a 'Nome' no singular.
+  - sugestão do revisor: 'sia il Suo grande Nome' poderia ser ajustado para 'sia il Suo Nome grande' para manter o sentido de 'Nome grande'.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em italiano: **presto e in breve — e dite amen**
 
-- **traducao** · *sentido*
+- **traducao** · *palavra*
+  - trecho citado: `presto`
+  - problema: A palavra 'presto' em italiano geralmente se refere a algo que acontece rapidamente, mas não captura o sentido de 'em breve', que é o que 'בַּעֲגָלָא' implica neste contexto.
+  - sugestão do revisor: Uma opção melhor seria 'rapidamente' ou 'in tempo', dependendo do sentido desejado.
+- **glosa 3** · *palavra*
   - trecho citado: `in breve —`
-  - problema: A expressão 'in breve' não reflete adequadamente o significado do termo hebraico 'קָרִיב', que remete mais ao contexto de 'próximo' ou 'imediato'.
+  - problema: A expressão 'in breve' não é a melhor escolha; isso implica uma breve extensão de tempo e não se alinha completamente com a palavra hebraica.
+  - sugestão do revisor: Considerar usar 'a breve scadenza' para ter uma tradução mais precisa.
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em italiano: **Sia il Suo grande Nome benedetto per sempre e per tutta l'eternità**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A glosa "il Suo grande Nome" não é apropriada; ela não representa a simplicidade da palavra hebraica, que significa apenas 'Nome'.
-  - sugestão do revisor: "Nome"
+  - problema: A glosa "il Suo grande Nome" interpreta incorretamente o termo, que deveria ser um simples "Nome" em vez de "il Suo grande Nome".
+
+#### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
+
+*Yitbarêch veyishtabách veyitpaêr*
+
+Texto em italiano: **Benedetto, lodato e glorificato sia**
+
+- **traducao** · *gramatica*
+  - trecho citado: `e glorificato sia`
+  - problema: A estrutura 'e glorificato sia' é incorreta em italiano, pois 'sia' deve ser posicionado antes de 'glorificato' quando utilizado como um verbo no subjuntivo em tal construção.
+  - sugestão do revisor: A forma correta seria 'sia glorificato'.
 
 #### וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
 
-*veyitromam veyitnasse veyithadar*
+*veyitromám veyitnassê veyit'hadár*
 
 Texto em italiano: **esaltato, elevato e onorato sia**
 
-- **traducao** · *palavra*
-  - trecho citado: `"esaltato,"`
-  - problema: A palavra 'esaltato' não é apropriada para o registro litúrgico em italiano e não traduz bem o sentido de 'וְיִתְרוֹמָם'.
-  - sugestão do revisor: Usar 'innalzato' seria mais adequado.
-
-#### וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא
-
-*veyitaleh veyithalal shemê decudshá berich hu*
-
-Texto em italiano: **e innalzato e celebrato sia il Nome del Santo, benedetto Egli sia**
-
-- **traducao** · *palavra*
-  - trecho citado: `benedetto`
-  - problema: A tradução 'benedetto' não é a mais apropriada neste contexto; 'benedetto' sugere mais uma benção, enquanto o sentido mais preciso do hebraico é que o Santo é 'bendito' ou 'louvado'.
-  - sugestão do revisor: 'benedetto' poderia ser trocado por 'benedetto sia' ou 'sia benedetto'.
-
-#### לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
-
-*leela min kol birchatá veshiratá*
-
-Texto em italiano: **al di sopra di tutte le benedizioni e i canti**
-
-- **traducao** · *palavra*
-  - trecho citado: `e i canti`
-  - problema: A palavra 'canti' não é a tradução mais apropriada para 'שִׁירָתָא' no contexto litúrgico, onde o sentido é mais próximo de 'melodie' ou 'canti religiosi'.
-  - sugestão do revisor: Usar 'canti religiosi' ou 'melodie'.
-
-#### תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן
-
-*tushbechata venechamata dáamiran bealma veimrú Amen*
-
-Texto em italiano: **lodi e consolazioni che si recitano nel mondo — e dite amen**
-
-- **traducao** · *palavra*
-  - trecho citado: `lodi`
-  - problema: A palavra "lodi" é uma tradução imprópria para o registro litúrgico; em contextos litúrgicos, o termo "lode" seria mais apropriado.
-  - sugestão do revisor: "lodi" poderia ser substituído por "lode".
+- **glosa 3** · *palavra*
+  - trecho citado: `וְיִתְהַדָּר` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'onorato' em italiano não é a melhor escolha nesse contexto litúrgico.
+  - sugestão do revisor: sugeriria 'glorificato' como uma opção mais apropriada.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em italiano: **Che una grande pace dal cielo e una buona vita vengano su di noi e su tutto Israele — e dite amen**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'una grande pace' pode ser considerada uma tradução impropria, pois a palavra 'שְׁלָמָא' refere-se ao conceito de paz em um sentido mais abrangente e reverente.
-  - sugestão do revisor: A glosa mais apropriada seria 'pace' ou 'shalom'.
+  - problema: A tradução 'una grande paz' não reflete corretamente o significado de 'שְׁלָמָא', que implica 'paz' de maneira mais simples, sem o adjetivo 'grande'.
+  - sugestão do revisor: 'paz'
 - **glosa 6** · *palavra*
   - trecho citado: `חַיִּים` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'una buona vita' traduz de forma inadequada o termo 'חַיִּים', que envolve o conceito de vida em geral e não apenas de boa vida.
-  - sugestão do revisor: A glosa deveria ser 'vita'.
-- **traducao** · *sentido*
-  - trecho citado: `una buona vita`
-  - problema: A expressão 'una buona vita' não reflete o sentido pleno do hebraico como uma benção, apenas enfatizando a vida de forma restrita e pessoal.
-  - sugestão do revisor: Uma melhor tradução poderia ser 'e una vita benedetta'.
+  - problema: A tradução 'e uma boa vida' não é precisa; 'חַיִּים' significa 'vida' no sentido de 'viva' ou 'vida boa', sem a necessidade do adjetivo 'buona'.
+  - sugestão do revisor: 'e vita'
 
 #### הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em italiano: **faccia Egli la pace su di noi e su tutto Israele — e dite amen**
 
 - **traducao** · *palavra*
   - trecho citado: `faccia Egli`
-  - problema: A expressão 'faccia Egli' não é adequada para o registro litúrgico e não reflete corretamente o termo hebraico.
-  - sugestão do revisor: 'Egli farà' ou 'Egli porti', que são mais apropriados para um contexto litúrgico.
-- **glosa 6** · *sentido*
-  - trecho citado: `su tutto`
-  - problema: A expressão 'su tutto' altera o sentido da frase, que deve enfatizar a inclusão de todo o povo, não como uma visão de cobertura.
-  - sugestão do revisor: 'sul totale di'.
+  - problema: A escolha da palavra 'faccia' é inadequada para o registro litúrgico e não reflete corretamente o verbo hebraico 'יַעֲשֶׂה' que significa 'faça'.
+  - sugestão do revisor: Sugestão: 'Egli faccia' ou apenas 'faccia' como uma forma mais litúrgica.
 
 #### עַל יִשְׂרָאֵל וְעַל רַבָּנָן
 
-*Al Israel veal rabanan*
+*Al Israel veal rabanán*
 
 Texto em italiano: **Su Israele e sui maestri**
 
-- **traducao** · *palavra*
+- **traducao** · *gramatica*
   - trecho citado: `e sui maestri`
-  - problema: A palavra 'maestri' não é a tradução mais precisa para 'רַבָּנָן', que se refere mais especificamente a 'rabbini' ou 'Rabinos', que é o termo usado em contextos litúrgicos.
-  - sugestão do revisor: 'e i rabbini' seria mais apropriado.
+  - problema: A forma 'sui' não é adequada aqui, pois 'maestri' é plural. O correto seria usar 'dei' para indicar 'e dei maestri' que significa 'e dos mestres'.
+  - sugestão do revisor: 'dei maestri'
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
-*veal talmidehon veal kol talmidei talmidehon*
+*veal talmidehôn veal kol talmidei talmidehôn*
 
 Texto em italiano: **e sui loro discepoli e su tutti i discepoli dei loro discepoli**
 
 - **traducao** · *palavra*
-  - trecho citado: `"e sui"`
-  - problema: A expressão 'sui' é imprópria no contexto litúrgico e deve ser tratada no plural como 'loro'.
-  - sugestão do revisor: "e ai loro"
+  - trecho citado: `e sui`
+  - problema: A expressão "e sui" não é adequada no contexto litúrgico, pois o termo hebraico refere-se a 'sopra' ou 'sobre', não 'sui'.
+  - sugestão do revisor: Deveria ser 'e sui discepoli' traduzido como 'e sui discepoli' ou 'sui'. Um exemplo correto poderia ser: 'e sui discepoli'.
+
+#### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
+
+*de'askín beoraytá kadishtá*
+
+Texto em italiano: **che si dedicano alla santa Torà**
+
+- **glosa 2** · *palavra*
+  - trecho citado: `בְּאוֹרַיְתָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'santa' não reflete adequadamente o termo hebraico 'Torà', que representa a Torá, o que requer um substantivo específico em vez de um adjetivo.
+  - sugestão do revisor: Utilizar 'Torà' ao invés de 'santa' como glosa correspondente.
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
 
-*di veatrá haden vedi vechol atar vaatár*
+*di veatrá hadên vedi vechol atar vaatár*
 
 Texto em italiano: **in questo luogo e in ogni luogo**
 
-- **glosa 2** · *sentido*
+- **glosa 1** · *palavra*
+  - trecho citado: `דִּי` *(citou a palavra hebraica de origem)*
+  - problema: A palavra דִּי deve ser traduzida como 'in' ou 'che', porém a glosa 'in' não é adequada para um contexto litúrgico em italiano.
+- **glosa 2** · *palavra*
   - trecho citado: `בְאַתְרָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa "questo luogo" está imprecisa e reduz o significado do termo hebraico.
-  - sugestão do revisor: "luogo" (lugar) seria mais apropriado, pois 'בְאַתְרָא' significa 'no lugar' de modo geral e não se limita a 'questo'.
-- **glosa 6** · *sentido*
-  - trecho citado: `אֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia e não fornece tradução para a palavra hebraica.
-  - sugestão do revisor: Adicionar "luogo" (lugar) como tradução para 'אֲתַר', que significa 'lugar'.
+  - problema: A palavra בְאַתְרָא refere-se a 'este lugar' e deve ser 'in questo luogo', mas a glosa está correta.
+- **glosa 4** · *palavra*
+  - trecho citado: `וְדִי` *(citou a palavra hebraica de origem)*
+  - problema: A palavra וְדִי é 'e', mas o uso de 'e' está apropriado, embora o uso alternativo de 'che' possa ser considerado.
+- **traducao** · *sentido*
+  - trecho citado: `in questo luogo e in ogni luogo`
+  - problema: A tradução 'in questo luogo e in ogni luogo' não do sentido completo, pois deveria incluir 'che' de acordo com a glosa do hebraico.
 
 #### יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
 
-*yehê lehon ulechon shelamá raba*
+*yehê lehôn ulchôn shelamá rabá*
 
 Texto em italiano: **che vi sia per loro e per voi grande pace**
 
 - **traducao** · *palavra*
   - trecho citado: `grande pace`
-  - problema: O termo 'grande' não é uma tradução apropriada para o hebraico 'שְׁלָמָא', que se refere à 'paz' em si e não à sua grandeza.
-  - sugestão do revisor: Utilizar apenas 'pace' seria mais apropriado, resultando em 'che vi sia per loro e per voi pace'.
+  - problema: A palavra 'grande' não está presente no texto hebraico e não corresponde à tradução precisa de שְׁלָמָא.
+  - sugestão do revisor: Substituir 'grande pace' por 'pace' para refletir melhor o texto original.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
 
-*vechayin arichin umezonei revichei*
+*vechayín arichín umezonêi revichei*
 
 Texto em italiano: **vita lunga e sostentamento abbondante**
 
 - **traducao** · *palavra*
   - trecho citado: `e sostentamento`
-  - problema: A palavra 'sostentamento' é inadequada no contexto litúrgico e não é a tradução mais apropriada para 'מְזוֹנֵי', que se refere mais a 'nutrição' ou 'sustento'.
-  - sugestão do revisor: substituir por 'nutrimento' ou 'sustento'.
+  - problema: A palavra 'sostentamento' é inadequada para o registro litúrgico, onde 'mezonot' se refere a 'provisões' ou 'nutrição' de uma maneira mais abrangente.
+  - sugestão do revisor: 'nutrimento' ou 'sostentamento nutrizionale'
 
 #### מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*min kodam marê shemayá vear-á veimrú Amen*
+*min kodám marê shemayá vear-á ve'imrú Amên*
 
 Texto em italiano: **da davanti al Signore del cielo e della terra — e dite amen**
 
 - **traducao** · *sentido*
-  - trecho citado: `"da davanti al Signore del cielo e della terra — e dite amen"`
-  - problema: A expressão "da davanti al" não reflete corretamente o sentido de "מִן קֳדָם", que sugere mais a ideia de 'diante de' do que uma localização 'da frente'.
-  - sugestão do revisor: Substituir por 'davanti al'.
+  - trecho citado: `e della terra —`
+  - problema: A frase sugere que só se deve dizer 'amen' em relação à terra, o que não reflete adequadamente o sentido do hebraico que une 'cielo' e 'terra'.
+  - sugestão do revisor: 'e dite amen'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em italiano: **Che venga una grande pace dal cielo**
 
 - **glosa 2** · *palavra*
   - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'una grande pace' é inadequada pois a palavra 'שְׁלָמָא' se traduz simplesmente como 'paz'.
+  - problema: A palavra 'una grande pace' é uma tradução incompleta, pois o termo 'שְׁלָמָא' refere-se a 'paz' de forma mais geral e não necessariamente 'grande'. No contexto litúrgico, é mais preciso traduzir como 'paz' sem o adjetivo.
   - sugestão do revisor: 'paz'
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em italiano: **Che vengano dal cielo una grande pace, e la vita, su di noi e su tutto Israele — e dite amen**
 
 - **traducao** · *sentido*
   - trecho citado: `Che vengano dal cielo una grande pace,`
-  - problema: A tradução não captura corretamente o significado de 'יְהֵא', que implica 'que haja' e não 'che vengano'.
-  - sugestão do revisor: 'Che ci sia'.
-- **glosa 1** · *palavra*
-  - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta não corresponde ao sentido literal da palavra hebraica.
-  - sugestão do revisor: 'Che ci sia'.
-- **glosa 3** · *palavra*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta está em branco e não reflete a palavra hebraica.
-  - sugestão do revisor: 'grande'.
-- **glosa 4** · *palavra*
-  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta está em branco e não reflete a palavra hebraica.
-  - sugestão do revisor: 'da'.
-- **glosa 5** · *palavra*
-  - trecho citado: `שְׁמַיָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta está em branco e não reflete a palavra hebraica.
-  - sugestão do revisor: 'cielo'.
-- **glosa 10** · *palavra*
-  - trecho citado: `יִשְׂרָאֵל` *(citou a palavra hebraica de origem)*
-  - problema: 'Israele —' é uma interrupção não necessária na frase.
-  - sugestão do revisor: 'Israele' sem a pontuação extra.
+  - problema: A tradução de 'יְהֵא' não é 'Che vengano', mas sim 'Che sia', que se refere a um desejo ou bênção de paz, e não especificamente à vinda.
 
 #### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
 
-*chayim vessavá vishuá venechamá veshezavá*
+*chayím vessavá vishuá venechamá veshezavá*
 
 Texto em italiano: **vita, abbondanza, salvezza, consolazione e soccorso**
 
 - **glosa 5** · *palavra*
   - trecho citado: `וְשֵׁיזָבָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'soccorso' não é uma tradução adequada para 'שֵׁיזָבָא', que se refere mais a um sentido de 'suporte' ou 'ajuda'.
+  - problema: A palavra escolhida, 'soccorso', não é uma tradução adequada para 'שֵׁיזָבָא', que significa 'ajuda' ou 'sustento'.
 
-#### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+#### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*verêvach vehatsalá lanu ulechol amô Israel veimrú Amen*
+*Hu berachamáv yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
-Texto em italiano: **sollievo e salvezza, per noi e per tutto il Suo popolo Israele — e dite amen**
+Texto em italiano: **faccia Egli, nella Sua misericordia, la pace su di noi e su tutto Israele — e dite amen**
 
-- **traducao** · *palavra*
-  - trecho citado: `il Suo popolo`
-  - problema: A expressão 'il Suo popolo' é uma escolha palavras imprópria, pois o termo hebraico עַמּוֹ (amô) refere-se diretamente ao povo de Israel, e 'Suoi' pode levar a uma interpretação mais ampla. Uma tradução mais precisa seria 'il Suo popolo Israele', que reflete melhor o sentido original.
-- **traducao** · *gramatica*
-  - trecho citado: `e per tutto`
-  - problema: A expressão 'e per tutto' requer o uso da preposição 'del' antes de 'Suo popolo', para que a frase esteja gramaticalmente correta em italiano.
-  - sugestão do revisor: 'e per tutto il Suo popolo'
+- **traducao** · *sentido*
+  - trecho citado: `faccia Egli,`
+  - problema: A tradução 'faccia Egli,' sugere uma ação de um sujeito, mas a forma hebraica é mais uma invocação, se alguém está pedindo a Deus que Ele faça algo. A estrutura em italiano não reflete adequadamente o pedido.
+  - sugestão do revisor: 'Egli faccia,' ou 'Possa Egli fare,' para manter a intenção de súplica.
 
 #### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu berachamav yaassê shalom aleinu veal kol amô Israel veimrú Amen*
+*Hu berachamáv yaassê shalom alêinu veal kol amô Israel ve'imrú Amên*
 
 Texto em italiano: **faccia Egli, nella Sua misericordia, la pace su di noi e su tutto il Suo popolo Israele — e dite amen**
 
-- **traducao** · *palavra*
-  - trecho citado: `faccia Egli,`
-  - problema: A expressão 'faccia Egli' não está em um registro litúrgico adequado e soa como uma construção incorrecta em italiano.
-  - sugestão do revisor: Sugere-se usar 'Egli faccia' para manter o formalismo.
+- **traducao** · *sentido*
+  - trecho citado: `faccia Egli, nella Sua misericordia, la pace su di noi e su tutto il Suo popolo Israele — e dite amen`
+  - problema: A tradução sugere erroneamente que a ação de fazer a paz é de Deus, mas não está claro que a mesma é uma bênção que deve ser 'feita' por Ele, e a introdução do 'faccia' leva a uma ambiguidade na ação.
+  - sugestão do revisor: Sugestão: 'Egli, nella Sua misericordia, faccia la pace su di noi e su tutto il Suo popolo Israele — e dite amen'
 
 #### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê verachamav shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê verachamáv shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em italiano: **faccia Egli, nella Sua misericordia, la pace su di noi e su tutto Israele — e dite amen**
 
 - **traducao** · *palavra*
-  - trecho citado: `nella Sua misericordia,`
-  - problema: A palavra 'misericordia' é inadequada para o registro litúrgico e para o contexto do termo hebraico, que se refere a 'compaixão' ou 'benevolência' que tem um tom mais amplo e mais profundo em contextos religiosos.
-  - sugestão do revisor: 'nel Suo amore' ou 'nella Sua compassione'.
+  - trecho citado: `faccia Egli,`
+  - problema: A expressão não é adequada para o registro litúrgico. O termo 'faccia' pode ser considerado informal ou não apropriado para uma oração.
+  - sugestão do revisor: Sugiro usar 'Egli faccia'.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
-*leela min kol birchatá shirata*
+*Leela min kol birchatá shiratá*
 
 Texto em italiano: **al di sopra di tutte le benedizioni e i canti**
 
-- **traducao** · *palavra*
-  - trecho citado: `e i canti`
-  - problema: A conjunção 'e' não está presente no texto hebraico e deve ser omitida.
-  - sugestão do revisor: "al di sopra di tutte le benedizioni e canti"
+- **glosa 4** · *palavra*
+  - trecho citado: `בִּרְכָתָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra escolhida 'le benedizioni' pode ser considerada informal; o termo mais apropriado no registro litúrgico seria 'le benedizioni' no singular.
+  - sugestão do revisor: Considerar 'la benedizione'.
 
-### alemão — 32 entrada(s)
+### alemão — 34 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em alemão: **Erhoben und geheiligt werde Sein großer Name**
 
 - **traducao** · *sentido*
   - trecho citado: `werde Sein großer Name`
-  - problema: A expressão não reflete corretamente o sentido de 'Sein großer Name'. A tradução deveria enfatizar que o nome é santificado, não apenas que será grande.
-  - sugestão do revisor: 'Sein großer Name sei geheiligt'
+  - problema: A expressão não reflete corretamente a intenção do hebraico, que é uma invocação para que o grande nome de Deus seja exaltado e santificado, não uma mera declaração.
+  - sugestão do revisor: Uma alternativa mais precisa seria 'Sein großer Name werde erhoben und geheiligt'.
 
 #### בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ
 
@@ -1173,753 +1018,765 @@ Texto em alemão: **Erhoben und geheiligt werde Sein großer Name**
 
 Texto em alemão: **in der Welt, die Er nach Seinem Willen erschuf**
 
-- **glosa 3** · *sentido*
-  - trecho citado: `בְרָא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução está vazia, o que não reflete o significado do hebraico.
+- **traducao** · *sentido*
+  - trecho citado: `"in der Welt, die Er nach Seinem Willen erschuf"`
+  - problema: A tradução não captura completamente o significado do termo 'כִרְעוּתֵהּ', que se refere mais especificamente a 'Sua vontade' ou 'pelo que Ele quis'.
+  - sugestão do revisor: "in der Welt, die Er nach Seinem Willen erschuf" poderia ser alterado para "in der Welt, die Er nach Seiner Absicht erschuf", para enfatizar melhor a intenção.
+- **glosa 4** · *sentido*
+  - trecho citado: `כִרְעוּתֵהּ` *(citou a palavra hebraica de origem)*
+  - problema: A glosa 'Er nach Seinem Willen erschuf' não reflete adequadamente o sentido de 'כִרְעוּתֵהּ', que é mais sobre 'Sua vontade' em um sentido mais profundo do que 'Willen'.
+  - sugestão do revisor: Alterar a glosa para 'nach Seiner Absicht' para maior precisão.
 
 #### וְיַמְלִיךְ מַלְכוּתֵהּ
 
-*veyamlich malchutêh*
+*veyamlích malchutêh*
 
 Texto em alemão: **und Er lasse Sein Reich erstehen**
 
-- **traducao** · *sentido*
-  - trecho citado: `und Er lasse Sein Reich erstehen`
-  - problema: A expressão 'Sein Reich erstehen' não captura adequadamente o sentido de 'málchut', que é 'Reino', mas a criação ou ressurgimento de um reino não é o que o hebraico sugere.
-  - sugestão do revisor: 'und er lasse sein Reich regieren' ou 'und er kröne sein Reich'.
+- **glosa 2** · *palavra*
+  - trecho citado: `Sein Reich erstehen`
+  - problema: A palavra 'erstehen' não captura corretamente o sentido de 'reino' no contexto litúrgico e pode ser melhor interpretada como 'Regierung' ou 'Herrschaft'.
 
 #### וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
 
-*veyatsmách purkanêh vikarev meshichêh*
+*veyatsmách purkanêh vikarêv meshichêh*
 
 Texto em alemão: **und Er lasse Seine Erlösung sprießen und bringe Seinen Maschiach nah**
 
 - **glosa 2** · *palavra*
-  - trecho citado: `פּוּרְקָנֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'Erlösung' não é apropriada, pois 'Purkan' geralmente se refere a 'salvação' ou 'redenção' em um contexto litúrgico.
-  - sugestão do revisor: 'Seine Rettung sprießen' ou 'Seine Erlösung' podem ser opções melhores, mas o uso de 'Rettung' pode ser mais alinhado ao sentido original.
+  - trecho citado: `Seine Erlösung sprießen`
+  - problema: O termo 'Erlösung' não é o mais adequado no contexto litúrgico; 'Erlösung' se refere a 'redenção', enquanto 'purkan' geralmente se refere a 'libertação' ou 'salvação'.
+  - sugestão do revisor: 'Seine Erlösung' poderia ser substituído por 'Seine Rettung' ou 'Sein Heil', para melhor refletir o sentido adequado.
 - **traducao** · *sentido*
-  - trecho citado: `und bringe Seinen Maschiach nah`
-  - problema: A expressão 'nah' (perto) não está presente no hebraico, podendo gerar confusão quanto à proximidade do Messias.
-  - sugestão do revisor: Deveria ser 'und bringe Seinen Maschiach' sem o 'nah'.
+  - trecho citado: `und Er lasse Seine Erlösung sprießen`
+  - problema: A parte 'sprießen' não transmite com precisão o sentido do hebraico, que tem a conotação de 'crescer' ou 'florir', não se limitando a uma ideia de 'germinar'.
+  - sugestão do revisor: 'und Er lasse Seine Rettung wachsen' ou 'und Er lasse Seine Rettung gedeihen' poderia ser mais apropriado.
 
 #### וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל
 
-*uvechayê dechol beit Israel*
+*uvechayê dechol bêt Israel*
 
 Texto em alemão: **und im Leben des ganzen Hauses Israel**
 
-- **traducao** · *palavra*
-  - trecho citado: `des ganzen`
-  - problema: A palavra 'ganzen' é um adjetivo que, embora possa ser usada em outros contextos, não é a melhor escolha para traduzir o substantivo coletivo 'Hauses' de forma litúrgica. A expressão correta em contextos litúrgicos geralmente utiliza uma forma mais específica e reverente.
-  - sugestão do revisor: 'des gesamten' para uma tradução mais precisa e adequada.
+- **glosa 3** · *palavra*
+  - trecho citado: `בֵּית` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'Hauses' não é adequada no contexto litúrgico; 'Haus' é um termo mais neutro em alemão que pode não transmitir a conotação de 'casa' em um sentido comunitário ou espiritual.
+  - sugestão do revisor: Utilizar 'Haus' em vez de 'Hauses'.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em alemão: **bald und in naher Zeit — und sprecht Amen**
 
-- **traducao** · *sentido*
-  - trecho citado: `bald und in naher Zeit —`
-  - problema: A expressão 'bald und in naher Zeit' não captura adequadamente o sentido do hebraico, que implica 'em breve' ou 'rapidamente' em um contexto mais imediato.
-  - sugestão do revisor: Uma tradução mais adequada seria 'bald' ou 'in naher Zeit' isoladamente, mas mantendo a ideia de 'em breve'.
 - **glosa 1** · *palavra*
   - trecho citado: `בַּעֲגָלָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'bald' não é uma tradução precisa do termo hebraico 'בַּעֲגָלָא', que se refere mais a um conceito de 'rapidamente' ou 'em breve'.
-  - sugestão do revisor: Considerar 'in Kürze' ou 'bald' que possa encaixar melhor no contexto.
+  - problema: A palavra 'bald' não captura o significado precisa do termo hebraico, que implica um sentido de 'rapidamente' ou 'em breve'.
+  - sugestão do revisor: 'bereit' ou 'bald' com mais ênfase em 'em breve'.
 - **glosa 3** · *palavra*
   - trecho citado: `קָרִיב` *(citou a palavra hebraica de origem)*
-  - problema: 'in naher Zeit —' não é a tradução exata para 'קָרִיב', que significa 'próximo' ou 'imediato' em vez de um tempo aproximado.
-  - sugestão do revisor: Utilizar 'bald' ou 'kurz' para capturar o sentido de proximidade no tempo.
+  - problema: A expressão 'in naher Zeit' poderia ser mais diretamente traduzida como 'na próxima época' ou similar que reflete o tempo iminente. 
+
+#### וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
+
+*veyitromám veyitnassê veyit'hadár*
+
+Texto em alemão: **erhoben, erhöht und geehrt sei Er**
+
+- **glosa 3** · *palavra*
+  - trecho citado: `וְיִתְהַדָּר` *(citou a palavra hebraica de origem)*
+  - problema: A tradução 'und geehrt sei Er' não corresponde adequadamente ao sentido da palavra hebraica, que implica em honra ou glória de forma mais profunda.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
 
-*leela min kol birchatá veshiratá*
+*Leela min kol birchatá veshiratá*
 
 Texto em alemão: **über alle Segnungen und Lieder hinaus**
 
 - **traducao** · *palavra*
   - trecho citado: `und Lieder hinaus`
-  - problema: A expressão 'hinaus' não está presente no texto hebraico original e altera o sentido.
-  - sugestão do revisor: A tradução correta seria 'und Lieder' sem 'hinaus'.
+  - problema: A palavra 'hinaus' está incorretamente adicionada ao final da tradução, não refletindo o sentido do hebraico.
+  - sugestão do revisor: substituir por 'und Lieder' apenas.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em alemão: **Möge großer Friede vom Himmel und gutes Leben über uns und ganz Israel kommen — und sprecht Amen**
 
-- **glosa 2** · *palavra*
+- **glosa 2** · *sentido*
   - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'großer Friede' não é precisa, pois 'שְׁלָמָא' é uma forma de 'paz' e não implica necessariamente o caráter de 'grande' como na tradução.
+  - problema: A glosa traduz "שְׁלָמָא" como "großer Friede", mas no contexto litúrgico significa apenas "paz".
+  - sugestão do revisor: "Frieden" seria uma tradução mais adequada.
 - **glosa 6** · *palavra*
   - trecho citado: `וְחַיִּים` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'gutes Leben' não capta corretamente o significado de 'חַיִּים', que significa 'vida' no sentido geral, sem o adjetivo 'gutes'.
-- **traducao** · *sentido*
+  - problema: A glosa traduz "וְחַיִּים" como "gutes Leben", que não é a interpretação mais comum. A palavra 'חיים' é geralmente traduzida como 'vida' no sentido de 'vida boa ou feliz' no contexto litúrgico.
+  - sugestão do revisor: "Leben" seria uma tradução mais apropriada para um contexto litúrgico.
+- **traducao** · *gramatica*
   - trecho citado: `— und sprecht Amen`
-  - problema: A parte '— und sprecht Amen' não corresponde ao hebraico, que implica um comando mais forte ou uma convocação a 'dizer Amém', indicando uma ação em vez de simplesmente um encorajamento.
+  - problema: A tradução final não está gramaticalmente correta, já que a forma 'sprecht' é uma forma do plural e não se refere ao que está implícito para todos.
+  - sugestão do revisor: "— und sagen Amen" seria a forma correta para manter o sentido coletivo.
 
 #### עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
 
-*Ossê shalom bimromav*
+*Ossê shalom bimro'máv*
 
 Texto em alemão: **Der Frieden stiftet in Seinen Höhen**
 
-- **glosa 1** · *sentido*
+- **traducao** · *sentido*
+  - trecho citado: `Der Frieden stiftet`
+  - problema: A tradução proposta sugere uma ação de 'estabelecer' ou 'fundar' a paz, mas a palavra hebraica עֹשֶׂה (osê) significa 'fazer' ou 'realizar', que é diferente de 'estabelecer'.
+  - sugestão do revisor: Um tradução mais adequada seria 'Der Frieden, der in Seinen Höhen gemacht wird' ou simplesmente 'Der Frieden'.
+- **glosa 1** · *palavra*
   - trecho citado: `עֹשֶׂה` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'Der' não traduz corretamente 'עֹשֶׂה', que significa 'fazer' ou 'aquele que faz'.
-  - sugestão do revisor: 'der Frieden stiftet' poderia ser substituído por 'der, der Frieden macht'.
+  - problema: A glosa proposta 'Der' não corresponde ao significado da palavra hebraica, que significa 'aquele que faz' ou 'fazendo'.
+  - sugestão do revisor: Uma glosa mais apropriada seria 'Der Machende' ou simplesmente 'Der, der macht'.
 - **glosa 2** · *palavra*
   - trecho citado: `שָׁלוֹם` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'Frieden stiftet' é imprópria; 'שָׁלוֹם' significa 'paz', mas 'stiften' não é a melhor escolha para expressar o ato de trazer paz no contexto litúrgico.
-  - sugestão do revisor: Usar apenas 'Frieden', para manter o significado de paz.
-- **glosa 3** · *gramatica*
-  - trecho citado: `בִּמְרוֹמָיו` *(citou a palavra hebraica de origem)*
-  - problema: A expressão 'in Seinen Höhen' não corresponde ao hebraico que indica um contexto de altitudes espirituais ou exaltadas.
-  - sugestão do revisor: Uma alternativa mais apropriada poderia ser 'in den Höhen'.
+  - problema: A glosa proposta 'Frieden stiftet' implica uma ação que não está presente no termo original.
+  - sugestão do revisor: A glosa correta seria 'Frieden', sem adicionar uma ação.
 
 #### הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em alemão: **Er stifte Frieden über uns und ganz Israel — und sprecht Amen**
 
-- **traducao** · *palavra*
-  - trecho citado: `stifte`
-  - problema: A palavra 'stifte' é inadequada para o registro litúrgico e não é o verbo correto para 'fazer' no contexto religioso. O termo mais apropriado seria 'schaffe' ou 'jetzt'.
-  - sugestão do revisor: Er schaffe Frieden über uns und ganz Israel — und sprecht Amen
+- **glosa 2** · *palavra*
+  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'stifte' não é a escolha mais adequada para um contexto litúrgico, onde seria preferível um verbo como 'gewähren' ou 'bringen'.
+- **glosa 6** · *palavra*
+  - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
+  - problema: A tradução 'ganz' não captura corretamente o sentido da palavra 'כָּל', que significa 'todo' ou 'toda a'.
 
 #### עַל יִשְׂרָאֵל וְעַל רַבָּנָן
 
-*Al Israel veal rabanan*
+*Al Israel veal rabanán*
 
 Texto em alemão: **Über Israel und über die Gelehrten**
 
 - **glosa 3** · *palavra*
-  - trecho citado: `וְעַל` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta "und über" não é uma tradução apropriada, pois a palavra 'וְ' (ve) no contexto não significa 'und über' de forma coordenativa. Em hebraico, 'וְ' adiciona um sentido de continuação ou ampliação de um pensamento, enquanto a tradução para o alemão deveria refletir isso de forma mais adequada.
-  - sugestão do revisor: A sugestão seria usar apenas 'und' para manter o sentido correto.
+  - trecho citado: `und über`
+  - problema: A palavra 'und' não é uma tradução adequada para a conjunção que está presente no hebraico.
+  - sugestão do revisor: A conjunção correta deveria ser apenas 'und', sem a preposição 'über'.
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
-*veal talmidehon veal kol talmidei talmidehon*
+*veal talmidehôn veal kol talmidei talmidehôn*
 
 Texto em alemão: **und über ihre Schüler und alle Schüler ihrer Schüler**
 
-- **traducao** · *palavra*
-  - trecho citado: `תַּלְמִידֵי` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'Schüler' não reflete corretamente o plural de 'talmid', que deve ser traduzido como 'Schüler' em plural. A tradução proposta foi correta, mas a frase final 'Schüler ihrer Schüler' repete o termo inadequadamente.
-  - sugestão do revisor: Uma melhor tradução seria 'Schüler' ou 'Schüler von Schülern', o que seria mais apropriado.
+- **traducao** · *sentido*
+  - trecho citado: `ihre Schüler`
+  - problema: A tradução "ihre Schüler" não reflete a pluralidade implícita na expressão original, onde se refere a mais de um grupo de alunos, incluindo os alunos dos alunos.
+  - sugestão do revisor: A tradução correta seria "ihre Schüler und die Schüler ihrer Schüler" para manter o significado plural.
+- **glosa 2** · *sentido*
+  - trecho citado: `„ihre Schüler“`
+  - problema: A glosa "ihre Schüler" não inclui a pluralidade do conceito, pois se refere apenas a um grupo específico de alunos.
+  - sugestão do revisor: A glosa precisa ser ajustada para incluir a ideia de "alle ihre Schüler".
 
 #### וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא
 
-*veal kol man daaskin beoraytá*
+*veal kol man de'askín beoraytá*
 
 Texto em alemão: **und über alle, die sich der Tora widmen**
 
-- **glosa 3** · *palavra*
-  - trecho citado: `מָאן` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'die sich' não traduz corretamente 'מָאן'. 'מָאן' refere-se a 'quem' ou 'todos os que', e portanto deve ser traduzido de forma mais adequada.
-  - sugestão do revisor: 'wer' ou 'alle, die'
+- **traducao** · *sentido*
+  - trecho citado: `der Tora widmen`
+  - problema: A expressão "der Tora widmen" não reflete corretamente o significado de 'מָאן דְּעָסְקִין בְּאוֹרַיְתָא' que se refere a 'quem se ocupa com a Torá'.
 
 #### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
 
-*daaskin beoraytá kadishtá*
+*de'askín beoraytá kadishtá*
 
 Texto em alemão: **die sich der heiligen Tora widmen**
 
-- **traducao** · *sentido*
-  - trecho citado: `der heiligen Tora widmen`
-  - problema: A tradução fornece uma interpretação que muda o foco original da frase hebraica, que implica mais sobre a ação de se dedicar ou estudar a Tora em vez de simplesmente 'dedicar-se'.
-  - sugestão do revisor: 'die sich mit der heiligen Tora beschäftigen' seria uma tradução mais precisa.
+- **glosa 1** · *palavra*
+  - trecho citado: `דְּעָסְקִין` *(citou a palavra hebraica de origem)*
+  - problema: A expressão 'die sich' é inadequada, pois o termo hebraico se refere a 'aqueles que ocupam-se' ou 'que estão engajados em'.
+  - sugestão do revisor: 'die sich beschäftigen' ou 'die sich widmen'
+
+#### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
+
+*di veatrá hadên vedi vechol atar vaatár*
+
+Texto em alemão: **an diesem Ort und an jedem Ort**
+
+- **glosa 2** · *palavra*
+  - trecho citado: `בְאַתְרָא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa escolhida não captura o significado correto da palavra hebraica, que se refere ao lugar específico.
+- **glosa 6** · *sentido*
+  - trecho citado: `אֲתַר` *(citou a palavra hebraica de origem)*
+  - problema: A glosa não possui tradução, o que faz falta na compreensão do hebraico.
 
 #### יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
 
-*yehê lehon ulechon shelamá raba*
+*yehê lehôn ulchôn shelamá rabá*
 
 Texto em alemão: **möge ihnen und euch großer Friede zuteilwerden**
 
-- **tradução** · *palavra*
+- **glosa 4** · *sentido*
+  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta está em branco, quando deveria refletir o significado de 'Paz'.
+  - sugestão do revisor: A glosa correta poderia ser 'Frieden'.
+- **traducao** · *palavra*
   - trecho citado: `großer Friede zuteilwerden`
-  - problema: A expressão 'zuteil werden' é uma construção incomum e não se encaixa no contexto litúrgico. Além disso, a palavra 'зuteil' é desnecessária e pode causar confusão.
-  - sugestão do revisor: Uma sugestão melhor seria usar simplesmente 'möge Frieden' ou 'möge euch Frieden zuteil werden'.
+  - problema: A expressão 'zuteilwerden' não é uma escolha apropriada para o registro litúrgico.
+  - sugestão do revisor: Uma opção melhor poderia ser 'Frieden' ou 'großer Frieden'.
 
 #### יְהֵא לָנָא וּלְהוֹן וּלְכוֹן חִנָּא וְחִסְדָּא וְרַחֲמֵי
 
-*yehê lána ul'hon ulechon chiná vechisdá verachamei*
+*yehê lána ul'hôn ulchôn chiná vechisdá verachamei*
 
 Texto em alemão: **möge uns, ihnen und euch Gnade, Güte und Erbarmen zuteilwerden**
 
-- **glosa 7** · *palavra*
-  - trecho citado: `וְרַחֲמֵי` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'und Erbarmen zuteilwerden' não é semântica nem gramaticalmente apropriada no contexto litúrgico.
-  - sugestão do revisor: A tradução correta seria 'und Barmherzigkeit'.
+- **traducao** · *palavra*
+  - trecho citado: `und Erbarmen zuteilwerden`
+  - problema: A expressão 'zuteilwerden' não é adequada no contexto litúrgico e pode ser considerada estranha.
+  - sugestão do revisor: Uma expressão mais comum e liturgicamente apropriada seria 'und Erbarmen empfangen'.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
 
-*vechayin arichin umezona revicha*
-
-Texto em alemão: **langes Leben und reichliche Nahrung**
-
-- **glosa 2** · *sentido*
-  - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está ausente e não fornece uma tradução.
-  - sugestão do revisor: Uma tradução possível seria 'lange', referindo-se a 'longo' ou 'extenso'.
-- **glosa 4** · *sentido*
-  - trecho citado: `רְוִיחָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está ausente e não fornece uma tradução.
-  - sugestão do revisor: Uma tradução possível seria 'Überfluss', referindo-se a 'abundância' ou 'fertilidade'.
-
-#### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
-
-*vechayin arichin umezonei revichei*
+*vechayín arichín umezoná revichá*
 
 Texto em alemão: **langes Leben und reichliche Nahrung**
 
 - **glosa 2** · *palavra*
   - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia, não há tradução proposta.
-  - sugestão do revisor: Uma opção poderia ser 'lang' ou 'lange'.
+  - problema: A glosa para esta palavra está em falta.
+  - sugestão do revisor: A glosa correta seria 'lang', referindo-se à duração ou comprimento, que se encaixa no contexto de vida longa.
+- **glosa 4** · *palavra*
+  - trecho citado: `רְוִיחָא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa para esta palavra está em falta.
+  - sugestão do revisor: A glosa correta seria 'reichlich', que significa abundante ou rico.
+
+#### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
+
+*vechayín arichín umezonêi revichei*
+
+Texto em alemão: **langes Leben und reichliche Nahrung**
+
+- **glosa 2** · *palavra*
+  - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'arichin' se refere a 'longos' ou 'duradouros', enquanto a glosa proposta não contém tradução.
 - **glosa 4** · *palavra*
   - trecho citado: `רְוִיחֵי` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia, não há tradução proposta.
-  - sugestão do revisor: Uma opção poderia ser 'Nahrung'.
+  - problema: A palavra 'revichei' significa 'abundância' ou 'riqueza', e a glosa não reflete isso.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá ve'imrú Amên*
 
 Texto em alemão: **und Erlösung von ihrem Vater im Himmel — und sprecht Amen**
 
-- **glosa 3** · *sentido*
+- **glosa 3** · *palavra*
   - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A tradução para 'kódam' está faltando. A palavra significa 'diante de' ou 'antes de', não tem um equivalente na glosa proposta.
+  - problema: A palavra 'קֳדָם' é traduzida como um substantivo que pode significar 'diante' ou 'na presença de', mas não foi fornecida uma tradução na glosa proposta.
+  - sugestão do revisor: incluir tradução como 'vor' ou 'davor' para expressar a ideia de 'diante'.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá vear-á ve'imrú Amên*
 
 Texto em alemão: **und Erlösung von ihrem Vater im Himmel und auf Erden — und sprecht Amen**
 
 - **glosa 3** · *sentido*
   - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A glosa para esta palavra está vazia, o que significa uma omissão do seu significado essencial.
-  - sugestão do revisor: Uma sugestão seria 'vor', que significa 'diante' ou 'em frente a'.
+  - problema: A glosa não fornece tradução para esta palavra, que significa 'diante de' ou 'perante'.
+  - sugestão do revisor: A glosa poderia ser 'vor' ou 'vor dem'.
 
 #### וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon di vishmayá vear-á ve'imrú Amên*
 
 Texto em alemão: **und Erlösung von ihrem Vater im Himmel und auf Erden — und sprecht Amen**
 
 - **glosa 3** · *sentido*
   - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta está vazia, o que deixa de fornecer o significado da palavra.
+  - problema: A glosa está vazia, não apresenta tradução para a palavra hebraica.
+  - sugestão do revisor: "vor" ou "angesicht" que significa "ante" ou "perante".
 - **glosa 5** · *sentido*
   - trecho citado: `דִּי` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta está vazia, o que deixa de fornecer o significado da palavra.
+  - problema: A glosa está vazia, não apresenta tradução para a palavra hebraica.
+  - sugestão do revisor: "der" ou "von" que significa "do".
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em alemão: **Möge großer Friede vom Himmel kommen**
 
 - **glosa 2** · *palavra*
-  - trecho citado: `"großer Friede"`
-  - problema: A palavra "großer" (grande) não é a tradução adequada para 'rabá', que se refere a 'muito' ou 'grande' em um sentido mais genérico, mas o termo comum para 'grande' pode não capturar plenamente o contexto litúrgico.
-  - sugestão do revisor: Substituir "großer" por "viel" ou "großer Frieden" pode ser mais preciso.
-- **traducao** · *sentido*
-  - trecho citado: `"Himmel kommen"`
-  - problema: A forma como a tradução é apresentada sugere que o 'Himmel' é um sujeito ativo ('come'). No entanto, a construção original em hebraico deve ser entendida como um desejo de que se deponha paz do céu, em vez de 'Himmel kommen' que implica movimento.
-  - sugestão do revisor: Reformular para algo como 'vom Himmel kommt'.
+  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
+  - problema: A tradução 'großer Friede' não é adequada; 'שְׁלָמָא' se refere simplesmente a 'paz'.
+  - sugestão do revisor: 'Frieden' seria mais apropriado.
+- **glosa 5** · *gramatica*
+  - trecho citado: `שְׁמַיָּא` *(citou a palavra hebraica de origem)*
+  - problema: A expressão 'Himmel kommen' é gramaticalmente incorreta; o verbo deveria preceder o objeto para manter a fluência na língua-alvo.
+  - sugestão do revisor: 'vom Himmel' seria suficiente, e pode-se dizer 'kommt' no final, se necessário.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em alemão: **Möge großer Friede vom Himmel und Leben über uns und ganz Israel kommen — und sprecht Amen**
 
-- **traducao** · *sentido*
-  - trecho citado: `ganz Israel kommen —`
-  - problema: A expressão final parece incompleta ou não precisa, pois 'kommen' não está presente no texto original e faz parte da estrutura da frase em alemão.
-  - sugestão do revisor: Sugeriria remover 'kommen' para manter a precisão com o hebraico, resultando em 'Möge großer Friede vom Himmel und Leben über uns und ganz Israel — und sprecht Amen'.
+- **glosa 2** · *palavra*
+  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa 'großer Friede' sugere um sentido de 'grande paz', enquanto 'שְׁלָמָא' pode ser mais adequadamente traduzido como 'paz' ou 'tranquilidade' em um contexto litúrgico.
+  - sugestão do revisor: 'Frieden' em vez de 'großer Friede'.
+- **glosa 10** · *palavra*
+  - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
+  - problema: A glosa 'ganz' é uma palavra coloquial para 'todo', o que pode não ser o mais apropriado em um contexto litúrgico.
+  - sugestão do revisor: Usar 'alle' para transmitir um tom mais formal e adequado.
 
 #### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
 
-*chayim vessavá vishuá venechamá veshezavá*
+*chayím vessavá vishuá venechamá veshezavá*
 
 Texto em alemão: **Leben, Fülle, Rettung, Trost und Befreiung**
 
 - **glosa 5** · *palavra*
   - trecho citado: `וְשֵׁיזָבָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'Befreiung' não é uma tradução precisa do hebraico, que é mais próximo do significado de 'salvação' ou 'libertação'.
-  - sugestão do revisor: Uma sugestão seria usar 'Erlösung'.
+  - problema: A palavra 'Befreiung' não é uma tradução adequada para 'שֵׁיזָבָא', pois dá a ideia de libertação física e não se encaixa no contexto litúrgico.
+  - sugestão do revisor: Uma alternativa mais apropriada poderia ser 'Erleichterung', que transmite um sentido de alívio.
 
 #### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*verêvach vehatsalá lanu ulechol amô Israel veimrú Amen*
+*verêvach vehatsalá lánu ulechol amô Israel ve'imrú Amên*
 
 Texto em alemão: **Erleichterung und Errettung, für uns und Sein ganzes Volk Israel — und sprecht Amen**
 
-- **traducao** · *sentido*
-  - trecho citado: `und Sein ganzes Volk`
-  - problema: O termo original se refere a 'todo o seu povo', e a tradução pode implicar que é um possessivo de 'Ele' ou 'Deus', que não é explícito no texto hebraico.
-  - sugestão do revisor: A tradução correta poderia ser 'und für sein ganzes Volk Israel' para evitar confusão.
+- **traducao** · *palavra*
+  - trecho citado: `und Sein ganzes`
+  - problema: A palavra 'Sein' é imprópria neste contexto litúrgico, pois o que se quer transmitir é que se refere ao povo de Deus, não a um possessivo humano.
+  - sugestão do revisor: substituir 'Sein' por 'Gottes' para dizer 'für uns und Gottes ganzes Volk Israel'.
 
 #### עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
 
-*Ossê shalom bimromav*
+*Ossê shalom bimro'máv*
 
 Texto em alemão: **Der Frieden stiftet in Seinen Höhen**
 
-- **glosa 1** · *sentido*
-  - trecho citado: `עוֹשֶׂה` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'Der' não corresponde ao significado da palavra hebraica, que significa 'aquele que faz'.
-- **glosa 2** · *sentido*
-  - trecho citado: `שָׁלוֹם` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'Frieden stiftet' não está correta, pois não é uma tradução direta, mas sim uma interpretação. O hebraico se refere a 'paz' e não a 'estabelecer' ou 'criar'.
-- **glosa 3** · *palavra*
-  - trecho citado: `בִּמְרוֹמָיו` *(citou a palavra hebraica de origem)*
-  - problema: A expressão 'in Seinen Höhen' não captura o sentido literal e vai mais para o poético. Isso não representa corretamente o termo hebraico, que se refere mais a 'nas suas alturas' ou 'no alto'.
+- **traducao** · *sentido*
+  - trecho citado: `Der Frieden stiftet in Seinen Höhen`
+  - problema: A tradução apresenta um erro de sentido. O texto hebraico se refere àquele que faz a paz (ou seja, 'faz paz') e não à ação de 'estabelecer paz' em um sentido ativo.
+  - sugestão do revisor: Considerar uma tradução mais próxima como 'Der Frieden, der in Seinen Höhen geschaffen wird' ou 'Der Frieden, der in Seinen Höhen gemacht wird', que capture o sentido correto.
 
 #### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu berachamav yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Hu berachamáv yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em alemão: **Er stifte in Seinem Erbarmen Frieden über uns und ganz Israel — und sprecht Amen**
 
 - **glosa 3** · *sentido*
   - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
-  - problema: A palavra hebraica 'יַעֲשֶׂה' significa 'machen' ou 'tun' im Deutschen, jedoch in der Übersetzung wird es nicht reflektiert.
-  - sugestão do revisor: Die passende Übersetzung könnte 'er macht' oder 'er wird machen' sein.
+  - problema: A tradução está em branco e não reflete o verbo 'fazer' ou 'realizar' no contexto.
+  - sugestão do revisor: A glosa correta deveria ser 'macht' ou 'stellt her'.
 
 #### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu berachamav yaassê shalom aleinu veal kol amô Israel veimrú Amen*
+*Hu berachamáv yaassê shalom alêinu veal kol amô Israel ve'imrú Amên*
 
 Texto em alemão: **Er stifte in Seinem Erbarmen Frieden über uns und Sein ganzes Volk Israel — und sprecht Amen**
 
-- **glosa 3** · *sentido*
-  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia.
-  - sugestão do revisor: "machen" ou "schaffen".
+- **glosa 2** · *palavra*
+  - trecho citado: `בְּרַחֲמָיו` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'stifte' em alemão não captura o sentido do verbo 'עשׂה' (fazer), que implica 'fazer' ou 'conceder' em um contexto mais amplo.
+  - sugestão do revisor: 'in Seinem Erbarmen möge er Frieden machen'
 - **glosa 7** · *sentido*
   - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia.
-  - sugestão do revisor: "alle".
+  - problema: A glosa 'Sein ganzes Volk' não reflete o significado completo de 'כָּל', que significa 'todo' ou 'todos', portanto deveria incluir um aspecto de totalidade sem posses.
+  - sugestão do revisor: 'alle'
 
 #### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê verachamav shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê verachamáv shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em alemão: **Er stifte in Seinem Erbarmen Frieden über uns und ganz Israel — und sprecht Amen**
 
 - **traducao** · *palavra*
   - trecho citado: `stifte`
-  - problema: A palavra 'stifte' é um termo que não se encaixa bem no registro litúrgico em alemão e não traduz adequadamente o verbo 'יעשה', que implica em uma ação mais relacionada a 'criar' ou 'estabelecer'.
-  - sugestão do revisor: Uma alternativa melhor poderia ser 'schaffe' ou 'teile'. Em termos litúrgicos, 'schaffe' pode ser mais apropriado.
+  - problema: A palavra 'stifte' não é apropriada no contexto litúrgico em alemão; ela não transmite corretamente o sentido de 'fazer' ou 'conceder' que a frase original implica.
+  - sugestão do revisor: Usar 'wirkt' ou 'schafft' em vez de 'stifte', que são mais adequados para o contexto.
 
 #### עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Ossê shalom bimromav hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Ossê shalom bimro'máv Hu yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em alemão: **Der Frieden stiftet in Seinen Höhen, Er stifte Frieden über uns und ganz Israel — und sprecht Amen**
 
 - **traducao** · *palavra*
-  - trecho citado: `stifte`
-  - problema: O termo "stifte" deveria ser no imperativo "stifte" para refletir a voz do hebraico, mas deve estar em um contexto formal e correto como "schaffe" ou "gewähre".
-  - sugestão do revisor: "Gewähre".
+  - trecho citado: `Frieden stiftet`
+  - problema: A palavra 'stiftet' (estabelecer) é inadequada aqui; o termo 'macht' ou 'schafft' poderia ser mais apropriado para refletir o sentido de 'fazer' em um contexto litúrgico.
+  - sugestão do revisor: Der Frieden schafft in Seinen Höhen, Er schafft Frieden über uns und ganz Israel — und sprecht Amen.
 
 #### וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
 
-*veyatsmách purkanêh vikarev meshichêh*
+*veyatsmách purkanêh vikarêv meshichêh*
 
 Texto em alemão: **und Er lasse Seine Erlösung sprießen und bringe Seinen Maschiach nah**
 
-- **tradução** · *palavra*
+- **traducao** · *palavra*
   - trecho citado: `Seine Erlösung sprießen`
-  - problema: O termo 'Erlösung' não é o mais apropriado neste contexto, pois 'purkan' se refere à 'libertação' ou 'salvação' em um sentido mais específico e litúrgico.
-  - sugestão do revisor: Utilizar 'Seine Befreiung' para refletir melhor o significado de 'purkan'.
+  - problema: A palavra 'Erlösung' não é a mais apropriada para 'פֻּרְקָנֵהּ', que geralmente se refere a 'salvação' ou 'libertação', não a 'redenção' em um sentido teológico mais restrito.
+  - sugestão do revisor: Utilizar 'Seine Erlösung' como 'Seine Rettung' ou 'Sein Heil', que são mais adequados ao contexto litúrgico.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
-*leela min kol birchatá shirata*
+*Leela min kol birchatá shiratá*
 
 Texto em alemão: **über alle Segnungen und Lieder hinaus**
 
-- **traducao** · *sentido*
+- **traducao** · *palavra*
   - trecho citado: `und Lieder hinaus`
-  - problema: A expressão 'und Lieder hinaus' não traduz corretamente o hebraico, que implica uma relação de excesso ou superioridade, ao invés de simplesmente adicionar.
-  - sugestão do revisor: poderia ser traduzido como 'und Gesänge' ou apenas omitindo a palavra 'hinaus' para melhor refletir a ideia de ultrapassar.
+  - problema: A palavra 'hinaus' não é necessária na tradução e altera o sentido pretendido da frase.
+  - sugestão do revisor: A tradução correta poderia ser 'über alle Segnungen und Lieder'.
 
 ### russo — 26 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em russo: **Да возвысится и освятится великое Имя Его**
 
-- **glosa 3** · *palavra*
+- **glosa 3** · *sentido*
   - trecho citado: `великое Имя Его`
-  - problema: A glosa 'великое Имя Его' não corresponde exatamente à palavra hebraica 'שְׁמֵהּ', que significa apenas 'Seu Nome'. No contexto litúrgico, o termo 'великое' (grande) não é apropriado aqui.
-  - sugestão do revisor: 'Имя' ou 'Имя Его' sem o adjetivo 'великое' seria mais preciso.
+  - problema: A glosa não traduz corretamente 'שְׁמֵהּ', que é um termo mais direto para 'Seu Nome' ao invés de 'великое Имя Его', que implica que é um grande nome, o que não está presente no original.
+  - sugestão do revisor: 'Имя Его'
 
 #### וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל
 
-*uvechayê dechol beit Israel*
+*uvechayê dechol bêt Israel*
 
 Texto em russo: **и при жизни всего дома Израиля**
 
-- **traducao** · *palavra*
-  - trecho citado: `всего`
-  - problema: A palavra "всего" não é adequada neste contexto, pois o hebraico "דְכָל" implica em 'todo', 'cada' em um sentido mais abrangente e integral.
-  - sugestão do revisor: Uma melhor tradução seria 'всех' ou 'всего народа', para refletir melhor o sentido de 'todo' em um contexto litúrgico.
+- **glosa 2** · *palavra*
+  - trecho citado: `דְכָל` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'всего' em russo não captura adequadamente o significado de 'дְכָל', que indica 'todos' ou 'todo'.
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em russo: **вскоре, в ближайшее время — и скажите: амен**
 
 - **glosa 2** · *palavra*
   - trecho citado: `וּבִזְמַן` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta está em branco e não traduz a expressão do hebraico.
+  - problema: A glosa está em branco e não traduz a palavra hebraica.
+  - sugestão do revisor: "и во время" ou "и в срок"
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em russo: **Да будет великое Имя Его благословенно вовеки и во веки веков**
 
-- **glosa 2** · *sentido*
+- **glosa 2** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'великое Имя Его' não é a correta para 'שְׁמֵהּ', que significa 'Имя Его'.
+  - problema: A frase 'великое Имя Его' traduz 'Seu grande nome' e não corretamente 'великое Имя Его', que é mais solene e adequado ao contexto litúrgico.
+  - sugestão do revisor: С Его великая Слава
+
+#### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
+
+*Yitbarêch veyishtabách veyitpaêr*
+
+Texto em russo: **Благословенно, восхваляемо и прославляемо**
+
+- **glosa 3** · *palavra*
+  - trecho citado: `וְיִתְפָּאַר` *(citou a palavra hebraica de origem)*
+  - problema: A palavra "прославляемо" é um adjetivo, mas o termo hebraico refere-se a um verbo e deve ser traduzido como um verbo também.
+  - sugestão do revisor: A tradução poderia ser "и прославляем".
 
 #### תֻּשְׁבְּחָתָא וְנֶחָמָתָא דַּאֲמִירָן בְּעָלְמָא וְאִמְרוּ אָמֵן
 
-*tushbechata venechamata dáamiran bealma veimrú Amen*
+*tushbechatá venechematá daamirán bealma ve'imrú Amên*
 
 Texto em russo: **восхвалений и утешений, произносимых в мире — и скажите: амен**
 
 - **traducao** · *palavra*
   - trecho citado: `восхвалений`
-  - problema: A palavra 'восхвалений' é inadequada neste contexto litúrgico, pois transmite uma conotação de 'exaltação' ao invés de 'glória' ou 'louvor'.
-  - sugestão do revisor: 'слава' seria uma escolha mais apropriada para transmitir 'glória' ou 'louvor' neste contexto.
+  - problema: A palavra "восхвалений" é inadequada para o contexto litúrgico e não reflete o sentido de "תֻּשְׁבְּחָתָא", que se refere à glamourização ou louvor.
+  - sugestão do revisor: "восхваления" seria mais apropriado.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em russo: **Да будут дарованы с небес великий мир и добрая жизнь нам и всему Израилю — и скажите: амен**
 
 - **traducao** · *sentido*
   - trecho citado: `великий мир`
-  - problema: A tradução 'великий мир' não reflete corretamente o sentido da palavra hebraica 'שְׁלָמָא', que é mais bem traduzida como 'мир' ou 'покой'.
-- **glosa 3** · *palavra*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está em branco e não reflete a tradução correta da palavra 'רַבָּא', que significa 'grande' ou 'maior' no contexto litúrgico.
-- **glosa 5** · *palavra*
-  - trecho citado: `שְׁמַיָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está em branco e deve incluir o significado da palavra 'שְׁמַיָּא', que se refere ao 'céu' ou 'dos céus'.
-- **glosa 7** · *palavra*
-  - trecho citado: `טוֹבִים` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está em branco e não reflete a tradução da palavra 'טוֹבִים', que significa 'boas' ou 'bênçãos'.
-- **glosa 11** · *palavra*
-  - trecho citado: `יִשְׂרָאֵל` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'Израилю —' não está correta. O termo correto deve ser 'Израиль' sem o final —, que se refere diretamente ao sujeito sem modificador.
+  - problema: A tradução de 'שְׁלָמָא' como 'великий мир' não capta o verdadeiro sentido da palavra hebraica, que se refere a 'paz' em um contexto mais amplo.
+  - sugestão do revisor: Considerar traduzir 'שְׁלָמָא' como 'мир'.
 
 #### הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em russo: **да дарует мир нам и всему Израилю — и скажите: амен**
 
-- **traducao** · *palavra*
-  - trecho citado: `Израилю —`
-  - problema: A palavra 'Израилю' deve ser 'Израиля' para refletir corretamente o genitivo da tradução.'
-  - sugestão do revisor: замените 'Израилю' на 'Израиля'.
+- **traducao** · *sentido*
+  - trecho citado: `израилю —`
+  - problema: A tradução não é fiel ao hebraico, pois a conjunção '—' não está presente e pode alterar o sentido.
+  - sugestão do revisor: A tradução correta deve ser: 'Израилю и'.
 
 #### עַל יִשְׂרָאֵל וְעַל רַבָּנָן
 
-*Al Israel veal rabanan*
+*Al Israel veal rabanán*
 
 Texto em russo: **Израилю и мудрецам**
 
-- **traducao** · *sentido*
-  - trecho citado: `Израилю`
-  - problema: A tradução 'Израилю' está no dativo, enquanto o hebraico 'יִשְׂרָאֵל' está no nominativo.
+- **glosa 2** · *sentido*
+  - trecho citado: `יִשְׂרָאֵל` *(citou a palavra hebraica de origem)*
+  - problema: A tradução 'Израилю' está no dativo singular, enquanto 'יִשְׂרָאֵל' se refere ao nome próprio 'Israel', que deve ser traduzido sem flexão de caso.
+  - sugestão do revisor: A tradução correta seria 'Израиль', sem a flexão.
 
 #### וְעַל תַּלְמִידֵיהוֹן וְעַל כָּל תַּלְמִידֵי תַלְמִידֵיהוֹן
 
-*veal talmidehon veal kol talmidei talmidehon*
+*veal talmidehôn veal kol talmidei talmidehôn*
 
 Texto em russo: **и ученикам их, и всем ученикам их учеников**
 
 - **traducao** · *sentido*
   - trecho citado: `ученикам их,`
-  - problema: A tradução 'ученикам их,' não reflete corretamente o plural do termo 'תַלְמִידֵיהוֹן', que seria 'их ученики'.
-  - sugestão do revisor: 'ученикам их' deveria ser 'ученикам их, и всем ученикам их'.
+  - problema: A tradução 'ученикам их,' não e completamente precisa, pois a forma correta deve refletir o plural apropriado dos 'talmidehôn' como 'ученикам их.'
+  - sugestão do revisor: Utilizar 'их ученикам' para melhor refletir o plural.
+- **traducao** · *gramatica*
+  - trecho citado: `всем`
+  - problema: O uso de 'всем' está gramaticalmente incorreto nesta construção, pois deveria estar concordando diretamente com o substantivo no contexto.
+  - sugestão do revisor: Mudar para 'всем ученикам'.
+
+#### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
+
+*de'askín beoraytá kadishtá*
+
+Texto em russo: **занимающимся святой Торой**
+
+- **glosa 2** · *sentido*
+  - trecho citado: `בְּאוֹרַיְתָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'святой' significa 'santo' ou 'sagrado', mas a expressão hebraica 'בְּאוֹרַיְתָא' especificamente se refere à 'Torá' ou 'lei', e não é apenas uma descrição de santidade.
+  - sugestão do revisor: A glosa correta seria 'Торой' em vez de 'святой'.
 
 #### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
 
-*di veatrá haden vedi vechol atar vaatár*
+*di veatrá hadên vedi vechol atar vaatár*
 
 Texto em russo: **в этом месте и во всяком месте**
 
-- **glosa 1** · *palavra*
-  - trecho citado: `דִּי` *(citou a palavra hebraica de origem)*
-  - problema: A glosa escolhida "в" não reflete corretamente o significado da palavra hebraica, que pode ser interpretada como 'что' ou 'который' dependendo do contexto.
-  - sugestão do revisor: Considerar como "что" ou reavaliar a estrutura da frase para melhor captura do sentido.
-- **glosa 2** · *palavra*
-  - trecho citado: `בְאַתְרָא` *(citou a palavra hebraica de origem)*
-  - problema: A expressão "этом месте" não está correta, pois a palavra hebraica implica um sentido de 'в месте' (na localização), que é mais amplo.
-  - sugestão do revisor: Usar 'в месте' em vez de 'этом месте'.
-- **glosa 6** · *palavra*
+- **glosa 3** · *sentido*
+  - trecho citado: `הָדֵין` *(citou a palavra hebraica de origem)*
+  - problema: A glosa proposta para 'הָדֵין' está vazia, o que é incorreto.
+- **glosa 6** · *sentido*
   - trecho citado: `אֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está em falta. 'אֲתַר' refere-se a 'место' (lugar) e deveria ser traduzido para refletir isso.
-  - sugestão do revisor: Incluir 'место' como parte da tradução.
-
-#### יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא
-
-*yehê lehon ulechon shelamá raba*
-
-Texto em russo: **да будет им и вам великий мир**
-
-- **glosa 4** · *palavra*
-  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'в velike' não traduz corretamente a ideia de 'paz'. 'Великий' significa 'grande', o que não é adequado neste contexto.
-  - sugestão do revisor: A tradução correta para 'שְׁלָמָא' seria 'мир'.
-- **glosa 5** · *palavra*
-  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A parte 'великий' não faz referência à intensidade ou grandeza que 'רַבָּא' sugere.
-  - sugestão do revisor: Um uso mais adequado poderia ser 'великий' ou 'величайший', mas ainda assim não é a tradução correta.
+  - problema: A glosa proposta para 'אֲתַר' está vazia, o que é incorreto.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
 
-*vechayin arichin umezona revicha*
+*vechayín arichín umezoná revichá*
 
 Texto em russo: **долгая жизнь и обильное пропитание**
 
 - **glosa 1** · *sentido*
   - trecho citado: `וְחַיִּין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa não corresponde exatamente ao significado da palavra hebraica, que se refere a 'vidas' no plural e não apenas a 'vida longa'.
-  - sugestão do revisor: A glosa correta poderia ser 'долгие жизни'.
-- **glosa 2** · *sentido*
+  - problema: A glosa 'долгая жизнь' não é uma tradução precisa de 'וְחַיִּין', que se refere mais a 'vidas' no plural, 'жизни' em ruço.
+  - sugestão do revisor: 'жизни'
+- **glosa 2** · *palavra*
   - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia, não há tradução proposta para esta palavra que significa 'longas'.
-  - sugestão do revisor: Adicionar uma glosa, como 'долгие'.
-- **glosa 3** · *gramatica*
-  - trecho citado: `וּמְזוֹנָא` *(citou a palavra hebraica de origem)*
-  - problema: A forma 'обильное' não concorda com o substantivo 'пропитание', pois a palavra hebraica é feminina, enquanto a tradução sugere um masculino.
-  - sugestão do revisor: Utilizar 'обильная' para concordar corretamente.
+  - problema: A glosa para 'אֲרִיכִין' está vazia e não fornece uma tradução.
+  - sugestão do revisor: 'долги' para refletir a forma plural e o sentido de 'longas'.
+- **glosa 4** · *palavra*
+  - trecho citado: `רְוִיחָא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa para 'רְוִיחָא' está vazia e não fornece uma tradução.
+  - sugestão do revisor: 'изобилие' para transmitir o sentido de abundância.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
 
-*vechayin arichin umezonei revichei*
+*vechayín arichín umezonêi revichei*
 
 Texto em russo: **долгая жизнь и обильное пропитание**
 
 - **glosa 1** · *palavra*
   - trecho citado: `וְחַיִּין` *(citou a palavra hebraica de origem)*
-  - problema: A glosa não refere-se ao sentido pleno da palavra que é mais sobre 'vida' (в жизни) do que 'долгая жизнь' (vida longa).
-- **glosa 2** · *palavra*
-  - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
-  - problema: A palavra está ausente na glosa, o que é um erro.
-- **glosa 4** · *palavra*
-  - trecho citado: `רְוִיחֵי` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está ausente, o que é um erro.
+  - problema: A glosa "долгая жизнь" não traduz corretamente a palavra hebraica, que se refere a "vida" no sentido mais amplo e não necessariamente "longa".
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá ve'imrú Amên*
 
 Texto em russo: **и избавление от Отца их небесного — и скажите: амен**
 
 - **glosa 3** · *sentido*
   - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está vazia e não traduz o termo hebraico.
+  - problema: A glosa está em branco e não representa o significado da palavra hebraica.
+  - sugestão do revisor: O termo 'к лицу' é uma tradução adequada, que transmite o significado de 'diante' ou 'perante'.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá vear-á ve'imrú Amên*
 
 Texto em russo: **и избавление от Отца их, что на небесах и на земле — и скажите: амен**
 
-- **traducao** · *sentido*
-  - trecho citado: `и избавление от Отца их, что на небесах и на земле —`
-  - problema: A frase 'что на небесах' distorce o sentido da expressão 'דְּבִשְׁמַיָּא', que se refere mais especificamente a 'которые на небесах'.
-  - sugestão do revisor: и избавление от Отца их, что на небесах и на земле — и скажите: амин.
+- **glosa 3** · *palavra*
+  - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
+  - problema: A glosa para a palavra 'קֳדָם' (kodám) está em branco, o que omite seu significado.
+  - sugestão do revisor: Uma possível glosa seria 'Перед' ou 'перед'. Isso se referiria a 'diante de' ou 'perante', dependendo do contexto.
 
 #### וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon di vishmayá vear-á ve'imrú Amên*
 
 Texto em russo: **и избавление от Отца их, что на небесах и на земле — и скажите: амен**
 
-- **glosa 3** · *sentido*
+- **glosa 3** · *palavra*
   - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está ausente e a palavra é essencial para o sentido da frase.
-  - sugestão do revisor: "перед" (perante) para expressar a ideia de 'diante' ou 'perante'.
-- **traducao** · *sentido*
-  - trecho citado: `что`
-  - problema: A tradução 'что' não é a melhor escolha, pois a passagem tem um sentido mais específico de 'который' em contexto.
-  - sugestão do revisor: Usar 'который' em vez de 'что' para refletir adequadamente a relação.
+  - problema: A glosa está em branco e não traduz a palavra hebraica.
 
 #### מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*min kodam marê shemayá vear-á veimrú Amen*
+*min kodám marê shemayá vear-á ve'imrú Amên*
 
 Texto em russo: **от Владыки неба и земли — и скажите: амен**
 
-- **glosa 1** · *palavra*
-  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
-  - problema: A tradução de 'מִן' como 'от' está correta em sentido, mas no contexto litúrgico seria mais apropriado usar 'из'.
-  - sugestão do revisor: из
+- **traducao** · *sentido*
+  - trecho citado: `и земли —`
+  - problema: A tradução sugere que a expressão em hebraico refere-se a 'и земли —', que não condiz com o sentido original que implica um entendimento mais abrangente da soberania de 'Marei' de 'Шемая' e 'ар'а'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
 
-*Yehê shelamá raba min shemayá*
+*Yehê shelamá rabá min shemayá*
 
 Texto em russo: **Да снизойдёт с небес великий мир**
 
 - **traducao** · *sentido*
   - trecho citado: `великий мир`
-  - problema: A tradução não reflete adequadamente o sentido da palavra hebraica 'שְׁלָמָא', que é frequentemente traduzida como 'paz', em vez de 'мир', que pode ser entendido como 'mundo' em russo.
-  - sugestão do revisor: A tradução correta deve ser 'великая мир' ou mais simplesmente 'покой'.
-- **glosa 1** · *palavra*
-  - trecho citado: `Да снизойдёт с небес`
-  - problema: A glosa não reflete a forma hebraica adequada para 'יְהֵא', que é um imperativo, sugerindo 'que...' em vez de 'да...'.
-  - sugestão do revisor: Uma glosa mais adequada poderia ser 'пусть'.
-- **glosa 2** · *palavra*
-  - trecho citado: `великий мир`
-  - problema: A glosa não corresponde ao uso litúrgico e à conotação espiritual da palavra 'שְׁלָמָא'.
-  - sugestão do revisor: Utilizar 'покой' ou 'мир' em contexto litúrgico.
+  - problema: A palavra 'великий' não reflete adequadamente o sentido da palavra hebraica 'רַבָּא', que significa 'grande' ou 'imenso', mas não deve ser traduzida como 'великий' no contexto litúrgico.
+  - sugestão do revisor: Considere usar 'великое' para manter a reverência do contexto.
+- **glosa 3** · *palavra*
+  - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa da palavra 'רַבָּא' está vazia e precisa ser incluída.
+  - sugestão do revisor: A glosa deve incluir a tradução apropriada de 'רַבָּא' como 'великое' ou 'сильное' dependendo do contexto da tradução.
+- **glosa 4** · *palavra*
+  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
+  - problema: A glosa da palavra 'מִן' também está vazia e precisa de uma tradução.
+  - sugestão do revisor: A glosa deve incluir 'из' para a tradução de 'מִן'.
+- **glosa 5** · *palavra*
+  - trecho citado: `שְׁמַיָּא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa da palavra 'שְׁמַיָּא' está vazia e não reflete o conceito de 'céus'.
+  - sugestão do revisor: A glosa deve incluir 'небес' como tradução de 'שְׁמַיָּא'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em russo: **Да будут дарованы с небес великий мир и жизнь нам и всему Израилю — и скажите: амен**
 
-- **glosa 1** · *palavra*
+- **glosa 1** · *sentido*
   - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução não reflete corretamente o sentido da palavra hebraica, que indica um desejo ou uma invocação.
-  - sugestão do revisor: "Да будет" ou "Да пусть будет".
-- **glosa 2** · *palavra*
-  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra escolhida para traduzir 'великий мир' não é adequada; a glosa não deve incluir 'великий'.
-  - sugestão do revisor: "мир".
-- **glosa 10** · *palavra*
-  - trecho citado: `יִשְׂרָאֵל` *(citou a palavra hebraica de origem)*
-  - problema: A forma utilizada para Israel com a inclusão do traço e da palavra 'Израилю' não está correta.
-  - sugestão do revisor: "Израиль".
-
-#### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
-
-*chayim vessavá vishuá venechamá veshezavá*
-
-Texto em russo: **жизнь, изобилие, спасение, утешение и избавление**
-
-- **glosa 5** · *palavra*
-  - trecho citado: `וְשֵׁיזָבָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'избавление' não corresponde corretamente à tradução do hebraico, que se refere a uma forma de salvação ou libertação mais direta.
-  - sugestão do revisor: Uma palavra mais adequada poderia ser 'освобождение' ou 'спасение', dependendo do contexto.
+  - problema: A glosa "Да будут дарованы с небес" não reflete corretamente o sentido de "Да будет" ou "Да будет даровано".
 
 #### וְרֶוַח וְהַצָּלָה לָנוּ וּלְכָל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*verêvach vehatsalá lanu ulechol amô Israel veimrú Amen*
+*verêvach vehatsalá lánu ulechol amô Israel ve'imrú Amên*
 
 Texto em russo: **облегчение и спасение нам и всему народу Его, Израилю — и скажите: амен**
 
-- **glosa 5** · *palavra*
+- **traducao** · *palavra*
   - trecho citado: `народу Его,`
-  - problema: A expressão 'народу Его' é uma tradução imprecisa, uma vez que o hebraico se refere explicitamente ao 'povo de Israel'.
-  - sugestão do revisor: Deveria ser traduzido como 'всему народу Израиля,'.
+  - problema: A expressão 'народу Его,' é imprecisa, pois o termo hebraico 'עַמּוֹ' se refere ao 'Seu povo' e não ao 'povo Dele'.
+  - sugestão do revisor: usar 'Ему' em vez de 'Его' para maior clareza.
 
 #### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu berachamav yaassê shalom aleinu veal kol Israel veimrú Amen*
-
-Texto em russo: **да дарует Он в милосердии Своём мир нам и всему Израилю — и скажите: амен**
-
-- **glosa 3** · *sentido*
-  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
-  - problema: A glosa está em branco e não representa o sentido da palavra hebraica.
-  - sugestão do revisor: "да дарует" ou "сотворит" seriam opções adequadas para representar 'יַעֲשֶׂה'.
-- **glosa 7** · *palavra*
-  - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'всему' não é a melhor escolha para o termo hebraico, que geralmente é traduzido como 'всё'.
-  - sugestão do revisor: "всё".
-- **traducao** · *gramatica*
-  - trecho citado: `— и скажите: амен`
-  - problema: A forma 'амен' é uma transliteração incorreta e não segue a ortografia correta em russo, que deve ser 'амин'.
-  - sugestão do revisor: 'амин'.
-
-#### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
-
-*hu berachamav yaassê shalom aleinu veal kol amô Israel veimrú Amen*
-
-Texto em russo: **да дарует Он в милосердии Своём мир нам и всему народу Его, Израилю — и скажите: амен**
-
-- **glosa 3** · *sentido*
-  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta não traduz explicitamente o significado da palavra em hebraico.
-
-#### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
-
-*hu yaassê verachamav shalom aleinu veal kol Israel veimrú Amen*
+*Hu berachamáv yaassê shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em russo: **да дарует Он в милосердии Своём мир нам и всему Израилю — и скажите: амен**
 
 - **traducao** · *palavra*
-  - trecho citado: `израилю —`
-  - problema: A palavra 'Израилю' é uma forma dativa que não condiz com o uso correto no contexto litúrgico, onde deveria haver uma forma mais direta como 'Израиля'.
-  - sugestão do revisor: 'всему Израилю'
+  - trecho citado: `да дарует Он`
+  - problema: A expressão 'да дарует Он' não representa adequadamente o verbo hebraico 'יַעֲשֶׂה', que se traduz como 'fará' ou 'fará (paz)', em vez de 'dar'.
+  - sugestão do revisor: Pode ser melhor traduzido como "да наполнит Он" ou similar para refletir mais precisamente o sentido.
+- **glosa 3** · *sentido*
+  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
+  - problema: A glosa não está presente, o que deixa a tradução incompleta.
+  - sugestão do revisor: Adicionar a glosa para 'יַעֲשֶׂה': 'ф fará'.
 
-#### עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+#### הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל עַמּוֹ יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Ossê shalom bimromav hu yaassê shalom aleinu veal kol Israel veimrú Amen*
+*Hu berachamáv yaassê shalom alêinu veal kol amô Israel ve'imrú Amên*
 
-Texto em russo: **Творящий мир в высотах Своих да дарует мир нам и всему Израилю — и скажите: амен**
+Texto em russo: **да дарует Он в милосердии Своём мир нам и всему народу Его, Израилю — и скажите: амен**
 
-- **glosa 4** · *palavra*
-  - trecho citado: `הוּא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'הוּא' não foi traduzida
+- **traducao** · *palavra*
+  - trecho citado: `да дарует Он`
+  - problema: A tradução 'да дарует Он' não reflete corretamente a palavra hebraica 'הוּא', que significa 'Ele' e não implica uma ação de conceder ou dar.
+  - sugestão do revisor: A tradução correta deve ser simplesmente 'Он'.
+- **glosa 3** · *sentido*
+  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
+  - problema: A glosa da palavra 'יַעֲשֶׂה' não foi proposta, resultando em uma tradução incompleta.
+  - sugestão do revisor: A glosa correta seria 'сделает'.
+- **glosa 7** · *palavra*
+  - trecho citado: `כָּל` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'всему' não reflete corretamente a palavra hebraica 'כָּל', que significa 'всё' ou 'всех', e não necessariamente implica em 'всему'.
+  - sugestão do revisor: A glosa correta deveria ser 'всему народам'.
+- **tradução** · *sentido*
+  - trecho citado: `всему народу Его, Израилю —`
+  - problema: A tradução 'всему народу Его, Израилю —' dá a entender que o Israel mencionado é uma parte que não é totalmente capturada na frase original.
+  - sugestão do revisor: A correção da tradução seria 'и всему народу Его, Израилю —'.
+
+#### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
+
+*Hu yaassê verachamáv shalom alêinu veal kol Israel ve'imrú Amên*
+
+Texto em russo: **да дарует Он в милосердии Своём мир нам и всему Израилю — и скажите: амен**
+
+- **glosa 2** · *sentido*
+  - trecho citado: `יַעֲשֶׂה` *(citou a palavra hebraica de origem)*
+  - problema: A glosa não traz o significado correto da palavra, que é 'fará' ou 'fazer', enquanto 'да дарует' refere-se a 'dar'.
+  - sugestão do revisor: F correta seria "fará" ou "сделает".
+
+#### וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
+
+*veyatsmách purkanêh vikarêv meshichêh*
+
+Texto em russo: **и да взрастит избавление Своё и приблизит Машиаха Своего**
+
+- **glosa 2** · *palavra*
+  - trecho citado: `избавление Своё`
+  - problema: A palavra 'избавление' não é adequada no contexto litúrgico, pois a palavra correta deve se referir mais diretamente ao conceito de 'salvação' ou 'libertação' que é mais comum em contextos messiânicos.
+  - sugestão do revisor: исполнение
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
-*leela min kol birchatá shirata*
+*Leela min kol birchatá shiratá*
 
 Texto em russo: **превыше всех благословений и песнопений**
 
-- **glosa 2** · *palavra*
-  - trecho citado: `מִן` *(citou a palavra hebraica de origem)*
-  - problema: A tradução está incompleta, pois a preposição 'מִן' não foi traduzida.
-  - sugestão do revisor: Adicionar uma tradução adequada, como 'от'.
+- **traducao** · *palavra*
+  - trecho citado: `и песнопений`
+  - problema: O termo 'песнопений' é inadequado no registro litúrgico, onde se prefere 'песен', que é uma forma mais comum e adequada.
 
 ### hebraico moderno — 28 entrada(s)
 
 #### יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
 
-*Yitgadal veyitkadash shemê raba*
+*Yitgadal veyitkadásh shemêh rabá*
 
 Texto em hebraico moderno: **יִתְעַלֶּה וְיִתְקַדֵּשׁ שְׁמוֹ הַגָּדוֹל**
 
 - **glosa 1** · *sentido*
   - trecho citado: `יִתְגַּדַּל` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'יִתְעַלֶּה' não captura o sentido de 'exaltar' ou 'crescer', que é o significado de 'יִתְגַּדַּל'.
-  - sugestão do revisor: O correto seria usar 'יִתְגַּדֵּל'.
+  - problema: A glosa proposta muda o significado de 'Yitgadal', que significa 'ser engrandecido', para 'Yit'aleh', que significa 'ascender'.
+  - sugestão do revisor: A glosa correta para 'יִתְגַּדַּל' deve refletir o sentido de 'ser engrandecido'.
 - **glosa 3** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'שְׁמוֹ' é uma forma menos respeitosa; a forma correta seria mais formal e adequada ao contexto litúrgico.
-  - sugestão do revisor: O correto seria usar 'שְׁמוֹ'.
+  - problema: A glosa proposta 'שְׁמוֹ' está errada, pois o termo correto que representa 'shem' na forma de 'shemêh' é o que mantém a conotação adequada na liturgia.
+  - sugestão do revisor: A glosa correta deve ser 'שְׁמוֹ'.
 - **glosa 4** · *palavra*
   - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A expressão 'הַגָּדוֹל' não é uma tradução precisa de 'רַבָּא', que é tradicionalmente traduzido como 'grande' em um contexto litúrgico.
-  - sugestão do revisor: O correto seria manter 'רַבָּא'.
+  - problema: A glosa 'הַגָּדוֹל' não é uma tradução literal de 'רַבָּא', que significa 'grande' em um contexto litúrgico, mas 'הַגָּדוֹל' tem uma conotação diferente.
+  - sugestão do revisor: A glosa correta deve ser apenas 'רַבָּא'.
 
 #### בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ
 
@@ -1929,34 +1786,38 @@ Texto em hebraico moderno: **בָּעוֹלָם שֶׁבָּרָא כִּרְצ�
 
 - **traducao** · *sentido*
   - trecho citado: `בְּעָלְמָא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução "בָּעוֹלָם" não corresponde corretamente ao que é expresso em hebraico, que traz uma nuance de 'mundo' não capturada aqui.
-  - sugestão do revisor: Uma tradução mais apropriada poderia ser 'בְּעָלְמָא', que se refere especificamente ao 'mundo' em um contexto mais amplo.
+  - problema: A palavra 'בָּעוֹלָם' não traduz corretamente 'בְּעָלְמָא', que denota um sentido mais amplo que 'mundo'; o significado literal é 'no mundo'.
+  - sugestão do revisor: 'בעולם' seria uma melhor escolha, mantendo a essência do original.
 - **glosa 2** · *palavra*
   - trecho citado: `דִּי` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta para 'דִּי' está ausente, o que pode causar confusão em sua interpretação.
-  - sugestão do revisor: Sugiro adicionar a glosa 'שֶׁ' que transmite corretamente o sentido de 'que' ou 'do qual'.
+  - problema: A tradução da conjunção 'דִּי' está ausente e não foi substituída adequadamente.
+  - sugestão do revisor: A glosa correta para 'דִּי' pode ser 'שֶׁ'.
+- **glosa 4** · *palavra*
+  - trecho citado: `כִרְעוּתֵהּ` *(citou a palavra hebraica de origem)*
+  - problema: 'כִּרְצוֹנוֹ' não reflete o sentido completo da palavra 'כִרְעוּתֵהּ'.
+  - sugestão do revisor: A glosa correta pode ser 'בהסכמה' ou algo que capture a ideia de 'como desejado'.
 
 #### וְיַמְלִיךְ מַלְכוּתֵהּ
 
-*veyamlich malchutêh*
+*veyamlích malchutêh*
 
 Texto em hebraico moderno: **וְיַמְלִיךְ מַלְכוּתוֹ**
 
-- **traducao** · *sentido*
+- **glosa 2** · *sentido*
   - trecho citado: `מַלְכוּתֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'מַלְכוּתוֹ' muda o possessivo de 'dela' para 'dele', alterando o sentido.
-  - sugestão do revisor: A tradução correta deve manter o possessivo como 'málchutêh', ou seja, 'de sua (dela) realeza'.
+  - problema: A glosa proposta "מַלְכוּתוֹ" altera o sentido da palavra original, que é possessiva e se refere à 'Sua soberania', enquanto a proposta se refere à 'sua soberania' em um sentido mais restrito.
+  - sugestão do revisor: A glosa correta seria 'מַלְכוּתֵהּ', que tem o sentido de 'a sua soberania'.
 
 #### וְיַצְמַח פּוּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
 
-*veyatsmách purkanêh vikarev meshichêh*
+*veyatsmách purkanêh vikarêv meshichêh*
 
 Texto em hebraico moderno: **וְיַצְמִיחַ גְּאֻלָּתוֹ וִיקָרֵב מְשִׁיחוֹ**
 
 - **glosa 2** · *sentido*
   - trecho citado: `פּוּרְקָנֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'גְּאֻלָּתוֹ' não é equivalente a 'פּוּרְקָנֵהּ', que se refere a 'libertação' ou 'redempção'.
-  - sugestão do revisor: A palavra correta poderia ser 'פּוּרְקָן', que se refere a 'libertação'.
+  - problema: A glosa proposta "גְּאֻלָּתוֹ" não corresponde ao significado de "פּוּרְקָנֵהּ", que se refere a um 'livramento' ou 'redenção', enquanto 'ge'ulá' é mais especificamente 'salvação' ou 'libertação'.
+  - sugestão do revisor: Uma opção mais adequada seria 'פּוּרְקָנָא'.
 
 #### בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן
 
@@ -1964,309 +1825,302 @@ Texto em hebraico moderno: **וְיַצְמִיחַ גְּאֻלָּתוֹ וִ�
 
 Texto em hebraico moderno: **בְּחַיֵּיכֶם וּבִימֵיכֶם**
 
-- **glosa 1** · *sentido*
-  - trecho citado: `בְּחַיֵּיכוֹן` *(citou a palavra hebraica de origem)*
-  - problema: A forma 'בְּחַיֵּיכֶם' é errada nesse contexto, pois 'חַיֵּיכוֹן' corresponde a 'seus (plural)', enquanto 'חַיֵּיכֶם' é a forma para 'vocês (plural)'.
-- **glosa 2** · *sentido*
-  - trecho citado: `וּבְיוֹמֵיכוֹן` *(citou a palavra hebraica de origem)*
-  - problema: A forma 'וּבִيمֵיכֶם' é errada também, pela mesma razão, 'יוֹמֵיכוֹן' significa 'seus dias (plural)', enquanto 'יוֹמֵיכֶם' é para 'vocês (plural)'.
+- **glosa 1** · *palavra*
+  - trecho citado: `בְּחַיֵּיכֶם`
+  - problema: A glosa proposta não mantém a forma plural do original. A palavra 'בְּחַיֵּיכֶן' é mais apropriada para manter a inclusão de todos os ouvintes, uma vez que é usada em contextos litúrgicos.
+  - sugestão do revisor: Utilizar 'בְּחַיֵּיכֶן' para refletir o pleno sentido do original.
+- **glosa 2** · *palavra*
+  - trecho citado: `וּבִימֵיכֶם`
+  - problema: A glosa proposta está incorreta em relação ao termo 'יומיכם'. O uso de 'וּבִימֵיכֶם' (que implica 'em seus dias') é uma alteração desnecessária da estrutura.
+  - sugestão do revisor: Deveria ser 'וּבְיוֹמֵיכֶן' para manter a correspondência correta e o elevado estilo litúrgico.
 
 #### וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל
 
-*uvechayê dechol beit Israel*
+*uvechayê dechol bêt Israel*
 
 Texto em hebraico moderno: **וּבְחַיֵּי כָּל בֵּית יִשְׂרָאֵל**
 
 - **traducao** · *palavra*
   - trecho citado: `דְכָל` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'כָּל' não é adequada para refletir o sentido da palavra 'דְכָל', que significa 'de todos' em vez de apenas 'todo'.
-  - sugestão do revisor: A tradução correta seria 'וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל', que poderia ser traduzido como 'Na vida de todos a casa de Israel'.
+  - problema: A palavra "כָּל" não é a tradução correta de "דְכָל" no contexto litúrgico, pois a expressão correta deve incluir a preposição em hebraico moderno.
+  - sugestão do revisor: A tradução correta seria "וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל" como "e na vida de toda a casa de Israel."
 
 #### בַּעֲגָלָא וּבִזְמַן קָרִיב וְאִמְרוּ אָמֵן
 
-*baagalá uvizmán carív veimrú Amen*
+*baagalá uvizmán carív ve'imrú Amên*
 
 Texto em hebraico moderno: **בִּמְהֵרָה וּבִזְמַן קָרוֹב — וְאִמְרוּ אָמֵן**
 
 - **traducao** · *sentido*
   - trecho citado: `בַּעֲגָלָא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução proposta 'בִּמְהֵרָה' não reflete corretamente o significado da palavra 'בַּעֲגָלָא', que se relaciona com 'com a chegada' ou 'com a vinda', enquanto 'בִּמְהֵרָה' significa 'rapidamente'.
-  - sugestão do revisor: Considerar 'בְּעָגַלָא' como tradução para manter a relação de aproximação.
+  - problema: A tradução proposta 'בִּמְהֵרָה' não reflete corretamente o sentido de 'בַּעֲגָלָא', que significa 'em breve' ou 'rapidamente'.
+  - sugestão do revisor: Uma tradução mais precisa poderia ser 'בִּמְהֵרָה' (com pressa) ou 'בַּעֲגָלָא'.
 
 #### יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ לְעָלַם וּלְעָלְמֵי עָלְמַיָּא
 
-*Yehê shemê raba mevarách lealám ul'almei almayá*
+*Yehê shemêh rabá mevarách lealám ul'alme almayá*
 
 Texto em hebraico moderno: **יְהִי שְׁמוֹ הַגָּדוֹל מְבֹרָךְ לְעוֹלָם וּלְעוֹלְמֵי עוֹלָמִים**
 
 - **glosa 2** · *sentido*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'שְׁמוֹ' traduz 'seu nome', enquanto 'שְׁמֵהּ' é 'seu nome' no sentido singular, mas não reflete o contexto do título 'grande' que é mais apropriado para 'שְׁמֵהּ'.
-  - sugestão do revisor: Considerar 'שְׁמוֹ' como a forma correta que se alinha melhor com 'grande nome'.
+  - problema: A glosa proposta altera o sentido ao usar 'שְׁמוֹ', que significa 'seu nome', enquanto 'שְׁמֵהּ' se refere a 'seu nome', mas na forma específica ou respeitosa da liturgia.
+  - sugestão do revisor: Manter 'שְׁמֵהּ' sem alteração.
 - **glosa 3** · *palavra*
   - trecho citado: `רַבָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'הַגָּדוֹל' é uma escolha inadequada para 'רַבָּא', pois 'רַבָּא' tem um sentido mais elevado e é frequentemente usado em contextos que referem-se ao 'Grande'.
-  - sugestão do revisor: A glosa poderia ser 'רַבָּא' permanecer como 'Grande' ou 'o excelente'.
-- **glosa 7** · *palavra*
+  - problema: A palavra escolhida 'הַגָּדוֹל' é uma tradução correta, mas não é a mais adequada para o registro litúrgico que geralmente usa 'רַבָּא' para significar 'grande' ou 'magnífico'.
+  - sugestão do revisor: Manter 'רַבָּא'.
+- **glosa 7** · *sentido*
   - trecho citado: `עָלְמַיָּא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'עוֹלָמִים' é inadequada pois 'עָלְמַיָּא' geralmente se refere a 'os mundos' no sentido plural, que não é capturado por 'עוֹלָמִים'.
-  - sugestão do revisor: Considere usar 'עָלְמַיָּא' como 'universos' ou 'os mundos'.
+  - problema: A glosa proposta muda o significado de 'עָלְמַיָּא', que se refere a 'mundos', enquanto 'עוֹלָמִים' se refere genericamente a 'mundos', mas pode não capturar a ideia de pluralidade 'עָלְמַיָּא' como utilizada na liturgia.
+  - sugestão do revisor: Manter 'עָלְמַיָּא'.
 
 #### יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר
 
-*Yitbarêch veyishtabach veyitpaar*
+*Yitbarêch veyishtabách veyitpaêr*
 
 Texto em hebraico moderno: **יִתְבָּרֵךְ וְיִשְׁתַּבֵּחַ וְיִתְפָּאֵר**
 
 - **glosa 2** · *palavra*
   - trecho citado: `וְיִשְׁתַּבַּח` *(citou a palavra hebraica de origem)*
-  - problema: A forma 'וְיִשְׁתַּבֵּחַ' é inadequada no registro litúrgico, já que a forma correta é 'וְיִשְׁתַּבַּח'.
-  - sugestão do revisor: Utilizar a forma correta 'וְיִשְׁתַּבַּח'.
+  - problema: A glosa sugere uma forma diferente da palavra hebraica que não é adequada no contexto: 'יִשְׁתַּבֵּחַ' não representa a mesma forma que aparece no hebraico.
+  - sugestão do revisor: A forma correta a ser utilizada é 'וְיִשְׁתַּבַּח'.
 
 #### וְיִתְרוֹמָם וְיִתְנַשֵּׂא וְיִתְהַדָּר
 
-*veyitromam veyitnasse veyithadar*
+*veyitromám veyitnassê veyit'hadár*
 
 Texto em hebraico moderno: **וְיִתְרוֹמֵם וְיִתְנַשֵּׂא וְיִתְהַדֵּר**
 
-- **traducao** · *gramatica*
-  - trecho citado: `וְיִתְרוֹמָם` *(citou a palavra hebraica de origem)*
-  - problema: A forma verbal está no plural, enquanto a tradução está na forma singular.
-  - sugestão do revisor: Utilizar 'וְיִתְרוֹמֵם' para manter a concordância verbal.
-- **traducao** · *gramatica*
+- **traducao** · *palavra*
   - trecho citado: `וְיִתְהַדָּר` *(citou a palavra hebraica de origem)*
-  - problema: A forma verbal está no singular e deve ser modificada para refletir a correspondente forma desejada no contexto do culto.
-  - sugestão do revisor: Utilizar 'וְיִתְהַדֵּר' para refletir a forma apropriada.
+  - problema: A palavra 'וְיִתְהַדֵּר' não é a forma correta; a forma correta deve ser 'וְיִתְהַדָּר'.
+  - sugestão do revisor: Utilizar 'וְיִתְהַדָּר' em vez de 'וְיִתְהַדֵּר'.
 
 #### וְיִתְעַלֶּה וְיִתְהַלָּל שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא
 
-*veyitaleh veyithalal shemê decudshá berich hu*
+*veyit'alé veyit'halál shemêh de'cudshá berích Hu*
 
 Texto em hebraico moderno: **וְיִתְעַלֶּה וְיִתְהַלֵּל שְׁמוֹ שֶׁל הַקָּדוֹשׁ בָּרוּךְ הוּא**
 
-- **traducao** · *sentido*
+- **glosa 3** · *palavra*
   - trecho citado: `שְׁמֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A tradução de 'שְׁמֵהּ' como 'שְׁמוֹ' altera o sentido original, que se refere à forma mais direta de se referir ao nome de Deus.
-  - sugestão do revisor: A tradução correta seria 'שְׁמוֹ'.
+  - problema: A glosa proposta 'שְׁמוֹ' não corresponde à forma correta do termo no contexto litúrgico.
+- **glosa 4** · *palavra*
+  - trecho citado: `דְּקֻדְשָׁא` *(citou a palavra hebraica de origem)*
+  - problema: A glosa 'שֶׁל הַקָּדוֹשׁ' não é uma tradução exata e direta do termo.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
 
-*leela min kol birchatá veshiratá*
+*Leela min kol birchatá veshiratá*
 
 Texto em hebraico moderno: **לְמַעְלָה מִכָּל הַבְּרָכוֹת וְהַשִּׁירוֹת**
 
 - **traducao** · *sentido*
   - trecho citado: `לְעֵלָּא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução proposta 'לְמַעְלָה' não transmite o mesmo sentido do original, pois 'לְעֵלָּא' tem uma conotação mais de 'acima' ou 'além', enquanto 'לְמַעְלָה' é simplesmente 'acima', sem o mesmo sentido de transcendência.
-  - sugestão do revisor: Uma tradução mais adequada poderia ser 'עַל' para expressar a ideia de 'acima'.
-- **glosa 1** · *palavra*
-  - trecho citado: `לְעֵלָּא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'לְמַעְלָה' não é uma correspondência precisa para 'לְעֵלָּא' no contexto litúrgico.
-  - sugestão do revisor: Considerar uma tradução mais fiel como 'עַל'.
+  - problema: A tradução proposta 'לְמַעְלָה' não reflete o sentido da palavra 'לְעֵלָּא', que expressa algo mais elevado ou superior no contexto litúrgico.
+  - sugestão do revisor: Uma sugestão apropriada seria usar a palavra 'עֵל' que reflete adequadamente o sentido de 'superior'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim tovim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím tovím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em hebraico moderno: **יְהִי שָׁלוֹם רָב מִן הַשָּׁמַיִם וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל — וְאִמְרוּ אָמֵן**
 
-- **traducao** · *sentido*
-  - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'יְהֵא' está incorretamente traduzida como 'יְהִי'. A tradução correta é 'que haja' ou 'que exista'.
 - **glosa 1** · *palavra*
   - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'יְהִי' não é o equivalente adequado a 'יְהֵא' no contexto litúrgico.
+  - problema: A forma 'יְהֵא' não é apropriada para o contexto litúrgico; 'יְהִי' seria a forma correta e mais utilizada.
 
 #### עַל יִשְׂרָאֵל וְעַל רַבָּנָן
 
-*Al Israel veal rabanan*
+*Al Israel veal rabanán*
 
 Texto em hebraico moderno: **עַל יִשְׂרָאֵל וְעַל הַחֲכָמִים**
 
-- **glosa 4** · *sentido*
+- **traducao** · *sentido*
   - trecho citado: `רַבָּנָן` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'הַחֲכָמִים' (os sábios) não é uma tradução adequada para 'רַבָּנָן' (os rabinos), pois se refere a um grupo específico em vez de de forma geral a sábios.
-  - sugestão do revisor: 'רַבָּנָן' deve ser traduzido como 'os rabinos'.
+  - problema: A tradução proposta 'הַחֲכָמִים' não representa corretamente a palavra 'רַבָּנָן', que significa 'rabis' ou 'os rabinos'.
 
 #### וְעַל כָּל מָאן דְּעָסְקִין בְּאוֹרַיְתָא
 
-*veal kol man daaskin beoraytá*
+*veal kol man de'askín beoraytá*
 
 Texto em hebraico moderno: **וְעַל כָּל מִי שֶׁעוֹסְקִים בַּתּוֹרָה**
 
 - **glosa 3** · *palavra*
   - trecho citado: `מָאן` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'מִי' não é uma tradução apropriada para o contexto litúrgico e formal que 'מָאן' pode ter.
-  - sugestão do revisor: 'מָאן' pode ser traduzido como 'quem', que é mais apropriado para este contexto.
-- **glosa 5** · *palavra*
+  - problema: A palavra 'מָאן' não é adequada para o contexto litúrgico e sua tradução como 'מִי' não mantém o mesmo registro formal. 'מָאן' está mais próximo de um sentido genérico de 'quem', enquanto 'מִי' refere-se a 'quem' de maneira mais específica.
+  - sugestão do revisor: Manter 'מָאן' como 'מָאן', já que é uma referência mais neutra e inclusiva no contexto.
+- **glosa 5** · *sentido*
   - trecho citado: `בְּאוֹרַיְתָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'בַּתּוֹרָה' altera o sentido, pois 'בְּאוֹרַיְתָא' significa 'na Torá', enquanto 'בַּתּוֹרָה' se refere à 'Torá' como um substantivo.
-  - sugestão do revisor: Usar 'בְּאוֹרַיְתָא' ou um equivalente adequado que mantenha o sentido.
+  - problema: A tradução 'בַּתּוֹרָה' não capta o sentido mais abrangente do termo 'בְּאוֹרַיְתָא', que se refere à Torá em um sentido mais amplo, incluindo o estudo e a observância.
+  - sugestão do revisor: Traduzir 'בְּאוֹרַיְתָא' como 'בַּתּוֹרָה' está correto em determinados contextos, mas aqui pode ser mais apropriado 'בְּאוֹרַיְתָא' para refletir o significado completo.
 
 #### דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא
 
-*daaskin beoraytá kadishtá*
+*de'askín beoraytá kadishtá*
 
 Texto em hebraico moderno: **שֶׁעוֹסְקִים בַּתּוֹרָה הַקְּדוֹשָׁה**
 
-- **glosa 1** · *sentido*
-  - trecho citado: `דְּעָסְקִין` *(citou a palavra hebraica de origem)*
-  - problema: A tradução altera o sentido original. 'דְּעָסְקִין' refere-se a 'estamos ocupados' ou 'trabalhando', enquanto 'שֶׁעוֹסְקִים' se refere a um presente contínuo de 'ocupamos', que implica uma ação em andamento e não é uma tradução direta do verbo na primeira pessoa plural.
-  - sugestão do revisor: Usar uma glosa mais precisa como 'עוסקים' que preservaria o sentido de 'estamos ocupados'.
-- **glosa 2** · *palavra*
-  - trecho citado: `בְּאוֹרַיְתָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'בְּאוֹרַיְתָא' refere-se a 'Torá', mas a tradução 'בַּתּוֹרָה' se traduz como 'na Torá', que não é a palavra apropriada para o significado pretendido.
-  - sugestão do revisor: Manter 'בְּאוֹרַיְתָא' ou utilizar outro termo mais adequado para 'Torá'.
-- **glosa 3** · *palavra*
-  - trecho citado: `קַדִּשְׁתָּא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'קַדִּשְׁתָּא' refere-se a 'sagrada' ou 'santíssima', enquanto 'הַקְּדוֹשָׁה' pode ser considerado um erro de sentido, pois menospreza o conceito de santidade que está diretamente associado à expressão.
-  - sugestão do revisor: Considerar uma glosa que mantenha o sentido de 'sagrado', como 'הקדושה' ou similar.
+- **traducao** · *sentido*
+  - trecho citado: `הַקְּדוֹשָׁה`
+  - problema: A palavra 'הַקְּדוֹשָׁה' significa 'a sagrada' ou 'a santificada', enquanto 'קַדִּשְׁתָּא' refere-se a algo que é 'sagrado' ou 'santificado' de modo mais genérico, sem o artigo definido.
+  - sugestão do revisor: 'הַקְּדוֹשָׁה' deve ser revisado para 'קָדוֹשׁ' ou 'קָדוֹשָׁה', ou a frase pode ser adaptada para não usar um artigo definido.
 
-#### דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר
+#### חִנָּא וְחִסְדָּא וְרַחֲמִין
 
-*di veatrá haden vedi vechol atar vaatár*
+*chiná vechisdá verachamín*
 
-Texto em hebraico moderno: **בַּמָּקוֹם הַזֶּה וּבְכָל מָקוֹם וּמָקוֹם**
+Texto em hebraico moderno: **חֵן וָחֶסֶד וְרַחֲמִים**
 
-- **tradução** · *sentido*
-  - trecho citado: `וַאֲתַר` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'וּמָקוֹם' sugere repetição do termo 'מָקוֹם', enquanto 'וַאֲתַר' se refere a 'e a localização', que não é representado na tradução.
-  - sugestão do revisor: 'וַאֲתַר' poderia ser traduzido como 'וְמָקוֹם' (e também em lugar) para melhor refletir o sentido original.
+- **glosa 1** · *palavra*
+  - trecho citado: `חִנָּא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'חֵן' não capta completamente o sentido da palavra 'חִנָּא', que se refere a algo mais relacionado a favor ou graça em um sentido mais amplo.
+  - sugestão do revisor: Uma tradução mais apropriada poderia ser 'חִנּוּן', que se relaciona melhor com o conceito original.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנָא רְוִיחָא
 
-*vechayin arichin umezona revicha*
+*vechayín arichín umezoná revichá*
 
 Texto em hebraico moderno: **וְחַיִּים אֲרֻכִּים וּפַרְנָסָה בְּרֶוַח**
 
 - **glosa 3** · *sentido*
-  - trecho citado: `וּמְזוֹנָא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'וּפַרְנָסָה' não corresponde corretamente ao sentido de 'מְזוֹנָא', que significa 'alimento' ou 'sustento'.
-  - sugestão do revisor: 'וּמְזוֹנָא' pode ser traduzido como 'מָזוֹן'.
+  - trecho citado: `אֲרִיכִין` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'פַרְנָסָה' (que significa 'sustento' ou 'manutenção') não corresponde ao significado de 'longos' que está implícito em 'אֲרִיכִין'.
+- **glosa 4** · *sentido*
+  - trecho citado: `רְוִיחָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'בְּרֶוַח' (que significa 'em abundância') não corresponde ao sentido exato de 'רְוִיחָא'.
 
 #### וְחַיִּין אֲרִיכִין וּמְזוֹנֵי רְוִיחֵי
 
-*vechayin arichin umezonei revichei*
+*vechayín arichín umezonêi revichei*
 
 Texto em hebraico moderno: **וְחַיִּים אֲרֻכִּים וּפַרְנָסָה בְּרֶוַח**
 
-- **glosa 3** · *sentido*
+- **glosa 3** · *palavra*
   - trecho citado: `וּמְזוֹנֵי` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'וּפַרְנָסָה' não traduz adequadamente 'וּמְזוֹנֵי', que se refere a sustento ou alimento, enquanto 'פַּרְנָסָה' normalmente se refere a sustento no sentido de provisão financeira ou renda.
-  - sugestão do revisor: A palavra correta seria 'מְזוֹנוֹת', que é o plural de 'alimentação'.
+  - problema: A palavra 'פַרְנָסָה' (parnassah) não é equivalente ao termo 'מְזוֹנֵי' (mezonei), que se refere a sustento ou alimento. A tradução correta deveria usar um termo que tenha relação ao ato de prover alimento, como 'מְזוּנִים'.
+  - sugestão do revisor: Usar 'מְזוּנִים' para se alinhar melhor com o significado de 'מְזוֹנֵי'.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá ve'imrú Amên*
 
 Texto em hebraico moderno: **וּגְאֻלָּה מִלִּפְנֵי אֲבִיהֶם שֶׁבַּשָּׁמַיִם — וְאִמְרוּ אָמֵן**
 
-- **glosa 1** · *sentido*
+- **traducao** · *sentido*
   - trecho citado: `וּפוּרְקָנָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa 'וּגְאֻלָּה' não reflete corretamente o significado de 'וּפוּרְקָנָא', que se refere a 'liberação' ou 'redenção' em vez de 'salvação'.
-  - sugestão do revisor: Uma tradução mais precisa poderia ser 'וּפוּרְקָנָא' para 'הַפְרָקָה'.
+  - problema: A palavra 'וּגוּאֻלָּה' não representa adequadamente o significado de 'וּפוּרְקָנָא', que tem um sentido mais próximo de 'redenção' ou 'salvação'.
+- **glosa 1** · *palavra*
+  - trecho citado: `וּפוּרְקָנָא` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'וּגְאֻלָּה' não é adequada para o termo litúrgico 'וּפוּרְקָנָא', que é mais específico e não pode ser traduzido simplesmente como 'redenção'.
 
 #### וּפוּרְקָנָא מִן קֳדָם אֲבוּהוֹן דְּבִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di-vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon divishmayá vear-á ve'imrú Amên*
 
 Texto em hebraico moderno: **וּגְאֻלָּה מִלִּפְנֵי אֲבִיהֶם שֶׁבַּשָּׁמַיִם וּבָאָרֶץ — וְאִמְרוּ אָמֵן**
 
-- **glosa 1** · *sentido*
+- **glosa 1** · *palavra*
   - trecho citado: `וּפוּרְקָנָא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta "וּגְאֻלָּה" não corresponde ao sentido da palavra hebraica que se refere a 'redempção' ou 'salvação' e não apenas a 'libertação'.
+  - problema: A palavra escolhida, 'וּגְאֻלָּה', significa 'redenção', mas 'וּפוּרְקָנָא' refere-se a 'salvação' ou 'liberação', que tem um sentido diferente.
 
 #### וּפֻרְקָנָא מִן קֳדָם אֲבוּהוֹן דִּי בִשְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*ufurkaná min kodam avuhon di vishmayá vear-á veimrú Amen*
+*ufurkaná min kodám avuhon di vishmayá vear-á ve'imrú Amên*
 
 Texto em hebraico moderno: **וּגְאֻלָּה מִלִּפְנֵי אֲבִיהֶם שֶׁבַּשָּׁמַיִם וּבָאָרֶץ — וְאִמְרוּ אָמֵן**
 
-- **traducao** · *sentido*
+- **glosa 1** · *sentido*
   - trecho citado: `וּפֻרְקָנָא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'וּגְאֻלָּה' não corresponde corretamente ao significado de 'וּפֻרְקָנָא', que se refere a 'salvação' ou 'liberação'.
-  - sugestão do revisor: 'וּפֻרְקָנָא' poderia ser traduzido como 'וּפְדוּת' ou 'שִׁיחוּת', que se ajustariam melhor ao sentido apropriado.
+  - problema: A palavra 'וּפֻרְקָנָא' significa 'libertação' ou 'salvação', enquanto 'וּגְאֻלָּה' significa 'redenção', que é um sentido diferente.
+  - sugestão do revisor: Utilizar 'וּפֻרְקָנָא' na tradução como 'libertação'.
+- **glosa 3** · *sentido*
+  - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
+  - problema: A palavra 'קֳדָם' significa 'diante' ou 'antes', enquanto 'מִלִּפְנֵי' tem um sentido mais específico de 'diante de' com nuances de formalidade.
+  - sugestão do revisor: Utilizar 'קֳדָם' na tradução como 'diante de'.
+- **glosa 6** · *sentido*
+  - trecho citado: `בִשְׁמַיָּא` *(citou a palavra hebraica de origem)*
+  - problema: A expressão 'בִשְׁמַיָּא' significa 'nos céus' ou 'no céu', 'שֶׁבַּשָּׁמַיִם' é mais abrangente mas ainda é diferente em nuance.
+  - sugestão do revisor: Utilizar 'בִשְׁמַיָּא' na tradução como 'nos céus'.
+- **glosa 7** · *sentido*
+  - trecho citado: `וְאַרְעָא` *(citou a palavra hebraica de origem)*
+  - problema: 'וְאַרְעָא' significa 'e a terra', enquanto 'וּבָאָרֶץ' é uma construção diferente que implica um som mais formal e tradicional.
+  - sugestão do revisor: Usar 'וְאַרְעָא' na tradução como 'e a terra'.
 
 #### מִן קֳדָם מָרֵא שְׁמַיָּא וְאַרְעָא וְאִמְרוּ אָמֵן
 
-*min kodam marê shemayá vear-á veimrú Amen*
+*min kodám marê shemayá vear-á ve'imrú Amên*
 
 Texto em hebraico moderno: **מִלִּפְנֵי אֲדוֹן הַשָּׁמַיִם וְהָאָרֶץ — וְאִמְרוּ אָמֵן**
 
-- **glosa 2** · *sentido*
+- **traducao** · *sentido*
+  - trecho citado: `מִן קֳדָם` *(citou a palavra hebraica de origem)*
+  - problema: A tradução proposta não corresponde ao sentido de 'מִן קֳדָם', que significa 'diante de' ou 'na presença de' em vez de 'מִלִּפְנֵי'.
+  - sugestão do revisor: A tradução correta seria 'מִלִּפְנֵי'.
+- **glosa 2** · *palavra*
   - trecho citado: `קֳדָם` *(citou a palavra hebraica de origem)*
-  - problema: A glosa "מִלִּפְנֵי" não captura o sentido adequado de "קֳדָם", que se refere a "ante" ou "diante de" e não diretamente a "perante" ou "à frente de".
-  - sugestão do revisor: Considerar "מִקֳּדֶם" ou "מִלפְנֵי" dependendo do contexto.
-- **glosa 3** · *palavra*
-  - trecho citado: `מָרֵא` *(citou a palavra hebraica de origem)*
-  - problema: A glosa "אֲדוֹן" é inadequada, já que "מָרֵא" não significa "senhor", mas sim uma forma de "majestoso" ou "o grande".
-  - sugestão do revisor: Usar uma tradução que reflita mais precisamente o sentido da palavra, possivelmente "רַב" ou "גָדוֹל".
-- **glosa 5** · *palavra*
-  - trecho citado: `אַרְעָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra "וְהָאָרֶץ —" não é uma tradução precisa de "אַרְעָא", que refere-se mais especificamente à "terra" de forma mais ampla e não está corretamente representada aqui como parte de uma conjunção.
-  - sugestão do revisor: A opção mais adequada poderia ser simplesmente usar "וְאַרְעָא" sem o artigo que transforma a frase.
+  - problema: A palavra 'מִלִּפְנֵי' não é uma tradução precisa para 'קֳדָם', que se refere mais ao conceito de 'na presença de'.
+  - sugestão do revisor: A glosa correta seria 'דִּיּוּן'.
 
 #### יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*Yehê shelamá raba min shemayá vechayim aleinu veal kol Israel veimrú Amen*
+*Yehê shelamá rabá min shemayá vechayím alêinu veal kol Israel ve'imrú Amên*
 
 Texto em hebraico moderno: **יְהִי שָׁלוֹם רָב מִן הַשָּׁמַיִם וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל — וְאִמְרוּ אָמֵן**
 
-- **traducao** · *palavra*
-  - trecho citado: `שְׁלָמָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'שָׁלוֹם' não captura completamente o sentido litúrgico de 'שְׁלָמָא', que pode ter conotações mais profundas de paz ou plenitude em um contexto religioso.
-  - sugestão do revisor: Usar 'שְׁלָמָא' em vez de 'שָׁלוֹם' para manter a integridade do texto original.
+- **traducao** · *sentido*
+  - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
+  - problema: A tradução proposta 'יְהִי' muda o sentido inicial da palavra de 'Que haja' para 'Seja'.
+  - sugestão do revisor: Manter a tradução mais próxima de 'יְהֵא', como 'Que haja' ou utilizar a forma 'יְהֵא'.
 - **glosa 1** · *sentido*
   - trecho citado: `יְהֵא` *(citou a palavra hebraica de origem)*
-  - problema: O termo 'יְהִי' é uma tradução, mas o original 'יְהֵא' em contextos litúrgicos é frequentemente interpretado mais como um desejo ou bênção.
-  - sugestão do revisor: Manter 'יְהֵא' em vez de mudar para 'יְהִי'.
-- **glosa 10** · *gramatica*
-  - trecho citado: `יִשְׂרָאֵל —`
-  - problema: A adição do caractere '—' após 'יִישְׂרָאֵל' não é adequada e prejudica a fluidez do texto.
-  - sugestão do revisor: Remover o '—' para manter a formalidade e fluidez da frase.
+  - problema: A glosa proposta 'יְהִי' ignora a conotação de invocação que 'יְהֵא' possui na liturgia.
+  - sugestão do revisor: Utilizar 'יְהֵא' em vez de 'יְהִי'.
 
 #### חַיִּים וְשָׂבָע וִישׁוּעָה וְנֶחָמָה וְשֵׁיזָבָא
 
-*chayim vessavá vishuá venechamá veshezavá*
+*chayím vessavá vishuá venechamá veshezavá*
 
 Texto em hebraico moderno: **חַיִּים וְשֹׂבַע וִישׁוּעָה וְנֶחָמָה וְהַצָּלָה**
 
-- **traducao** · *palavra*
-  - trecho citado: `וְשֵׁיזָבָא` *(citou a palavra hebraica de origem)*
-  - problema: A palavra 'שֵׁיזָבָא' não é adequada contextualmente e parece ser um erro de grafia ou uma confusão com outra palavra.
-  - sugestão do revisor: A palavra correta para 'salvação' e que transmite um sentido apropriado seria 'הַצָּלָה'.
+- **glosa 2** · *palavra*
+  - trecho citado: `וְשָׂבָע` *(citou a palavra hebraica de origem)*
+  - problema: A palavra escolhida 'שֹׂבַע' não é a correta para o registro litúrgico; a palavra correta é 'שָׂבַע', que significa 'satisfação' ou 'plenitude'.
+  - sugestão do revisor: 'וְשָׂבַע'
 
 #### הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן
 
-*hu yaassê verachamav shalom aleinu veal kol Israel veimrú Amen*
+*Hu yaassê verachamáv shalom alêinu veal kol Israel ve'imrú Amên*
 
 Texto em hebraico moderno: **הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל — וְאִמְרוּ אָמֵן**
 
-- **glosa 4** · *sentido*
-  - trecho citado: `שָׁלוֹם`
-  - problema: A glosa proposta diz 'יַעֲשֶׂה שָׁלוֹם', o que altera o sentido ao incluir um verbo adicional.
-  - sugestão do revisor: A glosa correta seria apenas 'שָׁלוֹם'.
+- **glosa 2** · *sentido*
+  - trecho citado: `יַעֲשֶׂה`
+  - problema: A glosa está vazia, o que impede a compreensão do significado da palavra.
+  - sugestão do revisor: Adicionar a glosa correta, que é 'fará'.
 
 #### וְיַצְמַח פֻּרְקָנֵהּ וִיקָרֵב מְשִׁיחֵהּ
 
-*veyatsmách purkanêh vikarev meshichêh*
+*veyatsmách purkanêh vikarêv meshichêh*
 
 Texto em hebraico moderno: **וְיַצְמִיחַ גְּאֻלָּתוֹ וִיקָרֵב מְשִׁיחוֹ**
 
 - **glosa 2** · *sentido*
   - trecho citado: `פֻּרְקָנֵהּ` *(citou a palavra hebraica de origem)*
-  - problema: A glosa proposta 'גְּאֻלָּתוֹ' não reflete a mesma ideia que 'פֻּרְקָנֵהּ', que se refere a 'livramento' ou 'redenção', enquanto a proposta foca na 'salvação'.
+  - problema: A palavra "גְּאֻלָּתוֹ" não reflete corretamente o significado de "פֻּרְקָנֵהּ", que se refere a 'redempção' ou 'libertação'.
+  - sugestão do revisor: Utilizar uma palavra como 'גאולה' pode ser mais apropriado.
 
 #### לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא
 
-*leela min kol birchatá shirata*
+*Leela min kol birchatá shiratá*
 
 Texto em hebraico moderno: **לְמַעְלָה מִכָּל הַבְּרָכוֹת וְהַשִּׁירוֹת**
 
 - **traducao** · *sentido*
-  - trecho citado: `לְעֵלָּא` *(citou a palavra hebraica de origem)*
-  - problema: A tradução 'לְמַעְלָה' não reflete adequadamente o significado de 'לְעֵלָּא', que transmite a ideia de 'acima' ou 'além', geralmente em um contexto de louvor ou exaltação.
-  - sugestão do revisor: Uma sugestão mais apropriada poderia ser 'עַל' ou manter 'לְעֵלָּא' para preservar o sentido original.
+  - trecho citado: `לְעֵלָּא מִן כָּל בִּרְכָתָא שִׁירָתָא` *(citou a palavra hebraica de origem)*
+  - problema: A tradução proposta não reflete corretamente o significado original; 'לְעֵלָּא' geralmente significa 'acima' ou 'mais elevado', enquanto 'לְמַעְלָה' é adequado, mas não expressa o sentido total de superlativo presente na frase original.
+  - sugestão do revisor: Uma tradução mais fiel seria 'Acima de todas as bênçãos e canções'.
 
 ## Descartados pelo guarda de citação
 
@@ -2274,10 +2128,14 @@ Estas queixas foram jogadas fora porque o trecho citado não existe no
 texto revisado — sinal de que o revisor inventou a citação. Ficam
 registradas só para você saber que existiram.
 
-- italiano · הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `Yעֲשֶׂה`
-- russo · דְּעָסְקִין בְּאוֹרַיְתָא קַדִּשְׁתָּא — citou `בְּאוֹרַיְتָא`
-- alemão · דִּי בְאַתְרָא הָדֵין וְדִי בְכָל אֲתַר וַאֲתַר — citou `بְכָל`
-- hebraico moderno · הוּא יַעֲשֶׂה בְרַחֲמָיו שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `יִשְׂרָאֵल —`
+- francês · יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `undefined`
+- russo · יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `""`
+- russo · יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `""`
+- russo · יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `""`
+- russo · יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא וְחַיִּים טוֹבִים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `""`
+- italiano · הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou `yַעֲשֶׂה`
+- russo · יְהֵא לְהוֹן וּלְכוֹן שְׁלָמָא רַבָּא — citou `великой мир`
+- italiano · הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל וְאִמְרוּ אָמֵן — citou ``
 
 ## O que fazer com isto
 
