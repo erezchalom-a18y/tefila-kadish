@@ -475,10 +475,12 @@ if (TRAVADA) lingua.classList.add('escondido-pela-chave');
 //
 // A chave e de cada lingua, e o programinha confere: sem ela nao se grava nada.
 // Sem ENDERECO_REVISAO, ou sem chave no link, a pagina e exatamente a de antes.
-// O portugues nunca vai por aqui: o Erez continua aplicando os dele a mao.
+// O portugues entrou em 29/10 ("criar um corretor para a versao em portugues
+// tambem"), com o link ?lang=pt&k=. A porta do Erez — sem ?lang= — continua
+// sem envio: ele segue aplicando os dele a mao.
 const ENDERECO_REVISAO = '';
 const chaveRevisor = new URLSearchParams(location.search).get('k') || '';
-const DIRETO = TRAVADA && pedida !== 'pt' && !!ENDERECO_REVISAO && !!chaveRevisor;
+const DIRETO = TRAVADA && !!ENDERECO_REVISAO && !!chaveRevisor;
 
 // A interface na lingua de quem revisa. Cai no portugues so se faltar chave —
 // e a checagem cobra que nao falte nenhuma.

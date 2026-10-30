@@ -18,13 +18,15 @@ registro e o Actions fica vermelho (o GitHub manda e-mail).
 O que vale para quê (decisão do Erez, 27/10):
 - **tradução** (do verso e da palavra): corrigida uma vez, vale nos 8 kadishim
   onde o texto era o mesmo;
-- **transliteração**: vale só no Yatom e no DeRabanan **do mesmo nussach**.
+- **transliteração**: vale só no Yatom e no DeRabanan **do mesmo nussach** —
+  menos no português, onde vale nos 8 (é a original, e o glossário guarda uma
+  só por verso).
 
 Tudo se faz pelo navegador. São três coisas: um token do GitHub, o Worker na
 Cloudflare (a conta já existe — é onde está o DNS do kadish.app) e uma linha no
 `revisar.html`.
 
-As chaves dos 6 rabinos e os 6 links prontos estão em
+As chaves dos 7 revisores (português e as 6 línguas) e os 7 links prontos estão em
 `revisao-cloudflare/CHAVES-E-LINKS.local.txt` — **só no computador**, nunca no
 GitHub (o `.gitignore` não deixa). Quem tem o link de uma língua pode alterar o
 texto dela no app.

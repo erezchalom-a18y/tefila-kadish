@@ -20,6 +20,11 @@
  * que ele decidiu. Se um dia alguem salvar um recado sem essa letra, ele vai
  * parar DEPOIS dos com letra no sort, e a conta sai errada.
  *
+ * Desde 29/10 chegam tambem recados pelo envio direto, com a hora no nome
+ * (pt-<dia>-<hhmmss>.txt). Num mesmo dia eles vem ANTES dos com letra — entao,
+ * se o Erez salvar um recado a mao no mesmo dia de um envio, o dele vale por
+ * ultimo, que e o que se quer: a palavra final e dele.
+ *
  * Uso: node servidor-teste.mjs 8899 . &
  *      node testar-portugues.mjs [http://127.0.0.1:8899/tefila-kadish]
  */
@@ -58,6 +63,10 @@ for (const r of recados) {
   for (const b of t.split(/\n(?=tradução do verso —|tradução da palavra —|transliteração —)/)) {
     const m = b.match(/^(tradução do verso|tradução da palavra|transliteração) — (.+)\n\s*está: (.*)\n\s*deveria ser: (.*)$/m);
     if (!m) continue;
+    // "(não escrevi, mas está errado)" nao e decisao de texto: o revisor marcou
+    // errado e nao escreveu a forma certa. O aplicador deixa de fora (29/10,
+    // desde que o portugues tambem chega pelo envio direto); aqui tambem.
+    if (/^\(não escrevi/.test(m[4].trim())) continue;
     const k = `${TIPOS[m[1]]}|${semNikud(m[2])}`;
     if (!setas.has(k)) setas.set(k, new Map());
     setas.get(k).set(m[3].trim(), m[4].trim());   // recado mais novo sobrescreve

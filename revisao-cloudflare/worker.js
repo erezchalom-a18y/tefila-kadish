@@ -16,13 +16,15 @@
  * chave certa, nada se grava. A chave de uma língua só serve para ela: quem tem
  * o link francês não consegue mandar um recado russo.
  *
- * O português NÃO passa por aqui: o Erez aplica os dele a mão, e os recados pt
- * têm a regra das letras (-a, -b…) que um nome com hora quebraria.
+ * O português entrou em 29/10, com chave própria. Os recados que o Erez salva
+ * à mão continuam com letra (pt-<dia>-a.txt); os que chegam por aqui têm a
+ * hora (pt-<dia>-<hhmmss>.txt). No mesmo dia, os com hora vêm ANTES dos com
+ * letra na ordem alfabética — o testar-portugues.mjs lê nessa ordem.
  *
  * Ver COMO-LIGAR.md ao lado deste arquivo para o passo a passo.
  */
 
-const LINGUAS = ['en', 'es', 'fr', 'it', 'de', 'ru'];
+const LINGUAS = ['pt', 'en', 'es', 'fr', 'it', 'de', 'ru'];
 const REPO = 'erezchalom-a18y/tefila-kadish';
 const LIMITE = 200000;   // um recado das 297 entradas inteiras tem ~60 KB
 

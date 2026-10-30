@@ -737,6 +737,16 @@ pronúncia muda de nussach para nussach (yisgadal x yitgadal); a tradução não
 - Testes: `testar-aplicar-revisao.mjs` (tradução nos 8, transliteração só no
   nussach, numa cópia dos dados), `testar-revisao-worker.mjs` (só grava com a
   chave certa) e a parte "envio direto" do `testar-revisar.mjs`.
+- **O português também (29/10)**: *"criar um corretor para a versão em
+  português também"*. Mesmo `revisar.html`, link `?lang=pt&k=<chave>`, chave
+  própria no `CHAVES`. A transliteração portuguesa continua valendo nos 8 (não
+  por nussach): o glossário guarda UMA transliteração pt por verso, e o
+  aplicar-glossario.mjs desfaria uma diferença por nussach. A porta do Erez
+  (sem `?lang=`) continua sem envio. Os recados automáticos se chamam
+  `pt-<dia>-<hhmmss>.txt`; os dele, `pt-<dia>-a.txt` — no mesmo dia os com hora
+  vêm antes, e o dele vale por último no testar-portugues.mjs. O workflow só
+  aplica os com hora. O testar-portugues.mjs ignora o "(não escrevi…)", como o
+  aplicador.
 - **No Windows, `trava-sincronia.mjs` fica vermelho à toa** se o git converter
   o engine.html para CRLF (`core.autocrlf=true`): a impressão digital do módulo
   SYNC muda pelas quebras de linha. Com LF, como no GitHub, ela bate.

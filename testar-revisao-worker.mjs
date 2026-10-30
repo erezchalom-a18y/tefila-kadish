@@ -3,14 +3,15 @@
  * faz só o que deve, sem sair do computador: o GitHub é de mentira, aqui dentro.
  *
  *   - com a chave certa, grava revisoes/<lingua>-<dia>-<hora>.txt, com o recado intacto;
+ *   - o português também, com a chave dele (29/10);
  *   - chave errada, chave de OUTRA língua, origem estranha, recado sem etiqueta,
- *     português — nada se grava.
+ *     língua que não existe — nada se grava.
  *
  * Uso: node testar-revisao-worker.mjs
  */
 import worker from './revisao-cloudflare/worker.js';
 
-const env = { CHAVES: JSON.stringify({ fr: 'chave-fr', ru: 'chave-ru' }), GITHUB_TOKEN: 'token-de-teste' };
+const env = { CHAVES: JSON.stringify({ pt: 'chave-pt', fr: 'chave-fr', ru: 'chave-ru' }), GITHUB_TOKEN: 'token-de-teste' };
 const gravados = [];
 globalThis.fetch = async (url, op) => {
   gravados.push({ url, corpo: JSON.parse(op.body), auth: op.headers.Authorization });
@@ -42,13 +43,21 @@ const recusas = [
   ['sem chave', { lang: 'fr', recado: RECADO }],
   ['a chave russa mandando francês', { lang: 'fr', chave: 'chave-ru', recado: RECADO }],
   ['recado com a etiqueta de outra língua', { lang: 'ru', chave: 'chave-ru', recado: RECADO }],
-  ['português', { lang: 'pt', chave: 'chave-fr', recado: RECADO.replace('lang=fr', 'lang=pt') }],
+  ['a chave francesa mandando português', { lang: 'pt', chave: 'chave-fr', recado: RECADO.replace('lang=fr', 'lang=pt') }],
+  ['hebraico', { lang: 'he', chave: 'chave-fr', recado: RECADO.replace('lang=fr', 'lang=he') }],
   ['recado grande demais', { lang: 'fr', chave: 'chave-fr', recado: RECADO + 'x'.repeat(300000) }],
 ];
 for (const [nome, dados] of recusas) {
   const antes = gravados.length;
   r = await pedir(dados);
   confere(`${nome}: recusa e não grava`, r.status >= 400 && gravados.length === antes, `status ${r.status}`);
+}
+{
+  const antes = gravados.length;
+  r = await pedir({ lang: 'pt', chave: 'chave-pt', recado: RECADO.replace('lang=fr', 'lang=pt') });
+  confere('português, com a chave dele: grava em revisoes/pt-<dia>-<hora>.txt',
+    r.status === 200 && gravados.length === antes + 1 &&
+    /\/revisoes\/pt-\d{4}-\d\d-\d\d-\d{6}\.txt$/.test(gravados[antes].url));
 }
 {
   const antes = gravados.length;

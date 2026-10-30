@@ -444,6 +444,16 @@ await semLink.close();
   await s.waitForTimeout(500);
   confere('sem &k= o botao continua sendo "gerar o recado"',
     (await s.textContent('#gerar')).trim() !== 'Envoyer les corrections');
+  // O portugues (29/10): o link ?lang=pt&k= envia; a porta do Erez, sem ?lang=,
+  // continua sem envio mesmo com &k= — ele aplica os dele a mao.
+  await s.goto(`${BASE}/revisar.html?lang=pt&k=chave-de-teste`, { waitUntil: 'networkidle' });
+  await s.waitForTimeout(500);
+  confere('portugues com &k=: o botao vira "Enviar as correções"',
+    (await s.textContent('#gerar')).trim() === 'Enviar as correções');
+  await s.goto(`${BASE}/revisar.html?k=chave-de-teste`, { waitUntil: 'networkidle' });
+  await s.waitForTimeout(500);
+  confere('sem ?lang= (a porta do Erez) nao ha envio, nem com &k=',
+    (await s.textContent('#gerar')).trim() !== 'Enviar as correções');
   await s.close();
 }
 

@@ -12,11 +12,13 @@ name: Revisão do rabino
 # revisoes/ como registro e o workflow fica vermelho — e o GitHub avisa o Erez
 # por e-mail.
 #
-# O portugues nao entra aqui: o Erez aplica os dele a mao.
+# So os recados que o programinha grava (com a hora no nome). Os que o Erez
+# salva a mao (pt-<dia>-a.txt) ele mesmo aplica — este workflow nao os toca.
 on:
   push:
     branches: [main]
     paths:
+      - 'revisoes/pt-*.txt'
       - 'revisoes/en-*.txt'
       - 'revisoes/es-*.txt'
       - 'revisoes/fr-*.txt'
@@ -51,7 +53,7 @@ jobs:
           antes="${{ github.event.before }}"
           if ! git cat-file -e "$antes^{commit}" 2>/dev/null; then antes="${{ github.sha }}~1"; fi
           git diff --name-only --diff-filter=A "$antes" "${{ github.sha }}" -- revisoes \
-            | grep -E '^revisoes/(en|es|fr|it|de|ru)-[0-9-]+\.txt$' | sort > novos.txt || true
+            | grep -E '^revisoes/(pt|en|es|fr|it|de|ru)-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}\.txt$' | sort > novos.txt || true
           echo "recados novos:"; cat novos.txt
 
       - name: Aplicar, com as provas do aplicador
