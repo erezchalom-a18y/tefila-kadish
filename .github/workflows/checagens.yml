@@ -86,6 +86,12 @@ jobs:
       - name: testar-treino.mjs (Modo Treino e repeticao)
         run: node testar-treino.mjs http://127.0.0.1:8896/tefila-kadish
 
+      - name: testar-treino-escolhida.mjs (no Treino, o play comeca na palavra tocada)
+        run: node testar-treino-escolhida.mjs http://127.0.0.1:8896/tefila-kadish
+
+      - name: testar-data-hebraica.mjs (as duas datas do falecimento andam juntas)
+        run: node testar-data-hebraica.mjs http://127.0.0.1:8896/tefila-kadish
+
       - name: testar-revisar.mjs (a pagina de revisao das linguas)
         run: node testar-revisar.mjs http://127.0.0.1:8896/tefila-kadish --provar
 

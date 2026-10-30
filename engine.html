@@ -2179,6 +2179,21 @@
     transition: border-color 0.2s;
   }
   .setup-field input:focus { border-color: var(--brass); }
+  .data-hebraica { display: flex; gap: 6px; }
+  .data-hebraica select {
+    flex: 1 1 0; min-width: 0;
+    padding: 9px 6px;
+    font-family: 'Lora', serif;
+    font-size: 14.5px;
+    color: var(--text);
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    outline: none;
+  }
+  .data-hebraica select#setupHebMes { flex-grow: 1.6; }
+  .data-hebraica select:focus { border-color: var(--brass); }
+  .setup-nota { display: block; margin-top: 5px; font-size: 12px; line-height: 1.35; color: var(--text-soft); }
   .setup-field input.hebrew-input {
     font-family: 'Frank Ruhl Libre', serif;
     direction: rtl;
@@ -3361,8 +3376,23 @@ document.addEventListener('DOMContentLoaded', () => {
       <input type="text" id="setupRelation" data-i18n="ph_relation" placeholder="Pai, mãe, avô...">
     </div>
     <div class="setup-field">
-      <label data-i18n="setup_death_date">Data de falecimento (necessária pra yahrzeit)</label>
+      <label data-i18n="setup_death_date">Data de falecimento (calendário civil)</label>
       <input type="date" id="setupDeathDate">
+    </div>
+    <!-- 29/10 — A DATA HEBRAICA, a pedido dele: "incluir a data hebraica como
+         opcao, quando uma das duas data preenche, ja preenche a outra, mas
+         lembrar que o yortzeit e pela data hebraica". Quem sabe so a data
+         hebraica (do tumulo, do siddur da familia) agora pode dar so ela. As
+         duas andam juntas, e o pôr do sol entra na conta: depois dele, o dia
+         hebraico ja e o seguinte. O yahrzeit sai DESTA data. -->
+    <div class="setup-field">
+      <label data-i18n="setup_heb_date">Data hebraica do falecimento</label>
+      <div class="data-hebraica">
+        <select id="setupHebDia" aria-label="dia"></select>
+        <select id="setupHebMes" aria-label="mês"></select>
+        <select id="setupHebAno" aria-label="ano"></select>
+      </div>
+      <small class="setup-nota" data-i18n="setup_heb_nota">O yahrzeit é contado pela data hebraica. Preencha uma das duas — a outra se preenche sozinha.</small>
     </div>
     <!-- 09/09 — A PERGUNTA DO POR DO SOL. E a que ninguem lembra e a que acerta
          a data hebraica: quem faleceu DEPOIS do por do sol ja entrou no dia
@@ -6150,8 +6180,15 @@ function stop() {
   clearActiveWords();
   document.querySelectorAll('.picto').forEach(p => p.classList.remove('active'));
 }
-playBtn.addEventListener('click', () => { state.isPlaying ? pause() : play(); });
+playBtn.addEventListener('click', () => {
+  if (state.isPlaying) { pause(); return; }
+  // No Treino, a palavra tocada antes do ▶ e onde ele comeca (ver escolherPalavra).
+  const e = tirarEscolhida();
+  if (e) { closePopup(); comecarNaPalavra(e.vi, e.wi); return; }
+  play();
+});
 document.getElementById('restartBtn').addEventListener('click', () => {
+  state.palavraEscolhida = null;
   stop();
   nowReading.textContent = 'Pronto para começar';
 });
@@ -7180,7 +7217,8 @@ const I18N = {
     setup_eyebrow: 'Personalizar', setup_title: 'Em memória de quem você está rezando?',
     setup_intro: 'O Kadish ganha significado quando ligado a uma alma específica. Você pode preencher agora ou pular e fazer depois.',
     setup_name: 'Nome (de preferência em hebraico)', setup_hebrew_name: 'Nome hebraico (opcional)',
-    setup_relation: 'Relação', setup_death_date: 'Data de falecimento (necessária pra yahrzeit)',
+    setup_relation: 'Relação', setup_death_date: 'Data de falecimento (calendário civil)', setup_heb_date: 'Data hebraica do falecimento',
+    setup_heb_nota: 'O yahrzeit é contado pela data hebraica. Preencha uma das duas — a outra se preenche sozinha.', heb_dia: 'dia', heb_mes: 'mês', heb_ano: 'ano',
     setup_avisos_q: 'Quando você quer ser lembrado?',
     aviso_semana: 'Uma semana antes',
     aviso_tres: 'Três dias antes',
@@ -7280,7 +7318,8 @@ const I18N = {
     setup_eyebrow: 'Personalize', setup_title: 'For whom are you praying?',
     setup_intro: 'Kaddish gains meaning when tied to a specific soul. You can fill in now or skip and do later.',
     setup_name: 'Name (preferably in Hebrew)', setup_hebrew_name: 'Hebrew name (optional)',
-    setup_relation: 'Relationship', setup_death_date: 'Date of passing (required for yahrzeit)',
+    setup_relation: 'Relationship', setup_death_date: 'Date of passing (civil calendar)', setup_heb_date: 'Hebrew date of passing',
+    setup_heb_nota: 'The yahrzeit follows the Hebrew date. Fill in either one — the other fills itself in.', heb_dia: 'day', heb_mes: 'month', heb_ano: 'year',
     setup_avisos_q: 'When do you want to be reminded?',
     aviso_semana: 'One week before',
     aviso_tres: 'Three days before',
@@ -7380,7 +7419,8 @@ const I18N = {
     setup_eyebrow: 'Personalizar', setup_title: '¿Por quién estás rezando?',
     setup_intro: 'El Kadish gana significado cuando está ligado a un alma específica. Puedes completar ahora o saltar y hacerlo después.',
     setup_name: 'Nombre (preferentemente en hebreo)', setup_hebrew_name: 'Nombre hebreo (opcional)',
-    setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (necesaria para yahrzeit)',
+    setup_relation: 'Relación', setup_death_date: 'Fecha de fallecimiento (calendario civil)', setup_heb_date: 'Fecha hebrea del fallecimiento',
+    setup_heb_nota: 'El yahrzeit se cuenta por la fecha hebrea. Complete una de las dos — la otra se completa sola.', heb_dia: 'día', heb_mes: 'mes', heb_ano: 'año',
     setup_avisos_q: '¿Cuándo quiere que le recordemos?',
     aviso_semana: 'Una semana antes',
     aviso_tres: 'Tres días antes',
@@ -7480,7 +7520,8 @@ const I18N = {
     setup_eyebrow: 'Personnaliser', setup_title: 'Pour qui priez-vous?',
     setup_intro: 'Le Kaddish prend tout son sens lié à une âme spécifique. Vous pouvez remplir maintenant ou passer et le faire plus tard.',
     setup_name: 'Nom (de préférence en hébreu)', setup_hebrew_name: 'Nom hébraïque (optionnel)',
-    setup_relation: 'Relation', setup_death_date: 'Date de décès (nécessaire pour yahrzeit)',
+    setup_relation: 'Relation', setup_death_date: 'Date de décès (calendrier civil)', setup_heb_date: 'Date hébraïque du décès',
+    setup_heb_nota: 'Le yahrzeit suit la date hébraïque. Remplissez l’une des deux — l’autre se remplit seule.', heb_dia: 'jour', heb_mes: 'mois', heb_ano: 'année',
     setup_avisos_q: 'Quand voulez-vous être rappelé ?',
     aviso_semana: 'Une semaine avant',
     aviso_tres: 'Trois jours avant',
@@ -7580,7 +7621,8 @@ const I18N = {
     setup_eyebrow: 'Personalizza', setup_title: 'In memoria di chi stai pregando?',
     setup_intro: 'Il Kaddish acquista significato quando è legato a un\'anima specifica. Puoi compilare ora oppure saltare e farlo dopo.',
     setup_name: 'Nome (preferibilmente in ebraico)', setup_hebrew_name: 'Nome ebraico (facoltativo)',
-    setup_relation: 'Relazione', setup_death_date: 'Data del decesso (necessaria per lo yahrzeit)',
+    setup_relation: 'Relazione', setup_death_date: 'Data del decesso (calendario civile)', setup_heb_date: 'Data ebraica del decesso',
+    setup_heb_nota: 'Lo yahrzeit segue la data ebraica. Compili una delle due — l’altra si compila da sola.', heb_dia: 'giorno', heb_mes: 'mese', heb_ano: 'anno',
     setup_avisos_q: 'Quando vuole essere avvisato?',
     aviso_semana: 'Una settimana prima',
     aviso_tres: 'Tre giorni prima',
@@ -7680,7 +7722,8 @@ const I18N = {
     setup_eyebrow: 'Anpassen', setup_title: 'Für wen beten Sie?',
     setup_intro: 'Das Kaddisch gewinnt an Bedeutung, wenn es mit einer bestimmten Seele verbunden ist. Sie können es jetzt ausfüllen oder überspringen und später nachtragen.',
     setup_name: 'Name (möglichst auf Hebräisch)', setup_hebrew_name: 'Hebräischer Name (optional)',
-    setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (für den Jahrzeit nötig)',
+    setup_relation: 'Beziehung', setup_death_date: 'Sterbedatum (bürgerlicher Kalender)', setup_heb_date: 'Hebräisches Sterbedatum',
+    setup_heb_nota: 'Der Jahrzeit richtet sich nach dem hebräischen Datum. Füllen Sie eines der beiden aus — das andere ergänzt sich von selbst.', heb_dia: 'Tag', heb_mes: 'Monat', heb_ano: 'Jahr',
     setup_avisos_q: 'Wann möchten Sie erinnert werden?',
     aviso_semana: 'Eine Woche vorher',
     aviso_tres: 'Drei Tage vorher',
@@ -7780,7 +7823,8 @@ const I18N = {
     setup_eyebrow: 'Персонализация', setup_title: 'За кого вы молитесь?',
     setup_intro: 'Кадиш обретает смысл, когда связан с конкретной душой. Вы можете заполнить сейчас или позже.',
     setup_name: 'Имя (желательно на иврите)', setup_hebrew_name: 'Еврейское имя (опционально)',
-    setup_relation: 'Отношение', setup_death_date: 'Дата кончины (требуется для йорцайта)',
+    setup_relation: 'Отношение', setup_death_date: 'Дата кончины (гражданский календарь)', setup_heb_date: 'Дата кончины по еврейскому календарю',
+    setup_heb_nota: 'Йорцайт отмечают по еврейской дате. Заполните одну из дат — вторая заполнится сама.', heb_dia: 'день', heb_mes: 'месяц', heb_ano: 'год',
     setup_avisos_q: 'Когда вам напомнить?',
     aviso_semana: 'За неделю',
     aviso_tres: 'За три дня',
@@ -7880,7 +7924,8 @@ const I18N = {
     setup_eyebrow: 'התאמה אישית', setup_title: 'למען מי אתה מתפלל?',
     setup_intro: 'הקדיש מקבל משמעות כשהוא קשור לנשמה ספציפית. אפשר למלא עכשיו או לדלג.',
     setup_name: 'שם (רצוי בעברית)', setup_hebrew_name: 'שם עברי (אופציונלי)',
-    setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (נדרש ליארצייט)',
+    setup_relation: 'קשר', setup_death_date: 'תאריך פטירה (לועזי)', setup_heb_date: 'תאריך פטירה עברי',
+    setup_heb_nota: 'היארצייט נקבע לפי התאריך העברי. מלאו אחד מהשניים — השני יתמלא לבד.', heb_dia: 'יום', heb_mes: 'חודש', heb_ano: 'שנה',
     setup_avisos_q: 'מתי להזכיר לכם?',
     aviso_semana: 'שבוע לפני',
     aviso_tres: 'שלושה ימים לפני',
@@ -8538,6 +8583,7 @@ function irParaModo(querTreino) {
 }
 function toggleModoTreino() {
   state.modoTreino = !state.modoTreino;
+  state.palavraEscolhida = null;
   document.body.classList.toggle('modo-treino', state.modoTreino);
   const repeatBtn = document.getElementById('repeatBtn');
   const repCount = document.getElementById('repCount');
@@ -8875,6 +8921,16 @@ function renderMemorial() {
  * todos os anos, e ninguem teria como desconfiar.
  */
 function dataDaMorte(m) {
+  // 29/10 — com a data hebraica guardada, e ELA que manda: "o yortzeit e pela
+  // data hebraica". O dia civil devolvido aqui e o que cai naquela data
+  // hebraica (o pôr do sol ja esta dentro dela). Cadastros de antes nao tem
+  // hebDate, e seguem a conta de sempre.
+  const h = m.hebDate;
+  if (h && h.ano && h.mes && h.dia && window.Hebraico) {
+    const d = Hebraico.paraData(h);
+    d.setHours(12, 0, 0, 0);
+    return d;
+  }
   const d = new Date(m.deathDate + 'T12:00:00');
   if (m.aposPorDoSol) d.setDate(d.getDate() + 1);
   return d;
@@ -8975,6 +9031,80 @@ function lerSeg(id) {
   });
 });
 
+// ---------- A DATA HEBRAICA NO CADASTRO (29/10) ----------
+// As duas datas andam juntas: preencheu uma, a outra se preenche. A ponte e o
+// pôr do sol — depois dele, o dia hebraico ja e o seguinte:
+//   civil -> hebraica: a data hebraica do dia civil (+1 se depois do pôr do sol)
+//   hebraica -> civil: o dia civil daquela data hebraica (-1 se depois)
+// Mudar a resposta do pôr do sol mexe na data que NAO foi a digitada: quem deu
+// a data hebraica (a do tumulo) fixa ela, e e a civil que anda; quem deu a
+// civil fixa a civil. O yahrzeit sai da hebraica (ver dataDaMorte).
+let _fonteDaData = 'civil';
+const HEB_ORDEM = [7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5, 6];   // Tishrei..Elul
+const hebSel = k => document.getElementById('setupHeb' + k);
+function opcao(valor, texto) { const o = document.createElement('option'); o.value = valor; o.textContent = texto; return o; }
+function rotuloHeb(k) { return TXT('heb_' + k.toLowerCase()); }
+function numHeb(n) { return state.lang === 'he' && window.Hebraico ? Hebraico.gematria(n) : String(n); }
+
+function pintarSelectsHeb(h) {
+  if (!window.Hebraico) return;
+  const sDia = hebSel('Dia'), sMes = hebSel('Mes'), sAno = hebSel('Ano');
+  const hoje = Hebraico.deData(new Date()).ano;
+  const ano = h && h.ano ? h.ano : 0;
+  sAno.replaceChildren(opcao('', rotuloHeb('Ano')));
+  for (let a = hoje; a >= 5600; a--) sAno.appendChild(opcao(a, numHeb(a)));
+  // Os meses dependem do ano: em ano bissexto ha Adar I e Adar II; num ano
+  // ainda nao escolhido, mostra os dois Adar (ver Hebraico.nomeMes).
+  const bissexto = ano ? Hebraico.ehBissexto(ano) : true;
+  sMes.replaceChildren(opcao('', rotuloHeb('Mes')));
+  HEB_ORDEM.forEach(mes => {
+    if (mes === 13 && !bissexto) return;
+    sMes.appendChild(opcao(mes, Hebraico.nomeMes(ano || 5784, mes, state.lang)));
+  });
+  let mes = h && h.mes ? h.mes : 0;
+  if (mes === 13 && !bissexto) mes = 12;
+  const limite = (ano && mes) ? Hebraico.diasNoMes(ano, mes) : 30;
+  sDia.replaceChildren(opcao('', rotuloHeb('Dia')));
+  for (let d = 1; d <= limite; d++) sDia.appendChild(opcao(d, numHeb(d)));
+  sAno.value = ano || '';
+  sMes.value = mes || '';
+  sDia.value = h && h.dia ? Math.min(h.dia, limite) : '';
+}
+function lerSelectsHeb() {
+  const ano = +hebSel('Ano').value, mes = +hebSel('Mes').value, dia = +hebSel('Dia').value;
+  return (ano && mes && dia) ? { ano, mes, dia } : null;
+}
+const isoDe = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const depoisDoPor = () => lerSeg('setupPorDoSol') === 'depois';
+function hebDaCivil() {
+  const v = document.getElementById('setupDeathDate').value;
+  if (!v || !window.Hebraico) return;
+  const d = new Date(v + 'T12:00:00');
+  if (depoisDoPor()) d.setDate(d.getDate() + 1);
+  pintarSelectsHeb(Hebraico.deData(d));
+}
+function civilDaHeb() {
+  const h = lerSelectsHeb();
+  if (!h || !window.Hebraico) return;
+  const d = Hebraico.paraData(h);
+  if (depoisDoPor()) d.setDate(d.getDate() - 1);
+  document.getElementById('setupDeathDate').value = isoDe(d);
+  pintarAcoesDoCadastro();
+}
+document.getElementById('setupDeathDate')?.addEventListener('change', () => {
+  _fonteDaData = 'civil'; hebDaCivil();
+});
+['Dia', 'Mes', 'Ano'].forEach(k => hebSel(k)?.addEventListener('change', () => {
+  // repinta: o ano decide se ha Adar II, e o mes decide se ha dia 30
+  pintarSelectsHeb({ ano: +hebSel('Ano').value, mes: +hebSel('Mes').value, dia: +hebSel('Dia').value });
+  if (lerSelectsHeb()) { _fonteDaData = 'hebraica'; civilDaHeb(); }
+}));
+// depois do ouvinte que acende o botao (acima), para ler a resposta ja nova
+document.getElementById('setupPorDoSol')?.addEventListener('click', () => {
+  if (_fonteDaData === 'hebraica' && lerSelectsHeb()) civilDaHeb(); else hebDaCivil();
+});
+pintarSelectsHeb(null);   // o formulario nunca aparece com as tres caixas vazias
+
 // As caixinhas dos avisos, lidas e marcadas por uma conta so (11/09).
 // Sem lista guardada valem OS QUATRO — e o que o app sempre fez, e quem
 // cadastrou antes de hoje nao pode perder aviso nenhum por causa disto.
@@ -9036,6 +9166,10 @@ function abrirCadastro(id) {
   document.getElementById('setupDeathDate').value = m ? (m.deathDate || '') : '';
   marcarSeg('setupSexo', m ? (m.sexo || '') : '');
   marcarSeg('setupPorDoSol', m ? (m.aposPorDoSol ? 'depois' : (m.deathDate ? 'antes' : '')) : '');
+  // a data hebraica: a guardada; num cadastro de antes de 29/10, a calculada
+  _fonteDaData = (m && m.dataFonte) || 'civil';
+  pintarSelectsHeb(m && m.hebDate ? m.hebDate : null);
+  if (!(m && m.hebDate)) hebDaCivil();
   marcarAvisos(m && Array.isArray(m.avisos) ? m.avisos : AVISOS_TODOS);
   const aj = document.getElementById('settingsOverlay');
   if (aj) aj.classList.remove('show');
@@ -9095,6 +9229,8 @@ document.getElementById('setupSave').addEventListener('click', () => {
     relation: document.getElementById('setupRelation').value.trim(),
     deathDate: document.getElementById('setupDeathDate').value,
     aposPorDoSol: lerSeg('setupPorDoSol') === 'depois',
+    hebDate: lerSelectsHeb(),
+    dataFonte: _fonteDaData,
     avisos: lerAvisos()
   };
   if (!m.name) { showToast(TXT('toast_need_name')); return; }
@@ -9256,6 +9392,37 @@ if (popupComecar) popupComecar.addEventListener('click', (e) => {
   e.stopPropagation();
   const vi = popup._currentVi, wi = popup._currentWi;
   closePopup();
+  state.palavraEscolhida = null;
+  comecarNaPalavra(vi, wi);
+});
+
+// ---------- A PALAVRA TOCADA, NO TREINO (29/10) ----------
+// Ele: "quando seleciono uma palavra no meio do texto como vechayim, e nao clico
+// no botao começar aqui, mas no botao play, o audio recomeça do yitgadal".
+// Tocar na palavra so abria o balao — nao guardava nada, e o ▶ retomava de onde
+// o audio estava (num app recem-aberto, o zero). Agora, no Treino, a palavra
+// tocada com o audio parado fica escolhida, e o ▶ comeca nela, pelo mesmo
+// caminho do "Começar aqui".
+//   - vale UMA vez: depois do ▶, pausar e apertar de novo retoma de onde parou;
+//   - tocar de novo na mesma palavra (fechar o balao) desfaz a escolha;
+//   - sobrevive ao balao sumir sozinho — 3,5 s e pouco para achar o ▶;
+//   - so no Treino. Na reza, quem toca numa palavra quer o significado, e o ▶
+//     continua retomando de onde estava.
+// A escolha guarda o hebraico: se o Kadish mudou no meio, o numero do verso
+// aponta para outra palavra, e entao ela simplesmente nao vale.
+function escolherPalavra(vi, wi) {
+  const v = verses[vi];
+  state.palavraEscolhida = (state.modoTreino && !state.isPlaying && v)
+    ? { vi, wi, heb: v.hebrew[wi] } : null;
+}
+function tirarEscolhida() {
+  const e = state.palavraEscolhida;
+  state.palavraEscolhida = null;
+  if (!e || !state.modoTreino || !verses[e.vi] || verses[e.vi].hebrew[e.wi] !== e.heb) return null;
+  return e;
+}
+
+function comecarNaPalavra(vi, wi) {
   if (window.SYNC && window.SYNC.ativo() && window.SYNC.comecarEm) {
     const t = window.SYNC.comecarEm(vi, wi);
     if (t !== null && t !== undefined) return;
@@ -9264,17 +9431,19 @@ if (popupComecar) popupComecar.addEventListener('click', (e) => {
   // o melhor honesto e comecar no VERSO dela, que e o que sempre existiu.
   if (typeof playVerse === 'function') playVerse(vi);
   else if (typeof play === 'function') play();
-});
+}
 
 function showPopup(e, vi, wi) {
   const v = verses[vi];
   // Toggle: if popup is showing for the same word, close it
   if (popup.classList.contains('show') && popup._currentVi === vi && popup._currentWi === wi) {
     closePopup();
+    state.palavraEscolhida = null;
     return;
   }
   popup._currentVi = vi;
   popup._currentWi = wi;
+  escolherPalavra(vi, wi);
   popupHeb.textContent = v.hebrew[wi];
   // Multi-lang translit
   const trArr = (v.translit && v.translit[state.lang]) || (v.translit && v.translit.pt) || [];
