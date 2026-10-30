@@ -2193,7 +2193,8 @@
   }
   .data-hebraica select#setupHebMes { flex-grow: 1.6; }
   .data-hebraica select:focus { border-color: var(--brass); }
-  .setup-nota { display: block; margin-top: 5px; font-size: 12px; line-height: 1.35; color: var(--text-soft); }
+  #setupModal .setup-nota { display: block; margin-top: 5px; font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 13px; line-height: 1.35; color: var(--text-soft); }
   .setup-field input.hebrew-input {
     font-family: 'Frank Ruhl Libre', serif;
     direction: rtl;
@@ -3111,7 +3112,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-26 · 71';
+const VERSAO = '2026-10-29 · 72';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -8968,7 +8969,8 @@ function icsDeTodos(nussach, lang) {
     let bruto = '';
     // os avisos que ELE pediu para esta pessoa; sem lista, os quatro de sempre
     try { bruto = Yahrzeit.gerarICS(dataDaMorte(pes), nussach, pes.name || '', 20, lang,
-                                    Array.isArray(pes.avisos) ? pes.avisos : null); }
+                                    Array.isArray(pes.avisos) ? pes.avisos : null,
+                                    !!pes.hebDate || pes.porDoSol === 'antes' || pes.porDoSol === 'depois'); }
     catch (e) { return; }
     const linhas = bruto.split(/\r?\n/);
     let dentro = false;

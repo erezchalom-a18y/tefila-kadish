@@ -580,19 +580,19 @@
       "por_nussach": {
         "ashkenaz": {
           "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
-          "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr"
+          "transliteration_pt": "Yitbarêch veyishtabách veyitpaêr"
         },
         "chabad": {
           "hebrew": "יִתְבָּרֵךְ וְיִשְׁתַּבַּח וְיִתְפָּאֵר",
-          "transliteration_pt": "Yitbarêch veyishtabach veyitpaêr"
+          "transliteration_pt": "Yitbarêch veyishtabách veyitpaêr"
         },
         "sefard": {
           "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-          "transliteration_pt": "Yitbarach veyishtabach veyitpaar"
+          "transliteration_pt": "Yitbarách veyishtabách veyitpaár"
         },
         "sefaradi": {
           "hebrew": "יִתְבָּרַךְ וְיִשְׁתַּבַּח וְיִתְפָּאַר",
-          "transliteration_pt": "Yitbarach veyishtabach veyitpaar"
+          "transliteration_pt": "Yitbarách veyishtabách veyitpaár"
         }
       }
     },
@@ -889,10 +889,16 @@
       },
       "por_nussach": {
         "ashkenaz": {
-          "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen"
+          "transliteration_pt": "tushbechatá venechematá daamirán bealma ve'imrú Amên"
         },
         "chabad": {
-          "transliteration_pt": "tushbechata venechemata dáamiran bealma veimrú Amen"
+          "transliteration_pt": "tushbechatá venechematá daamirán bealma ve'imrú Amên"
+        },
+        "sefaradi": {
+          "transliteration_pt": "tushbechatá venechamatá daamirán bealma ve'imrú Amên"
+        },
+        "sefard": {
+          "transliteration_pt": "tushbechatá venechamatá daamirán bealma ve'imrú Amên"
         }
       }
     },

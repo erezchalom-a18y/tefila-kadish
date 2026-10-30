@@ -327,6 +327,25 @@ for (const [chave, e] of Object.entries(gloss.entradas)) {
     e.translation_pt = achado.translation_pt;
     e.transliteration_pt = achado.transliteration_pt;
     e.glosas_pt = achado.palavras.map(p => p.glosa_pt);
+    // A EXCECAO POR NUSSACH ANDA JUNTO (29/10). O verso de um nussach pode ter
+    // transliteracao propria (o tsere/patach de 25/08; o venechamata do
+    // Sefaradi). Ela mora em e.por_nussach, e o aplicar-glossario.mjs a usa no
+    // lugar da principal. Copiar so a principal deixava a excecao com a grafia
+    // velha — e a proxima rodada do glossario desfazia o recado no verso todo.
+    // Achado na auditoria de 29/10. Agora: cada nussach cuja transliteracao do
+    // verso difere da principal tem a sua excecao, com o texto de hoje.
+    const porNu = {};
+    for (const f of ARQUIVOS) {
+      const v = sync[f].versos.find(x => semNikud(x.hebrew) === chave);
+      if (v) porNu[f.split('_')[0]] = v.transliteration_pt;
+    }
+    for (const [nu, tl] of Object.entries(porNu)) {
+      const ja = e.por_nussach && e.por_nussach[nu];
+      if (tl !== e.transliteration_pt || ja) {
+        e.por_nussach = e.por_nussach || {};
+        e.por_nussach[nu] = { ...(ja || {}), transliteration_pt: tl };
+      }
+    }
   } else {
     // O glossario guarda as outras linguas em `translations` e `glosas`. Nao
     // ha transliteracao por lingua ali — ela vive so no sync —, entao nada a

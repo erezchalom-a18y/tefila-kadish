@@ -278,8 +278,11 @@
    * de valer se ela limpar os dados. O calendario do telefone avisa sempre,
    * inclusive com o telefone no silencioso e sem internet.
    */
-  function gerarICS(falecimento, nussach, nome, quantos, lingua, avisosPedidos) {
+  function gerarICS(falecimento, nussach, nome, quantos, lingua, avisosPedidos, dataCerta) {
     const T = textos(lingua);
+    // dataCerta (29/10): o cadastro ja respondeu o por do sol ou deu a data
+    // hebraica — entao a duvida da data hebraica nao vai para o calendario.
+    const semDuvida = av => dataCerta ? av.filter(a => a !== T.anoitecer) : av;
     // 11/09 — QUAIS avisos passou a ser escolha de quem cadastra. Ele: "no
     // adicionar ao calendario, perguntar quando quer ser lembrado". Sem lista
     // vale o que sempre valeu — os quatro —, para quem ja tinha cadastrado e
@@ -306,11 +309,14 @@
       l.push(`DTEND;VALUE=DATE:${paraICS(fim)}`);
       l.push(`SUMMARY:${titulo}`);
       const ins = instrucoes(y, lingua);
-      l.push(`DESCRIPTION:${y.rotulo}. ${ins.vela.replace('🕯 ', '')} ${ins.kadish}${y.avisos.length ? ' — ' + y.avisos.join(' ') : ''}`);
+      l.push(`DESCRIPTION:${y.rotulo}. ${ins.vela.replace('🕯 ', '')} ${ins.kadish}${semDuvida(y.avisos).length ? ' — ' + semDuvida(y.avisos).join(' ') : ''}`);
       // uma semana antes, tres dias antes, tarde da vespera, manha do dia —
       // agora so os que ele pediu (ver `quais`, acima).
       const ALARMES = { semana: ['-P7D', T.av7], tres: ['-P3D', T.av3],
-                        vespera: ['-PT8H', T.avVespera], dia: ['PT8H', T.avHoje] };
+                        // 29/10: na vespera de Shabat/Yom Tov o alarme diz o que o cartao diz —
+                        // 'acenda a vela' num sabado a tarde mandaria acender no Shabat
+                        vespera: ['-PT8H', ins.caso === 'normal' ? T.avVespera : ins.vela.replace('🕯 ', '')],
+                        dia: ['PT8H', T.avHoje] };
       quais.forEach((k) => {
         const [quando, texto] = ALARMES[k];
         l.push('BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:${quando}`, `DESCRIPTION:${texto}`, 'END:VALARM');
