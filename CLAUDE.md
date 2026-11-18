@@ -4545,3 +4545,40 @@ O cabeçalho enxuto, que ele já viu desenhado: `Chabad ▾` abrindo na própria
 linha com `TRADIÇÃO / NUSSACH`, o `Reza|Treino` e o 🔊⚙ℹ subindo para essa
 linha, e as três portas indo para dentro do ℹ. **A tela de rezar da v64 e da
 v65 é a MESMA** — as duas versões só diferem na tela de preparação.
+
+## O tema Escuro volta, azul e dourado (18/11, v74)
+
+Ele fez um flyer do app e gostou das cores e do formato dos seletores:
+*"diferencia os menus e botoes do texto"*. Decidiu que seria um TEMA, e nao o
+padrao — o Pergaminho continua sendo o de quem abre o app — e que o
+**PEQUENO-yatom / GRANDE-derabanan fica escrito como esta**.
+
+- **Reaproveitou o lugar do "Escuro"**, que saiu da tela em 21/08 e cujo nome
+  (`theme_dark`) ja estava nas 8 linguas: **zero texto novo**. O CSS antigo
+  (marrom) foi trocado pelo azul `#14243f` com dourado `#e9b85c`.
+- **E o mesmo desenho da v68, com a diferenca grande de proposito:** o corpo
+  fica nas cores do azul (controles, barra do play, menu, paineis) e o bloco
+  `body.theme-escuro #main, ... .dedicatoria-fixa` no FIM do `<style>` devolve
+  as cores do creme `#f6efe2` a tudo o que e reza. A dedicatoria entra junto,
+  porque e o comeco do Kadish (v68).
+- **A leitura vai de ponta a ponta, sem margem azul dos lados.** A proposta do
+  flyer era um cartao com margem; ficou de fora porque o `testar-dedicatoria`
+  amostra a cor a 6px da borda e pergunta se e o fundo da leitura — com
+  margem, a resposta seria "nao" e o conserto seria afrouxar a checagem. Os
+  cantos de cima arredondados (22px) dizem "aqui comeca o cartao".
+- **Contraste medido:** texto claro no azul 12,98:1 · inativo 10,20:1 · azul
+  sobre o dourado aceso 8,48:1 · Kadish no creme 14,07:1 · `--text-faint` no
+  creme 5,33:1 (no Pergaminho ele da 3,14:1).
+- **A primeira foto pegou quatro acesos com letra clara sobre o dourado** — a
+  velocidade da barra, a das Ajustes, a repeticao e o Treino aceso (que lia um
+  `--brass-dark` que nao existe em tema nenhum e caia no marrom). Os quatro
+  passaram a letra no azul.
+- **Ficaram de fora, e cada um contraria uma decisao dele:** o "modo rezando"
+  que esconde os controles no play (a v65 tirou exatamente isso: *"elimina-se
+  assim a tela rezando"*), o logo no cabecalho (custa ~40px contra o piso de
+  60% para o Kadish) e o menu de 4 itens com ⏮ ⏭ (as decisoes da v66).
+
+As 20 checagens verdes antes e depois. Na rodada de depois, quatro deram
+TIMEOUT de navegador (pagina que nao abriu em 30s, audio que nao chegou a
+tocar) e ficaram verdes rodadas sozinhas, sem mudar nada — maquina carregada,
+nao defeito. A `trava-sincronia` fica verde: nada disto toca no modulo SYNC.

@@ -71,22 +71,37 @@
     --tip-bg: rgba(166, 138, 78, 0.10);
   }
 
-  /* Theme: Escuro */
+  /* Theme: Escuro — AZUL E DOURADO (18/11, v74)
+     Ele viu o flyer e pediu: "gostei das cores e formatos do menu onde esta
+     yatom e derabanan, diferencia os menus e botoes do texto". Escolheu ser
+     um TEMA, e nao o padrao: o Pergaminho continua sendo o de quem abre o app.
+     O desenho e o mesmo que o app ja tem desde a v68 — o alto no --bg, a reza
+     no --bg-leitura —, so que aqui a diferenca e grande de proposito:
+     tudo o que e CONTROLE fica no azul, e a REZA fica sozinha no creme.
+     Por isso as variaveis do corpo sao as do azul, e o bloco
+     "body.theme-escuro #main, ..." no fim do <style> devolve as do creme
+     a tudo o que e reza (o Kadish e a dedicatoria).
+     Contraste medido: texto claro no azul 12,98:1 · inativo 10,20:1 ·
+     azul sobre o dourado aceso 8,48:1 · Kadish no creme 14,07:1 ·
+     --text-faint no creme 5,33:1 (no Pergaminho e 3,14:1).
+     O tema antigo (marrom escuro) nunca voltou a ser oferecido desde 21/08;
+     o nome "Escuro" ja estava nas 8 linguas (theme_dark) e foi reaproveitado
+     — zero texto novo. */
   body.theme-escuro {
-    --bg: #1a1612;
-    --bg-leitura: #2c241a;  /* escuro: o degrade CLAREAVA; o tom assado ja vem claro */
-    --bg-elevated: #252019;
-    --text: #f5ecd8;
-    --text-soft: #d8c89a;
-    --text-faint: #a89876;
-    --brass: #e8c084;
-    --brass-bright: #f4d49e;
-    --gold-glow: #f4d49e;
-    --line: #45382a;
-    --rule: rgba(232, 192, 132, 0.18);
-    --tip-bg: rgba(232, 192, 132, 0.14);
+    --bg: #14243f;
+    --bg-deep: #14243f;     /* o menu do pe le esta, e sem ela caia no bege */
+    --bg-leitura: #f6efe2;
+    --bg-elevated: #0e1a30; /* o trilho dos seletores e a barra do play */
+    --text: #f3ead8;
+    --text-soft: #c9d2e3;
+    --text-faint: #9aa6be;
+    --brass: #e9b85c;
+    --brass-bright: #e9b85c;
+    --gold-glow: #f2cd7e;
+    --line: #2c3d5c;
+    --rule: rgba(233, 184, 92, 0.18);
+    --tip-bg: rgba(233, 184, 92, 0.12);
   }
-  body.theme-escuro .hebrew { color: #ffffff; }
 
   /* Theme: Alto contraste */
   body.theme-contraste {
@@ -2974,6 +2989,67 @@
     letter-spacing: .04em; margin-left: .3em;
   }
 
+  /* ===== TEMA ESCURO (azul e dourado) — o lado da REZA (v74) =====
+     MORA NO FIM DO <style> DE PROPOSITO: quem vem depois ganha, e e a licao
+     que este arquivo ja pagou tres vezes.
+     O Kadish e a dedicatoria voltam as cores do creme. A dedicatoria entra
+     junto porque e o COMECO do Kadish (decisao dele na v68), mesmo morando no
+     cabecalho grudado. A leitura vai de ponta a ponta, sem margem azul dos
+     lados: a fronteira com os controles e a cor, e os cantos de cima
+     arredondados dizem "aqui comeca o cartao". */
+  body.theme-escuro { background-color: var(--bg); }
+  body.theme-escuro #main,
+  body.theme-escuro .topbar .dedicatoria-fixa {
+    --bg: #f6efe2;
+    --bg-leitura: #f6efe2;
+    --bg-elevated: #efe5d2;
+    --text: #2a1f15;
+    --text-soft: #4d3d2d;
+    --text-faint: #6f604a;
+    --brass: #8b6a3e;
+    --brass-bright: #d4a25a;
+    --gold-glow: #e9b85c;
+    --line: #e3d6bd;
+    --rule: rgba(42, 31, 21, 0.1);
+    --tip-bg: rgba(212, 162, 90, 0.12);
+    background-color: var(--bg-leitura);
+    color: var(--text);
+  }
+  body.theme-escuro .topbar .dedicatoria-fixa,
+  body.theme-escuro.modo-treino #main { border-radius: 22px 22px 0 0; }
+  body.theme-escuro .topbar { border-bottom: 0; }
+
+  /* Os seletores no formato do flyer: trilho escuro, e o aceso em dourado com
+     a letra no azul. O texto dos botoes NAO muda — PEQUENO/GRANDE continuam,
+     decisao dele (18/11). O apagado fica legivel por inteiro: aqui quem diz
+     qual esta aceso e o dourado, e a opacidade .62 baixaria o contraste. */
+  body.theme-escuro .modo-switch {
+    background: var(--bg-elevated); border-color: var(--bg-elevated);
+    padding: 2px; gap: 2px;
+  }
+  body.theme-escuro .modo-op { border-radius: 999px; color: var(--text-soft); }
+  body.theme-escuro .modo-op:not(.active) { opacity: 1; }
+  body.theme-escuro .nussach-chip {
+    background: var(--bg-elevated); border-color: var(--bg-elevated); color: var(--text);
+  }
+  body.theme-escuro .nussach-chip[aria-expanded="true"],
+  body.theme-escuro .seg-control button.active { background: var(--brass); color: var(--bg); }
+  body.theme-escuro .filtros-texto .filtro-op { border-color: var(--brass); color: var(--brass); }
+  body.theme-escuro .filtros-texto .filtro-op.active { color: var(--bg); }
+  body.theme-escuro .seg-control { border-color: var(--bg-elevated); }
+  body.theme-escuro .play-btn { color: var(--bg); box-shadow: none; }
+  /* Os outros acesos da barra de baixo: a letra no azul, nunca a clara sobre o
+     dourado — a primeira foto deste tema mostrou "1×" e ".75×" assim, e o
+     Treino aceso no marrom do Pergaminho (--brass-dark nao existe em tema
+     nenhum e caia no #8b6a3e escrito ao lado). */
+  body.theme-escuro .speed-toggle button.active,
+  body.theme-escuro .repeat-toggle button.active,
+  body.theme-escuro .velocidade-nos-ajustes button.active { background: var(--brass); color: var(--bg); }
+  body.theme-escuro.modo-treino .treino-btn {
+    background: var(--brass); border-color: var(--brass); color: var(--bg);
+  }
+  body.theme-escuro .audio-bar { box-shadow: none; }
+
 </style>
 </head>
 <body>
@@ -3112,7 +3188,7 @@
 //
 // A trava do sessionStorage existe para nao entrar em laco de recarga se algum
 // dia os dois numeros discordarem por engano.
-const VERSAO = '2026-10-29 · 73';
+const VERSAO = '2026-11-18 · 74';
 // Escreve a versao nos DOIS lugares a partir da mesma constante — no alto da
 // tela e nos Ajustes. Escrever a mao nos dois ja fez os dois discordarem.
 document.addEventListener('DOMContentLoaded', () => {
@@ -3158,6 +3234,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="seg-control" data-setting="theme">
         <button class="active" data-value="pergaminho">Pergaminho</button>
         <button data-value="claro" data-i18n="theme_light">Claro</button>
+        <button data-value="escuro" data-i18n="theme_dark">Escuro</button>
       </div>
     </div>
 
@@ -8021,11 +8098,10 @@ function applyI18n(lang) {
 
 // ---------- Theme ----------
 function applyTheme(theme) {
-  // Ficaram dois temas: Pergaminho e Claro. Quem tinha Escuro ou Contraste
-  // guardado do uso anterior volta para Pergaminho em vez de ficar sem tema.
-  // (O CSS do Escuro continua no arquivo e agora FUNCIONA, porque o fundo passou
-  //  a obedecer a variavel; devolver o botao e uma linha.)
-  if (theme !== 'pergaminho' && theme !== 'claro') theme = 'pergaminho';
+  // Tres temas: Pergaminho (o padrao), Claro e, desde a v74, o Escuro de novo —
+  // agora azul e dourado, a pedido dele (18/11). Quem tinha Contraste guardado
+  // do uso anterior volta para Pergaminho em vez de ficar sem tema.
+  if (theme !== 'pergaminho' && theme !== 'claro' && theme !== 'escuro') theme = 'pergaminho';
   document.body.classList.remove('theme-claro', 'theme-escuro', 'theme-contraste');
   if (theme !== 'pergaminho') document.body.classList.add(`theme-${theme}`);
   localStorage.setItem('tefila_theme', theme);
